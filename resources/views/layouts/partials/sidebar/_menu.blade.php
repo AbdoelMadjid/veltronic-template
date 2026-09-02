@@ -25,9 +25,33 @@
             <!--begin::Menu-->
             <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="kt_app_sidebar_menu"
                 data-kt-menu="true" data-kt-menu-expand="true">
+
+                <div class="menu-item {{ request()->routeIs(['dashboard']) ? 'here show' : '' }} p-0 m-0">
+                    <!--begin:Menu link-->
+                    <a href="{{ route('dashboard') }}" class="menu-link">
+                        <span class="menu-icon"><i class="ki-duotone ki-screen fs-2">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                                <span class="path4"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">{{ __('menu.homepage') }}</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+
                 <!--begin:Menu item-->
+                <div class="menu-item p-0 m-0">
+                    <div class="menu-content pt-5 pb-2">
+                        <span class="menu-section text-muted text-uppercase fs-7 fw-semibold">{{ __('menu.dashboards')
+                            }}</span>
+                    </div>
+                </div>
+                <!--begin:Menu item-->
+
                 <div data-kt-menu-trigger="click"
-                    class="menu-item {{ request()->routeIs(['dashboard', 'dashboards.*']) ? 'here show' : '' }} menu-accordion">
+                    class="menu-item {{ request()->routeIs(['dashboards.*']) ? 'here show' : '' }} menu-accordion">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon"><i class="ki-duotone ki-screen fs-2">
@@ -45,45 +69,47 @@
                     <div class="menu-sub menu-sub-accordion">
                         <!--begin:Menu item-->
                         @foreach (config('sidebar._sidebar_dashboard.menus_dashboard') as $menu)
-                            @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menu['title'])); @endphp
-                            <div class="menu-item">
-                                <a class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}"
-                                    href="{{ route($menu['route']) }}">
-                                    <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                    <span
-                                        class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
-                                </a>
-                            </div>
+                        @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'],
+                        $menu['title'])); @endphp
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}"
+                                href="{{ route($menu['route']) }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title']
+                                    }}</span>
+                            </a>
+                        </div>
                         @endforeach
 
                         @php
-                            $collapsedMenus = config('sidebar._sidebar_dashboard.menus_dashboard_collapsed') ?? [];
-                            $collapsedCount = count($collapsedMenus);
-                            $isActiveCollapse = collect($collapsedMenus)
-                                ->pluck('route')
-                                ->contains(fn($route) => request()->routeIs($route));
+                        $collapsedMenus = config('sidebar._sidebar_dashboard.menus_dashboard_collapsed') ?? [];
+                        $collapsedCount = count($collapsedMenus);
+                        $isActiveCollapse = collect($collapsedMenus)
+                        ->pluck('route')
+                        ->contains(fn($route) => request()->routeIs($route));
 
-                            // teks yang sedang terlihat & teks alternatif yang akan dipakai oleh JS saat toggle
-                            $visibleText = $isActiveCollapse
-                                ? __('menu.show_less')
-                                : __('menu.show') . " {$collapsedCount} " . __('menu.more');
-                            $altText = $isActiveCollapse
-                                ? __('menu.show') . " {$collapsedCount} " . __('menu.more')
-                                : __('menu.show_less');
+                        // teks yang sedang terlihat & teks alternatif yang akan dipakai oleh JS saat toggle
+                        $visibleText = $isActiveCollapse
+                        ? __('menu.show_less')
+                        : __('menu.show') . " {$collapsedCount} " . __('menu.more');
+                        $altText = $isActiveCollapse
+                        ? __('menu.show') . " {$collapsedCount} " . __('menu.more')
+                        : __('menu.show_less');
                         @endphp
                         <!--end:Menu item-->
                         <div class="menu-inner flex-column collapse {{ $isActiveCollapse ? 'show' : '' }}"
                             id="kt_app_sidebar_menu_dashboards_collapse">
                             @foreach (config('sidebar._sidebar_dashboard.menus_dashboard_collapsed') as $menu)
-                                @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menu['title'])); @endphp
-                                <div class="menu-item">
-                                    <a class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}"
-                                        href="{{ route($menu['route']) }}">
-                                        <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                        <span
-                                            class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
-                                    </a>
-                                </div>
+                            @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'],
+                            $menu['title'])); @endphp
+                            <div class="menu-item">
+                                <a class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}"
+                                    href="{{ route($menu['route']) }}">
+                                    <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                    <span class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) :
+                                        $menu['title'] }}</span>
+                                </a>
+                            </div>
                             @endforeach
                         </div>
                         <!--end:Menu item-->
@@ -113,29 +139,31 @@
 
                 <!--begin:Menu item-->
                 @foreach (config('sidebar._sidebar_demo.menu_demos') as $menu)
-                    @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
-                @endforeach
-                <!--end:Menu item-->
-
-                <!--begin:Menu item-->
-                <div class="menu-item pt-5"><!--begin:Menu content-->
-                    <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.pages') }}</span>
-                    </div><!--end:Menu content-->
-                </div>
-                <!--end:Menu item-->
-
-                <!--begin:Menu item-->
-                @foreach (config('sidebar._sidebar_pages.pages_menus') as $menu)
-                    @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
+                @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
                 @endforeach
                 <!--end:Menu item-->
 
                 <!--begin:Menu item-->
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
-                    <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.apps') }}</span>
+                    <div class="menu-content"><span class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.pages')
+                            }}</span>
+                    </div>
+                    <!--end:Menu content-->
+                </div>
+                <!--end:Menu item-->
+
+                <!--begin:Menu item-->
+                @foreach (config('sidebar._sidebar_pages.pages_menus') as $menu)
+                @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
+                @endforeach
+                <!--end:Menu item-->
+
+                <!--begin:Menu item-->
+                <div class="menu-item pt-5">
+                    <!--begin:Menu content-->
+                    <div class="menu-content"><span class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.apps')
+                            }}</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -143,15 +171,15 @@
 
                 <!--begin:Menu item-->
                 @foreach (config('sidebar._sidebar_apps.apps_menus') as $menu)
-                    @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
+                @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
                 @endforeach
                 <!--end:Menu item-->
 
                 <!--begin:Menu item-->
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
-                    <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.layouts') }}</span>
+                    <div class="menu-content"><span class="menu-heading fw-bold text-uppercase fs-7">{{
+                            __('menu.layouts') }}</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -159,15 +187,15 @@
 
                 <!--begin:Menu item-->
                 @foreach (config('sidebar._sidebar_layouts.layout_menus') as $menu)
-                    @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
+                @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
                 @endforeach
                 <!--end:Menu item-->
 
                 <!--begin:Menu item-->
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
-                    <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.help') }}</span>
+                    <div class="menu-content"><span class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.help')
+                            }}</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -176,7 +204,7 @@
 
                 <!--begin:Menu item-->
                 @foreach (config('sidebar._sidebar_helps.help_menus') as $menu)
-                    @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
+                @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
                 @endforeach
                 <!--end:Menu item-->
             </div>

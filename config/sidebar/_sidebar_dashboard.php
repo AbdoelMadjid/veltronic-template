@@ -2,16 +2,15 @@
 
 return [
     'menus_dashboard' => [
-        ['route' => 'dashboard', 'title' => 'Default'],
         ['route' => 'dashboards.ecommerce', 'title' => 'eCommerce'],
         ['route' => 'dashboards.projects', 'title' => 'Projects'],
         ['route' => 'dashboards.online-courses', 'title' => 'Online Courses'],
         ['route' => 'dashboards.marketing', 'title' => 'Marketing'],
+        ['route' => 'dashboards.bidding', 'title' => 'Bidding'],
+        ['route' => 'dashboards.pos', 'title' => 'POS System'],
     ],
 
     'menus_dashboard_collapsed' => [
-        ['route' => 'dashboards.bidding', 'title' => 'Bidding'],
-        ['route' => 'dashboards.pos', 'title' => 'POS System'],
         ['route' => 'dashboards.call-center', 'title' => 'Call Center'],
         ['route' => 'dashboards.logistics', 'title' => 'Logistics'],
         ['route' => 'dashboards.website-analytics', 'title' => 'Website Analytics'],

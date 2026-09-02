@@ -456,6 +456,7 @@ return [
     'widgets' => 'Widget',
     'wizards' => 'Wizard',
     'dashboards' => 'Dashboard',
+    'homepage' => 'Halaman Utama',
     'pages' => 'Halaman',
     'apps' => 'Aplikasi',
     'demo' => 'Demo Widget',

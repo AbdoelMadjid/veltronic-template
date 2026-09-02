@@ -456,6 +456,7 @@ return [
     'widgets' => 'Widgets',
     'wizards' => 'Wizards',
     'dashboards' => 'Dashboards',
+    'homepage' => 'Home Page',
     'pages' => 'Pages',
     'apps' => 'Apps',
     'demo' => 'Widgets Demos',

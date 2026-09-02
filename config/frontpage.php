@@ -8,7 +8,7 @@ return [
             'name' => 'Landing Page',
             'desc' => 'Metronic 8 Marketing & Corporate Landing',
             'view' => 'frontpages.landing.v1.landing',
-            'url' => '/',
+            'url' => '/landing',
             'icon' => 'ki-rocket',
             'badge' => 'Metronic 8',
             'color' => 'primary',

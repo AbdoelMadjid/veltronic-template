@@ -63,7 +63,7 @@
             </div>
             <div class="d-flex align-items-center justify-content-between pt-1">
                 <span class="badge badge-light-secondary fs-9">Bootstrap 5 Marketing</span>
-                <a href="{{ url('/') }}" target="_blank" class="text-primary fs-8 text-hover-underline fw-semibold">
+                <a href="{{ url('/landing') }}" target="_blank" class="text-primary fs-8 text-hover-underline fw-semibold">
                     <i class="ki-duotone ki-arrow-up-right fs-8 me-1"></i> Buka Landing
                 </a>
             </div>

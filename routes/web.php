@@ -33,7 +33,7 @@ Route::get('/frontpage/switch/{frontpage}', function ($frontpage) {
 
 
 Route::get('/landing', function () {
-    return redirect('/');
+    return view('frontpages.landing.v1.landing');
 })->name('dashboards.landing');
 
 Route::get('/dashboard', function () {

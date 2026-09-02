@@ -339,24 +339,52 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.3.0
+                            Versi Saat Ini: v1.3.1
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
-                        <!--begin::Item v1.3.0-->
+                        <!--begin::Item v1.3.1-->
                         <div class="timeline-item mb-7">
-                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.3.0</div>
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.3.1</div>
                             <div class="timeline-badge">
                                 <i class="fa fa-genderless text-primary fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                    <span class="badge badge-primary fw-bold">v1.3.0</span>
-                                    <span class="text-gray-900 fw-bold fs-6">Mobile Toolbar Hub Refinement, Responsive Topic Categories & Footer Optimization</span>
+                                    <span class="badge badge-primary fw-bold">v1.3.1</span>
+                                    <span class="text-gray-900 fw-bold fs-6">Homepage Menu Separation, Dashboards Active State Isolation & Config Restructure</span>
                                     <span class="badge badge-light-success fs-8">Latest Release</span>
+                                </div>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pemisahan menu tunggal Home Page dari dropdown menu Dashboards pada sidebar, isolasi deteksi route aktif agar dropdown Dashboards tidak ikut terbuka saat membuka default dashboard, penyesuaian daftar menu dashboard, serta penambahan i18n translasi bilingual untuk homepage.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Homepage Sidebar Menu Separation:</strong> Menu tunggal teratas kini bertindak mandiri sebagai <em>Home Page</em> (<code>menu.homepage</code>) terpisah dari section dropdown Dashboards.</li>
+                                        <li class="mb-1"><strong>Dashboards Active State Isolation:</strong> Menghapus pencocokan route <code>dashboard</code> pada accordion menu Dashboards, sehingga dropdown hanya aktif pada pattern <code>dashboards.*</code>.</li>
+                                        <li class="mb-1"><strong>Sidebar Config Restructure:</strong> Menata ulang item menu <code>menus_dashboard</code> dan <code>menus_dashboard_collapsed</code> pada <code>config/sidebar/_sidebar_dashboard.php</code>.</li>
+                                        <li class="mb-1"><strong>Bilingual Localization & Blade Fix:</strong> Menambahkan translasi <code>menu.homepage</code> pada <code>lang/en/menu.php</code> dan <code>lang/id/menu.php</code>, serta perbaikan sintaks evaluasi title pada <code>dashboard.blade.php</code>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.3.1-->
+
+                        <!--begin::Item v1.3.0-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.3.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-success fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <span class="badge badge-success fw-bold">v1.3.0</span>
+                                    <span class="text-gray-900 fw-bold fs-6">Mobile Toolbar Hub Refinement, Responsive Topic Categories & Footer Optimization</span>
+                                    <span class="badge badge-light-dark fs-8">Stable Release</span>
                                 </div>
                                 <p class="text-gray-700 fs-7 mb-3">
                                     Penyempurnaan arsitektur dan pengalaman pengguna (UX) pada tampilan mobile/HP, meliputi penataan posisi tengah dropdown quick tools, integrasi panel interaktif penuh (My Apps, Notifikasi, Theme Mode, Gaya Icon, Version), grid responsif topic categories, perbaikan icon duotone initial render, dan optimalisasi layout footer 3 baris di mobile.

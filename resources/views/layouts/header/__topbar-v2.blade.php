@@ -152,7 +152,7 @@
     <div class="d-flex align-items-center ms-1 ms-lg-3">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
-            data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" title="Frontpages & Templates">
+            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" title="Frontpages & Templates">
             <i class="ki-duotone ki-screen fs-1">
                 <span class="path1"></span>
                 <span class="path2"></span>

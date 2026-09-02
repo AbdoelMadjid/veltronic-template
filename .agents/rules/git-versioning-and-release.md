@@ -22,21 +22,23 @@ Sebelum melakukan commit & tag:
    Versi Saat Ini: vX.Y.Z
    ```
 3. Tambahkan blok `<div class="timeline-item mb-7">` baru di urutan **paling atas** timeline:
-   - Pasang badge versi baru dengan status `<span class="badge badge-light-success fs-8">Latest Release</span>`.
-   - Pasang badge tipe versi:
-     - **Major**: `<span class="badge badge-light-danger fw-bold fs-8">Major</span>` (dot badge: `text-danger`)
-     - **Minor**: `<span class="badge badge-light-primary fw-bold fs-8">Minor</span>` (dot badge: `text-primary`)
-     - **Patch**: `<span class="badge badge-light-warning fw-bold fs-8">Patch</span>` (dot badge: `text-warning`)
-   - Pasang badge tanggal & waktu rilis:
-     ```html
-     <span class="badge badge-light text-gray-700 fs-8 border">
-         <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
-             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
-         </i>DD Mmm YYYY, HH:mm WIB
-     </span>
-     ```
-   - Ubah rilis sebelumnya menjadi `<span class="badge badge-light-dark fs-8">Stable Release</span>`.
-   - Cantumkan judul rilis, ringkasan, dan rincian perubahan (dalam bahasa Indonesia baku).
+   - Baris 1 (Badges & Tanggal):
+     - Badge versi baru + status `<span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>`.
+     - Badge tipe versi:
+       - **Major**: `<span class="badge badge-light-danger fw-bold fs-8">Major</span>` (dot badge: `text-danger`)
+       - **Minor**: `<span class="badge badge-light-primary fw-bold fs-8">Minor</span>` (dot badge: `text-primary`)
+       - **Patch**: `<span class="badge badge-light-warning fw-bold fs-8">Patch</span>` (dot badge: `text-warning`)
+     - Badge tanggal & waktu:
+       ```html
+       <span class="badge badge-light text-gray-700 fs-8 border">
+           <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+               <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+           </i>DD Mmm YYYY, HH:mm WIB
+       </span>
+       ```
+   - Baris 2 (Judul Rilis): `<h4 class="text-gray-900 fw-bold fs-6 mb-2">Judul Rilis Versi</h4>`
+   - Paragraf ringkasan & daftar rincian perubahan dalam card rounded `border-dashed`.
+   - Ubah rilis sebelumnya menjadi `<span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>`.
 
 ### 3. Eksekusi Commit, Tag, dan Push
 Jalankan urutan perintah git berikut secara berurutan:

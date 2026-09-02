@@ -364,9 +364,9 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>03 Sep 2026, 01:59 WIB
                                     </span>
-                                    <span class="text-gray-900 fw-bold fs-6">Homepage Menu Separation, Dashboards Active State Isolation & Config Restructure</span>
-                                    <span class="badge badge-light-success fs-8">Latest Release</span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Homepage Menu Separation, Dashboards Active State Isolation & Config Restructure</h4>
                                 <p class="text-gray-700 fs-7 mb-3">
                                     Pemisahan menu tunggal Home Page dari dropdown menu Dashboards pada sidebar, isolasi deteksi route aktif agar dropdown Dashboards tidak ikut terbuka saat membuka default dashboard, penyesuaian daftar menu dashboard, serta penambahan i18n translasi bilingual untuk homepage.
                                 </p>
@@ -398,9 +398,9 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>03 Sep 2026, 00:58 WIB
                                     </span>
-                                    <span class="text-gray-900 fw-bold fs-6">Mobile Toolbar Hub Refinement, Responsive Topic Categories & Footer Optimization</span>
-                                    <span class="badge badge-light-dark fs-8">Stable Release</span>
+                                    <span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>
                                 </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Mobile Toolbar Hub Refinement, Responsive Topic Categories & Footer Optimization</h4>
                                 <p class="text-gray-700 fs-7 mb-3">
                                     Penyempurnaan arsitektur dan pengalaman pengguna (UX) pada tampilan mobile/HP, meliputi penataan posisi tengah dropdown quick tools, integrasi panel interaktif penuh (My Apps, Notifikasi, Theme Mode, Gaya Icon, Version), grid responsif topic categories, perbaikan icon duotone initial render, dan optimalisasi layout footer 3 baris di mobile.
                                 </p>
@@ -435,9 +435,9 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>02 Sep 2026, 14:34 WIB
                                     </span>
-                                    <span class="text-gray-900 fw-bold fs-6">Dynamic KeenIcons Style Switcher & Icon Architecture Schema</span>
-                                    <span class="badge badge-light-dark fs-8">Stable Release</span>
+                                    <span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>
                                 </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Dynamic KeenIcons Style Switcher & Icon Architecture Schema</h4>
                                 <p class="text-gray-700 fs-7 mb-3">
                                     Penambahan fitur dinamisasi gaya icon KeenIcons (Duotone, Solid, Outline) pada topbar toolbar, engine JavaScript otomatis dengan dukungan MutationObserver, persistensi runtime (localStorage & cookie), serta penambahan modul dokumentasi Skema Pergantian Icon.
                                 </p>
@@ -471,9 +471,9 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>02 Sep 2026, 12:08 WIB
                                     </span>
-                                    <span class="text-gray-900 fw-bold fs-6">Dynamic Frontpages Switcher, Layout Polish & Core Enhancements</span>
-                                    <span class="badge badge-light-dark fs-8">Stable Release</span>
+                                    <span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>
                                 </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Dynamic Frontpages Switcher, Layout Polish & Core Enhancements</h4>
                                 <p class="text-gray-700 fs-7 mb-3">
                                     Pembaruan arsitektur besar untuk mendukung pemilihan multi-template frontpage dinamis, standardisasi layout autentikasi, penyempurnaan switcher multi-versi, serta konversi dokumentasi ke Bahasa Indonesia murni.
                                 </p>
@@ -509,9 +509,9 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>02 Sep 2026, 10:02 WIB
                                     </span>
-                                    <span class="text-gray-900 fw-bold fs-6">Initial Release & Laravel 13 Upgrade</span>
-                                    <span class="badge badge-light-dark fs-8">Base Version</span>
+                                    <span class="badge badge-light-dark fs-8 ms-auto">Base Version</span>
                                 </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Initial Release & Laravel 13 Upgrade</h4>
                                 <p class="text-gray-700 fs-7 mb-3">
                                     Rilis awal template Veltronic dengan upgrade fondasi framework ke Laravel 13 dan integrasi tema Metronic 8.
                                 </p>

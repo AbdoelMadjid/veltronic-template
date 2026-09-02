@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
-$educationViews = collect(File::files(resource_path('views/education')))
+$educationViews = collect(File::isDirectory(resource_path('views/frontpages/education')) ? File::files(resource_path('views/frontpages/education')) : [])
     ->map(fn ($file) => Str::before($file->getFilename(), '.blade.php'))
     ->sort()
     ->values();
@@ -20,7 +20,7 @@ Route::prefix('education')->name('education.')->group(function () use ($educatio
     })->name('lang.switch');
 
     if ($educationViews->contains('home-page')) {
-        Route::view('/', 'education.home-page')->name('home');
+        Route::view('/', 'frontpages.education.home-page')->name('home');
     }
 
     foreach ($educationViews as $view) {
@@ -29,6 +29,6 @@ Route::prefix('education')->name('education.')->group(function () use ($educatio
         }
 
         $routeName = $view === 'apply-for-all-intake' ? 'apply-all-intake' : $view;
-        Route::view($view, "education.{$view}")->name($routeName);
+        Route::view($view, "frontpages.education.{$view}")->name($routeName);
     }
 });

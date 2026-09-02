@@ -84,21 +84,109 @@
         @include('partials.theme-mode._main')
     </div>
     <!--end::Theme mode-->
-    <!--begin::Back to Web-->
+    <!--begin::Language-->
     <div class="app-navbar-item ms-1 ms-md-4">
         <!--begin::Menu wrapper-->
-        <div
-            class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative">
-            <a href="/">
-                <i class="ki-duotone ki-teacher fs-2">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
-                </i>
-            </a>
+        <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
+            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+            data-kt-menu-placement="bottom-end">
+            @if (app()->getLocale() == 'id')
+                <img class="w-20px h-20px rounded-1"
+                    src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/indonesia.svg') }}" alt="Indonesia" />
+            @else
+                <img class="w-20px h-20px rounded-1"
+                    src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/united-states.svg') }}" alt="English" />
+            @endif
         </div>
+        <!--begin::Menu sub-->
+        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-175px py-4 fs-7"
+            data-kt-menu="true">
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+                <a href="{{ route('lang.switch', 'en') }}"
+                    class="menu-link d-flex px-5 {{ app()->getLocale() == 'en' ? 'active' : '' }}">
+                    <span class="symbol symbol-20px me-4">
+                        <img class="rounded-1"
+                            src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/united-states.svg') }}"
+                            alt="" />
+                    </span>
+                    {{ __('menu.english') }}
+                </a>
+            </div>
+            <!--end::Menu item-->
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+                <a href="{{ route('lang.switch', 'id') }}"
+                    class="menu-link d-flex px-5 {{ app()->getLocale() == 'id' ? 'active' : '' }}">
+                    <span class="symbol symbol-20px me-4">
+                        <img class="rounded-1"
+                            src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/indonesia.svg') }}" alt="" />
+                    </span>
+                    {{ __('menu.indonesian') }}
+                </a>
+            </div>
+            <!--end::Menu item-->
+        </div>
+        <!--end::Menu sub-->
         <!--end::Menu wrapper-->
     </div>
-    <!--end::Back to Web-->
+    <!--end::Language-->
+    <!--begin::Version switcher-->
+    @php
+        $currentVersion = \App\Support\ThemeVersion::current();
+        $themeVersions = \App\Support\ThemeVersion::available();
+    @endphp
+    <div class="app-navbar-item ms-1 ms-md-4">
+        <!--begin::Menu wrapper-->
+        <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
+            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+            data-kt-menu-placement="bottom-end" title="Theme Version">
+            <i class="ki-duotone ki-cube-2 fs-2">
+                <span class="path1"></span>
+                <span class="path2"></span>
+                <span class="path3"></span>
+            </i>
+        </div>
+        <!--begin::Menu sub-->
+        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-175px py-4 fs-7"
+            data-kt-menu="true">
+            <div class="menu-item px-3">
+                <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
+                    Theme Version
+                </div>
+            </div>
+            @foreach ($themeVersions as $version)
+                <div class="menu-item px-3">
+                    <a href="{{ route('theme.version.switch', $version) }}"
+                        class="menu-link d-flex px-5 {{ $currentVersion === $version ? 'active' : '' }}">
+                        <span class="badge badge-light-primary fw-bold fs-8 px-2 py-1 me-2">{{ strtoupper($version) }}</span>
+                        {{ 'Metronic ' . strtoupper($version) }}
+                    </a>
+                </div>
+            @endforeach
+        </div>
+        <!--end::Menu sub-->
+        <!--end::Menu wrapper-->
+    </div>
+    <!--end::Version switcher-->
+    <!--begin::Frontpages-->
+    <div class="app-navbar-item ms-1 ms-md-4">
+        <!--begin::Menu wrapper-->
+        <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative"
+            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+            data-kt-menu-placement="bottom-end" title="Frontpages & Templates">
+            <i class="ki-duotone ki-screen fs-2">
+                <span class="path1"></span>
+                <span class="path2"></span>
+                <span class="path3"></span>
+                <span class="path4"></span>
+            </i>
+        </div>
+        <!--layout-partial:partials/menus/_frontpages-menu.blade.php-->
+        @include('partials.menus._frontpages-menu')
+        <!--end::Menu wrapper-->
+    </div>
+    <!--end::Frontpages-->
     <!--begin::User menu-->
     <div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
         <!--begin::Menu wrapper-->

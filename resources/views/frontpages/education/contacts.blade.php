@@ -1,4 +1,4 @@
-@extends('education.partials.web-master')
+@extends('frontpages.education.partials.web-master')
 @section('title', 'Contacts')
 @section('css')
     <link rel="stylesheet" href="assets/vendor/icon-awesome/css/font-awesome.min.css">
@@ -163,7 +163,7 @@
     <!-- End Contacts Info -->
 
     <!-- Call to Action -->
-    @include('education.content.call-to-action')
+    @include('frontpages.education.content.call-to-action')
     <!-- End Call to Action -->
 @endsection
 @section('script')

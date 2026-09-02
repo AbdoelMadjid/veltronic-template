@@ -10,19 +10,19 @@
                     </li>
 
                     <!-- Language -->
-                    @include('education.partials.toolbar.language')
+                    @include('frontpages.education.partials.toolbar.language')
                     <!-- End Language -->
 
                     <!-- Jump To -->
-                    @include('education.partials.toolbar.jump-to')
+                    @include('frontpages.education.partials.toolbar.jump-to')
                     <!-- End Jump To -->
 
                     <!-- Links -->
-                    @include('education.partials.toolbar.links')
+                    @include('frontpages.education.partials.toolbar.links')
                     <!-- End Links -->
 
                     <!-- Search -->
-                    @include('education.partials.toolbar.search')
+                    @include('frontpages.education.partials.toolbar.search')
                     <!-- End Search -->
                 </ul>
             </div>
@@ -31,7 +31,7 @@
 
         <div class="container">
             <!-- Nav -->
-            @include('education.partials.navbar')
+            @include('frontpages.education.partials.navbar')
             <!-- End Nav -->
         </div>
     </div>

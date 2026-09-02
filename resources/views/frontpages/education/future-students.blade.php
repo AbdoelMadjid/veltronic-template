@@ -1,4 +1,4 @@
-@extends('education.partials.web-master')
+@extends('frontpages.education.partials.web-master')
 @section('title', 'Future Studens')
 @section('css')
     <!-- CSS Implementing Plugins -->
@@ -410,7 +410,7 @@
     <!-- End Testimonials -->
 
     <!-- Call to Action -->
-    @include('education.content.call-to-action')
+    @include('frontpages.education.content.call-to-action')
     <!-- End Call to Action -->
 @endsection
 @section('script')

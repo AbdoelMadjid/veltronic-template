@@ -34,11 +34,11 @@
 <body>
     <main>
 
-        @include('education.partials.header')
+        @include('frontpages.education.partials.header')
 
         @yield('content')
 
-        @include('education.partials.footer')
+        @include('frontpages.education.partials.footer')
 
     </main>
 

@@ -1,4 +1,4 @@
-@extends('education.partials.web-master')
+@extends('frontpages.education.partials.web-master')
 @section('title', 'Program')
 @section('css')
     <!-- CSS Implementing Plugins -->

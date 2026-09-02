@@ -1,4 +1,4 @@
-@extends('education.partials.web-master')
+@extends('frontpages.education.partials.web-master')
 @section('title', 'Events')
 @section('css')
     <link rel="stylesheet" href="assets/vendor/icon-awesome/css/font-awesome.min.css">
@@ -533,7 +533,7 @@
     <!-- End University Events -->
 
     <!-- Call to Action -->
-    @include('education.content.call-to-action')
+    @include('frontpages.education.content.call-to-action')
     <!-- End Call to Action -->
 @endsection
 @section('script')

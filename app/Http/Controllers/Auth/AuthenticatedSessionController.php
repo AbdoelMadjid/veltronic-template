@@ -25,6 +25,8 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $locale = $request->string('locale')->toString();
+        $frontpage = $request->session()->get('frontpage');
+        $themeVersion = $request->session()->get('theme_version');
 
         if (in_array($locale, ['en', 'id'], true)) {
             $request->session()->put('locale', $locale);
@@ -37,6 +39,12 @@ class AuthenticatedSessionController extends Controller
         if (in_array($locale, ['en', 'id'], true)) {
             $request->session()->put('locale', $locale);
         }
+        if (!empty($frontpage)) {
+            $request->session()->put('frontpage', $frontpage);
+        }
+        if (!empty($themeVersion)) {
+            $request->session()->put('theme_version', $themeVersion);
+        }
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
@@ -47,6 +55,8 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         $locale = $request->session()->get('locale');
+        $frontpage = $request->session()->get('frontpage');
+        $themeVersion = $request->session()->get('theme_version');
 
         Auth::guard('web')->logout();
 
@@ -56,6 +66,12 @@ class AuthenticatedSessionController extends Controller
 
         if (in_array($locale, ['en', 'id'], true)) {
             $request->session()->put('locale', $locale);
+        }
+        if (!empty($frontpage)) {
+            $request->session()->put('frontpage', $frontpage);
+        }
+        if (!empty($themeVersion)) {
+            $request->session()->put('theme_version', $themeVersion);
         }
 
         return redirect('/');

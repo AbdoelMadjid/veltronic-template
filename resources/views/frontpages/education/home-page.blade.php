@@ -1,4 +1,4 @@
-@extends('education.partials.web-master')
+@extends('frontpages.education.partials.web-master')
 @section('title', 'Home Page')
 @section('css')
     <!-- CSS Implementing Plugins -->
@@ -14,15 +14,15 @@
 @endsection
 @section('content')
     <!-- Carousel Slider -->
-    @include('education.content.carousel-slider')
+    @include('frontpages.education.content.carousel-slider')
     <!-- End Carousel Slider -->
 
     <!-- Find a Course -->
-    @include('education.content.find-a-cource')
+    @include('frontpages.education.content.find-a-cource')
     <!-- End Find a Course -->
 
     <!-- Learn First Steps -->
-    @include('education.content.learn-first-steps')
+    @include('frontpages.education.content.learn-first-steps')
     <!-- End Learn First Steps -->
 
     <!-- Researches -->
@@ -675,7 +675,7 @@
     <!-- End News -->
 
     <!-- Call to Action -->
-    @include('education.content.call-to-action')
+    @include('frontpages.education.content.call-to-action')
     <!-- End Call to Action -->
 @endsection
 @section('script')

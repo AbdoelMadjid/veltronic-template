@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Support\Frontpage;
 use App\Support\ThemeVersion;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,14 @@ Route::get('/theme/version/{version}', function ($version) {
     }
     return redirect()->back();
 })->name('theme.version.switch');
+
+Route::get('/frontpage/switch/{frontpage}', function ($frontpage) {
+    if (in_array($frontpage, Frontpage::available(), true)) {
+        session(['frontpage' => $frontpage]);
+        \Illuminate\Support\Facades\Cookie::queue('frontpage', $frontpage, 525600);
+    }
+    return redirect()->back();
+})->name('frontpage.switch');
 
 
 Route::get('/landing', function () {

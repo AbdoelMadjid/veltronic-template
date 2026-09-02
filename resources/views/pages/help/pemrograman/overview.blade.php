@@ -333,8 +333,11 @@
                             <span class="text-muted fs-7">Catatan rilis dan riwayat perubahan versi template Veltronic</span>
                         </div>
                     </div>
-                    <div class="card-toolbar">
-                        <span class="badge badge-light-success fw-bold fs-7 px-3 py-2">
+                    <div class="card-toolbar d-flex align-items-center gap-2">
+                        <span class="badge badge-light-danger fw-semibold fs-8">Major</span>
+                        <span class="badge badge-light-primary fw-semibold fs-8">Minor</span>
+                        <span class="badge badge-light-warning fw-semibold fs-8">Patch</span>
+                        <span class="badge badge-light-success fw-bold fs-7 px-3 py-2 ms-2">
                             <i class="ki-duotone ki-check-circle fs-6 text-success me-1">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
@@ -346,15 +349,16 @@
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
-                        <!--begin::Item v1.3.1-->
+                        <!--begin::Item v1.3.1 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.3.1</div>
                             <div class="timeline-badge">
-                                <i class="fa fa-genderless text-primary fs-1"></i>
+                                <i class="fa fa-genderless text-warning fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
-                                <div class="d-flex align-items-center gap-2 mb-2">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                     <span class="badge badge-primary fw-bold">v1.3.1</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
                                     <span class="text-gray-900 fw-bold fs-6">Homepage Menu Separation, Dashboards Active State Isolation & Config Restructure</span>
                                     <span class="badge badge-light-success fs-8">Latest Release</span>
                                 </div>
@@ -374,15 +378,16 @@
                         </div>
                         <!--end::Item v1.3.1-->
 
-                        <!--begin::Item v1.3.0-->
+                        <!--begin::Item v1.3.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.3.0</div>
                             <div class="timeline-badge">
-                                <i class="fa fa-genderless text-success fs-1"></i>
+                                <i class="fa fa-genderless text-primary fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
-                                <div class="d-flex align-items-center gap-2 mb-2">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                     <span class="badge badge-success fw-bold">v1.3.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
                                     <span class="text-gray-900 fw-bold fs-6">Mobile Toolbar Hub Refinement, Responsive Topic Categories & Footer Optimization</span>
                                     <span class="badge badge-light-dark fs-8">Stable Release</span>
                                 </div>
@@ -405,15 +410,16 @@
                         </div>
                         <!--end::Item v1.3.0-->
 
-                        <!--begin::Item v1.2.0-->
+                        <!--begin::Item v1.2.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.2.0</div>
                             <div class="timeline-badge">
-                                <i class="fa fa-genderless text-success fs-1"></i>
+                                <i class="fa fa-genderless text-primary fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
-                                <div class="d-flex align-items-center gap-2 mb-2">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                     <span class="badge badge-success fw-bold">v1.2.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
                                     <span class="text-gray-900 fw-bold fs-6">Dynamic KeenIcons Style Switcher & Icon Architecture Schema</span>
                                     <span class="badge badge-light-dark fs-8">Stable Release</span>
                                 </div>
@@ -435,15 +441,16 @@
                         </div>
                         <!--end::Item v1.2.0-->
 
-                        <!--begin::Item v1.1.0-->
+                        <!--begin::Item v1.1.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.1.0</div>
                             <div class="timeline-badge">
-                                <i class="fa fa-genderless text-success fs-1"></i>
+                                <i class="fa fa-genderless text-primary fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
-                                <div class="d-flex align-items-center gap-2 mb-2">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                     <span class="badge badge-success fw-bold">v1.1.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
                                     <span class="text-gray-900 fw-bold fs-6">Dynamic Frontpages Switcher, Layout Polish & Core Enhancements</span>
                                     <span class="badge badge-light-dark fs-8">Stable Release</span>
                                 </div>
@@ -467,15 +474,16 @@
                         </div>
                         <!--end::Item v1.1.0-->
 
-                        <!--begin::Item v1.0.0-->
+                        <!--begin::Item v1.0.0 (Major)-->
                         <div class="timeline-item">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.0.0</div>
                             <div class="timeline-badge">
-                                <i class="fa fa-genderless text-success fs-1"></i>
+                                <i class="fa fa-genderless text-danger fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
-                                <div class="d-flex align-items-center gap-2 mb-2">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                     <span class="badge badge-success fw-bold">v1.0.0</span>
+                                    <span class="badge badge-light-danger fw-bold fs-8">Major</span>
                                     <span class="text-gray-900 fw-bold fs-6">Initial Release & Laravel 13 Upgrade</span>
                                     <span class="badge badge-light-dark fs-8">Base Version</span>
                                 </div>

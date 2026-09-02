@@ -23,6 +23,10 @@ Sebelum melakukan commit & tag:
    ```
 3. Tambahkan blok `<div class="timeline-item mb-7">` baru di urutan **paling atas** timeline:
    - Pasang badge versi baru dengan status `<span class="badge badge-light-success fs-8">Latest Release</span>`.
+   - Pasang badge tipe versi:
+     - **Major**: `<span class="badge badge-light-danger fw-bold fs-8">Major</span>` (dot badge: `text-danger`)
+     - **Minor**: `<span class="badge badge-light-primary fw-bold fs-8">Minor</span>` (dot badge: `text-primary`)
+     - **Patch**: `<span class="badge badge-light-warning fw-bold fs-8">Patch</span>` (dot badge: `text-warning`)
    - Ubah rilis sebelumnya menjadi `<span class="badge badge-light-dark fs-8">Stable Release</span>`.
    - Cantumkan judul rilis, ringkasan, dan rincian perubahan (dalam bahasa Indonesia baku).
 

@@ -339,24 +339,55 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.2.0
+                            Versi Saat Ini: v1.3.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
-                        <!--begin::Item v1.2.0-->
+                        <!--begin::Item v1.3.0-->
                         <div class="timeline-item mb-7">
-                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.2.0</div>
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.3.0</div>
                             <div class="timeline-badge">
                                 <i class="fa fa-genderless text-primary fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                    <span class="badge badge-primary fw-bold">v1.2.0</span>
-                                    <span class="text-gray-900 fw-bold fs-6">Dynamic KeenIcons Style Switcher & Icon Architecture Schema</span>
+                                    <span class="badge badge-primary fw-bold">v1.3.0</span>
+                                    <span class="text-gray-900 fw-bold fs-6">Mobile Toolbar Hub Refinement, Responsive Topic Categories & Footer Optimization</span>
                                     <span class="badge badge-light-success fs-8">Latest Release</span>
+                                </div>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyempurnaan arsitektur dan pengalaman pengguna (UX) pada tampilan mobile/HP, meliputi penataan posisi tengah dropdown quick tools, integrasi panel interaktif penuh (My Apps, Notifikasi, Theme Mode, Gaya Icon, Version), grid responsif topic categories, perbaikan icon duotone initial render, dan optimalisasi layout footer 3 baris di mobile.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Mobile Toolbar Hub Center Alignment:</strong> Posisi dropdown menu quick tools pada layar mobile diposisikan tepat di tengah horizontal layar (<code>left: 50%; transform: translateX(-50%)</code>) dengan batas lebar dan tinggi responsif.</li>
+                                        <li class="mb-1"><strong>Interactive Toolbar Sub-Panels:</strong> Dropdown toolbar mobile menyematkan konten fitur desktop lengkap (Full My Apps 16+ icon, Full Tabbed Notifications, Theme Mode Light/Dark/System, Gaya Icon Duotone/Solid/Outline, Theme Version V1/V2, serta Drawer Activities & Chat).</li>
+                                        <li class="mb-1"><strong>Toggle & Compact Default State:</strong> Toolbar mobile secara default tampil ringkas hanya berupa baris icon dan baru membuka panel submenu ketika salah satu icon disentuh/diklik (dapat ditutup kembali / <em>toggleable</em>).</li>
+                                        <li class="mb-1"><strong>Dark Header Icon Visibility Fix:</strong> Isolasi style warna icon di dalam dropdown mobile agar tidak terpengaruh style putih dark-header pada layout Metronic Version 2.</li>
+                                        <li class="mb-1"><strong>Responsive Dynamic Topic Categories:</strong> Grid kategori topik pada widget dashboard kini dinamis dan membungkus ke bawah (<em>auto-wrap</em>) pada layar HP/tablet (12 kolom desktop, 6 kolom laptop, 4 kolom tablet, 3/2 kolom mobile) sehingga kartu tombol tidak pipih.</li>
+                                        <li class="mb-1"><strong>Duotone Initial Render Fix:</strong> Melengkapi seluruh 12 icon kategori dengan child element <code>&lt;span class="path..."&gt;</code> agar icon duotone tampil sempurna tanpa jeda atau kedip saat pertama kali dimuat.</li>
+                                        <li class="mb-1"><strong>3-Row Responsive Footer:</strong> Tata letak footer pada mobile disusun rapi menjadi 3 baris terpusat (Menu Links, Copyright, Info Versi Laravel/PHP/MySQL) dan tetap 1 baris inline di desktop.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.3.0-->
+
+                        <!--begin::Item v1.2.0-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.2.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-success fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <span class="badge badge-success fw-bold">v1.2.0</span>
+                                    <span class="text-gray-900 fw-bold fs-6">Dynamic KeenIcons Style Switcher & Icon Architecture Schema</span>
+                                    <span class="badge badge-light-dark fs-8">Stable Release</span>
                                 </div>
                                 <p class="text-gray-700 fs-7 mb-3">
                                     Penambahan fitur dinamisasi gaya icon KeenIcons (Duotone, Solid, Outline) pada topbar toolbar, engine JavaScript otomatis dengan dukungan MutationObserver, persistensi runtime (localStorage & cookie), serta penambahan modul dokumentasi Skema Pergantian Icon.

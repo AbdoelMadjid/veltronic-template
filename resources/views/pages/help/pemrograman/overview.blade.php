@@ -177,6 +177,28 @@
                                         </div>
                                     </a>
                                 </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.skema.pergantian-versi-tampilan') }}" class="card card-flush h-100 bg-light-primary">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-cube-2 fs-2hx text-primary flex-shrink-0 mt-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Skema Pergantian Versi Tampilan</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Blueprint multi-versi Metronic (v1 &amp; v2), suffix view resolver, asset packaging, dan session switcher runtime.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.skema.pergantian-frontpage') }}" class="card card-flush h-100 bg-light-success">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-screen fs-2hx text-success flex-shrink-0 mt-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Skema Pergantian Frontpage</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Arsitektur dynamic frontpage loader, hirarki session-cookie-config, deklarasi template, dan integrasi root view.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -217,6 +239,17 @@
                                             <div>
                                                 <h3 class="mb-1 fs-4">{{ __('help.panduan_pergantian_versi_metronic') }}</h3>
                                                 <p class="text-gray-700 fs-7 mb-0">{!! __('help.pages.overview.paragraph_18') !!}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.operasional.panduan-pergantian-frontpage') }}" class="card card-flush h-100 bg-light-warning">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-screen fs-2hx text-warning flex-shrink-0 mt-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Panduan Pergantian Frontpage</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Langkah memilih frontpage via topbar, konfigurasi <code>DEFAULT_FRONTPAGE</code> di <code>.env</code>, dan cara menambah template baru.</p>
                                             </div>
                                         </div>
                                     </a>

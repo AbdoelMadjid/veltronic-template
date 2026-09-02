@@ -68,6 +68,14 @@ return [
                             'title' => 'Skema i18n Lanjutan',
                             'route' => 'help.pemrograman.skema.i18n-lanjutan',
                         ],
+                        [
+                            'title' => 'Skema Pergantian Versi Tampilan',
+                            'route' => 'help.pemrograman.skema.pergantian-versi-tampilan',
+                        ],
+                        [
+                            'title' => 'Skema Pergantian Frontpage',
+                            'route' => 'help.pemrograman.skema.pergantian-frontpage',
+                        ],
                     ],
                 ],
                 [
@@ -84,6 +92,10 @@ return [
                         [
                             'title' => 'Panduan Pergantian Versi Metronic',
                             'route' => 'help.pemrograman.operasional.panduan-pergantian-versi-metronic',
+                        ],
+                        [
+                            'title' => 'Panduan Pergantian Frontpage',
+                            'route' => 'help.pemrograman.operasional.panduan-pergantian-frontpage',
                         ],
                         [
                             'title' => 'Konvensi Penamaan',

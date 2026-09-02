@@ -359,6 +359,11 @@
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                     <span class="badge badge-primary fw-bold">v1.3.1</span>
                                     <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>03 Sep 2026, 01:59 WIB
+                                    </span>
                                     <span class="text-gray-900 fw-bold fs-6">Homepage Menu Separation, Dashboards Active State Isolation & Config Restructure</span>
                                     <span class="badge badge-light-success fs-8">Latest Release</span>
                                 </div>
@@ -388,6 +393,11 @@
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                     <span class="badge badge-success fw-bold">v1.3.0</span>
                                     <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>03 Sep 2026, 00:58 WIB
+                                    </span>
                                     <span class="text-gray-900 fw-bold fs-6">Mobile Toolbar Hub Refinement, Responsive Topic Categories & Footer Optimization</span>
                                     <span class="badge badge-light-dark fs-8">Stable Release</span>
                                 </div>
@@ -420,6 +430,11 @@
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                     <span class="badge badge-success fw-bold">v1.2.0</span>
                                     <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>02 Sep 2026, 14:34 WIB
+                                    </span>
                                     <span class="text-gray-900 fw-bold fs-6">Dynamic KeenIcons Style Switcher & Icon Architecture Schema</span>
                                     <span class="badge badge-light-dark fs-8">Stable Release</span>
                                 </div>
@@ -451,6 +466,11 @@
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                     <span class="badge badge-success fw-bold">v1.1.0</span>
                                     <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>02 Sep 2026, 12:08 WIB
+                                    </span>
                                     <span class="text-gray-900 fw-bold fs-6">Dynamic Frontpages Switcher, Layout Polish & Core Enhancements</span>
                                     <span class="badge badge-light-dark fs-8">Stable Release</span>
                                 </div>
@@ -484,6 +504,11 @@
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                     <span class="badge badge-success fw-bold">v1.0.0</span>
                                     <span class="badge badge-light-danger fw-bold fs-8">Major</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>02 Sep 2026, 10:02 WIB
+                                    </span>
                                     <span class="text-gray-900 fw-bold fs-6">Initial Release & Laravel 13 Upgrade</span>
                                     <span class="badge badge-light-dark fs-8">Base Version</span>
                                 </div>

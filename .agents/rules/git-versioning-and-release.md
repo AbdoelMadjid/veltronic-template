@@ -27,6 +27,14 @@ Sebelum melakukan commit & tag:
      - **Major**: `<span class="badge badge-light-danger fw-bold fs-8">Major</span>` (dot badge: `text-danger`)
      - **Minor**: `<span class="badge badge-light-primary fw-bold fs-8">Minor</span>` (dot badge: `text-primary`)
      - **Patch**: `<span class="badge badge-light-warning fw-bold fs-8">Patch</span>` (dot badge: `text-warning`)
+   - Pasang badge tanggal & waktu rilis:
+     ```html
+     <span class="badge badge-light text-gray-700 fs-8 border">
+         <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+         </i>DD Mmm YYYY, HH:mm WIB
+     </span>
+     ```
    - Ubah rilis sebelumnya menjadi `<span class="badge badge-light-dark fs-8">Stable Release</span>`.
    - Cantumkan judul rilis, ringkasan, dan rincian perubahan (dalam bahasa Indonesia baku).
 

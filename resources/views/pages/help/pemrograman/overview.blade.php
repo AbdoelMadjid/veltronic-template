@@ -339,24 +339,54 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.1.0
+                            Versi Saat Ini: v1.2.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
-                        <!--begin::Item v1.1.0-->
+                        <!--begin::Item v1.2.0-->
                         <div class="timeline-item mb-7">
-                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.1.0</div>
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.2.0</div>
                             <div class="timeline-badge">
                                 <i class="fa fa-genderless text-primary fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                    <span class="badge badge-primary fw-bold">v1.1.0</span>
-                                    <span class="text-gray-900 fw-bold fs-6">Dynamic Frontpages Switcher, Layout Polish & Core Enhancements</span>
+                                    <span class="badge badge-primary fw-bold">v1.2.0</span>
+                                    <span class="text-gray-900 fw-bold fs-6">Dynamic KeenIcons Style Switcher & Icon Architecture Schema</span>
                                     <span class="badge badge-light-success fs-8">Latest Release</span>
+                                </div>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penambahan fitur dinamisasi gaya icon KeenIcons (Duotone, Solid, Outline) pada topbar toolbar, engine JavaScript otomatis dengan dukungan MutationObserver, persistensi runtime (localStorage & cookie), serta penambahan modul dokumentasi Skema Pergantian Icon.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Dynamic KeenIcons Switcher:</strong> Tombol toggle dan dropdown menu di topbar/navbar untuk mengganti gaya icon aktif secara dinamis antara <em>Duotone</em> (default), <em>Solid</em>, dan <em>Outline</em> dengan preview representatif <code>ki-chart</code>.</li>
+                                        <li class="mb-1"><strong>Live DOM Icon Transformation:</strong> Engine client-side (<code>public/assets/js/custom/icon-style.js</code>) yang secara instan mengonversi seluruh class icon KeenIcons di seluruh halaman aplikasi secara real-time.</li>
+                                        <li class="mb-1"><strong>Otomatisasi MutationObserver:</strong> Mendeteksi elemen DOM baru yang dimuat secara asinkron (modal, AJAX content, tab) dan otomatis menyesuaikannya dengan gaya icon aktif.</li>
+                                        <li class="mb-1"><strong>Anti-Flicker & Persistensi:</strong> Inisialisasi awal via <code>partials.icon-style._init</code> pada root HTML dan penyimpanan preferensi di <code>localStorage</code> serta Cookie <code>kt_icon_style</code>.</li>
+                                        <li class="mb-1"><strong>Integrasi Multi-Layout:</strong> Pemasangan icon style switcher pada Layout Default/v1, Layout v2 (Demo 2), dan Layout Dokumentasi.</li>
+                                        <li class="mb-1"><strong>Skema Pergantian Icon:</strong> Modul blueprint arsitektur baru di <code>help/pemrograman/skema/pergantian-icon</code> yang mengulas tuntas standar HTML 3 varian gaya KeenIcons, siklus hidup, API JavaScript <code>KTIconStyle</code>, dan panduan developer.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.2.0-->
+
+                        <!--begin::Item v1.1.0-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.1.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-success fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <span class="badge badge-success fw-bold">v1.1.0</span>
+                                    <span class="text-gray-900 fw-bold fs-6">Dynamic Frontpages Switcher, Layout Polish & Core Enhancements</span>
+                                    <span class="badge badge-light-dark fs-8">Stable Release</span>
                                 </div>
                                 <p class="text-gray-700 fs-7 mb-3">
                                     Pembaruan arsitektur besar untuk mendukung pemilihan multi-template frontpage dinamis, standardisasi layout autentikasi, penyempurnaan switcher multi-versi, serta konversi dokumentasi ke Bahasa Indonesia murni.

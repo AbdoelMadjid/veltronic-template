@@ -1,0 +1,409 @@
+@extends('layouts.index')
+@section('styles')
+    <!--begin::Vendor Stylesheets(used for this page only)-->
+    <link href="{{ \App\Support\ThemeAsset::url('plugins/custom/datatables/datatables.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
+    <!--end::Vendor Stylesheets-->
+@endsection
+@section('toolbar')
+    @component('layouts.partials._toolbar')
+        @slot('li_1')
+            Pages
+        @endslot
+        @slot('li_2')
+            General
+        @endslot
+        @slot('li_3')
+            Corporate
+        @endslot
+    @endcomponent
+@endsection
+@section('content')
+    <div id="kt_app_content" class="app-content flex-column-fluid">
+        <!--begin::Content container-->
+        <div id="kt_app_content_container" class="app-container container-fluid">
+            <!--begin::About card-->
+            <div class="card">
+                <!--begin::Body-->
+                <div class="card-body p-lg-17">
+                    <!--begin::About-->
+                    <div class="mb-18">
+                        <!--begin::Wrapper-->
+                        <div class="mb-10">
+                            <!--begin::Top-->
+                            <div class="text-center mb-15">
+                                <!--begin::Title-->
+                                <h3 class="fs-2hx text-gray-900 mb-6">
+                                    Meet Our Team
+                                </h3>
+                                <!--end::Title-->
+                                <!--begin::Text-->
+                                <div class="fs-5 text-muted fw-semibold">
+                                    Save thousands to millions of bucks by using
+                                    single tool for different <br />amazing and
+                                    outstanding and usefull great and useful admin
+                                </div>
+                                <!--end::Text-->
+                            </div>
+                            <!--end::Top-->
+                            <!--begin::Overlay-->
+                            <div class="overlay">
+                                <!--begin::Image-->
+                                <img class="w-100 card-rounded" src="{{ \App\Support\ThemeAsset::url('media/stock/1600x800/img-1.jpg', $theme_asset_pack ?? null) }}"
+                                    alt="" />
+                                <!--end::Image-->
+                                <!--begin::Links-->
+                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                    <a href="/pages/general/pricing/column" class="btn btn-primary">Pricing</a>
+                                    <a href="/pages/general/careers/apply" class="btn btn-light-primary ms-3">Join Us</a>
+                                </div>
+                                <!--end::Links-->
+                            </div>
+                            <!--end::Container-->
+                        </div>
+                        <!--end::Wrapper-->
+                        <!--begin::Description-->
+                        <div class="fs-5 fw-semibold text-gray-600">
+                            <!--begin::Text-->
+                            <p class="mb-8">
+                                First, a disclaimer – the entire process of writing
+                                a blog post often takes more than a couple of hours,
+                                even if you can type eighty words per minute and
+                                your writing skills are sharp. From the seed of the
+                                idea to finally hitting “Publish,” you might spend
+                                several days or maybe even a week “writing” a blog
+                                post, but it’s important to spend those vital hours
+                                planning your post and even thinking about
+                                <a href="/pages/general/blog/post" class="link-primary pe-1">Your Post</a>(yes, thinking
+                                counts
+                                as
+                                working if you’re a
+                                blogger) before you actually write it.
+                            </p>
+                            <!--end::Text-->
+                        </div>
+                        <!--end::Description-->
+                    </div>
+                    <!--end::About-->
+                    <!--begin::Team-->
+                    <div class="mb-18">
+                        <!--begin::Heading-->
+                        <div class="text-center mb-17">
+                            <!--begin::Title-->
+                            <h3 class="fs-2hx text-gray-900 mb-5">
+                                Our Great Team
+                            </h3>
+                            <!--end::Title-->
+                            <!--begin::Sub-title-->
+                            <div class="fs-5 text-muted fw-semibold">
+                                It’s no doubt that when a development takes longer
+                                to complete, additional costs to <br />integrate and
+                                test each extra feature creeps up and haunts most of
+                                us.
+                            </div>
+                            <!--end::Sub-title=-->
+                        </div>
+                        <!--end::Heading-->
+                        <!--begin::Wrapper-->
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 gy-10">
+                            <!--begin::Item-->
+                            <div class="col text-center mb-9">
+                                <!--begin::Photo-->
+                                <div class="octagon mx-auto mb-2 d-flex w-150px h-150px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                    style="
+                                background-image: url('{{ \App\Support\ThemeAsset::url('media/avatars/300-1.jpg', $theme_asset_pack ?? null) }}');
+                              ">
+                                </div>
+                                <!--end::Photo-->
+                                <!--begin::Person-->
+                                <div class="mb-0">
+                                    <!--begin::Name-->
+                                    <a href="/pages/general/user-profile/projects"
+                                        class="text-gray-900 fw-bold text-hover-primary fs-3">Paul Miles</a>
+                                    <!--end::Name-->
+                                    <!--begin::Position-->
+                                    <div class="text-muted fs-6 fw-semibold">
+                                        Development Lead
+                                    </div>
+                                    <!--begin::Position-->
+                                </div>
+                                <!--end::Person-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="col text-center mb-9">
+                                <!--begin::Photo-->
+                                <div class="octagon mx-auto mb-2 d-flex w-150px h-150px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                    style="
+                                background-image: url('{{ \App\Support\ThemeAsset::url('media/avatars/300-2.jpg', $theme_asset_pack ?? null) }}');
+                              ">
+                                </div>
+                                <!--end::Photo-->
+                                <!--begin::Person-->
+                                <div class="mb-0">
+                                    <!--begin::Name-->
+                                    <a href="/pages/general/user-profile/projects"
+                                        class="text-gray-900 fw-bold text-hover-primary fs-3">Jania Garnbet</a>
+                                    <!--end::Name-->
+                                    <!--begin::Position-->
+                                    <div class="text-muted fs-6 fw-semibold">
+                                        Creative Director
+                                    </div>
+                                    <!--begin::Position-->
+                                </div>
+                                <!--end::Person-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="col text-center mb-9">
+                                <!--begin::Photo-->
+                                <div class="octagon mx-auto mb-2 d-flex w-150px h-150px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                    style="
+                                background-image: url('{{ \App\Support\ThemeAsset::url('media/avatars/300-16.jpg', $theme_asset_pack ?? null) }}');
+                              ">
+                                </div>
+                                <!--end::Photo-->
+                                <!--begin::Person-->
+                                <div class="mb-0">
+                                    <!--begin::Name-->
+                                    <a href="/pages/general/user-profile/projects"
+                                        class="text-gray-900 fw-bold text-hover-primary fs-3">James Nilson</a>
+                                    <!--end::Name-->
+                                    <!--begin::Position-->
+                                    <div class="text-muted fs-6 fw-semibold">
+                                        Python Expert
+                                    </div>
+                                    <!--begin::Position-->
+                                </div>
+                                <!--end::Person-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="col text-center mb-9">
+                                <!--begin::Photo-->
+                                <div class="octagon mx-auto mb-2 d-flex w-150px h-150px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                    style="
+                                background-image: url('{{ \App\Support\ThemeAsset::url('media/avatars/300-20.jpg', $theme_asset_pack ?? null) }}');
+                              ">
+                                </div>
+                                <!--end::Photo-->
+                                <!--begin::Person-->
+                                <div class="mb-0">
+                                    <!--begin::Name-->
+                                    <a href="/pages/general/user-profile/projects"
+                                        class="text-gray-900 fw-bold text-hover-primary fs-3">Mia Miles</a>
+                                    <!--end::Name-->
+                                    <!--begin::Position-->
+                                    <div class="text-muted fs-6 fw-semibold">
+                                        Project Manager
+                                    </div>
+                                    <!--begin::Position-->
+                                </div>
+                                <!--end::Person-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="col text-center mb-9">
+                                <!--begin::Photo-->
+                                <div class="octagon mx-auto mb-2 d-flex w-150px h-150px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                    style="
+                                background-image: url('{{ \App\Support\ThemeAsset::url('media/avatars/300-10.jpg', $theme_asset_pack ?? null) }}');
+                              ">
+                                </div>
+                                <!--end::Photo-->
+                                <!--begin::Person-->
+                                <div class="mb-0">
+                                    <!--begin::Name-->
+                                    <a href="/pages/general/user-profile/projects"
+                                        class="text-gray-900 fw-bold text-hover-primary fs-3">Sophia Miles</a>
+                                    <!--end::Name-->
+                                    <!--begin::Position-->
+                                    <div class="text-muted fs-6 fw-semibold">
+                                        Art Director
+                                    </div>
+                                    <!--begin::Position-->
+                                </div>
+                                <!--end::Person-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="col text-center mb-9">
+                                <!--begin::Photo-->
+                                <div class="octagon mx-auto mb-2 d-flex w-150px h-150px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                    style="
+                                background-image: url('{{ \App\Support\ThemeAsset::url('media/avatars/300-9.jpg', $theme_asset_pack ?? null) }}');
+                              ">
+                                </div>
+                                <!--end::Photo-->
+                                <!--begin::Person-->
+                                <div class="mb-0">
+                                    <!--begin::Name-->
+                                    <a href="/pages/general/user-profile/projects"
+                                        class="text-gray-900 fw-bold text-hover-primary fs-3">Oliver Lucas</a>
+                                    <!--end::Name-->
+                                    <!--begin::Position-->
+                                    <div class="text-muted fs-6 fw-semibold">
+                                        Marketing Manager
+                                    </div>
+                                    <!--begin::Position-->
+                                </div>
+                                <!--end::Person-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="col text-center mb-9">
+                                <!--begin::Photo-->
+                                <div class="octagon mx-auto mb-2 d-flex w-150px h-150px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                    style="
+                                background-image: url('{{ \App\Support\ThemeAsset::url('media/avatars/300-12.jpg', $theme_asset_pack ?? null) }}');
+                              ">
+                                </div>
+                                <!--end::Photo-->
+                                <!--begin::Person-->
+                                <div class="mb-0">
+                                    <!--begin::Name-->
+                                    <a href="/pages/general/user-profile/projects"
+                                        class="text-gray-900 fw-bold text-hover-primary fs-3">Amelia Miles</a>
+                                    <!--end::Name-->
+                                    <!--begin::Position-->
+                                    <div class="text-muted fs-6 fw-semibold">
+                                        QA Managers
+                                    </div>
+                                    <!--begin::Position-->
+                                </div>
+                                <!--end::Person-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="col text-center mb-9">
+                                <!--begin::Photo-->
+                                <div class="octagon mx-auto mb-2 d-flex w-150px h-150px bgi-no-repeat bgi-size-contain bgi-position-center"
+                                    style="
+                                background-image: url('{{ \App\Support\ThemeAsset::url('media/avatars/300-23.jpg', $theme_asset_pack ?? null) }}');
+                              ">
+                                </div>
+                                <!--end::Photo-->
+                                <!--begin::Person-->
+                                <div class="mb-0">
+                                    <!--begin::Name-->
+                                    <a href="/pages/general/user-profile/projects"
+                                        class="text-gray-900 fw-bold text-hover-primary fs-3">Liam James</a>
+                                    <!--end::Name-->
+                                    <!--begin::Position-->
+                                    <div class="text-muted fs-6 fw-semibold">
+                                        QA Managers
+                                    </div>
+                                    <!--begin::Position-->
+                                </div>
+                                <!--end::Person-->
+                            </div>
+                            <!--end::Item-->
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+                    <!--end::Team-->
+                    <!--begin::Join-->
+                    <div class="text-center mb-20">
+                        <!--begin::Top-->
+                        <div class="mb-13">
+                            <!--begin::Title-->
+                            <h3 class="fs-2hx text-gray-900 mb-5">Join Us</h3>
+                            <!--end::Title-->
+                            <!--begin::Text-->
+                            <div class="fs-5 text-muted fw-semibold">
+                                Save thousands to millions of bucks by using single
+                                tool <br />for different amazing and great useful
+                                admin
+                            </div>
+                            <!--end::Text-->
+                        </div>
+                        <!--end::Top-->
+                        <!--begin::Text-->
+                        <p class="fs-5 fw-semibold text-gray-600 text-start mb-15">
+                            First, a disclaimer – the entire process of writing a
+                            blog post often takes more than a couple of hours,
+                            even if you can type eighty words per minute and your
+                            writing skills are sharp. From the seed of the idea to
+                            finally hitting “Publish,” you might spend several
+                            days or maybe even a week “writing” a blog post, but
+                            it’s important to spend those vital hours planning
+                            <a href="/pages/general/blog/post" class="link-primary pe-1">Your Post</a>(yes, thinking
+                            counts
+                            as
+                            working if you’re a blogger)
+                            before you actually write it.
+                        </p>
+                        <!--end::Text-->
+                        <!--begin::Action-->
+                        <a href="/pages/general/careers/apply" class="btn btn-primary mb-5">Apply Now</a>
+                        <!--end::Action-->
+                    </div>
+                    <!--end::Join-->
+                    <!--begin::Card-->
+                    <div class="card mb-4 bg-light text-center">
+                        <!--begin::Body-->
+                        <div class="card-body py-12">
+                            <!--begin::Icon-->
+                            <a href="javascript:void(0)" class="mx-4">
+                                <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/facebook-4.svg', $theme_asset_pack ?? null) }}" class="h-30px my-2"
+                                    alt="" />
+                            </a>
+                            <!--end::Icon-->
+                            <!--begin::Icon-->
+                            <a href="javascript:void(0)" class="mx-4">
+                                <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/instagram-2-1.svg', $theme_asset_pack ?? null) }}" class="h-30px my-2"
+                                    alt="" />
+                            </a>
+                            <!--end::Icon-->
+                            <!--begin::Icon-->
+                            <a href="javascript:void(0)" class="mx-4">
+                                <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/github.svg', $theme_asset_pack ?? null) }}" class="h-30px my-2" alt="" />
+                            </a>
+                            <!--end::Icon-->
+                            <!--begin::Icon-->
+                            <a href="javascript:void(0)" class="mx-4">
+                                <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/behance.svg', $theme_asset_pack ?? null) }}" class="h-30px my-2" alt="" />
+                            </a>
+                            <!--end::Icon-->
+                            <!--begin::Icon-->
+                            <a href="javascript:void(0)" class="mx-4">
+                                <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/pinterest-p.svg', $theme_asset_pack ?? null) }}" class="h-30px my-2"
+                                    alt="" />
+                            </a>
+                            <!--end::Icon-->
+                            <!--begin::Icon-->
+                            <a href="javascript:void(0)" class="mx-4">
+                                <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/twitter.svg', $theme_asset_pack ?? null) }}" class="h-30px my-2" alt="" />
+                            </a>
+                            <!--end::Icon-->
+                            <!--begin::Icon-->
+                            <a href="javascript:void(0)" class="mx-4">
+                                <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/dribbble-icon-1.svg', $theme_asset_pack ?? null) }}" class="h-30px my-2"
+                                    alt="" />
+                            </a>
+                            <!--end::Icon-->
+                        </div>
+                        <!--end::Body-->
+                    </div>
+                    <!--end::Card-->
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::About card-->
+        </div>
+        <!--end::Content container-->
+    </div>
+@endsection
+
+@section('scripts')
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="{{ \App\Support\ThemeAsset::url('plugins/custom/datatables/datatables.bundle.js', $theme_asset_pack ?? null) }}"></script>
+    <!--end::Vendors Javascript-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ \App\Support\ThemeAsset::url('js/widgets.bundle.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ \App\Support\ThemeAsset::url('js/custom/widgets.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ \App\Support\ThemeAsset::url('js/custom/apps/chat/chat.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ \App\Support\ThemeAsset::url('js/custom/utilities/modals/upgrade-plan.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ \App\Support\ThemeAsset::url('js/custom/utilities/modals/create-app.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ \App\Support\ThemeAsset::url('js/custom/utilities/modals/users-search.js', $theme_asset_pack ?? null) }}"></script>
+    <!--end::Custom Javascript-->
+@endsection

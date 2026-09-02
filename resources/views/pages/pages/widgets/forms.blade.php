@@ -1,0 +1,65 @@
+﻿@extends('layouts.index')
+@section('styles')
+    <!--begin::Vendor Stylesheets(used for this page only)-->
+    <link href="{{ \App\Support\ThemeAsset::url('plugins/custom/datatables/datatables.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
+    <style>
+        .widget-showcase-row + .widget-showcase-row {
+            margin-top: 2rem;
+        }
+
+        .widget-showcase-item {
+            position: relative;
+        }
+    </style>
+    <!--end::Vendor Stylesheets-->
+@endsection
+@section('toolbar')
+    @component('layouts.partials._toolbar')
+        @slot('li_1')
+            Pages
+        @endslot
+        @slot('li_2')
+            Widgets / Forms
+        @endslot
+    @endcomponent
+@endsection
+@section('content')
+    <div id="kt_app_content" class="app-content flex-column-fluid">
+        <div id="kt_app_content_container" class="app-container container-fluid">
+            <div class="row g-5 g-xl-8 mb-10 widget-showcase-row">
+                <div class="col-xl-4 widget-showcase-item">
+                    <x-widget-include-badge name="forms.__widget-1" />
+                    @include('partials.widgets.forms._widget-1')
+                </div>
+                <div class="col-xl-8 widget-showcase-item">
+                    <x-widget-include-badge name="forms.__widget-6" />
+                    @include('partials.widgets.forms._widget-6')
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="{{ \App\Support\ThemeAsset::url('plugins/custom/datatables/datatables.bundle.js', $theme_asset_pack ?? null) }}"></script>
+    <!--end::Vendors Javascript-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ \App\Support\ThemeAsset::url('js/widgets.bundle.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ \App\Support\ThemeAsset::url('js/custom/widgets.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ \App\Support\ThemeAsset::url('js/custom/apps/chat/chat.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ \App\Support\ThemeAsset::url('js/custom/utilities/modals/upgrade-plan.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ \App\Support\ThemeAsset::url('js/custom/utilities/modals/create-app.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ \App\Support\ThemeAsset::url('js/custom/utilities/modals/users-search.js', $theme_asset_pack ?? null) }}"></script>
+    <!--end::Custom Javascript-->
+@endsection
+
+
+
+
+
+
+
+
+
+

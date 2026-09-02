@@ -1,0 +1,31 @@
+<!--begin::Engage widget 15-->
+<div class="card bg-primary bg-opacity-15 h-md-100" dir="ltr">
+    <!--begin::Body-->
+    <div class="card-body d-flex flex-column flex-center">
+        <!--begin::Heading-->
+        <div class="mb-2">
+            <!--begin::Title-->
+            <h1 class="fw-semibold text-gray-800 text-center lh-lg">
+                Have you tried <br /> new
+                <span class="fw-bolder"> Mobile Application ?</span>
+            </h1>
+            <!--end::Title-->
+            <!--begin::Illustration-->
+            <div class="py-10 text-center">
+                <img src="{{ \App\Support\ThemeAsset::url('media/svg/illustrations/easy/9.svg', $theme_asset_pack ?? null) }}" class="w-200px" alt="" />
+            </div>
+            <!--end::Illustration-->
+        </div>
+        <!--end::Heading-->
+        <!--begin::Links-->
+        <div class="text-center mb-1">
+            <!--begin::Link-->
+            <a class="btn btn-sm btn-primary me-2" data-bs-target="#kt_modal_create_app" data-bs-toggle="modal">
+                Try now </a>
+            <!--end::Link-->
+        </div>
+        <!--end::Links-->
+    </div>
+    <!--end::Body-->
+</div>
+<!--end::Engage widget 15-->

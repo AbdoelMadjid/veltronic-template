@@ -10,10 +10,10 @@
             Help
         @endslot
         @slot('li_2')
-            {{ __('help.skema_pemrograman') }}
+            Skema Pemrograman
         @endslot
         @slot('li_3')
-            {{ __('help.skema') }}
+            Skema
         @endslot
     @endcomponent
 @endsection
@@ -24,97 +24,97 @@
             <div class="schema-shell">
                 <div class="schema-hero">
                     <span class="schema-pill">Header Navigation</span>
-                    <h2 class="fw-bold">{{ __('help.skema_header_menu') }}</h2>
+                    <h2 class="fw-bold">Skema Header Menu</h2>
                     <p class="schema-lead">
-                        {{ __('help.pages.skema.header-menu.lead') }}
+                        Header memadukan beberapa pattern sekaligus: mega menu card, mega menu tab, dropdown recursive, dan compact help menu.
                     </p>
                 </div>
 
                 <div class="schema-grid">
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.header-menu.heading_1') !!}</h4>
+                            <h4>Orkestrasi Utama</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.header-menu.item_24') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_25') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_1') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_2') !!}</li>
+                                <li>Entry point: <code>resources/views/layouts/partials/header/_menu/_menu.blade.php</code>.</li>
+                                <li>Trigger top-level: <code>data-kt-menu-trigger="{default:'click', lg:'hover'}"</code>.</li>
+                                <li>Mode mobile: header menjadi drawer menggunakan <code>data-kt-drawer</code>.</li>
+                                <li>Active state top-level: <code>request()->routeIs(...)</code>.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.header-menu.heading_2') !!}</h4>
+                            <h4>Skema Per Menu Utama</h4>
                             <div class="schema-meta mb-3">
-                                <span class="schema-chip">{!! __('help.pages.skema.header-menu.chip_1') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.header-menu.chip_2') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.header-menu.chip_3') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.header-menu.chip_4') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.header-menu.chip_5') !!}</span>
+                                <span class="schema-chip">Dashboards = mega card</span>
+                                <span class="schema-chip">Pages = mega tab</span>
+                                <span class="schema-chip">Apps = recursive dropdown</span>
+                                <span class="schema-chip">Layouts = mega columns</span>
+                                <span class="schema-chip">Help = compact icon list</span>
                             </div>
-                            <div class="schema-note">{!! __('help.pages.skema.header-menu.note_1') !!}</div>
+                            <div class="schema-note">Satu top bar, lima karakter submenu berbeda. Ini memudahkan UX menyesuaikan volume konten tiap domain.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.header-menu.heading_3') !!}</h4>
+                            <h4>Dashboards: Mega Menu Card</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.header-menu.item_3') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_4') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_5') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_6') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_7') !!}</li>
+                                <li>Partial: <code>__dashboards.blade.php</code>.</li>
+                                <li>Dashboards: Mega Menu Card</li>
+                                <li>Kanan: list "More Dashboards" dari <code>header_dashboard_other</code>.</li>
+                                <li>Partial: <code>__dashboards.blade.php</code>.</li>
+                                <li>Kiri: card dashboard dari <code>header_dashboard_card</code>.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.header-menu.heading_4') !!}</h4>
+                            <h4>Pages: Mega Menu Tab</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.header-menu.item_8') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_9') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_10') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_11') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_26') !!}</li>
+                                <li>Partial: <code>__pages.blade.php</code>.</li>
+                                <li>Pages: Mega Menu Tab</li>
+                                <li>Tiap tab memanggil partial berbeda (<code>__pages-*</code>).</li>
+                                <li>Partial: <code>__pages.blade.php</code>.</li>
+                                <li>Lebar pane adaptif: <code>w-lg-1000px</code>, <code>w-lg-600px</code>, <code>w-lg-500px</code>.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.header-menu.heading_5') !!}</h4>
+                            <h4>Apps: Recursive Dropdown</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.header-menu.item_12') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_13') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_14') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_15') !!}</li>
+                                <li>Data source: <code>config/header/_header_apps.php</code>.</li>
+                                <li>Apps: Recursive Dropdown</li>
+                                <li>Level 1 default flyout; level lanjutan bisa pakai <code>'dropdown' => true</code>.</li>
+                                <li>Data source: <code>config/header/_header_apps.php</code>.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.header-menu.heading_6') !!}</h4>
+                            <h4>Layouts: Mega Menu Kolom</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.header-menu.item_16') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_17') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_18') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_19') !!}</li>
+                                <li>Partial: <code>__layouts.blade.php</code>.</li>
+                                <li>Layouts: Mega Menu Kolom</li>
+                                <li>Ada panel promosi "Layout Builder" dan gambar visual.</li>
+                                <li>Partial: <code>__layouts.blade.php</code>.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.header-menu.heading_7') !!}</h4>
+                            <h4>Help: Compact Hybrid Menu</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.header-menu.item_20') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_21') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_22') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_23') !!}</li>
+                                <li>Data source: <code>config/header/_header_help.php</code>.</li>
+                                <li>Help: Compact Hybrid Menu</li>
+                                <li>Eksternal default ke <code>target="_blank"</code> bila target tidak diisi.</li>
+                                <li>Data source: <code>config/header/_header_help.php</code>.</li>
                             </ul>
                             <pre class="schema-code"><code>[
   'title' => 'Skema Pemrograman',
@@ -126,36 +126,36 @@
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.header-menu.heading_8') !!}</h4>
+                            <h4>Mega Menu vs Dropdown: Pemilihan Pattern</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.header-menu.step_6') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.header-menu.step_1') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.header-menu.step_2') !!}</div>
+                                <div class="schema-step">Mega menu cocok untuk konten besar + kategorisasi visual + CTA.</div>
+                                <div class="schema-step">Dropdown cocok untuk list singkat dengan kedalaman rendah.</div>
+                                <div class="schema-step">Selalu verifikasi desktop hover behavior dan mobile click behavior.</div>
                             </div>
-                            <div class="schema-note mt-4">{!! __('help.pages.skema.header-menu.note_2') !!}</div>
+                            <div class="schema-note mt-4">Praktik terbaik: tentukan pattern dulu (mega atau dropdown), lalu tetapkan file config dan partial agar struktur konsisten.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.header-menu.heading_9') !!}</h4>
+                            <h4>Standar Tim (Strict) Header Menu</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.header-menu.step_7') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.header-menu.step_3') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.header-menu.step_4') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.header-menu.step_5') !!}</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> top-level baru harus punya pattern jelas (mega/tab/dropdown) sebelum implementasi.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> konfigurasi header dan partial renderer harus tetap domain-specific (hindari logika campur).</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> active state route wajib tervalidasi untuk perilaku desktop hover dan mobile click.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> link eksternal harus eksplisit mendefinisikan <code>target</code> dan tetap aman untuk UX.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.header-menu.heading_10') !!}</h4>
+                            <h4>Troubleshooting Header Menu</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.header-menu.item_27') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_28') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_29') !!}</li>
-                                <li>{!! __('help.pages.skema.header-menu.item_30') !!}</li>
+                                <li><strong>Submenu tidak tampil:</strong> cek trigger attribute dan struktur submenu wrapper.</li>
+                                <li><strong>Tab pages tidak pindah konten:</strong> cek target id tab dan state active awal.</li>
+                                <li><strong>Dropdown salah posisi:</strong> cek <code>data-kt-menu-placement</code> dan responsive behavior.</li>
+                                <li><strong>Link help tidak aktif:</strong> cek route internal dan request()->routeIs pattern.</li>
                             </ul>
                         </div>
                     </div>

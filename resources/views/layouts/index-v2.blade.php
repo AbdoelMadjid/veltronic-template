@@ -56,6 +56,7 @@ License: For each use you must have a valid license purchased only from above li
         rel="stylesheet" type="text/css" />
     <link href="{{ \App\Support\ThemeAsset::url('css/style.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet"
         type="text/css" />
+    <link href="{{ asset('assets/css/custom-icon-style.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     <script>
         // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
@@ -70,6 +71,8 @@ License: For each use you must have a valid license purchased only from above li
 <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
     <!--layout-partial:partials/theme-mode/_init.html-->
     @include('partials.theme-mode._init')
+    <!--layout-partial:partials/icon-style/_init.html-->
+    @include('partials.icon-style._init')
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -114,6 +117,7 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ \App\Support\ThemeAsset::url('plugins/global/plugins.bundle.js', $theme_asset_pack ?? null) }}">
     </script>
     <script src="{{ \App\Support\ThemeAsset::url('js/scripts.bundle.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ asset('assets/js/custom/icon-style.js') }}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Javascript-->
     @yield('scripts')

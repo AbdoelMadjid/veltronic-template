@@ -10,10 +10,10 @@
             Help
         @endslot
         @slot('li_2')
-            {{ __('help.skema_pemrograman') }}
+            Skema Pemrograman
         @endslot
         @slot('li_3')
-            {{ __('help.skema') }}
+            Skema
         @endslot
     @endcomponent
 @endsection
@@ -24,29 +24,29 @@
             <div class="schema-shell">
                 <div class="schema-hero">
                     <span class="schema-pill">Sidebar Architecture</span>
-                    <h2 class="fw-bold">{{ __('help.skema_sidebar_menu') }}</h2>
+                    <h2 class="fw-bold">Skema Sidebar Menu</h2>
                     <p class="schema-lead">
-                        {{ __('help.pages.skema.sidebar-menu.lead') }}
+                        Sidebar memakai konfigurasi deklaratif dan renderer recursive: fleksibel untuk nested menu, badge, target, dan dropdown.
                     </p>
                 </div>
 
                 <div class="schema-grid">
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.sidebar-menu.heading_1') !!}</h4>
+                            <h4>Peta Sumber Utama</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_1') !!}</li>
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_2') !!}</li>
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_3') !!}</li>
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_6') !!}</li>
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_7') !!}</li>
+                                <li><code>config/sidebar/_sidebar_dashboard.php</code> (dashboard + show more).</li>
+                                <li><code>config/sidebar/_sidebar_apps.php</code> (nested menu + badge + dropdown).</li>
+                                <li><code>config/sidebar/_sidebar_helps.php</code> (dokumen internal help).</li>
+                                <li><code>resources/views/layouts/partials/sidebar/_menu.blade.php</code> (section wrapper).</li>
+                                <li><code>resources/views/layouts/partials/sidebar/_menu-item.blade.php</code> (recursive renderer).</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.sidebar-menu.heading_2') !!}</h4>
+                            <h4>Struktur Data Dasar</h4>
                             <pre class="schema-code"><code>[
   'title' => 'Skema Pemrograman',
   'icon' => '...',
@@ -57,18 +57,18 @@
   ]
 ]</code></pre>
                             <div class="schema-meta">
-                                <span class="schema-chip">{!! __('help.pages.skema.sidebar-menu.chip_1') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.sidebar-menu.chip_2') !!}</span>
+                                <span class="schema-chip">children = parent node</span>
+                                <span class="schema-chip">tanpa children = leaf link</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.sidebar-menu.heading_3') !!}</h4>
+                            <h4>Mode Render Menu</h4>
                             <div class="schema-flow mb-4">
-                                <div class="schema-step">{!! __('help.pages.skema.sidebar-menu.step_9') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.sidebar-menu.step_1') !!}</div>
+                                <div class="schema-step"><code>children</code> + tanpa <code>dropdown</code> -> accordion.</div>
+                                <div class="schema-step"><code>children</code> + <code>'dropdown' => true</code> dirender sebagai item dropdown bertingkat.</div>
                             </div>
                             <pre class="schema-code"><code>[
   'route' => 'apps.chat',
@@ -84,7 +84,7 @@
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.sidebar-menu.heading_4') !!}</h4>
+                            <h4>Badge dan Target</h4>
                             <pre class="schema-code"><code>[
   'route' => 'apps.inbox.listing',
   'title' => 'Messages',
@@ -95,59 +95,59 @@
   'title' => 'Landing',
   'target' => '_blank'
 ]</code></pre>
-                            <div class="schema-note mt-4">{!! __('help.pages.skema.sidebar-menu.note_1') !!}</div>
+                            <div class="schema-note mt-4">Pada mode <code>dropdown => true</code>, implementasi saat ini menerapkan <code>target</code> parent ke item child pada dropdown tersebut.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.sidebar-menu.heading_5') !!}</h4>
+                            <h4>Fitur Unik Dashboard: Show More / Show Less</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.sidebar-menu.step_8') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.sidebar-menu.step_2') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.sidebar-menu.step_3') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.sidebar-menu.step_4') !!}</div>
+                                <div class="schema-step"><code>menus_dashboard</code> = item inti yang selalu tampil.</div>
+                                <div class="schema-step"><code>menus_dashboard_collapsed</code> menyimpan item tambahan pada mode collapsed.</div>
+                                <div class="schema-step">Tombol "Show X More" dihitung dinamis berdasarkan jumlah item collapsed.</div>
+                                <div class="schema-step">Jika route aktif ada di item collapsed, panel akan terbuka otomatis.</div>
                             </div>
                             <div class="schema-meta">
-                                <span class="schema-chip">{!! __('help.pages.skema.sidebar-menu.chip_3') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.sidebar-menu.chip_4') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.sidebar-menu.chip_5') !!}</span>
+                                <span class="schema-chip">toggle text dinamis</span>
+                                <span class="schema-chip">auto open on active route</span>
+                                <span class="schema-chip">desktop + mobile compatible</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.sidebar-menu.heading_6') !!}</h4>
+                            <h4>Checklist Engineering</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_8') !!}</li>
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_9') !!}</li>
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_10') !!}</li>
+                                <li>Active state parent dihitung recursive, leaf menggunakan <code>request()->routeIs($route . '*')</code>.</li>
+                                <li>Key title otomatis ditransformasikan ke <code>menu.*</code>; jika key tidak ada akan fallback ke text asli.</li>
+                                <li>Sebelum publish: validasi route, badge, target, dropdown behavior, dan tampilan mobile.</li>
                             </ul>
-                            <div class="schema-warn mt-4">{!! __('help.pages.skema.sidebar-menu.warn_1') !!}</div>
+                            <div class="schema-warn mt-4">Perubahan di struktur nested menu sebaiknya diuji di route aktif terdalam agar memastikan parent otomatis terbuka sesuai ekspektasi.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.sidebar-menu.heading_7') !!}</h4>
+                            <h4>Standar Tim (Strict) Sidebar</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.sidebar-menu.step_10') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.sidebar-menu.step_5') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.sidebar-menu.step_6') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.sidebar-menu.step_7') !!}</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> konfigurasi route, permission, dan status active wajib sinkron.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> icon level-1 wajib valid + jumlah <code>paths</code> sesuai icon duotone.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> key translasi menu wajib ada di EN+ID untuk item user-facing utama.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> perubahan nested menu harus diuji active state sampai level terdalam.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.sidebar-menu.heading_8') !!}</h4>
+                            <h4>Troubleshooting Sidebar</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_11') !!}</li>
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_4') !!}</li>
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_12') !!}</li>
-                                <li>{!! __('help.pages.skema.sidebar-menu.item_5') !!}</li>
+                                <li><strong>Menu tidak muncul:</strong> cek file config yang benar dan struktur array-nya.</li>
+                                <li><strong>Parent tidak auto-open:</strong> cek pola routeIs pada child route aktif.</li>
+                                <li><strong>Judul tidak tertranslate:</strong> cek normalisasi key <code>menu.*</code> di file lang.</li>
+                                <li><strong>Icon kosong:</strong> cek class icon dan nilai <code>paths</code>.</li>
                             </ul>
                         </div>
                     </div>

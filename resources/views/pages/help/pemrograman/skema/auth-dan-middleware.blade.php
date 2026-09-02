@@ -10,10 +10,10 @@
             Help
         @endslot
         @slot('li_2')
-            {{ __('help.skema_pemrograman') }}
+            Skema Pemrograman
         @endslot
         @slot('li_3')
-            {{ __('help.skema') }}
+            Skema
         @endslot
     @endcomponent
 @endsection
@@ -24,29 +24,29 @@
             <div class="schema-shell">
                 <div class="schema-hero">
                     <span class="schema-pill">Auth Blueprint</span>
-                    <h2 class="fw-bold">{{ __('help.skema_auth_dan_middleware') }}</h2>
+                    <h2 class="fw-bold">Skema Auth dan Middleware</h2>
                     <p class="schema-lead">
-                        {{ __('help.pages.skema.auth-dan-middleware.lead') }}
+                        Pondasi keamanan proyek: route auth bawaan Laravel + proteksi middleware + middleware custom locale.
                     </p>
                 </div>
 
                 <div class="schema-grid">
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.auth-dan-middleware.heading_1') !!}</h4>
+                            <h4>Flow Login dan Akses Halaman</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.auth-dan-middleware.step_8') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.auth-dan-middleware.step_1') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.auth-dan-middleware.step_2') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.auth-dan-middleware.step_3') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.auth-dan-middleware.step_4') !!}</div>
+                                <div class="schema-step">1. Guest akses <code>/login</code> (dari <code>routes/auth.php</code>).</div>
+                                <div class="schema-step">2. Submit login ke <code>POST /login</code>.</div>
+                                <div class="schema-step">3. Jika sukses, session auth aktif dan user diarahkan ke halaman aplikasi.</div>
+                                <div class="schema-step">4. Route protected (dashboard/menu pages) hanya bisa dibuka jika lolos middleware <code>auth</code>.</div>
+                                <div class="schema-step">5. Route tertentu juga pakai <code>verified</code> untuk email verification.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.auth-dan-middleware.heading_2') !!}</h4>
+                            <h4>Peta Route Auth Penting</h4>
                             <pre class="schema-code"><code>guest middleware:
 - GET  /login
 - POST /login
@@ -60,27 +60,27 @@ auth middleware:
 - PUT  /password
 - POST /logout</code></pre>
                             <div class="schema-meta">
-                                <span class="schema-chip">{!! __('help.pages.skema.auth-dan-middleware.chip_1') !!}</span>
+                                <span class="schema-chip">source: routes/auth.php</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.auth-dan-middleware.heading_3') !!}</h4>
+                            <h4>Proteksi Route di Proyek</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.auth-dan-middleware.item_5') !!}</li>
-                                <li>{!! __('help.pages.skema.auth-dan-middleware.item_6') !!}</li>
-                                <li>{!! __('help.pages.skema.auth-dan-middleware.item_7') !!}</li>
-                                <li>{!! __('help.pages.skema.auth-dan-middleware.item_1') !!}</li>
+                                <li><code>/dashboard</code> memakai middleware <code>auth</code> + <code>verified</code>.</li>
+                                <li>Semua route generator di <code>routes/menu.php</code> dibungkus middleware <code>auth</code>.</li>
+                                <li>Profile management di <code>routes/web.php</code> juga ada dalam group <code>auth</code>.</li>
+                                <li>Fallback 404 ditempatkan di luar auth agar respons error tetap konsisten.</li>
                             </ul>
-                            <div class="schema-note mt-4">{!! __('help.pages.skema.auth-dan-middleware.note_1') !!}</div>
+                            <div class="schema-note mt-4">Dampak: user belum login tidak bisa akses halaman konten internal di bawah <code>resources/views/pages</code>.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.auth-dan-middleware.heading_4') !!}</h4>
+                            <h4>Middleware Custom: SetLocale</h4>
                             <pre class="schema-code"><code>// bootstrap/app.php
 $middleware->web(append: [
   \App\Http\Middleware\SetLocale::class,
@@ -90,32 +90,32 @@ $middleware->web(append: [
 if (Session::has('locale')) {
   App::setLocale(Session::get('locale'));
 }</code></pre>
-                            <div class="schema-warn mt-4">{!! __('help.pages.skema.auth-dan-middleware.warn_1') !!}</div>
+                            <div class="schema-warn mt-4">Middleware ini berjalan di group <code>web</code>, jadi seluruh request web otomatis mengikuti locale session.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.auth-dan-middleware.heading_5') !!}</h4>
+                            <h4>Checklist Security Minimum</h4>
                             <ol class="schema-list">
-                                <li>{!! __('help.pages.skema.auth-dan-middleware.item_2') !!}</li>
-                                <li>{!! __('help.pages.skema.auth-dan-middleware.item_8') !!}</li>
-                                <li>{!! __('help.pages.skema.auth-dan-middleware.item_9') !!}</li>
-                                <li>{!! __('help.pages.skema.auth-dan-middleware.item_3') !!}</li>
-                                <li>{!! __('help.pages.skema.auth-dan-middleware.item_4') !!}</li>
+                                <li>Pastikan route sensitif selalu berada di middleware <code>auth</code>.</li>
+                                <li>Untuk area kritikal, tambahkan <code>verified</code> atau middleware tambahan lain sesuai kebutuhan.</li>
+                                <li>Gunakan <code>signed</code> dan <code>throttle</code> seperti pada route verifikasi email.</li>
+                                <li>Validasi redirect dan guard flow saat login/logout agar tidak ada open redirect.</li>
+                                <li>Uji skenario guest vs authenticated untuk setiap halaman blueprint baru.</li>
                             </ol>
                             <div class="schema-meta">
-                                <span class="schema-chip">{!! __('help.pages.skema.auth-dan-middleware.chip_2') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.auth-dan-middleware.chip_3') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.auth-dan-middleware.chip_4') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.auth-dan-middleware.chip_5') !!}</span>
+                                <span class="schema-chip">auth</span>
+                                <span class="schema-chip">verified</span>
+                                <span class="schema-chip">signed</span>
+                                <span class="schema-chip">throttle</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.auth-dan-middleware.heading_6') !!}</h4>
+                            <h4>Matrix Middleware (Praktis)</h4>
                             <pre class="schema-code"><code>Public:
 - landing, login, register, forgot password
 
@@ -132,12 +132,12 @@ Signed/Throttle:
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.auth-dan-middleware.heading_7') !!}</h4>
+                            <h4>Standar Tim (Strict) Auth</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.auth-dan-middleware.step_9') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.auth-dan-middleware.step_5') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.auth-dan-middleware.step_6') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.auth-dan-middleware.step_7') !!}</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> route baru harus diklasifikasikan jelas: public vs auth vs auth+verified.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> endpoint sensitif harus punya throttle jika rawan abuse.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> tidak boleh expose detail autentikasi internal pada pesan error user.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> setiap perubahan auth flow harus diuji guest, user valid, dan user tanpa verifikasi.</div>
                             </div>
                         </div>
                     </div>

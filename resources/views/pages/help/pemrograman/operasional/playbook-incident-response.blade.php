@@ -10,10 +10,10 @@
             Help
         @endslot
         @slot('li_2')
-            {{ __('help.skema_pemrograman') }}
+            Skema Pemrograman
         @endslot
         @slot('li_3')
-            {{ __('help.operasional') }}
+            Operasional
         @endslot
     @endcomponent
 @endsection
@@ -24,16 +24,16 @@
             <div class="schema-shell">
                 <div class="schema-hero">
                     <span class="schema-pill">Incident Playbook</span>
-                    <h2 class="fw-bold">{{ __('help.playbook_incident_response') }}</h2>
+                    <h2 class="fw-bold">Playbook Incident Response</h2>
                     <p class="schema-lead">
-                        {{ __('help.pages.operasional.playbook-incident-response.lead') }}
+                        Panduan operasional siapa melakukan apa pada 15 menit pertama incident, agar respons konsisten dan cepat.
                     </p>
                 </div>
 
                 <div class="schema-grid">
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.playbook-incident-response.heading_1') !!}</h4>
+                            <h4>Peran Inti Saat Incident</h4>
                             <pre class="schema-code"><code>IC (Incident Commander):
 - Memimpin keputusan, prioritas, dan status akhir severity.
 
@@ -48,37 +48,37 @@ Scribe:
 
 Support/QA:
 - Validasi dampak user, verifikasi fix, dan update kanal support.</code></pre>
-                            <div class="schema-note mt-4">{!! __('help.pages.operasional.playbook-incident-response.note_1') !!}</div>
+                            <div class="schema-note mt-4">Satu orang boleh memegang lebih dari satu peran pada tim kecil, tetapi IC sebaiknya tidak merangkap eksekutor utama.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.playbook-incident-response.heading_2') !!}</h4>
+                            <h4>Aturan Umum 0-15 Menit</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.operasional.playbook-incident-response.step_8') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.playbook-incident-response.step_1') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.playbook-incident-response.step_2') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.playbook-incident-response.step_3') !!}</div>
+                                <div class="schema-step">0-3 menit: triage awal, tentukan severity sementara, bentuk channel war-room.</div>
+                                <div class="schema-step">3-7 menit: kumpulkan evidence minimum (error rate, endpoint terdampak, rentang user).</div>
+                                <div class="schema-step">7-12 menit: jalankan mitigasi tercepat yang aman (rollback/disable feature/degrade mode).</div>
+                                <div class="schema-step">12-15 menit: kirim status update resmi pertama ke stakeholder.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.playbook-incident-response.heading_3') !!}</h4>
+                            <h4>Definition of Done (Menit 15)</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_1') !!}</li>
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_2') !!}</li>
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_3') !!}</li>
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_4') !!}</li>
+                                <li>Severity disepakati dan owner jelas.</li>
+                                <li>Ada mitigasi awal atau rencana mitigasi terikat waktu.</li>
+                                <li>Status update pertama sudah terkirim.</li>
+                                <li>Timeline/log evidence mulai terdokumentasi.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.playbook-incident-response.heading_4') !!}</h4>
+                            <h4>Sev-1 (Critical) - Aksi 0-15 Menit</h4>
                             <pre class="schema-code"><code>0-5 menit
 IC:
 - Deklarasi Sev-1, lock prioritas, tunjuk IC/Ops/Comms/Scribe.
@@ -113,7 +113,7 @@ Scribe:
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.playbook-incident-response.heading_5') !!}</h4>
+                            <h4>Sev-2 (High) - Aksi 0-15 Menit</h4>
                             <pre class="schema-code"><code>0-5 menit
 IC:
 - Deklarasi Sev-2 dan tetapkan owner teknis.
@@ -140,7 +140,7 @@ Comms:
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.playbook-incident-response.heading_6') !!}</h4>
+                            <h4>Sev-3/Sev-4 - Aksi 0-15 Menit</h4>
                             <pre class="schema-code"><code>Sev-3 (Medium)
 0-15 menit:
 - Triage terstruktur, assign owner, buat ticket prioritas.
@@ -157,42 +157,42 @@ Sev-4 (Low)
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.playbook-incident-response.heading_7') !!}</h4>
+                            <h4>Trigger Eskalasi Otomatis</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_5') !!}</li>
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_6') !!}</li>
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_7') !!}</li>
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_8') !!}</li>
+                                <li>Persentase error 5xx melewati threshold kritis.</li>
+                                <li>Fitur transaksi inti tidak bisa dipakai user.</li>
+                                <li>Tidak ada mitigasi efektif dalam 15 menit pertama.</li>
+                                <li>Ada dampak finansial/regulatori atau risiko data integrity.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.playbook-incident-response.heading_8') !!}</h4>
+                            <h4>Kanal Komunikasi Standar</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_9') !!}</li>
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_10') !!}</li>
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_11') !!}</li>
-                                <li>{!! __('help.pages.operasional.playbook-incident-response.item_12') !!}</li>
+                                <li><strong>War-room:</strong> koordinasi teknis real-time.</li>
+                                <li><strong>Incident channel:</strong> update periodik lintas tim.</li>
+                                <li><strong>Status page/internal broadcast:</strong> info resmi ke user/stakeholder.</li>
+                                <li><strong>Ticket incident:</strong> sumber kebenaran tunggal (owner, severity, timeline).</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.playbook-incident-response.heading_9') !!}</h4>
+                            <h4>Checklist Operasional Menit 0-15</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.operasional.playbook-incident-response.step_9') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.playbook-incident-response.step_4') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.playbook-incident-response.step_5') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.playbook-incident-response.step_6') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.playbook-incident-response.step_7') !!}</div>
+                                <div class="schema-step">1. Tentukan severity sementara dalam 3 menit pertama.</div>
+                                <div class="schema-step">2. Tetapkan 4 peran minimum: IC, Ops, Comms, Scribe.</div>
+                                <div class="schema-step">3. Jalankan mitigasi tercepat yang reversible.</div>
+                                <div class="schema-step">4. Kirim update #1 maksimal menit ke-15.</div>
+                                <div class="schema-step">5. Simpan evidence untuk RCA/postmortem sejak awal.</div>
                             </div>
                             <div class="schema-meta mt-3">
-                                <span class="schema-chip">{!! __('help.pages.operasional.playbook-incident-response.chip_1') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.operasional.playbook-incident-response.chip_2') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.operasional.playbook-incident-response.chip_3') !!}</span>
+                                <span class="schema-chip">first 15 minutes</span>
+                                <span class="schema-chip">clear ownership</span>
+                                <span class="schema-chip">fast mitigation</span>
                             </div>
                         </div>
                     </div>

@@ -10,10 +10,10 @@
             Help
         @endslot
         @slot('li_2')
-            {{ __('help.skema_pemrograman') }}
+            Skema Pemrograman
         @endslot
         @slot('li_3')
-            {{ __('help.skema') }}
+            Skema
         @endslot
     @endcomponent
 @endsection
@@ -24,45 +24,45 @@
             <div class="schema-shell">
                 <div class="schema-hero">
                     <span class="schema-pill">Blade Architecture</span>
-                    <h2 class="fw-bold">{{ __('help.skema_komponen_blade_and_partial') }}</h2>
+                    <h2 class="fw-bold">Skema Komponen Blade & Partial</h2>
                     <p class="schema-lead">
-                        {{ __('help.pages.skema.komponen-blade-partial.lead') }}
+                        Konvensi include/extend/component, serta panduan kapan menggunakan partial vs component.
                     </p>
                 </div>
 
                 <div class="schema-grid">
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_1') !!}</h4>
+                            <h4>Pola Utama Blade</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_1') !!}</li>
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_2') !!}</li>
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_3') !!}</li>
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_4') !!}</li>
+                                <li><code>@@extends</code> untuk pewarisan layout utama.</li>
+                                <li><code>@@include</code> untuk potongan markup statis/sederhana.</li>
+                                <li><code>@@component</code> untuk unit UI yang punya slot/parameter.</li>
+                                <li><code>&lt;x-...&gt;</code> untuk reusable component berbasis class/anonymous.</li>
                             </ul>
                             <div class="schema-meta mt-3">
-                                <span class="schema-chip">{!! __('help.pages.skema.komponen-blade-partial.chip_1') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.komponen-blade-partial.chip_2') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.komponen-blade-partial.chip_3') !!}</span>
+                                <span class="schema-chip">inheritance</span>
+                                <span class="schema-chip">reuse</span>
+                                <span class="schema-chip">maintainable views</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_2') !!}</h4>
+                            <h4>Decision Matrix: Partial vs Component</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_13') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_1') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_2') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_3') !!}</div>
+                                <div class="schema-step">Pakai <code>partial</code> jika tampilannya sederhana, context sudah tersedia dari parent, dan tidak perlu kontrak API.</div>
+                                <div class="schema-step">Pakai <code>component</code> jika butuh <code>props</code>, <code>slot</code>, validasi input, dan dipakai lintas domain halaman.</div>
+                                <div class="schema-step">Jika mulai banyak parameter optional di partial, refactor jadi component.</div>
+                                <div class="schema-step">Jika component hanya dipakai sekali dan tanpa variasi, pertimbangkan turunkan jadi partial.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_3') !!}</h4>
+                            <h4>Skema Folder yang Direkomendasikan</h4>
                             <pre class="schema-code"><code>resources/views/
 ├─ layouts/
 │  ├─ index.blade.php
@@ -79,28 +79,28 @@
 │  └─ forms/
 └─ pages/
    └─ ...</code></pre>
-                            <div class="schema-note mt-4">{!! __('help.pages.skema.komponen-blade-partial.note_1') !!}</div>
+                            <div class="schema-note mt-4">Bedakan <code>layouts/partials</code> (fragmen layout global) dengan <code>components</code> (unit reusable berkontrak API/props).</div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_4') !!}</h4>
+                            <h4>Contoh: Partial Sederhana</h4>
                             <pre class="schema-code"><code>// parent view
 @@include('layouts.partials._toolbar', [
   'li_1' => 'Help',
   'li_2' => 'Skema Komponen Blade & Partial'
 ])</code></pre>
                             <ul class="schema-list mt-4">
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_5') !!}</li>
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_6') !!}</li>
+                                <li>Cocok untuk blok statis berulang (toolbar, breadcrumb kecil, hint text).</li>
+                                <li>Jangan menaruh business logic berat di partial.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_5') !!}</h4>
+                            <h4>Contoh: Component Reusable</h4>
                             <pre class="schema-code"><code>// resources/views/components/ui/info-card.blade.php
 @@props(['title', 'icon' => 'ki-abstract-26'])
 
@@ -121,64 +121,64 @@
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_6') !!}</h4>
+                            <h4>Konvensi Naming</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_7') !!}</li>
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_8') !!}</li>
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_9') !!}</li>
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_10') !!}</li>
+                                <li>Partial: awali underscore untuk internal-only, misal <code>_toolbar.blade.php</code>.</li>
+                                <li>Component: nama domain + fungsi, misal <code>ui/info-card.blade.php</code>.</li>
+                                <li>Nama props gunakan bahasa domain (<code>title</code>, <code>badge</code>, <code>isActive</code>), hindari nama generik ambigu.</li>
+                                <li>Jika ada translasi, kirim text final dari caller atau kirim key secara konsisten.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_7') !!}</h4>
+                            <h4>Anti-Pattern yang Perlu Dihindari</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_11') !!}</li>
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_12') !!}</li>
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_13') !!}</li>
-                                <li>{!! __('help.pages.skema.komponen-blade-partial.item_14') !!}</li>
+                                <li>Component “god object” dengan terlalu banyak props optional.</li>
+                                <li>Partial yang mengakses data query langsung.</li>
+                                <li>Markup duplikat lintas halaman karena enggan ekstraksi.</li>
+                                <li>Pencampuran concern: style/script spesifik halaman dimasukkan ke partial global.</li>
                             </ul>
-                            <div class="schema-warn mt-4">{!! __('help.pages.skema.komponen-blade-partial.warn_1') !!}</div>
+                            <div class="schema-warn mt-4">Jika satu partial dipakai >3 lokasi dengan variasi berbeda, itu sinyal kuat untuk migrasi ke component.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_8') !!}</h4>
+                            <h4>Checklist Saat Menambah UI Baru</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_14') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_4') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_5') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_6') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_7') !!}</div>
+                                <div class="schema-step">1. Cek dulu apakah sudah ada partial/component serupa yang bisa dipakai ulang.</div>
+                                <div class="schema-step">2. Tentukan tipe: partial atau component berdasarkan decision matrix.</div>
+                                <div class="schema-step">3. Definisikan kontrak input jelas (props/slot/default value).</div>
+                                <div class="schema-step">4. Pastikan kompatibel mobile dan sesuai utility class Metronic.</div>
+                                <div class="schema-step">5. Review duplikasi markup dan konsistensi translasi sebelum merge.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_9') !!}</h4>
+                            <h4>Standar Tim (Strict)</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_15') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_8') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_9') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_10') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_11') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.komponen-blade-partial.step_12') !!}</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> component reusable harus punya kontrak <code>@@props</code> yang jelas, default value aman, dan nama props berbasis domain.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> maksimal <code>7 props</code> per component. Jika lebih, pecah jadi sub-component atau gunakan data object terstruktur.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> maksimal <code>2 named slots</code> + default slot. Lebih dari itu biasanya menandakan component terlalu kompleks.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> partial tidak boleh melakukan query data atau logic bisnis.</div>
+                                <div class="schema-step"><strong>Rule opsional:</strong> gunakan class-based component jika butuh normalisasi data/formatting sebelum render.</div>
+                                <div class="schema-step"><strong>Rule opsional:</strong> tambahkan docblock singkat di atas component untuk menjelaskan props penting dan contoh penggunaan.</div>
                             </div>
                             <div class="schema-meta mt-4">
-                                <span class="schema-chip">{!! __('help.pages.skema.komponen-blade-partial.chip_4') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.komponen-blade-partial.chip_5') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.komponen-blade-partial.chip_6') !!}</span>
+                                <span class="schema-chip">max 7 props</span>
+                                <span class="schema-chip">max 2 named slots</span>
+                                <span class="schema-chip">no query in partial</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_10') !!}</h4>
+                            <h4>Boilerplate Component Standar</h4>
                             <pre class="schema-code"><code>// resources/views/components/ui/stat-card.blade.php
 @@props([
   'title',
@@ -214,7 +214,7 @@
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.komponen-blade-partial.heading_11') !!}</h4>
+                            <h4>Boilerplate Usage</h4>
                             <pre class="schema-code"><code>&lt;x-ui.stat-card
   title="Total Orders"
   value="1,248"
@@ -227,7 +227,7 @@
     Lihat Detail
   &lt;/a&gt;
 &lt;/x-ui.stat-card&gt;</code></pre>
-                            <div class="schema-note mt-4">{!! __('help.pages.skema.komponen-blade-partial.note_2') !!}</div>
+                            <div class="schema-note mt-4">Jika kebutuhan tampilan berbeda jauh, buat varian component baru. Hindari menambah props berlebihan hanya untuk menjaga satu component tetap dipakai semua kasus.</div>
                         </div>
                     </div>
                 </div>

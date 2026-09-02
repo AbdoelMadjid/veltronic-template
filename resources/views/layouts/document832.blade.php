@@ -40,6 +40,7 @@ License: For each use you must have a valid license purchased only from above li
         <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
         <link href="{{ \App\Support\ThemeAsset::url('plugins/global/plugins-docs.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
         <link href="{{ \App\Support\ThemeAsset::url('css/style-docs.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/css/custom-icon-style.css') }}" rel="stylesheet" type="text/css" />
         <!--end::Global Stylesheets Bundle-->
 
         <!-- Google tag (gtag.js) -->
@@ -90,6 +91,8 @@ License: For each use you must have a valid license purchased only from above li
             }
         </script>
         <!--end::Theme mode setup on page load-->
+        <!--layout-partial:partials/icon-style/_init.html-->
+        @include('partials.icon-style._init')
 
         <!--begin::Main-->
         <div class="d-flex flex-column flex-root">
@@ -156,6 +159,7 @@ License: For each use you must have a valid license purchased only from above li
         <script src="{{ \App\Support\ThemeAsset::url('js/scripts.bundle.js', $theme_asset_pack ?? null) }}"></script>
         <script src="{{ \App\Support\ThemeAsset::url('js/custom/documentation/documentation.js', $theme_asset_pack ?? null) }}"></script>
         <script src="{{ \App\Support\ThemeAsset::url('js/custom/documentation/search.js', $theme_asset_pack ?? null) }}"></script>
+        <script src="{{ asset('assets/js/custom/icon-style.js') }}"></script>
         <!--end::Global Javascript Bundle-->
 
         @yield('scripts')

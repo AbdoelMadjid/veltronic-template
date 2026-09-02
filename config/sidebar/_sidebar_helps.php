@@ -76,6 +76,10 @@ return [
                             'title' => 'Skema Pergantian Frontpage',
                             'route' => 'help.pemrograman.skema.pergantian-frontpage',
                         ],
+                        [
+                            'title' => 'Skema Pergantian Icon',
+                            'route' => 'help.pemrograman.skema.pergantian-icon',
+                        ],
                     ],
                 ],
                 [

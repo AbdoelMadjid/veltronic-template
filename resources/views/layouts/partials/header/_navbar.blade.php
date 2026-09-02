@@ -84,6 +84,9 @@
         @include('partials.theme-mode._main')
     </div>
     <!--end::Theme mode-->
+    <!--begin::Icon style-->
+    @include('partials.icon-style._main')
+    <!--end::Icon style-->
     <!--begin::Language-->
     <div class="app-navbar-item ms-1 ms-md-4">
         <!--begin::Menu wrapper-->

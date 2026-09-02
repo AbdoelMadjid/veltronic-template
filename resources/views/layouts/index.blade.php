@@ -72,6 +72,7 @@ License: For each use you must have a valid license purchased only from above li
         rel="stylesheet" type="text/css" />
     <link href="{{ \App\Support\ThemeAsset::url('css/style.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet"
         type="text/css" />
+    <link href="{{ asset('assets/css/custom-icon-style.css') }}" rel="stylesheet" type="text/css" />
     <style>
         @media (max-width: 991.98px) {
             #kt_app_body[data-kt-app-toolbar-fixed-mobile="false"] #kt_app_toolbar {
@@ -163,6 +164,8 @@ License: For each use you must have a valid license purchased only from above li
 
     <!--layout-partial:partials/theme-mode/_init.html-->
     @include('partials.theme-mode._init')
+    <!--layout-partial:partials/icon-style/_init.html-->
+    @include('partials.icon-style._init')
     <!--layout-partial:layout/_default.html-->
     @include('layouts._default')
     <!--layout-partial:partials/_scrolltop.html-->
@@ -183,6 +186,7 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ \App\Support\ThemeAsset::url('plugins/global/plugins.bundle.js', $theme_asset_pack ?? null) }}">
     </script>
     <script src="{{ \App\Support\ThemeAsset::url('js/scripts.bundle.js', $theme_asset_pack ?? null) }}"></script>
+    <script src="{{ asset('assets/js/custom/icon-style.js') }}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
     {{-- <script src="{{ $theme_asset_base }}/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>

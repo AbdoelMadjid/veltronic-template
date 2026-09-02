@@ -63,6 +63,11 @@
         @include('partials.theme-mode._main')
     </div>
     <!--end::Theme mode-->
+    <!--begin::Icon style-->
+    <div class="d-flex align-items-center ms-1 ms-lg-3">
+        @include('partials.icon-style._main')
+    </div>
+    <!--end::Icon style-->
     <!--begin::Language-->
     <div class="d-flex align-items-center ms-1 ms-lg-3">
         <!--begin::Menu wrapper-->

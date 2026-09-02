@@ -1,0 +1,53 @@
+/**
+ * Custom Icon Style Switcher CSS
+ * Veltronic / Metronic Theme
+ */
+
+/* Toggle Button Icon Preview Switching */
+[data-kt-icon-style="duotone"] [data-kt-icon-preview-style="duotone"] {
+    display: inline-flex !important;
+}
+[data-kt-icon-style="duotone"] [data-kt-icon-preview-style="solid"],
+[data-kt-icon-style="duotone"] [data-kt-icon-preview-style="outline"] {
+    display: none !important;
+}
+
+[data-kt-icon-style="solid"] [data-kt-icon-preview-style="solid"] {
+    display: inline-flex !important;
+}
+[data-kt-icon-style="solid"] [data-kt-icon-preview-style="duotone"],
+[data-kt-icon-style="solid"] [data-kt-icon-preview-style="outline"] {
+    display: none !important;
+}
+
+[data-kt-icon-style="outline"] [data-kt-icon-preview-style="outline"] {
+    display: inline-flex !important;
+}
+[data-kt-icon-style="outline"] [data-kt-icon-preview-style="duotone"],
+[data-kt-icon-style="outline"] [data-kt-icon-preview-style="solid"] {
+    display: none !important;
+}
+
+/* Hide path spans when converted to Solid or Outline style */
+.ki-solid:not([data-kt-icon-style-ignore]) > [class^="path"],
+.ki-outline:not([data-kt-icon-style-ignore]) > [class^="path"] {
+    display: none !important;
+}
+
+/* Dropdown Menu Item Active State */
+[data-kt-element="icon-style-menu"] .menu-link.active {
+    color: var(--bs-primary) !important;
+    background-color: var(--bs-light-primary) !important;
+}
+
+[data-kt-element="icon-style-menu"] .menu-link.active .menu-icon i {
+    color: var(--bs-primary) !important;
+}
+
+/* Smooth transition for icon swap */
+[data-kt-element="icon-style-toggle"] .icon-style-preview i {
+    transition: transform 0.2s ease;
+}
+[data-kt-element="icon-style-toggle"]:hover .icon-style-preview i {
+    transform: scale(1.1);
+}

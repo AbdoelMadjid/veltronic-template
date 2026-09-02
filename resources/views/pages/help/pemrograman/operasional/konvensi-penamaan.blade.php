@@ -10,10 +10,10 @@
             Help
         @endslot
         @slot('li_2')
-            {{ __('help.skema_pemrograman') }}
+            Skema Pemrograman
         @endslot
         @slot('li_3')
-            {{ __('help.operasional') }}
+            Operasional
         @endslot
     @endcomponent
 @endsection
@@ -24,27 +24,27 @@
             <div class="schema-shell">
                 <div class="schema-hero">
                     <span class="schema-pill">Naming Convention</span>
-                    <h2 class="fw-bold">{{ __('help.konvensi_penamaan') }}</h2>
+                    <h2 class="fw-bold">Konvensi Penamaan</h2>
                     <p class="schema-lead">
-                        {{ __('help.pages.operasional.konvensi-penamaan.lead') }}
+                        Standar penamaan agar route otomatis, translasi menu, dan helper title berjalan konsisten di semua halaman.
                     </p>
                 </div>
 
                 <div class="schema-grid">
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.konvensi-penamaan.heading_1') !!}</h4>
+                            <h4>Konvensi Nama File View</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.konvensi-penamaan.item_1') !!}</li>
-                                <li>{!! __('help.pages.operasional.konvensi-penamaan.item_2') !!}</li>
-                                <li>{!! __('help.pages.operasional.konvensi-penamaan.item_3') !!}</li>
+                                <li>Gunakan huruf kecil + pemisah <code>-</code> untuk nama file Blade.</li>
+                                <li>Contoh: <code>panduan-tambah-halaman.blade.php</code>.</li>
+                                <li>Struktur folder menentukan route URL dan route name.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.konvensi-penamaan.heading_2') !!}</h4>
+                            <h4>Konvensi Route Name</h4>
                             <pre class="schema-code"><code>resources/views/pages/help/pemrograman/operasional/konvensi-penamaan.blade.php
 -> route name: help.pemrograman.operasional.konvensi-penamaan
 -> URL: /help/pemrograman/operasional/konvensi-penamaan</code></pre>
@@ -53,34 +53,34 @@
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.konvensi-penamaan.heading_3') !!}</h4>
+                            <h4>Konvensi Key Translasi Menu</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.konvensi-penamaan.item_4') !!}</li>
-                                <li>{!! __('help.pages.operasional.konvensi-penamaan.item_5') !!}</li>
-                                <li>{!! __('help.pages.operasional.konvensi-penamaan.item_6') !!}</li>
+                                <li>Sumber text menu berasal dari <code>title</code> di config.</li>
+                                <li>Normalisasi key: spasi -> underscore, <code>&</code> -> <code>and</code>.</li>
+                                <li>Contoh: <code>Skema Error Handling & Fallback</code> -> <code>menu.skema_error_handling_and_fallback</code>.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.konvensi-penamaan.heading_4') !!}</h4>
+                            <h4>Aturan Wajib EN + ID</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.konvensi-penamaan.item_7') !!}</li>
-                                <li>{!! __('help.pages.operasional.konvensi-penamaan.item_8') !!}</li>
-                                <li>{!! __('help.pages.operasional.konvensi-penamaan.item_9') !!}</li>
+                                <li>Setiap title user-facing baru wajib punya key pada <code>lang/en/menu.php</code> dan <code>lang/id/menu.php</code>.</li>
+                                <li>Hindari ketergantungan fallback title mentah untuk menu utama.</li>
+                                <li>Lakukan review key agar tidak duplikat secara semantik.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.konvensi-penamaan.heading_5') !!}</h4>
+                            <h4>Checklist Naming Sebelum Merge</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.operasional.konvensi-penamaan.step_4') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.konvensi-penamaan.step_1') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.konvensi-penamaan.step_2') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.konvensi-penamaan.step_3') !!}</div>
+                                <div class="schema-step">Nama file Blade konsisten (kebab-case, deskriptif).</div>
+                                <div class="schema-step">Route name terbentuk sesuai ekspektasi (cek <code>route:list</code>).</div>
+                                <div class="schema-step">Title config map ke key translasi yang benar.</div>
+                                <div class="schema-step">Key EN dan ID tersedia dan tidak typo.</div>
                             </div>
                         </div>
                     </div>

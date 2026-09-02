@@ -10,10 +10,10 @@
             Help
         @endslot
         @slot('li_2')
-            {{ __('help.skema_pemrograman') }}
+            Skema Pemrograman
         @endslot
         @slot('li_3')
-            {{ __('help.operasional') }}
+            Operasional
         @endslot
     @endcomponent
 @endsection
@@ -24,29 +24,29 @@
             <div class="schema-shell">
                 <div class="schema-hero">
                     <span class="schema-pill">Developer Workflow</span>
-                    <h2 class="fw-bold">{{ __('help.panduan_tambah_halaman') }}</h2>
+                    <h2 class="fw-bold">Panduan Tambah Halaman</h2>
                     <p class="schema-lead">
-                        {{ __('help.pages.operasional.panduan-tambah-halaman.lead') }}
+                        Alur standar menambahkan halaman baru pada proyek ini: dari file Blade, auto route, menu config, translasi, sampai validasi akhir.
                     </p>
                 </div>
 
                 <div class="schema-grid">
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.panduan-tambah-halaman.heading_1') !!}</h4>
+                            <h4>Flow End-to-End</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.operasional.panduan-tambah-halaman.step_5') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.panduan-tambah-halaman.step_1') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.panduan-tambah-halaman.step_2') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.panduan-tambah-halaman.step_3') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.panduan-tambah-halaman.step_4') !!}</div>
+                                <div class="schema-step">1. Buat file baru di <code>resources/views/pages/... .blade.php</code>.</div>
+                                <div class="schema-step">2. Route otomatis terbentuk via <code>routes/menu.php</code>.</div>
+                                <div class="schema-step">3. Tambahkan item menu di <code>config/sidebar</code> atau <code>config/header</code>.</div>
+                                <div class="schema-step">4. Tambah key translasi di <code>lang/en/menu.php</code> dan <code>lang/id/menu.php</code>.</div>
+                                <div class="schema-step">5. Uji akses URL, active state menu, dan page title.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.panduan-tambah-halaman.heading_2') !!}</h4>
+                            <h4>Contoh Struktur File</h4>
                             <pre class="schema-code"><code>resources/views/pages/help/pemrograman/operasional/
   panduan-foo.blade.php</code></pre>
                             <pre class="schema-code mt-4"><code>// route name otomatis
@@ -54,45 +54,45 @@ help.pemrograman.operasional.panduan-foo
 
 // URL otomatis
 /help/pemrograman/operasional/panduan-foo</code></pre>
-                            <div class="schema-note mt-4">{!! __('help.pages.operasional.panduan-tambah-halaman.note_1') !!}</div>
+                            <div class="schema-note mt-4">Pada proyek ini, route halaman `pages` tidak ditulis satu per satu, tetapi di-scan otomatis.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.panduan-tambah-halaman.heading_3') !!}</h4>
+                            <h4>Template Minimal Halaman</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.panduan-tambah-halaman.item_1') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-halaman.item_2') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-halaman.item_3') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-halaman.item_4') !!}</li>
+                                <li><code>@@extends('layouts.index')</code></li>
+                                <li><code>@@section('title', ...)</code></li>
+                                <li><code>@@section('toolbar')</code></li>
+                                <li><code>@@section('content')</code></li>
                             </ul>
                             <div class="schema-meta">
-                                <span class="schema-chip">{!! __('help.pages.operasional.panduan-tambah-halaman.chip_1') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.operasional.panduan-tambah-halaman.chip_2') !!}</span>
+                                <span class="schema-chip">konsisten layout</span>
+                                <span class="schema-chip">mudah maintain</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.panduan-tambah-halaman.heading_4') !!}</h4>
+                            <h4>Checklist Validasi</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.panduan-tambah-halaman.item_5') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-halaman.item_6') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-halaman.item_7') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-halaman.item_8') !!}</li>
+                                <li>Halaman dapat diakses saat login (middleware <code>auth</code> aktif).</li>
+                                <li>Menu mengarah ke route yang benar.</li>
+                                <li>Judul halaman tampil sesuai translasi.</li>
+                                <li>Tampilan desktop dan mobile tetap stabil.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.panduan-tambah-halaman.heading_5') !!}</h4>
+                            <h4>Perintah Verifikasi Cepat</h4>
                             <pre class="schema-code"><code>php artisan route:list --name=help.pemrograman
 php artisan optimize:clear
 composer test</code></pre>
-                            <div class="schema-warn mt-4">{!! __('help.pages.operasional.panduan-tambah-halaman.warn_1') !!}</div>
+                            <div class="schema-warn mt-4">Jika route baru tidak terlihat, pastikan nama file Blade valid dan tidak ada typo folder/path.</div>
                         </div>
                     </div>
                 </div>

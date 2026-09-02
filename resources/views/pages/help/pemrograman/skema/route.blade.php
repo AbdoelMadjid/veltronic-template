@@ -10,10 +10,10 @@
             Help
         @endslot
         @slot('li_2')
-            {{ __('help.skema_pemrograman') }}
+            Skema Pemrograman
         @endslot
         @slot('li_3')
-            {{ __('help.skema') }}
+            Skema
         @endslot
     @endcomponent
 @endsection
@@ -24,30 +24,30 @@
             <div class="schema-shell">
                 <div class="schema-hero">
                     <span class="schema-pill">Route Blueprint</span>
-                    <h2 class="fw-bold">{{ __('help.skema_route') }}</h2>
+                    <h2 class="fw-bold">Skema Route</h2>
                     <p class="schema-lead">
-                        {{ __('help.pages.skema.route.lead') }}
+                        Jalur request dari URL ke Blade di proyek ini: manual route + auto route generator.
                     </p>
                 </div>
 
                 <div class="schema-grid">
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.route.heading_1') !!}</h4>
+                            <h4>Flow Request</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.route.step_9') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.route.step_1') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.route.step_2') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.route.step_3') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.route.step_4') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.route.step_5') !!}</div>
+                                <div class="schema-step">1. User request URL.</div>
+                                <div class="schema-step">2. <code>routes/web.php</code> diproses.</div>
+                                <div class="schema-step">3. <code>require routes/menu.php</code> dipanggil.</div>
+                                <div class="schema-step">4. <code>routes/menu.php</code> scan semua <code>resources/views/pages/*.blade.php</code>.</div>
+                                <div class="schema-step">5. Setiap file menjadi route GET + route name otomatis dalam middleware <code>auth</code>.</div>
+                                <div class="schema-step">6. URL tidak match -> fallback error 404.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.route.heading_2') !!}</h4>
+                            <h4>Konversi File ke Route</h4>
                             <pre class="schema-code"><code>// contoh file
 resources/views/pages/help/pemrograman/skema/route.blade.php
 
@@ -58,80 +58,80 @@ route name: help.pemrograman.skema.route
 route url: /help/pemrograman/skema/route
 view: pages.help.pemrograman.skema.route</code></pre>
                             <div class="schema-meta">
-                                <span class="schema-chip">{!! __('help.pages.skema.route.chip_1') !!}</span>
-                                <span class="schema-chip">{!! __('help.pages.skema.route.chip_2') !!}</span>
+                                <span class="schema-chip">Source of truth: folder structure</span>
+                                <span class="schema-chip">Auto route naming</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.route.heading_3') !!}</h4>
+                            <h4>Komponen Tanggung Jawab</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.route.item_1') !!}</li>
-                                <li>{!! __('help.pages.skema.route.item_2') !!}</li>
-                                <li>{!! __('help.pages.skema.route.item_3') !!}</li>
+                                <li><code>routes/web.php</code>: route khusus, auth, profile, language switch, bootstrap route lain.</li>
+                                <li><code>routes/menu.php</code>: generator route berbasis file view.</li>
+                                <li><code>routes/auth.php</code>: route autentikasi bawaan.</li>
                             </ul>
-                            <div class="schema-note mt-4">{!! __('help.pages.skema.route.note_1') !!}</div>
+                            <div class="schema-note mt-4">Semua route generator dibungkus middleware <code>auth</code>, sementara fallback 404 tetap di luar middleware.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.route.heading_4') !!}</h4>
+                            <h4>Quick Add Page</h4>
                             <ol class="schema-list">
-                                <li>{!! __('help.pages.skema.route.item_4') !!}</li>
-                                <li>{!! __('help.pages.skema.route.item_5') !!}</li>
-                                <li>{!! __('help.pages.skema.route.item_6') !!}</li>
+                                <li>Buat file Blade baru di <code>resources/views/pages</code>.</li>
+                                <li>Route name dan URL langsung terbentuk otomatis.</li>
+                                <li>Tambahkan konfigurasi menu jika ingin tampil di navigasi.</li>
                             </ol>
-                            <div class="schema-warn mt-4">{!! __('help.pages.skema.route.warn_1') !!}</div>
+                            <div class="schema-warn mt-4">Hindari nama file duplikat dan gunakan format <code>kebab-case</code> untuk URL yang rapi.</div>
                         </div>
                     </div>
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.route.heading_5') !!}</h4>
+                            <h4>Contoh Pemetaan Aktual</h4>
                             <pre class="schema-code"><code>resources/views/pages/help/pemrograman/skema/route.blade.php
 => URL: /help/pemrograman/skema/route
 => route name: help.pemrograman.skema.route</code></pre>
                             <div class="schema-meta">
-                                <span class="schema-chip">{!! __('help.pages.skema.route.chip_3') !!}</span>
+                                <span class="schema-chip">php artisan route:list --name=help.pemrograman</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.route.heading_6') !!}</h4>
+                            <h4>Prioritas Evaluasi Route</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.route.item_7') !!}</li>
-                                <li>{!! __('help.pages.skema.route.item_8') !!}</li>
-                                <li>{!! __('help.pages.skema.route.item_9') !!}</li>
-                                <li>{!! __('help.pages.skema.route.item_10') !!}</li>
+                                <li>Route yang didefinisikan lebih dulu akan dievaluasi lebih awal.</li>
+                                <li>Route spesifik harus diletakkan sebelum route dinamis yang lebih generik.</li>
+                                <li>Fallback selalu ditempatkan paling akhir.</li>
+                                <li>Pada proyek ini, <code>routes/menu.php</code> dan <code>fallback</code> memegang peran besar untuk halaman konten.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.route.heading_7') !!}</h4>
+                            <h4>Standar Tim (Strict) Route</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.skema.route.step_10') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.route.step_6') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.route.step_7') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.skema.route.step_8') !!}</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> route name harus konsisten dan deskriptif berbasis struktur view.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> route internal halaman aplikasi wajib di-protect middleware <code>auth</code>.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> hindari route closure untuk route yang ingin di-cache.</div>
+                                <div class="schema-step"><strong>Rule wajib:</strong> setiap route baru harus muncul di <code>route:list</code> saat PR review.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.skema.route.heading_8') !!}</h4>
+                            <h4>Troubleshooting Route</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.skema.route.item_11') !!}</li>
-                                <li>{!! __('help.pages.skema.route.item_12') !!}</li>
-                                <li>{!! __('help.pages.skema.route.item_13') !!}</li>
-                                <li>{!! __('help.pages.skema.route.item_14') !!}</li>
+                                <li><strong>Route tidak ditemukan:</strong> cek penamaan file blade dan lokasi di <code>resources/views/pages</code>.</li>
+                                <li><strong>Route ada tapi tidak bisa diakses:</strong> cek middleware auth/verified dan status login.</li>
+                                <li><strong>Perubahan route belum terbaca:</strong> jalankan clear/cache command sesuai environment.</li>
+                                <li><strong>Nama route bentrok:</strong> cek hasil <code>php artisan route:list</code> untuk duplikasi.</li>
                             </ul>
                         </div>
                     </div>

@@ -2646,6 +2646,11 @@
 
                     </div>
                     <!--end::Theme mode-->
+                    <!--begin::Icon style-->
+                    <div class="d-flex align-items-center ms-2">
+                        @include('partials.icon-style._main')
+                    </div>
+                    <!--end::Icon style-->
                 </div>
                 <!--end::Toolbar-->
             </div>

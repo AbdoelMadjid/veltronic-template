@@ -10,10 +10,10 @@
             Help
         @endslot
         @slot('li_2')
-            {{ __('help.skema_pemrograman') }}
+            Skema Pemrograman
         @endslot
         @slot('li_3')
-            {{ __('help.operasional') }}
+            Operasional
         @endslot
     @endcomponent
 @endsection
@@ -24,27 +24,27 @@
             <div class="schema-shell">
                 <div class="schema-hero">
                     <span class="schema-pill">Menu Operation Guide</span>
-                    <h2 class="fw-bold">{{ __('help.panduan_tambah_menu') }}</h2>
+                    <h2 class="fw-bold">Panduan Tambah Menu</h2>
                     <p class="schema-lead">
-                        {{ __('help.pages.operasional.panduan-tambah-menu.lead') }}
+                        Standar menambah item menu agar konsisten di sidebar/header: struktur data, active state, translasi, dan edge case yang perlu diuji.
                     </p>
                 </div>
 
                 <div class="schema-grid">
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.panduan-tambah-menu.heading_1') !!}</h4>
+                            <h4>Pilih Domain Menu</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.panduan-tambah-menu.item_1') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-menu.item_2') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-menu.item_3') !!}</li>
+                                <li><code>config/sidebar/_sidebar_*.php</code> untuk navigasi utama kiri.</li>
+                                <li><code>config/header/_header_*.php</code> untuk menu atas.</li>
+                                <li><code>config/header/_header_help.php</code> untuk quick help menu.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.panduan-tambah-menu.heading_2') !!}</h4>
+                            <h4>Skema Data Leaf vs Parent</h4>
                             <pre class="schema-code"><code>// leaf
 [
   'title' => 'Panduan Tambah Menu',
@@ -61,36 +61,36 @@
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.panduan-tambah-menu.heading_3') !!}</h4>
+                            <h4>Kapan Pakai route vs href</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">{!! __('help.pages.operasional.panduan-tambah-menu.step_3') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.panduan-tambah-menu.step_1') !!}</div>
-                                <div class="schema-step">{!! __('help.pages.operasional.panduan-tambah-menu.step_2') !!}</div>
+                                <div class="schema-step"><code>route</code>: untuk halaman internal Laravel.</div>
+                                <div class="schema-step"><code>href</code>: untuk URL eksternal atau non-route.</div>
+                                <div class="schema-step"><code>target</code>: tetapkan eksplisit untuk UX yang konsisten.</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.panduan-tambah-menu.heading_4') !!}</h4>
+                            <h4>Fitur Opsional</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.panduan-tambah-menu.item_4') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-menu.item_5') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-menu.item_6') !!}</li>
+                                <li><code>badge</code> untuk status/beta/info.</li>
+                                <li><code>dropdown => true</code> untuk flyout menu.</li>
+                                <li><code>icon</code> + <code>paths</code> untuk top-level visual consistency.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>{!! __('help.pages.operasional.panduan-tambah-menu.heading_5') !!}</h4>
+                            <h4>Checklist Uji Setelah Tambah Menu</h4>
                             <ul class="schema-list">
-                                <li>{!! __('help.pages.operasional.panduan-tambah-menu.item_7') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-menu.item_8') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-menu.item_9') !!}</li>
-                                <li>{!! __('help.pages.operasional.panduan-tambah-menu.item_10') !!}</li>
+                                <li>Parent otomatis open saat child route aktif.</li>
+                                <li>Item baru aktif di desktop dan mobile.</li>
+                                <li>Title menu tertranslate di EN dan ID.</li>
+                                <li>Tidak ada route missing saat klik menu.</li>
                             </ul>
-                            <div class="schema-note mt-4">{!! __('help.pages.operasional.panduan-tambah-menu.note_1') !!}</div>
+                            <div class="schema-note mt-4">Untuk menu nested, validasi minimal pada child terdalam agar recursive active state benar.</div>
                         </div>
                     </div>
                 </div>

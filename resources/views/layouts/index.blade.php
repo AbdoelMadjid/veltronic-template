@@ -1,7 +1,14 @@
 @php
     $activeThemeVersion = \App\Support\ThemeVersion::current();
     $currentRoute = \Illuminate\Support\Facades\Route::currentRouteName() ?? '';
-    $isAuthenticationPage = str_starts_with($currentRoute, 'pages.authentication.');
+    $isAuthenticationPage = str_starts_with($currentRoute, 'pages.authentication.')
+        || in_array($currentRoute, ['login', 'register', 'password.request', 'password.reset', 'password.confirm', 'password.email', 'verification.notice', 'verification.verify'])
+        || !empty($CreativeLayout)
+        || !empty($CorpLayout)
+        || !empty($FancyLayout)
+        || !empty($OverlayLayout)
+        || !empty($EmailLayout)
+        || !empty($GeneralAuth);
     $resolvedLayout = \App\Support\ThemeVersion::resolveView('layouts.index', $activeThemeVersion);
 
     if (!$isAuthenticationPage && $resolvedLayout !== 'layouts.index') {

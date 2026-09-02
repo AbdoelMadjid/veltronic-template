@@ -1,8 +1,8 @@
 <!--begin::Icon style toggle-->
-<div class="app-navbar-item ms-1 ms-md-4">
+<div class="{{ $wrapper_class ?? 'app-navbar-item ms-1 ms-md-4' }}">
     <!--begin::Menu toggle-->
     <a href="javascript:void(0)"
-        class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
+        class="{{ $button_class ?? 'btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px' }}"
         data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent"
         data-kt-menu-placement="bottom-end" title="Pilih Gaya Icon (Duotone / Solid / Outline)"
         data-kt-element="icon-style-toggle">

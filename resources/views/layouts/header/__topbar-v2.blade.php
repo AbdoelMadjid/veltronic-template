@@ -7,7 +7,7 @@
     </div>
     <!--end::Search-->
     <!--begin::Activities-->
-    <div class="d-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
         <!--begin::Drawer toggle-->
         <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             id="kt_activities_toggle">
@@ -18,7 +18,7 @@
     </div>
     <!--end::Activities-->
     <!--begin::Notifications-->
-    <div class="d-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
         <!--begin::Menu- wrapper-->
         <div class="position-relative btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -31,7 +31,7 @@
     </div>
     <!--end::Notifications-->
     <!--begin::Chat-->
-    <div class="d-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
         <!--begin::Menu wrapper-->
         <div class="position-relative btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             id="kt_drawer_chat_toggle">
@@ -45,7 +45,7 @@
     </div>
     <!--end::Chat-->
     <!--begin::Quick links-->
-    <div class="d-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -58,14 +58,14 @@
     </div>
     <!--end::Quick links-->
     <!--begin::Theme mode-->
-    <div class="d-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
         <!--layout-partial:partials/theme-mode/_main.html-->
         @include('partials.theme-mode._main')
     </div>
     <!--end::Theme mode-->
     <!--begin::Icon style-->
-    <div class="d-flex align-items-center ms-1 ms-lg-3">
-        @include('partials.icon-style._main')
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
+        @include('partials.icon-style._main', ['wrapper_class' => 'd-flex align-items-center', 'button_class' => 'btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px'])
     </div>
     <!--end::Icon style-->
     <!--begin::Language-->
@@ -120,7 +120,7 @@
         $currentVersion = \App\Support\ThemeVersion::current();
         $themeVersions = \App\Support\ThemeVersion::available();
     @endphp
-    <div class="d-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -170,6 +170,24 @@
         <!--end::Menu wrapper-->
     </div>
     <!--end::Frontpages-->
+    <!--begin::Mobile Toolbar Hub-->
+    <div class="d-flex d-lg-none align-items-center ms-1 ms-lg-3">
+        <!--begin::Menu wrapper-->
+        <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
+            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end"
+            title="Quick Tools">
+            <i class="ki-duotone ki-element-11 fs-1">
+                <span class="path1"></span>
+                <span class="path2"></span>
+                <span class="path3"></span>
+                <span class="path4"></span>
+            </i>
+        </div>
+        <!--layout-partial:partials/menus/_mobile-toolbar-menu.blade.php-->
+        @include('partials.menus._mobile-toolbar-menu')
+        <!--end::Menu wrapper-->
+    </div>
+    <!--end::Mobile Toolbar Hub-->
     <!--begin::User-->
     <div class="d-flex align-items-center me-lg-n2 ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
         <!--begin::Menu wrapper-->

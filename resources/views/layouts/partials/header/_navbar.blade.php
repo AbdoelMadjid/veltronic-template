@@ -7,7 +7,7 @@
     </div>
     <!--end::Search-->
     <!--begin::Activities-->
-    <div class="app-navbar-item ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
         <!--begin::Drawer toggle-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             id="kt_activities_toggle">
@@ -23,7 +23,7 @@
     </div>
     <!--end::Activities-->
     <!--begin::Notifications-->
-    <div class="app-navbar-item ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
         <!--begin::Menu- wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -42,7 +42,7 @@
     </div>
     <!--end::Notifications-->
     <!--begin::Chat-->
-    <div class="app-navbar-item ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative"
             id="kt_drawer_chat_toggle">
@@ -60,7 +60,7 @@
     </div>
     <!--end::Chat-->
     <!--begin::My apps links-->
-    <div class="app-navbar-item ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -79,13 +79,13 @@
     </div>
     <!--end::My apps links-->
     <!--begin::Theme mode-->
-    <div class="app-navbar-item ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
         <!--layout-partial:partials/theme-mode/_main.html-->
         @include('partials.theme-mode._main')
     </div>
     <!--end::Theme mode-->
     <!--begin::Icon style-->
-    @include('partials.icon-style._main')
+    @include('partials.icon-style._main', ['wrapper_class' => 'app-navbar-item d-none d-lg-flex ms-1 ms-md-4'])
     <!--end::Icon style-->
     <!--begin::Language-->
     <div class="app-navbar-item ms-1 ms-md-4">
@@ -139,7 +139,7 @@
         $currentVersion = \App\Support\ThemeVersion::current();
         $themeVersions = \App\Support\ThemeVersion::available();
     @endphp
-    <div class="app-navbar-item ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -190,6 +190,24 @@
         <!--end::Menu wrapper-->
     </div>
     <!--end::Frontpages-->
+    <!--begin::Mobile Toolbar Hub-->
+    <div class="app-navbar-item d-flex d-lg-none ms-1 ms-md-4">
+        <!--begin::Menu wrapper-->
+        <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative"
+            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+            data-kt-menu-placement="bottom-end" title="Quick Tools">
+            <i class="ki-duotone ki-element-11 fs-2">
+                <span class="path1"></span>
+                <span class="path2"></span>
+                <span class="path3"></span>
+                <span class="path4"></span>
+            </i>
+        </div>
+        <!--layout-partial:partials/menus/_mobile-toolbar-menu.blade.php-->
+        @include('partials.menus._mobile-toolbar-menu')
+        <!--end::Menu wrapper-->
+    </div>
+    <!--end::Mobile Toolbar Hub-->
     <!--begin::User menu-->
     <div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
         <!--begin::Menu wrapper-->

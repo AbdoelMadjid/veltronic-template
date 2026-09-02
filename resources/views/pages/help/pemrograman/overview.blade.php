@@ -270,6 +270,98 @@
                     </div>
                 </div>
             </div>
+
+            <!--begin::Version & Tags History Card-->
+            <div class="card mb-5 mb-xl-8 border">
+                <div class="card-header border-0 pt-6">
+                    <div class="card-title d-flex align-items-center gap-3">
+                        <div class="symbol symbol-40px">
+                            <span class="symbol-label bg-light-primary text-primary">
+                                <i class="ki-duotone ki-tag fs-2 text-primary">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold text-gray-900 mb-0">Riwayat Versi & Release Tags</h3>
+                            <span class="text-muted fs-7">Catatan rilis dan riwayat perubahan versi template Veltronic</span>
+                        </div>
+                    </div>
+                    <div class="card-toolbar">
+                        <span class="badge badge-light-success fw-bold fs-7 px-3 py-2">
+                            <i class="ki-duotone ki-check-circle fs-6 text-success me-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                            Versi Saat Ini: v1.1.0
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body pt-2">
+                    <!--begin::Timeline-->
+                    <div class="timeline-label">
+                        <!--begin::Item v1.1.0-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.1.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.1.0</span>
+                                    <span class="text-gray-900 fw-bold fs-6">Dynamic Frontpages Switcher & Education Multi-Page Restructure</span>
+                                    <span class="badge badge-light-success fs-8">Latest Release</span>
+                                </div>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembaruan arsitektur frontpage untuk mendukung berbagai template halaman depan (Landing Page & Education Portal) secara dinamis.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Dynamic Frontpages Switcher:</strong> Menambahkan menu dropdown di topbar/navbar untuk memilih template halaman depan yang aktif (Landing Page Metronic 8 & Education Portal Unify v2.6).</li>
+                                        <li class="mb-1"><strong>Persistensi Preferensi:</strong> Dukungan penyimpanan preferensi frontpage melalui Cookie & Session, sehingga pilihan pengguna tidak hilang saat login/logout.</li>
+                                        <li class="mb-1"><strong>Reorganisasi Folder Blade:</strong> Merestrukturisasi direktori views menjadi <code>views/frontpages/education/</code> dan <code>views/frontpages/landing/</code> untuk modularitas yang lebih rapi.</li>
+                                        <li class="mb-1"><strong>Konfigurasi Fleksibel:</strong> Menambahkan <code>config/frontpage.php</code> dan variabel environment <code>DEFAULT_FRONTPAGE</code> di <code>.env</code>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.1.0-->
+
+                        <!--begin::Item v1.0.0-->
+                        <div class="timeline-item">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.0.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-success fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <span class="badge badge-success fw-bold">v1.0.0</span>
+                                    <span class="text-gray-900 fw-bold fs-6">Initial Release & Laravel 13 Upgrade</span>
+                                    <span class="badge badge-light-dark fs-8">Base Version</span>
+                                </div>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Rilis awal template Veltronic dengan upgrade fondasi framework ke Laravel 13 dan integrasi tema Metronic 8.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Fitur Awal:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Laravel 13 Foundation:</strong> Kompatibilitas penuh dengan Laravel 13, PHP 8.2+, dan manajemen asset modern.</li>
+                                        <li class="mb-1"><strong>Dual Version Theme:</strong> Integrasi Metronic v1 & v2 dengan runtime theme version switcher (<code>App\Support\ThemeVersion</code>).</li>
+                                        <li class="mb-1"><strong>Multilingual Support (i18n):</strong> Dukungan alih bahasa (English & Bahasa Indonesia) dengan session storage.</li>
+                                        <li class="mb-1"><strong>Documentation & Help Center:</strong> Modul panduan arsitektur pemrograman, skema routing, layout, menu, dan checklist QA.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.0.0-->
+                    </div>
+                    <!--end::Timeline-->
+                </div>
+            </div>
+            <!--end::Version & Tags History Card-->
         </div>
     </div>
 @endsection

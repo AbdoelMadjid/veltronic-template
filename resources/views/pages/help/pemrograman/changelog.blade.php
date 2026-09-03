@@ -48,13 +48,46 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.5.0
+                            Versi Saat Ini: v1.5.1
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.5.1 (Patch)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.5.1</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-warning fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-success fw-bold">v1.5.1</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>03 Sep 2026, 20:45 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Custom Metronic Error Pages (404/403/500), Unimplemented MVC Safe Fallback & Profil View Modularization</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi template penanganan error global bergaya Metronic (404 Not Found, 403 Forbidden, 500 Server Error), penanganan proteksi dynamic routing terhadap modul MVC/View yang belum dibuat atau masih kosong, serta modularisasi halaman profil pengguna ke dalam komponen tab terpisah.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Custom Global Error Pages:</strong> Pembuatan template error terstandarisasi di <code>resources/views/errors/404.blade.php</code>, <code>403.blade.php</code>, dan <code>500.blade.php</code> dengan layout Metronic dan penanganan aman untuk variabel <code>$exception</code>.</li>
+                                        <li class="mb-1"><strong>Unimplemented MVC Safe Fallback:</strong> Peningkatan dynamic routing di <code>routes/menu.php</code> agar otomatis melewati file Blade kosong (0-byte) dan langsung menampilkan halaman error 404 ketika menu/route diakses sebelum MVC/View-nya dibuat.</li>
+                                        <li class="mb-1"><strong>Profil Pengguna Modularization:</strong> Pemisahan struktur view profil pengguna (<code>profil-pengguna.blade.php</code>) ke dalam sub-komponen modular di folder <code>resources/views/pages/profil/partials/</code> (tabs overview, settings, security, billing, statements, referrals, api-keys, logs).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.5.1-->
+
                         <!--begin::Item v1.5.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.5.0</div>
@@ -63,14 +96,14 @@
                             </div>
                             <div class="timeline-content ps-3">
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
-                                    <span class="badge badge-success fw-bold">v1.5.0</span>
+                                    <span class="badge badge-primary fw-bold">v1.5.0</span>
                                     <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
                                     <span class="badge badge-light text-gray-700 fs-8 border">
                                         <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>03 Sep 2026, 14:15 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                    <span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Master Data Views Restructuring, Prefix Route Alignment & Seeder Normalization</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

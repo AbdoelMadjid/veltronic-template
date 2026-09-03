@@ -1,64 +1,78 @@
-# Git Versioning, Tags & Automatic Changelog Rule
+# Git Versioning, Tags & Changelog Rule
 
 ## Trigger & Scope
-Aturan ini **WAJIB** dijalankan setiap kali pengguna meminta untuk melakukan *push* ke repository GitHub (contoh: *"push ke github"*, *"tolong push"*, *"bantu untuk di push"*, *"upsh"*). **Tidak boleh melakukan push langsung tanpa menyertakan tag dan memperbarui riwayat versi.**
+Aturan ini **WAJIB** dijalankan setiap kali pengguna meminta untuk melakukan *push* ke repository GitHub (contoh: *"push ke github"*, *"tolong push"*, *"bantu push"*, *"push"*).
 
 ---
 
 ## Prosedur Wajib Setiap Perintah Push:
 
-### 1. Tentukan Semantic Versioning (SemVer) & Tag
-- Periksa tag / versi terakhir di `resources/views/pages/help/pemrograman/overview.blade.php` atau `git tag`.
-- Tentukan versi berikutnya sesuai bobot perubahan:
-  - **PATCH (`v1.3.x`)**: Perbaikan bug, refactoring kecil, update teks/style/route.
-  - **MINOR (`v1.x.0`)**: Penambahan fitur baru, halaman baru, modul baru, skema baru.
-  - **MAJOR (`vx.0.0`)**: Perubahan arsitektur besar / breaking changes.
+### 1. Evaluasi Kebutuhan Tag Baru vs Update Tag Sebelumnya
+Sebelum melakukan push, evaluasi perubahan yang ada:
 
-### 2. Wajib Perbarui Riwayat Versi di `overview.blade.php`
-Sebelum melakukan commit & tag:
-1. Buka `resources/views/pages/help/pemrograman/overview.blade.php`.
-2. Perbarui badge **Versi Saat Ini** pada header:
-   ```html
-   Versi Saat Ini: vX.Y.Z
-   ```
-3. Tambahkan blok `<div class="timeline-item mb-7">` baru di urutan **paling atas** timeline:
-   - Baris 1 (Badges & Tanggal):
-     - Badge versi baru + status `<span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>`.
-     - Badge tipe versi:
-       - **Major**: `<span class="badge badge-light-danger fw-bold fs-8">Major</span>` (dot badge: `text-danger`)
-       - **Minor**: `<span class="badge badge-light-primary fw-bold fs-8">Minor</span>` (dot badge: `text-primary`)
-       - **Patch**: `<span class="badge badge-light-warning fw-bold fs-8">Patch</span>` (dot badge: `text-warning`)
-     - Badge tanggal & waktu:
-       ```html
-       <span class="badge badge-light text-gray-700 fs-8 border">
-           <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
-               <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
-           </i>DD Mmm YYYY, HH:mm WIB
-       </span>
-       ```
-   - Baris 2 (Judul Rilis): `<h4 class="text-gray-900 fw-bold fs-6 mb-2">Judul Rilis Versi</h4>`
-   - Paragraf ringkasan & daftar rincian perubahan dalam card rounded `border-dashed`.
-   - Ubah rilis sebelumnya menjadi `<span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>`.
+- **Kapan Bikin Tag Baru (New Tag / Bump Version)**:
+  - Terdapat penambahan fitur baru, halaman/modul baru, perubahan struktur/arsitektur, atau perbaikan bug signifikan.
+  - Tentukan kenaikan versi sesuai SemVer:
+    - **PATCH (`vX.Y.Z+1`)**: Bug fix, refactoring, penyesuaian route/error handler, modularisasi view.
+    - **MINOR (`vX.Y+1.0`)**: Penambahan modul/halaman baru, fitur bisnis baru, skema seeder baru.
+    - **MAJOR (`vX+1.0.0`)**: Breaking changes / perombakan arsitektur besar.
 
-### 3. Eksekusi Commit, Tag, dan Push
-Jalankan urutan perintah git berikut secara berurutan:
+- **Kapan Update ke Tag Sebelumnya (Same Tag)**:
+  - Perubahan hanya perbaikan kecil/lanjutan (typo, formatting, revisi teks kecil) yang masih satu konteks dengan rilis/tag terakhir yang baru saja dibuat.
+  - Perbarui catatan rincian perubahan pada entri tag/versi tersebut di `changelog.blade.php`.
+  - Jika diperlukan me-repoint tag lokal & remote:
+    ```bash
+    git tag -f -a vX.Y.Z -m "Release vX.Y.Z: [deskripsi ringkas terupdate]"
+    git push origin vX.Y.Z --force
+    ```
+
+---
+
+### 2. Wajib Perbarui `resources/views/pages/help/pemrograman/changelog.blade.php`
+Sebelum melakukan commit & push:
+1. Buka file `resources/views/pages/help/pemrograman/changelog.blade.php`.
+2. **Jika Tag Baru**:
+   - Perbarui badge **Versi Saat Ini** pada header:
+     ```html
+     Versi Saat Ini: vX.Y.Z
+     ```
+   - Tambahkan blok `<div class="timeline-item mb-7">` baru di urutan **paling atas** timeline:
+     - Badge versi baru + `<span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>`.
+     - Badge tipe versi (`Major` / `Minor` / `Patch`).
+     - Badge tanggal & jam: `DD Mmm YYYY, HH:mm WIB`.
+     - Judul rilis, paragraf ringkasan, dan rincian perubahan dalam card rounded `border-dashed`.
+     - Ubah rilis sebelumnya dari `Latest Release` menjadi `Stable Release` (`badge-light-dark`).
+3. **Jika Update Tag Sebelumnya**:
+   - Perbarui daftar rincian perubahan pada blok timeline versi tersebut agar mencakup perubahan terbaru.
+
+---
+
+### 3. Eksekusi Commit, Tag & Push
+Jalankan langkah git:
+
 ```bash
-# 1. Stage semua perubahan termasuk file overview.blade.php
+# 1. Stage semua file yang berubah termasuk changelog.blade.php
 git add .
 
-# 2. Commit dengan pesan standar
-git commit -m "feat/fix/chore: deskripsi ringkas perubahan (vX.Y.Z)"
+# 2. Commit dengan format pesan yang jelas
+git commit -m "feat/fix/docs/refactor: deskripsi perubahan (vX.Y.Z)"
 
-# 3. Buat annotated tag
-git tag -a vX.Y.Z -m "Release vX.Y.Z: Deskripsi ringkas rilis"
+# 3. Buat / update tag jika ada
+# Jika tag baru:
+git tag -a vX.Y.Z -m "Release vX.Y.Z: Deskripsi rilis"
 
-# 4. Push branch utama dan tag ke GitHub
+# 4. Push commit dan tag ke GitHub
 git push origin main
+# Jika ada tag baru:
 git push origin vX.Y.Z
+# Jika update tag sebelumnya:
+# git push origin vX.Y.Z --force
 ```
 
+---
+
 ### 4. Konfirmasi ke Pengguna
-Laporkan kepada pengguna:
-- Nomor versi / tag yang baru dibuat.
-- Status update changelog di `overview.blade.php`.
-- Bukti push commit dan push tag berhasil.
+Laporkan hasil eksekusi kepada pengguna:
+- Status tag (Tag baru `vX.Y.Z` atau update pada tag sebelumnya).
+- Ringkasan catatan yang ditambahkan/diperbarui di `help/pemrograman/changelog`.
+- Konfirmasi branch dan tag berhasil di-push ke GitHub.

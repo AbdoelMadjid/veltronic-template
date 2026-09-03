@@ -11,7 +11,6 @@ return [
                 [
                     'title' => 'Overview',
                     'route' => 'help.pemrograman.overview',
-                    'badge' => ['label' => 'New', 'class' => 'badge badge-danger'],
                 ],
                 [
                     'title' => 'Skema',
@@ -118,6 +117,14 @@ return [
                             'route' => 'help.pemrograman.operasional.playbook-incident-response',
                         ],
                     ],
+                ],
+                [
+                    'title' => 'Changelog',
+                    'route' => 'help.pemrograman.changelog',
+                ],
+                [
+                    'title' => 'Console Developer',
+                    'route' => 'help.pemrograman.console-developer',
                 ],
             ],
         ],

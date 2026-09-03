@@ -90,6 +90,7 @@ return [
     'compose' => 'Tulis',
     'contact_us' => 'Hubungi Kami',
     'contacts' => 'Kontak',
+    'console_developer' => 'Pengembang Konsol',
     'contextual_menu' => 'Menu Kontekstual',
     'controls' => 'Kontrol',
     'cookie' => 'Cookie',
@@ -518,8 +519,8 @@ return [
     'panduan_pergantian_versi_metronic' => 'Panduan Pergantian Versi Metronic',
     'panduan_pergantian_frontpage' => 'Panduan Pergantian Frontpage',
     'konvensi_penamaan' => 'Konvensi Penamaan',
-    'workflow_developer_harian' => 'Workflow Developer Harian',
-    'checklist_qa_smoke_test' => 'Checklist QA Smoke Test',
+    'workflow_developer_harian' => 'Pengembang Alur Kerja Harian',
+    'checklist_qa_smoke_test' => 'Daftar Periksa QA Smoke Test',
     'playbook_incident_response' => 'Panduan Respons Insiden',
     'idp_profil_pengguna' => 'Profil Pengguna',
     'md_akses_role' => 'Akses Role',
@@ -528,18 +529,16 @@ return [
     'md_app_profil' => 'Profil Aplikasi',
     'md_app_support' => 'Dukungan Aplikasi',
     'md_backup_db' => 'Backup DB',
-    'md_changelog' => 'Catatan Perubahan',
-    'md_console_developer' => 'Console Developer',
     'md_data_login' => 'Data Login',
     'md_manajemen_pengguna' => 'Manajemen Pengguna',
-    'md_masterdata' => 'MASTER DATA',
+    'md_masterdata' => 'Master Data',
     'md_menu' => 'Menu',
     'md_permission' => 'Permission',
-    'md_referensi' => 'Referensi',
-    'md_reset_password' => 'Ganti Kata Kunci',
     'md_role' => 'Role',
     'md_theme_frontpage' => 'Tema Halaman Depan',
     'md_user' => 'User',
 ];
+
+
 
 

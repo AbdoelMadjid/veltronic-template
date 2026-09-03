@@ -90,6 +90,7 @@ return [
     'compose' => 'Compose',
     'contact_us' => 'Contact Us',
     'contacts' => 'Contacts',
+    'console_developer' => 'Developer Console',
     'contextual_menu' => 'Contextual Menu',
     'controls' => 'Controls',
     'cookie' => 'Cookie',
@@ -528,18 +529,16 @@ return [
     'md_app_profil' => 'App Profile',
     'md_app_support' => 'App Support',
     'md_backup_db' => 'Database Backup',
-    'md_changelog' => 'Changelog',
-    'md_console_developer' => 'Developer Console',
     'md_data_login' => 'Login Data',
     'md_manajemen_pengguna' => 'User Management',
-    'md_masterdata' => 'MASTER DATA',
+    'md_masterdata' => 'Master Data',
     'md_menu' => 'Menu',
     'md_permission' => 'Permission',
-    'md_referensi' => 'References',
-    'md_reset_password' => 'Reset Password',
     'md_role' => 'Role',
     'md_theme_frontpage' => 'Theme Front Page',
     'md_user' => 'Users',
 ];
+
+
 
 

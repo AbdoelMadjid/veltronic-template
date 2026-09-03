@@ -50,13 +50,5 @@ return [
             'permissions' => ['create', 'read', 'update', 'delete'],
             'roles' => ['admin', 'master'],
         ],
-        [
-            'title' => 'Ganti Kata Kunci',
-            'title_en' => 'Reset Password',
-            'title_key' => 'md_reset_password',
-            'route' => 'manajemenpengguna/reset-password',
-            'permissions' => ['read', 'update'],
-            'roles' => ['admin', 'master'],
-        ],
     ],
 ];

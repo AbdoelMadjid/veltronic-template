@@ -19,8 +19,8 @@ foreach ($parentMenuFiles as $parentMenuFile) {
 }
 
 return [
-    'MASTER DATA' => [
-        'title_en' => 'MASTER DATA',
+    'Master Data' => [
+        'title_en' => 'Master Data',
         'title_key' => 'md_masterdata',
         'default_permissions' => ['read'],
         'default_roles' => ['admin', 'master'],

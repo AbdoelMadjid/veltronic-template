@@ -95,7 +95,7 @@
                             <div class="fv-row mb-8">
                                 <div class="position-relative">
                                     <input id="emailInput" type="text" placeholder="{{ __('auth.email') }}" name="email"
-                                        autocomplete="off" value="{{-- {{ old('email') }} --}}test@example.com"
+                                        autocomplete="off" value="{{ old('email') }}"
                                         class="form-control bg-transparent @if ($emailHasError) is-invalid border-danger pe-12 @endif" />
                                     <span id="emailErrorIcon"
                                         class="position-absolute top-50 end-0 translate-middle-y me-4 text-danger d-flex align-items-center @if (! $emailHasError) d-none @endif">
@@ -110,7 +110,7 @@
                             <div class="fv-row mb-3">
                                 <div class="position-relative">
                                     <input type="password" placeholder="{{ __('auth.password_label') }}" name="password"
-                                        autocomplete="off" id="passwordInput" value="password"
+                                        autocomplete="off" id="passwordInput" value=""
                                         class="form-control bg-transparent @if ($passwordHasError) is-invalid border-danger pe-15 @endif" />
                                     <span id="passwordErrorIcon"
                                         class="position-absolute top-50 end-0 translate-middle-y me-12 text-danger d-flex align-items-center @if (! $passwordHasError) d-none @endif">

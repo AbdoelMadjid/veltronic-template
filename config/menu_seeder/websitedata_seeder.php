@@ -17,8 +17,8 @@ foreach ($parentMenuFiles as $parentMenuFile) {
 }
 
 return [
-    'WEBSITE DATA' => [
-        'title_en' => 'WEBSITE DATA',
+    'Website Data' => [
+        'title_en' => 'Website Data',
         'title_key' => 'wd_websitedata',
         'default_permissions' => ['read'],
         'default_roles' => ['admin'],

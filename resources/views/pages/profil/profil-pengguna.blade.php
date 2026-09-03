@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('title', 'Profil Pengguna')
 @section('styles')
     <!--begin::Vendor Stylesheets(used for this page only)-->
     <link

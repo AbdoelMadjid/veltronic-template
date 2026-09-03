@@ -57,6 +57,18 @@ if (!function_exists('getPageTitle')) {
             }
         }
 
+        // Cek dari konfigurasi menu_seeder dinamis
+        $customCategories = config('menu_seeder.categories', []);
+        foreach ($customCategories as $categoryConfig) {
+            $menus = $categoryConfig['menus'] ?? [];
+            if (!empty($menus) && is_array($menus)) {
+                $title = searchMenuTitle($menus, $currentRoute);
+                if ($title) {
+                    return $title;
+                }
+            }
+        }
+
         return config('app.name', 'Metronic v.8.3.2 - Laravel 12');
     }
 }
@@ -71,8 +83,12 @@ if (!function_exists('searchMenuTitle')) {
      */
     function searchMenuTitle(array $items, string $currentRoute): ?string
     {
+        $normalizedCurrent = str_replace(['/', '\\'], '.', trim($currentRoute, '/'));
+
         foreach ($items as $item) {
-            if (isset($item['route']) && $item['route'] === $currentRoute) {
+            $itemRoute = isset($item['route']) ? str_replace(['/', '\\'], '.', trim((string) $item['route'], '/')) : null;
+
+            if ($itemRoute !== null && ($itemRoute === $normalizedCurrent || ($item['route'] ?? '') === $currentRoute)) {
                 $title = $item['title'] ?? null;
                 if ($title) {
                     $key = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $title));
@@ -81,8 +97,15 @@ if (!function_exists('searchMenuTitle')) {
                 return null;
             }
 
-            if (!empty($item['children'])) {
+            if (!empty($item['children']) && is_array($item['children'])) {
                 $found = searchMenuTitle($item['children'], $currentRoute);
+                if ($found) {
+                    return $found;
+                }
+            }
+
+            if (!empty($item['children_collapsed']) && is_array($item['children_collapsed'])) {
+                $found = searchMenuTitle($item['children_collapsed'], $currentRoute);
                 if ($found) {
                     return $found;
                 }

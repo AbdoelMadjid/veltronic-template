@@ -48,13 +48,47 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.4.0
+                            Versi Saat Ini: v1.5.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.5.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.5.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-success fw-bold">v1.5.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>03 Sep 2026, 14:15 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Master Data Views Restructuring, Prefix Route Alignment & Seeder Normalization</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyelarasan struktur view master data ke dalam folder <code>pages/datamaster/</code>, standarisasi prefix route menu seeder <code>datamaster.*</code>, serta pembersihan dan penataan ulang konfigurasi seeder dan translasi menu.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Reorganisasi View Data Master:</strong> Memindahkan seluruh template view data master ke dalam folder <code>resources/views/pages/datamaster/</code> (termasuk modul <code>appsupport</code>, <code>manajemenpengguna</code>, dan <code>profil-pengguna</code>).</li>
+                                        <li class="mb-1"><strong>Prefix Route Alignment:</strong> Penyelarasan penamaan route pada file seeder (<code>identitaspengguna_seeder.php</code>, <code>masterdata-appsupport_seeder.php</code>, <code>masterdata-manajemenpengguna_seeder.php</code>) menggunakan format konsisten <code>datamaster.*</code>.</li>
+                                        <li class="mb-1"><strong>Automatic Route Mapping:</strong> Integrasi otomatis 13 endpoint submodule data master melalui dynamic route generator di <code>routes/menu.php</code>.</li>
+                                        <li class="mb-1"><strong>Localization & Seeder Sync:</strong> Penyesuaian key translasi menu dan sinkronisasi struktur menu seeder.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.5.0-->
+
                         <!--begin::Item v1.4.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.4.0</div>
@@ -63,14 +97,14 @@
                             </div>
                             <div class="timeline-content ps-3">
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
-                                    <span class="badge badge-success fw-bold">v1.4.0</span>
+                                    <span class="badge badge-primary fw-bold">v1.4.0</span>
                                     <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
                                     <span class="badge badge-light text-gray-700 fs-8 border">
                                         <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>03 Sep 2026, 10:35 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                    <span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Admin MVC Architecture Convention, Dedicated Changelog Route & Menu Seeder Optimization</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

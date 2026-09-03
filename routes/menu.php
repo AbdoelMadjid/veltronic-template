@@ -68,6 +68,11 @@ Route::middleware(['auth'])->group(function () use ($files) {
     })->name('demo.widget-source');
 
     foreach ($files as $file) {
+        // Lewati file kosong (belum diimplementasikan / MVC belum dibuat) agar diarahkan ke 404
+        if ($file->getSize() === 0) {
+            continue;
+        }
+
         // Ambil path relatif terhadap folder "pages"
         $relativePath = $file->getRelativePathname(); // contoh: "apps/projects/targets.blade.php"
 
@@ -80,13 +85,17 @@ Route::middleware(['auth'])->group(function () use ($files) {
         // Untuk URL path (pakai slash)
         $routeUrl = '/' . str_replace(['\\'], '/', $relativePath);
 
-        Route::get($routeUrl, function () use ($routeName) {
-            return view('pages.' . $routeName);
+        Route::get($routeUrl, function () use ($routeName, $file) {
+            $viewName = 'pages.' . $routeName;
+            if (!view()->exists($viewName) || $file->getSize() === 0) {
+                abort(404);
+            }
+            return view($viewName);
         })->name($routeName);
     }
 });
 
 // Fallback tetap di luar middleware, supaya 404 bisa tampil meskipun belum login
 Route::fallback(function () {
-    return view('pages.pages.authentication.general.error-404');
+    return response()->view('errors.404', [], 404);
 })->name('fallback.404');

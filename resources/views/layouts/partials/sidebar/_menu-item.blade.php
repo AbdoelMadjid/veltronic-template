@@ -1,6 +1,7 @@
 @props(['menu', 'level' => 1])
 
 @php
+    // Cek route aktif untuk item sekarang atau turunannya (route.*).
     $isRouteActive = function ($route) {
         if (empty($route)) {
             return false;
@@ -9,8 +10,68 @@
         return request()->routeIs($route) || request()->routeIs($route . '.*');
     };
 
-    // Rekursif cek aktif
+    // Izin baca berbasis permission pattern: "read {route}".
+    $canReadRoute = function ($route) {
+        if (empty($route)) {
+            return true;
+        }
+
+        if (!auth()->check()) {
+            return false;
+        }
+
+        $candidates = [$route];
+        $normalizedDot = str_replace(['\\', '/'], '.', trim((string) $route));
+        $normalizedDot = preg_replace('/\.+/', '.', $normalizedDot) ?? $normalizedDot;
+        $normalizedDot = trim($normalizedDot, '.');
+        if ($normalizedDot !== '') {
+            $candidates[] = $normalizedDot;
+            $candidates[] = str_replace('.', '/', $normalizedDot);
+        }
+
+        foreach (array_values(array_unique($candidates)) as $candidate) {
+            if (
+                auth()
+                    ->user()
+                    ->can("read {$candidate}")
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    $canDisplayItem = null;
+    // Item tampil jika:
+    // - punya child yang bisa tampil, atau
+    // - leaf route yang diizinkan, atau
+    // - leaf href.
+    $canDisplayItem = function ($item) use (&$canDisplayItem, $canReadRoute) {
+        $allChildren = array_merge($item['children'] ?? [], $item['children_collapsed'] ?? []);
+        if (!empty($allChildren)) {
+            foreach ($allChildren as $child) {
+                if ($canDisplayItem($child)) {
+                    return true;
+                }
+            }
+        }
+
+        if (isset($item['route'])) {
+            return $canReadRoute($item['route']);
+        }
+
+        return isset($item['href']);
+    };
+
+    $children = array_values(array_filter($menu['children'] ?? [], fn($child) => $canDisplayItem($child)));
+    $collapsedChildren = array_values(
+        array_filter($menu['children_collapsed'] ?? [], fn($child) => $canDisplayItem($child)),
+    );
+    $menuIsVisible = $canDisplayItem($menu);
+
     $isActiveRecursive = null;
+    // Parent dianggap aktif jika salah satu descendant route aktif.
     $isActiveRecursive = function ($item) use (&$isActiveRecursive, $isRouteActive) {
         $allChildren = array_merge($item['children'] ?? [], $item['children_collapsed'] ?? []);
         if (!empty($allChildren)) {
@@ -24,8 +85,7 @@
         return isset($item['route']) && $isRouteActive($item['route']);
     };
 
-    $hasChildren = !empty($menu['children']);
-    $collapsedChildren = $menu['children_collapsed'] ?? [];
+    $hasChildren = !empty($children);
     $collapsedCount = count($collapsedChildren);
     $isActiveParent = $isActiveRecursive($menu);
     $isActiveSelf = isset($menu['route']) && $isRouteActive($menu['route']);
@@ -37,22 +97,44 @@
         '_l' .
         $level .
         '_collapse';
+    // Ambil judul dari title_key (jika ada), fallback ke slug title, lalu fallback teks asli title.
     $resolveMenuTitle = function ($item) {
         $titleKey = isset($item['title_key'])
             ? 'menu.' . $item['title_key']
             : 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $item['title'] ?? ''));
         return __($titleKey) != $titleKey ? __($titleKey) : $item['title'] ?? '';
     };
+    $resolveMenuBadgeLabel = function ($item) {
+        if (!isset($item['badge']['label'])) {
+            return '';
+        }
+        $label = (string) $item['badge']['label'];
+        $badgeKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], trim($label)));
+        return __($badgeKey) != $badgeKey ? __($badgeKey) : $label;
+    };
+    $getItemPaths = function ($item) {
+        if (function_exists('keenicon_paths')) {
+            return keenicon_paths($item['icon'] ?? '', (int) ($item['paths'] ?? 0));
+        }
+        return (int) ($item['paths'] ?? 0);
+    };
+    $getIconClass = function ($item) {
+        $icon = $item['icon'] ?? '';
+        if (function_exists('formatIconClass')) {
+            return formatIconClass($icon);
+        }
+        return trim((string) $icon);
+    };
 @endphp
 
-@if ($hasChildren && !($menu['dropdown'] ?? false))
-    {{-- Item dengan submenu --}}
+{{-- Mode 1: accordion biasa (bukan dropdown) --}}
+@if ($menuIsVisible && $hasChildren && !($menu['dropdown'] ?? false))
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $isActiveParent ? 'here show' : '' }}">
         <span class="menu-link">
             @if ($level == 1)
                 <span class="menu-icon">
-                    <i class="{{ $menu['icon'] ?? '' }}">
-                        @for ($i = 1; $i <= ($menu['paths'] ?? 0); $i++)
+                    <i class="{{ $getIconClass($menu) }}">
+                        @for ($i = 1; $i <= $getItemPaths($menu); $i++)
                             <span class="path{{ $i }}"></span>
                         @endfor
                     </i>
@@ -65,13 +147,14 @@
         </span>
 
         <div class="menu-sub menu-sub-accordion menu-active-bg">
-            @foreach ($menu['children'] as $child)
+            @foreach ($children as $child)
                 @include('layouts.partials.sidebar._menu-item', [
                     'menu' => $child,
                     'level' => $level + 1,
                 ])
             @endforeach
 
+            {{-- Anak tambahan yang disembunyikan dalam collapse "show more / show less" --}}
             @if ($collapsedCount > 0)
                 @php
                     $visibleText = $isActiveCollapsedChild
@@ -114,16 +197,16 @@
             @endif
         </div>
     </div>
-@elseif ($hasChildren && ($menu['dropdown'] ?? false))
-    {{-- Dropdown --}}
+    {{-- Mode 2: dropdown flyout (meta.dropdown = true) --}}
+@elseif ($menuIsVisible && $hasChildren && ($menu['dropdown'] ?? false))
     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start"
         class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention {{ $isActiveParent ? 'here show' : '' }}">
 
         <span class="menu-link">
             @if ($level == 1)
                 <span class="menu-icon">
-                    <i class="{{ $menu['icon'] ?? '' }}">
-                        @for ($i = 1; $i <= ($menu['paths'] ?? 0); $i++)
+                    <i class="{{ $getIconClass($menu) }}">
+                        @for ($i = 1; $i <= $getItemPaths($menu); $i++)
                             <span class="path{{ $i }}"></span>
                         @endfor
                     </i>
@@ -136,7 +219,7 @@
         </span>
 
         <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-2 py-4 w-200px mh-75 overflow-auto">
-            @foreach ($menu['children'] as $child)
+            @foreach ($children as $child)
                 @php
                     $childTitleKey =
                         'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $child['title']));
@@ -153,16 +236,16 @@
             @endforeach
         </div>
     </div>
-@else
-    {{-- Item tanpa anak --}}
+    {{-- Mode 3: leaf item (tanpa children) --}}
+@elseif ($menuIsVisible)
     <div class="menu-item">
         <a class="menu-link {{ $isActiveSelf ? 'active' : '' }}"
             href="{{ isset($menu['href']) ? $menu['href'] : (isset($menu['route']) ? route($menu['route']) : '#') }}"
             {{ isset($menu['target']) ? 'target=' . $menu['target'] : '' }}>
             @if ($level == 1)
                 <span class="menu-icon">
-                    <i class="{{ $menu['icon'] ?? '' }}">
-                        @for ($i = 1; $i <= ($menu['paths'] ?? 0); $i++)
+                    <i class="{{ $getIconClass($menu) }}">
+                        @for ($i = 1; $i <= $getItemPaths($menu); $i++)
                             <span class="path{{ $i }}"></span>
                         @endfor
                     </i>
@@ -176,7 +259,7 @@
             @if (isset($menu['badge']))
                 <span class="menu-badge">
                     <span class="{{ $menu['badge']['class'] ?? 'badge badge-info' }}">
-                        {{ $menu['badge']['label'] ?? '' }}
+                        {{ $resolveMenuBadgeLabel($menu) }}
                     </span>
                 </span>
             @endif

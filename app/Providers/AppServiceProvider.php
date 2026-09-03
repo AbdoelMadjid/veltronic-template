@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Support\ThemeVersion;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        require_once(app_path('utils/helper.php'));
     }
 
     /**
@@ -20,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Superadmin bypass: Role 'master' memiliki semua hak akses
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('master') ? true : null;
+        });
         \Illuminate\Support\Facades\View::composer('*', function ($view) {
             $version = ThemeVersion::current();
             $currentRoute = \Illuminate\Support\Facades\Route::currentRouteName() ?? '';

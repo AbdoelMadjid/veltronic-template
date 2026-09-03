@@ -1,0 +1,48 @@
+<?php
+
+return array (
+  'id' => 
+  array (
+    0 => 'idp_profil_pengguna',
+    1 => 'md_akses_role',
+    2 => 'md_akses_user',
+    3 => 'md_app_fitur',
+    4 => 'md_app_profil',
+    5 => 'md_app_support',
+    6 => 'md_backup_db',
+    7 => 'md_changelog',
+    8 => 'md_console_developer',
+    9 => 'md_data_login',
+    10 => 'md_manajemen_pengguna',
+    11 => 'md_masterdata',
+    12 => 'md_menu',
+    13 => 'md_permission',
+    14 => 'md_referensi',
+    15 => 'md_reset_password',
+    16 => 'md_role',
+    17 => 'md_theme_frontpage',
+    18 => 'md_user',
+  ),
+  'en' => 
+  array (
+    0 => 'idp_profil_pengguna',
+    1 => 'md_akses_role',
+    2 => 'md_akses_user',
+    3 => 'md_app_fitur',
+    4 => 'md_app_profil',
+    5 => 'md_app_support',
+    6 => 'md_backup_db',
+    7 => 'md_changelog',
+    8 => 'md_console_developer',
+    9 => 'md_data_login',
+    10 => 'md_manajemen_pengguna',
+    11 => 'md_masterdata',
+    12 => 'md_menu',
+    13 => 'md_permission',
+    14 => 'md_referensi',
+    15 => 'md_reset_password',
+    16 => 'md_role',
+    17 => 'md_theme_frontpage',
+    18 => 'md_user',
+  ),
+);

@@ -10,7 +10,7 @@
 @section('toolbar')
     @component('layouts.partials._toolbar')
         @slot('li_1')
-            Profil Pengguna
+            Profil
         @endslot
     @endcomponent
 @endsection

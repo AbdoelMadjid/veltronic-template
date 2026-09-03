@@ -84,11 +84,19 @@ if (!function_exists('searchMenuTitle')) {
     function searchMenuTitle(array $items, string $currentRoute): ?string
     {
         $normalizedCurrent = str_replace(['/', '\\'], '.', trim($currentRoute, '/'));
+        $baseCurrent = preg_replace('/\.index$/', '', $normalizedCurrent);
 
         foreach ($items as $item) {
             $itemRoute = isset($item['route']) ? str_replace(['/', '\\'], '.', trim((string) $item['route'], '/')) : null;
+            $itemRouteBase = $itemRoute ? preg_replace('/\.index$/', '', $itemRoute) : null;
 
-            if ($itemRoute !== null && ($itemRoute === $normalizedCurrent || ($item['route'] ?? '') === $currentRoute)) {
+            if ($itemRoute !== null && (
+                $itemRoute === $normalizedCurrent ||
+                $itemRoute === $baseCurrent ||
+                $itemRouteBase === $baseCurrent ||
+                ($item['route'] ?? '') === $currentRoute ||
+                ($item['route'] ?? '') === $baseCurrent
+            )) {
                 $title = $item['title'] ?? null;
                 if ($title) {
                     $key = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $title));

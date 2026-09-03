@@ -2,12 +2,27 @@
 
 @php
     // Cek route aktif untuk item sekarang atau turunannya (route.*).
-    $isRouteActive = function ($route) {
-        if (empty($route)) {
-            return false;
+    $isRouteActive = function ($route, $href = null) {
+        if (!empty($route)) {
+            $baseRoute = preg_replace('/\.index$/', '', (string) $route);
+            if (
+                request()->routeIs($route) ||
+                request()->routeIs($route . '.*') ||
+                request()->routeIs($baseRoute) ||
+                request()->routeIs($baseRoute . '.*')
+            ) {
+                return true;
+            }
         }
 
-        return request()->routeIs($route) || request()->routeIs($route . '.*');
+        if (!empty($href) && $href !== '#') {
+            $path = trim(parse_url((string) $href, PHP_URL_PATH) ?? '', '/');
+            if ($path !== '' && (request()->is($path) || request()->is($path . '/*'))) {
+                return true;
+            }
+        }
+
+        return false;
     };
 
     // Izin baca berbasis permission pattern: "read {route}".
@@ -82,13 +97,13 @@
             }
             return false;
         }
-        return isset($item['route']) && $isRouteActive($item['route']);
+        return $isRouteActive($item['route'] ?? null, $item['href'] ?? null);
     };
 
     $hasChildren = !empty($children);
     $collapsedCount = count($collapsedChildren);
     $isActiveParent = $isActiveRecursive($menu);
-    $isActiveSelf = isset($menu['route']) && $isRouteActive($menu['route']);
+    $isActiveSelf = $isRouteActive($menu['route'] ?? null, $menu['href'] ?? null);
     $isActiveCollapsedChild = collect($collapsedChildren)->contains(fn($child) => $isActiveRecursive($child));
     $collapseIdBase =
         (isset($menu['route'])

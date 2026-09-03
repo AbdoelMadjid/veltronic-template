@@ -48,13 +48,50 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.5.1
+                            Versi Saat Ini: v1.6.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.6.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.6.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.6.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>03 Sep 2026, 23:00 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">App Support Menu Management, Multi-Level Hierarchy Builder & Modular Route Architecture</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi menyeluruh modul manajemen menu aplikasi (<code>appsupport/menu</code>) dengan dukungan pembuatan menu satuan, sub-menu dari induk yang sudah ada, serta Form Builder Menu Komplit bertingkat (Level 1 &rarr; Level 2 &rarr; Level 3) sekaligus dalam satu transaksi. Dilengkapi sinkronisasi multi-bahasa, perizinan CRUD, dan perbaikan toolbar title/breadcrumb tanpa regresi.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Menu Management Module:</strong> Pembuatan CRUD Menu lengkap di <code>MenuController</code>, <code>MenuRequest</code>, dan <code>Menu</code> model untuk modul <code>appsupport/menu</code>.</li>
+                                        <li class="mb-1"><strong>Multi-Level Complete Builder:</strong> Penyediaan form interaktif untuk membangun Menu Utama baru (Level 1) beserta seluruh Sub Menu (Level 2) dan Anak Sub Menu (Level 3) sekaligus.</li>
+                                        <li class="mb-1"><strong>Quick Sub-Menu Creator:</strong> Tombol aksi <code>+</code> pada baris tabel untuk menambahkan sub-menu baru di bawah menu utama yang sudah ada secara instan.</li>
+                                        <li class="mb-1"><strong>Multi-Lingual & Metadata Synchronization:</strong> Sinkronisasi otomatis field <code>title_key</code> dan <code>title_en</code> ke dalam file bahasa <code>lang/id/menu.php</code> dan <code>lang/en/menu.php</code> serta kolom <code>meta</code> JSON.</li>
+                                        <li class="mb-1"><strong>Permissions & Roles Integration:</strong> Visualisasi badge CRUD terstandarisasi (Create, Read, Update, Delete, Sort) dan penugasan akses Spatie roles (admin, master, dll.).</li>
+                                        <li class="mb-1"><strong>Modular Route Architecture:</strong> Pendaftaran route modul ke dalam <code>routes/masterdata.php</code> dan pengabaian file partials/underscore pada dynamic router <code>routes/menu.php</code>.</li>
+                                        <li class="mb-1"><strong>Anti-Regression & Breadcrumb Fixes:</strong> Resolusi title page dan breadcrumb hierarchy tanpa pengulangan judul, serta pembuatan aturan agent <code>code-integrity-and-regression-prevention.md</code>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.6.0-->
+
                         <!--begin::Item v1.5.1 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.5.1</div>
@@ -70,7 +107,7 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>03 Sep 2026, 20:45 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                    <span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Custom Metronic Error Pages (404/403/500), Unimplemented MVC Safe Fallback & Profil View Modularization</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

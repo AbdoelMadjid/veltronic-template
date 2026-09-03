@@ -76,6 +76,11 @@ Route::middleware(['auth'])->group(function () use ($files) {
         // Ambil path relatif terhadap folder "pages"
         $relativePath = $file->getRelativePathname(); // contoh: "apps/projects/targets.blade.php"
 
+        // Lewati file partials atau file internal yang diawali underscore
+        if (str_contains($relativePath, 'partials/') || str_contains($relativePath, 'partials\\') || str_starts_with(basename($relativePath), '_')) {
+            continue;
+        }
+
         // Hilangkan extension .blade.php
         $relativePath = str_replace('.blade.php', '', $relativePath);
 
@@ -84,6 +89,11 @@ Route::middleware(['auth'])->group(function () use ($files) {
 
         // Untuk URL path (pakai slash)
         $routeUrl = '/' . str_replace(['\\'], '/', $relativePath);
+
+        // Jangan menimpa route yang sudah didefinisikan oleh controller/resource
+        if (Route::has($routeName) || Route::has($routeName . '.index')) {
+            continue;
+        }
 
         Route::get($routeUrl, function () use ($routeName, $file) {
             $viewName = 'pages.' . $routeName;

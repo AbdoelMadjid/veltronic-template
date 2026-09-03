@@ -70,8 +70,13 @@ if (!function_exists('sidebarAdditionalMenuSections')) {
         $resolveMenuLink = function (string $url): array {
             $urlPath = menuNormalizePath($url);
             $routeKey = menuNormalizeKey($urlPath !== '' ? $urlPath : $url);
-            if ($routeKey !== '' && Route::has($routeKey)) {
-                return ['route' => $routeKey];
+            if ($routeKey !== '') {
+                if (Route::has($routeKey)) {
+                    return ['route' => $routeKey];
+                }
+                if (Route::has($routeKey . '.index')) {
+                    return ['route' => $routeKey . '.index'];
+                }
             }
 
             if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://')) {

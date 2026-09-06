@@ -85,13 +85,13 @@ tests/Unit/ThemeAssetTest.php</code></pre>
 
                             <h5 class="fs-6 fw-bold mb-2">Contoh Pattern yang Benar</h5>
                             <pre class="schema-code"><code>&lt;!-- CSS page/plugin --&gt;
-&lt;link rel="stylesheet" href="{{ ThemeAsset::url("css/datatables.bundle.css") }}" /&gt;
+&lt;link rel="stylesheet" href="@{{ \App\Support\ThemeAsset::url("css/datatables.bundle.css") }}" /&gt;
 
 &lt;!-- CSS global (layout) --&gt;
-&lt;link rel="stylesheet" href="{{ ThemeAsset::url("css/style.bundle.css") }}" /&gt;
+&lt;link rel="stylesheet" href="@{{ \App\Support\ThemeAsset::url("css/style.bundle.css") }}" /&gt;
 
 &lt;!-- JS global --&gt;
-&lt;script src="{{ ThemeAsset::url("js/scripts.bundle.js") }}"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="@{{ \App\Support\ThemeAsset::url("js/scripts.bundle.js") }}"&gt;&lt;/script&gt;</code></pre>
 
                             <h5 class="fs-6 fw-bold mb-2">Signature</h5>
                             <pre class="schema-code"><code>php artisan theme:assets-diff {theme_version}

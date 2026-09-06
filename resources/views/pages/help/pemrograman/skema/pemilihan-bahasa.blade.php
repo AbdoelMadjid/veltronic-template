@@ -120,14 +120,14 @@ document.documentElement.addEventListener('kt.lang.change', function (e) {
                                 <div class="schema-step">
                                     <strong>Opsi A: Menggunakan data-kt-translate (Direkomendasikan)</strong>
                                     <pre class="schema-code"><code>&lt;span class="menu-title" data-kt-translate="menu.my_profile"&gt;
-    {{ __('menu.my_profile') }}
+    @{{ __('menu.my_profile') }}
 &lt;/span&gt;</code></pre>
                                 </div>
                                 <div class="schema-step">
                                     <strong>Opsi B: Placeholder &amp; Title Input</strong>
                                     <pre class="schema-code"><code>&lt;input type="text"
     data-kt-translate-placeholder="menu.search_menu_placeholder"
-    placeholder="{{ __('menu.search_menu_placeholder') }}" /&gt;</code></pre>
+    placeholder="@{{ __('menu.search_menu_placeholder') }}" /&gt;</code></pre>
                                 </div>
                                 <div class="schema-step">
                                     <strong>Opsi C: Inline Bilingual Custom Text</strong>

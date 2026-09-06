@@ -27,7 +27,10 @@ if (!function_exists('getPageTitle')) {
             'docs._icons' => ['menus_icons'],
         ];
 
-        $currentRoute = Route::current()->getName();
+        $currentRoute = Route::current() ? Route::current()->getName() : '';
+        if (empty($currentRoute)) {
+            return config('app.name', 'Veltronic');
+        }
 
         foreach ($configs as $config => $menuKeys) {
             $configData = config($config, []);

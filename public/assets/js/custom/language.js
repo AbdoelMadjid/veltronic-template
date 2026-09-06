@@ -327,6 +327,25 @@ var KTLanguage = (function () {
             return translated;
         }
 
+        // 3. Fallback: bidirectional lookup across translations dictionaries
+        var targetDict = translations[locale] || {};
+        var sourceLocale = locale === "id" ? "en" : "id";
+        var sourceDict = translations[sourceLocale] || {};
+
+        for (var k in sourceDict) {
+            if (sourceDict.hasOwnProperty(k) && typeof sourceDict[k] === "string" && sourceDict[k].trim().toLowerCase() === lower) {
+                if (targetDict[k] && typeof targetDict[k] === "string") {
+                    var transVal = targetDict[k].trim();
+                    if (trimmed === trimmed.toUpperCase() && trimmed.length > 2) {
+                        return transVal.toUpperCase();
+                    } else if (trimmed.charAt(0) === trimmed.charAt(0).toUpperCase() && trimmed.length > 1 && trimmed.charAt(1) === trimmed.charAt(1).toLowerCase()) {
+                        return transVal.charAt(0).toUpperCase() + transVal.slice(1);
+                    }
+                    return transVal;
+                }
+            }
+        }
+
         return null;
     };
 
@@ -612,17 +631,29 @@ var KTLanguage = (function () {
 
         loadTranslations();
 
-        // Bind global click listener for language switchers
+        // Bind global click listener for language switchers with robust selector matching
         document.addEventListener("click", function (e) {
-            var item = e.target.closest('[data-kt-element="lang-item"], [data-kt-lang-value], .mobile-lang-item');
+            var item = e.target.closest(
+                '[data-kt-element="lang-item"], [data-kt-lang-value], .mobile-lang-item, a[href*="/lang/en"], a[href*="/lang/id"], [data-kt-value="en"], [data-kt-value="id"]'
+            );
             if (item) {
-                e.preventDefault();
                 var targetLocale = item.getAttribute("data-kt-value") || item.getAttribute("data-kt-lang-value");
-                if (targetLocale) {
+                if (!targetLocale) {
+                    var href = item.getAttribute("href") || "";
+                    if (href.indexOf("/lang/en") !== -1) {
+                        targetLocale = "en";
+                    } else if (href.indexOf("/lang/id") !== -1) {
+                        targetLocale = "id";
+                    }
+                }
+
+                if (targetLocale && supportedLocales.indexOf(targetLocale) !== -1) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     setLanguage(targetLocale, true, true);
                 }
             }
-        });
+        }, true);
 
         // Initialize observer for dynamic content
         initObserver();
@@ -638,17 +669,25 @@ var KTLanguage = (function () {
     };
 })();
 
-// Initialize on DOM ready
-if (typeof KTUtil !== "undefined" && KTUtil.onDOMContentLoaded) {
-    KTUtil.onDOMContentLoaded(function () {
+// Expose globally
+if (typeof window !== "undefined") {
+    window.KTLanguage = KTLanguage;
+}
+
+// Auto-initialize immediately or on DOMContentLoaded
+var startKTLanguage = function () {
+    if (typeof KTLanguage !== "undefined" && KTLanguage.init) {
         KTLanguage.init();
-    });
+    }
+};
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startKTLanguage);
 } else {
-    document.addEventListener("DOMContentLoaded", function () {
-        KTLanguage.init();
-    });
+    startKTLanguage();
 }
 
 if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
     module.exports = KTLanguage;
 }
+

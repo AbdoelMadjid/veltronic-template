@@ -148,7 +148,7 @@
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.pages') }}</span>
+                            class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.pages">{{ __('menu.pages') }}</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -164,7 +164,7 @@
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.apps') }}</span>
+                            class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.apps">{{ __('menu.apps') }}</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -180,7 +180,7 @@
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.layouts') }}</span>
+                            class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.layouts">{{ __('menu.layouts') }}</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -196,7 +196,7 @@
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.help') }}</span>
+                            class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.help">{{ __('menu.help') }}</span>
                     </div>
                     <!--end:Menu content-->
                 </div>

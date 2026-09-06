@@ -12,7 +12,7 @@
             class="menu-item {{ request()->routeIs(['dashboard', 'dashboards.*']) ? 'here show' : '' }} menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
-                <span class="menu-title">{{ __('menu.dashboards') }}</span>
+                <span class="menu-title" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>
                 <span class="menu-arrow d-lg-none"></span>
             </span>
             <!--end:Menu link-->
@@ -27,7 +27,7 @@
             class="menu-item {{ request()->routeIs('pages.*') ? 'here show' : '' }} menu-lg-down-accordion me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
-                <span class="menu-title">{{ __('menu.pages') }}</span>
+                <span class="menu-title" data-kt-translate="menu.pages">{{ __('menu.pages') }}</span>
                 <span class="menu-arrow d-lg-none"></span>
             </span>
             <!--end:Menu link-->
@@ -41,7 +41,7 @@
             class="menu-item {{ request()->routeIs(['apps.*']) ? 'here show' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
-                <span class="menu-title">{{ __('menu.apps') }}</span>
+                <span class="menu-title" data-kt-translate="menu.apps">{{ __('menu.apps') }}</span>
                 <span class="menu-arrow d-lg-none"></span>
             </span>
             <!--end:Menu link-->
@@ -60,7 +60,7 @@
             class="menu-item {{ request()->routeIs(['demo.*']) ? 'here show' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
-                <span class="menu-title">{{ __('menu.demo') }}</span>
+                <span class="menu-title" data-kt-translate="menu.demo">{{ __('menu.demo') }}</span>
                 <span class="menu-arrow d-lg-none"></span>
             </span>
             <!--end:Menu link-->
@@ -79,7 +79,7 @@
             class="menu-item {{ request()->routeIs(['help.*']) ? 'here show' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
-                <span class="menu-title">{{ __('menu.help') }}</span>
+                <span class="menu-title" data-kt-translate="menu.help">{{ __('menu.help') }}</span>
                 <span class="menu-arrow d-lg-none"></span>
             </span>
             <!--end:Menu link-->

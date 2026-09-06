@@ -17,22 +17,22 @@
         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-4 fs-7"
             data-kt-menu="true" @if (!empty($menuId)) id="{{ $menuId }}" @endif>
             <div class="menu-item px-3">
-                <a href="{{ route('lang.switch', 'en') }}"
+                <a href="javascript:void(0)"
                     class="menu-link d-flex px-5 {{ app()->getLocale() == 'en' ? 'active' : '' }}"
                     data-kt-element="lang-item" data-kt-value="en">
                     <span class="symbol symbol-20px me-4">
-                        <img class="rounded-1" src="{{ \App\Support\ThemeAsset::url('media/flags/united-states.svg', $theme_asset_pack ?? null) }}" alt="" />
+                        <img class="rounded-1" src="{{ \App\Support\ThemeAsset::url('media/flags/united-states.svg', $theme_asset_pack ?? null) }}" alt="English" />
                     </span>
                     <span>English</span>
                 </a>
             </div>
 
             <div class="menu-item px-3">
-                <a href="{{ route('lang.switch', 'id') }}"
+                <a href="javascript:void(0)"
                     class="menu-link d-flex px-5 {{ app()->getLocale() == 'id' ? 'active' : '' }}"
                     data-kt-element="lang-item" data-kt-value="id">
                     <span class="symbol symbol-20px me-4">
-                        <img class="rounded-1" src="{{ \App\Support\ThemeAsset::url('media/flags/indonesia.svg', $theme_asset_pack ?? null) }}" alt="" />
+                        <img class="rounded-1" src="{{ \App\Support\ThemeAsset::url('media/flags/indonesia.svg', $theme_asset_pack ?? null) }}" alt="Bahasa Indonesia" />
                     </span>
                     <span>Bahasa Indonesia</span>
                 </a>

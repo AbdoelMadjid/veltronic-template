@@ -145,9 +145,9 @@
         <div class="menu-sub menu-sub-dropdown w-175px py-4">
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('lang.switch', 'en') }}" class="menu-link d-flex px-5 {{ \App\Support\LanguageManager::current() === 'en' ? 'active' : '' }}" data-kt-element="lang-item" data-kt-value="en">
+                <a href="javascript:void(0)" class="menu-link d-flex px-5 {{ \App\Support\LanguageManager::current() === 'en' ? 'active' : '' }}" data-kt-element="lang-item" data-kt-value="en">
                     <span class="symbol symbol-20px me-4">
-                        <img class="rounded-1" src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/united-states.svg') }}" alt="" />
+                        <img class="rounded-1" src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/united-states.svg') }}" alt="English" />
                     </span>
                     English
                 </a>
@@ -155,9 +155,9 @@
             <!--end::Menu item-->
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('lang.switch', 'id') }}" class="menu-link d-flex px-5 {{ \App\Support\LanguageManager::current() === 'id' ? 'active' : '' }}" data-kt-element="lang-item" data-kt-value="id">
+                <a href="javascript:void(0)" class="menu-link d-flex px-5 {{ \App\Support\LanguageManager::current() === 'id' ? 'active' : '' }}" data-kt-element="lang-item" data-kt-value="id">
                     <span class="symbol symbol-20px me-4">
-                        <img class="rounded-1" src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/indonesia.svg') }}" alt="" />
+                        <img class="rounded-1" src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/indonesia.svg') }}" alt="Bahasa Indonesia" />
                     </span>
                     Bahasa Indonesia
                 </a>

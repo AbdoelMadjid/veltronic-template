@@ -29,8 +29,10 @@
             defaultLocale: defaultLocale,
             supportedLocales: supportedLocales,
             switchUrl: "{{ url('lang') }}",
-            translationsUrl: "{{ route('lang.translations') }}"
+            translationsUrl: "{{ route('lang.translations') }}",
+            payload: {!! json_encode(\App\Support\LanguageManager::getClientPayload(), JSON_UNESCAPED_UNICODE) !!}
         };
     })();
 </script>
 <!--end::Language setup on page load-->
+

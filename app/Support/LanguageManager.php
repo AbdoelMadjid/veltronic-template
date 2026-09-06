@@ -64,6 +64,11 @@ class LanguageManager
     }
 
     /**
+     * In-memory cached payload for request lifecycle.
+     */
+    protected static ?array $memoryPayload = null;
+
+    /**
      * Get all translation files merged for given or all locales.
      *
      * @param string|null $locale
@@ -114,6 +119,22 @@ class LanguageManager
      */
     public static function getClientPayload(): array
     {
+        if (self::$memoryPayload !== null) {
+            return self::$memoryPayload;
+        }
+
+        try {
+            if (class_exists(\Illuminate\Support\Facades\Cache::class)) {
+                $cached = \Illuminate\Support\Facades\Cache::get('kt_language_client_payload');
+                if (is_array($cached)) {
+                    self::$memoryPayload = $cached;
+                    return $cached;
+                }
+            }
+        } catch (\Throwable $e) {
+            // cache driver fallback
+        }
+
         $all = self::getTranslations();
         $flat = [
             'en' => [],
@@ -147,12 +168,24 @@ class LanguageManager
             }
         }
 
-        return [
+        $payload = [
             'current' => self::current(),
             'locales' => self::availableLocales(),
             'translations' => $flat,
             'textMap' => $textMap,
         ];
+
+        self::$memoryPayload = $payload;
+
+        try {
+            if (class_exists(\Illuminate\Support\Facades\Cache::class)) {
+                \Illuminate\Support\Facades\Cache::put('kt_language_client_payload', $payload, 86400);
+            }
+        } catch (\Throwable $e) {
+            // ignore cache write error
+        }
+
+        return $payload;
     }
 
     /**

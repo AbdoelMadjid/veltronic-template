@@ -511,19 +511,30 @@ var KTLanguage = (function () {
     };
 
     // Setup MutationObserver for dynamically added nodes (modals, ajax, tabs)
+    var observerTimeout = null;
     var initObserver = function () {
         if (observer || typeof MutationObserver === "undefined") return;
 
         observer = new MutationObserver(function (mutations) {
             if (isTranslating) return;
 
+            var pendingElements = [];
             mutations.forEach(function (mutation) {
                 mutation.addedNodes.forEach(function (node) {
-                    if (node.nodeType === 1) { // Element
-                        applyTranslations(node, currentLocale);
+                    if (node.nodeType === 1 && !shouldSkipElement(node)) {
+                        pendingElements.push(node);
                     }
                 });
             });
+
+            if (pendingElements.length > 0) {
+                clearTimeout(observerTimeout);
+                observerTimeout = setTimeout(function () {
+                    pendingElements.forEach(function (el) {
+                        applyTranslations(el, currentLocale);
+                    });
+                }, 50);
+            }
         });
 
         observer.observe(document.body, {
@@ -592,7 +603,13 @@ var KTLanguage = (function () {
     var init = function () {
         populateInitialDictionaries();
         currentLocale = getLanguage();
-        setLanguage(currentLocale, true, false);
+        updateUIControls(currentLocale);
+
+        // Only translate DOM on startup if active locale differs from default or explicit elements exist
+        if (currentLocale !== defaultLocale) {
+            applyTranslations(document.body, currentLocale);
+        }
+
         loadTranslations();
 
         // Bind global click listener for language switchers

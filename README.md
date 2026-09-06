@@ -207,7 +207,7 @@ Catatan:
 Variabel minimum yang biasanya perlu disesuaikan:
 
 ```env
-APP_NAME=Laravel
+APP_NAME=Veltronic
 APP_ENV=local
 APP_DEBUG=true
 APP_URL=http://localhost
@@ -215,9 +215,11 @@ APP_URL=http://localhost
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=metronic831-laravel12
+DB_DATABASE=veltronic-template
 DB_USERNAME=root
 DB_PASSWORD=
+
+DEFAULT_FRONTPAGE=landing
 
 QUEUE_CONNECTION=database
 CACHE_STORE=database

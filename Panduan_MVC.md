@@ -1,4 +1,4 @@
-# Panduan Arsitektur MVC - Metronic Laravel 12
+# Panduan Arsitektur MVC - Veltronic (Metronic 8.3.2 Laravel 12)
 
 Dokumen ini menjelaskan alur **Model-View-Controller (MVC)** yang benar-benar dipakai di project ini.
 

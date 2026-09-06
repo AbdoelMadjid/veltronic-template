@@ -1,76 +1,84 @@
-# Skema Pemilihan Bahasa
+# Skema Pemilihan Bahasa (Realtime Zero-Reload Bilingual Localization)
 
 URL aplikasi: `/help/pemrograman/skema/pemilihan-bahasa`
 
 [⬅ Kembali ke README Docs](../README.md)
 
-Locale dipilih dari user menu, disimpan di session, lalu diterapkan oleh middleware web pada setiap request.
+Blueprint arsitektur lokalisasi bilingual **English & Indonesian** secara real-time di seluruh aplikasi tanpa reload layar (< 5ms), terintegrasi dengan engine `KTLanguage`, inisialisasi anti-flicker, sinkronisasi session latar belakang, dan pengamatan DOM dinamis.
 
 Tag:
-- `locale default: en`
-- `fallback default: en`
+- `zero reload`
+- `offline ready`
+- `cookie & session sync`
+- `ktlanguage engine`
 
-## Flow Bahasa dari UI ke Runtime
+---
 
-Langkah/aturan:
-- 1. User klik English / Indonesian di user account menu.
-- 2. Link menuju `route('lang.switch', '{locale}')`.
-- 3. Route `/lang/{locale}` validasi whitelist locale.
-- 4. Locale valid disimpan dengan `session(['locale' => $locale])`.
-- 5. Redirect kembali ke halaman sebelumnya.
-- 6. Middleware `SetLocale` menjalankan `App::setLocale()`.
-- 7. Seluruh `__()` membaca file bahasa sesuai locale aktif.
+## 1. Alur Siklus Hidup (Live Zero-Reload Flow)
 
-## Titik Implementasi
+1. **Load Awal Anti-Flicker**: `partials.lang._init` membaca `localStorage['data-kt-lang']` / Cookie `kt_lang` dan menyematkan `<html data-kt-lang="id" lang="id">` sebelum render selesai.
+2. **Inisialisasi KTLanguage Engine**: `KTLanguage.init()` memuat kamus inti secara offline dan mengambil kamus penuh secara asinkron dari `/lang/translations.json` (atau payload in-memory Blade).
+3. **User Mengubah Bahasa**: Saat user memilih English / Indonesia dari dropdown navbar, mobile toolbar, atau user menu:
+   - Memperbarui atribut `data-kt-lang` dan `lang` pada `<html>`.
+   - Menyimpan preferensi ke `localStorage` dan Cookie `kt_lang`.
+   - Mengirim request fetch asinkron ke `/lang/{locale}` untuk sinkronisasi Session Laravel di latar belakang.
+   - Memperbarui bendera aktif dan checkmark pada dropdown seketika.
+   - Menerjemahkan teks DOM secara live via `data-kt-translate` dan kamus dua arah (EN ↔ ID).
+   - Memicu event kustom `kt.lang.change`.
+4. **Observasi Dinamis (MutationObserver)**: Elemen baru yang dimasukkan via modal atau AJAX otomatis diterjemahkan sesuai bahasa aktif.
+5. **Pengecualian Konten Help**: Kontainer dengan `data-kt-lang-ignore="true"`, `.schema-shell`, `.schema-hero`, dan `.schema-card` secara otomatis diabaikan agar dokumen internal tetap berbahasa Indonesia murni.
 
-- `routes/web.php`: endpoint switch locale `/lang/{locale}`.
-- `app/Http/Middleware/SetLocale.php`: baca session locale dan set ke runtime.
-- `bootstrap/app.php`: registrasi middleware `SetLocale` pada group `web`.
-- `resources/views/partials/menus/_user-account-menu.blade.php`: UI selector bahasa.
-- `config/app.php`: default locale dan fallback locale.
+---
 
-## Default dan Fallback
+## 2. Struktur Komponen & File Terkait
 
-- Session kosong -> pakai `config('app.locale')` (default `en`).
-- Key tidak ada -> fallback ke `config('app.fallback_locale')`.
-- Jika tetap tidak ada -> key mentah bisa tampil di UI.
+- `public/assets/js/custom/language.js`: Engine utama `KTLanguage` untuk manipulasi DOM dan sync.
+- `resources/views/partials/lang/_init.blade.php`: Script inisialisasi awal di layout head.
+- `resources/views/partials/lang/_main.blade.php`: Komponen dropdown pilihan bahasa universal (navbar, topbar v2).
+- `app/Support/LanguageManager.php`: Backend helper untuk mengelola locale dan kompilasi kamus terjemahan JSON.
+- `app/Http/Middleware/SetLocale.php`: Middleware runtime dengan fallback session dan cookie `kt_lang`.
+- `routes/web.php`: Endpoint `/lang/{locale}` (AJAX JSON) dan `/lang/translations.json`.
 
-## Pola Translasi Menu Dinamis
+---
 
-- Sumber string: `lang/en/menu.php` dan `lang/id/menu.php`.
-- Jika key tidak tersedia, renderer fallback ke text title asli.
+## 3. API JavaScript (KTLanguage)
 
-## Whitelist Locale
+```javascript
+// Mengambil bahasa yang aktif saat ini ('en' | 'id')
+var currentLang = KTLanguage.getLanguage();
 
-> Peringatan: Saat menambah bahasa baru, whitelist wajib diperbarui. Jika tidak, locale baru tidak akan tersimpan.
+// Mengubah bahasa secara programatik tanpa reload
+KTLanguage.setLanguage('id'); // 'en' atau 'id'
 
-## Tambah Bahasa Baru (contoh: ja)
+// Mengambil string terjemahan berdasarkan key
+var text = KTLanguage.translate('menu.dashboards', 'id'); // "Dasbor"
 
-- Buat `lang/ja/menu.php`.
-- Update whitelist locale jadi `['en', 'id', 'ja']`.
-- Tambah opsi language selector di user menu.
-- Tambah key label bahasa baru pada menu translation.
-- Uji perpindahan bahasa dan cek key yang belum terisi.
+// Menerapkan terjemahan pada kontainer tertentu
+KTLanguage.apply(document.querySelector('#modal_content'), 'id');
 
-## Edge Cases dan Debug Checklist
+// Mendengarkan event perubahan bahasa
+document.documentElement.addEventListener('kt.lang.change', function (e) {
+    console.log('Language changed to:', e.detail.locale);
+});
+```
 
-- `redirect()->back()` bergantung referer; tanpa referer perilaku redirect bisa berbeda.
-- File translasi yang tidak sinkron antar locale menimbulkan UI campuran bahasa.
-- Cache aktif dapat membuat perubahan bahasa terlihat terlambat.
+---
 
-> Catatan: Checklist cepat: cek session locale -> cek middleware terpasang -> cek key translation -> clear cache.
+## 4. Panduan Menulis Elemen di Blade
 
-## Standar Tim (Strict) Locale Switch
+```html
+<!-- Opsi A: Menggunakan data-kt-translate (Direkomendasikan) -->
+<span class="menu-title" data-kt-translate="menu.my_profile">
+    {{ __('menu.my_profile') }}
+</span>
 
-Langkah/aturan:
-- **Rule wajib:** locale switch harus melalui whitelist eksplisit, tidak menerima input bebas.
-- **Rule wajib:** saat menambah locale baru, update route whitelist + UI selector + file lang domain utama.
-- **Rule wajib:** fallback locale harus tetap terdefinisi untuk mencegah UI kosong.
-- **Rule wajib:** perubahan locale harus teruji lintas halaman dan lintas role user.
+<!-- Opsi B: Placeholder & Title Input -->
+<input type="text"
+    data-kt-translate-placeholder="menu.search_menu_placeholder"
+    placeholder="{{ __('menu.search_menu_placeholder') }}" />
 
-## Checklist Validasi Tambah Locale Baru
-
-- Menu utama tertranslate penuh tanpa key mentah tampil.
-- Halaman auth/error/validation tidak campur bahasa.
-- Switch locale tetap konsisten setelah login/logout.
-- Tidak ada overflow layout pada teks lebih panjang.
+<!-- Opsi C: Pengecualian Translasi (Konten Hardcoded) -->
+<div data-kt-lang-ignore="true">
+    <p>Teks ini tidak akan diterjemahkan oleh KTLanguage engine.</p>
+</div>
+```

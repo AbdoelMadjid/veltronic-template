@@ -1,8 +1,10 @@
 # Dokumentasi Skema Pemrograman
 
-Versi ringkas per submenu dari menu **Skema Pemrograman**.
+Versi ringkas per topik dari dokumentasi **Skema Pemrograman**.
 
 [⬅ Kembali ke README Utama](../../README.md)
+
+---
 
 ## Kelompok Skema
 - [Skema Route](./skema/route.md)
@@ -18,11 +20,17 @@ Versi ringkas per submenu dari menu **Skema Pemrograman**.
 - [Skema Cache dan Deployment](./skema/cache-dan-deployment.md)
 - [Skema Pemilihan Bahasa](./skema/pemilihan-bahasa.md)
 - [Skema i18n Lanjutan](./skema/i18n-lanjutan.md)
+- [Skema Pergantian Versi Tampilan](./skema/pergantian-versi-tampilan.md)
+- [Skema Pergantian Frontpage](./skema/pergantian-frontpage.md)
+- [Skema Pergantian Icon](./skema/pergantian-icon.md)
+
+---
 
 ## Kelompok Operasional
 - [Panduan Tambah Halaman](./operasional/panduan-tambah-halaman.md)
 - [Panduan Tambah Menu](./operasional/panduan-tambah-menu.md)
 - [Panduan Pergantian Versi Metronic](./operasional/panduan-pergantian-versi-metronic.md)
+- [Panduan Pergantian Frontpage](./operasional/panduan-pergantian-frontpage.md)
 - [Konvensi Penamaan](./operasional/konvensi-penamaan.md)
 - [Workflow Developer Harian](./operasional/workflow-developer-harian.md)
 - [Checklist QA Smoke Test](./operasional/checklist-qa-smoke-test.md)

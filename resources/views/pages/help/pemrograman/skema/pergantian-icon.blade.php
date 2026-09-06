@@ -20,7 +20,7 @@
 
 @section('content')
     <div id="kt_app_content" class="app-content flex-column-fluid">
-        <div id="kt_app_content_container" class="app-container container-fluid">
+        <div id="kt_app_content_container" class="app-container container-fluid" data-kt-lang-ignore="true">
             <div class="schema-shell">
                 <!--begin::Hero-->
                 <div class="schema-hero">

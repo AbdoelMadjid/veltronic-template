@@ -14,8 +14,8 @@
 
 @section('content')
     <div id="kt_app_content" class="app-content flex-column-fluid">
-        <div id="kt_app_content_container" class="app-container container-fluid">
-            <div class="card mb-5 mb-xl-8">
+        <div id="kt_app_content_container" class="app-container container-fluid" data-kt-lang-ignore="true">
+            <div class="card mb-5 mb-xl-8" data-kt-lang-ignore="true">
                 <div class="card-header border-0 pt-6">
                     <div class="card-title">
                         <h2 class="fw-bold">Skema Pemrograman</h2>

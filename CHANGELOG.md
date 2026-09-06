@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [v1.7.1] - 2026-09-06
+
+### Changed
+- **Help Documentation Hardcoded Bahasa Indonesia**:
+  - Standardized all internal documentation pages under `pages/help/pemrograman` (Overview, 16 Skema blueprints, 8 Operasional guides, Console Developer, and Changelog) to pure hardcoded Bahasa Indonesia without bilingual translation dependencies.
+  - Cleaned up redundant help dictionary files (`lang/en/help.php`, `lang/id/help.php`) and audit script (`scripts/help_i18n_audit.php`).
+
+### Added
+- **DOM Translation Exemption Engine (`KTLanguage`)**:
+  - Enhanced `shouldSkipElement()` in `public/assets/js/custom/language.js` to strictly skip containers marked with `data-kt-lang-ignore="true"`, `.schema-shell`, `.schema-hero`, and `.schema-card`.
+  - Bumped and auto-invalidated stale client `localStorage` translation cache (`kt_translations_cache` v3).
+- **Documentation Alignment**:
+  - Added missing markdown documentation for Frontpage Switching (`pergantian-frontpage.md`), KeenIcons Switching (`pergantian-icon.md`), and Theme Multi-Version (`pergantian-versi-tampilan.md`).
+  - Synchronized `README.md` and `docs/skema-pemrograman/README.md` with active project architecture and GitHub repository URL.
+
+---
+
 ## [v1.7.0] - 2026-09-06
 
 ### Added

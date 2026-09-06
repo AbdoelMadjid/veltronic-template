@@ -1,9 +1,9 @@
-# Metronic 8.3.2 - Laravel 12
+# Veltronic - Metronic 8.3.2 Laravel 12 Template
 
-Project ini adalah implementasi Metronic pada Laravel 12.
+Project ini adalah template enterprise berbasis Metronic 8.3.2 pada Laravel 12 dengan fitur dynamic menu management, realtime live bilingual (EN/ID), dynamic frontpage switching, KeenIcons switching, multi-version theme resolver, dan role-permission system.
 
 Repository:
-`https://github.com/AbdoelMadjid/metronic-832-laravel-12.git`
+`https://github.com/AbdoelMadjid/veltronic-template.git`
 
 ## Table of Contents
 
@@ -44,8 +44,8 @@ Repository:
 ## 1. Clone Project
 
 ```bash
-git clone https://github.com/AbdoelMadjid/metronic-832-laravel-12.git
-cd metronic-832-laravel-12
+git clone https://github.com/AbdoelMadjid/veltronic-template.git
+cd veltronic-template
 ```
 
 <div align="right"><a href="#table-of-contents" title="Back to Table of Contents">&#8679;</a></div>
@@ -479,8 +479,11 @@ Seluruh daftar di bawah diselaraskan dengan route help:
     <tr><td>Skema Data Layer</td><td>Pola model, migration, query, dan pemisahan logic data dari view.</td><td><code>/help/pemrograman/skema/data-layer</code></td><td><a href="./docs/skema-pemrograman/skema/data-layer.md">data-layer.md</a></td></tr>
     <tr><td>Skema Error Handling & Fallback</td><td>Fallback 404 dan penanganan error supaya UX tetap konsisten.</td><td><code>/help/pemrograman/skema/error-handling-dan-fallback</code></td><td><a href="./docs/skema-pemrograman/skema/error-handling-dan-fallback.md">error-handling-dan-fallback.md</a></td></tr>
     <tr><td>Skema Cache & Deployment</td><td>Strategi cache command dan urutan deploy yang minim risiko.</td><td><code>/help/pemrograman/skema/cache-dan-deployment</code></td><td><a href="./docs/skema-pemrograman/skema/cache-dan-deployment.md">cache-dan-deployment.md</a></td></tr>
-    <tr><td>Skema Pemilihan Bahasa</td><td>Switch locale berbasis session dan dampaknya ke translasi UI.</td><td><code>/help/pemrograman/skema/pemilihan-bahasa</code></td><td><a href="./docs/skema-pemrograman/skema/pemilihan-bahasa.md">pemilihan-bahasa.md</a></td></tr>
+    <tr><td>Skema Pemilihan Bahasa</td><td>Switch locale realtime zero-reload (KTLanguage) dan sumber terjemahan.</td><td><code>/help/pemrograman/skema/pemilihan-bahasa</code></td><td><a href="./docs/skema-pemrograman/skema/pemilihan-bahasa.md">pemilihan-bahasa.md</a></td></tr>
     <tr><td>Skema i18n Lanjutan</td><td>Standar key translasi, fallback, dan governance i18n tim.</td><td><code>/help/pemrograman/skema/i18n-lanjutan</code></td><td><a href="./docs/skema-pemrograman/skema/i18n-lanjutan.md">i18n-lanjutan.md</a></td></tr>
+    <tr><td>Skema Pergantian Versi Tampilan</td><td>Blueprint multi-versi Metronic (v1 & v2), suffix resolver, dan asset packaging.</td><td><code>/help/pemrograman/skema/pergantian-versi-tampilan</code></td><td><a href="./docs/skema-pemrograman/skema/pergantian-versi-tampilan.md">pergantian-versi-tampilan.md</a></td></tr>
+    <tr><td>Skema Pergantian Frontpage</td><td>Arsitektur dynamic frontpage loader, session-cookie-config hierarchy, dan root view.</td><td><code>/help/pemrograman/skema/pergantian-frontpage</code></td><td><a href="./docs/skema-pemrograman/skema/pergantian-frontpage.md">pergantian-frontpage.md</a></td></tr>
+    <tr><td>Skema Pergantian Icon</td><td>Dinamisasi gaya icon KeenIcons (Duotone, Solid, Outline) secara realtime tanpa reload.</td><td><code>/help/pemrograman/skema/pergantian-icon</code></td><td><a href="./docs/skema-pemrograman/skema/pergantian-icon.md">pergantian-icon.md</a></td></tr>
   </tbody>
 </table>
 
@@ -501,6 +504,7 @@ Seluruh daftar di bawah diselaraskan dengan route help:
     <tr><td>Panduan Tambah Halaman</td><td>Flow end-to-end tambah halaman dari file Blade sampai validasi akhir.</td><td><code>/help/pemrograman/operasional/panduan-tambah-halaman</code></td><td><a href="./docs/skema-pemrograman/operasional/panduan-tambah-halaman.md">panduan-tambah-halaman.md</a></td></tr>
     <tr><td>Panduan Tambah Menu</td><td>Standar tambah item sidebar/header, route vs href, dan active state.</td><td><code>/help/pemrograman/operasional/panduan-tambah-menu</code></td><td><a href="./docs/skema-pemrograman/operasional/panduan-tambah-menu.md">panduan-tambah-menu.md</a></td></tr>
     <tr><td>Panduan Pergantian Versi Metronic</td><td>Playbook upgrade versi tema agar tidak hardcode dan minim regresi.</td><td><code>/help/pemrograman/operasional/panduan-pergantian-versi-metronic</code></td><td><a href="./docs/skema-pemrograman/operasional/panduan-pergantian-versi-metronic.md">panduan-pergantian-versi-metronic.md</a></td></tr>
+    <tr><td>Panduan Pergantian Frontpage</td><td>Langkah memilih template frontpage via topbar, konfigurasi `.env`, dan tambah template.</td><td><code>/help/pemrograman/operasional/panduan-pergantian-frontpage</code></td><td><a href="./docs/skema-pemrograman/operasional/panduan-pergantian-frontpage.md">panduan-pergantian-frontpage.md</a></td></tr>
     <tr><td>Konvensi Penamaan</td><td>Aturan nama file, route, dan key translasi agar konsisten EN/ID.</td><td><code>/help/pemrograman/operasional/konvensi-penamaan</code></td><td><a href="./docs/skema-pemrograman/operasional/konvensi-penamaan.md">konvensi-penamaan.md</a></td></tr>
     <tr><td>Workflow Developer Harian</td><td>Ritme kerja harian: implementasi, quality gate, dan release readiness.</td><td><code>/help/pemrograman/operasional/workflow-developer-harian</code></td><td><a href="./docs/skema-pemrograman/operasional/workflow-developer-harian.md">workflow-developer-harian.md</a></td></tr>
     <tr><td>Checklist QA Smoke Test</td><td>Checklist minimum sebelum merge/release untuk menekan regresi.</td><td><code>/help/pemrograman/operasional/checklist-qa-smoke-test</code></td><td><a href="./docs/skema-pemrograman/operasional/checklist-qa-smoke-test.md">checklist-qa-smoke-test.md</a></td></tr>

@@ -20,9 +20,9 @@
 
 @section('content')
     <div id="kt_app_content" class="app-content flex-column-fluid">
-        <div id="kt_app_content_container" class="app-container container-fluid">
+        <div id="kt_app_content_container" class="app-container container-fluid" data-kt-lang-ignore="true">
             <!--begin::Version & Tags History Card-->
-            <div class="card mb-5 mb-xl-8 border">
+            <div class="card mb-5 mb-xl-8 border" data-kt-lang-ignore="true">
                 <div class="card-header border-0 pt-6">
                     <div class="card-title d-flex align-items-center gap-3">
                         <div class="symbol symbol-40px">
@@ -48,13 +48,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.7.0
+                            Versi Saat Ini: v1.7.1
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.7.1 (Patch)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.7.1</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-warning fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-warning fw-bold">v1.7.1</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>06 Sep 2026, 21:35 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Hardcoded Bahasa Indonesia Documentation &amp; Dynamic Localization Ignore Engine</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Standarisasi seluruh dokumentasi internal Skema Pemrograman dan Operasional menjadi Bahasa Indonesia murni tanpa dependensi kamus terjemahan, penghapusan file kamus help yang tidak terpakai, penambahan fitur pengecualian translasi DOM (<code>data-kt-lang-ignore</code>) pada engine <code>KTLanguage</code>, serta sinkronisasi penuh dokumentasi Markdown dan README.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Help Documentation Hardcoded Bahasa Indonesia:</strong> Seluruh halaman dokumentasi di <code>resources/views/pages/help/pemrograman</code> (Overview, 16 Skema, 8 Operasional, Console Developer, dan Changelog) murni menggunakan Bahasa Indonesia langsung dengan struktur visual dan styling yang tetap utuh.</li>
+                                        <li class="mb-1"><strong>Pembersihan Kamus Translasi Redundan:</strong> Menghapus file kamus terjemahan <code>lang/en/help.php</code>, <code>lang/id/help.php</code>, dan script audit <code>scripts/help_i18n_audit.php</code> untuk efisiensi kompilasi dictionary.</li>
+                                        <li class="mb-1"><strong>DOM Translation Exemption Engine (KTLanguage):</strong> Memperbarui fungsi <code>shouldSkipElement()</code> di <code>public/assets/js/custom/language.js</code> untuk otomatis melewati elemen dengan <code>data-kt-lang-ignore="true"</code>, <code>.schema-shell</code>, <code>.schema-hero</code>, dan <code>.schema-card</code> agar tidak tertranslasi saat bahasa English aktif.</li>
+                                        <li class="mb-1"><strong>Invalidation Cache Client:</strong> Otomatis mereset dan memperbarui versi cache translasi <code>localStorage</code> (<code>kt_translations_cache</code> v3).</li>
+                                        <li class="mb-1"><strong>Sinkronisasi Dokumentasi Markdown &amp; README:</strong> Menambahkan dokumen Markdown lengkap untuk Skema Frontpage, Icon, Theme Multi-Version, dan memperbarui seluruh tabel indeks serta URL repositori GitHub.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.7.1-->
+
                         <!--begin::Item v1.7.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.7.0</div>
@@ -70,7 +105,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>06 Sep 2026, 21:00 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Realtime Zero-Reload Bilingual Localization (English &harr; Indonesian) & Mobile Toolbar Hub Integration</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

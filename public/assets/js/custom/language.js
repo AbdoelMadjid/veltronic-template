@@ -202,14 +202,16 @@ var KTLanguage = (function () {
             ingestPayload(window.KTLanguageConfig.payload);
         }
 
-        // 2. Try localStorage cache
+        // 2. Try localStorage cache (v3 with help-exempt)
         if (!isLoaded) {
             try {
                 var cached = localStorage.getItem("kt_translations_cache");
                 if (cached) {
                     var parsed = JSON.parse(cached);
-                    if (parsed) {
+                    if (parsed && parsed.v === 3) {
                         ingestPayload(parsed);
+                    } else {
+                        localStorage.removeItem("kt_translations_cache");
                     }
                 }
             } catch (e) { }
@@ -239,6 +241,7 @@ var KTLanguage = (function () {
                     // Update localStorage cache
                     try {
                         localStorage.setItem("kt_translations_cache", JSON.stringify({
+                            v: 3,
                             translations: translations,
                             textMap: textMap,
                             timestamp: Date.now()
@@ -386,7 +389,7 @@ var KTLanguage = (function () {
     var shouldSkipElement = function (el) {
         if (!el || el.nodeType !== 1) return true;
         if (el.hasAttribute("data-kt-lang-ignore") || el.getAttribute("data-kt-lang-ignore") === "true") return true;
-        if (el.closest('[data-kt-lang-ignore="true"]')) return true;
+        if (el.closest('[data-kt-lang-ignore="true"], [data-kt-lang-ignore], .schema-shell, .schema-hero, .schema-card, [data-help-page], [data-kt-ignore-lang]')) return true;
         if (el.matches("script, style, code, pre, textarea, [contenteditable]")) return true;
         return false;
     };

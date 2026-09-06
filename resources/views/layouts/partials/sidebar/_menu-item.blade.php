@@ -113,10 +113,13 @@
         $level .
         '_collapse';
     // Ambil judul dari title_key (jika ada), fallback ke slug title, lalu fallback teks asli title.
-    $resolveMenuTitle = function ($item) {
-        $titleKey = isset($item['title_key'])
+    $resolveMenuTitleKey = function ($item) {
+        return isset($item['title_key'])
             ? 'menu.' . $item['title_key']
             : 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $item['title'] ?? ''));
+    };
+    $resolveMenuTitle = function ($item) use ($resolveMenuTitleKey) {
+        $titleKey = $resolveMenuTitleKey($item);
         return __($titleKey) != $titleKey ? __($titleKey) : $item['title'] ?? '';
     };
     $resolveMenuBadgeLabel = function ($item) {
@@ -157,7 +160,7 @@
             @else
                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
             @endif
-            <span class="menu-title">{{ $resolveMenuTitle($menu) }}</span>
+            <span class="menu-title" data-kt-translate="{{ $resolveMenuTitleKey($menu) }}">{{ $resolveMenuTitle($menu) }}</span>
             <span class="menu-arrow"></span>
         </span>
 
@@ -229,15 +232,14 @@
             @else
                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
             @endif
-            <span class="menu-title">{{ $resolveMenuTitle($menu) }}</span>
+            <span class="menu-title" data-kt-translate="{{ $resolveMenuTitleKey($menu) }}">{{ $resolveMenuTitle($menu) }}</span>
             <span class="menu-arrow"></span>
         </span>
 
         <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-2 py-4 w-200px mh-75 overflow-auto">
             @foreach ($children as $child)
                 @php
-                    $childTitleKey =
-                        'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $child['title']));
+                    $childTitleKey = $resolveMenuTitleKey($child);
                 @endphp
                 <div class="menu-item">
                     <a class="menu-link {{ $isRouteActive($child['route'] ?? null) ? 'active' : '' }}"
@@ -245,7 +247,7 @@
                         {{ isset($menu['target']) ? 'target=' . $menu['target'] : '' }}>
                         <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                         <span
-                            class="menu-title">{{ __($childTitleKey) != $childTitleKey ? __($childTitleKey) : $child['title'] }}</span>
+                            class="menu-title" data-kt-translate="{{ $childTitleKey }}">{{ __($childTitleKey) != $childTitleKey ? __($childTitleKey) : $child['title'] }}</span>
                     </a>
                 </div>
             @endforeach
@@ -268,7 +270,7 @@
             @else
                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
             @endif
-            <span class="menu-title">{{ $resolveMenuTitle($menu) }}</span>
+            <span class="menu-title" data-kt-translate="{{ $resolveMenuTitleKey($menu) }}">{{ $resolveMenuTitle($menu) }}</span>
 
 
             @if (isset($menu['badge']))

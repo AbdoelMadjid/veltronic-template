@@ -22,132 +22,155 @@
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <div id="kt_app_content_container" class="app-container container-fluid">
             <div class="schema-shell">
+                <!--begin::Hero-->
                 <div class="schema-hero">
-                    <span class="schema-pill">Localization Flow</span>
-                    <h2 class="fw-bold">Skema Pemilihan Bahasa</h2>
+                    <span class="schema-pill">Live Bilingual Engine</span>
+                    <h2 class="fw-bold">Skema Pemilihan Bahasa (No-Reload Dynamic Switcher)</h2>
                     <p class="schema-lead">
-                        Locale dipilih dari user menu, disimpan di session, lalu diterapkan oleh middleware web pada setiap request.
+                        Blueprint arsitektur lokalisasi bilingual <strong>English &amp; Indonesian</strong> secara real-time di seluruh aplikasi tanpa reload layar (< 5ms), terintegrasi dengan engine <code>KTLanguage</code>, anti-flicker init, background session sync, dan pengamatan DOM dinamis.
                     </p>
                 </div>
+                <!--end::Hero-->
 
+                <!--begin::Grid-->
                 <div class="schema-grid">
+                    <!--begin::Col 1: Alur Perpindahan Bahasa-->
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>Flow Bahasa dari UI ke Runtime</h4>
+                            <h4>1. Alur Siklus Hidup (Live Zero-Reload Flow)</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">1. User klik English / Indonesian di user account menu.</div>
-                                <div class="schema-step">2. Link menuju <code>route('lang.switch', '{locale}')</code>.</div>
-                                <div class="schema-step">3. Route <code>/lang/{locale}</code> validasi whitelist locale.</div>
-                                <div class="schema-step">4. Locale valid disimpan dengan <code>session(['locale' => $locale])</code>.</div>
-                                <div class="schema-step">5. Redirect kembali ke halaman sebelumnya.</div>
-                                <div class="schema-step">6. Middleware <code>SetLocale</code> menjalankan <code>App::setLocale()</code>.</div>
-                                <div class="schema-step">7. Seluruh <code>__()</code> membaca file bahasa sesuai locale aktif.</div>
+                                <div class="schema-step">
+                                    <strong>1. Load Awal Anti-Flicker:</strong> <code>partials.lang._init</code> membaca <code>localStorage['data-kt-lang']</code> / Cookie <code>kt_lang</code> dan menyematkan <code>&lt;html data-kt-lang="id" lang="id"&gt;</code> sebelum render selesai.
+                                </div>
+                                <div class="schema-step">
+                                    <strong>2. Inisialisasi KTLanguage Engine:</strong> <code>KTLanguage.init()</code> memuat kamus inti secara offline dan mengambil kamus penuh secara asinkron dari <code>/lang/translations.json</code>.
+                                </div>
+                                <div class="schema-step">
+                                    <strong>3. User Mengubah Bahasa:</strong> Saat user memilih English / Indonesia dari dropdown navbar, mobile toolbar, atau user menu:
+                                    <ul class="fs-8 text-gray-700 mt-1 mb-0 ps-3">
+                                        <li>Memperbarui atribut <code>data-kt-lang</code> dan <code>lang</code> pada <code>&lt;html&gt;</code>.</li>
+                                        <li>Menyimpan preferensi ke <code>localStorage</code> dan Cookie <code>kt_lang</code>.</li>
+                                        <li>Mengirim request fetch asinkron ke <code>/lang/{locale}</code> untuk sinkronisasi Session Laravel di latar belakang.</li>
+                                        <li>Memperbarui ikon bendera aktif dan status link pada dropdown seketika.</li>
+                                        <li>Menerjemahkan teks DOM secara live via <code>data-kt-translate</code> dan kamus dua arah (EN &harr; ID).</li>
+                                        <li>Memicu event kustom <code>kt.lang.change</code>.</li>
+                                    </ul>
+                                </div>
+                                <div class="schema-step">
+                                    <strong>4. Observasi Dinamis (MutationObserver):</strong> Elemen baru yang dimasukkan via modal, AJAX, atau collapse otomatis diterjemahkan sesuai bahasa aktif.
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!--end::Col 1-->
 
+                    <!--begin::Col 2: Struktur Komponen & Modul-->
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>Titik Implementasi</h4>
+                            <h4>2. Struktur Komponen &amp; File Terkait</h4>
                             <ul class="schema-list">
-                                <li><code>routes/web.php</code>: endpoint switch locale <code>/lang/{locale}</code>.</li>
-                                <li><code>app/Http/Middleware/SetLocale.php</code>: baca session locale dan set ke runtime.</li>
-                                <li><code>bootstrap/app.php</code>: registrasi middleware <code>SetLocale</code> pada group <code>web</code>.</li>
-                                <li><code>resources/views/partials/menus/_user-account-menu.blade.php</code>: UI selector bahasa.</li>
-                                <li><code>config/app.php</code>: default locale dan fallback locale.</li>
+                                <li><code>public/assets/js/custom/language.js</code>: Engine utama <code>KTLanguage</code> untuk manipulasi DOM dan sync.</li>
+                                <li><code>resources/views/partials/lang/_init.blade.php</code>: Script inisialisasi awal di layout head.</li>
+                                <li><code>resources/views/partials/lang/_main.blade.php</code>: Komponen dropdown pilihan bahasa universal (navbar, topbar v2).</li>
+                                <li><code>app/Support/LanguageManager.php</code>: Backend helper untuk mengelola locale dan kompilasi kamus terjemahan JSON.</li>
+                                <li><code>app/Http/Middleware/SetLocale.php</code>: Middleware runtime dengan fallback session dan cookie <code>kt_lang</code>.</li>
+                                <li><code>routes/web.php</code>: Endpoint <code>/lang/{locale}</code> (AJAX JSON) dan <code>/lang/translations.json</code>.</li>
                             </ul>
-                        </div>
-                    </div>
-
-                    <div class="schema-col-6">
-                        <div class="schema-card">
-                            <h4>Default dan Fallback</h4>
-                            <ul class="schema-list">
-                                <li>Session kosong -> pakai <code>config('app.locale')</code> (default <code>en</code>).</li>
-                                <li>Key tidak ada -> fallback ke <code>config('app.fallback_locale')</code>.</li>
-                                <li>Jika tetap tidak ada -> key mentah bisa tampil di UI.</li>
-                            </ul>
-                            <div class="schema-meta">
-                                <span class="schema-chip">locale default: en</span>
-                                <span class="schema-chip">fallback default: en</span>
+                            <div class="schema-meta mt-3">
+                                <span class="schema-chip">Zero Reload</span>
+                                <span class="schema-chip">Offline Ready</span>
+                                <span class="schema-chip">Cookie &amp; Session Sync</span>
                             </div>
                         </div>
                     </div>
+                    <!--end::Col 2-->
 
+                    <!--begin::Col 3: API JavaScript-->
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>Pola Translasi Menu Dinamis</h4>
-                            <pre class="schema-code"><code>// title config menu
-'Skema Pemrograman'
+                            <h4>3. API JavaScript (<code>KTLanguage</code>)</h4>
+                            <p class="text-gray-700 fs-7">
+                                Modul <code>KTLanguage</code> dapat diakses secara global untuk kontrol terprogram di JavaScript:
+                            </p>
+                            <pre class="schema-code"><code>// Mengambil bahasa yang aktif saat ini ('en' | 'id')
+var currentLang = KTLanguage.getLanguage();
 
-// key yang dicari
-menu.skema_pemrograman</code></pre>
-                            <ul class="schema-list mt-4">
-                                <li>Sumber string: <code>lang/en/menu.php</code> dan <code>lang/id/menu.php</code>.</li>
-                                <li>Jika key tidak tersedia, renderer fallback ke text title asli.</li>
-                            </ul>
+// Mengubah bahasa secara programatik tanpa reload
+KTLanguage.setLanguage('id'); // 'en' atau 'id'
+
+// Mengambil string terjemahan berdasarkan key
+var text = KTLanguage.translate('menu.dashboards', 'id'); // "Dasbor"
+
+// Menerapkan terjemahan pada kontainer tertentu (misal setelah load ajax)
+KTLanguage.apply(document.querySelector('#modal_content'), 'id');
+
+// Mendengarkan event perubahan bahasa
+document.documentElement.addEventListener('kt.lang.change', function (e) {
+    console.log('Language changed to:', e.detail.locale);
+});</code></pre>
                         </div>
                     </div>
+                    <!--end::Col 3-->
 
+                    <!--begin::Col 4: Panduan Menulis Elemen Bilingual di Blade-->
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>Whitelist Locale</h4>
-                            <pre class="schema-code"><code>if (in_array($locale, ['en', 'id'])) {
-    session(['locale' => $locale]);
-}</code></pre>
-                            <div class="schema-warn mt-4">Saat menambah bahasa baru, whitelist wajib diperbarui. Jika tidak, locale baru tidak akan tersimpan.</div>
+                            <h4>4. Panduan Menulis Elemen di Blade</h4>
+                            <div class="schema-flow">
+                                <div class="schema-step">
+                                    <strong>Opsi A: Menggunakan data-kt-translate (Direkomendasikan)</strong>
+                                    <pre class="schema-code"><code>&lt;span class="menu-title" data-kt-translate="menu.my_profile"&gt;
+    {{ __('menu.my_profile') }}
+&lt;/span&gt;</code></pre>
+                                </div>
+                                <div class="schema-step">
+                                    <strong>Opsi B: Placeholder &amp; Title Input</strong>
+                                    <pre class="schema-code"><code>&lt;input type="text"
+    data-kt-translate-placeholder="menu.search_menu_placeholder"
+    placeholder="{{ __('menu.search_menu_placeholder') }}" /&gt;</code></pre>
+                                </div>
+                                <div class="schema-step">
+                                    <strong>Opsi C: Inline Bilingual Custom Text</strong>
+                                    <pre class="schema-code"><code>&lt;span data-kt-lang-en="Download Report" data-kt-lang-id="Unduh Laporan"&gt;
+    Download Report
+&lt;/span&gt;</code></pre>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!--end::Col 4-->
 
-                    <div class="schema-col-6">
-                        <div class="schema-card">
-                            <h4>Tambah Bahasa Baru (contoh: ja)</h4>
-                            <ol class="schema-list">
-                                <li>Buat <code>lang/ja/menu.php</code>.</li>
-                                <li>Update whitelist locale jadi <code>['en', 'id', 'ja']</code>.</li>
-                                <li>Tambah opsi language selector di user menu.</li>
-                                <li>Tambah key label bahasa baru pada menu translation.</li>
-                                <li>Uji perpindahan bahasa dan cek key yang belum terisi.</li>
-                            </ol>
-                        </div>
-                    </div>
-
+                    <!--begin::Col 5: Whitelist & Kamus Bahasa-->
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>Edge Cases dan Debug Checklist</h4>
-                            <ul class="schema-list">
-                                <li><code>redirect()->back()</code> bergantung referer; tanpa referer perilaku redirect bisa berbeda.</li>
-                                <li>File translasi yang tidak sinkron antar locale menimbulkan UI campuran bahasa.</li>
-                                <li>Cache aktif dapat membuat perubahan bahasa terlihat terlambat.</li>
-                            </ul>
-                            <div class="schema-note mt-4">Checklist cepat: cek session locale -> cek middleware terpasang -> cek key translation -> clear cache.</div>
-                        </div>
-                    </div>
-
-                    <div class="schema-col-6">
-                        <div class="schema-card">
-                            <h4>Standar Tim (Strict) Locale Switch</h4>
-                            <div class="schema-flow">
-                                <div class="schema-step"><strong>Rule wajib:</strong> locale switch harus melalui whitelist eksplisit, tidak menerima input bebas.</div>
-                                <div class="schema-step"><strong>Rule wajib:</strong> saat menambah locale baru, update route whitelist + UI selector + file lang domain utama.</div>
-                                <div class="schema-step"><strong>Rule wajib:</strong> fallback locale harus tetap terdefinisi untuk mencegah UI kosong.</div>
-                                <div class="schema-step"><strong>Rule wajib:</strong> perubahan locale harus teruji lintas halaman dan lintas role user.</div>
+                            <h4>5. Menambah Bahasa Baru (Ekspansi Masa Depan)</h4>
+                            <div class="schema-grid">
+                                <div class="schema-col-6">
+                                    <div class="p-4 rounded border bg-light">
+                                        <h5 class="fs-6 fw-bold mb-2">Langkah Backend</h5>
+                                        <ol class="fs-8 text-gray-700 ps-3 mb-0">
+                                            <li>Buat direktori <code>lang/{kode_bahasa}/</code> (misal <code>lang/ja/</code>).</li>
+                                            <li>Tambahkan kode bahasa ke <code>LanguageManager::availableLocales()</code>.</li>
+                                            <li>Tambahkan file terjemahan <code>menu.php</code>, <code>auth.php</code>, dsb.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="schema-col-6">
+                                    <div class="p-4 rounded border bg-light">
+                                        <h5 class="fs-6 fw-bold mb-2">Langkah Frontend</h5>
+                                        <ol class="fs-8 text-gray-700 ps-3 mb-0">
+                                            <li>Tambahkan kode bahasa ke <code>supportedLocales</code> di <code>language.js</code> &amp; <code>_init.blade.php</code>.</li>
+                                            <li>Tambahkan item pilihan bahasa pada dropdown <code>partials.lang._main</code>.</li>
+                                            <li>Sediakan asset bendera SVG di <code>assets/media/flags/{nama}.svg</code>.</li>
+                                        </ol>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="schema-col-6">
-                        <div class="schema-card">
-                            <h4>Checklist Validasi Tambah Locale Baru</h4>
-                            <ul class="schema-list">
-                                <li>Menu utama tertranslate penuh tanpa key mentah tampil.</li>
-                                <li>Halaman auth/error/validation tidak campur bahasa.</li>
-                                <li>Switch locale tetap konsisten setelah login/logout.</li>
-                                <li>Tidak ada overflow layout pada teks lebih panjang.</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <!--end::Col 5-->
                 </div>
+                <!--end::Grid-->
             </div>
         </div>
     </div>

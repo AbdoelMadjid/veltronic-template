@@ -10,9 +10,10 @@
                 </i>
                 <input type="text" id="kt_app_sidebar_menu_search_input"
                     class="form-control form-control-sm bg-transparent ps-11"
+                    data-kt-translate-placeholder="menu.search_menu_placeholder"
                     placeholder="{{ __('menu.search_menu_placeholder') }}" autocomplete="off" />
             </div>
-            <div id="kt_app_sidebar_menu_search_empty" class="fs-8 text-muted pt-2 d-none">
+            <div id="kt_app_sidebar_menu_search_empty" class="fs-8 text-muted pt-2 d-none" data-kt-translate="menu.search_menu_not_found">
                 {{ __('menu.search_menu_not_found') }}
             </div>
         </div>
@@ -36,7 +37,7 @@
                                 <span class="path4"></span>
                             </i>
                         </span>
-                        <span class="menu-title">{{ __('menu.homepage') }}</span>
+                        <span class="menu-title" data-kt-translate="menu.homepage">{{ __('menu.homepage') }}</span>
                     </a>
                     <!--end:Menu link-->
                 </div>
@@ -47,7 +48,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item pt-5">
                     <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">{{ __('menu.dashboards') }}</span>
+                        <span class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>
                     </div>
                 </div>
                 <!--begin:Menu item-->
@@ -63,7 +64,7 @@
                                 <span class="path4"></span>
                             </i>
                         </span>
-                        <span class="menu-title">{{ __('menu.dashboards') }}</span>
+                        <span class="menu-title" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>
                         <span class="menu-arrow"></span>
                     </span>
                     <!--end:Menu link-->
@@ -77,7 +78,7 @@
                                     href="{{ route($menu['route']) }}">
                                     <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                     <span
-                                        class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                        class="menu-title" data-kt-translate="{{ $titleKey }}">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
                                 </a>
                             </div>
                         @endforeach
@@ -107,7 +108,7 @@
                                         href="{{ route($menu['route']) }}">
                                         <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                         <span
-                                            class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                            class="menu-title" data-kt-translate="{{ $titleKey }}">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
                                     </a>
                                 </div>
                             @endforeach

@@ -88,51 +88,7 @@
     @include('partials.icon-style._main', ['wrapper_class' => 'app-navbar-item d-none d-lg-flex ms-1 ms-md-4'])
     <!--end::Icon style-->
     <!--begin::Language-->
-    <div class="app-navbar-item ms-1 ms-md-4">
-        <!--begin::Menu wrapper-->
-        <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
-            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-            data-kt-menu-placement="bottom-end">
-            @if (app()->getLocale() == 'id')
-                <img class="w-20px h-20px rounded-1"
-                    src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/indonesia.svg') }}" alt="Indonesia" />
-            @else
-                <img class="w-20px h-20px rounded-1"
-                    src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/united-states.svg') }}" alt="English" />
-            @endif
-        </div>
-        <!--begin::Menu sub-->
-        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-175px py-4 fs-7"
-            data-kt-menu="true">
-            <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <a href="{{ route('lang.switch', 'en') }}"
-                    class="menu-link d-flex px-5 {{ app()->getLocale() == 'en' ? 'active' : '' }}">
-                    <span class="symbol symbol-20px me-4">
-                        <img class="rounded-1"
-                            src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/united-states.svg') }}"
-                            alt="" />
-                    </span>
-                    {{ __('menu.english') }}
-                </a>
-            </div>
-            <!--end::Menu item-->
-            <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <a href="{{ route('lang.switch', 'id') }}"
-                    class="menu-link d-flex px-5 {{ app()->getLocale() == 'id' ? 'active' : '' }}">
-                    <span class="symbol symbol-20px me-4">
-                        <img class="rounded-1"
-                            src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/indonesia.svg') }}" alt="" />
-                    </span>
-                    {{ __('menu.indonesian') }}
-                </a>
-            </div>
-            <!--end::Menu item-->
-        </div>
-        <!--end::Menu sub-->
-        <!--end::Menu wrapper-->
-    </div>
+    @include('partials.lang._main', ['wrapper_class' => 'app-navbar-item d-none d-lg-flex ms-1 ms-md-4'])
     <!--end::Language-->
     <!--begin::Version switcher-->
     @php

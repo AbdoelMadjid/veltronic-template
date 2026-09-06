@@ -14,6 +14,16 @@ Route::prefix('education')->name('education.')->group(function () use ($educatio
     Route::get('lang/{locale}', function (Request $request, string $locale) {
         if (in_array($locale, ['en', 'id'], true)) {
             $request->session()->put('locale', $locale);
+            \Illuminate\Support\Facades\Cookie::queue('kt_lang', $locale, 525600);
+            \Illuminate\Support\Facades\App::setLocale($locale);
+
+            if ($request->expectsJson() || $request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
+                return response()->json([
+                    'status' => 'success',
+                    'locale' => $locale,
+                    'message' => 'Language switched successfully'
+                ]);
+            }
         }
 
         return redirect()->back();

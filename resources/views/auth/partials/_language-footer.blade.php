@@ -1,14 +1,15 @@
 <div class="d-flex flex-stack px-lg-10">
     <div class="me-0">
         <button class="btn btn-flex btn-link btn-color-gray-700 btn-active-color-primary rotate fs-base"
-            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="0px, 0px">
+            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="0px, 0px"
+            data-kt-element="lang-toggle">
             @if (app()->getLocale() == 'id')
-                <img class="w-20px h-20px rounded me-3" src="{{ \App\Support\ThemeAsset::url('media/flags/indonesia.svg', $theme_asset_pack ?? null) }}" alt="" />
-                <span class="me-1">{{ __('auth.indonesian') }}</span>
+                <img class="w-20px h-20px rounded me-3" data-kt-element="lang-flag-current" src="{{ \App\Support\ThemeAsset::url('media/flags/indonesia.svg', $theme_asset_pack ?? null) }}" alt="" />
+                <span class="me-1" data-kt-element="lang-current-label">{{ __('auth.indonesian') }}</span>
             @else
-                <img class="w-20px h-20px rounded me-3" src="{{ \App\Support\ThemeAsset::url('media/flags/united-states.svg', $theme_asset_pack ?? null) }}"
+                <img class="w-20px h-20px rounded me-3" data-kt-element="lang-flag-current" src="{{ \App\Support\ThemeAsset::url('media/flags/united-states.svg', $theme_asset_pack ?? null) }}"
                     alt="" />
-                <span class="me-1">{{ __('auth.english') }}</span>
+                <span class="me-1" data-kt-element="lang-current-label">{{ __('auth.english') }}</span>
             @endif
             <i class="ki-duotone ki-down fs-5 text-muted rotate-180 m-0"></i>
         </button>
@@ -17,21 +18,23 @@
             data-kt-menu="true" @if (!empty($menuId)) id="{{ $menuId }}" @endif>
             <div class="menu-item px-3">
                 <a href="{{ route('lang.switch', 'en') }}"
-                    class="menu-link d-flex px-5 {{ app()->getLocale() == 'en' ? 'active' : '' }}">
+                    class="menu-link d-flex px-5 {{ app()->getLocale() == 'en' ? 'active' : '' }}"
+                    data-kt-element="lang-item" data-kt-value="en">
                     <span class="symbol symbol-20px me-4">
                         <img class="rounded-1" src="{{ \App\Support\ThemeAsset::url('media/flags/united-states.svg', $theme_asset_pack ?? null) }}" alt="" />
                     </span>
-                    <span>{{ __('auth.english') }}</span>
+                    <span>English</span>
                 </a>
             </div>
 
             <div class="menu-item px-3">
                 <a href="{{ route('lang.switch', 'id') }}"
-                    class="menu-link d-flex px-5 {{ app()->getLocale() == 'id' ? 'active' : '' }}">
+                    class="menu-link d-flex px-5 {{ app()->getLocale() == 'id' ? 'active' : '' }}"
+                    data-kt-element="lang-item" data-kt-value="id">
                     <span class="symbol symbol-20px me-4">
                         <img class="rounded-1" src="{{ \App\Support\ThemeAsset::url('media/flags/indonesia.svg', $theme_asset_pack ?? null) }}" alt="" />
                     </span>
-                    <span>{{ __('auth.indonesian') }}</span>
+                    <span>Bahasa Indonesia</span>
                 </a>
             </div>
         </div>

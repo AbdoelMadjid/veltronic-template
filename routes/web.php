@@ -5,16 +5,36 @@ use App\Support\Frontpage;
 use App\Support\ThemeVersion;
 use Illuminate\Support\Facades\Route;
 
+use App\Support\LanguageManager;
+use Illuminate\Http\Request;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/lang/{locale}', function ($locale) {
-    if (in_array($locale, ['en', 'id'])) {
+Route::get('/lang/{locale}', function (Request $request, string $locale) {
+    if (in_array($locale, LanguageManager::availableLocales(), true)) {
         session(['locale' => $locale]);
+        \Illuminate\Support\Facades\Cookie::queue('kt_lang', $locale, 525600);
+        \Illuminate\Support\Facades\App::setLocale($locale);
+
+        if ($request->expectsJson() || $request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
+            return response()->json([
+                'status' => 'success',
+                'locale' => $locale,
+                'message' => 'Language switched successfully'
+            ]);
+        }
     }
+
     return redirect()->back();
 })->name('lang.switch');
+
+Route::get('/lang/translations.json', function () {
+    $payload = LanguageManager::getClientPayload();
+    return response()->json($payload)
+        ->header('Cache-Control', 'public, max-age=3600');
+})->name('lang.translations');
 
 Route::get('/theme/version/{version}', function ($version) {
     if (in_array($version, ThemeVersion::available(), true)) {

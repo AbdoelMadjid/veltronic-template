@@ -77,6 +77,14 @@
         </button>
         <!--end::Icon style Tab Toggle-->
 
+        <!--begin::Language Tab Toggle-->
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_lang" title="Pilih Bahasa / Language">
+            <img class="w-20px h-20px rounded-1" data-kt-element="lang-flag-current"
+                src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/' . (\App\Support\LanguageManager::current() === 'id' ? 'indonesia.svg' : 'united-states.svg')) }}"
+                alt="Language" />
+        </button>
+        <!--end::Language Tab Toggle-->
+
         <!--begin::Version switcher Tab Toggle-->
         <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_version" title="Theme Version">
             <i class="ki-duotone ki-cube-2 {{ $iconSize }}">
@@ -198,7 +206,36 @@
                 </a>
             </div>
         </div>
-        <!--end::Panel Icon Style-->
+        <!--begin::Panel Language-->
+        <div class="mobile-hub-panel d-none" id="hub_panel_lang">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="fs-7 fw-bold text-gray-700 text-uppercase" data-kt-translate="menu.language_selection">Pilih Bahasa</span>
+                <span class="badge badge-light-primary fs-8 py-1 px-2" id="mobile_active_lang_label">{{ \App\Support\LanguageManager::current() === 'id' ? 'Bahasa Indonesia' : 'English' }}</span>
+            </div>
+            <div class="d-flex flex-column gap-1">
+                <!--English-->
+                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-lang-item" data-kt-lang-value="en">
+                    <div class="d-flex align-items-center">
+                        <span class="symbol symbol-20px me-3">
+                            <img class="rounded-1" src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/united-states.svg') }}" alt="English" />
+                        </span>
+                        <span class="fw-semibold fs-7 text-gray-800">English</span>
+                    </div>
+                    <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon {{ \App\Support\LanguageManager::current() === 'en' ? '' : 'd-none' }}" data-kt-lang-check="en"></i>
+                </a>
+                <!--Indonesian-->
+                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-lang-item" data-kt-lang-value="id">
+                    <div class="d-flex align-items-center">
+                        <span class="symbol symbol-20px me-3">
+                            <img class="rounded-1" src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/indonesia.svg') }}" alt="Indonesia" />
+                        </span>
+                        <span class="fw-semibold fs-7 text-gray-800">Bahasa Indonesia</span>
+                    </div>
+                    <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon {{ \App\Support\LanguageManager::current() === 'id' ? '' : 'd-none' }}" data-kt-lang-check="id"></i>
+                </a>
+            </div>
+        </div>
+        <!--end::Panel Language-->
 
         <!--begin::Panel Theme Version-->
         <div class="mobile-hub-panel d-none" id="hub_panel_version">

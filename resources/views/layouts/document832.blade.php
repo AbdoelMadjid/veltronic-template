@@ -93,6 +93,8 @@ License: For each use you must have a valid license purchased only from above li
         <!--end::Theme mode setup on page load-->
         <!--layout-partial:partials/icon-style/_init.html-->
         @include('partials.icon-style._init')
+        <!--layout-partial:partials/lang/_init.html-->
+        @include('partials.lang._init')
 
         <!--begin::Main-->
         <div class="d-flex flex-column flex-root">
@@ -160,6 +162,7 @@ License: For each use you must have a valid license purchased only from above li
         <script src="{{ \App\Support\ThemeAsset::url('js/custom/documentation/documentation.js', $theme_asset_pack ?? null) }}"></script>
         <script src="{{ \App\Support\ThemeAsset::url('js/custom/documentation/search.js', $theme_asset_pack ?? null) }}"></script>
         <script src="{{ asset('assets/js/custom/icon-style.js') }}"></script>
+        <script src="{{ asset('assets/js/custom/language.js') }}"></script>
         <!--end::Global Javascript Bundle-->
 
         @yield('scripts')

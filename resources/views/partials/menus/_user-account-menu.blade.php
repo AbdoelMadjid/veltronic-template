@@ -40,7 +40,7 @@
     <!--end::Menu separator-->
     <!--begin::Menu item-->
     <div class="menu-item px-5">
-        <a href="{{ route('pages.account.overview') }}" class="menu-link px-5">
+        <a href="{{ route('pages.account.overview') }}" class="menu-link px-5" data-kt-translate="menu.my_profile">
             {{ $isAltMenu ? 'My Profile' : __('menu.my_profile') }}
         </a>
     </div>
@@ -48,7 +48,7 @@
     <!--begin::Menu item-->
     <div class="menu-item px-5">
         <a href="{{ route('apps.projects.list') }}" class="menu-link px-5">
-            <span class="menu-text">{{ $isAltMenu ? 'My Projects' : __('menu.my_projects') }}</span>
+            <span class="menu-text" data-kt-translate="menu.my_projects">{{ $isAltMenu ? 'My Projects' : __('menu.my_projects') }}</span>
             <span class="menu-badge">
                 <span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
             </span>
@@ -59,28 +59,28 @@
     <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
         data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
         <a href="javascript:void(0)" class="menu-link px-5">
-            <span class="menu-title">{{ $isAltMenu ? 'My Subscription' : __('menu.my_subscription') }}</span>
+            <span class="menu-title" data-kt-translate="menu.my_subscription">{{ $isAltMenu ? 'My Subscription' : __('menu.my_subscription') }}</span>
             <span class="menu-arrow"></span>
         </a>
         <!--begin::Menu sub-->
         <div class="menu-sub menu-sub-dropdown w-175px py-4">
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('pages.account.referrals') }}" class="menu-link px-5">
+                <a href="{{ route('pages.account.referrals') }}" class="menu-link px-5" data-kt-translate="menu.referrals">
                     {{ $isAltMenu ? 'Referrals' : __('menu.referrals') }}
                 </a>
             </div>
             <!--end::Menu item-->
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('pages.account.billing') }}" class="menu-link px-5">
+                <a href="{{ route('pages.account.billing') }}" class="menu-link px-5" data-kt-translate="menu.billing">
                     {{ $isAltMenu ? 'Billing' : __('menu.billing') }}
                 </a>
             </div>
             <!--end::Menu item-->
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('pages.account.statements') }}" class="menu-link px-5">
+                <a href="{{ route('pages.account.statements') }}" class="menu-link px-5" data-kt-translate="menu.payments">
                     {{ $isAltMenu ? 'Payments' : __('menu.payments') }}
                 </a>
             </div>
@@ -88,7 +88,7 @@
             <!--begin::Menu item-->
             <div class="menu-item px-3">
                 <a href="{{ route('pages.account.statements') }}" class="menu-link d-flex flex-stack px-5">
-                    {{ $isAltMenu ? 'Statements' : __('menu.statements') }}
+                    <span data-kt-translate="menu.statements">{{ $isAltMenu ? 'Statements' : __('menu.statements') }}</span>
                     <span class="ms-2 lh-0" data-bs-toggle="tooltip"
                         title="{{ __('menu.view_your_statements') ?? 'View your statements' }}">
                         <i class="ki-duotone ki-information-5 fs-5"><span class="path1"></span><span
@@ -105,7 +105,7 @@
                     <label class="form-check form-switch form-check-custom form-check-solid">
                         <input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked"
                             name="notifications" />
-                        <span class="form-check-label text-muted fs-7">
+                        <span class="form-check-label text-muted fs-7" data-kt-translate="menu.notifications">
                             {{ $isAltMenu ? 'Notifications' : __('menu.notifications') }}
                         </span>
                     </label>
@@ -118,7 +118,7 @@
     <!--end::Menu item-->
     <!--begin::Menu item-->
     <div class="menu-item px-5">
-        <a href="{{ route('pages.account.statements') }}" class="menu-link px-5">
+        <a href="{{ route('pages.account.statements') }}" class="menu-link px-5" data-kt-translate="menu.my_statements">
             {{ $isAltMenu ? 'My Statements' : __('menu.my_statements') }}
         </a>
     </div>
@@ -127,9 +127,50 @@
     <!--begin::Menu separator-->
     <div class="separator my-2"></div>
     <!--end::Menu separator-->
+
+    <!--begin::Menu item Language Selection-->
+    <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+        data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
+        <a href="javascript:void(0)" class="menu-link px-5">
+            <span class="menu-title position-relative">
+                <span data-kt-translate="menu.language_selection">Language</span>
+                <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">
+                    <span data-kt-element="lang-current-label">{{ \App\Support\LanguageManager::current() === 'id' ? 'Bahasa Indonesia' : 'English' }}</span>
+                    <img class="w-15px h-15px rounded-1 ms-2" data-kt-element="lang-flag-current"
+                        src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/' . (\App\Support\LanguageManager::current() === 'id' ? 'indonesia.svg' : 'united-states.svg')) }}" alt="" />
+                </span>
+            </span>
+        </a>
+        <!--begin::Menu sub-->
+        <div class="menu-sub menu-sub-dropdown w-175px py-4">
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+                <a href="{{ route('lang.switch', 'en') }}" class="menu-link d-flex px-5 {{ \App\Support\LanguageManager::current() === 'en' ? 'active' : '' }}" data-kt-element="lang-item" data-kt-value="en">
+                    <span class="symbol symbol-20px me-4">
+                        <img class="rounded-1" src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/united-states.svg') }}" alt="" />
+                    </span>
+                    English
+                </a>
+            </div>
+            <!--end::Menu item-->
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+                <a href="{{ route('lang.switch', 'id') }}" class="menu-link d-flex px-5 {{ \App\Support\LanguageManager::current() === 'id' ? 'active' : '' }}" data-kt-element="lang-item" data-kt-value="id">
+                    <span class="symbol symbol-20px me-4">
+                        <img class="rounded-1" src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/indonesia.svg') }}" alt="" />
+                    </span>
+                    Bahasa Indonesia
+                </a>
+            </div>
+            <!--end::Menu item-->
+        </div>
+        <!--end::Menu sub-->
+    </div>
+    <!--end::Menu item Language Selection-->
+
     <!--begin::Menu item-->
     <div class="menu-item px-5 my-1">
-        <a href="{{ route('pages.account.settings') }}" class="menu-link px-5">
+        <a href="{{ route('pages.account.settings') }}" class="menu-link px-5" data-kt-translate="menu.account_settings">
             {{ $isAltMenu ? 'Account Settings' : __('menu.account_settings') }}
         </a>
     </div>
@@ -139,17 +180,10 @@
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <a href="javascript:void(0)" class="menu-link px-5"
-                onclick="event.preventDefault(); this.closest('form').submit();">
+                onclick="event.preventDefault(); this.closest('form').submit();" data-kt-translate="menu.sign_out">
                 {{ $isAltMenu ? 'Sign Out' : __('menu.sign_out') }}
             </a>
-            {{-- <x-dropdown-link :href="route('logout')"
-                    onclick="event.preventDefault(); this.closest('form').submit();">
-                    {{ __('Log Out') }}
-                </x-dropdown-link> --}}
         </form>
-        {{-- <a href="{{ route('pages.authentication.layouts.corporate.sign-in') }}" class="menu-link px-5">
-            Sign Out
-        </a> --}}
     </div>
     <!--end::Menu item-->
 </div>

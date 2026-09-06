@@ -510,6 +510,7 @@ return [
     'skema_error_handling_and_fallback' => 'Error Handling and Fallback Schema',
     'skema_cache_and_deployment' => 'Cache and Deployment Schema',
     'skema_pemilihan_bahasa' => 'Language Selection Schema',
+    'skema_pergantian_icon' => 'Icon Switching Schema',
     'skema_i18n_lanjutan' => 'Advanced i18n Schema',
     'skema_pergantian_versi_tampilan' => 'Theme Version Switching Schema',
     'skema_pergantian_frontpage' => 'Frontpage Switching Schema',

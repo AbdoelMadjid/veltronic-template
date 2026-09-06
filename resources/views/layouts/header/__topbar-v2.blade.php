@@ -64,56 +64,10 @@
     </div>
     <!--end::Theme mode-->
     <!--begin::Icon style-->
-    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
-        @include('partials.icon-style._main', ['wrapper_class' => 'd-flex align-items-center', 'button_class' => 'btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px'])
-    </div>
+    @include('partials.icon-style._main', ['wrapper_class' => 'd-none d-lg-flex align-items-center ms-1 ms-lg-3', 'button_class' => 'btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px'])
     <!--end::Icon style-->
     <!--begin::Language-->
-    <div class="d-flex align-items-center ms-1 ms-lg-3">
-        <!--begin::Menu wrapper-->
-        <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
-            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-            data-kt-menu-placement="bottom-end">
-            @if (app()->getLocale() == 'id')
-                <img class="w-20px h-20px rounded-1"
-                    src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/indonesia.svg') }}" alt="Indonesia" />
-            @else
-                <img class="w-20px h-20px rounded-1"
-                    src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/united-states.svg') }}" alt="English" />
-            @endif
-        </div>
-        <!--begin::Menu sub-->
-        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-175px py-4 fs-7"
-            data-kt-menu="true">
-            <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <a href="{{ route('lang.switch', 'en') }}"
-                    class="menu-link d-flex px-5 {{ app()->getLocale() == 'en' ? 'active' : '' }}">
-                    <span class="symbol symbol-20px me-4">
-                        <img class="rounded-1"
-                            src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/united-states.svg') }}"
-                            alt="" />
-                    </span>
-                    {{ __('menu.english') }}
-                </a>
-            </div>
-            <!--end::Menu item-->
-            <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <a href="{{ route('lang.switch', 'id') }}"
-                    class="menu-link d-flex px-5 {{ app()->getLocale() == 'id' ? 'active' : '' }}">
-                    <span class="symbol symbol-20px me-4">
-                        <img class="rounded-1"
-                            src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/indonesia.svg') }}" alt="" />
-                    </span>
-                    {{ __('menu.indonesian') }}
-                </a>
-            </div>
-            <!--end::Menu item-->
-        </div>
-        <!--end::Menu sub-->
-        <!--end::Menu wrapper-->
-    </div>
+    @include('partials.lang._main', ['wrapper_class' => 'd-none d-lg-flex align-items-center ms-1 ms-lg-3', 'button_class' => 'btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px'])
     <!--end::Language-->
     <!--begin::Version switcher-->
     @php

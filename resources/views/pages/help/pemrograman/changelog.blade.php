@@ -48,13 +48,49 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.6.0
+                            Versi Saat Ini: v1.7.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.7.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.7.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.7.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>06 Sep 2026, 21:00 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Realtime Zero-Reload Bilingual Localization (English &harr; Indonesian) & Mobile Toolbar Hub Integration</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi menyeluruh sistem alih bahasa instan tanpa reload halaman (live switching) mengadopsi arsitektur yang sejalan dengan <code>KTThemeMode</code> dan <code>KTIconStyle</code>. Didukung oleh in-memory client payload dictionary, non-destructive DOM TreeWalker engine, persistensi multi-layer (localStorage, cookie, dan Laravel session background sync), serta konsolidasi kontrol pada Mobile Toolbar Hub.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Zero-Latency Language Engine (KTLanguage):</strong> Engine lokalisasi frontend di <code>public/assets/js/custom/language.js</code> dengan TreeWalker DOM traversal yang menerjemahkan teks seluruh tampilan secara dinamis (&lt; 5ms) tanpa merusak elemen anak (ikon, bullet, badge, SVG, atau event listener).</li>
+                                        <li class="mb-1"><strong>Dual-Layer Translation Mechanism:</strong> Dukungan penuh penerjemahan via atribut (<code>data-kt-translate</code>, <code>data-kt-translate-placeholder</code>, <code>data-kt-translate-title</code>, <code>data-kt-lang-en/id</code>) serta automatic text phrase matching dua arah (EN &harr; ID) dengan pelestarian format huruf besar/kecil.</li>
+                                        <li class="mb-1"><strong>In-Memory Precompiled Dictionary (LanguageManager):</strong> Kompilasi 2.171+ kunci terjemahan per bahasa dan 1.887 pasangan frasa dua arah yang diinjeksi langsung pada inisialisasi Blade (<code>_init.blade.php</code>) untuk performa 100% offline-ready tanpa delay fetch AJAX.</li>
+                                        <li class="mb-1"><strong>Multi-Layer State Persistence & Backend Sync:</strong> Penyimpanan pilihan bahasa ke <code>localStorage</code> dan cookie <code>kt_lang</code> dengan async background sync ke endpoint <code>/lang/{locale}</code> untuk sinkronisasi session Laravel secara transparan.</li>
+                                        <li class="mb-1"><strong>Standardized Modular Dropdown Component:</strong> Komponen dropdown bahasa modular (<code>partials.lang._main</code>) dengan styling standar Metronic (<code>w-175px</code>), checkmark aktif, dan indikator bendera (US &amp; ID).</li>
+                                        <li class="mb-1"><strong>Mobile Toolbar Hub Integration:</strong> Konsolidasi pemilihan bahasa ke dalam Mobile Toolbar Hub (<code>_mobile-toolbar-menu.blade.php</code>) dan penyembunyian tombol bendera redundan di header mobile pada breakpoint <code>d-none d-lg-flex</code>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.7.0-->
+
                         <!--begin::Item v1.6.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.6.0</div>
@@ -70,7 +106,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>03 Sep 2026, 23:00 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">App Support Menu Management, Multi-Level Hierarchy Builder & Modular Route Architecture</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

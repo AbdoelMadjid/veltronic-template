@@ -48,13 +48,49 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.7.1
+                            Versi Saat Ini: v1.8.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.8.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.8.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.8.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>07 Sep 2026, 13:15 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Interactive Seeder Blueprint Builder for Menu Management &amp; Realtime Code Generator</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembaruan menyeluruh pada modul manajemen menu (<code>appsupport/menu</code>) dengan menghadirkan antarmuka perancangan menu visual elegan yang menganut 100% pola blueprint seeder (<code>config/menu_seeder/</code>). Dilengkapi real-time auto-translation, auto key &amp; route generator, live Keenicons preview &amp; quick picker, permission presets, role pills, serta generator array PHP seeder instan siap salin.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Real-time Smart Auto-Generator:</strong> Pengetikan nama menu bahasa Indonesia secara otomatis mengonversi title bahasa Inggris, menghasilkan kunci terjemahan standar (<code>title_key</code> seperti <code>md_*</code>, <code>app_*</code>), dan menyusun route name/URL yang presisi.</li>
+                                        <li class="mb-1"><strong>Live Keenicons Picker &amp; Quick Palette:</strong> Visualisasi live preview kotak ikon Keenicons dengan deteksi jumlah <code>paths</code> otomatis dan tombol shortcut 1-klik untuk ikon populer.</li>
+                                        <li class="mb-1"><strong>CRUD Permission Presets &amp; Role Pills:</strong> Tombol preset cepat (⚡ Full CRUD, 👁️ Read Only, ✏️ Manage) dan checklist role berbasis badge pills interaktif.</li>
+                                        <li class="mb-1"><strong>Visual Multi-Level Hierarchy Builder:</strong> Mode perancangan hirarki komplit (Level 1 Root, Level 2 Submenu, Level 3 Grandchild) dengan auto-inheritance prefix URL parent.</li>
+                                        <li class="mb-1"><strong>Real-time PHP Seeder Blueprint Generator:</strong> Tab preview kode array PHP seeder terformat rapi yang dapat disalin ke clipboard dengan satu klik untuk dijadikan blueprint seeder permanen.</li>
+                                        <li class="mb-1"><strong>Otomatis Sinkronisasi Translation &amp; Spatie Permission:</strong> Integrasi backend controller untuk otomatis memperbarui file <code>lang/id/menu.php</code>, <code>lang/en/menu.php</code>, serta sinkronisasi permission role Spatie.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.8.0-->
+
                         <!--begin::Item v1.7.1 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.7.1</div>
@@ -70,7 +106,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>06 Sep 2026, 21:35 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Hardcoded Bahasa Indonesia Documentation &amp; Dynamic Localization Ignore Engine</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

@@ -74,6 +74,18 @@ class MenuController extends Controller
         if ($request->filled('title_en')) {
             $meta['title_en'] = trim($request->input('title_en'));
         }
+        if ($request->filled('badge_label')) {
+            $meta['badge'] = [
+                'label' => trim($request->input('badge_label')),
+                'class' => $request->input('badge_class', 'badge badge-light-primary'),
+            ];
+        }
+        if ($request->boolean('dropdown')) {
+            $meta['dropdown'] = true;
+        }
+        if ($request->filled('target')) {
+            $meta['target'] = trim($request->input('target'));
+        }
 
         DB::beginTransaction();
         try {
@@ -105,6 +117,12 @@ class MenuController extends Controller
                     }
                     if (!empty($subData['title_en'])) {
                         $subMeta['title_en'] = trim($subData['title_en']);
+                    }
+                    if (!empty($subData['badge_label'])) {
+                        $subMeta['badge'] = [
+                            'label' => trim($subData['badge_label']),
+                            'class' => $subData['badge_class'] ?? 'badge badge-light-primary',
+                        ];
                     }
 
                     $subMenu = Menu::create([
@@ -226,6 +244,27 @@ class MenuController extends Controller
             $meta['title_en'] = trim($request->input('title_en'));
         } else {
             unset($meta['title_en']);
+        }
+
+        if ($request->filled('badge_label')) {
+            $meta['badge'] = [
+                'label' => trim($request->input('badge_label')),
+                'class' => $request->input('badge_class', 'badge badge-light-primary'),
+            ];
+        } else {
+            unset($meta['badge']);
+        }
+
+        if ($request->boolean('dropdown')) {
+            $meta['dropdown'] = true;
+        } else {
+            unset($meta['dropdown']);
+        }
+
+        if ($request->filled('target')) {
+            $meta['target'] = trim($request->input('target'));
+        } else {
+            unset($meta['target']);
         }
 
         DB::beginTransaction();

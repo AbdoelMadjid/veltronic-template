@@ -409,4 +409,45 @@ class MenuController extends Controller
             return redirect()->back()->with('error', 'Gagal menghapus menu: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Update the orders of menus via Drag and Drop.
+     */
+    public function reorder(Request $request)
+    {
+        $items = $request->input('items', []);
+        if (!is_array($items) || empty($items)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data urutan tidak valid.',
+            ], 422);
+        }
+
+        DB::beginTransaction();
+        try {
+            foreach ($items as $item) {
+                if (!empty($item['id']) && isset($item['orders'])) {
+                    Menu::where('id', (int) $item['id'])->update([
+                        'orders' => (int) $item['orders'],
+                    ]);
+                }
+            }
+            DB::commit();
+
+            // Render fresh sidebar additional HTML for real-time DOM update
+            $sidebarHtml = view('layouts.partials.sidebar._menu-section-additional')->render();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Urutan menu berhasil disimpan.',
+                'sidebar_html' => $sidebarHtml,
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memperbarui urutan menu: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }

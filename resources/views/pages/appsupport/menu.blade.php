@@ -27,6 +27,59 @@
             border-color: var(--bs-primary) !important;
             color: var(--bs-primary) !important;
         }
+
+        /* Drag & Drop Reordering Styles */
+        .drag-handle {
+            cursor: grab !important;
+            user-select: none;
+            transition: all 0.2s ease;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .drag-handle:hover {
+            background-color: var(--bs-primary-light) !important;
+            color: var(--bs-primary) !important;
+            transform: scale(1.1);
+        }
+        .drag-handle:active {
+            cursor: grabbing !important;
+        }
+        .menu-row {
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .menu-row.dragging {
+            opacity: 0.45 !important;
+            background-color: rgba(var(--bs-primary-rgb), 0.08) !important;
+            outline: 2px dashed var(--bs-primary) !important;
+        }
+        .menu-row.drag-child-highlight {
+            background-color: rgba(var(--bs-primary-rgb), 0.04) !important;
+            opacity: 0.65 !important;
+        }
+        .menu-row.drag-over-top {
+            border-top: 3px solid var(--bs-primary) !important;
+            background-color: rgba(var(--bs-primary-rgb), 0.04) !important;
+        }
+        .menu-row.drag-over-bottom {
+            border-bottom: 3px solid var(--bs-primary) !important;
+            background-color: rgba(var(--bs-primary-rgb), 0.04) !important;
+        }
+        .menu-row.reorder-updated {
+            animation: rowUpdatedFlash 1.2s ease-out;
+        }
+        @keyframes rowUpdatedFlash {
+            0% { background-color: rgba(var(--bs-success-rgb), 0.28); }
+            100% { background-color: transparent; }
+        }
+        #reorder-toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1090;
+        }
     </style>
 @endsection
 
@@ -119,7 +172,7 @@
                         <table class="table align-middle table-row-dashed fs-6 gy-4" id="kt_table_menus">
                             <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="min-w-240px">Nama Menu & Terjemahan</th>
+                                    <th class="min-w-260px">Nama Menu & Terjemahan</th>
                                     <th class="min-w-160px">URL / Route Name</th>
                                     <th class="min-w-100px">Kategori</th>
                                     <th class="min-w-160px">Permissions & Roles</th>
@@ -128,16 +181,42 @@
                                     <th class="text-end min-w-120px">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="fw-semibold text-gray-600">
+                            <tbody class="fw-semibold text-gray-600" id="menu_table_tbody">
+                                @php
+                                    $currentRootId = null;
+                                @endphp
                                 @forelse($menus as $menu)
                                     @php
                                         $currentDepth = $menu->depth ?? 0;
                                         $currentLevel = $currentDepth + 1;
+                                        if ($currentDepth === 0) {
+                                            $currentRootId = $menu->id;
+                                        }
                                     @endphp
-                                    <tr data-category="{{ strtolower($menu->category ?? '') }}" class="menu-row">
+                                    <tr data-id="{{ $menu->id }}"
+                                        data-parent-id="{{ $menu->main_menu_id ?? '' }}"
+                                        data-root-id="{{ $currentRootId }}"
+                                        data-depth="{{ $currentDepth }}"
+                                        data-category="{{ strtolower($menu->category ?? '') }}"
+                                        data-name="{{ $menu->name }}"
+                                        data-orders="{{ $menu->orders ?? 0 }}"
+                                        class="menu-row">
                                         <!--begin::Name & Tree-->
                                         <td class="menu-depth-{{ min($currentDepth, 3) }}">
                                             <div class="d-flex align-items-center">
+                                                <!--begin::Drag Handle-->
+                                                <span class="drag-handle btn btn-icon btn-sm btn-light btn-active-light-primary me-2 cursor-move"
+                                                      draggable="true"
+                                                      title="Tahan & geser untuk mengubah urutan"
+                                                      data-bs-toggle="tooltip"
+                                                      data-bs-placement="top">
+                                                    <i class="ki-duotone ki-abstract-14 fs-4 text-gray-500">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                    </i>
+                                                </span>
+                                                <!--end::Drag Handle-->
+
                                                 @if($currentDepth > 0)
                                                     <span class="tree-line"></span>
                                                 @endif
@@ -249,7 +328,7 @@
 
                                         <!--begin::Orders-->
                                         <td class="text-center">
-                                            <span class="badge badge-light fw-bold fs-7">{{ $menu->orders ?? 0 }}</span>
+                                            <span class="badge badge-light fw-bold fs-7 row-order-badge">{{ $menu->orders ?? 0 }}</span>
                                         </td>
                                         <!--end::Orders-->
 
@@ -334,6 +413,9 @@
                 <!--end::Card body-->
             </div>
             <!--end::Card-->
+
+            <!-- Floating Toast Container for Reorder Feedback -->
+            <div id="reorder-toast-container"></div>
 
         </div>
     </div>
@@ -1155,6 +1237,352 @@
                     }
                 });
             });
+
+            // ========================================================
+            // DRAG & DROP TREE-TABLE REORDERING ENGINE
+            // Syarat:
+            // 1) Menu Utama (Level 1) dipindahkan -> seluruh anak sub menu ikut berpindah.
+            // 2) Sub menu dipindahkan -> hanya berlaku di bawah parent utamanya saja.
+            // ========================================================
+            const tableBody = document.getElementById('menu_table_tbody');
+            const toastContainer = document.getElementById('reorder-toast-container');
+            let dragState = null;
+
+            function showReorderToast(message, type = 'success') {
+                if (!toastContainer) return;
+                const toastId = 'toast_' + Date.now();
+                const iconClass = type === 'success' ? 'ki-check-circle text-success' : 'ki-cross-circle text-danger';
+                const toastHtml = `
+                    <div id="${toastId}" class="toast show align-items-center text-white bg-dark border-0 shadow-lg mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex align-items-center p-3">
+                            <i class="ki-duotone ${iconClass} fs-2hx me-3">
+                                <span class="path1"></span><span class="path2"></span>
+                            </i>
+                            <div class="toast-body fs-7 fw-semibold p-0 flex-grow-1 text-white">
+                                ${message}
+                            </div>
+                            <button type="button" class="btn btn-icon btn-sm btn-active-light-dark ms-2" data-bs-dismiss="toast" aria-label="Close">
+                                <i class="ki-duotone ki-cross fs-2 text-white"><span class="path1"></span><span class="path2"></span></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                toastContainer.insertAdjacentHTML('beforeend', toastHtml);
+                const toastEl = document.getElementById(toastId);
+                setTimeout(() => {
+                    if (toastEl) {
+                        toastEl.classList.remove('show');
+                        setTimeout(() => toastEl.remove(), 400);
+                    }
+                }, 3000);
+            }
+
+            // Fungsi untuk mengumpulkan seluruh descendant rows (anak-cucu) dari suatu row
+            function collectDescendantRows(row) {
+                const depth = parseInt(row.dataset.depth) || 0;
+                const rowId = row.dataset.id;
+                const descendants = [];
+                let next = row.nextElementSibling;
+
+                while (next && next.classList.contains('menu-row')) {
+                    const nextDepth = parseInt(next.dataset.depth) || 0;
+                    if (nextDepth <= depth) {
+                        break; // Sudah bukan anak lagi
+                    }
+
+                    // Jika Level 1 (depth 0), semua row ber-rootId sama adalah anak/cucunya
+                    if (depth === 0) {
+                        if (next.dataset.rootId === rowId) {
+                            descendants.push(next);
+                        } else {
+                            break;
+                        }
+                    } 
+                    // Jika Level 2 (depth 1), anak langsungnya adalah yang ber-parentId sama dengan rowId
+                    else if (depth === 1) {
+                        if (next.dataset.parentId === rowId) {
+                            descendants.push(next);
+                        } else {
+                            break;
+                        }
+                    } else {
+                        break;
+                    }
+
+                    next = next.nextElementSibling;
+                }
+
+                return descendants;
+            }
+
+            // Inisialisasi event listeners pada drag handle
+            document.addEventListener('dragstart', function (e) {
+                const handle = e.target.closest('.drag-handle');
+                if (!handle) return;
+
+                const sourceRow = handle.closest('.menu-row');
+                if (!sourceRow) return;
+
+                // Cek apakah filter/search sedang aktif
+                const isFiltered = (searchInput?.value?.trim() !== '') || (categorySelect?.value?.trim() !== '');
+                if (isFiltered) {
+                    e.preventDefault();
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Pencarian / Filter Aktif',
+                            text: 'Harap reset pencarian atau filter kategori terlebih dahulu untuk mengubah urutan menu.',
+                            icon: 'info',
+                            confirmButtonText: 'OK',
+                            customClass: { confirmButton: 'btn btn-primary' }
+                        });
+                    } else {
+                        alert('Harap reset pencarian/filter terlebih dahulu untuk mengatur urutan menu.');
+                    }
+                    return;
+                }
+
+                const sourceId = sourceRow.dataset.id;
+                const sourceDepth = parseInt(sourceRow.dataset.depth) || 0;
+                const sourceParentId = sourceRow.dataset.parentId || '';
+                const sourceRootId = sourceRow.dataset.rootId || sourceId;
+                const sourceCategory = sourceRow.dataset.category || '';
+                const sourceDescendants = collectDescendantRows(sourceRow);
+                const sourceBlock = [sourceRow, ...sourceDescendants];
+
+                dragState = {
+                    sourceRow,
+                    sourceId,
+                    sourceDepth,
+                    sourceParentId,
+                    sourceRootId,
+                    sourceCategory,
+                    sourceDescendants,
+                    sourceBlock
+                };
+
+                sourceRow.classList.add('dragging');
+                sourceDescendants.forEach(r => r.classList.add('drag-child-highlight'));
+
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', sourceId);
+            });
+
+            document.addEventListener('dragover', function (e) {
+                if (!dragState) return;
+
+                const targetRow = e.target.closest('.menu-row');
+                if (!targetRow || dragState.sourceBlock.includes(targetRow)) {
+                    return;
+                }
+
+                const targetDepth = parseInt(targetRow.dataset.depth) || 0;
+                const targetParentId = targetRow.dataset.parentId || '';
+                const targetCategory = targetRow.dataset.category || '';
+
+                // VALIDASI ATURAN DROP:
+                // 1) Menu Utama (depth 0): hanya bisa di-drop pada sesama Menu Utama di kategori yang sama
+                if (dragState.sourceDepth === 0) {
+                    if (targetDepth !== 0 || targetCategory !== dragState.sourceCategory) {
+                        return; // Bukan sesama root menu di kategori yang sama
+                    }
+                }
+                // 2) Sub Menu (depth > 0): hanya bisa di-drop pada sesama sub menu yang ber-parent SAMA PERSIS
+                else {
+                    if (targetDepth !== dragState.sourceDepth || targetParentId !== dragState.sourceParentId) {
+                        return; // Bukan sesama sub menu di bawah parent yang sama
+                    }
+                }
+
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+
+                // Tentukan letak garis drop (atas / bawah)
+                const rect = targetRow.getBoundingClientRect();
+                const isTopHalf = e.clientY < (rect.top + rect.height / 2);
+
+                document.querySelectorAll('.menu-row.drag-over-top, .menu-row.drag-over-bottom').forEach(r => {
+                    r.classList.remove('drag-over-top', 'drag-over-bottom');
+                });
+
+                if (isTopHalf) {
+                    targetRow.classList.add('drag-over-top');
+                } else {
+                    targetRow.classList.add('drag-over-bottom');
+                }
+            });
+
+            document.addEventListener('dragleave', function (e) {
+                const targetRow = e.target.closest('.menu-row');
+                if (targetRow && !targetRow.contains(e.relatedTarget)) {
+                    targetRow.classList.remove('drag-over-top', 'drag-over-bottom');
+                }
+            });
+
+            document.addEventListener('drop', function (e) {
+                if (!dragState) return;
+
+                const targetRow = e.target.closest('.menu-row');
+                if (!targetRow || dragState.sourceBlock.includes(targetRow)) {
+                    return;
+                }
+
+                const targetDepth = parseInt(targetRow.dataset.depth) || 0;
+                const targetParentId = targetRow.dataset.parentId || '';
+                const targetCategory = targetRow.dataset.category || '';
+                const isTopHalf = targetRow.classList.contains('drag-over-top');
+
+                // Validasi ulang aturan
+                let isValid = false;
+                if (dragState.sourceDepth === 0) {
+                    isValid = (targetDepth === 0 && targetCategory === dragState.sourceCategory);
+                } else {
+                    isValid = (targetDepth === dragState.sourceDepth && targetParentId === dragState.sourceParentId);
+                }
+
+                if (!isValid) {
+                    return;
+                }
+
+                e.preventDefault();
+
+                // Bersihkan styling drag over
+                document.querySelectorAll('.menu-row.drag-over-top, .menu-row.drag-over-bottom').forEach(r => {
+                    r.classList.remove('drag-over-top', 'drag-over-bottom');
+                });
+
+                // Tentukan insertion point:
+                // Jika Level 1 (depth 0): target punya anak-cucu juga, jadi saat drop bottom, harus setelah anak terakhir target!
+                let insertionAnchor = targetRow;
+                if (!isTopHalf) {
+                    const targetDescendants = collectDescendantRows(targetRow);
+                    if (targetDescendants.length > 0) {
+                        insertionAnchor = targetDescendants[targetDescendants.length - 1];
+                    }
+                }
+
+                // Pindahkan SELURUH blok source (parent + anak-cucunya) ke posisi baru di DOM
+                if (isTopHalf) {
+                    dragState.sourceBlock.forEach(row => {
+                        targetRow.parentNode.insertBefore(row, targetRow);
+                    });
+                } else {
+                    let refNode = insertionAnchor.nextSibling;
+                    dragState.sourceBlock.forEach(row => {
+                        targetRow.parentNode.insertBefore(row, refNode);
+                    });
+                }
+
+                // Berikan efek highlight berhasil
+                dragState.sourceBlock.forEach(row => {
+                    row.classList.add('reorder-updated');
+                    setTimeout(() => row.classList.remove('reorder-updated'), 1400);
+                });
+
+                // Hitung ulang nomor urutan (orders) & kirim via AJAX
+                saveReorderedMenus(dragState);
+            });
+
+            document.addEventListener('dragend', function () {
+                if (dragState) {
+                    dragState.sourceRow.classList.remove('dragging');
+                    dragState.sourceDescendants.forEach(r => r.classList.remove('drag-child-highlight'));
+                }
+                document.querySelectorAll('.menu-row.drag-over-top, .menu-row.drag-over-bottom').forEach(r => {
+                    r.classList.remove('drag-over-top', 'drag-over-bottom');
+                });
+                dragState = null;
+            });
+
+            // Simpan urutan ke Database via AJAX
+            function saveReorderedMenus(state) {
+                const payloadItems = [];
+
+                if (state.sourceDepth === 0) {
+                    // Kumpulkan semua Root Menu di kategori yang sama
+                    const rootRows = Array.from(document.querySelectorAll(`#menu_table_tbody tr.menu-row[data-depth="0"][data-category="${state.sourceCategory}"]`));
+                    rootRows.forEach((row, index) => {
+                        const newOrder = index + 1;
+                        row.dataset.orders = newOrder;
+                        const badge = row.querySelector('.row-order-badge');
+                        if (badge) badge.innerText = newOrder;
+
+                        payloadItems.push({
+                            id: row.dataset.id,
+                            orders: newOrder
+                        });
+                    });
+                } else {
+                    // Kumpulkan semua sub menu sibling yang ber-parentId sama
+                    const siblingRows = Array.from(document.querySelectorAll(`#menu_table_tbody tr.menu-row[data-depth="${state.sourceDepth}"][data-parent-id="${state.sourceParentId}"]`));
+                    siblingRows.forEach((row, index) => {
+                        const newOrder = index + 1;
+                        row.dataset.orders = newOrder;
+                        const badge = row.querySelector('.row-order-badge');
+                        if (badge) badge.innerText = newOrder;
+
+                        payloadItems.push({
+                            id: row.dataset.id,
+                            orders: newOrder
+                        });
+                    });
+                }
+
+                if (payloadItems.length === 0) return;
+
+                // Kirim AJAX ke route menu.reorder
+                fetch('{{ route("appsupport.menu.reorder") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ items: payloadItems })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showReorderToast(`Urutan menu <b>${state.sourceRow.dataset.name}</b> berhasil diperbarui!`, 'success');
+
+                        // Update Sidebar secara Real-Time tanpa reload
+                        if (data.sidebar_html) {
+                            const sidebarWrapper = document.getElementById('kt_app_sidebar_additional_sections_wrapper');
+                            if (sidebarWrapper) {
+                                sidebarWrapper.innerHTML = data.sidebar_html;
+
+                                // Re-initialize Metronic KTMenu & KTComponents
+                                if (typeof KTMenu !== 'undefined') {
+                                    const sidebarMenuEl = document.getElementById('kt_app_sidebar_menu');
+                                    if (sidebarMenuEl) {
+                                        const instance = KTMenu.getInstance(sidebarMenuEl);
+                                        if (instance) {
+                                            instance.update();
+                                        } else {
+                                            KTMenu.createInstances();
+                                        }
+                                    }
+                                }
+                                if (typeof KTComponents !== 'undefined') {
+                                    KTComponents.init();
+                                }
+                                if (typeof KTLanguage !== 'undefined' && typeof KTLanguage.translateDOM === 'function') {
+                                    KTLanguage.translateDOM(sidebarWrapper);
+                                }
+
+                                // Efek visual highlight halus pada sidebar
+                                sidebarWrapper.classList.add('reorder-updated');
+                                setTimeout(() => sidebarWrapper.classList.remove('reorder-updated'), 1200);
+                            }
+                        }
+                    } else {
+                        showReorderToast(data.message || 'Gagal menyimpan urutan menu.', 'danger');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error saving menu order:', err);
+                    showReorderToast('Terjadi kesalahan saat menyimpan urutan.', 'danger');
+                });
+            }
 
         });
     </script>

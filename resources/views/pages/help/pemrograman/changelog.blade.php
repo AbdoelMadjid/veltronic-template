@@ -48,13 +48,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.8.0
+                            Versi Saat Ini: v1.8.1
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.8.1 (Patch)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.8.1</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-warning fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-warning fw-bold">v1.8.1</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>07 Sep 2026, 15:25 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Tree-Aware Drag &amp; Drop Menu Reordering Engine &amp; Live Real-Time Sidebar Synchronization</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Peningkatan fungsionalitas manajemen menu (<code>appsupport/menu</code>) dengan sistem pengurutan menu interaktif berbasis <i>Drag &amp; Drop</i> berhirarki cerdas serta pembaruan tampilan navigasi sidebar secara sinkron dan <i>real-time</i> tanpa memerlukan <i>reload</i> halaman.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Tree-Aware Hierarchical Drag &amp; Drop:</strong> Ketika Menu Utama (Level 1) digeser, seluruh sub menu dan anak-cucunya otomatis ikut berpindah sebagai satu blok utuh. Sedangkan untuk Sub Menu (Level 2 &amp; 3) pergeseran dibatasi secara ketat hanya pada lingkup saudara di bawah induk yang sama.</li>
+                                        <li class="mb-1"><strong>Real-Time Live Sidebar DOM Sync:</strong> Respon AJAX langsung merender ulang potongan HTML sidebar database menu (<code>_menu-section-additional.blade.php</code>) dan memperbarui sidebar DOM secara instan.</li>
+                                        <li class="mb-1"><strong>Re-initialization KTMenu &amp; Language Engine:</strong> Otomatis memperbarui instance <code>KTMenu</code> dan <code>KTComponents</code> serta menerjemahkan kembali label sidebar dengan <code>KTLanguage.translateDOM()</code>.</li>
+                                        <li class="mb-1"><strong>Batch Order Update Endpoint:</strong> Penambahan endpoint khusus <code>POST /appsupport/menu/reorder</code> pada controller untuk persistensi urutan ke database secara transaksional.</li>
+                                        <li class="mb-1"><strong>Elegance Metronic Feedback:</strong> Tombol drag handle <code>ki-abstract-14</code> dengan cursor grab/grabbing, garis indikator drop biru, highlight animasi flash hijau pada baris dan sidebar, serta notifikasi toast mengambang.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.8.1-->
+
                         <!--begin::Item v1.8.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.8.0</div>
@@ -70,7 +105,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>07 Sep 2026, 13:15 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Interactive Seeder Blueprint Builder for Menu Management &amp; Realtime Code Generator</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

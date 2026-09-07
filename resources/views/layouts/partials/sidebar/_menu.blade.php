@@ -43,7 +43,9 @@
                 </div>
 
                 {{-- Menu tambahan: sumber database (config/menu_seeder) --}}
-                @include('layouts.partials.sidebar._menu-section-additional')
+                <div id="kt_app_sidebar_additional_sections_wrapper">
+                    @include('layouts.partials.sidebar._menu-section-additional')
+                </div>
 
                 <!--begin:Menu item-->
                 <div class="menu-item pt-5">

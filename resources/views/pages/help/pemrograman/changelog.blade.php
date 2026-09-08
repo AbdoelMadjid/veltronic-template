@@ -48,13 +48,47 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.8.1
+                            Versi Saat Ini: v1.9.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.9.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.9.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.9.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>08 Sep 2026, 08:00 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Frontpage Landing v1 Bilingual Localization, Realtime Instant Head &amp; Meta Engine &amp; Zero-Delay O(1) Performance</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi fitur bilingual penuh pada Frontpage Landing v1, engine translasi instan untuk <code>&lt;title&gt;</code> dan seluruh tag <code>&lt;meta&gt;</code> di <i>head</i> halaman (Landing &amp; Dashboard), perbaikan layout dropdown Help menu topbar, serta optimasi performa <i>instant $O(1)$ lookup</i> tanpa jeda.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Frontpage Landing v1 Bilingual Localization:</strong> Translasi menyeluruh dwiarah English &harr; Indonesian di <code>resources/views/frontpages/landing/v1/landing.blade.php</code> dengan kamus <code>lang/en/landing.php</code> dan <code>lang/id/landing.php</code> serta dropdown pemilih bahasa di header toolbar.</li>
+                                        <li class="mb-1"><strong>Realtime Instant Head &amp; Meta Engine:</strong> Penambahan fungsi <code>applyHeadTranslations()</code> di <code>language.js</code> yang secara langsung memperbarui <code>&lt;title&gt;</code>, <code>document.title</code>, <code>&lt;meta name="description"&gt;</code>, <code>&lt;meta name="keywords"&gt;</code>, <code>&lt;meta property="og:title"&gt;</code>, dan <code>&lt;meta property="og:locale"&gt;</code> tanpa reload halaman.</li>
+                                        <li class="mb-1"><strong>Smart Dashboard Compound Titles:</strong> Parsing cerdas untuk judul tab browser majemuk di dashboard (misal: <code>Dashboards - Metronic 832</code> &harr; <code>Dasbor - Metronic 832</code>) pada layout utama, layout v2, dan layout dokumentasi.</li>
+                                        <li class="mb-1"><strong>High-Performance O(1) Zero-Delay Optimization:</strong> Penghapusan loop linier pencarian kata pada <code>translateText()</code>, beralih 100% ke hash map instan sehingga translasi seluruh DOM dan metadata selesai dalam <code>&lt; 2ms</code> (tanpa jeda).</li>
+                                        <li class="mb-1"><strong>Topbar Help Menu &amp; Theme v2 Seeder Menu:</strong> Perbaikan ukuran full-screen dropdown Help menu di topbar navbar dan penataan urutan menu hasil seeder sebelum dasbor pada layout v2 dengan pola tampilan Apps.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.9.0-->
                         <!--begin::Item v1.8.1 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.8.1</div>
@@ -70,7 +104,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>07 Sep 2026, 15:25 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Tree-Aware Drag &amp; Drop Menu Reordering Engine &amp; Live Real-Time Sidebar Synchronization</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

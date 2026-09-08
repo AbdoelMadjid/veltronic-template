@@ -1,13 +1,18 @@
 <!--begin::Navbar-->
 <div class="app-navbar flex-shrink-0">
     <!--begin::Search-->
-    <div class="app-navbar-item align-items-stretch ms-1 ms-md-4">
+    <div class="app-navbar-item align-items-stretch ms-1 ms-md-4 {{ !app_fitur('tool_search') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_search') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_search">
         <!--layout-partial:partials/search/_dropdown.html-->
         @include('partials.search._dropdown')
     </div>
     <!--end::Search-->
+
     <!--begin::Activities-->
-    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4 {{ !app_fitur('tool_activities') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_activities') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_activities">
         <!--begin::Drawer toggle-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             id="kt_activities_toggle">
@@ -22,36 +27,40 @@
         <!--end::Drawer toggle-->
     </div>
     <!--end::Activities-->
+
     <!--begin::Notifications-->
-    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4 {{ !app_fitur('tool_notifications') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_notifications') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_notifications">
         <!--begin::Menu- wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
             data-kt-menu-placement="bottom-end" id="kt_menu_item_wow">
             <i class="ki-duotone ki-notification-status fs-2">
                 <span class="path1"></span>
-                <span
-                    class="path2"></span>
-                    <span class="path3"></span>
-                    <span class="path4"></span>
-                </i>
+                <span class="path2"></span>
+                <span class="path3"></span>
+                <span class="path4"></span>
+            </i>
         </div>
         <!--layout-partial:partials/menus/_notifications-menu.html-->
         @include('partials.menus._notifications-menu')
         <!--end::Menu wrapper-->
     </div>
     <!--end::Notifications-->
+
     <!--begin::Chat-->
-    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4 {{ !app_fitur('tool_chat') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_chat') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_chat">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative"
             id="kt_drawer_chat_toggle">
             <i class="ki-duotone ki-message-text-2 fs-2">
                 <span class="path1"></span>
                 <span class="path2"></span>
-                <span
-                    class="path3"></span>
-                </i>
+                <span class="path3"></span>
+            </i>
             <span
                 class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink">
             </span>
@@ -59,8 +68,11 @@
         <!--end::Menu wrapper-->
     </div>
     <!--end::Chat-->
+
     <!--begin::My apps links-->
-    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4 {{ !app_fitur('tool_my_apps') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_my_apps') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_my_apps">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -68,34 +80,45 @@
             <i class="ki-duotone ki-element-11 fs-2">
                 <span class="path1"></span>
                 <span class="path2"></span>
-                <span
-                    class="path3"></span>
-                    <span class="path4"></span>
-                </i>
+                <span class="path3"></span>
+                <span class="path4"></span>
+            </i>
         </div>
         <!--layout-partial:partials/menus/_my-apps-menu.html-->
         @include('partials.menus._my-apps-menu')
         <!--end::Menu wrapper-->
     </div>
     <!--end::My apps links-->
+
     <!--begin::Theme mode-->
-    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4 {{ !app_fitur('tool_theme_mode') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_theme_mode') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_theme_mode">
         <!--layout-partial:partials/theme-mode/_main.html-->
         @include('partials.theme-mode._main')
     </div>
     <!--end::Theme mode-->
+
     <!--begin::Icon style-->
-    @include('partials.icon-style._main', ['wrapper_class' => 'app-navbar-item d-none d-lg-flex ms-1 ms-md-4'])
+    @include('partials.icon-style._main', [
+        'wrapper_class' => 'app-navbar-item d-none d-lg-flex ms-1 ms-md-4 ' . (!app_fitur('tool_icon_style') ? 'feature-hidden' : '')
+    ])
     <!--end::Icon style-->
+
     <!--begin::Language-->
-    @include('partials.lang._main', ['wrapper_class' => 'app-navbar-item d-none d-lg-flex ms-1 ms-md-4'])
+    @include('partials.lang._main', [
+        'wrapper_class' => 'app-navbar-item d-none d-lg-flex ms-1 ms-md-4 ' . (!app_fitur('tool_language') ? 'feature-hidden' : '')
+    ])
     <!--end::Language-->
+
     <!--begin::Version switcher-->
     @php
         $currentVersion = \App\Support\ThemeVersion::current();
         $themeVersions = \App\Support\ThemeVersion::available();
     @endphp
-    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4">
+    <div class="app-navbar-item d-none d-lg-flex ms-1 ms-md-4 {{ !app_fitur('tool_theme_version') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_theme_version') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_theme_version">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -128,8 +151,11 @@
         <!--end::Menu wrapper-->
     </div>
     <!--end::Version switcher-->
+
     <!--begin::Frontpages-->
-    <div class="app-navbar-item ms-1 ms-md-4">
+    <div class="app-navbar-item ms-1 ms-md-4 {{ !app_fitur('tool_frontpages') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_frontpages') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_frontpages">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -146,6 +172,7 @@
         <!--end::Menu wrapper-->
     </div>
     <!--end::Frontpages-->
+
     <!--begin::Mobile Toolbar Hub-->
     <div class="app-navbar-item d-flex d-lg-none ms-1 ms-md-4">
         <!--begin::Menu wrapper-->
@@ -164,6 +191,7 @@
         <!--end::Menu wrapper-->
     </div>
     <!--end::Mobile Toolbar Hub-->
+
     <!--begin::User menu-->
     <div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
         <!--begin::Menu wrapper-->
@@ -189,6 +217,7 @@
         <!--end::Menu wrapper-->
     </div>
     <!--end::User menu-->
+
     <!--begin::Header menu toggle-->
     <div class="app-navbar-item d-lg-none ms-2 me-n2" title="Show header menu">
         <div class="btn btn-flex btn-icon btn-active-color-primary w-30px h-30px" id="kt_app_header_menu_toggle">

@@ -1,13 +1,17 @@
 <!--begin::Toolbar wrapper-->
 <div class="topbar d-flex align-items-stretch flex-shrink-0">
     <!--begin::Search-->
-    <div class="d-flex align-items-stretch ms-1 ms-lg-3">
+    <div class="d-flex align-items-stretch ms-1 ms-lg-3 {{ !app_fitur('tool_search') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_search') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_search">
         <!--layout-partial:partials/search/_dropdown.html-->
         @include('partials.search._dropdown')
     </div>
     <!--end::Search-->
     <!--begin::Activities-->
-    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3 {{ !app_fitur('tool_activities') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_activities') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_activities">
         <!--begin::Drawer toggle-->
         <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             id="kt_activities_toggle">
@@ -18,7 +22,9 @@
     </div>
     <!--end::Activities-->
     <!--begin::Notifications-->
-    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3 {{ !app_fitur('tool_notifications') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_notifications') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_notifications">
         <!--begin::Menu- wrapper-->
         <div class="position-relative btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -31,7 +37,9 @@
     </div>
     <!--end::Notifications-->
     <!--begin::Chat-->
-    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3 {{ !app_fitur('tool_chat') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_chat') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_chat">
         <!--begin::Menu wrapper-->
         <div class="position-relative btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             id="kt_drawer_chat_toggle">
@@ -45,7 +53,9 @@
     </div>
     <!--end::Chat-->
     <!--begin::Quick links-->
-    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3 {{ !app_fitur('tool_my_apps') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_my_apps') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_my_apps">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -58,23 +68,27 @@
     </div>
     <!--end::Quick links-->
     <!--begin::Theme mode-->
-    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3 {{ !app_fitur('tool_theme_mode') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_theme_mode') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_theme_mode">
         <!--layout-partial:partials/theme-mode/_main.html-->
         @include('partials.theme-mode._main')
     </div>
     <!--end::Theme mode-->
     <!--begin::Icon style-->
-    @include('partials.icon-style._main', ['wrapper_class' => 'd-none d-lg-flex align-items-center ms-1 ms-lg-3', 'button_class' => 'btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px'])
+    @include('partials.icon-style._main', ['wrapper_class' => 'd-none d-lg-flex align-items-center ms-1 ms-lg-3 ' . (!app_fitur('tool_icon_style') ? 'feature-hidden' : ''), 'button_class' => 'btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px'])
     <!--end::Icon style-->
     <!--begin::Language-->
-    @include('partials.lang._main', ['wrapper_class' => 'd-none d-lg-flex align-items-center ms-1 ms-lg-3', 'button_class' => 'btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px'])
+    @include('partials.lang._main', ['wrapper_class' => 'd-none d-lg-flex align-items-center ms-1 ms-lg-3 ' . (!app_fitur('tool_language') ? 'feature-hidden' : ''), 'button_class' => 'btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px'])
     <!--end::Language-->
     <!--begin::Version switcher-->
     @php
         $currentVersion = \App\Support\ThemeVersion::current();
         $themeVersions = \App\Support\ThemeVersion::available();
     @endphp
-    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-none d-lg-flex align-items-center ms-1 ms-lg-3 {{ !app_fitur('tool_theme_version') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_theme_version') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_theme_version">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -108,7 +122,9 @@
     </div>
     <!--end::Version switcher-->
     <!--begin::Frontpages-->
-    <div class="d-flex align-items-center ms-1 ms-lg-3">
+    <div class="d-flex align-items-center ms-1 ms-lg-3 {{ !app_fitur('tool_frontpages') ? 'feature-hidden' : '' }}"
+        style="{{ !app_fitur('tool_frontpages') ? 'display: none !important;' : '' }}"
+        data-kt-feature-tool="tool_frontpages">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" title="Frontpages & Templates">

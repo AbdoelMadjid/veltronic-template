@@ -72,6 +72,34 @@ if (!function_exists('getPageTitle')) {
             }
         }
 
+        // Cek dari database Menu jika route terdaftar di database
+        try {
+            if (class_exists(\App\Models\Menu::class) && \Illuminate\Support\Facades\Schema::hasTable('menus')) {
+                $menuRow = \App\Models\Menu::where(function ($q) use ($currentRoute) {
+                    $normalizedDot = str_replace(['/', '\\'], '.', trim($currentRoute, '/'));
+                    $normalizedSlash = str_replace(['.', '\\'], '/', trim($currentRoute, '/'));
+                    $q->where('url', $currentRoute)
+                        ->orWhere('url', $normalizedDot)
+                        ->orWhere('url', $normalizedSlash)
+                        ->orWhere('url', '/' . $normalizedSlash);
+                })->first();
+
+                if ($menuRow) {
+                    $meta = is_array($menuRow->meta) ? $menuRow->meta : [];
+                    if (!empty($meta['title_key'])) {
+                        $key = 'menu.' . $meta['title_key'];
+                        if (__($key) !== $key) {
+                            return __($key);
+                        }
+                    }
+                    $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menuRow->name));
+                    return __($titleKey) !== $titleKey ? __($titleKey) : $menuRow->name;
+                }
+            }
+        } catch (\Throwable $e) {
+            // Silently fallback to default app name
+        }
+
         return config('app.name', 'Metronic v.8.3.2 - Laravel 12');
     }
 }
@@ -100,6 +128,14 @@ if (!function_exists('searchMenuTitle')) {
                 ($item['route'] ?? '') === $currentRoute ||
                 ($item['route'] ?? '') === $baseCurrent
             )) {
+                // Prioritaskan title_key untuk translasi bilingual
+                if (!empty($item['title_key'])) {
+                    $transKey = 'menu.' . $item['title_key'];
+                    if (__($transKey) !== $transKey) {
+                        return __($transKey);
+                    }
+                }
+
                 $title = $item['title'] ?? null;
                 if ($title) {
                     $key = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $title));
@@ -126,3 +162,33 @@ if (!function_exists('searchMenuTitle')) {
         return null;
     }
 }
+
+if (!function_exists('app_fitur')) {
+    /**
+     * Cek apakah fitur aplikasi aktif berdasarkan key fitur.
+     * Menggunakan cache performa tinggi dari model AppFitur.
+     *
+     * @param string $key
+     * @param bool $default
+     * @return bool
+     */
+    function app_fitur(string $key, bool $default = true): bool
+    {
+        return \App\Models\AppFitur::isEnabled($key, $default);
+    }
+}
+
+if (!function_exists('app_setting')) {
+    /**
+     * Ambil nilai konfigurasi sistem aplikasi berdasarkan key setting.
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    function app_setting(string $key, $default = null)
+    {
+        return \App\Models\AppSetting::get($key, $default);
+    }
+}
+

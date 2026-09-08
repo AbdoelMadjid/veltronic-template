@@ -10,7 +10,9 @@
         id="kt_app_header_menu" data-kt-menu="true">
         <!--begin:Menu item-->
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-            class="menu-item {{ request()->routeIs(['dashboard', 'dashboards.*']) ? 'here show' : '' }} menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
+            data-kt-feature-menu="top_menu_dashboard"
+            style="{{ !app_fitur('top_menu_dashboard') ? 'display: none !important;' : '' }}"
+            class="menu-item {{ request()->routeIs(['dashboard', 'dashboards.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_dashboard') ? 'd-none' : '' }} menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link">
                 <span class="menu-title" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>
@@ -25,10 +27,13 @@
             <!--end:Menu sub-->
         </div>
         <!--end:Menu item-->
+
         <!--begin:Menu item-->
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
             id="page-menu-item"
-            class="menu-item {{ request()->routeIs('pages.*') ? 'here show' : '' }} menu-lg-down-accordion me-0 me-lg-2">
+            data-kt-feature-menu="top_menu_pages"
+            style="{{ !app_fitur('top_menu_pages') ? 'display: none !important;' : '' }}"
+            class="menu-item {{ request()->routeIs('pages.*') ? 'here show' : '' }} {{ !app_fitur('top_menu_pages') ? 'd-none' : '' }} menu-lg-down-accordion me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link">
                 <span class="menu-title" data-kt-translate="menu.pages">{{ __('menu.pages') }}</span>
@@ -43,9 +48,12 @@
             <!--end:Menu sub-->
         </div>
         <!--end:Menu item-->
+
         <!--begin:Menu item-->
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-            class="menu-item {{ request()->routeIs(['apps.*']) ? 'here show' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+            data-kt-feature-menu="top_menu_apps"
+            style="{{ !app_fitur('top_menu_apps') ? 'display: none !important;' : '' }}"
+            class="menu-item {{ request()->routeIs(['apps.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_apps') ? 'd-none' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
 
             <!--begin:Menu link-->
             <span class="menu-link">
@@ -64,9 +72,12 @@
             <!--end:Menu sub-->
         </div>
         <!--end:Menu item-->
+
         <!--begin:Menu item-->
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-            class="menu-item {{ request()->routeIs(['layouts.*']) ? 'here show' : '' }} menu-lg-down-accordion me-0 me-lg-2">
+            data-kt-feature-menu="top_menu_layouts"
+            style="{{ !app_fitur('top_menu_layouts') ? 'display: none !important;' : '' }}"
+            class="menu-item {{ request()->routeIs(['layouts.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_layouts') ? 'd-none' : '' }} menu-lg-down-accordion me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link">
                 <span class="menu-title" data-kt-translate="menu.layouts">{{ __('menu.layouts') }}</span>
@@ -81,9 +92,12 @@
             <!--end:Menu sub-->
         </div>
         <!--end:Menu item-->
+
         <!--begin:Menu item-->
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-            class="menu-item {{ request()->routeIs(['demo.*']) ? 'here show' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+            data-kt-feature-menu="top_menu_demo"
+            style="{{ !app_fitur('top_menu_demo') ? 'display: none !important;' : '' }}"
+            class="menu-item {{ request()->routeIs(['demo.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_demo') ? 'd-none' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
                 <span class="menu-title" data-kt-translate="menu.demo">{{ __('menu.demo') }}</span>
@@ -93,16 +107,19 @@
             <!--begin:Menu sub-->
             <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-250px">
                 <!--begin:Menu item-->
-                <!--begin:Menu item-->
                 @foreach (config('header._header_demo.demos_menu') as $menuDemo)
                     @include('layouts.partials.header._menu._menu_item_apps', ['menu' => $menuDemo])
                 @endforeach
                 <!--end:Menu item-->
             </div><!--end:Menu sub-->
-        </div><!--end:Menu item-->
+        </div>
+        <!--end:Menu item-->
+
         <!--begin:Menu item-->
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-            class="menu-item {{ request()->routeIs(['help.*']) ? 'here show' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+            data-kt-feature-menu="top_menu_help"
+            style="{{ !app_fitur('top_menu_help') ? 'display: none !important;' : '' }}"
+            class="menu-item {{ request()->routeIs(['help.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_help') ? 'd-none' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link">
                 <span class="menu-title" data-kt-translate="menu.help">{{ __('menu.help') }}</span>
@@ -117,7 +134,8 @@
                 @endforeach
                 <!--end:Menu item-->
             </div><!--end:Menu sub-->
-        </div><!--end:Menu item-->
+        </div>
+        <!--end:Menu item-->
     </div>
     <!--end::Menu-->
 </div>

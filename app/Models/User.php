@@ -46,4 +46,28 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Check if user has master or admin role.
+     */
+    public function isMasterOrAdmin(): bool
+    {
+        try {
+            return $this->hasAnyRole(['master', 'admin']);
+        } catch (\Throwable $e) {
+            return in_array($this->role ?? '', ['master', 'admin']);
+        }
+    }
+
+    /**
+     * Check if user has master role.
+     */
+    public function isMaster(): bool
+    {
+        try {
+            return $this->hasRole('master');
+        } catch (\Throwable $e) {
+            return ($this->role ?? '') === 'master';
+        }
+    }
 }

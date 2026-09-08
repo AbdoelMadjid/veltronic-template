@@ -45,6 +45,27 @@ Komponen global meliputi:
 - **Aturan**:
   - File partial modular (modal, tab, petunjuk) disimpan di `resources/views/pages/{kategori}/partials/` dan wajib diabaikan dari auto-routing generator di `routes/menu.php`.
 
+### D. Standar UI Bebas Ikon pada Judul & Sub Judul (`ui-icon-and-title-standards.md`)
+- **Aturan**:
+  - Judul utama (*page/banner header*), sub judul bagian (*section headers*), dan header grup form **DILARANG MENGGUNAKAN IKON** (baik langsung maupun dengan wadah kotak/bulat). Ikuti standar hierarki tipografi murni bawaan template.
+
+### E. Standar Posisi & Tampilan Tombol Aksi Seksi (`ui-section-action-buttons-layout.md`)
+- **Aturan**:
+  - Tombol aksi pada setiap seksi/header wajib **selalu rata kanan** di semua resolusi layar (`ms-auto flex-shrink-0`).
+  - Pada layar mobile / HP, tombol **hanya menampilkan ikon** (`<span class="d-none d-sm-inline">Label</span>`) dan tetap berada di posisi rata kanan.
+
+### F. Standar Styling Modul Murni Template Bawaan (`modular-assets-separation.md`)
+- **Aturan**:
+  - Seluruh modul **WAJIB** dibangun menggunakan 100% utility class dan komponen bawaan Metronic (mengikuti acuan bersih seperti `profil-pengguna`).
+  - **DILARANG** membuat file custom CSS baru per halaman/modul.
+
+### G. Standar Notifikasi & Alert Template (`notification-standards.md`)
+- **Aturan**:
+  - Seluruh modul **WAJIB** menggunakan helper global `window.Notify` (`public/assets/js/custom/notification-helper.js`).
+  - Notifikasi toast otomatis berada di pojok kanan atas (`toastr-top-right`).
+  - Dialog SweetAlert2 wajib menggunakan `buttonsStyling: false` dan class Metronic (`btn btn-primary`, `btn btn-light`, `btn btn-danger`).
+  - Dilarang membuat HTML container toast kustom sendiri per halaman.
+
 ---
 
 ## 4. Checklist Sebelum Menyelesaikan Tugas (Done Criteria)

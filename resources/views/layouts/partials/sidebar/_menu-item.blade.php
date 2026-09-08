@@ -35,6 +35,15 @@
             return false;
         }
 
+        $user = auth()->user();
+        if (
+            (method_exists($user, 'isMasterOrAdmin') && $user->isMasterOrAdmin()) ||
+            (method_exists($user, 'hasAnyRole') && $user->hasAnyRole(['master', 'admin'])) ||
+            in_array($user->role ?? '', ['master', 'admin'])
+        ) {
+            return true;
+        }
+
         $candidates = [$route];
         $normalizedDot = str_replace(['\\', '/'], '.', trim((string) $route));
         $normalizedDot = preg_replace('/\.+/', '.', $normalizedDot) ?? $normalizedDot;

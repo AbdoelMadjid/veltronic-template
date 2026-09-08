@@ -35,6 +35,7 @@ License: For each use you must have a valid license purchased only from above li
     <base href="{{ url('/') }}/">
     <title>{{ trim($__env->yieldContent('title')) ?: getPageTitle() }} - Metronic 832</title>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="description" data-kt-translate="menu.meta_description"
         content="{{ __('menu.meta_description') }}" />
     <meta name="keywords" data-kt-translate="menu.meta_keywords"
@@ -181,6 +182,8 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ \App\Support\ThemeAsset::url('js/scripts.bundle.js', $theme_asset_pack ?? null) }}"></script>
     <script src="{{ asset('assets/js/custom/icon-style.js') }}"></script>
     <script src="{{ asset('assets/js/custom/language.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/notification-helper.js') }}"></script>
+    @include('partials._notification')
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
     {{-- <script src="{{ $theme_asset_base }}/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>

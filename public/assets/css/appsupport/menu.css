@@ -1,0 +1,109 @@
+/* ========================================================
+ * Menu Support Module Styles
+ * Path: public/assets/css/appsupport/menu.css
+ * ======================================================== */
+
+.menu-depth-0 { 
+    font-weight: 600; 
+    color: var(--bs-gray-900); 
+}
+
+.menu-depth-1 { 
+    padding-left: 1.75rem !important; 
+}
+
+.menu-depth-2 { 
+    padding-left: 3.5rem !important; 
+}
+
+.menu-depth-3 { 
+    padding-left: 5.25rem !important; 
+}
+
+.tree-line {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-left: 2px solid var(--bs-gray-300);
+    border-bottom: 2px solid var(--bs-gray-300);
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.btn-quick-icon {
+    transition: all 0.2s ease;
+}
+
+.btn-quick-icon:hover {
+    transform: translateY(-2px);
+    background-color: var(--bs-primary-light);
+}
+
+.role-cb-label.active {
+    background-color: var(--bs-primary-light) !important;
+    border-color: var(--bs-primary) !important;
+    color: var(--bs-primary) !important;
+}
+
+/* Drag & Drop Reordering Styles */
+.drag-handle {
+    cursor: grab !important;
+    user-select: none;
+    transition: all 0.2s ease;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drag-handle:hover {
+    background-color: var(--bs-primary-light) !important;
+    color: var(--bs-primary) !important;
+    transform: scale(1.1);
+}
+
+.drag-handle:active {
+    cursor: grabbing !important;
+}
+
+.menu-row {
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.menu-row.dragging {
+    opacity: 0.45 !important;
+    background-color: rgba(var(--bs-primary-rgb), 0.08) !important;
+    outline: 2px dashed var(--bs-primary) !important;
+}
+
+.menu-row.drag-child-highlight {
+    background-color: rgba(var(--bs-primary-rgb), 0.04) !important;
+    opacity: 0.65 !important;
+}
+
+.menu-row.drag-over-top {
+    border-top: 3px solid var(--bs-primary) !important;
+    background-color: rgba(var(--bs-primary-rgb), 0.04) !important;
+}
+
+.menu-row.drag-over-bottom {
+    border-bottom: 3px solid var(--bs-primary) !important;
+    background-color: rgba(var(--bs-primary-rgb), 0.04) !important;
+}
+
+.menu-row.reorder-updated {
+    animation: rowUpdatedFlash 1.2s ease-out;
+}
+
+@keyframes rowUpdatedFlash {
+    0% { background-color: rgba(var(--bs-success-rgb), 0.28); }
+    100% { background-color: transparent; }
+}
+
+#reorder-toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1090;
+}

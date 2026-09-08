@@ -1,5 +1,5 @@
 <!--begin::Icon style toggle-->
-<div class="{{ $wrapper_class ?? 'app-navbar-item ms-1 ms-md-4' }}">
+<div class="{{ $wrapper_class ?? 'app-navbar-item ms-1 ms-md-4' }}" data-kt-feature-tool="tool_icon_style">
     <!--begin::Menu toggle-->
     <a href="javascript:void(0)"
         class="{{ $button_class ?? 'btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px' }}"

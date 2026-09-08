@@ -91,7 +91,7 @@ Route::middleware(['auth'])->group(function () use ($files) {
         $routeUrl = '/' . str_replace(['\\'], '/', $relativePath);
 
         // Jangan menimpa route yang sudah didefinisikan oleh controller/resource
-        if (Route::has($routeName) || Route::has($routeName . '.index')) {
+        if (str_starts_with($relativePath, 'appsupport/') || str_starts_with($relativePath, 'appsupport\\') || Route::getRoutes()->hasNamedRoute($routeName) || Route::getRoutes()->hasNamedRoute($routeName . '.index')) {
             continue;
         }
 

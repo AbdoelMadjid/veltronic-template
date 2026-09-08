@@ -102,6 +102,16 @@ View menggunakan Blade, lokasi utama:
 - `resources/views/layouts/partials/**` untuk bagian reusable (sidebar, header, footer, dsb)
 - `resources/views/pages/**` untuk halaman konten
 
+### Pemisahan Aset Modular (CSS & JS per Modul)
+Agar file Blade tetap bersih dan mudah dipelihara:
+- **CSS Modul**: Simpan di `public/assets/css/{modul}/{halaman}.css` dan load via `@section('styles')`.
+- **JS Modul**: Simpan di `public/assets/js/{modul}/{halaman}.js` dan load via `@section('scripts')`.
+- Contoh pada modul Menu (`appsupport/menu`):
+  - View: `resources/views/pages/appsupport/menu.blade.php`
+  - CSS: `public/assets/css/appsupport/menu.css`
+  - JS: `public/assets/js/appsupport/menu.js`
+- Panduan lengkap: [.agents/rules/modular-assets-separation.md](file:///.agents/rules/modular-assets-separation.md)
+
 Pola render route dinamis:
 - URL `/a/b/c` -> cari `resources/views/pages/a/b/c.blade.php`
 

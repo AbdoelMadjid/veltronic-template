@@ -163,6 +163,8 @@ License: For each use you must have a valid license purchased only from above li
         <script src="{{ \App\Support\ThemeAsset::url('js/custom/documentation/search.js', $theme_asset_pack ?? null) }}"></script>
         <script src="{{ asset('assets/js/custom/icon-style.js') }}"></script>
         <script src="{{ asset('assets/js/custom/language.js') }}"></script>
+        <script src="{{ asset('assets/js/custom/notification-helper.js') }}"></script>
+        @include('partials._notification')
         <!--end::Global Javascript Bundle-->
 
         @yield('scripts')

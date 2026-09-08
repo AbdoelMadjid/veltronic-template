@@ -47,169 +47,196 @@
                     @include('layouts.partials.sidebar._menu-section-additional')
                 </div>
 
-                <!--begin:Menu item-->
-                <div class="menu-item pt-5">
-                    <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>
-                    </div>
-                </div>
-                <!--begin:Menu item-->
+                {{-- Menu Template Bawaan: Hanya bisa dilihat oleh role master dan admin --}}
+                @php
+                    $authUser = auth()->user();
+                    $canViewTemplateSidebar = $authUser && (
+                        (method_exists($authUser, 'isMasterOrAdmin') && $authUser->isMasterOrAdmin()) ||
+                        (method_exists($authUser, 'hasAnyRole') && $authUser->hasAnyRole(['master', 'admin'])) ||
+                        in_array($authUser->role ?? '', ['master', 'admin'])
+                    );
+                @endphp
 
-                <div data-kt-menu-trigger="click"
-                    class="menu-item {{ request()->routeIs(['dashboards.*']) ? 'here show' : '' }} menu-accordion">
-                    <!--begin:Menu link-->
-                    <span class="menu-link">
-                        <span class="menu-icon"><i class="ki-duotone ki-screen fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <!--end:Menu link-->
-                    <!--begin:Menu sub-->
-                    <div class="menu-sub menu-sub-accordion">
-                        <!--begin:Menu item-->
-                        @foreach (config('sidebar._sidebar_dashboard.menus_dashboard') as $menu)
-                            @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menu['title'])); @endphp
-                            <div class="menu-item">
-                                <a class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}"
-                                    href="{{ route($menu['route']) }}">
-                                    <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                    <span
-                                        class="menu-title" data-kt-translate="{{ $titleKey }}">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
-                                </a>
-                            </div>
-                        @endforeach
-
-                        @php
-                            $collapsedMenus = config('sidebar._sidebar_dashboard.menus_dashboard_collapsed') ?? [];
-                            $collapsedCount = count($collapsedMenus);
-                            $isActiveCollapse = collect($collapsedMenus)
-                                ->pluck('route')
-                                ->contains(fn($route) => request()->routeIs($route));
-
-                            // teks yang sedang terlihat & teks alternatif yang akan dipakai oleh JS saat toggle
-                            $visibleText = $isActiveCollapse
-                                ? __('menu.show_less')
-                                : __('menu.show') . " {$collapsedCount} " . __('menu.more');
-                            $altText = $isActiveCollapse
-                                ? __('menu.show') . " {$collapsedCount} " . __('menu.more')
-                                : __('menu.show_less');
-                        @endphp
-                        <!--end:Menu item-->
-                        <div class="menu-inner flex-column collapse {{ $isActiveCollapse ? 'show' : '' }}"
-                            id="kt_app_sidebar_menu_dashboards_collapse">
-                            @foreach (config('sidebar._sidebar_dashboard.menus_dashboard_collapsed') as $menu)
-                                @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menu['title'])); @endphp
-                                <div class="menu-item">
-                                    <a class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}"
-                                        href="{{ route($menu['route']) }}">
-                                        <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                        <span
-                                            class="menu-title" data-kt-translate="{{ $titleKey }}">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
-                        <!--end:Menu item-->
-                        <div class="menu-item">
+                @if ($canViewTemplateSidebar)
+                    <!--begin:Section Dashboards-->
+                    <div data-kt-feature-sidebar="side_menu_dashboard"
+                        class="{{ !app_fitur('side_menu_dashboard') ? 'd-none' : '' }}"
+                        style="{{ !app_fitur('side_menu_dashboard') ? 'display: none !important;' : '' }}">
+                        <div class="menu-item pt-5">
                             <div class="menu-content">
-                                <a class="btn btn-flex btn-color-primary d-flex flex-stack fs-base p-0 ms-2 mb-2 toggle collapsible {{ $isActiveCollapse ? '' : 'collapsed' }}"
-                                    data-bs-toggle="collapse" href="#kt_app_sidebar_menu_dashboards_collapse"
-                                    data-kt-toggle-text="{{ $altText }}"
-                                    aria-expanded="{{ $isActiveCollapse ? 'true' : 'false' }}">
-                                    <span data-kt-toggle-text-target="true">{{ $visibleText }}</span>
-                                    <i class="ki-duotone ki-minus-square toggle-on fs-2 me-0">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                    <i class="ki-duotone ki-plus-square toggle-off fs-2 me-0">
+                                <span class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>
+                            </div>
+                        </div>
+
+                        <div data-kt-menu-trigger="click"
+                            class="menu-item {{ request()->routeIs(['dashboards.*']) ? 'here show' : '' }} menu-accordion">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-icon"><i class="ki-duotone ki-screen fs-2">
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                         <span class="path3"></span>
+                                        <span class="path4"></span>
+                                        <span class="path5"></span>
                                     </i>
-                                </a>
+                                </span>
+                                <span class="menu-title" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>
+                                <span class="menu-arrow"></span>
+                            </span>
+                            <!--end:Menu link-->
+                            <!--begin:Menu sub-->
+                            <div class="menu-sub menu-sub-accordion">
+                                <!--begin:Menu item-->
+                                @foreach (config('sidebar._sidebar_dashboard.menus_dashboard') as $menu)
+                                    @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menu['title'])); @endphp
+                                    <div class="menu-item">
+                                        <a class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}"
+                                            href="{{ route($menu['route']) }}">
+                                            <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                            <span
+                                                class="menu-title" data-kt-translate="{{ $titleKey }}">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                        </a>
+                                    </div>
+                                @endforeach
+
+                                @php
+                                    $collapsedMenus = config('sidebar._sidebar_dashboard.menus_dashboard_collapsed') ?? [];
+                                    $collapsedCount = count($collapsedMenus);
+                                    $isActiveCollapse = collect($collapsedMenus)
+                                        ->pluck('route')
+                                        ->contains(fn($route) => request()->routeIs($route));
+
+                                    // teks yang sedang terlihat & teks alternatif yang akan dipakai oleh JS saat toggle
+                                    $visibleText = $isActiveCollapse
+                                        ? __('menu.show_less')
+                                        : __('menu.show') . " {$collapsedCount} " . __('menu.more');
+                                    $altText = $isActiveCollapse
+                                        ? __('menu.show') . " {$collapsedCount} " . __('menu.more')
+                                        : __('menu.show_less');
+                                @endphp
+                                <!--end:Menu item-->
+                                <div class="menu-inner flex-column collapse {{ $isActiveCollapse ? 'show' : '' }}"
+                                    id="kt_app_sidebar_menu_dashboards_collapse">
+                                    @foreach (config('sidebar._sidebar_dashboard.menus_dashboard_collapsed') as $menu)
+                                        @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menu['title'])); @endphp
+                                        <div class="menu-item">
+                                            <a class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}"
+                                                href="{{ route($menu['route']) }}">
+                                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                                <span
+                                                    class="menu-title" data-kt-translate="{{ $titleKey }}">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <!--end:Menu item-->
+                                <div class="menu-item">
+                                    <div class="menu-content">
+                                        <a class="btn btn-flex btn-color-primary d-flex flex-stack fs-base p-0 ms-2 mb-2 toggle collapsible {{ $isActiveCollapse ? '' : 'collapsed' }}"
+                                            data-bs-toggle="collapse" href="#kt_app_sidebar_menu_dashboards_collapse"
+                                            data-kt-toggle-text="{{ $altText }}"
+                                            aria-expanded="{{ $isActiveCollapse ? 'true' : 'false' }}">
+                                            <span data-kt-toggle-text-target="true">{{ $visibleText }}</span>
+                                            <i class="ki-duotone ki-minus-square toggle-on fs-2 me-0">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            <i class="ki-duotone ki-plus-square toggle-off fs-2 me-0">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
+                            <!--end:Menu sub-->
                         </div>
                     </div>
-                    <!--end:Menu sub-->
-                </div>
-                <!--end:Menu item-->
+                    <!--end:Section Dashboards-->
 
-                <!--begin:Menu item-->
-                @foreach (config('sidebar._sidebar_demo.menu_demos') as $menu)
-                    @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
-                @endforeach
-                <!--end:Menu item-->
-
-                <!--begin:Menu item-->
-                <div class="menu-item pt-5">
-                    <!--begin:Menu content-->
-                    <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.pages">{{ __('menu.pages') }}</span>
+                    <!--begin:Section Demos-->
+                    <div data-kt-feature-sidebar="side_menu_demo"
+                        class="{{ !app_fitur('side_menu_demo') ? 'd-none' : '' }}"
+                        style="{{ !app_fitur('side_menu_demo') ? 'display: none !important;' : '' }}">
+                        @foreach (config('sidebar._sidebar_demo.menu_demos') as $menu)
+                            @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
+                        @endforeach
                     </div>
-                    <!--end:Menu content-->
-                </div>
-                <!--end:Menu item-->
+                    <!--end:Section Demos-->
 
-                <!--begin:Menu item-->
-                @foreach (config('sidebar._sidebar_pages.pages_menus') as $menu)
-                    @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
-                @endforeach
-                <!--end:Menu item-->
+                    <!--begin:Section Pages-->
+                    <div data-kt-feature-sidebar="side_menu_pages"
+                        class="{{ !app_fitur('side_menu_pages') ? 'd-none' : '' }}"
+                        style="{{ !app_fitur('side_menu_pages') ? 'display: none !important;' : '' }}">
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content"><span
+                                    class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.pages">{{ __('menu.pages') }}</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
 
-                <!--begin:Menu item-->
-                <div class="menu-item pt-5">
-                    <!--begin:Menu content-->
-                    <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.apps">{{ __('menu.apps') }}</span>
+                        @foreach (config('sidebar._sidebar_pages.pages_menus') as $menu)
+                            @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
+                        @endforeach
                     </div>
-                    <!--end:Menu content-->
-                </div>
-                <!--end:Menu item-->
+                    <!--end:Section Pages-->
 
-                <!--begin:Menu item-->
-                @foreach (config('sidebar._sidebar_apps.apps_menus') as $menu)
-                    @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
-                @endforeach
-                <!--end:Menu item-->
+                    <!--begin:Section Apps-->
+                    <div data-kt-feature-sidebar="side_menu_apps"
+                        class="{{ !app_fitur('side_menu_apps') ? 'd-none' : '' }}"
+                        style="{{ !app_fitur('side_menu_apps') ? 'display: none !important;' : '' }}">
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content"><span
+                                    class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.apps">{{ __('menu.apps') }}</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
 
-                <!--begin:Menu item-->
-                <div class="menu-item pt-5">
-                    <!--begin:Menu content-->
-                    <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.layouts">{{ __('menu.layouts') }}</span>
+                        @foreach (config('sidebar._sidebar_apps.apps_menus') as $menu)
+                            @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
+                        @endforeach
                     </div>
-                    <!--end:Menu content-->
-                </div>
-                <!--end:Menu item-->
+                    <!--end:Section Apps-->
 
-                <!--begin:Menu item-->
-                @foreach (config('sidebar._sidebar_layouts.layout_menus') as $menu)
-                    @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
-                @endforeach
-                <!--end:Menu item-->
+                    <!--begin:Section Layouts-->
+                    <div data-kt-feature-sidebar="side_menu_layouts"
+                        class="{{ !app_fitur('side_menu_layouts') ? 'd-none' : '' }}"
+                        style="{{ !app_fitur('side_menu_layouts') ? 'display: none !important;' : '' }}">
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content"><span
+                                    class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.layouts">{{ __('menu.layouts') }}</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
 
-                <!--begin:Menu item-->
-                <div class="menu-item pt-5">
-                    <!--begin:Menu content-->
-                    <div class="menu-content"><span
-                            class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.help">{{ __('menu.help') }}</span>
+                        @foreach (config('sidebar._sidebar_layouts.layout_menus') as $menu)
+                            @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
+                        @endforeach
                     </div>
-                    <!--end:Menu content-->
-                </div>
-                <!--end:Menu item-->
+                    <!--end:Section Layouts-->
 
+                    <!--begin:Section Help-->
+                    <div data-kt-feature-sidebar="side_menu_help"
+                        class="{{ !app_fitur('side_menu_help') ? 'd-none' : '' }}"
+                        style="{{ !app_fitur('side_menu_help') ? 'display: none !important;' : '' }}">
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content"><span
+                                    class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.help">{{ __('menu.help') }}</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
 
-                <!--begin:Menu item-->
-                @foreach (config('sidebar._sidebar_helps.help_menus') as $menu)
-                    @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
-                @endforeach
-                <!--end:Menu item-->
+                        @foreach (config('sidebar._sidebar_helps.help_menus') as $menu)
+                            @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
+                        @endforeach
+                    </div>
+                    <!--end:Section Help-->
+                @endif
             </div>
             <!--end::Menu-->
         </div>

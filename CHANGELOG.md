@@ -5,6 +5,28 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.10.0] - 2026-09-08
+
+### Added
+- **App Feature Visibility & Settings Module (`appsupport/app-fiturs`)**:
+  - Full database-driven feature toggle management (`AppFitur` & `AppSetting` models) with cached lookup via `app_fitur()` helper.
+  - Granular control over Topbar Tools, Topbar Menus, and Sidebar Menus.
+  - Realtime client-side DOM toggling via `app-fiturs.js`, bulk category actions, live search & filter, and stats counters.
+- **Theme v2 (Demo 2) Feature Visibility Integration**:
+  - Integrated `app_fitur()` server-side checks and `data-kt-feature-tool` / `data-kt-feature-menu` DOM attributes into `__topbar-v2.blade.php` and `__menu-v2.blade.php`.
+  - Unified feature visibility behavior seamlessly between Metronic Theme v1 and v2.
+- **Dynamic Bilingual Page Title & Database Menu Lookup**:
+  - Enhanced `getPageTitle()` helper in `GetPageTitle.php` to resolve `title_key` and query dynamic database `menus` table entries.
+  - Removed static hardcoded `@section('title')` in App Support views for automatic bilingual translation (`lang/id/menu.php` and `lang/en/menu.php`).
+
+### Changed
+- **Sidebar Template Access Control**:
+  - Restricted sidebar template sections exclusively to `master` and `admin` roles.
+  - Added read permission bypass in `_menu-item.blade.php` for `master` and `admin` roles, preventing template menus from disappearing due to missing database permission rows.
+- **System Settings Refinement**:
+  - Cleaned up App Fiturs Settings tab to focus on Security & Access (public registration, session lifetime) and System Maintenance (instant cache cleaners).
+  - Synchronized `AppSettingSeeder.php` to reflect the refined settings schema.
+
 ---
 
 ## [v1.9.0] - 2026-09-08

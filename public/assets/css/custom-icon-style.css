@@ -3,6 +3,11 @@
  * Veltronic / Metronic Theme
  */
 
+/* Global Dynamic Feature Visibility */
+.feature-hidden {
+    display: none !important;
+}
+
 /* Toggle Button Icon Preview Switching */
 [data-kt-icon-style="duotone"] [data-kt-icon-preview-style="duotone"] {
     display: inline-flex !important;

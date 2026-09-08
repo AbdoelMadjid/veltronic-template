@@ -6,7 +6,7 @@
 @endphp
 
 <!--begin::Language dropdown-->
-<div class="{{ $wrapperClass }}">
+<div class="{{ $wrapperClass }}" data-kt-feature-tool="tool_language">
     <!--begin::Menu toggle-->
     <a href="javascript:void(0)"
         class="{{ $btnClass }}"

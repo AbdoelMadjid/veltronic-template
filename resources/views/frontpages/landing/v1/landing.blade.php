@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <!--
 Author: Keenthemes
 Product Name: MetronicProduct Version: 8.2.5
@@ -10,12 +10,12 @@ Dribbble: www.dribbble.com/keenthemes
 Like: www.facebook.com/keenthemes
 License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
 -->
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}">
     <!--begin::Head-->
 
     <head>
-        <title>
-            Metronic - The World's #1 Selling Bootstrap Admin Template by KeenThemes
+        <title data-kt-translate="landing.page_title">
+            {{ __('landing.page_title') }}
         </title>
         <meta charset="utf-8" />
         <meta name="description"
@@ -37,6 +37,7 @@ License: For each use you must have a valid license purchased only from above li
         <link href="{{ \App\Support\ThemeAsset::url('plugins/global/plugins.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
         <link href="{{ \App\Support\ThemeAsset::url('css/style.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
         <!--end::Global Stylesheets Bundle-->
+        @include('partials.lang._init')
         <script>
             // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
         </script>
@@ -121,7 +122,8 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="menu-item">
                                                 <!--begin::Menu link-->
                                                 <a class="menu-link nav-link active py-3 px-4 px-xxl-6" href="#kt_body"
-                                                    data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Home</a>
+                                                    data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true"
+                                                    data-kt-translate="landing.home">{{ __('landing.home') }}</a>
                                                 <!--end::Menu link-->
                                             </div>
                                             <!--end::Menu item-->
@@ -129,8 +131,8 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="menu-item">
                                                 <!--begin::Menu link-->
                                                 <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#how-it-works"
-                                                    data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">How it
-                                                    Works</a>
+                                                    data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true"
+                                                    data-kt-translate="landing.how_it_works">{{ __('landing.how_it_works') }}</a>
                                                 <!--end::Menu link-->
                                             </div>
                                             <!--end::Menu item-->
@@ -139,7 +141,8 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Menu link-->
                                                 <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#achievements"
                                                     data-kt-scroll-toggle="true"
-                                                    data-kt-drawer-dismiss="true">Achievements</a>
+                                                    data-kt-drawer-dismiss="true"
+                                                    data-kt-translate="landing.achievements">{{ __('landing.achievements') }}</a>
                                                 <!--end::Menu link-->
                                             </div>
                                             <!--end::Menu item-->
@@ -147,7 +150,8 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="menu-item">
                                                 <!--begin::Menu link-->
                                                 <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#team"
-                                                    data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Team</a>
+                                                    data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true"
+                                                    data-kt-translate="landing.team">{{ __('landing.team') }}</a>
                                                 <!--end::Menu link-->
                                             </div>
                                             <!--end::Menu item-->
@@ -156,7 +160,8 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Menu link-->
                                                 <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#portfolio"
                                                     data-kt-scroll-toggle="true"
-                                                    data-kt-drawer-dismiss="true">Portfolio</a>
+                                                    data-kt-drawer-dismiss="true"
+                                                    data-kt-translate="landing.portfolio">{{ __('landing.portfolio') }}</a>
                                                 <!--end::Menu link-->
                                             </div>
                                             <!--end::Menu item-->
@@ -165,7 +170,8 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Menu link-->
                                                 <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#pricing"
                                                     data-kt-scroll-toggle="true"
-                                                    data-kt-drawer-dismiss="true">Pricing</a>
+                                                    data-kt-drawer-dismiss="true"
+                                                    data-kt-translate="landing.pricing">{{ __('landing.pricing') }}</a>
                                                 <!--end::Menu link-->
                                             </div>
                                             <!--end::Menu item-->
@@ -175,26 +181,30 @@ License: For each use you must have a valid license purchased only from above li
                                 </div>
                                 <!--end::Menu wrapper-->
                                 <!--begin::Toolbar-->
+                                <div class="flex-equal d-flex align-items-center justify-content-end ms-1">
+                                    @include('partials.lang._main', [
+                                        'wrapper_class' => 'd-inline-flex align-items-center me-2 me-lg-3',
+                                        'button_class' => 'btn btn-icon btn-custom btn-active-light btn-active-color-primary w-35px h-35px'
+                                    ])
 
-                                @if (Route::has('login'))
-                                    <div class="flex-equal text-end ms-1">
+                                    @if (Route::has('login'))
                                         @auth
-                                            <a href="{{ url('/dashboard') }}" class="btn btn-success">
-                                                Dashboard
+                                            <a href="{{ url('/dashboard') }}" class="btn btn-success" data-kt-translate="landing.dashboard">
+                                                {{ __('landing.dashboard') }}
                                             </a>
                                         @else
-                                            <a href="{{ route('login') }}" class="btn btn-success">
-                                                Log in
+                                            <a href="{{ route('login') }}" class="btn btn-success" data-kt-translate="landing.login">
+                                                {{ __('landing.login') }}
                                             </a>
 
                                             {{--  @if (Route::has('register'))
-                                                <a href="{{ route('register') }}" class="btn btn-success">
-                                                    Register
+                                                <a href="{{ route('register') }}" class="btn btn-success" data-kt-translate="landing.register">
+                                                    {{ __('landing.register') }}
                                                 </a>
                                             @endif --}}
                                         @endauth
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                                 <!--end::Toolbar-->
                             </div>
                             <!--end::Wrapper-->
@@ -208,7 +218,7 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="text-center mb-5 mb-lg-10 py-10 py-lg-20">
                             <!--begin::Title-->
                             <h1 class="text-white lh-base fw-bold fs-2x fs-lg-3x mb-15">
-                                Build An Outstanding Solutions <br />with
+                                <span data-kt-translate="landing.hero_title">{{ __('landing.hero_title') }}</span> <br /><span data-kt-translate="landing.hero_with">{{ __('landing.hero_with') }}</span>
                                 <span
                                     style="
                                     background: linear-gradient(
@@ -219,12 +229,12 @@ License: For each use you must have a valid license purchased only from above li
                                     -webkit-background-clip: text;
                                     -webkit-text-fill-color: transparent;
                                 ">
-                                    <span id="kt_landing_hero_text">The Best Theme Ever</span>
+                                    <span id="kt_landing_hero_text" data-kt-translate="landing.hero_highlight">{{ __('landing.hero_highlight') }}</span>
                                 </span>
                             </h1>
                             <!--end::Title-->
                             <!--begin::Action-->
-                            <a href="/" class="btn btn-primary">Try Metronic</a>
+                            <a href="/" class="btn btn-primary" data-kt-translate="landing.try_metronic">{{ __('landing.try_metronic') }}</a>
                             <!--end::Action-->
                         </div>
                         <!--end::Heading-->
@@ -306,14 +316,13 @@ License: For each use you must have a valid license purchased only from above li
                     <div class="text-center mb-17">
                         <!--begin::Title-->
                         <h3 class="fs-2hx text-gray-900 mb-5" id="how-it-works"
-                            data-kt-scroll-offset="{default: 100, lg: 150}">
-                            How it Works
+                            data-kt-scroll-offset="{default: 100, lg: 150}" data-kt-translate="landing.how_it_works">
+                            {{ __('landing.how_it_works') }}
                         </h3>
                         <!--end::Title-->
                         <!--begin::Text-->
-                        <div class="fs-5 text-muted fw-bold">
-                            Save thousands to millions of bucks by using single tool <br />for
-                            different amazing and great useful admin
+                        <div class="fs-5 text-muted fw-bold" data-kt-translate="landing.how_it_works_subtitle">
+                            {{ __('landing.how_it_works_subtitle') }}
                         </div>
                         <!--end::Text-->
                     </div>
@@ -334,16 +343,15 @@ License: For each use you must have a valid license purchased only from above li
                                     <span class="badge badge-circle badge-light-success fw-bold p-5 me-3 fs-3">1</span>
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bold text-gray-900">
-                                        Jane Miller
+                                    <div class="fs-5 fs-lg-3 fw-bold text-gray-900" data-kt-translate="landing.step_1_title">
+                                        {{ __('landing.step_1_title') }}
                                     </div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-semibold fs-6 fs-lg-4 text-muted">
-                                    Save thousands to millions of bucks <br />by using single tool
-                                    for different <br />amazing and great
+                                <div class="fw-semibold fs-6 fs-lg-4 text-muted" data-kt-translate="landing.step_1_desc">
+                                    {{ __('landing.step_1_desc') }}
                                 </div>
                                 <!--end::Description-->
                             </div>
@@ -364,16 +372,15 @@ License: For each use you must have a valid license purchased only from above li
                                     <span class="badge badge-circle badge-light-success fw-bold p-5 me-3 fs-3">2</span>
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bold text-gray-900">
-                                        Setup Your App
+                                    <div class="fs-5 fs-lg-3 fw-bold text-gray-900" data-kt-translate="landing.step_2_title">
+                                        {{ __('landing.step_2_title') }}
                                     </div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-semibold fs-6 fs-lg-4 text-muted">
-                                    Save thousands to millions of bucks <br />by using single tool
-                                    for different <br />amazing and great
+                                <div class="fw-semibold fs-6 fs-lg-4 text-muted" data-kt-translate="landing.step_2_desc">
+                                    {{ __('landing.step_2_desc') }}
                                 </div>
                                 <!--end::Description-->
                             </div>
@@ -394,16 +401,15 @@ License: For each use you must have a valid license purchased only from above li
                                     <span class="badge badge-circle badge-light-success fw-bold p-5 me-3 fs-3">3</span>
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bold text-gray-900">
-                                        Enjoy Nautica App
+                                    <div class="fs-5 fs-lg-3 fw-bold text-gray-900" data-kt-translate="landing.step_3_title">
+                                        {{ __('landing.step_3_title') }}
                                     </div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-semibold fs-6 fs-lg-4 text-muted">
-                                    Save thousands to millions of bucks <br />by using single tool
-                                    for different <br />amazing and great
+                                <div class="fw-semibold fs-6 fs-lg-4 text-muted" data-kt-translate="landing.step_3_desc">
+                                    {{ __('landing.step_3_desc') }}
                                 </div>
                                 <!--end::Description-->
                             </div>
@@ -480,14 +486,13 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="text-center mt-15 mb-18" id="achievements"
                             data-kt-scroll-offset="{default: 100, lg: 150}">
                             <!--begin::Title-->
-                            <h3 class="fs-2hx text-white fw-bold mb-5">
-                                We Make Things Better
+                            <h3 class="fs-2hx text-white fw-bold mb-5" data-kt-translate="landing.achievements_title">
+                                {{ __('landing.achievements_title') }}
                             </h3>
                             <!--end::Title-->
                             <!--begin::Description-->
-                            <div class="fs-5 text-gray-700 fw-bold">
-                                Save thousands to millions of bucks by using single tool
-                                <br />for different amazing and great useful admin
+                            <div class="fs-5 text-gray-700 fw-bold" data-kt-translate="landing.achievements_subtitle">
+                                {{ __('landing.achievements_subtitle') }}
                             </div>
                             <!--end::Description-->
                         </div>
@@ -519,7 +524,7 @@ License: For each use you must have a valid license purchased only from above li
                                         </div>
                                         <!--end::Value-->
                                         <!--begin::Label-->
-                                        <span class="text-gray-600 fw-semibold fs-5 lh-0">Known Companies</span>
+                                        <span class="text-gray-600 fw-semibold fs-5 lh-0" data-kt-translate="landing.known_companies">{{ __('landing.known_companies') }}</span>
                                         <!--end::Label-->
                                     </div>
                                     <!--end::Info-->
@@ -546,7 +551,7 @@ License: For each use you must have a valid license purchased only from above li
                                         </div>
                                         <!--end::Value-->
                                         <!--begin::Label-->
-                                        <span class="text-gray-600 fw-semibold fs-5 lh-0">Statistic Reports</span>
+                                        <span class="text-gray-600 fw-semibold fs-5 lh-0" data-kt-translate="landing.statistic_reports">{{ __('landing.statistic_reports') }}</span>
                                         <!--end::Label-->
                                     </div>
                                     <!--end::Info-->
@@ -574,7 +579,7 @@ License: For each use you must have a valid license purchased only from above li
                                         </div>
                                         <!--end::Value-->
                                         <!--begin::Label-->
-                                        <span class="text-gray-600 fw-semibold fs-5 lh-0">Secure Payments</span>
+                                        <span class="text-gray-600 fw-semibold fs-5 lh-0" data-kt-translate="landing.secure_payments">{{ __('landing.secure_payments') }}</span>
                                         <!--end::Label-->
                                     </div>
                                     <!--end::Info-->
@@ -586,18 +591,16 @@ License: For each use you must have a valid license purchased only from above li
                         <!--end::Statistics-->
                         <!--begin::Testimonial-->
                         <div class="fs-2 fw-semibold text-muted text-center mb-3">
-                            <span class="fs-1 lh-1 text-gray-700">“</span>When you care about
-                            your topic, you’ll write about it in a
+                            <span class="fs-1 lh-1 text-gray-700">“</span><span data-kt-translate="landing.quote_text">{{ __('landing.quote_text') }}</span>
                             <br />
-                            <span class="text-gray-700 me-1">more powerful</span>, emotionally
-                            expressive way
+                            <span class="text-gray-700 me-1" data-kt-translate="landing.quote_highlight">{{ __('landing.quote_highlight') }}</span><span data-kt-translate="landing.quote_suffix">{{ __('landing.quote_suffix') }}</span>
                             <span class="fs-1 lh-1 text-gray-700">“</span>
                         </div>
                         <!--end::Testimonial-->
                         <!--begin::Author-->
                         <div class="fs-2 fw-semibold text-muted text-center">
-                            <a href="/" class="link-primary fs-4 fw-bold">Marcus Levy,</a>
-                            <span class="fs-4 fw-bold text-gray-600">KeenThemes CEO</span>
+                            <a href="/" class="link-primary fs-4 fw-bold" data-kt-translate="landing.quote_author">{{ __('landing.quote_author') }}</a>
+                            <span class="fs-4 fw-bold text-gray-600" data-kt-translate="landing.quote_author_role">{{ __('landing.quote_author_role') }}</span>
                         </div>
                         <!--end::Author-->
                     </div>
@@ -623,15 +626,13 @@ License: For each use you must have a valid license purchased only from above li
                     <div class="text-center mb-12">
                         <!--begin::Title-->
                         <h3 class="fs-2hx text-gray-900 mb-5" id="team"
-                            data-kt-scroll-offset="{default: 100, lg: 150}">
-                            Our Great Team
+                            data-kt-scroll-offset="{default: 100, lg: 150}" data-kt-translate="landing.team_title">
+                            {{ __('landing.team_title') }}
                         </h3>
                         <!--end::Title-->
                         <!--begin::Sub-title-->
-                        <div class="fs-5 text-muted fw-bold">
-                            It’s no doubt that when a development takes longer to complete,
-                            additional costs to <br />integrate and test each extra feature
-                            creeps up and haunts most of us.
+                        <div class="fs-5 text-muted fw-bold" data-kt-translate="landing.team_subtitle">
+                            {{ __('landing.team_subtitle') }}
                         </div>
                         <!--end::Sub-title=-->
                     </div>
@@ -658,8 +659,8 @@ License: For each use you must have a valid license purchased only from above li
                                         Miles</a>
                                     <!--end::Name-->
                                     <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">
-                                        Development Lead
+                                    <div class="text-muted fs-6 fw-semibold mt-1" data-kt-translate="landing.dev_lead">
+                                        {{ __('landing.dev_lead') }}
                                     </div>
                                     <!--begin::Position-->
                                 </div>
@@ -680,8 +681,8 @@ License: For each use you must have a valid license purchased only from above li
                                         Marcus</a>
                                     <!--end::Name-->
                                     <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">
-                                        Creative Director
+                                    <div class="text-muted fs-6 fw-semibold mt-1" data-kt-translate="landing.creative_director">
+                                        {{ __('landing.creative_director') }}
                                     </div>
                                     <!--begin::Position-->
                                 </div>
@@ -702,8 +703,8 @@ License: For each use you must have a valid license purchased only from above li
                                         Nilson</a>
                                     <!--end::Name-->
                                     <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">
-                                        Python Expert
+                                    <div class="text-muted fs-6 fw-semibold mt-1" data-kt-translate="landing.python_expert">
+                                        {{ __('landing.python_expert') }}
                                     </div>
                                     <!--begin::Position-->
                                 </div>
@@ -724,8 +725,8 @@ License: For each use you must have a valid license purchased only from above li
                                         Clarc</a>
                                     <!--end::Name-->
                                     <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">
-                                        Project Manager
+                                    <div class="text-muted fs-6 fw-semibold mt-1" data-kt-translate="landing.project_manager">
+                                        {{ __('landing.project_manager') }}
                                     </div>
                                     <!--begin::Position-->
                                 </div>
@@ -746,8 +747,8 @@ License: For each use you must have a valid license purchased only from above li
                                         Hunt</a>
                                     <!--end::Name-->
                                     <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">
-                                        Art Director
+                                    <div class="text-muted fs-6 fw-semibold mt-1" data-kt-translate="landing.art_director">
+                                        {{ __('landing.art_director') }}
                                     </div>
                                     <!--begin::Position-->
                                 </div>
@@ -768,8 +769,8 @@ License: For each use you must have a valid license purchased only from above li
                                         Wayde</a>
                                     <!--end::Name-->
                                     <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">
-                                        Marketing Manager
+                                    <div class="text-muted fs-6 fw-semibold mt-1" data-kt-translate="landing.marketing_manager">
+                                        {{ __('landing.marketing_manager') }}
                                     </div>
                                     <!--begin::Position-->
                                 </div>
@@ -790,8 +791,8 @@ License: For each use you must have a valid license purchased only from above li
                                         Puyol</a>
                                     <!--end::Name-->
                                     <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">
-                                        QA Managers
+                                    <div class="text-muted fs-6 fw-semibold mt-1" data-kt-translate="landing.qa_managers">
+                                        {{ __('landing.qa_managers') }}
                                     </div>
                                     <!--begin::Position-->
                                 </div>
@@ -828,8 +829,8 @@ License: For each use you must have a valid license purchased only from above li
                             <div class="text-center mb-5 mb-lg-10">
                                 <!--begin::Title-->
                                 <h3 class="fs-2hx text-gray-900 mb-5" id="portfolio"
-                                    data-kt-scroll-offset="{default: 100, lg: 250}">
-                                    Our Projects
+                                    data-kt-scroll-offset="{default: 100, lg: 250}" data-kt-translate="landing.projects_title">
+                                    {{ __('landing.projects_title') }}
                                 </h3>
                                 <!--end::Title-->
                             </div>
@@ -841,24 +842,22 @@ License: For each use you must have a valid license purchased only from above li
                                     <li class="nav-item">
                                         <a class="nav-link text-gray-500 text-active-primary px-3 px-lg-6 active"
                                             href="javascript:void(0)" data-bs-toggle="tab"
-                                            data-bs-target="#kt_landing_projects_latest">Latest</a>
+                                            data-bs-target="#kt_landing_projects_latest" data-kt-translate="landing.tab_latest">{{ __('landing.tab_latest') }}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-gray-500 text-active-primary px-3 px-lg-6"
                                             href="javascript:void(0)" data-bs-toggle="tab"
-                                            data-bs-target="#kt_landing_projects_web_design">Web
-                                            Design</a>
+                                            data-bs-target="#kt_landing_projects_web_design" data-kt-translate="landing.tab_web_design">{{ __('landing.tab_web_design') }}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-gray-500 text-active-primary px-3 px-lg-6"
                                             href="javascript:void(0)" data-bs-toggle="tab"
-                                            data-bs-target="#kt_landing_projects_mobile_apps">Mobile
-                                            Apps</a>
+                                            data-bs-target="#kt_landing_projects_mobile_apps" data-kt-translate="landing.tab_mobile_apps">{{ __('landing.tab_mobile_apps') }}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-gray-500 text-active-primary px-3 px-lg-6"
                                             href="javascript:void(0)" data-bs-toggle="tab"
-                                            data-bs-target="#kt_landing_projects_development">Development</a>
+                                            data-bs-target="#kt_landing_projects_development" data-kt-translate="landing.tab_development">{{ __('landing.tab_development') }}</a>
                                     </li>
                                 </ul>
                                 <!--end::Tabs-->
@@ -1328,13 +1327,11 @@ License: For each use you must have a valid license purchased only from above li
                             <!--begin::Heading-->
                             <div class="mb-13 text-center">
                                 <h1 class="fs-2hx fw-bold text-white mb-5" id="pricing"
-                                    data-kt-scroll-offset="{default: 100, lg: 150}">
-                                    Clear Pricing Makes it Easy
+                                    data-kt-scroll-offset="{default: 100, lg: 150}" data-kt-translate="landing.pricing_title">
+                                    {{ __('landing.pricing_title') }}
                                 </h1>
-                                <div class="text-gray-600 fw-semibold fs-5">
-                                    Save thousands to millions of bucks by using single tool for
-                                    different <br />amazing and outstanding cool and great useful
-                                    admin
+                                <div class="text-gray-600 fw-semibold fs-5" data-kt-translate="landing.pricing_subtitle">
+                                    {{ __('landing.pricing_subtitle') }}
                                 </div>
                             </div>
                             <!--end::Heading-->
@@ -1345,10 +1342,10 @@ License: For each use you must have a valid license purchased only from above li
                                     style="border: 1px dashed #2b4666">
                                     <a href="javascript:void(0)"
                                         class="btn btn-color-gray-600 btn-active btn-active-success px-6 py-3 me-2 active"
-                                        data-kt-plan="month">Monthly</a>
+                                        data-kt-plan="month" data-kt-translate="landing.monthly">{{ __('landing.monthly') }}</a>
                                     <a href="javascript:void(0)"
                                         class="btn btn-color-gray-600 btn-active btn-active-success px-6 py-3"
-                                        data-kt-plan="annual">Annual</a>
+                                        data-kt-plan="annual" data-kt-translate="landing.annual">{{ __('landing.annual') }}</a>
                                 </div>
                                 <!--end::Nav group-->
                                 <!--begin::Row-->
@@ -1362,11 +1359,11 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Heading-->
                                                 <div class="mb-7 text-center">
                                                     <!--begin::Title-->
-                                                    <h1 class="text-gray-900 mb-5 fw-boldest">Startup</h1>
+                                                    <h1 class="text-gray-900 mb-5 fw-boldest" data-kt-translate="landing.plan_startup">{{ __('landing.plan_startup') }}</h1>
                                                     <!--end::Title-->
                                                     <!--begin::Description-->
-                                                    <div class="text-gray-500 fw-semibold mb-5">
-                                                        Best Settings for Startups
+                                                    <div class="text-gray-500 fw-semibold mb-5" data-kt-translate="landing.plan_startup_desc">
+                                                        {{ __('landing.plan_startup_desc') }}
                                                     </div>
                                                     <!--end::Description-->
                                                     <!--begin::Price-->
@@ -1376,8 +1373,8 @@ License: For each use you must have a valid license purchased only from above li
                                                             data-kt-plan-price-month="99"
                                                             data-kt-plan-price-annual="999">99</span>
                                                         <span class="fs-7 fw-semibold opacity-50"
-                                                            data-kt-plan-price-month="/ Mon"
-                                                            data-kt-plan-price-annual="/ Ann">/ Mon</span>
+                                                            data-kt-plan-price-month="{{ __('landing.per_month') }}"
+                                                            data-kt-plan-price-annual="{{ __('landing.per_annual') }}">{{ __('landing.per_month') }}</span>
                                                     </div>
                                                     <!--end::Price-->
                                                 </div>
@@ -1386,9 +1383,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 <div class="w-100 mb-10">
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
-                                                        <span class="fw-semibold fs-6 text-gray-800 text-start pe-3">Up
-                                                            to
-                                                            10 Active Users</span>
+                                                        <span class="fw-semibold fs-6 text-gray-800 text-start pe-3" data-kt-translate="landing.feature_active_users">{{ __('landing.feature_active_users') }}</span>
                                                         <i class="ki-duotone ki-check-circle fs-1 text-success">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1397,10 +1392,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
-                                                        <span class="fw-semibold fs-6 text-gray-800 text-start pe-3">Up
-                                                            to
-                                                            30 Project
-                                                            Integrations</span>
+                                                        <span class="fw-semibold fs-6 text-gray-800 text-start pe-3" data-kt-translate="landing.feature_project_integrations">{{ __('landing.feature_project_integrations') }}</span>
                                                         <i class="ki-duotone ki-check-circle fs-1 text-success">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1409,8 +1401,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
-                                                        <span class="fw-semibold fs-6 text-gray-800">Keen Analytics
-                                                            Platform</span>
+                                                        <span class="fw-semibold fs-6 text-gray-800" data-kt-translate="landing.feature_analytics_platform">{{ __('landing.feature_analytics_platform') }}</span>
                                                         <i class="ki-duotone ki-cross-circle fs-1">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1419,9 +1410,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
-                                                        <span class="fw-semibold fs-6 text-gray-800">Targets Timelines
-                                                            &
-                                                            Files</span>
+                                                        <span class="fw-semibold fs-6 text-gray-800" data-kt-translate="landing.feature_targets_files">{{ __('landing.feature_targets_files') }}</span>
                                                         <i class="ki-duotone ki-cross-circle fs-1">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1430,8 +1419,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack">
-                                                        <span class="fw-semibold fs-6 text-gray-800">Unlimited
-                                                            Projects</span>
+                                                        <span class="fw-semibold fs-6 text-gray-800" data-kt-translate="landing.feature_unlimited_projects">{{ __('landing.feature_unlimited_projects') }}</span>
                                                         <i class="ki-duotone ki-cross-circle fs-1">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1441,7 +1429,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 </div>
                                                 <!--end::Features-->
                                                 <!--begin::Select-->
-                                                <a href="javascript:void(0)" class="btn btn-primary">Select</a>
+                                                <a href="javascript:void(0)" class="btn btn-primary" data-kt-translate="landing.select">{{ __('landing.select') }}</a>
                                                 <!--end::Select-->
                                             </div>
                                             <!--end::Option-->
@@ -1457,11 +1445,11 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Heading-->
                                                 <div class="mb-7 text-center">
                                                     <!--begin::Title-->
-                                                    <h1 class="text-white mb-5 fw-boldest">Business</h1>
+                                                    <h1 class="text-white mb-5 fw-boldest" data-kt-translate="landing.plan_business">{{ __('landing.plan_business') }}</h1>
                                                     <!--end::Title-->
                                                     <!--begin::Description-->
-                                                    <div class="text-white opacity-75 fw-semibold mb-5">
-                                                        Best Settings for Business
+                                                    <div class="text-white opacity-75 fw-semibold mb-5" data-kt-translate="landing.plan_business_desc">
+                                                        {{ __('landing.plan_business_desc') }}
                                                     </div>
                                                     <!--end::Description-->
                                                     <!--begin::Price-->
@@ -1471,8 +1459,8 @@ License: For each use you must have a valid license purchased only from above li
                                                             data-kt-plan-price-month="199"
                                                             data-kt-plan-price-annual="1999">199</span>
                                                         <span class="fs-7 fw-semibold text-white opacity-75"
-                                                            data-kt-plan-price-month="/ Mon"
-                                                            data-kt-plan-price-annual="/ Ann">/ Mon</span>
+                                                            data-kt-plan-price-month="{{ __('landing.per_month') }}"
+                                                            data-kt-plan-price-annual="{{ __('landing.per_annual') }}">{{ __('landing.per_month') }}</span>
                                                     </div>
                                                     <!--end::Price-->
                                                 </div>
@@ -1482,9 +1470,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
                                                         <span
-                                                            class="fw-semibold fs-6 text-white opacity-75 text-start pe-3">Up
-                                                            to 10 Active
-                                                            Users</span>
+                                                            class="fw-semibold fs-6 text-white opacity-75 text-start pe-3" data-kt-translate="landing.feature_active_users">{{ __('landing.feature_active_users') }}</span>
                                                         <i class="ki-duotone ki-check-circle fs-1 text-white">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1494,9 +1480,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
                                                         <span
-                                                            class="fw-semibold fs-6 text-white opacity-75 text-start pe-3">Up
-                                                            to 30 Project
-                                                            Integrations</span>
+                                                            class="fw-semibold fs-6 text-white opacity-75 text-start pe-3" data-kt-translate="landing.feature_project_integrations">{{ __('landing.feature_project_integrations') }}</span>
                                                         <i class="ki-duotone ki-check-circle fs-1 text-white">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1506,9 +1490,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
                                                         <span
-                                                            class="fw-semibold fs-6 text-white opacity-75 text-start pe-3">Keen
-                                                            Analytics
-                                                            Platform</span>
+                                                            class="fw-semibold fs-6 text-white opacity-75 text-start pe-3" data-kt-translate="landing.feature_analytics_platform">{{ __('landing.feature_analytics_platform') }}</span>
                                                         <i class="ki-duotone ki-check-circle fs-1 text-white">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1518,9 +1500,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
                                                         <span
-                                                            class="fw-semibold fs-6 text-white opacity-75 text-start pe-3">Targets
-                                                            Timelines &
-                                                            Files</span>
+                                                            class="fw-semibold fs-6 text-white opacity-75 text-start pe-3" data-kt-translate="landing.feature_targets_files">{{ __('landing.feature_targets_files') }}</span>
                                                         <i class="ki-duotone ki-check-circle fs-1 text-white">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1529,8 +1509,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack">
-                                                        <span class="fw-semibold fs-6 text-white opacity-75">Unlimited
-                                                            Projects</span>
+                                                        <span class="fw-semibold fs-6 text-white opacity-75" data-kt-translate="landing.feature_unlimited_projects">{{ __('landing.feature_unlimited_projects') }}</span>
                                                         <i class="ki-duotone ki-cross-circle fs-1 text-white">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1541,7 +1520,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--end::Features-->
                                                 <!--begin::Select-->
                                                 <a href="javascript:void(0)"
-                                                    class="btn btn-color-primary btn-active-light-primary btn-light">Select</a>
+                                                    class="btn btn-color-primary btn-active-light-primary btn-light" data-kt-translate="landing.select">{{ __('landing.select') }}</a>
                                                 <!--end::Select-->
                                             </div>
                                             <!--end::Option-->
@@ -1557,13 +1536,13 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Heading-->
                                                 <div class="mb-7 text-center">
                                                     <!--begin::Title-->
-                                                    <h1 class="text-gray-900 mb-5 fw-boldest">
-                                                        Enterprise
+                                                    <h1 class="text-gray-900 mb-5 fw-boldest" data-kt-translate="landing.plan_enterprise">
+                                                        {{ __('landing.plan_enterprise') }}
                                                     </h1>
                                                     <!--end::Title-->
                                                     <!--begin::Description-->
-                                                    <div class="text-gray-500 fw-semibold mb-5">
-                                                        Best Settings for Enterprise
+                                                    <div class="text-gray-500 fw-semibold mb-5" data-kt-translate="landing.plan_enterprise_desc">
+                                                        {{ __('landing.plan_enterprise_desc') }}
                                                     </div>
                                                     <!--end::Description-->
                                                     <!--begin::Price-->
@@ -1573,8 +1552,8 @@ License: For each use you must have a valid license purchased only from above li
                                                             data-kt-plan-price-month="999"
                                                             data-kt-plan-price-annual="9999">999</span>
                                                         <span class="fs-7 fw-semibold opacity-50"
-                                                            data-kt-plan-price-month="/ Mon"
-                                                            data-kt-plan-price-annual="/ Ann">/ Mon</span>
+                                                            data-kt-plan-price-month="{{ __('landing.per_month') }}"
+                                                            data-kt-plan-price-annual="{{ __('landing.per_annual') }}">{{ __('landing.per_month') }}</span>
                                                     </div>
                                                     <!--end::Price-->
                                                 </div>
@@ -1583,9 +1562,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 <div class="w-100 mb-10">
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
-                                                        <span class="fw-semibold fs-6 text-gray-800 text-start pe-3">Up
-                                                            to
-                                                            10 Active Users</span>
+                                                        <span class="fw-semibold fs-6 text-gray-800 text-start pe-3" data-kt-translate="landing.feature_active_users">{{ __('landing.feature_active_users') }}</span>
                                                         <i class="ki-duotone ki-check-circle fs-1 text-success">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1594,21 +1571,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
-                                                        <span class="fw-semibold fs-6 text-gray-800 text-start pe-3">Up
-                                                            to
-                                                            30 Project
-                                                            Integrations</span>
-                                                        <i class="ki-duotone ki-check-circle fs-1 text-success">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                        </i>
-                                                    </div>
-                                                    <!--end::Item-->
-                                                    <!--begin::Item-->
-                                                    <div class="d-flex flex-stack mb-5">
-                                                        <span
-                                                            class="fw-semibold fs-6 text-gray-800 text-start pe-3">Keen
-                                                            Analytics Platform</span>
+                                                        <span class="fw-semibold fs-6 text-gray-800 text-start pe-3" data-kt-translate="landing.feature_project_integrations">{{ __('landing.feature_project_integrations') }}</span>
                                                         <i class="ki-duotone ki-check-circle fs-1 text-success">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1618,8 +1581,17 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-5">
                                                         <span
-                                                            class="fw-semibold fs-6 text-gray-800 text-start pe-3">Targets
-                                                            Timelines & Files</span>
+                                                            class="fw-semibold fs-6 text-gray-800 text-start pe-3" data-kt-translate="landing.feature_analytics_platform">{{ __('landing.feature_analytics_platform') }}</span>
+                                                        <i class="ki-duotone ki-check-circle fs-1 text-success">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                        </i>
+                                                    </div>
+                                                    <!--end::Item-->
+                                                    <!--begin::Item-->
+                                                    <div class="d-flex flex-stack mb-5">
+                                                        <span
+                                                            class="fw-semibold fs-6 text-gray-800 text-start pe-3" data-kt-translate="landing.feature_targets_files">{{ __('landing.feature_targets_files') }}</span>
                                                         <i class="ki-duotone ki-check-circle fs-1 text-success">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1629,8 +1601,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack">
                                                         <span
-                                                            class="fw-semibold fs-6 text-gray-800 text-start pe-3">Unlimited
-                                                            Projects</span>
+                                                            class="fw-semibold fs-6 text-gray-800 text-start pe-3" data-kt-translate="landing.feature_unlimited_projects">{{ __('landing.feature_unlimited_projects') }}</span>
                                                         <i class="ki-duotone ki-check-circle fs-1 text-success">
                                                             <span class="path1"></span>
                                                             <span class="path2"></span>
@@ -1640,7 +1611,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 </div>
                                                 <!--end::Features-->
                                                 <!--begin::Select-->
-                                                <a href="javascript:void(0)" class="btn btn-primary">Select</a>
+                                                <a href="javascript:void(0)" class="btn btn-primary" data-kt-translate="landing.select">{{ __('landing.select') }}</a>
                                                 <!--end::Select-->
                                             </div>
                                             <!--end::Option-->
@@ -1676,14 +1647,13 @@ License: For each use you must have a valid license purchased only from above li
                     <div class="text-center mb-17">
                         <!--begin::Title-->
                         <h3 class="fs-2hx text-gray-900 mb-5" id="clients"
-                            data-kt-scroll-offset="{default: 125, lg: 150}">
-                            What Our Clients Say
+                            data-kt-scroll-offset="{default: 125, lg: 150}" data-kt-translate="landing.clients_title">
+                            {{ __('landing.clients_title') }}
                         </h3>
                         <!--end::Title-->
                         <!--begin::Description-->
-                        <div class="fs-5 text-muted fw-bold">
-                            Save thousands to millions of bucks by using single tool <br />for
-                            different amazing and great useful admin
+                        <div class="fs-5 text-muted fw-bold" data-kt-translate="landing.clients_subtitle">
+                            {{ __('landing.clients_subtitle') }}
                         </div>
                         <!--end::Description-->
                     </div>
@@ -1717,17 +1687,13 @@ License: For each use you must have a valid license purchased only from above li
                                     </div>
                                     <!--end::Rating-->
                                     <!--begin::Title-->
-                                    <div class="fs-2 fw-bold text-gray-900 mb-3">
-                                        This is by far the cleanest template <br />and the most well
-                                        structured
+                                    <div class="fs-2 fw-bold text-gray-900 mb-3" data-kt-translate="landing.testimonial_title">
+                                        {{ __('landing.testimonial_title') }}
                                     </div>
                                     <!--end::Title-->
                                     <!--begin::Feedback-->
-                                    <div class="text-gray-500 fw-semibold fs-4">
-                                        The most well thought out design theme I have ever used. The
-                                        codes are up to tandard. The css styles are very clean. In
-                                        fact the cleanest and the most up to standard I have ever
-                                        seen.
+                                    <div class="text-gray-500 fw-semibold fs-4" data-kt-translate="landing.testimonial_text">
+                                        {{ __('landing.testimonial_text') }}
                                     </div>
                                     <!--end::Feedback-->
                                 </div>
@@ -1744,7 +1710,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <div class="flex-grow-1">
                                         <a href="javascript:void(0)" class="text-gray-900 fw-bold text-hover-primary fs-6">Paul
                                             Miles</a>
-                                        <span class="text-muted d-block fw-bold">Development Lead</span>
+                                        <span class="text-muted d-block fw-bold" data-kt-translate="landing.dev_lead">{{ __('landing.dev_lead') }}</span>
                                     </div>
                                     <!--end::Name-->
                                 </div>
@@ -1780,17 +1746,13 @@ License: For each use you must have a valid license purchased only from above li
                                     </div>
                                     <!--end::Rating-->
                                     <!--begin::Title-->
-                                    <div class="fs-2 fw-bold text-gray-900 mb-3">
-                                        This is by far the cleanest template <br />and the most well
-                                        structured
+                                    <div class="fs-2 fw-bold text-gray-900 mb-3" data-kt-translate="landing.testimonial_title">
+                                        {{ __('landing.testimonial_title') }}
                                     </div>
                                     <!--end::Title-->
                                     <!--begin::Feedback-->
-                                    <div class="text-gray-500 fw-semibold fs-4">
-                                        The most well thought out design theme I have ever used. The
-                                        codes are up to tandard. The css styles are very clean. In
-                                        fact the cleanest and the most up to standard I have ever
-                                        seen.
+                                    <div class="text-gray-500 fw-semibold fs-4" data-kt-translate="landing.testimonial_text">
+                                        {{ __('landing.testimonial_text') }}
                                     </div>
                                     <!--end::Feedback-->
                                 </div>
@@ -1807,7 +1769,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <div class="flex-grow-1">
                                         <a href="javascript:void(0)" class="text-gray-900 fw-bold text-hover-primary fs-6">Janya
                                             Clebert</a>
-                                        <span class="text-muted d-block fw-bold">Development Lead</span>
+                                        <span class="text-muted d-block fw-bold" data-kt-translate="landing.dev_lead">{{ __('landing.dev_lead') }}</span>
                                     </div>
                                     <!--end::Name-->
                                 </div>
@@ -1843,17 +1805,13 @@ License: For each use you must have a valid license purchased only from above li
                                     </div>
                                     <!--end::Rating-->
                                     <!--begin::Title-->
-                                    <div class="fs-2 fw-bold text-gray-900 mb-3">
-                                        This is by far the cleanest template <br />and the most well
-                                        structured
+                                    <div class="fs-2 fw-bold text-gray-900 mb-3" data-kt-translate="landing.testimonial_title">
+                                        {{ __('landing.testimonial_title') }}
                                     </div>
                                     <!--end::Title-->
                                     <!--begin::Feedback-->
-                                    <div class="text-gray-500 fw-semibold fs-4">
-                                        The most well thought out design theme I have ever used. The
-                                        codes are up to tandard. The css styles are very clean. In
-                                        fact the cleanest and the most up to standard I have ever
-                                        seen.
+                                    <div class="text-gray-500 fw-semibold fs-4" data-kt-translate="landing.testimonial_text">
+                                        {{ __('landing.testimonial_text') }}
                                     </div>
                                     <!--end::Feedback-->
                                 </div>
@@ -1870,7 +1828,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <div class="flex-grow-1">
                                         <a href="javascript:void(0)" class="text-gray-900 fw-bold text-hover-primary fs-6">Steave
                                             Brown</a>
-                                        <span class="text-muted d-block fw-bold">Development Lead</span>
+                                        <span class="text-muted d-block fw-bold" data-kt-translate="landing.dev_lead">{{ __('landing.dev_lead') }}</span>
                                     </div>
                                     <!--end::Name-->
                                 </div>
@@ -1888,21 +1846,20 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="my-2 me-5">
                             <!--begin::Title-->
                             <div class="fs-1 fs-lg-2qx fw-bold text-white mb-2">
-                                Start With Metronic Today,
-                                <span class="fw-normal">Speed Up Development!</span>
+                                <span data-kt-translate="landing.cta_title">{{ __('landing.cta_title') }}</span>
+                                <span class="fw-normal" data-kt-translate="landing.cta_title_highlight">{{ __('landing.cta_title_highlight') }}</span>
                             </div>
                             <!--end::Title-->
                             <!--begin::Description-->
-                            <div class="fs-6 fs-lg-5 text-white fw-semibold opacity-75">
-                                Join over 100,000 Professionals Community to Stay Ahead
+                            <div class="fs-6 fs-lg-5 text-white fw-semibold opacity-75" data-kt-translate="landing.cta_subtitle">
+                                {{ __('landing.cta_subtitle') }}
                             </div>
                             <!--end::Description-->
                         </div>
                         <!--end::Content-->
                         <!--begin::Link-->
                         <a href="https://1.envato.market/EA4JP"
-                            class="btn btn-lg btn-outline border-2 btn-outline-white flex-shrink-0 my-2">Purchase on
-                            Themeforest</a>
+                            class="btn btn-lg btn-outline border-2 btn-outline-white flex-shrink-0 my-2" data-kt-translate="landing.purchase_themeforest">{{ __('landing.purchase_themeforest') }}</a>
                         <!--end::Link-->
                     </div>
                     <!--end::Highlight-->
@@ -1912,15 +1869,6 @@ License: For each use you must have a valid license purchased only from above li
             <!--end::Testimonials Section-->
             <!--begin::Footer Section-->
             <div class="mb-0">
-                <!--begin::Curve top-->
-                {{-- <div class="landing-curve landing-dark-color">
-                    <svg viewBox="15 -1 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M1 48C4.93573 47.6644 8.85984 47.3311 12.7725 47H1489.16C1493.1 47.3311 1497.04 47.6644 1501 48V47H1489.16C914.668 -1.34764 587.282 -1.61174 12.7725 47H1V48Z"
-                            fill="currentColor"></path>
-                    </svg>
-                </div> --}}
-                <!--end::Curve top-->
                 <!--begin::Wrapper-->
                 <div class="landing-dark-bg pt-20">
                     <!--begin::Container-->
@@ -1932,10 +1880,10 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--begin::Block-->
                                 <div class="rounded landing-dark-border p-9 mb-10">
                                     <!--begin::Title-->
-                                    <h2 class="text-white">Would you need a Custom License?</h2>
+                                    <h2 class="text-white" data-kt-translate="landing.custom_license_title">{{ __('landing.custom_license_title') }}</h2>
                                     <!--end::Title-->
                                     <!--begin::Text-->
-                                    <span class="fw-normal fs-4 text-gray-700">Email us to
+                                    <span class="fw-normal fs-4 text-gray-700"><span data-kt-translate="landing.custom_license_email">{{ __('landing.custom_license_email') }}</span>
                                         <a href="https://keenthemes.com/support"
                                             class="text-white opacity-50 text-hover-primary">support@keenthemes.com</a></span>
                                     <!--end::Text-->
@@ -1944,12 +1892,11 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--begin::Block-->
                                 <div class="rounded landing-dark-border p-9">
                                     <!--begin::Title-->
-                                    <h2 class="text-white">How About a Custom Project?</h2>
+                                    <h2 class="text-white" data-kt-translate="landing.custom_project_title">{{ __('landing.custom_project_title') }}</h2>
                                     <!--end::Title-->
                                     <!--begin::Text-->
-                                    <span class="fw-normal fs-4 text-gray-700">Use Our Custom Development Service.
-                                        <a href="javascript:void(0)" class="text-white opacity-50 text-hover-primary">Click to
-                                            Get a Quote</a></span>
+                                    <span class="fw-normal fs-4 text-gray-700"><span data-kt-translate="landing.custom_project_text">{{ __('landing.custom_project_text') }}</span>
+                                        <a href="javascript:void(0)" class="text-white opacity-50 text-hover-primary" data-kt-translate="landing.click_to_get_quote">{{ __('landing.click_to_get_quote') }}</a></span>
                                     <!--end::Text-->
                                 </div>
                                 <!--end::Block-->
@@ -1962,48 +1909,47 @@ License: For each use you must have a valid license purchased only from above li
                                     <!--begin::Links-->
                                     <div class="d-flex fw-semibold flex-column me-20">
                                         <!--begin::Subtitle-->
-                                        <h4 class="fw-bold text-gray-500 mb-6">
-                                            More for Metronic
+                                        <h4 class="fw-bold text-gray-500 mb-6" data-kt-translate="landing.more_for_metronic">
+                                            {{ __('landing.more_for_metronic') }}
                                         </h4>
                                         <!--end::Subtitle-->
                                         <!--begin::Link-->
                                         <a href="https://keenthemes.com/faqs"
-                                            class="text-white opacity-50 text-hover-primary fs-5 mb-6">FAQ</a>
+                                            class="text-white opacity-50 text-hover-primary fs-5 mb-6" data-kt-translate="landing.faq">{{ __('landing.faq') }}</a>
                                         <!--end::Link-->
                                         <!--begin::Link-->
                                         <a href="https://preview.keenthemes.com/html/metronic/docs"
-                                            class="text-white opacity-50 text-hover-primary fs-5 mb-6">Documentaions</a>
+                                            class="text-white opacity-50 text-hover-primary fs-5 mb-6" data-kt-translate="landing.documentations">{{ __('landing.documentations') }}</a>
                                         <!--end::Link-->
                                         <!--begin::Link-->
                                         <a href="https://www.youtube.com/c/KeenThemesTuts/videos"
-                                            class="text-white opacity-50 text-hover-primary fs-5 mb-6">Video Tuts</a>
+                                            class="text-white opacity-50 text-hover-primary fs-5 mb-6" data-kt-translate="landing.video_tuts">{{ __('landing.video_tuts') }}</a>
                                         <!--end::Link-->
                                         <!--begin::Link-->
                                         <a href="https://preview.keenthemes.com/html/metronic/docs/getting-started/changelog"
-                                            class="text-white opacity-50 text-hover-primary fs-5 mb-6">Changelog</a>
+                                            class="text-white opacity-50 text-hover-primary fs-5 mb-6" data-kt-translate="landing.changelog">{{ __('landing.changelog') }}</a>
                                         <!--end::Link-->
                                         <!--begin::Link-->
                                         <a href="https://devs.keenthemes.com/"
-                                            class="text-white opacity-50 text-hover-primary fs-5 mb-6">Support
-                                            Forum</a>
+                                            class="text-white opacity-50 text-hover-primary fs-5 mb-6" data-kt-translate="landing.support_forum">{{ __('landing.support_forum') }}</a>
                                         <!--end::Link-->
                                         <!--begin::Link-->
                                         <a href="https://keenthemes.com/blog"
-                                            class="text-white opacity-50 text-hover-primary fs-5">Blog</a>
+                                            class="text-white opacity-50 text-hover-primary fs-5" data-kt-translate="landing.blog">{{ __('landing.blog') }}</a>
                                         <!--end::Link-->
                                     </div>
                                     <!--end::Links-->
                                     <!--begin::Links-->
                                     <div class="d-flex fw-semibold flex-column ms-lg-20">
                                         <!--begin::Subtitle-->
-                                        <h4 class="fw-bold text-gray-500 mb-6">Stay Connected</h4>
+                                        <h4 class="fw-bold text-gray-500 mb-6" data-kt-translate="landing.stay_connected">{{ __('landing.stay_connected') }}</h4>
                                         <!--end::Subtitle-->
                                         <!--begin::Link-->
                                         <a href="https://www.facebook.com/keenthemes" class="mb-6">
                                             <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/facebook-4.svg', $theme_asset_pack ?? null) }}"
                                                 class="h-20px me-2" alt="" />
                                             <span
-                                                class="text-white opacity-50 text-hover-primary fs-5 mb-6">Facebook</span>
+                                                class="text-white opacity-50 text-hover-primary fs-5 mb-6" data-kt-translate="landing.facebook">{{ __('landing.facebook') }}</span>
                                         </a>
                                         <!--end::Link-->
                                         <!--begin::Link-->
@@ -2011,7 +1957,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/github.svg', $theme_asset_pack ?? null) }}"
                                                 class="h-20px me-2" alt="" />
                                             <span
-                                                class="text-white opacity-50 text-hover-primary fs-5 mb-6">Github</span>
+                                                class="text-white opacity-50 text-hover-primary fs-5 mb-6" data-kt-translate="landing.github">{{ __('landing.github') }}</span>
                                         </a>
                                         <!--end::Link-->
                                         <!--begin::Link-->
@@ -2019,7 +1965,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/twitter.svg', $theme_asset_pack ?? null) }}"
                                                 class="h-20px me-2" alt="" />
                                             <span
-                                                class="text-white opacity-50 text-hover-primary fs-5 mb-6">Twitter</span>
+                                                class="text-white opacity-50 text-hover-primary fs-5 mb-6" data-kt-translate="landing.twitter">{{ __('landing.twitter') }}</span>
                                         </a>
                                         <!--end::Link-->
                                         <!--begin::Link-->
@@ -2027,7 +1973,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/dribbble-icon-1.svg', $theme_asset_pack ?? null) }}"
                                                 class="h-20px me-2" alt="" />
                                             <span
-                                                class="text-white opacity-50 text-hover-primary fs-5 mb-6">Dribbble</span>
+                                                class="text-white opacity-50 text-hover-primary fs-5 mb-6" data-kt-translate="landing.dribbble">{{ __('landing.dribbble') }}</span>
                                         </a>
                                         <!--end::Link-->
                                         <!--begin::Link-->
@@ -2035,7 +1981,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <img src="{{ \App\Support\ThemeAsset::url('media/svg/brand-logos/instagram-2-1.svg', $theme_asset_pack ?? null) }}"
                                                 class="h-20px me-2" alt="" />
                                             <span
-                                                class="text-white opacity-50 text-hover-primary fs-5 mb-6">Instagram</span>
+                                                class="text-white opacity-50 text-hover-primary fs-5 mb-6" data-kt-translate="landing.instagram">{{ __('landing.instagram') }}</span>
                                         </a>
                                         <!--end::Link-->
                                     </div>
@@ -2074,14 +2020,14 @@ License: For each use you must have a valid license purchased only from above li
                             <ul
                                 class="menu menu-gray-600 menu-hover-primary fw-semibold fs-6 fs-md-5 order-1 mb-5 mb-md-0">
                                 <li class="menu-item">
-                                    <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
+                                    <a href="https://keenthemes.com" target="_blank" class="menu-link px-2" data-kt-translate="landing.about">{{ __('landing.about') }}</a>
                                 </li>
                                 <li class="menu-item mx-5">
                                     <a href="https://devs.keenthemes.com" target="_blank"
-                                        class="menu-link px-2">Support</a>
+                                        class="menu-link px-2" data-kt-translate="landing.support">{{ __('landing.support') }}</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="" target="_blank" class="menu-link px-2">Purchase</a>
+                                    <a href="" target="_blank" class="menu-link px-2" data-kt-translate="landing.purchase">{{ __('landing.purchase') }}</a>
                                 </li>
                             </ul>
                             <!--end::Menu-->
@@ -2124,6 +2070,7 @@ License: For each use you must have a valid license purchased only from above li
         <script src="{{ \App\Support\ThemeAsset::url('plugins/custom/typedjs/typedjs.bundle.js', $theme_asset_pack ?? null) }}"></script>
         <!--end::Vendors Javascript-->
         <!--begin::Custom Javascript(used for this page only)-->
+        <script src="{{ \App\Support\ThemeAsset::url('js/custom/language.js', $theme_asset_pack ?? null) }}"></script>
         <script src="{{ \App\Support\ThemeAsset::url('js/custom/landing.js', $theme_asset_pack ?? null) }}"></script>
         <script src="{{ \App\Support\ThemeAsset::url('js/custom/pages/pricing/general.js', $theme_asset_pack ?? null) }}"></script>
         <!--end::Custom Javascript-->

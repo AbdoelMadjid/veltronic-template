@@ -160,10 +160,15 @@ class LanguageManager
                 if (is_string($enText) && is_string($idText) && $enText !== '' && $idText !== '' && $enText !== $idText) {
                     $trimEn = trim($enText);
                     $trimId = trim($idText);
+                    $normEn = preg_replace('/\s+/', ' ', $trimEn);
+                    $normId = preg_replace('/\s+/', ' ', $trimId);
+
                     $textMap['en_to_id'][$trimEn] = $trimId;
                     $textMap['id_to_en'][$trimId] = $trimEn;
-                    $textMap['lower_en_to_id'][strtolower($trimEn)] = $trimId;
-                    $textMap['lower_id_to_en'][strtolower($trimId)] = $trimEn;
+                    $textMap['en_to_id'][$normEn] = $normId;
+                    $textMap['id_to_en'][$normId] = $normEn;
+                    $textMap['lower_en_to_id'][strtolower($normEn)] = $normId;
+                    $textMap['lower_id_to_en'][strtolower($normId)] = $normEn;
                 }
             }
         }

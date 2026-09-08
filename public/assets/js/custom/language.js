@@ -169,6 +169,24 @@ var KTLanguage = (function () {
         if (data.translations) {
             translations.en = Object.assign({}, translations.en, data.translations.en || {});
             translations.id = Object.assign({}, translations.id, data.translations.id || {});
+
+            // Auto-sync bidirectional mappings
+            for (var k in translations.en) {
+                if (translations.en.hasOwnProperty(k) && translations.id[k]) {
+                    var enText = String(translations.en[k]).trim();
+                    var idText = String(translations.id[k]).trim();
+                    if (enText && idText && enText !== idText) {
+                        var normEn = enText.replace(/\s+/g, " ");
+                        var normId = idText.replace(/\s+/g, " ");
+                        textMap.en_to_id[enText] = idText;
+                        textMap.id_to_en[idText] = enText;
+                        textMap.en_to_id[normEn] = normId;
+                        textMap.id_to_en[normId] = normEn;
+                        textMap.lower_en_to_id[normEn.toLowerCase()] = normId;
+                        textMap.lower_id_to_en[normId.toLowerCase()] = normEn;
+                    }
+                }
+            }
         }
         if (data.textMap) {
             textMap.en_to_id = Object.assign({}, textMap.en_to_id, data.textMap.en_to_id || {});
@@ -189,10 +207,14 @@ var KTLanguage = (function () {
                 var enText = coreTranslations.en[k];
                 var idText = coreTranslations.id[k];
                 if (enText !== idText) {
+                    var normEn = enText.replace(/\s+/g, " ");
+                    var normId = idText.replace(/\s+/g, " ");
                     textMap.en_to_id[enText] = idText;
                     textMap.id_to_en[idText] = enText;
-                    textMap.lower_en_to_id[enText.toLowerCase()] = idText;
-                    textMap.lower_id_to_en[idText.toLowerCase()] = enText;
+                    textMap.en_to_id[normEn] = normId;
+                    textMap.id_to_en[normId] = normEn;
+                    textMap.lower_en_to_id[normEn.toLowerCase()] = normId;
+                    textMap.lower_id_to_en[normId.toLowerCase()] = normEn;
                 }
             }
         }
@@ -202,13 +224,13 @@ var KTLanguage = (function () {
             ingestPayload(window.KTLanguageConfig.payload);
         }
 
-        // 2. Try localStorage cache (v3 with help-exempt)
+        // 2. Try localStorage cache (v5 with landing support)
         if (!isLoaded) {
             try {
                 var cached = localStorage.getItem("kt_translations_cache");
                 if (cached) {
                     var parsed = JSON.parse(cached);
-                    if (parsed && parsed.v === 3) {
+                    if (parsed && parsed.v >= 5) {
                         ingestPayload(parsed);
                     } else {
                         localStorage.removeItem("kt_translations_cache");
@@ -241,7 +263,7 @@ var KTLanguage = (function () {
                     // Update localStorage cache
                     try {
                         localStorage.setItem("kt_translations_cache", JSON.stringify({
-                            v: 3,
+                            v: 5,
                             translations: translations,
                             textMap: textMap,
                             timestamp: Date.now()
@@ -264,13 +286,13 @@ var KTLanguage = (function () {
 
         var dict = translations[locale] || {};
 
-        // 1. Direct key match (e.g. 'menu.dashboards')
+        // 1. Direct key match (e.g. 'landing.clients_title', 'menu.dashboards')
         if (typeof dict[key] !== "undefined") {
             return dict[key];
         }
 
-        // 2. Prefixed search (e.g. 'dashboards' -> 'menu.dashboards')
-        var prefixes = ["menu.", "help.", "auth.", "education.", "passwords."];
+        // 2. Prefixed search (e.g. 'clients_title' -> 'landing.clients_title', 'dashboards' -> 'menu.dashboards')
+        var prefixes = ["landing.", "menu.", "help.", "auth.", "education.", "passwords."];
         for (var i = 0; i < prefixes.length; i++) {
             var fullKey = prefixes[i] + key;
             if (typeof dict[fullKey] !== "undefined") {
@@ -279,8 +301,11 @@ var KTLanguage = (function () {
         }
 
         // 3. Normalized slug check (e.g. 'menu.skema_pergantian_icon')
-        var cleanKey = key.replace(/^(menu|help|auth|education|passwords)\./, "");
+        var cleanKey = key.replace(/^(landing|menu|help|auth|education|passwords)\./, "");
         var slug = cleanKey.toLowerCase().replace(/[\s\&\/\-]+/g, "_");
+        if (typeof dict[slug] !== "undefined") {
+            return dict[slug];
+        }
         for (var j = 0; j < prefixes.length; j++) {
             var slugKey = prefixes[j] + slug;
             if (typeof dict[slugKey] !== "undefined") {
@@ -307,6 +332,8 @@ var KTLanguage = (function () {
         var trimmed = text.trim();
         if (!trimmed || trimmed.length < 2) return null;
 
+        var normalized = trimmed.replace(/\s+/g, " ");
+
         var map = locale === "id" ? textMap.en_to_id : textMap.id_to_en;
         var lowerMap = locale === "id" ? textMap.lower_en_to_id : textMap.lower_id_to_en;
 
@@ -314,9 +341,12 @@ var KTLanguage = (function () {
         if (map && map[trimmed]) {
             return map[trimmed];
         }
+        if (map && map[normalized]) {
+            return map[normalized];
+        }
 
         // 2. Lowercase match with case preservation
-        var lower = trimmed.toLowerCase();
+        var lower = normalized.toLowerCase();
         if (lowerMap && lowerMap[lower]) {
             var translated = lowerMap[lower];
             if (trimmed === trimmed.toUpperCase() && trimmed.length > 2) {
@@ -333,15 +363,18 @@ var KTLanguage = (function () {
         var sourceDict = translations[sourceLocale] || {};
 
         for (var k in sourceDict) {
-            if (sourceDict.hasOwnProperty(k) && typeof sourceDict[k] === "string" && sourceDict[k].trim().toLowerCase() === lower) {
-                if (targetDict[k] && typeof targetDict[k] === "string") {
-                    var transVal = targetDict[k].trim();
-                    if (trimmed === trimmed.toUpperCase() && trimmed.length > 2) {
-                        return transVal.toUpperCase();
-                    } else if (trimmed.charAt(0) === trimmed.charAt(0).toUpperCase() && trimmed.length > 1 && trimmed.charAt(1) === trimmed.charAt(1).toLowerCase()) {
-                        return transVal.charAt(0).toUpperCase() + transVal.slice(1);
+            if (sourceDict.hasOwnProperty(k) && typeof sourceDict[k] === "string") {
+                var sourceVal = sourceDict[k].trim().replace(/\s+/g, " ").toLowerCase();
+                if (sourceVal === lower) {
+                    if (targetDict[k] && typeof targetDict[k] === "string") {
+                        var transVal = targetDict[k].trim();
+                        if (trimmed === trimmed.toUpperCase() && trimmed.length > 2) {
+                            return transVal.toUpperCase();
+                        } else if (trimmed.charAt(0) === trimmed.charAt(0).toUpperCase() && trimmed.length > 1 && trimmed.charAt(1) === trimmed.charAt(1).toLowerCase()) {
+                            return transVal.charAt(0).toUpperCase() + transVal.slice(1);
+                        }
+                        return transVal;
                     }
-                    return transVal;
                 }
             }
         }
@@ -444,9 +477,14 @@ var KTLanguage = (function () {
             var trimmed = raw.trim();
             if (!trimmed) return;
 
-            var translated = translateText(trimmed, locale);
-            if (translated !== null && translated !== trimmed) {
-                textNode.nodeValue = raw.replace(trimmed, translated);
+            var normalized = trimmed.replace(/\s+/g, " ");
+            var translated = translateText(normalized, locale);
+            if (translated !== null && translated !== normalized && translated !== trimmed) {
+                var leadMatch = raw.match(/^\s*/);
+                var trailMatch = raw.match(/\s*$/);
+                var leadingSpace = leadMatch ? leadMatch[0] : "";
+                var trailingSpace = trailMatch ? trailMatch[0] : "";
+                textNode.nodeValue = leadingSpace + translated + trailingSpace;
             }
         });
     };

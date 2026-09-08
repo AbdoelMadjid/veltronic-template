@@ -110,30 +110,10 @@
             </span>
             <!--end:Menu link-->
             <!--begin:Menu sub-->
-            <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
+            <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-225px">
                 <!--begin:Menu item-->
-                @foreach (config('header._header_help.help_menus') as $menu)
-                    @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menu['title'])); @endphp
-                    @php
-                        $menuHref = isset($menu['route']) ? route($menu['route']) : $menu['href'] ?? '#';
-                        $isExternal = !isset($menu['route']);
-                        $isActive = isset($menu['route']) && request()->routeIs($menu['route'] . '*');
-                    @endphp
-                    <div class="menu-item">
-                        <a class="menu-link {{ $isActive ? 'active' : '' }}" href="{{ $menuHref }}"
-                            @if (isset($menu['target'])) target="{{ $menu['target'] }}" @elseif($isExternal) target="_blank" @endif
-                            @if (!empty($menu['tooltip'])) title="{{ __($titleKey . '_tooltip') != $titleKey . '_tooltip' ? __($titleKey . '_tooltip') : $menu['tooltip'] ?? '' }}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right" @endif>
-                            <span class="menu-icon">
-                                <i class="{{ $menu['icon'] }}">
-                                    @for ($i = 1; $i <= $menu['paths']; $i++)
-                                        <span class="path{{ $i }}"></span>
-                                    @endfor
-                                </i>
-                            </span>
-                            <span
-                                class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
-                        </a>
-                    </div>
+                @foreach (config('header._header_help.help_menus') as $menuHelp)
+                    @include('layouts.partials.header._menu._menu_item_apps', ['menu' => $menuHelp])
                 @endforeach
                 <!--end:Menu item-->
             </div><!--end:Menu sub-->

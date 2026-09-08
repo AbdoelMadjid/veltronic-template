@@ -4,8 +4,9 @@
     // cek rekursif aktif
     $isActiveRecursive = null;
     $isActiveRecursive = function ($item) use (&$isActiveRecursive) {
-        if (!empty($item['children'])) {
-            foreach ($item['children'] as $child) {
+        $children = array_merge($item['children'] ?? [], $item['children_collapsed'] ?? []);
+        if (!empty($children)) {
+            foreach ($children as $child) {
                 if ($isActiveRecursive($child)) {
                     return true;
                 }
@@ -15,7 +16,8 @@
         return isset($item['route']) && request()->routeIs($item['route'] . '*');
     };
 
-    $hasChildren = !empty($menu['children']);
+    $allChildren = array_merge($menu['children'] ?? [], $menu['children_collapsed'] ?? []);
+    $hasChildren = !empty($allChildren);
     $isActiveParent = $isActiveRecursive($menu);
     $isActiveSelf = isset($menu['route']) && request()->routeIs($menu['route'] . '*');
 
@@ -54,7 +56,7 @@
             {{ $isDropdown
                 ? 'menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg px-lg-2 py-lg-4 w-lg-225px'
                 : 'menu-sub-accordion menu-active-bg' }}">
-            @foreach ($menu['children'] as $child)
+            @foreach ($allChildren as $child)
                 @include('layouts.partials.header._menu._menu_item_apps', [
                     'menu' => $child,
                     'level' => $level + 1,
@@ -65,8 +67,9 @@
 @else
     <div class="menu-item">
         <a class="menu-link {{ $isActiveSelf ? 'active' : '' }}"
-            href="{{ isset($menu['href']) ? $menu['href'] : (isset($menu['route']) ? route($menu['route']) : '#') }}"
-            @if (isset($menu['href'])) target="_blank" @endif>
+            href="{{ isset($menu['route']) ? route($menu['route']) : ($menu['href'] ?? '#') }}"
+            @if (isset($menu['target'])) target="{{ $menu['target'] }}" @elseif(isset($menu['href'])) target="_blank" @endif
+            @if (!empty($menu['tooltip'])) title="{{ __($titleKey . '_tooltip') != $titleKey . '_tooltip' ? __($titleKey . '_tooltip') : $menu['tooltip'] ?? '' }}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right" @endif>
             @if ($level == 1)
                 <span class="menu-icon">
                     <i class="{{ $menu['icon'] ?? '' }}">

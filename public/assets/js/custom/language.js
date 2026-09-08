@@ -326,13 +326,11 @@ var KTLanguage = (function () {
         return null;
     };
 
-    // Translate single phrase/text bidirectionally
+    // Translate single phrase/text bidirectionally - Pure O(1) Instant Lookup
     var translateText = function (text, locale) {
         if (!text || typeof text !== "string") return null;
         var trimmed = text.trim();
         if (!trimmed || trimmed.length < 2) return null;
-
-        var normalized = trimmed.replace(/\s+/g, " ");
 
         var map = locale === "id" ? textMap.en_to_id : textMap.id_to_en;
         var lowerMap = locale === "id" ? textMap.lower_en_to_id : textMap.lower_id_to_en;
@@ -341,11 +339,14 @@ var KTLanguage = (function () {
         if (map && map[trimmed]) {
             return map[trimmed];
         }
+
+        // 2. Normalized space match
+        var normalized = trimmed.replace(/\s+/g, " ");
         if (map && map[normalized]) {
             return map[normalized];
         }
 
-        // 2. Lowercase match with case preservation
+        // 3. Lowercase match with case preservation
         var lower = normalized.toLowerCase();
         if (lowerMap && lowerMap[lower]) {
             var translated = lowerMap[lower];
@@ -355,28 +356,6 @@ var KTLanguage = (function () {
                 return translated.charAt(0).toUpperCase() + translated.slice(1);
             }
             return translated;
-        }
-
-        // 3. Fallback: bidirectional lookup across translations dictionaries
-        var targetDict = translations[locale] || {};
-        var sourceLocale = locale === "id" ? "en" : "id";
-        var sourceDict = translations[sourceLocale] || {};
-
-        for (var k in sourceDict) {
-            if (sourceDict.hasOwnProperty(k) && typeof sourceDict[k] === "string") {
-                var sourceVal = sourceDict[k].trim().replace(/\s+/g, " ").toLowerCase();
-                if (sourceVal === lower) {
-                    if (targetDict[k] && typeof targetDict[k] === "string") {
-                        var transVal = targetDict[k].trim();
-                        if (trimmed === trimmed.toUpperCase() && trimmed.length > 2) {
-                            return transVal.toUpperCase();
-                        } else if (trimmed.charAt(0) === trimmed.charAt(0).toUpperCase() && trimmed.length > 1 && trimmed.charAt(1) === trimmed.charAt(1).toLowerCase()) {
-                            return transVal.charAt(0).toUpperCase() + transVal.slice(1);
-                        }
-                        return transVal;
-                    }
-                }
-            }
         }
 
         return null;
@@ -506,13 +485,11 @@ var KTLanguage = (function () {
             } else {
                 var rawTitle = document.title ? document.title.trim() : (titleEl.textContent ? titleEl.textContent.trim() : "");
                 if (rawTitle) {
-                    // Try full match first
                     var transTitle = translate(rawTitle, locale) || translateText(rawTitle, locale);
                     if (transTitle) {
                         document.title = transTitle;
                         titleEl.textContent = transTitle;
                     } else if (rawTitle.indexOf(" - ") !== -1) {
-                        // Handle compound titles e.g. "Dashboards - Metronic 832" or "Dasbor - Metronic 832"
                         var parts = rawTitle.split(" - ");
                         var pagePart = parts[0].trim();
                         var suffix = parts.slice(1).join(" - ").trim();
@@ -537,22 +514,14 @@ var KTLanguage = (function () {
             }
         }
 
-        // 2. Process <meta> elements with data-kt-translate, name="description", name="keywords", property="og:title"
-        var metaElements = document.querySelectorAll("head meta[data-kt-translate], head meta[data-kt-translate-content], head meta[name='description'], head meta[name='keywords'], head meta[property='og:title']");
+        // 2. Process <meta> elements with data-kt-translate
+        var metaElements = document.querySelectorAll("head meta[data-kt-translate]");
         metaElements.forEach(function (meta) {
-            var key = meta.getAttribute("data-kt-translate") || meta.getAttribute("data-kt-translate-content");
+            var key = meta.getAttribute("data-kt-translate");
             if (key) {
                 var trans = translate(key, locale);
                 if (trans !== null) {
                     meta.setAttribute("content", trans);
-                }
-            } else {
-                var currentContent = (meta.getAttribute("content") || "").trim();
-                if (currentContent && currentContent.length > 2) {
-                    var transContent = translateText(currentContent, locale);
-                    if (transContent) {
-                        meta.setAttribute("content", transContent);
-                    }
                 }
             }
         });
@@ -571,14 +540,13 @@ var KTLanguage = (function () {
 
         isTranslating = true;
 
-        // Process head metadata (title, meta tags)
-        if (container === document.body || container === document.documentElement || container === document) {
+        // Process head metadata
+        if (container === document.body || container === document.documentElement) {
             applyHeadTranslations(locale);
         }
 
         // A. Process explicit data-kt-translate attributes
-        var targetRoot = (container === document.body || container === document.documentElement) ? document : container;
-        var explicitElements = targetRoot.querySelectorAll("[data-kt-translate]");
+        var explicitElements = container.querySelectorAll("[data-kt-translate]");
         explicitElements.forEach(function (el) {
             if (shouldSkipElement(el)) return;
             var key = el.getAttribute("data-kt-translate");
@@ -593,7 +561,6 @@ var KTLanguage = (function () {
                     el.textContent = translated;
                 }
             } else {
-                // Fallback: translate by existing text content
                 var currentTxt = (el.tagName === "META" ? (el.getAttribute("content") || "") : el.textContent).trim();
                 var textTranslated = translateText(currentTxt, locale);
                 if (textTranslated !== null) {

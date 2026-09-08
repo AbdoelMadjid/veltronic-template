@@ -10,19 +10,19 @@ Dribbble: www.dribbble.com/keenthemes
 Like: www.facebook.com/keenthemes
 License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
 -->
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}">
     <!--begin::Head-->
 
     <head>
         <base href="{{ url('/') }}/">
         <title>{{ trim($__env->yieldContent('title')) ?: getPageTitle() }} | Documentation 8.3.2 </title>
         <meta charset="utf-8" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
+        <meta name="description" data-kt-translate="menu.meta_description" content="{{ __('menu.meta_description') }}" />
+        <meta name="keywords" data-kt-translate="menu.meta_keywords" content="{{ __('menu.meta_keywords') }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:locale" content="en_US" />
+        <meta property="og:locale" content="{{ app()->getLocale() === 'id' ? 'id_ID' : 'en_US' }}" />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content="Extended Bootstrap Utilities by KeenThemes" />
+        <meta property="og:title" data-kt-translate="menu.og_title" content="{{ __('menu.og_title') }}" />
         <meta property="og:url" content="https://keenthemes.com/metronic" />
         <meta property="og:site_name" content="Metronic by Keenthemes" />
         <link rel="canonical" href="https://preview.keenthemes.combase/utilities" />

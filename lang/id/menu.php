@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'meta_description' => 'Tema Admin Tailwind CSS & Bootstrap 5 tercanggih dengan 40 tata letak bawaan unik di Themeforest yang dipercaya oleh 100.000 pemula dan profesional. Multi-demo, Mode Gelap, dukungan RTL dan versi lengkap React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel. Dapatkan sekarang dan peroleh pembaruan seumur hidup gratis.',
+    'meta_keywords' => 'tailwind, tailwindcss, metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, tema admin, desain web, figma, pengembangan web, template gratis, tema admin gratis, tema bootstrap, template bootstrap, dasbor bootstrap, mode gelap bootstrap, tombol bootstrap, datepicker bootstrap, timepicker bootstrap, fullcalendar, datatables, flaticon',
+    'og_title' => 'Metronic - Template Admin Tailwind CSS & Bootstrap #1 Terlaris di Dunia oleh KeenThemes',
     'help' => 'Bantuan',
     '01_-_10' => '01 - 10',
     '11_-_20' => '11 - 20',

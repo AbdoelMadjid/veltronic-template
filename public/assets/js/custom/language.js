@@ -504,25 +504,55 @@ var KTLanguage = (function () {
                     document.title = translatedTitle;
                 }
             } else {
-                var rawTitle = document.title ? document.title.trim() : "";
+                var rawTitle = document.title ? document.title.trim() : (titleEl.textContent ? titleEl.textContent.trim() : "");
                 if (rawTitle) {
-                    var transTitle = translateText(rawTitle, locale);
+                    // Try full match first
+                    var transTitle = translate(rawTitle, locale) || translateText(rawTitle, locale);
                     if (transTitle) {
                         document.title = transTitle;
                         titleEl.textContent = transTitle;
+                    } else if (rawTitle.indexOf(" - ") !== -1) {
+                        // Handle compound titles e.g. "Dashboards - Metronic 832" or "Dasbor - Metronic 832"
+                        var parts = rawTitle.split(" - ");
+                        var pagePart = parts[0].trim();
+                        var suffix = parts.slice(1).join(" - ").trim();
+                        var transPagePart = translate(pagePart, locale) || translateText(pagePart, locale);
+                        if (transPagePart && transPagePart !== pagePart) {
+                            var newTitle = transPagePart + " - " + suffix;
+                            document.title = newTitle;
+                            titleEl.textContent = newTitle;
+                        }
+                    } else if (rawTitle.indexOf(" | ") !== -1) {
+                        var parts = rawTitle.split(" | ");
+                        var pagePart = parts[0].trim();
+                        var suffix = parts.slice(1).join(" | ").trim();
+                        var transPagePart = translate(pagePart, locale) || translateText(pagePart, locale);
+                        if (transPagePart && transPagePart !== pagePart) {
+                            var newTitle = transPagePart + " | " + suffix;
+                            document.title = newTitle;
+                            titleEl.textContent = newTitle;
+                        }
                     }
                 }
             }
         }
 
-        // 2. Process <meta> elements with data-kt-translate or data-kt-translate-content
-        var metaElements = document.querySelectorAll("head meta[data-kt-translate], head meta[data-kt-translate-content]");
+        // 2. Process <meta> elements with data-kt-translate, name="description", name="keywords", property="og:title"
+        var metaElements = document.querySelectorAll("head meta[data-kt-translate], head meta[data-kt-translate-content], head meta[name='description'], head meta[name='keywords'], head meta[property='og:title']");
         metaElements.forEach(function (meta) {
             var key = meta.getAttribute("data-kt-translate") || meta.getAttribute("data-kt-translate-content");
             if (key) {
                 var trans = translate(key, locale);
                 if (trans !== null) {
                     meta.setAttribute("content", trans);
+                }
+            } else {
+                var currentContent = (meta.getAttribute("content") || "").trim();
+                if (currentContent && currentContent.length > 2) {
+                    var transContent = translateText(currentContent, locale);
+                    if (transContent) {
+                        meta.setAttribute("content", transContent);
+                    }
                 }
             }
         });

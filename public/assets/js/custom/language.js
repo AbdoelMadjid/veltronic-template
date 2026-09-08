@@ -489,6 +489,51 @@ var KTLanguage = (function () {
         });
     };
 
+    // Apply translations to head metadata (title, meta description, keywords, og tags)
+    var applyHeadTranslations = function (locale) {
+        if (!locale) locale = currentLocale;
+
+        // 1. Process <title> and document.title
+        var titleEl = document.querySelector("title");
+        if (titleEl) {
+            var titleKey = titleEl.getAttribute("data-kt-translate");
+            if (titleKey) {
+                var translatedTitle = translate(titleKey, locale);
+                if (translatedTitle) {
+                    titleEl.textContent = translatedTitle;
+                    document.title = translatedTitle;
+                }
+            } else {
+                var rawTitle = document.title ? document.title.trim() : "";
+                if (rawTitle) {
+                    var transTitle = translateText(rawTitle, locale);
+                    if (transTitle) {
+                        document.title = transTitle;
+                        titleEl.textContent = transTitle;
+                    }
+                }
+            }
+        }
+
+        // 2. Process <meta> elements with data-kt-translate or data-kt-translate-content
+        var metaElements = document.querySelectorAll("head meta[data-kt-translate], head meta[data-kt-translate-content]");
+        metaElements.forEach(function (meta) {
+            var key = meta.getAttribute("data-kt-translate") || meta.getAttribute("data-kt-translate-content");
+            if (key) {
+                var trans = translate(key, locale);
+                if (trans !== null) {
+                    meta.setAttribute("content", trans);
+                }
+            }
+        });
+
+        // 3. Process <meta property="og:locale">
+        var ogLocale = document.querySelector('head meta[property="og:locale"]');
+        if (ogLocale) {
+            ogLocale.setAttribute("content", locale === "id" ? "id_ID" : "en_US");
+        }
+    };
+
     // Apply translations to elements in container
     var applyTranslations = function (container, locale) {
         if (!container) container = document.body;
@@ -496,20 +541,40 @@ var KTLanguage = (function () {
 
         isTranslating = true;
 
+        // Process head metadata (title, meta tags)
+        if (container === document.body || container === document.documentElement || container === document) {
+            applyHeadTranslations(locale);
+        }
+
         // A. Process explicit data-kt-translate attributes
-        var explicitElements = container.querySelectorAll("[data-kt-translate]");
+        var targetRoot = (container === document.body || container === document.documentElement) ? document : container;
+        var explicitElements = targetRoot.querySelectorAll("[data-kt-translate]");
         explicitElements.forEach(function (el) {
             if (shouldSkipElement(el)) return;
             var key = el.getAttribute("data-kt-translate");
             var translated = translate(key, locale);
             if (translated !== null) {
-                el.textContent = translated;
+                if (el.tagName === "META") {
+                    el.setAttribute("content", translated);
+                } else if (el.tagName === "TITLE") {
+                    el.textContent = translated;
+                    document.title = translated;
+                } else {
+                    el.textContent = translated;
+                }
             } else {
                 // Fallback: translate by existing text content
-                var currentTxt = el.textContent.trim();
+                var currentTxt = (el.tagName === "META" ? (el.getAttribute("content") || "") : el.textContent).trim();
                 var textTranslated = translateText(currentTxt, locale);
                 if (textTranslated !== null) {
-                    el.textContent = textTranslated;
+                    if (el.tagName === "META") {
+                        el.setAttribute("content", textTranslated);
+                    } else if (el.tagName === "TITLE") {
+                        el.textContent = textTranslated;
+                        document.title = textTranslated;
+                    } else {
+                        el.textContent = textTranslated;
+                    }
                 }
             }
         });

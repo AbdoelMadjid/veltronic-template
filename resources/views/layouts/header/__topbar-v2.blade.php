@@ -122,6 +122,7 @@
     </div>
     <!--end::Version switcher-->
     <!--begin::Frontpages-->
+    @if(auth()->user()?->isMasterOrAdmin())
     <div class="d-flex align-items-center ms-1 ms-lg-3 {{ !app_fitur('tool_frontpages') ? 'feature-hidden' : '' }}"
         style="{{ !app_fitur('tool_frontpages') ? 'display: none !important;' : '' }}"
         data-kt-feature-tool="tool_frontpages">
@@ -139,6 +140,7 @@
         @include('partials.menus._frontpages-menu')
         <!--end::Menu wrapper-->
     </div>
+    @endif
     <!--end::Frontpages-->
     <!--begin::Mobile Toolbar Hub-->
     <div class="d-flex d-lg-none align-items-center ms-1 ms-lg-3">

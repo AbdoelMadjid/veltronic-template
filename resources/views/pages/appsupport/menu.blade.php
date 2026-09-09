@@ -5,11 +5,7 @@
 @endsection
 
 @section('toolbar')
-    @component('layouts.partials._toolbar')
-        @slot('li_1')
-            {{ __('menu.md_app_support') !== 'menu.md_app_support' ? __('menu.md_app_support') : 'App Support' }}
-        @endslot
-    @endcomponent
+    @include('layouts.partials._toolbar')
 @endsection
 
 @section('content')

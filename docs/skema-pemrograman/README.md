@@ -23,6 +23,7 @@ Versi ringkas per topik dari dokumentasi **Skema Pemrograman**.
 - [Skema Pergantian Versi Tampilan](./skema/pergantian-versi-tampilan.md)
 - [Skema Pergantian Frontpage](./skema/pergantian-frontpage.md)
 - [Skema Pergantian Icon](./skema/pergantian-icon.md)
+- [Skema Page Title & Breadcrumb](./skema/page-title-dan-breadcrumbs.md)
 
 ---
 
@@ -31,6 +32,7 @@ Versi ringkas per topik dari dokumentasi **Skema Pemrograman**.
 - [Panduan Tambah Menu](./operasional/panduan-tambah-menu.md)
 - [Panduan Pergantian Versi Metronic](./operasional/panduan-pergantian-versi-metronic.md)
 - [Panduan Pergantian Frontpage](./operasional/panduan-pergantian-frontpage.md)
+- [Panduan Page Title & Breadcrumb](./operasional/panduan-page-title-dan-breadcrumbs.md)
 - [Konvensi Penamaan](./operasional/konvensi-penamaan.md)
 - [Workflow Developer Harian](./operasional/workflow-developer-harian.md)
 - [Checklist QA Smoke Test](./operasional/checklist-qa-smoke-test.md)

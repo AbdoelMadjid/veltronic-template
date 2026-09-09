@@ -1,4 +1,7 @@
 @php
+    if (!auth()->user()?->isMasterOrAdmin()) {
+        return;
+    }
     $currentFrontpage = \App\Support\Frontpage::current();
     $frontpages = \App\Support\Frontpage::all();
 @endphp

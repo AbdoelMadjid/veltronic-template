@@ -62,6 +62,10 @@
         gap: 1rem;
     }
 
+    .schema-col-4 {
+        grid-column: span 4 / span 4;
+    }
+
     .schema-col-6 {
         grid-column: span 6 / span 6;
     }
@@ -181,6 +185,7 @@
     }
 
     @media (max-width: 991.98px) {
+        .schema-col-4,
         .schema-col-6 {
             grid-column: span 12 / span 12;
         }

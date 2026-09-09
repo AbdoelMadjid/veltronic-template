@@ -26,7 +26,11 @@
                     <!--begin::Content wrapper-->
                     <div class="d-flex flex-column flex-column-fluid">
                         <!--layout-partial:layout/partials/_toolbar.html-->
-                        @yield('toolbar')
+                        @hasSection('toolbar')
+                            @yield('toolbar')
+                        @else
+                            @include('layouts.partials._toolbar')
+                        @endif
                         <!--layout-partial:layout/partials/_content.html-->
                         @yield('content')
                     </div>

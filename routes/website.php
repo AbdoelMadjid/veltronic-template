@@ -10,7 +10,7 @@ $educationViews = collect(File::isDirectory(resource_path('views/frontpages/educ
     ->sort()
     ->values();
 
-Route::prefix('education')->name('education.')->group(function () use ($educationViews) {
+Route::prefix('education')->name('education.')->middleware(['auth', 'role:master|admin'])->group(function () use ($educationViews) {
     Route::get('lang/{locale}', function (Request $request, string $locale) {
         if (in_array($locale, ['en', 'id'], true)) {
             $request->session()->put('locale', $locale);

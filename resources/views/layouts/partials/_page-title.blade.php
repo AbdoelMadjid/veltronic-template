@@ -13,32 +13,55 @@
             return __($segmentKey) !== $segmentKey ? __($segmentKey) : ucwords($segment);
         };
 
+        $translateSafely = static function (string $key): ?string {
+            $key = trim($key);
+            if ($key === '' || strtolower($key) === 'menu' || strtolower($key) === 'auth' || strtolower($key) === 'pagination') {
+                return null;
+            }
+            $res = __($key);
+            if (is_string($res) && $res !== $key) {
+                return $res;
+            }
+            if (!str_starts_with($key, 'menu.')) {
+                $resMenu = __('menu.' . $key);
+                if (is_string($resMenu) && $resMenu !== 'menu.' . $key) {
+                    return $resMenu;
+                }
+                $slug = strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $key));
+                $resSlug = __('menu.' . $slug);
+                if (is_string($resSlug) && $resSlug !== 'menu.' . $slug) {
+                    return $resSlug;
+                }
+            }
+            return null;
+        };
+
         // Title didapat dari yield('title') atau getPageTitle()
-        $title = trim($__env->yieldContent('title'));
-        if (!$title) {
+        $yieldTitle = trim($__env->yieldContent('title'));
+        if ($yieldTitle === '' || $yieldTitle === 'Index') {
             $title = getPageTitle();
         } else {
-            $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $title));
-            $title = __($titleKey) !== $titleKey ? __($titleKey) : $title;
+            $translatedTitle = $translateSafely($yieldTitle);
+            if ($translatedTitle !== null) {
+                $title = $translatedTitle;
+            } else {
+                $pageTitle = getPageTitle();
+                $title = ($pageTitle !== config('app.name', 'Veltronic') && $pageTitle !== 'Metronic v.8.3.2 - Laravel 12') ? $pageTitle : $yieldTitle;
+            }
         }
 
         // Ambil slot breadcrumbs (li_1, li_2, li_3, ...) jika dipassing via @component
         $customBreadcrumbs = [];
         $slotIdx = 1;
         while (isset(${'li_' . $slotIdx}) && trim((string)${'li_' . $slotIdx}) !== '') {
-            $customBreadcrumbs[] = trim((string)${'li_' . $slotIdx});
+            $rawSlot = trim((string)${'li_' . $slotIdx});
+            $customBreadcrumbs[] = $translateSafely($rawSlot) ?? $rawSlot;
             $slotIdx++;
         }
 
-        // Jika tidak ada slot li_*, gunakan segment URL
+        // Jika tidak ada slot manual li_*, otomatis ambil breadcrumbs hierarkis
         if (empty($customBreadcrumbs)) {
-            $breadcrumbSegments = count($segments) > 1 ? array_slice($segments, 0, -1) : [];
-            foreach ($breadcrumbSegments as $segment) {
-                $breadcrumbTitle = $formatSegmentTitle($segment);
-                if ($breadcrumbTitle !== '') {
-                    $customBreadcrumbs[] = $breadcrumbTitle;
-                }
-            }
+            $customBreadcrumbs = getPageBreadcrumbs();
         }
     @endphp
     <!--begin::Title-->
@@ -60,11 +83,7 @@
                 <span class="bullet bg-gray-500 w-5px h-2px"></span>
             </li>
             <li class="breadcrumb-item text-muted">
-                @php
-                    $itemKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $breadcrumbItem));
-                    $itemLabel = __($itemKey) !== $itemKey ? __($itemKey) : $breadcrumbItem;
-                @endphp
-                {{ $itemLabel }}
+                {{ translateMenuTitleSafely($breadcrumbItem) ?? $breadcrumbItem }}
             </li>
         @endforeach
     </ul>

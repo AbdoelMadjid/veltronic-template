@@ -5,6 +5,29 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.12.0] - 2026-09-09
+
+### Added
+- **Zero-Boilerplate Automatic Hierarchical Page Title & Breadcrumbs Engine**:
+  - `app/Helpers/GetPageTitle.php`: Multi-layer fallback resolver (`config/menu_seeder.php`, database `menus` table, `sidebar.*` config, and dynamic URL segments).
+  - Ancestral Breadcrumbs Trail: Breadcrumb strictly displays ancestor navigation hierarchy without redundantly repeating the active page title at the end.
+  - Safe Bilingual Translation: Helper `translateMenuTitleSafely()` seamlessly resolves translation keys and plain strings for EN & ID.
+  - Smart Layout Toolbar Fallback: Updated `resources/views/layouts/_default.blade.php` with `@hasSection('toolbar') @yield('toolbar') @else @include('layouts.partials._toolbar') @endif` so child views require zero boilerplate `@section('toolbar')`.
+  - Unified Theme v1 & Theme v2 Page Title Partials: `_page-title.blade.php` and `_page-title-v2.blade.php` render localized titles and hierarchical ancestor trails.
+- **Help Documentation (Skema & Operasional)**:
+  - Added Skema: `resources/views/pages/help/pemrograman/skema/page-title-dan-breadcrumbs.blade.php` and `docs/skema-pemrograman/skema/page-title-dan-breadcrumbs.md`.
+  - Added Operasional: `resources/views/pages/help/pemrograman/operasional/panduan-page-title-dan-breadcrumbs.blade.php` and `docs/skema-pemrograman/operasional/panduan-page-title-dan-breadcrumbs.md`.
+  - Added `.schema-col-4` (spans 4 columns / full width 3-column grid) in `_schema-ui.blade.php` for developer QA checklist cards.
+  - Updated Help Overview catalog and markdown index (`docs/skema-pemrograman/README.md`).
+
+### Enhanced
+- **Selective Localization Boundary & Bilingual Menu Parity**:
+  - Sidebar and Toolbar maintain 100% bilingual synchronization (EN & ID) with explicit `title_key` entries across `config/sidebar/_sidebar_helps.php`, `lang/en/menu.php`, and `lang/id/menu.php`.
+  - Help documentation content body isolated cleanly in standard Indonesian with `data-kt-lang-ignore="true"` to protect technical documentation from dynamic translation interference.
+  - Updated realtime language engine in `public/assets/js/custom/language.js` with `help.*` translation maps and bumped cache version to `v: 6`.
+
+---
+
 ## [v1.11.0] - 2026-09-09
 
 ### Added

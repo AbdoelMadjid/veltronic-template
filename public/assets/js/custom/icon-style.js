@@ -51,10 +51,12 @@ var KTIconStyle = (function () {
     var shouldSkipElement = function (el) {
         if (!el || el.nodeType !== 1) return true;
         if (el.hasAttribute("data-kt-icon-style-ignore") || el.getAttribute("data-kt-icon-style-ignore") === "true") return true;
+        if (el.closest('[data-kt-icon-style-ignore]')) return true;
         if (el.closest('[data-kt-element="icon-style-menu"]')) return true;
         if (el.closest('[data-kt-element="icon-style-toggle"]')) return true;
         if (el.closest('#kt_docs_keenicons_listing')) return true;
         if (el.closest('[data-kt-icon-preview="true"]')) return true;
+        if (el.closest('[data-kt-icon-preview]')) return true;
         return false;
     };
 

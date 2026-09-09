@@ -48,13 +48,116 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.9.0
+                            Versi Saat Ini: v1.12.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.12.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.12.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.12.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>09 Sep 2026, 10:30 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Zero-Boilerplate Hierarchical Page Title &amp; Breadcrumbs Engine, Skema &amp; Operasional Documentation, and Bilingual Menu Parity</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Engine otomatisasi hierarki <i>Page Title</i> dan <i>Breadcrumbs</i> tanpa <i>boilerplate</i> pada view anak, penataan breadcrumb cerdas yang hanya menampilkan jejak leluhur (<i>ancestor trail</i>) tanpa pengulangan judul halaman aktif, dokumentasi lengkap skema dan operasional di menu Help, penambahan grid selebar 100% (<code>.schema-col-4</code>) untuk checklist QA pengembang, serta sinkronisasi bilingual penuh pada menu dan sidebar.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Zero-Boilerplate Automatic Page Title &amp; Breadcrumbs:</strong> Helper <code>app/Helpers/GetPageTitle.php</code> menyelesaikan resolusi 4 lapis (<code>config/menu_seeder.php</code>, database <code>menus</code>, <code>sidebar.*</code>, dan URL segments) dengan fungsi translasi aman <code>translateMenuTitleSafely()</code>.</li>
+                                        <li class="mb-1"><strong>Ancestor Breadcrumb Hierarchy:</strong> Breadcrumbs secara eksklusif hanya menampilkan hierarki leluhur induk (misal: <code>Home &gt; Master Data &gt; App Support</code> untuk halaman <code>Menu</code>), menghindari redundansi judul halaman di ujung breadcrumb.</li>
+                                        <li class="mb-1"><strong>Smart Layout Toolbar Fallback:</strong> Penataan <code>resources/views/layouts/_default.blade.php</code> dengan pengecekan <code>@hasSection('toolbar')</code> otomatis merender toolbar default bila view anak tidak mendeklarasikan toolbar kustom.</li>
+                                        <li class="mb-1"><strong>Dokumentasi Skema &amp; Operasional Help:</strong> Penambahan halaman panduan komprehensif di <code>help/pemrograman/skema/page-title-dan-breadcrumbs</code> dan <code>help/pemrograman/operasional/panduan-page-title-dan-breadcrumbs</code> beserta file Markdown di <code>docs/skema-pemrograman/</code>.</li>
+                                        <li class="mb-1"><strong>Schema UI Full-Width Grid:</strong> Penambahan class CSS <code>.schema-col-4</code> pada <code>_schema-ui.blade.php</code> untuk merentangkan 3 kolom kartu QA Checklist Pengembang hingga 100% lebar kontainer.</li>
+                                        <li class="mb-1"><strong>Selective Localization Boundary:</strong> Sidebar dan Toolbar tetap mengusung dwibahasa penuh (EN &amp; ID) dengan <code>title_key</code> sinkron, sementara isi konten bantuan Help dilindungi dalam bahasa Indonesia murni via <code>data-kt-lang-ignore="true"</code>.</li>
+                                        <li class="mb-1"><strong>Realtime Language Engine Sync:</strong> Pembaruan peta kamus <code>help.*</code> pada <code>public/assets/js/custom/language.js</code> dan pembaruan versi cache ke <code>v: 6</code>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.12.0-->
+
+                        <!--begin::Item v1.11.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.11.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.11.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>09 Sep 2026, 03:30 WIB
+                                    </span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Toolbar Gregorian &amp; Hijri Bilingual Date Widget, Responsive Mobile Tooltip &amp; Dual-Language Sync</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Integrasi widget penanggalan ganda Masehi dan Hijriah dwibahasa pada area aksi toolbar, penambahan helper global <code>renderDate()</code>, <code>toHijriah()</code>, dan <code>renderGreeting()</code>, tampilan responsif mobile dengan tooltip Bootstrap/Metronic interaktif, serta sinkronisasi dinamis pada modul <code>language.js</code>.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Toolbar Date Widget:</strong> Menampilkan tanggal Masehi dan Hijriah lengkap pada <code>resources/views/layouts/partials/_toolbar.blade.php</code>.</li>
+                                        <li class="mb-1"><strong>Global Date Helpers:</strong> Fungsi helper penanggalan dan salam di <code>app/Helpers/helpers.php</code> yang dimuat otomatis via <code>composer.json</code>.</li>
+                                        <li class="mb-1"><strong>Bilingual Dictionaries:</strong> Penambahan kamus nama bulan, imbuhan (M/AD, H/AH), dan sapaan di <code>lang/id/translation.php</code> dan <code>lang/en/translation.php</code>.</li>
+                                        <li class="mb-1"><strong>Responsive Mobile Display:</strong> Mode ringkas ikon pada layar <code>&lt; 768px</code> dengan tooltip interaktif saat di-hover/tap.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.11.0-->
+
+                        <!--begin::Item v1.10.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.10.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.10.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>08 Sep 2026, 17:00 WIB
+                                    </span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">App Feature Visibility &amp; Settings Module, Theme v2 Topbar/Menu Feature Integration, and Dynamic Page Title Database Lookup</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Modul manajemen visibilitas fitur (<code>appsupport/app-fiturs</code>) berbasis database dan cache dengan helper <code>app_fitur()</code>, integrasi kendali fitur pada Theme v2 (Demo 2), proteksi hak akses menu sidebar template untuk role master/admin, serta resolusi judul halaman dinamis dari tabel database.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Database Feature Toggle Management:</strong> Model <code>AppFitur</code> &amp; <code>AppSetting</code> dengan kontrol granular untuk Topbar Tools, Topbar Menus, dan Sidebar Menus.</li>
+                                        <li class="mb-1"><strong>Theme v2 Feature Integration:</strong> Sinkronisasi pengecekan fitur pada <code>__topbar-v2.blade.php</code> dan <code>__menu-v2.blade.php</code>.</li>
+                                        <li class="mb-1"><strong>Template Sidebar Role Restriction:</strong> Pembatasan menu template khusus role <code>master</code> dan <code>admin</code> tanpa terhalang permission database.</li>
+                                        <li class="mb-1"><strong>Dynamic Bilingual Page Title:</strong> Resolusi otomatis kunci terjemahan <code>title_key</code> untuk menu yang bersumber dari tabel database.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.10.0-->
+
                         <!--begin::Item v1.9.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.9.0</div>
@@ -70,7 +173,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>08 Sep 2026, 08:00 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Frontpage Landing v1 Bilingual Localization, Realtime Instant Head &amp; Meta Engine &amp; Zero-Delay O(1) Performance</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

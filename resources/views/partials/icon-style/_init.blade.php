@@ -1,7 +1,7 @@
 <!--begin::Icon style setup on page load-->
 <script>
     (function () {
-        var defaultIconStyle = "duotone";
+        var defaultIconStyle = "{{ \App\Models\AppSetting::get('default_icon_style', 'duotone') }}";
         var iconStyle;
 
         if (document.documentElement) {

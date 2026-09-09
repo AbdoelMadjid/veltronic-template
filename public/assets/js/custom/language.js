@@ -110,6 +110,35 @@ var KTLanguage = (function () {
             "menu.show_less": "Show less",
             "menu.language_selection": "Language",
             "menu.home": "Home",
+            "menu.skema_pemrograman": "Programming Blueprint",
+            "menu.skema": "Scheme",
+            "menu.operasional": "Operational",
+            "menu.skema_route": "Route Schema",
+            "menu.skema_layout": "Layout Schema",
+            "menu.skema_komponen_blade_and_partial": "Blade Component and Partial Schema",
+            "menu.skema_theme_assets": "Theme Assets Schema",
+            "menu.skema_auth_dan_middleware": "Auth and Middleware Schema",
+            "menu.skema_struktur_config_menu": "Config Menu Structure Schema",
+            "menu.skema_sidebar_menu": "Sidebar Menu Schema",
+            "menu.skema_header_menu": "Header Menu Schema",
+            "menu.skema_data_layer": "Data Layer Schema",
+            "menu.skema_error_handling_and_fallback": "Error Handling and Fallback Schema",
+            "menu.skema_cache_and_deployment": "Cache and Deployment Schema",
+            "menu.skema_pemilihan_bahasa": "Language Selection Schema",
+            "menu.skema_i18n_lanjutan": "Advanced i18n Schema",
+            "menu.skema_pergantian_versi_tampilan": "Theme Version Switching Schema",
+            "menu.skema_pergantian_frontpage": "Frontpage Switching Schema",
+            "menu.skema_pergantian_icon": "Icon Switching Schema",
+            "menu.skema_page_title_and_breadcrumb": "Page Title & Breadcrumb Schema",
+            "menu.panduan_tambah_halaman": "Add Page Guide",
+            "menu.panduan_tambah_menu": "Add Menu Guide",
+            "menu.panduan_pergantian_versi_metronic": "Metronic Version Switching Guide",
+            "menu.panduan_pergantian_frontpage": "Frontpage Switching Guide",
+            "menu.panduan_page_title_and_breadcrumb": "Page Title & Breadcrumb Guide",
+            "menu.konvensi_penamaan": "Naming Convention",
+            "menu.workflow_developer_harian": "Daily Developer Workflow",
+            "menu.checklist_qa_smoke_test": "QA Smoke Test Checklist",
+            "menu.playbook_incident_response": "Incident Response Playbook",
             "auth.english": "English",
             "auth.indonesian": "Bahasa Indonesia",
             "auth.terms": "Terms",
@@ -155,6 +184,35 @@ var KTLanguage = (function () {
             "menu.show_less": "Tampilkan lebih sedikit",
             "menu.language_selection": "Pilihan Bahasa",
             "menu.home": "Beranda",
+            "menu.skema_pemrograman": "Skema Pemrograman",
+            "menu.skema": "Skema",
+            "menu.operasional": "Operasional",
+            "menu.skema_route": "Skema Routing",
+            "menu.skema_layout": "Skema Tata Letak",
+            "menu.skema_komponen_blade_and_partial": "Skema Komponen Blade dan Partial",
+            "menu.skema_theme_assets": "Skema Aset Tema",
+            "menu.skema_auth_dan_middleware": "Skema Autentikasi dan Middleware",
+            "menu.skema_struktur_config_menu": "Skema Struktur Config Menu",
+            "menu.skema_sidebar_menu": "Skema Menu Bilah Samping",
+            "menu.skema_header_menu": "Skema Menu Tajuk",
+            "menu.skema_data_layer": "Skema Lapisan Data",
+            "menu.skema_error_handling_and_fallback": "Skema Penanganan Error dan Fallback",
+            "menu.skema_cache_and_deployment": "Skema Cache dan Deployment",
+            "menu.skema_pemilihan_bahasa": "Skema Pemilihan Bahasa",
+            "menu.skema_i18n_lanjutan": "Skema i18n Lanjutan",
+            "menu.skema_pergantian_versi_tampilan": "Skema Pergantian Versi Tampilan",
+            "menu.skema_pergantian_frontpage": "Skema Pergantian Frontpage",
+            "menu.skema_pergantian_icon": "Skema Pergantian Ikon",
+            "menu.skema_page_title_and_breadcrumb": "Skema Judul Halaman & Breadcrumb",
+            "menu.panduan_tambah_halaman": "Panduan Tambah Halaman",
+            "menu.panduan_tambah_menu": "Panduan Tambah Menu",
+            "menu.panduan_pergantian_versi_metronic": "Panduan Pergantian Versi Metronic",
+            "menu.panduan_pergantian_frontpage": "Panduan Pergantian Frontpage",
+            "menu.panduan_page_title_and_breadcrumb": "Panduan Judul Halaman & Breadcrumb",
+            "menu.konvensi_penamaan": "Konvensi Penamaan",
+            "menu.workflow_developer_harian": "Pengembang Alur Kerja Harian",
+            "menu.checklist_qa_smoke_test": "Daftar Periksa QA Smoke Test",
+            "menu.playbook_incident_response": "Panduan Respons Insiden",
             "auth.english": "Bahasa Inggris",
             "auth.indonesian": "Bahasa Indonesia",
             "auth.terms": "Ketentuan",
@@ -224,13 +282,13 @@ var KTLanguage = (function () {
             ingestPayload(window.KTLanguageConfig.payload);
         }
 
-        // 2. Try localStorage cache (v5 with landing support)
+        // 2. Try localStorage cache (v6)
         if (!isLoaded) {
             try {
                 var cached = localStorage.getItem("kt_translations_cache");
                 if (cached) {
                     var parsed = JSON.parse(cached);
-                    if (parsed && parsed.v >= 5) {
+                    if (parsed && parsed.v >= 6) {
                         ingestPayload(parsed);
                     } else {
                         localStorage.removeItem("kt_translations_cache");
@@ -263,7 +321,7 @@ var KTLanguage = (function () {
                     // Update localStorage cache
                     try {
                         localStorage.setItem("kt_translations_cache", JSON.stringify({
-                            v: 5,
+                            v: 6,
                             translations: translations,
                             textMap: textMap,
                             timestamp: Date.now()

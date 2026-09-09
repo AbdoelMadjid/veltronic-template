@@ -9,6 +9,14 @@ use App\Support\LanguageManager;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+
+    if (!auth()->user()->isMasterOrAdmin()) {
+        return redirect()->route('dashboard');
+    }
+
     return view('welcome');
 })->name('home');
 
@@ -49,12 +57,12 @@ Route::get('/frontpage/switch/{frontpage}', function ($frontpage) {
         \Illuminate\Support\Facades\Cookie::queue('frontpage', $frontpage, 525600);
     }
     return redirect()->back();
-})->name('frontpage.switch');
+})->middleware(['auth', 'role:master|admin'])->name('frontpage.switch');
 
 
 Route::get('/landing', function () {
     return view('frontpages.landing.v1.landing');
-})->name('dashboards.landing');
+})->middleware(['auth', 'role:master|admin'])->name('dashboards.landing');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -1,29 +1,43 @@
 <!--begin::Page title-->
 <div class="page-title d-flex flex-column me-3">
     @php
-        $title = trim($__env->yieldContent('title'));
-        if (!$title) {
-            $title = getPageTitle();
-        }
-
-        $routeName = \Illuminate\Support\Facades\Route::currentRouteName() ?? '';
-        $segments = [];
-
-        if ($routeName === 'dashboard') {
-            $segments = ['Dashboards', 'Default'];
-        } elseif ($routeName !== '') {
-            $segments = array_values(array_filter(explode('.', $routeName), fn($segment) => $segment !== ''));
-        }
-
-        $normalize = function (string $value): string {
-            $translatedKey = 'menu.' . strtolower(str_replace([' ', '&', '/', '-'], ['_', 'and', '_', '_'], $value));
-            $translated = __($translatedKey);
-            if ($translated !== $translatedKey) {
-                return $translated;
+        $translateSafely = static function (string $key): ?string {
+            $key = trim($key);
+            if ($key === '' || strtolower($key) === 'menu' || strtolower($key) === 'auth' || strtolower($key) === 'pagination') {
+                return null;
             }
-
-            return ucwords(str_replace(['-', '_'], ' ', $value));
+            $res = __($key);
+            if (is_string($res) && $res !== $key) {
+                return $res;
+            }
+            if (!str_starts_with($key, 'menu.')) {
+                $resMenu = __('menu.' . $key);
+                if (is_string($resMenu) && $resMenu !== 'menu.' . $key) {
+                    return $resMenu;
+                }
+                $slug = strtolower(str_replace([' ', '&', '/', '-'], ['_', 'and', '_', '_'], $key));
+                $resSlug = __('menu.' . $slug);
+                if (is_string($resSlug) && $resSlug !== 'menu.' . $slug) {
+                    return $resSlug;
+                }
+            }
+            return null;
         };
+
+        $yieldTitle = trim($__env->yieldContent('title'));
+        if ($yieldTitle === '' || $yieldTitle === 'Index') {
+            $title = getPageTitle();
+        } else {
+            $translatedTitle = $translateSafely($yieldTitle);
+            if ($translatedTitle !== null) {
+                $title = $translatedTitle;
+            } else {
+                $pageTitle = getPageTitle();
+                $title = ($pageTitle !== config('app.name', 'Veltronic') && $pageTitle !== 'Metronic v.8.3.2 - Laravel 12') ? $pageTitle : $yieldTitle;
+            }
+        }
+
+        $breadcrumbs = getPageBreadcrumbs();
     @endphp
     <!--begin::Title-->
     <h1 class="d-flex text-white fw-bold my-1 fs-3">
@@ -39,12 +53,12 @@
             </a>
         </li>
         <!--end::Item-->
-        @foreach ($segments as $segment)
+        @foreach ($breadcrumbs as $breadcrumbItem)
             <li class="breadcrumb-item">
                 <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
             </li>
             <li class="breadcrumb-item text-white opacity-75">
-                {{ $normalize($segment) }}
+                {{ translateMenuTitleSafely($breadcrumbItem) ?? $breadcrumbItem }}
             </li>
         @endforeach
     </ul>

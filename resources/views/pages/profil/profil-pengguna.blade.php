@@ -1,5 +1,4 @@
 @extends('layouts.index')
-@section('title', 'Profil Pengguna')
 @section('styles')
     <!--begin::Vendor Stylesheets(used for this page only)-->
     <link
@@ -8,11 +7,7 @@
     <!--end::Vendor Stylesheets-->
 @endsection
 @section('toolbar')
-    @component('layouts.partials._toolbar')
-        @slot('li_1')
-            Profil
-        @endslot
-    @endcomponent
+    @include('layouts.partials._toolbar')
 @endsection
 @section('content')
     <div id="kt_app_content" class="app-content flex-column-fluid">

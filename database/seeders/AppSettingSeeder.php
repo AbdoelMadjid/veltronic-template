@@ -13,6 +13,36 @@ class AppSettingSeeder extends Seeder
     public function run(): void
     {
         $settings = [
+            // Appearance & Defaults
+            [
+                'key' => 'default_icon_style',
+                'value' => 'duotone',
+                'group' => 'appearance',
+                'type' => 'string',
+                'description' => 'Gaya default icon KeenIcons (duotone, solid, outline)',
+            ],
+            [
+                'key' => 'default_language',
+                'value' => 'id',
+                'group' => 'appearance',
+                'type' => 'string',
+                'description' => 'Bahasa default aplikasi (id = Bahasa Indonesia, en = English)',
+            ],
+            [
+                'key' => 'default_theme_version',
+                'value' => 'v1',
+                'group' => 'appearance',
+                'type' => 'string',
+                'description' => 'Versi tata letak tema default (v1 = Sidebar Classic, v2 = Header Navbar)',
+            ],
+            [
+                'key' => 'default_frontpage',
+                'value' => 'landing',
+                'group' => 'appearance',
+                'type' => 'string',
+                'description' => 'Halaman depan default (landing = Metronic Landing, education = Education Portal)',
+            ],
+
             // Security & Auth Settings
             [
                 'key' => 'enable_registration',

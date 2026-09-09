@@ -151,9 +151,14 @@ class AppFiturController extends Controller
     {
         $data = $request->except(['_token']);
 
+        // Handle checkbox fields that might not be present if unchecked
+        if (!$request->has('enable_registration')) {
+            $data['enable_registration'] = '0';
+        }
+
         foreach ($data as $key => $value) {
             $group = 'general';
-            if (in_array($key, ['default_theme_mode', 'default_icon_style', 'default_language', 'sidebar_default_state'])) {
+            if (in_array($key, ['default_theme_mode', 'default_icon_style', 'default_language', 'default_theme_version', 'default_frontpage', 'sidebar_default_state'])) {
                 $group = 'appearance';
             } elseif (in_array($key, ['enable_registration', 'session_lifetime'])) {
                 $group = 'security';
@@ -166,7 +171,7 @@ class AppFiturController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Pengaturan sistem berhasil disimpan ke database.',
+            'message' => 'Pengaturan aplikasi berhasil disimpan ke database.',
         ]);
     }
 

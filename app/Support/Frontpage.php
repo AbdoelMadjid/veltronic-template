@@ -6,6 +6,17 @@ class Frontpage
 {
     public static function default(): string
     {
+        try {
+            if (class_exists(\App\Models\AppSetting::class)) {
+                $dbDefault = \App\Models\AppSetting::get('default_frontpage');
+                if (!empty($dbDefault) && in_array($dbDefault, self::available(), true)) {
+                    return (string) $dbDefault;
+                }
+            }
+        } catch (\Throwable $e) {
+            // fallback if db/cache error
+        }
+
         return (string) config('frontpage.default', 'landing');
     }
 

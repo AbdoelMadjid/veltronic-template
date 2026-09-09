@@ -6,6 +6,17 @@ class ThemeVersion
 {
     public static function default(): string
     {
+        try {
+            if (class_exists(\App\Models\AppSetting::class)) {
+                $dbDefault = \App\Models\AppSetting::get('default_theme_version');
+                if (!empty($dbDefault)) {
+                    return (string) $dbDefault;
+                }
+            }
+        } catch (\Throwable $e) {
+            // fallback if db/cache error
+        }
+
         return (string) config('theme.default_version', 'v1');
     }
 

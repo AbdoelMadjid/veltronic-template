@@ -1,11 +1,7 @@
 @extends('layouts.index')
 
 @section('toolbar')
-@component('layouts.partials._toolbar')
-@slot('li_1')
-{{ __('menu.md_app_support') !== 'menu.md_app_support' ? __('menu.md_app_support') : 'App Support' }}
-@endslot
-@endcomponent
+    @include('layouts.partials._toolbar')
 @endsection
 
 @section('content')
@@ -16,10 +12,6 @@
         <!--begin::Overview Header Banner-->
         @include('pages.appsupport.partials.app-fiturs.header-banner')
         <!--end::Overview Header Banner-->
-
-        <!--begin::Stats Summary Bar-->
-        @include('pages.appsupport.partials.app-fiturs.stats-summary')
-        <!--end::Stats Summary Bar-->
 
         <!--begin::Navs Card-->
         <div class="card card-flush shadow-sm border-0 mb-6">

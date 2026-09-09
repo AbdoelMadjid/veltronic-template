@@ -110,4 +110,28 @@ class MenuSeederLanguageTest extends TestCase
         $breadcrumbsProfilEn = getPageBreadcrumbs('profil.profil-pengguna');
         $this->assertEquals(['Master Data'], $breadcrumbsProfilEn);
     }
+
+    public function test_help_pemrograman_views_render_successfully(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $responseChangelog = $this->actingAs($admin)
+            ->get('/help/pemrograman/changelog');
+        $responseChangelog->assertStatus(200);
+        $responseChangelog->assertSee('Riwayat Versi');
+        $responseChangelog->assertSee('v1.12.0');
+
+        $responseOverview = $this->actingAs($admin)
+            ->get('/help/pemrograman/overview');
+        $responseOverview->assertStatus(200);
+
+        $responseSkema = $this->actingAs($admin)
+            ->get('/help/pemrograman/skema/page-title-dan-breadcrumbs');
+        $responseSkema->assertStatus(200);
+
+        $responseOperasional = $this->actingAs($admin)
+            ->get('/help/pemrograman/operasional/panduan-page-title-dan-breadcrumbs');
+        $responseOperasional->assertStatus(200);
+    }
 }

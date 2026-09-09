@@ -4,20 +4,6 @@
     @include('pages.help.pemrograman._schema-ui')
 @endsection
 
-@section('toolbar')
-    @component('layouts.partials._toolbar')
-        @slot('li_1')
-            Help
-        @endslot
-        @slot('li_2')
-            Skema Pemrograman
-        @endslot
-        @slot('li_3')
-            Changelog
-        @endslot
-    @endcomponent
-@endsection
-
 @section('content')
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <div id="kt_app_content_container" class="app-container container-fluid" data-kt-lang-ignore="true">
@@ -81,7 +67,7 @@
                                     <ul class="text-gray-700 fs-7 mb-0 ps-4">
                                         <li class="mb-1"><strong>Zero-Boilerplate Automatic Page Title &amp; Breadcrumbs:</strong> Helper <code>app/Helpers/GetPageTitle.php</code> menyelesaikan resolusi 4 lapis (<code>config/menu_seeder.php</code>, database <code>menus</code>, <code>sidebar.*</code>, dan URL segments) dengan fungsi translasi aman <code>translateMenuTitleSafely()</code>.</li>
                                         <li class="mb-1"><strong>Ancestor Breadcrumb Hierarchy:</strong> Breadcrumbs secara eksklusif hanya menampilkan hierarki leluhur induk (misal: <code>Home &gt; Master Data &gt; App Support</code> untuk halaman <code>Menu</code>), menghindari redundansi judul halaman di ujung breadcrumb.</li>
-                                        <li class="mb-1"><strong>Smart Layout Toolbar Fallback:</strong> Penataan <code>resources/views/layouts/_default.blade.php</code> dengan pengecekan <code>@hasSection('toolbar')</code> otomatis merender toolbar default bila view anak tidak mendeklarasikan toolbar kustom.</li>
+                                        <li class="mb-1"><strong>Smart Layout Toolbar Fallback:</strong> Penataan <code>resources/views/layouts/_default.blade.php</code> dengan pengecekan <code>@@hasSection('toolbar')</code> otomatis merender toolbar default bila view anak tidak mendeklarasikan toolbar kustom.</li>
                                         <li class="mb-1"><strong>Dokumentasi Skema &amp; Operasional Help:</strong> Penambahan halaman panduan komprehensif di <code>help/pemrograman/skema/page-title-dan-breadcrumbs</code> dan <code>help/pemrograman/operasional/panduan-page-title-dan-breadcrumbs</code> beserta file Markdown di <code>docs/skema-pemrograman/</code>.</li>
                                         <li class="mb-1"><strong>Schema UI Full-Width Grid:</strong> Penambahan class CSS <code>.schema-col-4</code> pada <code>_schema-ui.blade.php</code> untuk merentangkan 3 kolom kartu QA Checklist Pengembang hingga 100% lebar kontainer.</li>
                                         <li class="mb-1"><strong>Selective Localization Boundary:</strong> Sidebar dan Toolbar tetap mengusung dwibahasa penuh (EN &amp; ID) dengan <code>title_key</code> sinkron, sementara isi konten bantuan Help dilindungi dalam bahasa Indonesia murni via <code>data-kt-lang-ignore="true"</code>.</li>

@@ -4,31 +4,46 @@ namespace App\Support;
 
 class ThemeVersion
 {
+    protected static ?string $cachedDefault = null;
+    protected static ?array $cachedAvailable = null;
+
     public static function default(): string
     {
+        if (self::$cachedDefault !== null) {
+            return self::$cachedDefault;
+        }
+
         try {
             if (class_exists(\App\Models\AppSetting::class)) {
                 $dbDefault = \App\Models\AppSetting::get('default_theme_version');
                 if (!empty($dbDefault)) {
-                    return (string) $dbDefault;
+                    self::$cachedDefault = (string) $dbDefault;
+                    return self::$cachedDefault;
                 }
             }
         } catch (\Throwable $e) {
             // fallback if db/cache error
         }
 
-        return (string) config('theme.default_version', 'v1');
+        self::$cachedDefault = (string) config('theme.default_version', 'v1');
+        return self::$cachedDefault;
     }
 
     public static function available(): array
     {
+        if (self::$cachedAvailable !== null) {
+            return self::$cachedAvailable;
+        }
+
         $versions = config('theme.versions', [self::default()]);
 
         if (!is_array($versions) || $versions === []) {
-            return [self::default()];
+            self::$cachedAvailable = [self::default()];
+            return self::$cachedAvailable;
         }
 
-        return array_values(array_unique(array_map('strval', $versions)));
+        self::$cachedAvailable = array_values(array_unique(array_map('strval', $versions)));
+        return self::$cachedAvailable;
     }
 
     public static function normalize(?string $version): string

@@ -22,14 +22,21 @@ class AppSetting extends Model
 
     const CACHE_KEY = 'app_settings_map';
 
+    /**
+     * In-memory request lifecycle cache.
+     *
+     * @var array<string, mixed>|null
+     */
+    protected static ?array $memoryMap = null;
+
     protected static function booted()
     {
         static::saved(function () {
-            Cache::forget(self::CACHE_KEY);
+            self::clearCache();
         });
 
         static::deleted(function () {
-            Cache::forget(self::CACHE_KEY);
+            self::clearCache();
         });
     }
 
@@ -42,12 +49,18 @@ class AppSetting extends Model
      */
     public static function get(string $key, $default = null)
     {
+        if (self::$memoryMap !== null) {
+            return self::$memoryMap[$key] ?? $default;
+        }
+
         try {
             $settings = Cache::rememberForever(self::CACHE_KEY, function () {
                 return self::query()->pluck('value', 'key')->toArray();
             });
 
-            return $settings[$key] ?? $default;
+            self::$memoryMap = is_array($settings) ? $settings : [];
+
+            return self::$memoryMap[$key] ?? $default;
         } catch (\Throwable $e) {
             return $default;
         }
@@ -73,8 +86,17 @@ class AppSetting extends Model
             ]
         );
 
-        Cache::forget(self::CACHE_KEY);
+        self::clearCache();
 
         return $setting;
+    }
+
+    /**
+     * Clear both in-memory and persistent cache.
+     */
+    public static function clearCache(): void
+    {
+        self::$memoryMap = null;
+        Cache::forget(self::CACHE_KEY);
     }
 }

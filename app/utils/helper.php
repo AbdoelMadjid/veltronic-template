@@ -59,6 +59,11 @@ if (!function_exists('menuNormalizePath')) {
 if (!function_exists('sidebarAdditionalMenuSections')) {
     function sidebarAdditionalMenuSections(): array
     {
+        static $cachedSections = null;
+        if ($cachedSections !== null) {
+            return $cachedSections;
+        }
+
         if (!auth()->check()) {
             return [];
         }
@@ -214,6 +219,8 @@ if (!function_exists('sidebarAdditionalMenuSections')) {
             ];
         }
 
+        $cachedSections = $sections;
+
         return $sections;
     }
 }
@@ -229,25 +236,11 @@ if (!function_exists('sidebarMenuSections')) {
 if (!function_exists('isFeatureActive')) {
     function isFeatureActive(string $featureKey, bool $default = true): bool
     {
-        static $features = null;
-
-        if ($features === null) {
-            try {
-                if (\Illuminate\Support\Facades\Schema::hasTable('app_fiturs')) {
-                    $features = \App\Models\AppSupport\AppFitur::pluck('active', 'feature_key')->toArray();
-                } else {
-                    $features = [];
-                }
-            } catch (\Throwable $e) {
-                $features = [];
-            }
+        if (function_exists('app_fitur')) {
+            return app_fitur($featureKey, $default);
         }
 
-        if (array_key_exists($featureKey, $features)) {
-            return (bool) $features[$featureKey];
-        }
-
-        return $default;
+        return \App\Models\AppFitur::isEnabled($featureKey, $default);
     }
 }
 

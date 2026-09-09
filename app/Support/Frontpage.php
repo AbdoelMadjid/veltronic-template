@@ -4,30 +4,46 @@ namespace App\Support;
 
 class Frontpage
 {
+    protected static ?string $cachedDefault = null;
+    protected static ?array $cachedAll = null;
+    protected static ?array $cachedAvailable = null;
+
     public static function default(): string
     {
+        if (self::$cachedDefault !== null) {
+            return self::$cachedDefault;
+        }
+
         try {
             if (class_exists(\App\Models\AppSetting::class)) {
                 $dbDefault = \App\Models\AppSetting::get('default_frontpage');
                 if (!empty($dbDefault) && in_array($dbDefault, self::available(), true)) {
-                    return (string) $dbDefault;
+                    self::$cachedDefault = (string) $dbDefault;
+                    return self::$cachedDefault;
                 }
             }
         } catch (\Throwable $e) {
             // fallback if db/cache error
         }
 
-        return (string) config('frontpage.default', 'landing');
+        self::$cachedDefault = (string) config('frontpage.default', 'landing');
+        return self::$cachedDefault;
     }
 
     public static function all(): array
     {
-        return (array) config('frontpage.pages', []);
+        if (self::$cachedAll === null) {
+            self::$cachedAll = (array) config('frontpage.pages', []);
+        }
+        return self::$cachedAll;
     }
 
     public static function available(): array
     {
-        return array_keys(self::all());
+        if (self::$cachedAvailable === null) {
+            self::$cachedAvailable = array_keys(self::all());
+        }
+        return self::$cachedAvailable;
     }
 
     public static function normalize(?string $key): string

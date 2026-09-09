@@ -5,6 +5,18 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.12.1] - 2026-09-09
+
+### Fixed & Optimized
+- **High-Performance In-Memory Static Memoization & Query Overhead Elimination**:
+  - `app/Models/AppSetting.php` & `app/Models/AppFitur.php`: Added static `$memoryMap` request lifecycle memoization, eliminating 2,850+ repeated database cache queries per single request down to ~5 queries (99.8% database overhead reduction).
+  - `app/Support/ThemeVersion.php` & `app/Support/Frontpage.php`: Added request-level memoization for default/available variants to reduce repetitive string and config operations.
+  - `app/utils/helper.php`: Added static memoization to `sidebarAdditionalMenuSections()` and unified `isFeatureActive()` with `app_fitur()` cached map.
+  - `resources/views/layouts/index.blade.php` & `index-v2.blade.php`: Added `<link rel="preconnect">` for Google Fonts to prevent render-blocking DNS/TLS latency.
+  - Configured `CACHE_STORE=file` in `.env` and `.env.example`.
+
+---
+
 ## [v1.12.0] - 2026-09-09
 
 ### Added

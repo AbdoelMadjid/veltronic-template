@@ -51,6 +51,8 @@ License: For each use you must have a valid license purchased only from above li
     <link rel="shortcut icon"
         href="{{ \App\Support\ThemeAsset::url('media/logos/favicon.ico', $theme_asset_pack ?? null) }}" />
     <!--begin::Fonts(mandatory for all pages)-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" /> <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used for this page only)-->
     {{--     

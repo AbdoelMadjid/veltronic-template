@@ -120,7 +120,7 @@ class MenuSeederLanguageTest extends TestCase
             ->get('/help/pemrograman/changelog');
         $responseChangelog->assertStatus(200);
         $responseChangelog->assertSee('Riwayat Versi');
-        $responseChangelog->assertSee('v1.12.0');
+        $responseChangelog->assertSee('v1.12.1');
 
         $responseOverview = $this->actingAs($admin)
             ->get('/help/pemrograman/overview');

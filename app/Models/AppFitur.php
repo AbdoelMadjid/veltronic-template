@@ -29,20 +29,27 @@ class AppFitur extends Model
 
     const CACHE_KEY = 'app_fiturs_status_map';
 
+    /**
+     * In-memory request lifecycle cache.
+     *
+     * @var array<string, bool>|null
+     */
+    protected static ?array $memoryMap = null;
+
     protected static function booted()
     {
         static::saved(function () {
-            Cache::forget(self::CACHE_KEY);
+            self::clearCache();
         });
 
         static::deleted(function () {
-            Cache::forget(self::CACHE_KEY);
+            self::clearCache();
         });
     }
 
     /**
      * Check if a specific feature key is enabled.
-     * Cached forever until modified.
+     * Cached in memory and persistent cache.
      *
      * @param string $key
      * @param bool $default
@@ -50,13 +57,19 @@ class AppFitur extends Model
      */
     public static function isEnabled(string $key, bool $default = true): bool
     {
+        if (self::$memoryMap !== null) {
+            return array_key_exists($key, self::$memoryMap) ? (bool) self::$memoryMap[$key] : $default;
+        }
+
         try {
             $map = Cache::rememberForever(self::CACHE_KEY, function () {
                 return self::query()->pluck('is_enabled', 'key')->toArray();
             });
 
-            if (array_key_exists($key, $map)) {
-                return (bool) $map[$key];
+            self::$memoryMap = is_array($map) ? $map : [];
+
+            if (array_key_exists($key, self::$memoryMap)) {
+                return (bool) self::$memoryMap[$key];
             }
         } catch (\Throwable $e) {
             // Fallback gracefully during migrations or setup
@@ -67,10 +80,11 @@ class AppFitur extends Model
     }
 
     /**
-     * Clear the cached features map.
+     * Clear both in-memory and persistent cache.
      */
     public static function clearCache(): void
     {
+        self::$memoryMap = null;
         Cache::forget(self::CACHE_KEY);
     }
 }

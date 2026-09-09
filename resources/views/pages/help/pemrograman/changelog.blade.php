@@ -34,13 +34,47 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.12.1
+                            Versi Saat Ini: v1.13.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.13.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.13.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.13.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>09 Sep 2026, 18:45 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Modul CRUD Manajemen Pengguna, UserDataTable QueryBuilder Service, &amp; Antarmuka Murni Bahasa Indonesia</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi menyeluruh modul <b>Manajemen Pengguna</b> (<code>manajemenpengguna/users</code>) dengan class service <code>UserDataTable</code> berbasis <code>use Illuminate\Database\Eloquent\Builder as QueryBuilder;</code>, upload avatar foto profil dengan sinkronisasi realtime pada avatar header, modal CRUD interaktif, validasi <code>UserRequest</code>, serta standardisasi antarmuka murni Bahasa Indonesia tanpa istilah bilingual / dual language.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Dedicated Yajra UserDataTable Service:</strong> Pemisahan logika datatable ke <code>app/DataTable/ManajemenPengguna/UserDataTable.php</code> menggunakan Eloquent QueryBuilder dan inject di <code>UserController@@index</code>.</li>
+                                        <li class="mb-1"><strong>Full CRUD &amp; Transaction Safety:</strong> Controller <code>UserController.php</code> menangani operasi store, edit, update, delete, dan reset password default (<code>password123</code>) berbalut DB transaction.</li>
+                                        <li class="mb-1"><strong>Avatar Management &amp; Realtime Header Sync:</strong> Dukungan upload dan preview foto profil, serta update dinamis avatar pojok kanan atas secara realtime jika akun aktif diedit.</li>
+                                        <li class="mb-1"><strong>Standardisasi Bahasa Indonesia Murni:</strong> Pembersihan seluruh notasi ganda/bilingual (menghapus <code>(Role)</code>, <code>(Avatar)</code>, mengubah <code>Master Data</code> &rarr; <code>Data Master</code>, <code>Refresh</code> &rarr; <code>Segarkan</code>, <code>Reset</code> &rarr; <code>Atur Ulang</code>) pada view, modal form, modal detail, DataTables language, dan notifikasi SweetAlert.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.13.0-->
+
                         <!--begin::Item v1.12.1 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.12.1</div>
@@ -56,7 +90,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>09 Sep 2026, 14:30 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">High-Performance In-Memory Static Memoization &amp; Query Overhead Elimination</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

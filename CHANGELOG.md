@@ -5,6 +5,26 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.13.0] - 2026-09-09
+
+### Added
+- **Manajemen Pengguna (User Management) Full CRUD Module**:
+  - `app/Http/Controllers/ManajemenPengguna/UserController.php`: Full CRUD operations (list, create, store, edit, update, delete, reset-password) with database transaction safety and validation.
+  - `app/DataTable/ManajemenPengguna/UserDataTable.php`: Dedicated Yajra DataTables service class using `use Illuminate\Database\Eloquent\Builder as QueryBuilder;` and `DataTables::eloquent()`.
+  - `app/Http/Requests/ManajemenPengguna/UserRequest.php`: Robust validation for avatar image uploads, unique email per user, passwords, and Spatie roles.
+  - `resources/views/pages/manajemenpengguna/users.blade.php`: Modern Metronic card UI with responsive search, role filters, real-time reload, and action tooltips.
+  - `resources/views/pages/manajemenpengguna/partials/users-form-modal.blade.php` & `users-detail-modal.blade.php`: Form modal with avatar preview, edit support, and detail view.
+  - `public/assets/js/manajemenpengguna/users.js`: Client-side AJAX submission with FormData multipart, real-time header avatar live update, SweetAlert2 confirm dialogs, and toast notifications.
+  - `database/migrations/2026_09_09_000001_add_avatar_to_users_table.php`: Added nullable `avatar` column to `users` table.
+
+### Enhanced
+- **Pure Indonesian UI & Zero Bilingual Leftovers**:
+  - Refined all text labels, table headers, modal fields, validation messages, and action tooltips across the User Management module to pure, natural Indonesian (removed all bilingual dual notations such as `(Role)`, `(Avatar)`, `Master Data` $\rightarrow$ `Data Master`, `Refresh` $\rightarrow$ `Segarkan`, `Reset` $\rightarrow$ `Atur Ulang`).
+  - Updated DataTables language dictionary and SweetAlert prompt messages to pure Indonesian.
+  - Updated user account dropdown (`resources/views/partials/menus/_user-account-menu.blade.php`) to use Indonesian translations directly.
+
+---
+
 ## [v1.12.1] - 2026-09-09
 
 ### Fixed & Optimized

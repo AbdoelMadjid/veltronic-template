@@ -198,21 +198,14 @@
     <div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
         <!--begin::Menu wrapper-->
         @php
-            $assetBase = $theme_asset_base ?? 'assets';
             $authUser = auth()->user();
-            $avatar =
-                $authUser?->profile_photo_url ??
-                ($authUser?->avatar_url ??
-                    ((isset($authUser?->avatar) && is_string($authUser->avatar)
-                        ? (str_starts_with($authUser->avatar, 'http')
-                            ? $authUser->avatar
-                            : asset(ltrim($authUser->avatar, '/')))
-                        : null) ??
-                        asset($assetBase . '/media/avatars/300-1.jpg')));
+            $hasAvatar = !empty($authUser?->avatar_url);
+            $initial = strtoupper(substr($authUser?->name ?? 'U', 0, 1));
         @endphp
-        <div class="cursor-pointer symbol symbol-35px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-            data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-            <img src="{{ $avatar }}" class="rounded-3" alt="user" />
+        <div class="cursor-pointer symbol symbol-35px symbol-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+            data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" id="header_user_avatar_toggle">
+            <img src="{{ $authUser?->avatar_url ?? '' }}" class="header-user-avatar-img object-fit-cover rounded-3 w-35px h-35px w-md-40px h-md-40px {{ $hasAvatar ? '' : 'd-none' }}" alt="user" />
+            <div class="symbol-label fs-5 fw-bold bg-light-primary text-primary header-user-avatar-initial rounded-3 w-35px h-35px w-md-40px h-md-40px {{ $hasAvatar ? 'd-none' : '' }}">{{ $initial }}</div>
         </div>
         <!--layout-partial:partials/menus/_user-account-menu.html-->
         @include('partials.menus._user-account-menu')

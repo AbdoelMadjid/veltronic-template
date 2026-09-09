@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppSupport\AppFiturController;
 use App\Http\Controllers\AppSupport\MenuController as AppSupportMenuController;
+use App\Http\Controllers\ManajemenPengguna\UserController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -24,6 +25,13 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('menu', AppSupportMenuController::class);
     });
 
+    // Manajemen Pengguna (Users, Roles, Permissions)
+    Route::prefix('manajemenpengguna')->name('manajemenpengguna.')->group(function () {
+        Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
+        Route::resource('users', UserController::class);
+    });
+
     // Tempat untuk menambahkan route modul admin / master data lainnya yang berkaitan dengan database menu seeder di masa mendatang.
 
 });
+

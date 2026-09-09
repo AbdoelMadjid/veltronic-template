@@ -163,10 +163,15 @@
     <!--begin::User-->
     <div class="d-flex align-items-center me-lg-n2 ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
         <!--begin::Menu wrapper-->
-        @php($avatar = $current_user_display['avatar'] ?? asset(($theme_asset_base ?? 'assets') . '/media/avatars/300-1.jpg'))
-        <div class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
+        @php
+            $authUser = auth()->user();
+            $hasAvatar = !empty($authUser?->avatar_url);
+            $initial = strtoupper(substr($authUser?->name ?? 'U', 0, 1));
+        @endphp
+        <div class="cursor-pointer symbol symbol-35px symbol-md-40px"
             data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-            <img class="h-30px w-30px rounded" src="{{ $avatar }}" alt="" />
+            <img src="{{ $authUser?->avatar_url ?? '' }}" class="header-user-avatar-img object-fit-cover rounded-3 w-35px h-35px w-md-40px h-md-40px {{ $hasAvatar ? '' : 'd-none' }}" alt="user" />
+            <div class="symbol-label fs-5 fw-bold bg-light-primary text-primary header-user-avatar-initial rounded-3 w-35px h-35px w-md-40px h-md-40px {{ $hasAvatar ? 'd-none' : '' }}">{{ $initial }}</div>
         </div>
         <!--layout-partial:partials/menus/_user-account-menu.html-->
         @include('partials.menus._user-account-menu')

@@ -5,6 +5,24 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.11.0] - 2026-09-09
+
+### Added
+- **Toolbar Gregorian & Hijri Bilingual Date Widget**:
+  - Integrated full Gregorian and Hijri calendar dates into toolbar action area (`resources/views/layouts/partials/_toolbar.blade.php`).
+  - Added global helper functions in `app/Helpers/helpers.php` (`renderDate()`, `toHijriah()`, and `renderGreeting()`).
+  - Added dedicated bilingual translation dictionaries (`lang/id/translation.php` & `lang/en/translation.php`) for Gregorian/Hijri month names, suffixes (`M` / `AD`, `H` / `AH`), and greetings.
+  - Autoloaded `app/Helpers/helpers.php` in `composer.json`.
+
+### Enhanced
+- **Responsive Mobile Toolbar Display**:
+  - Automatically collapses date text to icon-only on mobile screens (`< 768px`) with `d-none d-md-inline`.
+  - Added interactive Bootstrap/Metronic Tooltip (`data-bs-toggle="tooltip"`) on hover / touch displaying the complete bilingual date.
+- **Realtime Client-Side Dual-Language Synchronization**:
+  - Enhanced `KTLanguage` engine in `public/assets/js/custom/language.js` with `data-kt-lang-title-en` and `data-kt-lang-title-id` support for dynamic tooltip/title translations and HTML content in `[data-kt-lang-*]` attributes.
+
+---
+
 ## [v1.10.0] - 2026-09-08
 
 ### Added

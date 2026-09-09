@@ -619,7 +619,30 @@ var KTLanguage = (function () {
             if (shouldSkipElement(el)) return;
             var targetText = locale === "id" ? el.getAttribute("data-kt-lang-id") : el.getAttribute("data-kt-lang-en");
             if (targetText) {
-                el.textContent = targetText;
+                if (targetText.indexOf("<") !== -1 && targetText.indexOf(">") !== -1) {
+                    el.innerHTML = targetText;
+                } else {
+                    el.textContent = targetText;
+                }
+            }
+        });
+
+        // D2. Process bilingual paired title/tooltip attributes: data-kt-lang-title-en & data-kt-lang-title-id
+        var dualLangTitleElements = container.querySelectorAll("[data-kt-lang-title-en], [data-kt-lang-title-id]");
+        dualLangTitleElements.forEach(function (el) {
+            if (shouldSkipElement(el)) return;
+            var targetTitle = locale === "id" ? el.getAttribute("data-kt-lang-title-id") : el.getAttribute("data-kt-lang-title-en");
+            if (targetTitle) {
+                el.setAttribute("title", targetTitle);
+                if (el.hasAttribute("data-bs-original-title")) {
+                    el.setAttribute("data-bs-original-title", targetTitle);
+                }
+                if (typeof bootstrap !== "undefined" && bootstrap.Tooltip) {
+                    var tooltipInstance = bootstrap.Tooltip.getInstance(el);
+                    if (tooltipInstance && typeof tooltipInstance.setContent === "function") {
+                        tooltipInstance.setContent({ '.tooltip-inner': targetTitle });
+                    }
+                }
             }
         });
 

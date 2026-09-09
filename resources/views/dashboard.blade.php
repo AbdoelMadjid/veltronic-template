@@ -18,18 +18,6 @@
         @slot('li_2')
             Default
         @endslot
-        @slot('action')
-            <div class="d-flex align-items-center gap-2 gap-lg-3">
-                <!--begin::Secondary button-->
-                <a href="javascript:void(0)" class="btn btn-sm fw-bold btn-secondary" data-bs-toggle="modal"
-                    data-bs-target="#kt_modal_create_app">Rollover</a>
-                <!--end::Secondary button-->
-                <!--begin::Primary button-->
-                <a href="javascript:void(0)" class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#kt_modal_new_target">Add Target</a>
-                <!--end::Primary button-->
-            </div>
-        @endslot
     @endcomponent
 @endsection
 @section('content')

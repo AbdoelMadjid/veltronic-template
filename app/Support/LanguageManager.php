@@ -121,9 +121,31 @@ class LanguageManager
      *
      * @return array
      */
+    /**
+     * Clear payload cache.
+     */
+    public static function clearCache(): void
+    {
+        self::$memoryPayload = null;
+        try {
+            if (class_exists(\Illuminate\Support\Facades\Cache::class)) {
+                \Illuminate\Support\Facades\Cache::forget('kt_language_client_payload');
+            }
+        } catch (\Throwable $e) {
+            // ignore
+        }
+    }
+
+    /**
+     * Get flattened key-value pairs (e.g. 'menu.my_profile' => 'My Profile')
+     * and string dictionary mappings for instant DOM translation.
+     *
+     * @return array
+     */
     public static function getClientPayload(): array
     {
         if (self::$memoryPayload !== null) {
+            self::$memoryPayload['current'] = self::current();
             return self::$memoryPayload;
         }
 
@@ -131,6 +153,7 @@ class LanguageManager
             if (class_exists(\Illuminate\Support\Facades\Cache::class)) {
                 $cached = \Illuminate\Support\Facades\Cache::get('kt_language_client_payload');
                 if (is_array($cached)) {
+                    $cached['current'] = self::current();
                     self::$memoryPayload = $cached;
                     return $cached;
                 }

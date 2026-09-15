@@ -22,6 +22,8 @@ class SetLocale
             $cookieLocale = $request->cookie('kt_lang');
         } elseif (isset($_COOKIE['kt_lang']) && in_array($_COOKIE['kt_lang'], ['en', 'id'], true)) {
             $cookieLocale = $_COOKIE['kt_lang'];
+        } elseif ($request->hasCookie('data-kt-lang') && in_array($request->cookie('data-kt-lang'), ['en', 'id'], true)) {
+            $cookieLocale = $request->cookie('data-kt-lang');
         } elseif (isset($_COOKIE['data-kt-lang']) && in_array($_COOKIE['data-kt-lang'], ['en', 'id'], true)) {
             $cookieLocale = $_COOKIE['data-kt-lang'];
         }
@@ -44,6 +46,8 @@ class SetLocale
             if (!Session::has('locale') || Session::get('locale') !== $locale) {
                 Session::put('locale', $locale);
             }
+            \Illuminate\Support\Facades\Cookie::queue('kt_lang', $locale, 525600);
+            \Illuminate\Support\Facades\Cookie::queue('data-kt-lang', $locale, 525600);
         }
 
         return $next($request);

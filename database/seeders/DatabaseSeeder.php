@@ -22,5 +22,15 @@ class DatabaseSeeder extends Seeder
             AppFiturSeeder::class,
             AppSettingSeeder::class,
         ]);
+
+        if (class_exists(\App\Support\LanguageManager::class)) {
+            \App\Support\LanguageManager::clearCache();
+        }
+        if (class_exists(\App\Models\AppSetting::class)) {
+            \App\Models\AppSetting::clearCache();
+        }
+        if (class_exists(\Illuminate\Support\Facades\Cache::class)) {
+            \Illuminate\Support\Facades\Cache::forget('kt_language_client_payload');
+        }
     }
 }

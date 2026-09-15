@@ -763,6 +763,7 @@ var KTLanguage = (function () {
             try {
                 localStorage.setItem("data-kt-lang", locale);
                 document.cookie = "kt_lang=" + locale + ";path=/;max-age=31536000;SameSite=Lax";
+                document.cookie = "data-kt-lang=" + locale + ";path=/;max-age=31536000;SameSite=Lax";
             } catch (e) {
                 // Ignore storage error
             }

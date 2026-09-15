@@ -66,5 +66,7 @@ class AppSettingSeeder extends Seeder
                 $setting
             );
         }
+
+        AppSetting::clearCache();
     }
 }

@@ -54,9 +54,15 @@ class MenuSeeder extends Seeder
             });
 
             $this->forgetPermissionCache();
+            if (class_exists(\App\Support\LanguageManager::class)) {
+                \App\Support\LanguageManager::clearCache();
+            }
         } catch (\Throwable $e) {
             $this->restoreTranslationFiles($translationSnapshot);
             $this->forgetPermissionCache();
+            if (class_exists(\App\Support\LanguageManager::class)) {
+                \App\Support\LanguageManager::clearCache();
+            }
             throw $e;
         }
     }

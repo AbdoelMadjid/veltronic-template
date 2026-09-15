@@ -34,13 +34,47 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.15.0
+                            Versi Saat Ini: v1.15.1
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.15.1 (Patch)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.15.1</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-warning fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-warning fw-bold text-dark">v1.15.1</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>15 Sep 2026, 22:35 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Zero-Flicker Bilingual Multi-Environment &amp; Fresh-Seed Hardening</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyempurnaan arsitektur <i>Zero-Flicker Bilingual Engine</i> agar berjalan 100% konsisten lintas perangkat (PC &amp; Laptop) serta sesudah eksekusi <code>php artisan migrate:fresh --seed</code>, memastikan locale dinamis pada payload kamus backend, pembacaan cookie ganda (<code>kt_lang</code> &amp; <code>data-kt-lang</code>) di middleware <code>SetLocale</code>, serta pembersihan cache otomatis di seeder.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Dynamic Locale In-Memory Payload:</strong> Memperbarui <code>LanguageManager::getClientPayload()</code> agar menyuntikkan locale aktif request secara dinamis sehingga cache kamus tidak mengunci locale sebelumnya saat berpindah bahasa.</li>
+                                        <li class="mb-1"><strong>Multi-Variant Cookie Middleware:</strong> Memperkuat <code>SetLocale.php</code> untuk membaca seluruh varian cookie klien secara prioritas dan menambahkan <code>Cookie::queue()</code> agar request navigasi berikutnya selalu sinkron dari milidetik pertama di sisi server (SSR).</li>
+                                        <li class="mb-1"><strong>Synchronous Dual-Cookie Persistence:</strong> Menuliskan cookie <code>kt_lang</code> dan <code>data-kt-lang</code> secara sinkron di <code>language.js</code> dan <code>_init.blade.php</code> sebelum translasi DOM dijalankan.</li>
+                                        <li class="mb-1"><strong>Automated Seeder Cache Invalidation:</strong> Menambahkan pembersihan cache otomatis di <code>DatabaseSeeder.php</code>, <code>MenuSeeder.php</code>, dan <code>AppSettingSeeder.php</code> untuk menjamin fresh database migration bersih dari residu cache lama.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.15.1-->
+
                         <!--begin::Item v1.15.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.15.0</div>
@@ -56,7 +90,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>15 Sep 2026, 22:15 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Modul Profil Pengguna 5-Tab, Direct Upload KTP &amp; Avatar Realtime, Zero-Reload CRUD Engine &amp; Aturan Standar</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

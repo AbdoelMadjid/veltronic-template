@@ -5,6 +5,28 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.15.1] - 2026-09-15
+
+### Fixed & Enhanced
+- **Zero-Flicker Bilingual Multi-Environment & Fresh-Seed Hardening**:
+  - `app/Support/LanguageManager.php`: Added `clearCache()` and updated `getClientPayload()` to dynamically refresh the active request locale without locking stale locale dictionaries in the application cache.
+  - `app/Http/Middleware/SetLocale.php`: Enhanced multi-variant cookie parsing (`kt_lang`, `data-kt-lang`, `$request->cookie()`, `$_COOKIE`) and added cookie queuing (`Cookie::queue()`) on each valid request for instant SSR localization alignment across page navigations.
+  - `resources/views/partials/lang/_init.blade.php` & `public/assets/js/custom/language.js`: Synchronously persisted both `kt_lang` and `data-kt-lang` cookies during client-side language switching before subsequent page navigation requests.
+  - `database/seeders/DatabaseSeeder.php`, `MenuSeeder.php`, `AppSettingSeeder.php`: Automated cache clearing for `LanguageManager`, `AppSetting`, and `kt_language_client_payload` during `php artisan migrate:fresh --seed` across different environments.
+
+---
+
+## [v1.15.0] - 2026-09-15
+
+### Added
+- **Modul Profil Pengguna 5-Tab & Zero-Reload CRUD Engine**:
+  - Implemented 5 interactive tabs: Profil Saya, Identitas Diri, Ganti Password, Konfigurasi, and Riwayat Pengguna.
+  - Direct KTP photo upload with preview modal and automatic download functionality.
+  - Animated profile completion percentage calculation based on mandatory and optional fields.
+  - Standardized Zero-Reload Realtime CRUD Policy in `AGENTS.md` and `.agents/rules/crud-zero-reload-realtime-standards.md`.
+
+---
+
 ## [v1.14.0] - 2026-09-15
 
 ### Added

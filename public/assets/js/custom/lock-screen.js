@@ -209,7 +209,11 @@ const KTLockScreen = (function () {
                 }
             } else {
                 if (errorAlert && errorText) {
-                    errorText.textContent = data.message || 'Password yang Anda masukkan salah.';
+                    if (response.status === 401) {
+                        errorText.innerHTML = (data.message || 'Sesi login telah kedaluwarsa.') + ' <a href="/login" class="fw-bold text-danger text-decoration-underline ms-1">Login ulang</a>';
+                    } else {
+                        errorText.textContent = data.message || 'Password yang Anda masukkan salah.';
+                    }
                     errorAlert.classList.remove('d-none');
                 }
                 if (passwordInput) {
@@ -319,6 +323,12 @@ const KTLockScreen = (function () {
         // Verify authentication state
         const isAuth = document.body.getAttribute('data-user-auth') === '1';
         if (!isAuth) {
+            return;
+        }
+
+        // Check if autolock is disabled by user preference
+        const autolockEnabled = document.body.getAttribute('data-autolock-enabled') !== '0';
+        if (!autolockEnabled) {
             return;
         }
 

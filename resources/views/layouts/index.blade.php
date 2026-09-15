@@ -143,6 +143,7 @@ License: For each use you must have a valid license purchased only from above li
 
     data-session-lifetime="{{ (int) \App\Models\AppSupport\AppSetting::get('session_lifetime', 120) }}"
     data-user-auth="{{ auth()->check() ? '1' : '0' }}"
+    data-autolock-enabled="{{ (auth()->check() ? (auth()->user()?->setting('autolock_screen', '1') ?? '1') : '1') }}"
     class="
         @if (in_array($layout, ['corp', 'fancy', 'emaillayout'])) app-blank
         @elseif (in_array($layout, ['creative', 'overlay']))

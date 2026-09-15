@@ -5,6 +5,21 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.16.1] - 2026-09-15
+
+### Fixed & Enhanced
+- **Lock Screen Idle & User Preference Synchronization**:
+  - Enhanced `public/assets/js/custom/lock-screen.js` to respect user's profile autolock preference via `data-autolock-enabled` in `resources/views/layouts/index.blade.php` and `index-v2.blade.php`.
+  - Added graceful 401 unauthenticated session expiry handling with interactive re-login action link.
+- **Profile Avatar Sizing & Image-Input State Alignment**:
+  - Restored details avatar sizing in `resources/views/pages/profil/partials/details.blade.php` to native Metronic dimensions (160px desktop / 100px mobile) via `.symbol-label` without altering background rendering or zero-reload behavior.
+  - Added conditional `.image-input-empty` state to `resources/views/pages/profil/partials/tabs/profil-saya.blade.php` to ensure avatar remove button visibility matches empty/filled status consistently across reloads.
+  - Fixed dangling Bootstrap tooltip persistence upon clicking avatar remove button in `resources/views/pages/profil/profil-pengguna.blade.php`.
+- **Environment Template (.env.example) Synchronization**:
+  - Updated `.env.example` with `CACHE_STORE=database` and verified complete parity with `.env`.
+
+---
+
 ## [v1.16.0] - 2026-09-15
 
 ### Refactored & Reorganized

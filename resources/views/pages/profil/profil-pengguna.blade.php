@@ -134,7 +134,17 @@
                 if (navImg) navImg.style.backgroundImage = `url('${targetUrl}')`;
 
                 const wrapper = document.getElementById('profil_saya_avatar_wrapper');
-                if (wrapper) wrapper.style.backgroundImage = `url('${targetUrl}')`;
+                if (wrapper) {
+                    wrapper.style.backgroundImage = `url('${targetUrl}')`;
+                    const imageInputEl = wrapper.closest('.image-input');
+                    if (imageInputEl) {
+                        if (avatarUrl) {
+                            imageInputEl.classList.remove('image-input-empty');
+                        } else {
+                            imageInputEl.classList.add('image-input-empty');
+                        }
+                    }
+                }
             }
 
             // Realtime updater: KTP card preview, modal, and placeholder
@@ -319,6 +329,13 @@
 
             if (avatarRemoveBtn) {
                 avatarRemoveBtn.addEventListener('click', function () {
+                    // Sembunyikan dan bersihkan tooltip yang sedang aktif
+                    const tooltipInstance = bootstrap.Tooltip.getInstance(this);
+                    if (tooltipInstance) {
+                        tooltipInstance.hide();
+                    }
+                    document.querySelectorAll('.tooltip').forEach(el => el.remove());
+
                     if (avatarRemoveInput) avatarRemoveInput.value = '1';
                     setTimeout(submitAvatarForm, 100);
                 });

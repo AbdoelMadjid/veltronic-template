@@ -26,7 +26,7 @@
                         <form id="form_auto_avatar" action="{{ route('profil.profil-pengguna.avatar') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <!--begin::Image input-->
-                            <div class="image-input image-input-outline" data-kt-image-input="true"
+                            <div class="image-input image-input-outline {{ empty($authUser?->avatar) ? 'image-input-empty' : '' }}" data-kt-image-input="true"
                                 style="background-image: url('{{ \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null) }}');">
                                 <!--begin::Preview existing avatar-->
                                 <div class="image-input-wrapper w-100px h-100px" id="profil_saya_avatar_wrapper"

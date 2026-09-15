@@ -34,7 +34,7 @@
     <!--begin: Pic-->
     <div class="me-7 mb-4">
         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-            <div class="image-input-wrapper w-100px h-100px w-lg-160px h-lg-160px rounded-3" id="profile_header_avatar_img"
+            <div class="symbol-label" id="profile_header_avatar_img"
                 style="background-image: url('{{ $avatarSrc }}'); background-position: top center; background-size: cover;">
             </div>
             <div

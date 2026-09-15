@@ -34,13 +34,47 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.16.0
+                            Versi Saat Ini: v1.16.1
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.16.1 (Patch)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.16.1</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-warning fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-warning fw-bold text-white">v1.16.1</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>15 Sep 2026, 23:45 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Penyempurnaan Auto Lock Screen, Sinkronisasi Ukuran Avatar Profil &amp; .env.example</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembaruan pemeliharaan yang menyelaraskan fitur penguncian layar otomatis (Auto Lock Screen) dengan preferensi profil pengguna, standardisasi ukuran avatar details profil sesuai template asli Metronic, penanganan tooltip dan state tombol hapus avatar saat reload, serta sinkronisasi penuh berkas <code>.env.example</code>.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Auto Lock Screen &amp; User Preference:</strong> Penambahan atribut <code>data-autolock-enabled</code> untuk mematuhi preferensi pengguna dan penanganan respons 401 unauthenticated session expiry yang elegan.</li>
+                                        <li class="mb-1"><strong>Ukuran Avatar Details Profil:</strong> Menyelaraskan ukuran avatar ke standar template Metronic (160px desktop / 100px mobile) via class <code>.symbol-label</code> tanpa mengubah fungsionalitas background-image dan zero-reload.</li>
+                                        <li class="mb-1"><strong>State Tombol Hapus &amp; Tooltip Cleanup:</strong> Penambahan class dinamis <code>.image-input-empty</code> saat reload serta pembersihan otomatis tooltip Bootstrap saat tombol hapus diklik.</li>
+                                        <li class="mb-1"><strong>Sinkronisasi .env.example:</strong> Penyelarasan konfigurasi <code>CACHE_STORE=database</code> dan variabel environment pada <code>.env.example</code>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.16.1-->
+
                         <!--begin::Item v1.16.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.16.0</div>
@@ -56,7 +90,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>15 Sep 2026, 23:15 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Reorganisasi Domain Namespace Model, Controller, &amp; Factory</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

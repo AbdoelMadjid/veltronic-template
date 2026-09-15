@@ -55,14 +55,3 @@
     justify-content: center !important;
     border-radius: 0.475rem !important;
 }
-
-[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn .btn-label,
-[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn .btn-label {
-    display: none !important;
-}
-
-[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn .btn-icon,
-[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn .btn-icon {
-    margin: 0 !important;
-}
-

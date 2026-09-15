@@ -141,6 +141,8 @@ License: For each use you must have a valid license purchased only from above li
             data-kt-app-aside-push-footer="true" @endif
     @endif
 
+    data-session-lifetime="{{ (int) \App\Models\AppSetting::get('session_lifetime', 120) }}"
+    data-user-auth="{{ auth()->check() ? '1' : '0' }}"
     class="
         @if (in_array($layout, ['corp', 'fancy', 'emaillayout'])) app-blank
         @elseif (in_array($layout, ['creative', 'overlay']))
@@ -186,6 +188,7 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ asset('assets/js/custom/icon-style.js') }}"></script>
     <script src="{{ asset('assets/js/custom/language.js') }}"></script>
     <script src="{{ asset('assets/js/custom/notification-helper.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/lock-screen.js') }}"></script>
     @include('partials._notification')
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->

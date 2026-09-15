@@ -122,6 +122,44 @@ document.addEventListener('DOMContentLoaded', function () {
         if (dropdownUserEmail && email) {
             dropdownUserEmail.textContent = email;
         }
+
+        // 3. Update Navbar User Name & Email
+        document.querySelectorAll('.header-user-name, #header_navbar_user_name').forEach(el => {
+            if (name) el.textContent = name;
+        });
+        document.querySelectorAll('.header-user-email, #header_navbar_user_email').forEach(el => {
+            if (email) el.textContent = email;
+        });
+
+        // 4. Update Lock Screen Modal User Profile
+        const lockAvatarImg = document.getElementById('lock_screen_avatar_img');
+        const lockAvatarInitial = document.getElementById('lock_screen_avatar_initial');
+        const lockUserName = document.getElementById('lock_screen_user_name');
+        const lockUserEmail = document.getElementById('lock_screen_user_email');
+
+        if (lockAvatarImg) {
+            if (timestampedUrl) {
+                lockAvatarImg.src = timestampedUrl;
+                lockAvatarImg.classList.remove('d-none');
+            } else {
+                lockAvatarImg.src = '';
+                lockAvatarImg.classList.add('d-none');
+            }
+        }
+        if (lockAvatarInitial) {
+            lockAvatarInitial.textContent = initial;
+            if (timestampedUrl) {
+                lockAvatarInitial.classList.add('d-none');
+            } else {
+                lockAvatarInitial.classList.remove('d-none');
+            }
+        }
+        if (lockUserName && name) {
+            lockUserName.textContent = name;
+        }
+        if (lockUserEmail && email) {
+            lockUserEmail.textContent = email;
+        }
     }
 
     // Initialize Tooltips safely

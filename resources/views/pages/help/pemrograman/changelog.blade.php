@@ -34,13 +34,49 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.14.0
+                            Versi Saat Ini: v1.15.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.15.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.15.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.15.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>15 Sep 2026, 22:15 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Modul Profil Pengguna 5-Tab, Direct Upload KTP &amp; Avatar Realtime, Zero-Reload CRUD Engine &amp; Aturan Standar</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi komprehensif modul Profil Pengguna dengan 5 tab interaktif (Profil Saya, Identitas Diri &amp; KTP terpisah, Ganti Password, Konfigurasi Preferensi, Riwayat Aktivitas), direct upload KTP dengan modal preview &amp; direct download, animated Profile Completion Percentage, standardisasi Zero-Reload Realtime CRUD Policy tanpa reload halaman, serta preservasi murni styling Metronic 8 tanpa custom CSS tambahan.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Modul Profil Pengguna 5 Tab:</strong> Antarmuka lengkap mencakup tab Profil Saya, Identitas Diri &amp; KTP terpisah, Ganti Password, Konfigurasi Pengguna, dan Riwayat Log Aktivitas Akun (<code>UserLog</code>).</li>
+                                        <li class="mb-1"><strong>Direct Upload KTP &amp; Modal Preview:</strong> Upload, ubah, dan hapus berkas foto KTP langsung dari tab <i>Profil Saya</i> dengan modal popup bawaan Metronic 8 dan tombol <i>Download / Simpan Gambar</i> otomatis.</li>
+                                        <li class="mb-1"><strong>Profile Completion Animation:</strong> Kalkulasi persentase kelengkapan data identitas &amp; berkas KTP terpusat dari backend dengan animasi countup dan progress bar interaktif.</li>
+                                        <li class="mb-1"><strong>Zero-Reload Realtime Engine:</strong> Seluruh aksi simpan identitas, ganti avatar, upload KTP, ubah password, dan toggle preferensi berjalan via AJAX murni tanpa reload browser (<code>window.location.reload()</code>), state data DOM langsung terupdate seketika notifikasi SweetAlert2/Toastr ditutup dan tab aktif tetap terjaga.</li>
+                                        <li class="mb-1"><strong>Aturan Standar Agen:</strong> Pembuatan <code>.agents/rules/crud-zero-reload-realtime-standards.md</code> dan pembaruan <code>AGENTS.md</code> untuk menjamin konsistensi zero-reload realtime CRUD pada seluruh modul.</li>
+                                        <li class="mb-1"><strong>Pure Metronic 8 Utility Styling:</strong> 100% menggunakan komponen bawaan template tanpa menambah file/kode custom CSS baru.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.15.0-->
+
                         <!--begin::Item v1.14.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.14.0</div>
@@ -56,7 +92,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>15 Sep 2026, 14:35 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Islamic Hijri Day Names &amp; Two-Line Toolbar Date, Zero-Flicker Bilingual Engine, and Realtime Icon Style Switcher</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

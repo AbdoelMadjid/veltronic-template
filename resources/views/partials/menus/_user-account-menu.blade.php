@@ -5,129 +5,51 @@
     $assetBase = $theme_asset_base ?? \App\Support\ThemeVersion::assetBase($menuStyle);
     $themeVersions = \App\Support\ThemeVersion::available();
     $authUser = auth()->user();
-    $hasAvatar = !empty($authUser?->avatar_url);
-    $profileName = $authUser?->name ?? ($current_user_display['name'] ?? 'Guest User');
-    $profileEmail = $authUser?->email ?? ($current_user_display['email'] ?? '');
-    $initial = strtoupper(substr($profileName, 0, 1));
 @endphp
 <!--begin::User account menu-->
-<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
+<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-3 fs-6 w-200px"
     data-kt-menu="true">
     <!--begin::Menu item-->
-    <div class="menu-item px-3">
-        <div class="menu-content d-flex align-items-center px-3">
-            <!--begin::Avatar-->
-            <div class="symbol symbol-50px me-5">
-                <img alt="Logo" id="header_dropdown_avatar_img" src="{{ $authUser?->avatar_url ?? '' }}" class="w-50px h-50px rounded-3 object-fit-cover {{ $hasAvatar ? '' : 'd-none' }}" />
-                <div id="header_dropdown_avatar_initial" class="symbol-label bg-light-primary text-primary fw-bolder fs-2 rounded-3 w-50px h-50px {{ $hasAvatar ? 'd-none' : '' }}">
-                    {{ $initial }}
-                </div>
-            </div>
-            <!--end::Avatar-->
-            <!--begin::Username-->
-            <div class="d-flex flex-column">
-                <div class="fw-bold d-flex align-items-center fs-5">
-                    <span id="header_dropdown_user_name">{{ $profileName }}</span>
-                    @if ($authUser && $authUser->roles->first())
-                        <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2" id="header_dropdown_user_role">{{ ucfirst($authUser->roles->first()->name) }}</span>
-                    @endif
-                </div>
-                @if ($profileEmail !== '')
-                    <a href="javascript:void(0)" class="fw-semibold text-muted text-hover-primary fs-7" id="header_dropdown_user_email">
-                        {{ $profileEmail }} </a>
-                @endif
-            </div>
-            <!--end::Username-->
-        </div>
-    </div>
-    <!--end::Menu item-->
-    <!--begin::Menu separator-->
-    <div class="separator my-2"></div>
-    <!--end::Menu separator-->
-    <!--begin::Menu item-->
-    <div class="menu-item px-5">
-        <a href="{{ route('pages.account.overview') }}" class="menu-link px-5" data-kt-translate="menu.my_profile">
-            {{ __('menu.my_profile') }}
-        </a>
-    </div>
-    <!--end::Menu item-->
-    <!--begin::Menu item-->
-    {{-- <div class="menu-item px-5">
-        <a href="{{ route('apps.projects.list') }}" class="menu-link px-5">
-            <span class="menu-text" data-kt-translate="menu.my_projects">{{ __('menu.my_projects') }}</span>
-            <span class="menu-badge">
-                <span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
+    <div class="menu-item px-3 my-1">
+        <a href="{{ Route::has('profil.profil-pengguna') ? route('profil.profil-pengguna') : route('pages.account.overview') }}" class="menu-link px-3">
+            <span class="menu-icon">
+                <i class="ki-duotone ki-user fs-3">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
             </span>
+            <span class="menu-title" data-kt-translate="menu.my_profile">{{ __('menu.my_profile') }}</span>
         </a>
-    </div> --}}
+    </div>
     <!--end::Menu item-->
+
     <!--begin::Menu item-->
-    {{-- <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-        data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
-        <a href="javascript:void(0)" class="menu-link px-5">
-            <span class="menu-title" data-kt-translate="menu.my_subscription">{{ __('menu.my_subscription') }}</span>
-            <span class="menu-arrow"></span>
+    <div class="menu-item px-3 my-1">
+        <a href="{{ Route::has('profil.profil-pengguna') ? route('profil.profil-pengguna', ['tab' => 'konfigurasi']) : route('pages.account.settings') }}" class="menu-link px-3">
+            <span class="menu-icon">
+                <i class="ki-duotone ki-setting-2 fs-3">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+            </span>
+            <span class="menu-title" data-kt-translate="menu.account_settings">{{ __('menu.account_settings') }}</span>
         </a>
-        <!--begin::Menu sub-->
-        <div class="menu-sub menu-sub-dropdown w-175px py-4">
-            <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <a href="{{ route('pages.account.referrals') }}" class="menu-link px-5" data-kt-translate="menu.referrals">
-                    {{ __('menu.referrals') }}
-                </a>
-            </div>
-            <!--end::Menu item-->
-            <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <a href="{{ route('pages.account.billing') }}" class="menu-link px-5" data-kt-translate="menu.billing">
-                    {{ __('menu.billing') }}
-                </a>
-            </div>
-            <!--end::Menu item-->
-            <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <a href="{{ route('pages.account.statements') }}" class="menu-link px-5" data-kt-translate="menu.payments">
-                    {{ __('menu.payments') }}
-                </a>
-            </div>
-            <!--end::Menu item-->
-            <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <a href="{{ route('pages.account.statements') }}" class="menu-link d-flex flex-stack px-5">
-                    <span data-kt-translate="menu.statements">{{ __('menu.statements') }}</span>
-                    <span class="ms-2 lh-0" data-bs-toggle="tooltip"
-                        title="{{ __('menu.view_your_statements') ?? 'Lihat pernyataan Anda' }}">
-                        <i class="ki-duotone ki-information-5 fs-5"><span class="path1"></span><span
-                                class="path2"></span><span class="path3"></span></i> </span>
-                </a>
-            </div>
-            <!--end::Menu item-->
-            <!--begin::Menu separator-->
-            <div class="separator my-2"></div>
-            <!--end::Menu separator-->
-            <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <div class="menu-content px-3">
-                    <label class="form-check form-switch form-check-custom form-check-solid">
-                        <input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked"
-                            name="notifications" />
-                        <span class="form-check-label text-muted fs-7" data-kt-translate="menu.notifications">
-                            {{ __('menu.notifications') }}
-                        </span>
-                    </label>
-                </div>
-            </div>
-            <!--end::Menu item-->
-        </div>
-        <!--end::Menu sub-->
-    </div> --}}
+    </div>
     <!--end::Menu item-->
+
     <!--begin::Menu item-->
-    {{-- <div class="menu-item px-5">
-        <a href="{{ route('pages.account.statements') }}" class="menu-link px-5" data-kt-translate="menu.my_statements">
-            {{ __('menu.my_statements') }}
+    <div class="menu-item px-3 my-1">
+        <a href="javascript:void(0)" class="menu-link px-3" onclick="if(window.KTLockScreen){window.KTLockScreen.lock();}">
+            <span class="menu-icon">
+                <i class="ki-duotone ki-lock fs-3">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                    <span class="path3"></span>
+                </i>
+            </span>
+            <span class="menu-title" data-kt-translate="menu.lock_screen">{{ __('menu.lock_screen') }}</span>
         </a>
-    </div> --}}
+    </div>
     <!--end::Menu item-->
 
     <!--begin::Menu separator-->
@@ -135,19 +57,18 @@
     <!--end::Menu separator-->
 
     <!--begin::Menu item-->
-    <div class="menu-item px-5 my-1">
-        <a href="{{ route('pages.account.settings') }}" class="menu-link px-5" data-kt-translate="menu.account_settings">
-            {{ __('menu.account_settings') }}
-        </a>
-    </div>
-    <!--end::Menu item-->
-    <!--begin::Menu item-->
-    <div class="menu-item px-5">
-        <form method="POST" action="{{ route('logout') }}">
+    <div class="menu-item px-3 my-1">
+        <form method="POST" action="{{ route('logout') }}" class="m-0 p-0">
             @csrf
-            <a href="javascript:void(0)" class="menu-link px-5"
-                onclick="event.preventDefault(); this.closest('form').submit();" data-kt-translate="menu.sign_out">
-                {{ __('menu.sign_out') }}
+            <a href="javascript:void(0)" class="menu-link px-3 text-hover-danger"
+                onclick="event.preventDefault(); this.closest('form').submit();">
+                <span class="menu-icon">
+                    <i class="ki-duotone ki-exit-right fs-3">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </span>
+                <span class="menu-title" data-kt-translate="menu.sign_out">{{ __('menu.sign_out') }}</span>
             </a>
         </form>
     </div>

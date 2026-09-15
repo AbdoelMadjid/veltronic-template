@@ -495,6 +495,7 @@ return [
     'english' => 'Inggris',
     'indonesian' => 'Indonesia',
     'account_settings' => 'Pengaturan Akun',
+    'lock_screen' => 'Kunci Layar',
     'sign_out' => 'Keluar',
     'notifications' => 'Notifikasi',
     'home' => 'Beranda',
@@ -607,3 +608,7 @@ return [
     'cards' => 'Kartu',
     'charts' => 'Grafik',
 ];
+
+
+
+

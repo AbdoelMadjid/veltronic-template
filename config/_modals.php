@@ -26,5 +26,6 @@ return [
     'partials.modals.kt_modal_upgrade_plan',
     'partials.modals.kt_modal_two_factor_authentication',
     'partials.modals.kt_modal_about_app',
+    'partials.modals.kt_modal_lock_screen',
 
 ];

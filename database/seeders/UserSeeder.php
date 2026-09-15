@@ -15,17 +15,25 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $users = ['user', 'admin', 'master'];
-        $default = [
-            'password' => bcrypt('password'),
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10)
-        ];
 
         foreach ($users as $value) {
-            User::create([...$default, ...[
-                'name' => $value,
-                'email' => $value . '@gmail.com',
-            ]])->assignRole($value);
+            $user = User::firstOrCreate(
+                ['email' => $value . '@gmail.com'],
+                [
+                    'name' => fake()->name(),
+                    'password' => bcrypt('password'),
+                    'email_verified_at' => now(),
+                    'remember_token' => Str::random(10),
+                ]
+            );
+            if (!$user->hasRole($value)) {
+                $user->assignRole($value);
+            }
         }
+
+        // Generate 50 sample users with role 'user'
+        User::factory()->count(50)->create()->each(function ($user) {
+            $user->assignRole('user');
+        });
     }
 }

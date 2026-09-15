@@ -37,7 +37,7 @@ class User extends Authenticatable
     /**
      * Get avatar URL attribute.
      */
-    public function getAvatarUrlAttribute(): ?string
+    public function getAvatarUrlAttribute(): string
     {
         if ($this->avatar) {
             if (str_starts_with($this->avatar, 'http://') || str_starts_with($this->avatar, 'https://')) {
@@ -45,7 +45,7 @@ class User extends Authenticatable
             }
             return asset('storage/' . $this->avatar);
         }
-        return null;
+        return \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg');
     }
 
     /**
@@ -84,14 +84,46 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if user has master role.
+     * Get user details (KTP & Address data).
      */
-    public function isMaster(): bool
+    public function detail(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        try {
-            return $this->hasRole('master');
-        } catch (\Throwable $e) {
-            return ($this->role ?? '') === 'master';
-        }
+        return $this->hasOne(UserDetail::class, 'user_id');
+    }
+
+    /**
+     * Get user custom settings.
+     */
+    public function settings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserSetting::class, 'user_id');
+    }
+
+    /**
+     * Get user activity logs.
+     */
+    public function logs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserLog::class, 'user_id')->latest('created_at');
+    }
+
+    /**
+     * Get single setting value by key.
+     */
+    public function setting(string $key, $default = null)
+    {
+        $setting = $this->settings()->where('key', $key)->first();
+        return $setting ? $setting->value : $default;
+    }
+
+    /**
+     * Set / update single setting value.
+     */
+    public function setSetting(string $key, $value, string $group = 'general'): UserSetting
+    {
+        return $this->settings()->updateOrCreate(
+            ['key' => $key],
+            ['value' => $value, 'group' => $group]
+        );
     }
 }

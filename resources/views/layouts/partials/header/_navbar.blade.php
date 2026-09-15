@@ -225,12 +225,25 @@
         @php
             $authUser = auth()->user();
             $hasAvatar = !empty($authUser?->avatar_url);
-            $initial = strtoupper(substr($authUser?->name ?? 'U', 0, 1));
+            $profileName = $authUser?->name ?? ($current_user_display['name'] ?? 'Guest User');
+            $profileEmail = $authUser?->email ?? ($current_user_display['email'] ?? '');
+            $initial = strtoupper(substr($profileName, 0, 1));
         @endphp
-        <div class="cursor-pointer symbol symbol-35px symbol-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+        <div class="cursor-pointer d-flex align-items-center" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
             data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" id="header_user_avatar_toggle">
-            <img src="{{ $authUser?->avatar_url ?? '' }}" class="header-user-avatar-img object-fit-cover rounded-3 w-35px h-35px w-md-40px h-md-40px {{ $hasAvatar ? '' : 'd-none' }}" alt="user" />
-            <div class="symbol-label fs-5 fw-bold bg-light-primary text-primary header-user-avatar-initial rounded-3 w-35px h-35px w-md-40px h-md-40px {{ $hasAvatar ? 'd-none' : '' }}">{{ $initial }}</div>
+            <!--begin::Avatar-->
+            <div class="symbol symbol-35px symbol-md-40px">
+                <div class="image-input-wrapper w-35px h-35px w-md-40px h-md-40px rounded-3" id="header_navbar_user_avatar"
+                    style="background-image: url('{{ $authUser?->avatar_url ?: \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg') }}'); background-position: top center; background-size: cover;">
+                </div>
+            </div>
+            <!--end::Avatar-->
+            <!--begin::User Info-->
+            <div class="d-none d-md-flex flex-column align-items-start justify-content-center ms-3 me-1 text-start">
+                <span class="text-gray-800 fs-7 fw-bold lh-1 mb-1 header-user-name" id="header_navbar_user_name">{{ $profileName }}</span>
+                <span class="text-muted fs-8 fw-semibold lh-1 header-user-email" id="header_navbar_user_email">{{ $profileEmail }}</span>
+            </div>
+            <!--end::User Info-->
         </div>
         <!--layout-partial:partials/menus/_user-account-menu.html-->
         @include('partials.menus._user-account-menu')

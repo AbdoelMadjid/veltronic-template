@@ -256,8 +256,8 @@
             <div class="row mb-0">
                 <label class="col-lg-3 col-form-label fw-semibold fs-6 text-gray-800">Durasi Sesi Timeout</label>
                 <div class="col-lg-9 fv-row d-flex align-items-center">
-                    <input type="number" class="form-control form-control-solid w-150px me-3" name="session_lifetime" value="{{ $settings['session_lifetime'] ?? '120' }}" min="15" max="1440" />
-                    <span class="text-muted fs-7">Menit (Otomatis logout saat tidak ada aktivitas).</span>
+                    <input type="number" class="form-control form-control-solid w-150px me-3" name="session_lifetime" value="{{ $settings['session_lifetime'] ?? '120' }}" min="1" max="1440" />
+                    <span class="text-muted fs-7">Menit (Otomatis mengunci layar / Lock Screen saat tidak ada aktivitas).</span>
                 </div>
             </div>
         </div>

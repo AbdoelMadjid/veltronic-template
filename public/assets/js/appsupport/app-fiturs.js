@@ -370,6 +370,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         KTIconStyle.setStyle(chosenIconStyle, false);
                     }
 
+                    // Instantly update lock screen lifetime
+                    if (data.settings && data.settings.session_lifetime && typeof KTLockScreen !== 'undefined' && KTLockScreen.updateLifetime) {
+                        KTLockScreen.updateLifetime(data.settings.session_lifetime);
+                    }
+
                     Notify.alert({
                         text: data.message,
                         icon: 'success',

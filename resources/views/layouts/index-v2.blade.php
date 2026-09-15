@@ -51,6 +51,7 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ \App\Support\ThemeAsset::url('css/style.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ asset('assets/css/custom-icon-style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
     <!--layout-partial:partials/icon-style/_init.html-->
     @include('partials.icon-style._init')
     <!--end::Global Stylesheets Bundle-->
@@ -71,7 +72,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Head-->
 <!--begin::Body-->
 
-<body id="kt_body" style="background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg.jpg') }}')" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
+<body id="kt_body" style="background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg.jpg') }}')" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled" data-session-lifetime="{{ (int) \App\Models\AppSetting::get('session_lifetime', 120) }}" data-user-auth="{{ auth()->check() ? '1' : '0' }}">
     <!--layout-partial:partials/theme-mode/_init.html-->
     @include('partials.theme-mode._init')
     <!--layout-partial:partials/lang/_init.html-->
@@ -123,6 +124,7 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ asset('assets/js/custom/icon-style.js') }}"></script>
     <script src="{{ asset('assets/js/custom/language.js') }}"></script>
     <script src="{{ asset('assets/js/custom/notification-helper.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/lock-screen.js') }}"></script>
     @include('partials._notification')
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Javascript-->

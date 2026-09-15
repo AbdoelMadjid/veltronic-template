@@ -495,6 +495,7 @@ return [
     'english' => 'English',
     'indonesian' => 'Indonesian',
     'account_settings' => 'Account Settings',
+    'lock_screen' => 'Lock Screen',
     'sign_out' => 'Sign Out',
     'notifications' => 'Notifications',
     'home' => 'Home',
@@ -609,3 +610,7 @@ return [
     'cards' => 'Cards',
     'charts' => 'Charts',
 ];
+
+
+
+

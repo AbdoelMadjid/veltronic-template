@@ -31,6 +31,16 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('users', UserController::class);
     });
 
+    // Profil Pengguna (Identitas Diri, Ganti Password, Konfigurasi, Riwayat)
+    Route::prefix('profil')->name('profil.')->group(function () {
+        Route::get('/profil-pengguna', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'index'])->name('profil-pengguna');
+        Route::post('/profil-pengguna/identitas', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateIdentitas'])->name('profil-pengguna.identitas');
+        Route::post('/profil-pengguna/password', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updatePassword'])->name('profil-pengguna.password');
+        Route::post('/profil-pengguna/konfigurasi', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateKonfigurasi'])->name('profil-pengguna.konfigurasi');
+        Route::post('/profil-pengguna/avatar', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateAvatar'])->name('profil-pengguna.avatar');
+        Route::post('/profil-pengguna/ktp', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateFotoKtp'])->name('profil-pengguna.ktp');
+    });
+
     // Tempat untuk menambahkan route modul admin / master data lainnya yang berkaitan dengan database menu seeder di masa mendatang.
 
 });

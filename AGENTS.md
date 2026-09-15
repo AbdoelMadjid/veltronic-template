@@ -14,3 +14,9 @@
 - Fokus langsung pada file dan baris kode yang diminta pengguna tanpa refactoring liar di luar ruang lingkup.
 - Gunakan komponen bawaan Metronic/Veltronic tanpa membuat custom CSS berlebih per halaman.
 - Pastikan seluruh aturan di `.agents/rules/` dipatuhi secara konsisten.
+
+## 4. Zero-Reload Realtime CRUD Policy
+- **DILARANG** me-reload halaman (`window.location.reload()` atau form submit refresh) pada setiap aksi CRUD, simpan identitas, ganti password, upload berkas/foto/KTP, toggle fitur, dan pengaturan konfigurasi.
+- Saat proses berhasil, tampilkan notifikasi (SweetAlert2/Toastr), dan setelah notifikasi ditutup/dikonfirmasi maka seluruh data di UI **wajib berubah secara realtime**.
+- Tab yang sedang aktif harus **tetap berada di tab yang sama** tanpa mereset posisi scroll atau navigasi pengguna.
+- Detail lengkap diatur di `.agents/rules/crud-zero-reload-realtime-standards.md`.

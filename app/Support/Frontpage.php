@@ -22,8 +22,8 @@ class Frontpage
         }
 
         try {
-            if (class_exists(\App\Models\AppSetting::class)) {
-                $dbDefault = \App\Models\AppSetting::get('default_frontpage');
+            if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
+                $dbDefault = \App\Models\AppSupport\AppSetting::get('default_frontpage');
                 if (!empty($dbDefault) && in_array($dbDefault, self::available(), true)) {
                     self::$cachedDefault = (string) $dbDefault;
                     return self::$cachedDefault;

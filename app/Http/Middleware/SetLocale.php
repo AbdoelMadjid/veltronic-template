@@ -31,8 +31,8 @@ class SetLocale
         $sessionLocale = Session::get('locale');
         $defaultDbLocale = null;
         try {
-            if (class_exists(\App\Models\AppSetting::class)) {
-                $defaultDbLocale = \App\Models\AppSetting::get('default_language');
+            if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
+                $defaultDbLocale = \App\Models\AppSupport\AppSetting::get('default_language');
             }
         } catch (\Throwable $e) {
             // fallback

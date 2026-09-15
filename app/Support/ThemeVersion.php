@@ -20,8 +20,8 @@ class ThemeVersion
         }
 
         try {
-            if (class_exists(\App\Models\AppSetting::class)) {
-                $dbDefault = \App\Models\AppSetting::get('default_theme_version');
+            if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
+                $dbDefault = \App\Models\AppSupport\AppSetting::get('default_theme_version');
                 if (!empty($dbDefault)) {
                     self::$cachedDefault = (string) $dbDefault;
                     return self::$cachedDefault;

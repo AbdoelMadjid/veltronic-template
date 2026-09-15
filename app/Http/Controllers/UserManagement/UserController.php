@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\ManajemenPengguna;
+namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\UserManagement\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,7 +25,7 @@ class UserController extends Controller
         }
 
         $roles = Role::all();
-        return view('pages.manajemenpengguna.users', compact('roles'));
+        return view('pages.usermanagement.users', compact('roles'));
     }
 
     /**
@@ -63,7 +63,7 @@ class UserController extends Controller
                 ]);
             }
 
-            return redirect()->route('manajemenpengguna.users.index')->with('success', 'User berhasil ditambahkan.');
+            return redirect()->route('usermanagement.users.index')->with('success', 'User berhasil ditambahkan.');
         } catch (\Throwable $e) {
             DB::rollBack();
             if ($request->expectsJson() || $request->ajax()) {
@@ -82,7 +82,7 @@ class UserController extends Controller
         if (request()->expectsJson()) {
             return response()->json(['data' => $user]);
         }
-        return view('pages.manajemenpengguna.user-detail', compact('user'));
+        return view('pages.usermanagement.users', compact('user'));
     }
 
     /**
@@ -117,7 +117,7 @@ class UserController extends Controller
                 ]);
             }
 
-            return redirect()->route('manajemenpengguna.users.index')->with('success', 'User berhasil diperbarui.');
+            return redirect()->route('usermanagement.users.index')->with('success', 'User berhasil diperbarui.');
         } catch (\Throwable $e) {
             DB::rollBack();
             if ($request->expectsJson() || $request->ajax()) {
@@ -142,7 +142,7 @@ class UserController extends Controller
                 ]);
             }
 
-            return redirect()->route('manajemenpengguna.users.index')->with('success', 'User berhasil dihapus.');
+            return redirect()->route('usermanagement.users.index')->with('success', 'User berhasil dihapus.');
         } catch (\Throwable $e) {
             if (request()->expectsJson() || request()->ajax()) {
                 return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -168,7 +168,7 @@ class UserController extends Controller
                 ]);
             }
 
-            return redirect()->route('manajemenpengguna.users.index')->with('success', 'Password user berhasil direset.');
+            return redirect()->route('usermanagement.users.index')->with('success', 'Password user berhasil direset.');
         } catch (\Throwable $e) {
             if (request()->expectsJson() || request()->ajax()) {
                 return response()->json(['success' => false, 'message' => $e->getMessage()], 500);

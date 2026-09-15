@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Menu;
+use App\Models\AppSupport\Menu;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -249,7 +249,7 @@ if (!function_exists('isFeatureActive')) {
             return app_fitur($featureKey, $default);
         }
 
-        return \App\Models\AppFitur::isEnabled($featureKey, $default);
+        return \App\Models\AppSupport\AppFitur::isEnabled($featureKey, $default);
     }
 }
 
@@ -257,8 +257,8 @@ if (!function_exists('getActiveIconStyle')) {
     function getActiveIconStyle(): string
     {
         try {
-            if (class_exists(\App\Models\AppSetting::class) && \Illuminate\Support\Facades\Schema::hasTable('app_settings')) {
-                $dbStyle = \App\Models\AppSetting::get('default_icon_style');
+            if (class_exists(\App\Models\AppSupport\AppSetting::class) && \Illuminate\Support\Facades\Schema::hasTable('app_settings')) {
+                $dbStyle = \App\Models\AppSupport\AppSetting::get('default_icon_style');
                 if (!empty($dbStyle) && in_array($dbStyle, ['duotone', 'solid', 'outline'], true)) {
                     return $dbStyle;
                 }

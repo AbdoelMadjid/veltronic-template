@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\AppSupport;
 
 use App\Http\Controllers\Controller;
-use App\Models\AppFitur;
-use App\Models\AppSetting;
+use App\Models\AppSupport\AppFitur;
+use App\Models\AppSupport\AppSetting;
 use Database\Seeders\AppFiturSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\AppSetting;
+use App\Models\AppSupport\AppSetting;
 use Illuminate\Database\Seeder;
 
 class AppSettingSeeder extends Seeder

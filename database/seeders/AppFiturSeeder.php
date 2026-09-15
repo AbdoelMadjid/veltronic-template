@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\AppFitur;
+use App\Models\AppSupport\AppFitur;
 use Illuminate\Database\Seeder;
 
 class AppFiturSeeder extends Seeder

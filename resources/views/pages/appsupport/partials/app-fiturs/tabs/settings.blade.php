@@ -23,7 +23,7 @@
                 <div class="col-lg-9">
                     <div class="row g-4" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]" data-kt-icon-preview="true">
                         @php
-                            $currentIconStyle = $settings['default_icon_style'] ?? \App\Models\AppSetting::get('default_icon_style', 'duotone');
+                            $currentIconStyle = $settings['default_icon_style'] ?? \App\Models\AppSupport\AppSetting::get('default_icon_style', 'duotone');
                         @endphp
                         
                         <!-- Duotone -->
@@ -90,7 +90,7 @@
                 <div class="col-lg-9">
                     <div class="row g-4" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
                         @php
-                            $currentLang = $settings['default_language'] ?? \App\Models\AppSetting::get('default_language', 'id');
+                            $currentLang = $settings['default_language'] ?? \App\Models\AppSupport\AppSetting::get('default_language', 'id');
                         @endphp
 
                         <!-- Bahasa Indonesia -->
@@ -141,7 +141,7 @@
                 <div class="col-lg-9">
                     <div class="row g-4" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
                         @php
-                            $currentThemeVersion = $settings['default_theme_version'] ?? \App\Models\AppSetting::get('default_theme_version', 'v1');
+                            $currentThemeVersion = $settings['default_theme_version'] ?? \App\Models\AppSupport\AppSetting::get('default_theme_version', 'v1');
                         @endphp
 
                         <!-- Theme v1 -->
@@ -192,7 +192,7 @@
                 <div class="col-lg-9">
                     <div class="row g-4" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
                         @php
-                            $currentFrontpage = $settings['default_frontpage'] ?? \App\Models\AppSetting::get('default_frontpage', 'landing');
+                            $currentFrontpage = $settings['default_frontpage'] ?? \App\Models\AppSupport\AppSetting::get('default_frontpage', 'landing');
                         @endphp
 
                         <!-- Landing Metronic -->

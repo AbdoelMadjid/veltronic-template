@@ -39,8 +39,8 @@ Route::get('/lang/translations.json', function () {
 Route::get('/theme/version/{version}', function ($version) {
     if (in_array($version, ThemeVersion::available(), true)) {
         session(['theme_version' => $version]);
-        if (class_exists(\App\Models\AppSetting::class)) {
-            \App\Models\AppSetting::set('default_theme_version', $version, 'appearance');
+        if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
+            \App\Models\AppSupport\AppSetting::set('default_theme_version', $version, 'appearance');
         }
     }
     return redirect()->back();
@@ -50,8 +50,8 @@ Route::get('/frontpage/switch/{frontpage}', function ($frontpage) {
     if (in_array($frontpage, Frontpage::available(), true)) {
         session(['frontpage' => $frontpage]);
         \Illuminate\Support\Facades\Cookie::queue('frontpage', $frontpage, 525600);
-        if (class_exists(\App\Models\AppSetting::class)) {
-            \App\Models\AppSetting::set('default_frontpage', $frontpage, 'appearance');
+        if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
+            \App\Models\AppSupport\AppSetting::set('default_frontpage', $frontpage, 'appearance');
         }
     }
     return redirect()->back();
@@ -61,8 +61,8 @@ Route::match(['get', 'post'], '/icon-style/switch/{style}', function (Request $r
     if (in_array($style, ['duotone', 'solid', 'outline'], true)) {
         session(['kt_icon_style' => $style]);
         \Illuminate\Support\Facades\Cookie::queue('kt_icon_style', $style, 525600);
-        if (class_exists(\App\Models\AppSetting::class)) {
-            \App\Models\AppSetting::set('default_icon_style', $style, 'appearance');
+        if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
+            \App\Models\AppSupport\AppSetting::set('default_icon_style', $style, 'appearance');
         }
         if ($request->expectsJson() || $request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
             return response()->json([

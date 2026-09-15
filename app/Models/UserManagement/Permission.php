@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\UserManagement;
 
-use App\Models\Menu;
+use App\Models\AppSupport\Menu;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Permission\Models\Permission as ModelsPermission;
 

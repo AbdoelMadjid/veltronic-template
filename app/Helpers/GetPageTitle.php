@@ -404,14 +404,14 @@ if (!function_exists('getPageBreadcrumbs')) {
         // SUMBER 1: Database Menu (Tabel 'menus' dengan relasi parentMenu & category)
         // =========================================================================
         try {
-            if (class_exists(\App\Models\Menu::class) && \Illuminate\Support\Facades\Schema::hasTable('menus')) {
+            if (class_exists(\App\Models\AppSupport\Menu::class) && \Illuminate\Support\Facades\Schema::hasTable('menus')) {
                 $path = trim(request()->path(), '/');
                 $normalizedDot = str_replace(['/', '\\'], '.', trim($currentRoute, '/'));
                 $normalizedSlash = str_replace(['.', '\\'], '/', trim($currentRoute, '/'));
                 $normalizedPathDot = str_replace(['/', '\\'], '.', $path);
                 $normalizedPathSlash = str_replace(['.', '\\'], '/', $path);
 
-                $menuRow = \App\Models\Menu::where(function ($q) use ($currentRoute, $normalizedDot, $normalizedSlash, $path, $normalizedPathDot, $normalizedPathSlash) {
+                $menuRow = \App\Models\AppSupport\Menu::where(function ($q) use ($currentRoute, $normalizedDot, $normalizedSlash, $path, $normalizedPathDot, $normalizedPathSlash) {
                     $q->where('url', $currentRoute)
                         ->orWhere('url', $normalizedDot)
                         ->orWhere('url', $normalizedSlash)
@@ -622,14 +622,14 @@ if (!function_exists('getPageTitle')) {
 
         // 1. Cek dari database Menu
         try {
-            if (class_exists(\App\Models\Menu::class) && \Illuminate\Support\Facades\Schema::hasTable('menus')) {
+            if (class_exists(\App\Models\AppSupport\Menu::class) && \Illuminate\Support\Facades\Schema::hasTable('menus')) {
                 $path = trim(request()->path(), '/');
                 $normalizedDot = str_replace(['/', '\\'], '.', trim($currentRoute, '/'));
                 $normalizedSlash = str_replace(['.', '\\'], '/', trim($currentRoute, '/'));
                 $normalizedPathDot = str_replace(['/', '\\'], '.', $path);
                 $normalizedPathSlash = str_replace(['.', '\\'], '/', $path);
 
-                $menuRow = \App\Models\Menu::where(function ($q) use ($currentRoute, $normalizedDot, $normalizedSlash, $path, $normalizedPathDot, $normalizedPathSlash) {
+                $menuRow = \App\Models\AppSupport\Menu::where(function ($q) use ($currentRoute, $normalizedDot, $normalizedSlash, $path, $normalizedPathDot, $normalizedPathSlash) {
                     $q->where('url', $currentRoute)
                         ->orWhere('url', $normalizedDot)
                         ->orWhere('url', $normalizedSlash)
@@ -734,7 +734,7 @@ if (!function_exists('app_fitur')) {
      */
     function app_fitur(string $key, bool $default = true): bool
     {
-        return \App\Models\AppFitur::isEnabled($key, $default);
+        return \App\Models\AppSupport\AppFitur::isEnabled($key, $default);
     }
 }
 
@@ -748,7 +748,7 @@ if (!function_exists('app_setting')) {
      */
     function app_setting(string $key, $default = null)
     {
-        return \App\Models\AppSetting::get($key, $default);
+        return \App\Models\AppSupport\AppSetting::get($key, $default);
     }
 }
 

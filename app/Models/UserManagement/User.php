@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\UserManagement;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Profil\UserDetail;
+use App\Models\Profil\UserLog;
+use App\Models\Profil\UserSetting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,8 +13,16 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<\Database\Factories\UserManagement\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
+
+    /**
+     * Create a new factory instance for the model.
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\UserManagement\UserFactory::new();
+    }
 
     /**
      * The attributes that are mass assignable.

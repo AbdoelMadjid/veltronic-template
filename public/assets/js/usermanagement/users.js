@@ -1,6 +1,6 @@
 /**
- * Manajemen Pengguna (Users) JavaScript Module with Avatar & Yajra DataTables
- * Path: public/assets/js/manajemenpengguna/users.js
+ * User Management (Users) JavaScript Module with Avatar & Yajra DataTables
+ * Path: public/assets/js/usermanagement/users.js
  */
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
     const routes = window.USER_MANAGEMENT_ROUTES || {
-        datatable: '/manajemenpengguna/users',
-        store: '/manajemenpengguna/users',
-        base: '/manajemenpengguna/users'
+        datatable: '/usermanagement/users',
+        store: '/usermanagement/users',
+        base: '/usermanagement/users'
     };
 
     // DOM Elements

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\AppSetting;
-use App\Models\User;
+use App\Models\AppSupport\AppSetting;
+use App\Models\UserManagement\User;
 use Database\Seeders\AppSettingSeeder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AppSupport\AppFiturController;
 use App\Http\Controllers\AppSupport\MenuController as AppSupportMenuController;
-use App\Http\Controllers\ManajemenPengguna\UserController;
+use App\Http\Controllers\UserManagement\UserController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -25,8 +25,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('menu', AppSupportMenuController::class);
     });
 
-    // Manajemen Pengguna (Users, Roles, Permissions)
-    Route::prefix('manajemenpengguna')->name('manajemenpengguna.')->group(function () {
+    // User Management (Users, Roles, Permissions, Akses)
+    Route::prefix('usermanagement')->name('usermanagement.')->group(function () {
         Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
         Route::resource('users', UserController::class);
     });

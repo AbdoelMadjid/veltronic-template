@@ -72,7 +72,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Head-->
 <!--begin::Body-->
 
-<body id="kt_body" style="background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg.jpg') }}')" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled" data-session-lifetime="{{ (int) \App\Models\AppSetting::get('session_lifetime', 120) }}" data-user-auth="{{ auth()->check() ? '1' : '0' }}">
+<body id="kt_body" style="background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg.jpg') }}')" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled" data-session-lifetime="{{ (int) \App\Models\AppSupport\AppSetting::get('session_lifetime', 120) }}" data-user-auth="{{ auth()->check() ? '1' : '0' }}">
     <!--layout-partial:partials/theme-mode/_init.html-->
     @include('partials.theme-mode._init')
     <!--layout-partial:partials/lang/_init.html-->

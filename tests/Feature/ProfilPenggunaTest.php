@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
-use App\Models\UserDetail;
-use App\Models\UserSetting;
+use App\Models\UserManagement\User;
+use App\Models\Profil\UserDetail;
+use App\Models\Profil\UserSetting;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;

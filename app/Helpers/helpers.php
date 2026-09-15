@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use App\Models\User;
+use App\Models\UserManagement\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Menu;
-use App\Models\Permission;
-use App\Models\Role;
+use App\Models\AppSupport\Menu;
+use App\Models\UserManagement\Permission;
+use App\Models\UserManagement\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;

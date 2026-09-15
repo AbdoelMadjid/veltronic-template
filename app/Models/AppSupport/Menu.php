@@ -2,7 +2,7 @@
 
 namespace App\Models\AppSupport;
 
-use App\Models\Permission;
+use App\Models\UserManagement\Permission;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

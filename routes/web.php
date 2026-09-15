@@ -9,14 +9,6 @@ use App\Support\LanguageManager;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-    if (!auth()->check()) {
-        return redirect()->route('login');
-    }
-
-    if (!auth()->user()->isMasterOrAdmin()) {
-        return redirect()->route('dashboard');
-    }
-
     return view('welcome');
 })->name('home');
 
@@ -47,22 +39,46 @@ Route::get('/lang/translations.json', function () {
 Route::get('/theme/version/{version}', function ($version) {
     if (in_array($version, ThemeVersion::available(), true)) {
         session(['theme_version' => $version]);
+        if (class_exists(\App\Models\AppSetting::class)) {
+            \App\Models\AppSetting::set('default_theme_version', $version, 'appearance');
+        }
     }
     return redirect()->back();
-})->name('theme.version.switch');
+})->middleware(['auth', 'role:master|admin'])->name('theme.version.switch');
 
 Route::get('/frontpage/switch/{frontpage}', function ($frontpage) {
     if (in_array($frontpage, Frontpage::available(), true)) {
         session(['frontpage' => $frontpage]);
         \Illuminate\Support\Facades\Cookie::queue('frontpage', $frontpage, 525600);
+        if (class_exists(\App\Models\AppSetting::class)) {
+            \App\Models\AppSetting::set('default_frontpage', $frontpage, 'appearance');
+        }
     }
     return redirect()->back();
 })->middleware(['auth', 'role:master|admin'])->name('frontpage.switch');
 
+Route::match(['get', 'post'], '/icon-style/switch/{style}', function (Request $request, string $style) {
+    if (in_array($style, ['duotone', 'solid', 'outline'], true)) {
+        session(['kt_icon_style' => $style]);
+        \Illuminate\Support\Facades\Cookie::queue('kt_icon_style', $style, 525600);
+        if (class_exists(\App\Models\AppSetting::class)) {
+            \App\Models\AppSetting::set('default_icon_style', $style, 'appearance');
+        }
+        if ($request->expectsJson() || $request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
+            return response()->json([
+                'status' => 'success',
+                'style' => $style,
+                'message' => 'Icon style updated successfully and saved to system settings.'
+            ]);
+        }
+    }
+    return redirect()->back();
+})->middleware(['auth', 'role:master|admin'])->name('icon.style.switch');
+
 
 Route::get('/landing', function () {
     return view('frontpages.landing.v1.landing');
-})->middleware(['auth', 'role:master|admin'])->name('dashboards.landing');
+})->name('dashboards.landing');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

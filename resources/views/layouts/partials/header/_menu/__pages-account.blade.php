@@ -13,7 +13,7 @@
                         <a href="{{ route($menu['route']) }}"
                             class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                             <span
-                                class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                         </a>
                     </div>
                 @endforeach
@@ -29,7 +29,7 @@
                         <a href="{{ route($menu['route']) }}"
                             class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                             <span
-                                class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                         </a>
                     </div>
                 @endforeach

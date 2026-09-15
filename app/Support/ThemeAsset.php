@@ -7,11 +7,10 @@ class ThemeAsset
     public static function url(string $relativePath, ?string $version = null): string
     {
         $path = ltrim($relativePath, '/');
-        $defaultVersion = ThemeVersion::default();
         $activeVersion = ThemeVersion::normalize($version ?? ThemeVersion::current());
-        $base = ThemeVersion::assetBase($defaultVersion);
+        $base = ThemeVersion::assetBase($activeVersion);
 
-        if ($activeVersion !== $defaultVersion) {
+        if ($activeVersion !== 'v1') {
             $versionedPath = self::versionedPath($path, $activeVersion);
 
             if (is_file(public_path($base.'/'.$versionedPath))) {

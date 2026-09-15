@@ -76,12 +76,15 @@
     </div>
     <!--end::Theme mode-->
     <!--begin::Icon style-->
+    @if(auth()->user()?->isMasterOrAdmin())
     @include('partials.icon-style._main', ['wrapper_class' => 'd-none d-lg-flex align-items-center ms-1 ms-lg-3 ' . (!app_fitur('tool_icon_style') ? 'feature-hidden' : ''), 'button_class' => 'btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px'])
+    @endif
     <!--end::Icon style-->
     <!--begin::Language-->
     @include('partials.lang._main', ['wrapper_class' => 'd-none d-lg-flex align-items-center ms-1 ms-lg-3 ' . (!app_fitur('tool_language') ? 'feature-hidden' : ''), 'button_class' => 'btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px'])
     <!--end::Language-->
     <!--begin::Version switcher-->
+    @if(auth()->user()?->isMasterOrAdmin())
     @php
         $currentVersion = \App\Support\ThemeVersion::current();
         $themeVersions = \App\Support\ThemeVersion::available();
@@ -120,6 +123,7 @@
         <!--end::Menu sub-->
         <!--end::Menu wrapper-->
     </div>
+    @endif
     <!--end::Version switcher-->
     <!--begin::Frontpages-->
     @if(auth()->user()?->isMasterOrAdmin())

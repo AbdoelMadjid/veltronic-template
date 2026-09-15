@@ -3,7 +3,7 @@
     <!--begin::Menu wrapper-->
     <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper d-flex flex-column h-100">
         <div id="kt_app_sidebar_menu_search" class="px-3 pt-5 pb-2 flex-column-auto" data-menu-search-skip="true">
-            <div class="position-relative">
+            <div class="app-sidebar-menu-search-full position-relative">
                 <i class="ki-duotone ki-magnifier fs-3 text-gray-500 position-absolute top-50 translate-middle-y ms-4">
                     <span class="path1"></span>
                     <span class="path2"></span>
@@ -12,6 +12,18 @@
                     class="form-control form-control-sm bg-transparent ps-11"
                     data-kt-translate-placeholder="menu.search_menu_placeholder"
                     placeholder="{{ __('menu.search_menu_placeholder') }}" autocomplete="off" />
+            </div>
+            <div class="app-sidebar-menu-search-minimized d-none">
+                <button type="button" id="kt_app_sidebar_menu_search_minimized_btn"
+                    class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-40px h-40px"
+                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover"
+                    data-kt-translate-title="menu.search_menu_placeholder"
+                    title="{{ __('menu.search_menu_placeholder') }}">
+                    <i class="ki-duotone ki-magnifier fs-2 text-gray-500">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </button>
             </div>
             <div id="kt_app_sidebar_menu_search_empty" class="fs-8 text-muted pt-2 d-none" data-kt-translate="menu.search_menu_not_found">
                 {{ __('menu.search_menu_not_found') }}
@@ -337,5 +349,18 @@
 
             emptyState.classList.toggle('d-none', matches.length > 0);
         });
+
+        const minBtn = document.getElementById('kt_app_sidebar_menu_search_minimized_btn');
+        if (minBtn) {
+            minBtn.addEventListener('click', function() {
+                const toggle = document.getElementById('kt_app_sidebar_toggle');
+                if (toggle && !toggle.classList.contains('active')) {
+                    toggle.click();
+                }
+                setTimeout(() => {
+                    input.focus();
+                }, 200);
+            });
+        }
     })();
 </script>

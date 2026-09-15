@@ -9,7 +9,7 @@
                 <!--begin:Menu section-->
                 <div class="mb-6">
                     <!--begin:Menu heading-->
-                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">
+                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4" data-kt-translate="menu.general_modals">
                         {{ __('menu.general_modals') }}
                     </h4>
                     <!--end:Menu heading-->
@@ -20,7 +20,7 @@
                             <a href="{{ route($menu['route']) }}"
                                 class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                                 <span
-                                    class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                    class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                             </a>
                         </div>
                     @endforeach
@@ -31,7 +31,7 @@
                 <!--end:Menu section-->
                 <div class="mb-6">
                     <!--begin:Menu heading-->
-                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">
+                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4" data-kt-translate="menu.form_modals">
                         {{ __('menu.form_modals') }}
                     </h4>
                     <!--end:Menu heading-->
@@ -42,7 +42,7 @@
                             <a href="{{ route($menu['route']) }}"
                                 class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                                 <span
-                                    class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                    class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                             </a>
                         </div>
                     @endforeach
@@ -56,7 +56,7 @@
                 <!--begin:Menu section-->
                 <div class="mb-6">
                     <!--begin:Menu heading-->
-                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">
+                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4" data-kt-translate="menu.wizard_modals">
                         {{ __('menu.wizard_modals') }}
                     </h4>
                     <!--end:Menu heading-->
@@ -67,7 +67,7 @@
                             <a href="{{ route($menu['route']) }}"
                                 class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                                 <span
-                                    class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                    class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                             </a>
                         </div>
                     @endforeach
@@ -83,7 +83,7 @@
                 <!--begin:Menu section-->
                 <div class="mb-6">
                     <!--begin:Menu heading-->
-                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">
+                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4" data-kt-translate="menu.search">
                         {{ __('menu.search') }}
                     </h4>
                     <!--end:Menu heading-->
@@ -94,7 +94,7 @@
                             <a href="{{ route($menu['route']) }}"
                                 class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                                 <span
-                                    class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                    class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                             </a>
                         </div>
                     @endforeach
@@ -106,7 +106,7 @@
                 <!--begin:Menu section-->
                 <div class="mb-6">
                     <!--begin:Menu heading-->
-                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">
+                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4" data-kt-translate="menu.wizards">
                         {{ __('menu.wizards') }}
                     </h4>
                     <!--end:Menu heading-->
@@ -117,7 +117,7 @@
                             <a href="{{ route($menu['route']) }}"
                                 class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                                 <span
-                                    class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                    class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                             </a>
                         </div>
                     @endforeach
@@ -129,7 +129,7 @@
                 <!--begin:Menu section-->
                 <div class="mb-6">
                     <!--begin:Menu heading-->
-                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">
+                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4" data-kt-translate="menu.search_modals">
                         {{ __('menu.search_modals') }}
                     </h4>
                     <!--end:Menu heading-->
@@ -140,7 +140,7 @@
                             <a href="{{ route($menu['route']) }}"
                                 class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                                 <span
-                                    class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                    class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                             </a>
                         </div>
                     @endforeach

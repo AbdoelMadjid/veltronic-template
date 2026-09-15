@@ -41,54 +41,56 @@
     <!--begin::Menu item-->
     <div class="menu-item px-5">
         <a href="{{ route('pages.account.overview') }}" class="menu-link px-5" data-kt-translate="menu.my_profile">
-            {{ $isAltMenu ? 'My Profile' : __('menu.my_profile') }}
+            {{ __('menu.my_profile') }}
         </a>
     </div>
     <!--end::Menu item-->
     <!--begin::Menu item-->
-    <div class="menu-item px-5">
+    {{-- <div class="menu-item px-5">
         <a href="{{ route('apps.projects.list') }}" class="menu-link px-5">
-            <span class="menu-text" data-kt-translate="menu.my_projects">{{ $isAltMenu ? 'My Projects' : __('menu.my_projects') }}</span>
+            <span class="menu-text" data-kt-translate="menu.my_projects">{{ __('menu.my_projects') }}</span>
             <span class="menu-badge">
                 <span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
             </span>
         </a>
-    </div>
+    </div> --}}
     <!--end::Menu item-->
     <!--begin::Menu item-->
-    <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+    {{-- <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
         data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
         <a href="javascript:void(0)" class="menu-link px-5">
-            <span class="menu-title" data-kt-translate="menu.my_subscription">{{ $isAltMenu ? 'My Subscription' : __('menu.my_subscription') }}</span>
+            <span class="menu-title" data-kt-translate="menu.my_subscription">{{ __('menu.my_subscription') }}</span>
             <span class="menu-arrow"></span>
         </a>
         <!--begin::Menu sub-->
         <div class="menu-sub menu-sub-dropdown w-175px py-4">
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('pages.account.referrals') }}" class="menu-link px-5" data-kt-translate="menu.referrals">
-                    {{ $isAltMenu ? 'Referrals' : __('menu.referrals') }}
+                <a href="{{ route('pages.account.referrals') }}" class="menu-link px-5"
+                    data-kt-translate="menu.referrals">
+                    {{ __('menu.referrals') }}
                 </a>
             </div>
             <!--end::Menu item-->
             <!--begin::Menu item-->
             <div class="menu-item px-3">
                 <a href="{{ route('pages.account.billing') }}" class="menu-link px-5" data-kt-translate="menu.billing">
-                    {{ $isAltMenu ? 'Billing' : __('menu.billing') }}
+                    {{ __('menu.billing') }}
                 </a>
             </div>
             <!--end::Menu item-->
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('pages.account.statements') }}" class="menu-link px-5" data-kt-translate="menu.payments">
-                    {{ $isAltMenu ? 'Payments' : __('menu.payments') }}
+                <a href="{{ route('pages.account.statements') }}" class="menu-link px-5"
+                    data-kt-translate="menu.payments">
+                    {{ __('menu.payments') }}
                 </a>
             </div>
             <!--end::Menu item-->
             <!--begin::Menu item-->
             <div class="menu-item px-3">
                 <a href="{{ route('pages.account.statements') }}" class="menu-link d-flex flex-stack px-5">
-                    <span data-kt-translate="menu.statements">{{ $isAltMenu ? 'Statements' : __('menu.statements') }}</span>
+                    <span data-kt-translate="menu.statements">{{ __('menu.statements') }}</span>
                     <span class="ms-2 lh-0" data-bs-toggle="tooltip"
                         title="{{ __('menu.view_your_statements') ?? 'View your statements' }}">
                         <i class="ki-duotone ki-information-5 fs-5"><span class="path1"></span><span
@@ -106,7 +108,7 @@
                         <input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked"
                             name="notifications" />
                         <span class="form-check-label text-muted fs-7" data-kt-translate="menu.notifications">
-                            {{ $isAltMenu ? 'Notifications' : __('menu.notifications') }}
+                            {{ __('menu.notifications') }}
                         </span>
                     </label>
                 </div>
@@ -114,26 +116,26 @@
             <!--end::Menu item-->
         </div>
         <!--end::Menu sub-->
-    </div>
+    </div> --}}
     <!--end::Menu item-->
     <!--begin::Menu item-->
-    <div class="menu-item px-5">
+    {{-- <div class="menu-item px-5">
         <a href="{{ route('pages.account.statements') }}" class="menu-link px-5" data-kt-translate="menu.my_statements">
-            {{ $isAltMenu ? 'My Statements' : __('menu.my_statements') }}
+            {{ __('menu.my_statements') }}
         </a>
-    </div>
+    </div> --}}
     <!--end::Menu item-->
 
     <!--begin::Menu separator-->
     <div class="separator my-2"></div>
     <!--end::Menu separator-->
 
-    <!--begin::Menu item Language Selection-->
+    {{-- <!--begin::Menu item Language Selection-->
     <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
         data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
         <a href="javascript:void(0)" class="menu-link px-5">
             <span class="menu-title position-relative">
-                <span data-kt-translate="menu.language_selection">Language</span>
+                <span data-kt-translate="menu.language_selection">{{ __('menu.language_selection') }}</span>
                 <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">
                     <span data-kt-element="lang-current-label">{{ \App\Support\LanguageManager::current() === 'id' ? 'Bahasa Indonesia' : 'English' }}</span>
                     <img class="w-15px h-15px rounded-1 ms-2" data-kt-element="lang-flag-current"
@@ -166,12 +168,13 @@
         </div>
         <!--end::Menu sub-->
     </div>
-    <!--end::Menu item Language Selection-->
+    <!--end::Menu item Language Selection--> --}}
 
     <!--begin::Menu item-->
     <div class="menu-item px-5 my-1">
-        <a href="{{ route('pages.account.settings') }}" class="menu-link px-5" data-kt-translate="menu.account_settings">
-            {{ $isAltMenu ? 'Account Settings' : __('menu.account_settings') }}
+        <a href="{{ route('pages.account.settings') }}" class="menu-link px-5"
+            data-kt-translate="menu.account_settings">
+            {{ __('menu.account_settings') }}
         </a>
     </div>
     <!--end::Menu item-->
@@ -181,7 +184,7 @@
             @csrf
             <a href="javascript:void(0)" class="menu-link px-5"
                 onclick="event.preventDefault(); this.closest('form').submit();" data-kt-translate="menu.sign_out">
-                {{ $isAltMenu ? 'Sign Out' : __('menu.sign_out') }}
+                {{ __('menu.sign_out') }}
             </a>
         </form>
     </div>

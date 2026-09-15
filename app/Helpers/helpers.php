@@ -129,12 +129,34 @@ if (!function_exists('renderGreeting')) {
     }
 }
 
+if (!function_exists('renderDatePlain')) {
+    function renderDatePlain(array $options = [], ?string $locale = null): string
+    {
+        $locale = $locale ?: app()->getLocale();
+        $date = Carbon::now('Asia/Jakarta');
+        $dateLoc = (clone $date)->locale($locale);
+
+        $gregorianDay = $dateLoc->translatedFormat('l');
+        $formattedDate = $dateLoc->translatedFormat('j F Y');
+        $gregorianSuffix = __('translation.gregorian_suffix', [], $locale);
+        if ($gregorianSuffix === 'translation.gregorian_suffix') {
+            $gregorianSuffix = $locale === 'en' ? 'AD' : 'M';
+        }
+
+        $hijriDate = toHijriah($dateLoc, $locale, true);
+
+        return "{$gregorianDay}, {$formattedDate} {$gregorianSuffix} • {$hijriDate}";
+    }
+}
+
 if (!function_exists('renderDate')) {
     function renderDate(array $options = [], ?string $locale = null)
     {
         $defaults = [
             'wrapper_id' => 'date-display',
-            'wrapper_class' => '',
+            'wrapper_class' => 'd-flex flex-column text-start',
+            'gregorian_class' => 'text-gray-800 fw-bold fs-7 lh-1',
+            'hijri_class' => 'text-muted fw-semibold fs-8 lh-1 mt-1',
             'day_class' => '',
             'sunday_class' => 'text-danger',
             'sunday_style' => '',
@@ -173,23 +195,37 @@ if (!function_exists('renderDate')) {
             $dayHtml = $dayAttrs !== '' ? "<span{$dayAttrs}>$day</span>" : $day;
 
             $formattedDate = $dateLoc->translatedFormat('j F Y');
-            $hijriDate = toHijriah($dateLoc, $loc);
 
             $gregorianSuffix = __('translation.gregorian_suffix', [], $loc);
             if ($gregorianSuffix === 'translation.gregorian_suffix') {
                 $gregorianSuffix = $loc === 'en' ? 'AD' : 'M';
             }
 
-            return "{$dayHtml}, {$formattedDate} {$gregorianSuffix} ( {$hijriDate} )";
+            // Hijri day & date calculation with Islamic day
+            $hijriRaw = toHijriah($dateLoc, $loc, true);
+            $hijriParts = explode(', ', $hijriRaw, 2);
+            if (count($hijriParts) === 2) {
+                $hijriDayName = $hijriParts[0];
+                $hijriDateRest = $hijriParts[1];
+                $hijriDayHtml = $dayAttrs !== '' ? "<span{$dayAttrs}>{$hijriDayName}</span>" : $hijriDayName;
+                $hijriFullHtml = "{$hijriDayHtml}, {$hijriDateRest}";
+            } else {
+                $hijriFullHtml = $hijriRaw;
+            }
+
+            $gregorianLine = "<span class=\"{$opts['gregorian_class']}\">{$dayHtml}, {$formattedDate} {$gregorianSuffix}</span>";
+            $hijriLine = "<span class=\"{$opts['hijri_class']}\">{$hijriFullHtml}</span>";
+
+            return "{$gregorianLine}{$hijriLine}";
         };
 
         $contentId = $buildDateString('id');
         $contentEn = $buildDateString('en');
         $currentContent = $locale === 'en' ? $contentEn : $contentId;
 
-        $wrapperAttrs = "id='{$opts['wrapper_id']}'";
+        $wrapperAttrs = "id=\"{$opts['wrapper_id']}\"";
         if ($opts['wrapper_class'] !== '') {
-            $wrapperAttrs .= " class='{$opts['wrapper_class']}'";
+            $wrapperAttrs .= " class=\"{$opts['wrapper_class']}\"";
         }
 
         $attrId = htmlspecialchars($contentId, ENT_QUOTES, 'UTF-8');
@@ -237,7 +273,7 @@ if (!function_exists('renderTime')) {
 
 
 if (!function_exists('toHijriah')) {
-    function toHijriah($date = null, ?string $locale = null)
+    function toHijriah($date = null, ?string $locale = null, bool $includeDay = false)
     {
         $locale = $locale ?: app()->getLocale();
 
@@ -275,6 +311,26 @@ if (!function_exists('toHijriah')) {
             10 => 'Shawwal',
             11 => "Dhu al-Qi'dah",
             12 => 'Dhu al-Hijjah',
+        ];
+
+        $daysId = [
+            0 => 'Ahad',
+            1 => 'Al-Itsnain',
+            2 => 'Ats-Tsulatsa',
+            3 => "Al-Arba'a",
+            4 => 'Al-Khamis',
+            5 => "Al-Jumu'ah",
+            6 => 'As-Sabt',
+        ];
+
+        $daysEn = [
+            0 => 'al-Ahad',
+            1 => 'al-Ithnayn',
+            2 => "al-Thulatha'",
+            3 => "al-Arba'a",
+            4 => 'al-Khamis',
+            5 => "al-Jumu'ah",
+            6 => 'as-Sabt',
         ];
 
         $translatedMonths = __('translation.hijri_months', [], $locale);
@@ -316,6 +372,17 @@ if (!function_exists('toHijriah')) {
         $monthNumber = $m;
 
         $monthName = $months[$monthNumber] ?? ($monthsId[$monthNumber] ?? '');
+
+        if ($includeDay) {
+            $translatedDays = __('translation.hijri_days', [], $locale);
+            if (is_array($translatedDays)) {
+                $days = $translatedDays;
+            } else {
+                $days = $locale === 'en' ? $daysEn : $daysId;
+            }
+            $dayName = $days[$date->dayOfWeek] ?? ($daysId[$date->dayOfWeek] ?? '');
+            return "{$dayName}, {$d} {$monthName} {$y} {$suffix}";
+        }
 
         return "{$d} {$monthName} {$y} {$suffix}";
     }

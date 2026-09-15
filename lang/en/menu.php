@@ -468,6 +468,8 @@ return [
     'layouts' => 'Layouts',
     'docs_components' => 'Docs & Components',
     'docs_components_tooltip' => '200+ in-house components and 3rd-party plugins',
+    'about' => 'About',
+    'about_tooltip' => 'About application and developer',
     'components_tooltip' => 'Check out over 200 in-house components, plugins and ready for use solutions',
     'documentation_tooltip' => 'Check out the complete documentation',
     'show' => 'Show',
@@ -540,14 +542,87 @@ return [
     'md_app_support' => 'App Support',
     'md_backup_db' => 'Database Backup',
     'md_data_login' => 'Login Data',
-    'md_manajemen_pengguna' => 'User Management',
     'md_masterdata' => 'Master Data',
     'md_menu' => 'Menu',
     'md_permission' => 'Permission',
     'md_role' => 'Role',
     'md_theme_frontpage' => 'Theme Front Page',
     'md_user' => 'Users',
+    'md_user_management' => 'User Management',
+    'activities' => 'Activities',
+    'notifications' => 'Notifications',
+    'chat' => 'Chat',
+    'my_apps' => 'My Apps',
+    'theme_mode' => 'Theme Mode',
+    'icon_style' => 'Icon Style',
+    'language' => 'Language',
+    'theme_version' => 'Theme Version',
+    'frontpages_and_templates' => 'Frontpages & Templates',
+    'quick_tools' => 'Quick Tools',
+    'show_header_menu' => 'Show header menu',
+    'show_aside' => 'Show aside',
+    'frontpage_selection' => 'Frontpage Selection (Default: /)',
+    'frontpage_selection_desc' => 'Choose the initial page displayed when accessing the website',
+    'active_frontpage_notice' => 'Currently active frontpage:',
+    'selected_active' => 'Selected (Active)',
+    'select_default' => 'Set as Default',
+    'open_landing' => 'Open Landing',
+    'light' => 'Light',
+    'dark' => 'Dark',
+    'system' => 'System',
+    'light_mode' => 'Light Mode',
+    'dark_mode' => 'Dark Mode',
+    'system_mode' => 'System Mode',
+    'duotone' => 'Duotone',
+    'solid' => 'Solid',
+    'outline' => 'Outline',
+    'select_theme_mode' => 'Select Theme Mode',
+    'select_icon_style' => 'Select Icon Style',
+    'select_language' => 'Select Language',
+    'quick_links' => 'Quick Links',
+    'administration' => 'Administration',
+    'widgets' => 'Widgets',
+    'widgets_demos' => 'Widgets Demos',
+    'feeds' => 'Feeds',
+    'engage' => 'Engage',
+    'lists' => 'Lists',
+    'maps' => 'Maps',
+    'misc' => 'Misc',
+    'mixed' => 'Mixed',
+    'player' => 'Player',
+    'sliders' => 'Sliders',
+    'social' => 'Social',
+    'statistics' => 'Statistics',
+    'tables' => 'Tables',
+    'tiles' => 'Tiles',
+    'timeline' => 'Timeline',
+    'video' => 'Video',
+    'forms' => 'Forms',
+    'general' => 'General',
+    'utilities' => 'Utilities',
+    'wizards' => 'Wizards',
+    'search' => 'Search',
+    'user_profile' => 'User Profile',
+    'corporate' => 'Corporate',
+    'documentation' => 'Documentation',
+    'calendar' => 'Calendar',
+    'cards' => 'Cards',
+    'charts' => 'Charts',
 ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

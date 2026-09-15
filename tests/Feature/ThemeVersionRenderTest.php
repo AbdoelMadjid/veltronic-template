@@ -28,6 +28,8 @@ class ThemeVersionRenderTest extends TestCase
         $response->assertOk();
         $response->assertSee('id="kt_wrapper"', false);
         $response->assertDontSee('id="kt_app_wrapper"', false);
+        $response->assertSee('style.bundle-v2.css', false);
+        $response->assertSee('header-bg.jpg', false);
     }
 
     public function test_file_manager_files_renders_v1_layout_when_theme_version_is_v1(): void

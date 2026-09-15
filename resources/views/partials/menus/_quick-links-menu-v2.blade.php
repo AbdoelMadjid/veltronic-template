@@ -4,8 +4,8 @@
     <div class="d-flex flex-column flex-center bgi-no-repeat rounded-top px-9 py-10"
         style="background-image:url('{{ \App\Support\ThemeAsset::url('media/misc/menu-header-bg.jpg') }}')">
         <!--begin::Title-->
-        <h3 class="text-white fw-semibold mb-3">
-            Quick Links
+        <h3 class="text-white fw-semibold mb-3" data-kt-translate="menu.quick_links">
+            {{ __('menu.quick_links') }}
         </h3>
         <!--end::Title-->
         <!--begin::Status-->
@@ -24,8 +24,8 @@
                     <span class="path2"></span>
                     <span class="path3"></span>
                 </i>
-                <span class="fs-5 fw-semibold text-gray-800 mb-0">Accounting</span>
-                <span class="fs-7 text-gray-500">eCommerce</span>
+                <span class="fs-5 fw-semibold text-gray-800 mb-0" data-kt-translate="menu.accounting">{{ __('menu.accounting') }}</span>
+                <span class="fs-7 text-gray-500" data-kt-translate="menu.ecommerce">{{ __('menu.ecommerce') }}</span>
             </a>
         </div>
         <!--end:Item-->
@@ -37,7 +37,7 @@
                     <span class="path1"></span>
                     <span class="path2"></span>
                 </i>
-                <span class="fs-5 fw-semibold text-gray-800 mb-0">Administration</span>
+                <span class="fs-5 fw-semibold text-gray-800 mb-0" data-kt-translate="menu.administration">{{ __('menu.administration') }}</span>
                 <span class="fs-7 text-gray-500">Console</span>
             </a>
         </div>
@@ -50,7 +50,7 @@
                     <span class="path1"></span>
                     <span class="path2"></span>
                 </i>
-                <span class="fs-5 fw-semibold text-gray-800 mb-0">Projects</span>
+                <span class="fs-5 fw-semibold text-gray-800 mb-0" data-kt-translate="menu.projects">{{ __('menu.projects') }}</span>
                 <span class="fs-7 text-gray-500">Pending Tasks</span>
             </a>
         </div>
@@ -63,7 +63,7 @@
                     <span class="path1"></span>
                     <span class="path2"></span>
                 </i>
-                <span class="fs-5 fw-semibold text-gray-800 mb-0">Customers</span>
+                <span class="fs-5 fw-semibold text-gray-800 mb-0" data-kt-translate="menu.customers">{{ __('menu.customers') }}</span>
                 <span class="fs-7 text-gray-500">Latest cases</span>
             </a>
         </div>

@@ -98,5 +98,12 @@ class AppSetting extends Model
     {
         self::$memoryMap = null;
         Cache::forget(self::CACHE_KEY);
+
+        if (class_exists(\App\Support\ThemeVersion::class)) {
+            \App\Support\ThemeVersion::clearCache();
+        }
+        if (class_exists(\App\Support\Frontpage::class)) {
+            \App\Support\Frontpage::clearCache();
+        }
     }
 }

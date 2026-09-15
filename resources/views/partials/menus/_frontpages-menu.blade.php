@@ -11,10 +11,10 @@
     <!--begin::Heading-->
     <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom">
         <div>
-            <h3 class="text-gray-900 fw-bold fs-6 mb-0">Pilihan Frontpage (Default: /)</h3>
-            <span class="text-muted fs-8">Pilih halaman awal yang tampil saat website diakses</span>
+            <h3 class="text-gray-900 fw-bold fs-6 mb-0" data-kt-translate="menu.frontpage_selection">{{ __('menu.frontpage_selection') }}</h3>
+            <span class="text-muted fs-8" data-kt-translate="menu.frontpage_selection_desc">{{ __('menu.frontpage_selection_desc') }}</span>
         </div>
-        <span class="badge badge-light-primary fw-bold fs-8">{{ count($frontpages) }} Pilihan</span>
+        <span class="badge badge-light-primary fw-bold fs-8">{{ count($frontpages) }} <span data-kt-translate="menu.layouts">{{ __('menu.layouts') }}</span></span>
     </div>
     <!--end::Heading-->
 
@@ -27,7 +27,7 @@
         </i>
         <div class="d-flex flex-column">
             <span class="fs-8 text-gray-700">
-                Frontpage aktif saat ini:
+                <span data-kt-translate="menu.active_frontpage_notice">{{ __('menu.active_frontpage_notice') }}</span>
                 <strong class="text-primary">{{ $frontpages[$currentFrontpage]['name'] ?? ucfirst($currentFrontpage) }}</strong>
             </span>
         </div>
@@ -56,18 +56,20 @@
                 </div>
                 @if ($isLandingActive)
                     <span class="badge badge-primary fs-8 fw-bold">
-                        <i class="ki-duotone ki-check fs-8 text-white me-1"></i> Terpilih (Aktif)
+                        <i class="ki-duotone ki-check fs-8 text-white me-1"></i>
+                        <span data-kt-translate="menu.selected_active">{{ __('menu.selected_active') }}</span>
                     </span>
                 @else
-                    <a href="{{ route('frontpage.switch', 'landing') }}" class="btn btn-sm btn-light-primary py-1 px-3 fs-8">
-                        Pilih Default
+                    <a href="{{ route('frontpage.switch', 'landing') }}" class="btn btn-sm btn-light-primary py-1 px-3 fs-8" data-kt-translate="menu.select_default">
+                        {{ __('menu.select_default') }}
                     </a>
                 @endif
             </div>
             <div class="d-flex align-items-center justify-content-between pt-1">
                 <span class="badge badge-light-secondary fs-9">Bootstrap 5 Marketing</span>
                 <a href="{{ url('/landing') }}" target="_blank" class="text-primary fs-8 text-hover-underline fw-semibold">
-                    <i class="ki-duotone ki-arrow-up-right fs-8 me-1"></i> Buka Landing
+                    <i class="ki-duotone ki-arrow-up-right fs-8 me-1"></i>
+                    <span data-kt-translate="menu.open_landing">{{ __('menu.open_landing') }}</span>
                 </a>
             </div>
         </div>
@@ -93,11 +95,12 @@
                 </div>
                 @if ($isEducationActive)
                     <span class="badge badge-warning fs-8 fw-bold text-dark">
-                        <i class="ki-duotone ki-check fs-8 me-1"></i> Terpilih (Aktif)
+                        <i class="ki-duotone ki-check fs-8 me-1"></i>
+                        <span data-kt-translate="menu.selected_active">{{ __('menu.selected_active') }}</span>
                     </span>
                 @else
-                    <a href="{{ route('frontpage.switch', 'education') }}" class="btn btn-sm btn-light-warning py-1 px-3 fs-8 text-dark">
-                        Pilih Default
+                    <a href="{{ route('frontpage.switch', 'education') }}" class="btn btn-sm btn-light-warning py-1 px-3 fs-8 text-dark" data-kt-translate="menu.select_default">
+                        {{ __('menu.select_default') }}
                     </a>
                 @endif
             </div>

@@ -1,6 +1,9 @@
 <!--begin::Menu toggle-->
 <a href="javascript:void(0)" class="btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
-    data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+    data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end"
+    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+    data-kt-translate-title="menu.theme_mode"
+    title="{{ __('menu.theme_mode') }}">
     <i class="ki-duotone ki-night-day theme-light-show fs-1">
         <span class="path1"></span>
         <span class="path2"></span>

@@ -28,12 +28,12 @@
         if ($yieldTitle === '' || $yieldTitle === 'Index') {
             $title = getPageTitle();
         } else {
-            $translatedTitle = $translateSafely($yieldTitle);
+            $translatedTitle = translateMenuTitleSafely($yieldTitle);
             if ($translatedTitle !== null) {
                 $title = $translatedTitle;
             } else {
                 $pageTitle = getPageTitle();
-                $title = ($pageTitle !== config('app.name', 'Veltronic') && $pageTitle !== 'Metronic v.8.3.2 - Laravel 12') ? $pageTitle : $yieldTitle;
+                $title = ($pageTitle !== config('app.name', 'Veltronic') && $pageTitle !== 'Metronic v.8.3.2 - Laravel 13' && $pageTitle !== 'Metronic v.8.3.2 - Laravel 12') ? $pageTitle : $yieldTitle;
             }
         }
 

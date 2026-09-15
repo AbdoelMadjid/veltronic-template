@@ -10,7 +10,7 @@ Dribbble: www.dribbble.com/keenthemes
 Like: www.facebook.com/keenthemes
 License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
 -->
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}" data-kt-icon-style="{{ getActiveIconStyle() }}">
 <!--begin::Head-->
 
 <head>
@@ -51,22 +51,29 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ \App\Support\ThemeAsset::url('css/style.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ asset('assets/css/custom-icon-style.css') }}" rel="stylesheet" type="text/css" />
+    <!--layout-partial:partials/icon-style/_init.html-->
+    @include('partials.icon-style._init')
     <!--end::Global Stylesheets Bundle-->
     <script>
         // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
         if (window.top != window.self) {
             window.top.location.replace(window.self.location.href);
         }
-    </script>
+    <style>
+        body#kt_body {
+            background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg.jpg') }}');
+        }
+        [data-bs-theme="dark"] body#kt_body {
+            background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg-dark.jpg') }}');
+        }
+    </style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
 
-<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
+<body id="kt_body" style="background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg.jpg') }}')" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
     <!--layout-partial:partials/theme-mode/_init.html-->
     @include('partials.theme-mode._init')
-    <!--layout-partial:partials/icon-style/_init.html-->
-    @include('partials.icon-style._init')
     <!--layout-partial:partials/lang/_init.html-->
     @include('partials.lang._init')
     <!--begin::Main-->

@@ -9,7 +9,7 @@
                 <!--begin:Col-->
                 <div class="col-lg-4 mb-3">
                     <!--begin:Heading-->
-                    <h4 class="fs-6 fs-lg-4 text-gray-800 fw-bold mt-3 mb-3 ms-4">{{ __('menu.layouts') }}</h4>
+                    <h4 class="fs-6 fs-lg-4 text-gray-800 fw-bold mt-3 mb-3 ms-4" data-kt-translate="menu.layouts">{{ __('menu.layouts') }}</h4>
                     <!--end:Heading-->
                     <!--begin:Menu item-->
                     @foreach (config('header._header_layouts.layouts') as $menu)
@@ -18,7 +18,7 @@
                             <a href="{{ route($menu['route']) }}"
                                 class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                                 <span
-                                    class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                    class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                             </a>
                         </div>
                     @endforeach
@@ -28,7 +28,7 @@
                 <!--begin:Col-->
                 <div class="col-lg-4 mb-3">
                     <!--begin:Heading-->
-                    <h4 class="fs-6 fs-lg-4 text-gray-800 fw-bold mt-3 mb-3 ms-4">{{ __('menu.toolbars') }}</h4>
+                    <h4 class="fs-6 fs-lg-4 text-gray-800 fw-bold mt-3 mb-3 ms-4" data-kt-translate="menu.toolbars">{{ __('menu.toolbars') }}</h4>
                     <!--end:Heading-->
                     <!--begin:Menu item-->
                     @foreach (config('header._header_layouts.toolbars') as $menu)
@@ -37,7 +37,7 @@
                             <a href="{{ route($menu['route']) }}"
                                 class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                                 <span
-                                    class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                    class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                             </a>
                         </div>
                     @endforeach
@@ -47,7 +47,7 @@
                 <!--begin:Col-->
                 <div class="col-lg-4 mb-3">
                     <!--begin:Heading-->
-                    <h4 class="fs-6 fs-lg-4 text-gray-800 fw-bold mt-3 mb-3 ms-4">{{ __('menu.asides') }}</h4>
+                    <h4 class="fs-6 fs-lg-4 text-gray-800 fw-bold mt-3 mb-3 ms-4" data-kt-translate="menu.asides">{{ __('menu.asides') }}</h4>
                     <!--end:Heading-->
                     <!--begin:Menu item-->
                     @foreach (config('header._header_layouts.asides') as $menu)
@@ -56,7 +56,7 @@
                             <a href="{{ route($menu['route']) }}"
                                 class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                                 <span
-                                    class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                                    class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                             </a>
                         </div>
                     @endforeach
@@ -69,14 +69,14 @@
             <!--begin:Layout Builder-->
             <div class="d-flex flex-stack flex-wrap flex-lg-nowrap gap-2 mb-5 mb-lg-0 mx-lg-5">
                 <div class="d-flex flex-column me-5">
-                    <div class="fs-6 fw-bold text-gray-800">
+                    <div class="fs-6 fw-bold text-gray-800" data-kt-translate="menu.layout_builder">
                         {{ __('menu.layout_builder') }}
                     </div>
-                    <div class="fs-7 fw-semibold text-muted">
+                    <div class="fs-7 fw-semibold text-muted" data-kt-translate="menu.layout_builder_description">
                         {{ __('menu.layout_builder_description') }}
                     </div>
                 </div>
-                <a href="?page=layout-builder" class="btn btn-sm btn-primary fw-bold">
+                <a href="?page=layout-builder" class="btn btn-sm btn-primary fw-bold" data-kt-translate="menu.try_builder">
                     {{ __('menu.try_builder') }}
                 </a>
             </div>

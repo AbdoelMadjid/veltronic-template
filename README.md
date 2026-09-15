@@ -1,6 +1,6 @@
-# Veltronic - Metronic 8.3.2 Laravel 12 Template
+# Veltronic - Metronic 8.3.2 Laravel 13 Template
 
-Project ini adalah template enterprise berbasis Metronic 8.3.2 pada Laravel 12 dengan fitur dynamic menu management, realtime live bilingual (EN/ID), dynamic frontpage switching, KeenIcons switching, multi-version theme resolver, dan role-permission system.
+Project ini adalah template enterprise berbasis Metronic 8.3.2 pada Laravel 13 dengan fitur dynamic menu management, realtime live bilingual (EN/ID), dynamic frontpage switching, KeenIcons switching, multi-version theme resolver, dan role-permission system.
 
 Repository:
 `https://github.com/AbdoelMadjid/veltronic-template.git`

@@ -56,6 +56,10 @@ class LanguageManager
                     return $sessLocale;
                 }
             }
+
+            if (isset($_COOKIE['kt_lang']) && in_array($_COOKIE['kt_lang'], self::availableLocales(), true)) {
+                return $_COOKIE['kt_lang'];
+            }
         } catch (\Throwable $e) {
             // fallback if container not fully booted
         }

@@ -8,6 +8,13 @@ class Frontpage
     protected static ?array $cachedAll = null;
     protected static ?array $cachedAvailable = null;
 
+    public static function clearCache(): void
+    {
+        self::$cachedDefault = null;
+        self::$cachedAll = null;
+        self::$cachedAvailable = null;
+    }
+
     public static function default(): string
     {
         if (self::$cachedDefault !== null) {

@@ -15,7 +15,10 @@
         data-kt-feature-tool="tool_activities">
         <!--begin::Drawer toggle-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
-            id="kt_activities_toggle">
+            id="kt_activities_toggle"
+            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+            data-kt-translate-title="menu.activities"
+            title="{{ __('menu.activities') }}">
             <i class="ki-duotone ki-messages fs-2">
                 <span class="path1"></span>
                 <span class="path2"></span>
@@ -35,7 +38,10 @@
         <!--begin::Menu- wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-            data-kt-menu-placement="bottom-end" id="kt_menu_item_wow">
+            data-kt-menu-placement="bottom-end" id="kt_menu_item_wow"
+            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+            data-kt-translate-title="menu.notifications"
+            title="{{ __('menu.notifications') }}">
             <i class="ki-duotone ki-notification-status fs-2">
                 <span class="path1"></span>
                 <span class="path2"></span>
@@ -55,7 +61,10 @@
         data-kt-feature-tool="tool_chat">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative"
-            id="kt_drawer_chat_toggle">
+            id="kt_drawer_chat_toggle"
+            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+            data-kt-translate-title="menu.chat"
+            title="{{ __('menu.chat') }}">
             <i class="ki-duotone ki-message-text-2 fs-2">
                 <span class="path1"></span>
                 <span class="path2"></span>
@@ -76,7 +85,10 @@
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-            data-kt-menu-placement="bottom-end">
+            data-kt-menu-placement="bottom-end"
+            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+            data-kt-translate-title="menu.my_apps"
+            title="{{ __('menu.my_apps') }}">
             <i class="ki-duotone ki-element-11 fs-2">
                 <span class="path1"></span>
                 <span class="path2"></span>
@@ -100,9 +112,11 @@
     <!--end::Theme mode-->
 
     <!--begin::Icon style-->
+    @if(auth()->user()?->isMasterOrAdmin())
     @include('partials.icon-style._main', [
         'wrapper_class' => 'app-navbar-item d-none d-lg-flex ms-1 ms-md-4 ' . (!app_fitur('tool_icon_style') ? 'feature-hidden' : '')
     ])
+    @endif
     <!--end::Icon style-->
 
     <!--begin::Language-->
@@ -112,6 +126,7 @@
     <!--end::Language-->
 
     <!--begin::Version switcher-->
+    @if(auth()->user()?->isMasterOrAdmin())
     @php
         $currentVersion = \App\Support\ThemeVersion::current();
         $themeVersions = \App\Support\ThemeVersion::available();
@@ -122,7 +137,10 @@
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-            data-kt-menu-placement="bottom-end" title="Theme Version">
+            data-kt-menu-placement="bottom-end"
+            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+            data-kt-translate-title="menu.theme_version"
+            title="{{ __('menu.theme_version') }}">
             <i class="ki-duotone ki-cube-2 fs-2">
                 <span class="path1"></span>
                 <span class="path2"></span>
@@ -133,8 +151,8 @@
         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-175px py-4 fs-7"
             data-kt-menu="true">
             <div class="menu-item px-3">
-                <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
-                    Theme Version
+                <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase" data-kt-translate="menu.theme_version">
+                    {{ __('menu.theme_version') }}
                 </div>
             </div>
             @foreach ($themeVersions as $version)
@@ -150,6 +168,7 @@
         <!--end::Menu sub-->
         <!--end::Menu wrapper-->
     </div>
+    @endif
     <!--end::Version switcher-->
 
     <!--begin::Frontpages-->
@@ -160,7 +179,10 @@
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-            data-kt-menu-placement="bottom-end" title="Frontpages & Templates">
+            data-kt-menu-placement="bottom-end"
+            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+            data-kt-translate-title="menu.frontpages_and_templates"
+            title="{{ __('menu.frontpages_and_templates') }}">
             <i class="ki-duotone ki-screen fs-2">
                 <span class="path1"></span>
                 <span class="path2"></span>
@@ -180,7 +202,10 @@
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-            data-kt-menu-placement="bottom-end" title="Quick Tools">
+            data-kt-menu-placement="bottom-end"
+            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+            data-kt-translate-title="menu.quick_tools"
+            title="{{ __('menu.quick_tools') }}">
             <i class="ki-duotone ki-element-11 fs-2">
                 <span class="path1"></span>
                 <span class="path2"></span>
@@ -221,7 +246,10 @@
     <!--end::User menu-->
 
     <!--begin::Header menu toggle-->
-    <div class="app-navbar-item d-lg-none ms-2 me-n2" title="Show header menu">
+    <div class="app-navbar-item d-lg-none ms-2 me-n2"
+        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+        data-kt-translate-title="menu.show_header_menu"
+        title="{{ __('menu.show_header_menu') }}">
         <div class="btn btn-flex btn-icon btn-active-color-primary w-30px h-30px" id="kt_app_header_menu_toggle">
             <i class="ki-duotone ki-element-4 fs-1">
                 <span class="path1"></span>
@@ -238,7 +266,10 @@
             request()->is('layouts/asides/aside-4') ||
             request()->is('layouts/asides/aside-5'))
         <!--begin::Aside toggle-->
-        <div class="app-navbar-item d-lg-none ms-2 me-n2" title="Show aside">
+        <div class="app-navbar-item d-lg-none ms-2 me-n2"
+            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+            data-kt-translate-title="menu.show_aside"
+            title="{{ __('menu.show_aside') }}">
             <div class="btn btn-flex btn-icon btn-active-color-primary w-30px h-30px" id="kt_app_aside_toggle">
                 <i class="ki-duotone ki-trello fs-1">
                     <span class="path1"></span>

@@ -21,4 +21,13 @@ return [
         11 => "Dhu al-Qi'dah",
         12 => 'Dhu al-Hijjah',
     ],
+    'hijri_days' => [
+        0 => 'al-Ahad',
+        1 => 'al-Ithnayn',
+        2 => "al-Thulatha'",
+        3 => "al-Arba'a",
+        4 => 'al-Khamis',
+        5 => "al-Jumu'ah",
+        6 => 'as-Sabt',
+    ],
 ];

@@ -29,35 +29,35 @@
                 @endphp
 
                 <a class="nav-link py-3 py-lg-6 {{ $isActiveGeneral ? 'active' : '' }} text-active-primary" href="javascript:void(0)"
-                    data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_general">{{ __('menu.general') }}</a>
+                    data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_general" data-kt-translate="menu.general">{{ __('menu.general') }}</a>
             </li>
             <!--end:Nav item-->
             <!--begin:Nav item-->
             <li class="nav-item mx-lg-1">
                 <a class="nav-link py-3 py-lg-6 {{ request()->routeIs('pages.account.*') ? 'active' : '' }} text-active-primary"
                     href="javascript:void(0)" data-bs-toggle="tab"
-                    data-bs-target="#kt_app_header_menu_pages_account">{{ __('menu.account') }}</a>
+                    data-bs-target="#kt_app_header_menu_pages_account" data-kt-translate="menu.account">{{ __('menu.account') }}</a>
             </li>
             <!--end:Nav item-->
             <!--begin:Nav item-->
             <li class="nav-item mx-lg-1">
                 <a class="nav-link py-3 py-lg-6 {{ request()->routeIs('pages.authentication.*') ? 'active' : '' }} text-active-primary"
                     href="javascript:void(0)" data-bs-toggle="tab"
-                    data-bs-target="#kt_app_header_menu_pages_authentication">{{ __('menu.authentication') }}</a>
+                    data-bs-target="#kt_app_header_menu_pages_authentication" data-kt-translate="menu.authentication">{{ __('menu.authentication') }}</a>
             </li>
             <!--end:Nav item-->
             <!--begin:Nav item-->
             <li class="nav-item mx-lg-1">
                 <a class="nav-link py-3 py-lg-6 {{ request()->routeIs('pages.utilities.*') ? 'active' : '' }} text-active-primary"
                     href="javascript:void(0)" data-bs-toggle="tab"
-                    data-bs-target="#kt_app_header_menu_pages_utilities">{{ __('menu.utilities') }}</a>
+                    data-bs-target="#kt_app_header_menu_pages_utilities" data-kt-translate="menu.utilities">{{ __('menu.utilities') }}</a>
             </li>
             <!--end:Nav item-->
             <!--begin:Nav item-->
             <li class="nav-item mx-lg-1">
                 <a class="nav-link py-3 py-lg-6 {{ request()->routeIs('pages.widgets.*') ? 'active' : '' }} text-active-primary"
                     href="javascript:void(0)" data-bs-toggle="tab"
-                    data-bs-target="#kt_app_header_menu_pages_widgets">{{ __('menu.widgets') }}</a>
+                    data-bs-target="#kt_app_header_menu_pages_widgets" data-kt-translate="menu.widgets">{{ __('menu.widgets') }}</a>
             </li>
             <!--end:Nav item-->
         </ul>

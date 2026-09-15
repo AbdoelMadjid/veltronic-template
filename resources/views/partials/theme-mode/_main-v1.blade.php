@@ -1,7 +1,10 @@
 <!--begin::Menu toggle-->
 <a href="javascript:void(0)"
     class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
-    data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+    data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end"
+    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+    data-kt-translate-title="menu.theme_mode"
+    title="{{ __('menu.theme_mode') }}">
     <i class="ki-duotone ki-night-day theme-light-show fs-1">
         <span class="path1"></span>
         <span class="path2"></span>
@@ -40,8 +43,8 @@
                     <span class="path10"></span>
                 </i>
             </span>
-            <span class="menu-title">
-                Light
+            <span class="menu-title" data-kt-translate="menu.light">
+                {{ __('menu.light') }}
             </span>
         </a>
     </div>
@@ -55,8 +58,8 @@
                     <span class="path2"></span>
                 </i>
             </span>
-            <span class="menu-title">
-                Dark
+            <span class="menu-title" data-kt-translate="menu.dark">
+                {{ __('menu.dark') }}
             </span>
         </a>
     </div>
@@ -72,8 +75,8 @@
                     <span class="path4"></span>
                 </i>
             </span>
-            <span class="menu-title">
-                System
+            <span class="menu-title" data-kt-translate="menu.system">
+                {{ __('menu.system') }}
             </span>
         </a>
     </div>

@@ -41,27 +41,51 @@
         if ($yieldTitle === '' || $yieldTitle === 'Index') {
             $title = getPageTitle();
         } else {
-            $translatedTitle = $translateSafely($yieldTitle);
+            $translatedTitle = translateMenuTitleSafely($yieldTitle);
             if ($translatedTitle !== null) {
                 $title = $translatedTitle;
             } else {
                 $pageTitle = getPageTitle();
-                $title = ($pageTitle !== config('app.name', 'Veltronic') && $pageTitle !== 'Metronic v.8.3.2 - Laravel 12') ? $pageTitle : $yieldTitle;
+                $title = ($pageTitle !== config('app.name', 'Veltronic') && $pageTitle !== 'Metronic v.8.3.2 - Laravel 13' && $pageTitle !== 'Metronic v.8.3.2 - Laravel 12') ? $pageTitle : $yieldTitle;
             }
         }
 
-        // Ambil slot breadcrumbs (li_1, li_2, li_3, ...) jika dipassing via @component
-        $customBreadcrumbs = [];
+        // Ambil hierarki breadcrumbs otomatis dari Database / Config (Source 1 - 4)
+        $autoBreadcrumbs = getPageBreadcrumbs();
+
+        // Ambil slot breadcrumbs (li_1, li_2, li_3, ...) jika dipassing manual via @component
+        $rawCustomBreadcrumbs = [];
         $slotIdx = 1;
         while (isset(${'li_' . $slotIdx}) && trim((string)${'li_' . $slotIdx}) !== '') {
             $rawSlot = trim((string)${'li_' . $slotIdx});
-            $customBreadcrumbs[] = $translateSafely($rawSlot) ?? $rawSlot;
+            if (str_contains($rawSlot, '/')) {
+                $subParts = array_map('trim', explode('/', $rawSlot));
+                foreach ($subParts as $subPart) {
+                    if ($subPart !== '') {
+                        $rawCustomBreadcrumbs[] = $subPart;
+                    }
+                }
+            } else {
+                $rawCustomBreadcrumbs[] = $rawSlot;
+            }
             $slotIdx++;
         }
 
-        // Jika tidak ada slot manual li_*, otomatis ambil breadcrumbs hierarkis
-        if (empty($customBreadcrumbs)) {
-            $customBreadcrumbs = getPageBreadcrumbs();
+        if (!empty($autoBreadcrumbs)) {
+            $customBreadcrumbs = $autoBreadcrumbs;
+        } elseif (!empty($rawCustomBreadcrumbs)) {
+            $customBreadcrumbs = [];
+            foreach ($rawCustomBreadcrumbs as $item) {
+                $trans = translateMenuTitleSafely($item) ?? $item;
+                if ($trans !== $title && strtolower($item) !== strtolower($title)) {
+                    $customBreadcrumbs[] = $trans;
+                }
+            }
+            if (empty($customBreadcrumbs)) {
+                $customBreadcrumbs = array_map(fn($item) => translateMenuTitleSafely($item) ?? $item, $rawCustomBreadcrumbs);
+            }
+        } else {
+            $customBreadcrumbs = [];
         }
     @endphp
     <!--begin::Title-->

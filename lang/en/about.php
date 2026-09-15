@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'modal_title' => 'About Veltronic',
+    'modal_subtitle' => 'Enterprise Laravel 13 & Metronic 8.3.2 Admin Dashboard',
+    'btn_about' => 'About',
+    'btn_about_tooltip' => 'About Veltronic application and developer',
+    'app_name' => 'Veltronic Template',
+    'version' => 'Version',
+    'release_version' => 'v8.3.2 - Laravel 13',
+    'description' => 'Veltronic is a modern, modular enterprise-grade admin template built on top of Laravel 13 and KeenThemes Metronic 8.3.2. Featuring real-time bilingual switching (EN/ID), dynamic frontpage & theme switcher, auto-routing engine, and role-based permissions.',
+    'creator_heading' => 'Creator & Developer',
+    'creator_name' => 'Abdoel Madjid',
+    'creator_role' => 'Full-Stack Developer & Software Architect',
+    'creator_bio' => 'Passionate software engineer focused on building clean, maintainable, and scalable enterprise web solutions with modern PHP, Laravel, and frontend technologies.',
+    'features_heading' => 'Key Features',
+    'feature_bilingual' => 'Real-time Live Bilingual (EN/ID) Engine',
+    'feature_themes' => 'Multi-Theme Version Resolver (v1 & v2)',
+    'feature_frontpages' => 'Dynamic Frontpage & Landing Page Switcher',
+    'feature_icons' => 'KeenIcons Style Switcher (Duotone, Solid, Outline)',
+    'feature_routing' => 'Dynamic Menu Management & Auto Route Generator',
+    'feature_auth' => 'Spatie Role & Permission Security Layer',
+    'github_repository' => 'GitHub Repository',
+    'visit_github' => 'Visit Repository',
+    'documentation' => 'Documentation',
+    'close' => 'Close',
+];

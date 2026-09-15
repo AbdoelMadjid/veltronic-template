@@ -128,8 +128,21 @@
             : 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $item['title'] ?? ''));
     };
     $resolveMenuTitle = function ($item) use ($resolveMenuTitleKey) {
+        if (!empty($item['title_key']) && function_exists('translateMenuTitleSafely')) {
+            $trans = translateMenuTitleSafely('menu.' . $item['title_key']);
+            if ($trans !== null) {
+                return $trans;
+            }
+        }
+        $raw = $item['title'] ?? '';
+        if (function_exists('translateMenuTitleSafely')) {
+            $transRaw = translateMenuTitleSafely($raw);
+            if ($transRaw !== null) {
+                return $transRaw;
+            }
+        }
         $titleKey = $resolveMenuTitleKey($item);
-        return __($titleKey) != $titleKey ? __($titleKey) : $item['title'] ?? '';
+        return __($titleKey) != $titleKey ? __($titleKey) : $raw;
     };
     $resolveMenuBadgeLabel = function ($item) {
         if (!isset($item['badge']['label'])) {
@@ -227,9 +240,9 @@
     {{-- Mode 2: dropdown flyout (meta.dropdown = true) --}}
 @elseif ($menuIsVisible && $hasChildren && ($menu['dropdown'] ?? false))
     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start"
-        class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention {{ $isActiveParent ? 'here show' : '' }}">
+        class="menu-item menu-dropdown menu-lg-down-accordion menu-sub-lg-down-indention {{ $isActiveParent ? 'here' : '' }}">
 
-        <span class="menu-link">
+        <span class="menu-link {{ $isActiveParent ? 'active' : '' }}">
             @if ($level == 1)
                 <span class="menu-icon">
                     <i class="{{ $getIconClass($menu) }}">
@@ -247,18 +260,25 @@
 
         <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-2 py-4 w-200px mh-75 overflow-auto">
             @foreach ($children as $child)
-                @php
-                    $childTitleKey = $resolveMenuTitleKey($child);
-                @endphp
-                <div class="menu-item">
-                    <a class="menu-link {{ $isRouteActive($child['route'] ?? null) ? 'active' : '' }}"
-                        href="{{ route($child['route']) }}"
-                        {{ isset($menu['target']) ? 'target=' . $menu['target'] : '' }}>
-                        <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                        <span
-                            class="menu-title" data-kt-translate="{{ $childTitleKey }}">{{ __($childTitleKey) != $childTitleKey ? __($childTitleKey) : $child['title'] }}</span>
-                    </a>
-                </div>
+                @if (!empty($child['children'] ?? []))
+                    @include('layouts.partials.sidebar._menu-item', [
+                        'menu' => $child,
+                        'level' => $level + 1,
+                    ])
+                @else
+                    @php
+                        $childTitleKey = $resolveMenuTitleKey($child);
+                    @endphp
+                    <div class="menu-item">
+                        <a class="menu-link {{ $isRouteActive($child['route'] ?? null, $child['href'] ?? null) ? 'active' : '' }}"
+                            href="{{ isset($child['href']) ? $child['href'] : (isset($child['route']) ? route($child['route']) : '#') }}"
+                            {{ isset($child['target']) ? 'target=' . $child['target'] : '' }}>
+                            <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                            <span
+                                class="menu-title" data-kt-translate="{{ $childTitleKey }}">{{ $resolveMenuTitle($child) }}</span>
+                        </a>
+                    </div>
+                @endif
             @endforeach
         </div>
     </div>

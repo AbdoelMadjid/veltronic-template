@@ -1,1 +1,68 @@
 /* Add here all your css styles (customizations) */
+
+/* ==========================================================================
+   Sidebar Minimize State (Search Icon & Docs Button)
+   ========================================================================== */
+
+/* 1. Search Box: Minimized vs Expanded */
+.app-sidebar-menu-search-minimized {
+    display: none !important;
+}
+
+.app-sidebar-menu-search-full {
+    display: block !important;
+}
+
+[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) .app-sidebar-menu-search-full,
+[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) .app-sidebar-menu-search-full {
+    display: none !important;
+}
+
+[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) .app-sidebar-menu-search-minimized,
+[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) .app-sidebar-menu-search-minimized {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_menu_search,
+[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_menu_search {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_menu_search_empty {
+    display: none !important;
+}
+
+/* 2. Docs & Components Footer Button: Minimized vs Expanded */
+[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer,
+[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn,
+[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    border-radius: 0.475rem !important;
+}
+
+[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn .btn-label,
+[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn .btn-label {
+    display: none !important;
+}
+
+[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn .btn-icon,
+[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn .btn-icon {
+    margin: 0 !important;
+}
+

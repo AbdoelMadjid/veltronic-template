@@ -8,6 +8,17 @@
     <!--begin::Menu-->
     <div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0"
         id="kt_app_header_menu" data-kt-menu="true">
+
+        @php
+            $authUser = auth()->user();
+            $canViewTemplateHeader = $authUser && (
+                (method_exists($authUser, 'isMasterOrAdmin') && $authUser->isMasterOrAdmin()) ||
+                (method_exists($authUser, 'hasAnyRole') && $authUser->hasAnyRole(['master', 'admin'])) ||
+                in_array($authUser->role ?? '', ['master', 'admin'])
+            );
+        @endphp
+
+        @if ($canViewTemplateHeader)
         <!--begin:Menu item-->
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
             data-kt-feature-menu="top_menu_dashboard"
@@ -136,6 +147,7 @@
             </div><!--end:Menu sub-->
         </div>
         <!--end:Menu item-->
+        @endif
     </div>
     <!--end::Menu-->
 </div>

@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\AppSetting;
 use App\Models\User;
+use Database\Seeders\AppSettingSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -18,80 +20,71 @@ class FrontpageAccessTest extends TestCase
         Role::firstOrCreate(['name' => 'master', 'guard_name' => 'web']);
         Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
         Role::firstOrCreate(['name' => 'siswa', 'guard_name' => 'web']);
+
+        $this->seed(AppSettingSeeder::class);
     }
 
-    public function test_guest_is_redirected_to_login_from_root(): void
+    public function test_guest_can_access_frontpages(): void
     {
         $response = $this->get('/');
-        $response->assertRedirect(route('login'));
+        $response->assertStatus(200);
+
+        $landingResponse = $this->get('/landing');
+        $landingResponse->assertStatus(200);
+
+        $educationResponse = $this->get('/education');
+        $educationResponse->assertStatus(200);
     }
 
-    public function test_guest_is_redirected_to_login_from_landing(): void
-    {
-        $response = $this->get('/landing');
-        $response->assertRedirect(route('login'));
-    }
-
-    public function test_guest_is_redirected_to_login_from_education(): void
-    {
-        $response = $this->get('/education');
-        $response->assertRedirect(route('login'));
-    }
-
-    public function test_non_admin_user_redirected_from_root(): void
+    public function test_non_admin_user_can_access_frontpages(): void
     {
         $user = User::factory()->create();
         $user->assignRole('siswa');
 
-        $response = $this->actingAs($user)->get('/');
-        $response->assertRedirect(route('dashboard'));
+        $rootResponse = $this->actingAs($user)->get('/');
+        $rootResponse->assertStatus(200);
+
+        $landingResponse = $this->actingAs($user)->get('/landing');
+        $landingResponse->assertStatus(200);
+
+        $educationResponse = $this->actingAs($user)->get('/education');
+        $educationResponse->assertStatus(200);
     }
 
-    public function test_non_admin_user_cannot_access_landing(): void
-    {
-        $user = User::factory()->create();
-        $user->assignRole('siswa');
-
-        $response = $this->actingAs($user)->get('/landing');
-        $response->assertStatus(403);
-    }
-
-    public function test_non_admin_user_cannot_access_education(): void
-    {
-        $user = User::factory()->create();
-        $user->assignRole('siswa');
-
-        $response = $this->actingAs($user)->get('/education');
-        $response->assertStatus(403);
-    }
-
-    public function test_admin_can_access_frontpages(): void
+    public function test_admin_and_master_can_access_frontpages(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');
 
-        $rootResponse = $this->actingAs($admin)->get('/');
-        $rootResponse->assertStatus(200);
+        $adminResponse = $this->actingAs($admin)->get('/');
+        $adminResponse->assertStatus(200);
 
-        $landingResponse = $this->actingAs($admin)->get('/landing');
-        $landingResponse->assertStatus(200);
-
-        $educationResponse = $this->actingAs($admin)->get('/education');
-        $educationResponse->assertStatus(200);
-    }
-
-    public function test_master_can_access_frontpages(): void
-    {
         $master = User::factory()->create();
         $master->assignRole('master');
 
-        $rootResponse = $this->actingAs($master)->get('/');
-        $rootResponse->assertStatus(200);
+        $masterResponse = $this->actingAs($master)->get('/');
+        $masterResponse->assertStatus(200);
+    }
 
-        $landingResponse = $this->actingAs($master)->get('/landing');
-        $landingResponse->assertStatus(200);
+    public function test_guest_and_non_admin_cannot_switch_system_default_frontpage(): void
+    {
+        $guestResponse = $this->get('/frontpage/switch/education');
+        $guestResponse->assertRedirect(route('login'));
 
-        $educationResponse = $this->actingAs($master)->get('/education');
-        $educationResponse->assertStatus(200);
+        $user = User::factory()->create();
+        $user->assignRole('siswa');
+
+        $userResponse = $this->actingAs($user)->get('/frontpage/switch/education');
+        $userResponse->assertStatus(403);
+    }
+
+    public function test_admin_can_switch_system_default_frontpage(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $response = $this->actingAs($admin)->get('/frontpage/switch/education');
+        $response->assertStatus(302);
+        $this->assertEquals('education', AppSetting::get('default_frontpage'));
     }
 }

@@ -10,7 +10,7 @@ Dribbble: www.dribbble.com/keenthemes
 Like: www.facebook.com/keenthemes
 License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
 -->
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}" data-kt-icon-style="{{ getActiveIconStyle() }}">
     <!--begin::Head-->
 
     <head>
@@ -37,7 +37,9 @@ License: For each use you must have a valid license purchased only from above li
         <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
         <link href="{{ \App\Support\ThemeAsset::url('plugins/global/plugins.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
         <link href="{{ \App\Support\ThemeAsset::url('css/style.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
+        <link href="{{ \App\Support\ThemeAsset::url('css/custom-icon-style.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
         <!--end::Global Stylesheets Bundle-->
+        @include('partials.icon-style._init')
         @include('partials.lang._init')
         <script>
             // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
@@ -2071,6 +2073,7 @@ License: For each use you must have a valid license purchased only from above li
         <script src="{{ \App\Support\ThemeAsset::url('plugins/custom/typedjs/typedjs.bundle.js', $theme_asset_pack ?? null) }}"></script>
         <!--end::Vendors Javascript-->
         <!--begin::Custom Javascript(used for this page only)-->
+        <script src="{{ \App\Support\ThemeAsset::url('js/custom/icon-style.js', $theme_asset_pack ?? null) }}"></script>
         <script src="{{ \App\Support\ThemeAsset::url('js/custom/language.js', $theme_asset_pack ?? null) }}"></script>
         <script src="{{ \App\Support\ThemeAsset::url('js/custom/landing.js', $theme_asset_pack ?? null) }}"></script>
         <script src="{{ \App\Support\ThemeAsset::url('js/custom/pages/pricing/general.js', $theme_asset_pack ?? null) }}"></script>

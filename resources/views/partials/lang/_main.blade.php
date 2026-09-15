@@ -11,7 +11,10 @@
     <a href="javascript:void(0)"
         class="{{ $btnClass }}"
         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-        data-kt-menu-placement="bottom-end" title="Pilih Bahasa / Language"
+        data-kt-menu-placement="bottom-end"
+        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+        data-kt-translate-title="menu.language"
+        title="{{ __('menu.language') }}"
         data-kt-element="lang-toggle">
         <img class="w-20px h-20px rounded-1"
             data-kt-element="lang-flag-current"
@@ -25,8 +28,8 @@
         data-kt-menu="true" data-kt-element="lang-menu">
         <!--begin::Menu header-->
         <div class="menu-item px-3 mb-1">
-            <div class="menu-content text-muted pb-1 px-3 fs-7 text-uppercase fw-bold" data-kt-translate="menu.language_selection">
-                Bahasa
+            <div class="menu-content text-muted pb-1 px-3 fs-7 text-uppercase fw-bold" data-kt-translate="menu.language">
+                {{ __('menu.language') }}
             </div>
         </div>
         <!--end::Menu header-->

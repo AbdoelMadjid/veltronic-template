@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'modal_title' => 'Tentang Veltronic',
+    'modal_subtitle' => 'Enterprise Laravel 13 & Metronic 8.3.2 Admin Dashboard',
+    'btn_about' => 'Tentang',
+    'btn_about_tooltip' => 'Tentang aplikasi Veltronic dan pengembang',
+    'app_name' => 'Veltronic Template',
+    'version' => 'Versi',
+    'release_version' => 'v8.3.2 - Laravel 13',
+    'description' => 'Veltronic adalah template admin dashboard enterprise modern dan modular berbasis Laravel 13 dan KeenThemes Metronic 8.3.2. Dilengkapi fitur realtime bilingual (EN/ID), dynamic frontpage & theme switcher, auto-routing engine, serta manajemen role & permission.',
+    'creator_heading' => 'Pembuat & Pengembang',
+    'creator_name' => 'Abdoel Madjid',
+    'creator_role' => 'Full-Stack Developer & Software Architect',
+    'creator_bio' => 'Software engineer yang berdedikasi membangun solusi web enterprise yang bersih, modular, dan scalable dengan ekosistem Laravel modern dan teknologi frontend terkini.',
+    'features_heading' => 'Fitur Utama',
+    'feature_bilingual' => 'Engine Realtime Live Bilingual (EN/ID)',
+    'feature_themes' => 'Multi-Theme Version Resolver (v1 & v2)',
+    'feature_frontpages' => 'Dynamic Frontpage & Landing Page Switcher',
+    'feature_icons' => 'KeenIcons Style Switcher (Duotone, Solid, Outline)',
+    'feature_routing' => 'Dynamic Menu Management & Auto Route Generator',
+    'feature_auth' => 'Lapisan Keamanan Spatie Role & Permission',
+    'github_repository' => 'Repositori GitHub',
+    'visit_github' => 'Kunjungi Repositori',
+    'documentation' => 'Dokumentasi',
+    'close' => 'Tutup',
+];

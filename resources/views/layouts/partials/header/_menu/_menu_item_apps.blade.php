@@ -31,11 +31,11 @@
     <div
         @if ($isDropdown) data-kt-menu-trigger="{default:'click', lg: 'hover'}"
             data-kt-menu-placement="right-start"
-            class="menu-item menu-lg-down-accordion {{ $isActiveParent ? 'here show' : '' }}"
+            class="menu-item menu-lg-down-accordion {{ $isActiveParent ? 'here' : '' }}"
         @else
             data-kt-menu-trigger="click"
             class="menu-item menu-accordion {{ $isActiveParent ? 'here show' : '' }} {{ $level > 1 ? 'menu-sub-indention' : '' }}" @endif>
-        <span class="menu-link">
+        <span class="menu-link {{ $isActiveParent ? 'active' : '' }}">
             @if ($level == 1)
                 <span class="menu-icon">
                     <i class="{{ $menu['icon'] ?? '' }}">
@@ -47,7 +47,7 @@
             @else
                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
             @endif
-            <span class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+            <span class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
             <span class="menu-arrow"></span>
         </span>
 
@@ -68,7 +68,7 @@
     <div class="menu-item">
         <a class="menu-link {{ $isActiveSelf ? 'active' : '' }}"
             href="{{ isset($menu['route']) ? route($menu['route']) : ($menu['href'] ?? '#') }}"
-            @if (isset($menu['target'])) target="{{ $menu['target'] }}" @elseif(isset($menu['href'])) target="_blank" @endif
+            @if (isset($menu['target'])) target="{{ $menu['target'] }}" @elseif(isset($menu['href']) && (str_starts_with($menu['href'], 'http://') || str_starts_with($menu['href'], 'https://'))) target="_blank" @endif
             @if (!empty($menu['tooltip'])) title="{{ __($titleKey . '_tooltip') != $titleKey . '_tooltip' ? __($titleKey . '_tooltip') : $menu['tooltip'] ?? '' }}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right" @endif>
             @if ($level == 1)
                 <span class="menu-icon">
@@ -81,12 +81,12 @@
             @else
                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
             @endif
-            <span class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+            <span class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
             @if (isset($menu['badge']))
                 @php $badgeKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menu['badge']['label'] ?? '')); @endphp
                 <span class="menu-badge">
                     <span class="{{ $menu['badge']['class'] ?? 'badge badge-info' }}">
-                        {{ __($badgeKey) != $badgeKey ? __($badgeKey) : $menu['badge']['label'] ?? '' }}
+                        {{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($badgeKey) : null) ?? (__($badgeKey) != $badgeKey ? __($badgeKey) : $menu['badge']['label'] ?? '') }}
                     </span>
                 </span>
             @endif

@@ -28,7 +28,7 @@ Dribbble: www.dribbble.com/keenthemes
 Like: www.facebook.com/keenthemes
 License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
 -->
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}" data-kt-icon-style="{{ getActiveIconStyle() }}">
 <!--begin::Head-->
 
 <head>
@@ -67,6 +67,9 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ \App\Support\ThemeAsset::url('css/style.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ asset('assets/css/custom-icon-style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
+    <!--layout-partial:partials/icon-style/_init.html-->
+    @include('partials.icon-style._init')
     <style>
         @media (max-width: 991.98px) {
             #kt_app_body[data-kt-app-toolbar-fixed-mobile="false"] #kt_app_toolbar {
@@ -158,8 +161,6 @@ License: For each use you must have a valid license purchased only from above li
 
     <!--layout-partial:partials/theme-mode/_init.html-->
     @include('partials.theme-mode._init')
-    <!--layout-partial:partials/icon-style/_init.html-->
-    @include('partials.icon-style._init')
     <!--layout-partial:partials/lang/_init.html-->
     @include('partials.lang._init')
     <!--layout-partial:layout/_default.html-->

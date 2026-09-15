@@ -1,9 +1,9 @@
 <?php
 
 $configPaths = [
-    'f:/laragon/new_project/metronic-832-laravel-12/config/docs',
-    'f:/laragon/new_project/metronic-832-laravel-12/config/header',
-    'f:/laragon/new_project/metronic-832-laravel-12/config/sidebar',
+    'f:/laragon/new_project/metronic-832-laravel-13/config/docs',
+    'f:/laragon/new_project/metronic-832-laravel-13/config/header',
+    'f:/laragon/new_project/metronic-832-laravel-13/config/sidebar',
 ];
 
 $titles = [];

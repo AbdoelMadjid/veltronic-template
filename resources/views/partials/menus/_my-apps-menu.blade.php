@@ -5,7 +5,7 @@
         <!--begin::Card header-->
         <div class="card-header">
             <!--begin::Card title-->
-            <div class="card-title">My Apps</div>
+            <div class="card-title" data-kt-translate="menu.my_apps">{{ __('menu.my_apps') }}</div>
             <!--end::Card title-->
             <!--begin::Card toolbar-->
             <div class="card-toolbar">

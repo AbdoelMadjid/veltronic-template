@@ -4,6 +4,7 @@
     $isV2 = ($version ?? $currentVersion) === 'v2';
     $btnClass = 'btn btn-icon btn-color-gray-600 btn-active-light-primary btn-active-color-primary w-35px h-35px rounded-3 position-relative';
     $iconSize = 'fs-2';
+    $currentIconStyle = getActiveIconStyle();
 @endphp
 
 <!--begin::Mobile Toolbar Items Dropdown-->
@@ -15,7 +16,8 @@
         <button type="button" class="{{ $btnClass }}"
             data-kt-drawer-show="true" data-kt-drawer-target="#kt_activities"
             onclick="if(typeof KTMenu!=='undefined'&&KTMenu.hideDropdowns){KTMenu.hideDropdowns();}"
-            title="Activities">
+            data-kt-translate-title="menu.activities"
+            title="{{ __('menu.activities') }}">
             <i class="ki-duotone {{ $isV2 ? 'ki-chart-simple' : 'ki-messages' }} {{ $iconSize }}">
                 <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span>@if(!$isV2)<span class="path5"></span>@endif
             </i>
@@ -26,7 +28,8 @@
         <button type="button" class="{{ $btnClass }}"
             data-kt-drawer-show="true" data-kt-drawer-target="#kt_drawer_chat"
             onclick="if(typeof KTMenu!=='undefined'&&KTMenu.hideDropdowns){KTMenu.hideDropdowns();}"
-            title="Chat">
+            data-kt-translate-title="menu.chat"
+            title="{{ __('menu.chat') }}">
             <i class="ki-duotone ki-message-text-2 {{ $iconSize }}">
                 <span class="path1"></span><span class="path2"></span><span class="path3"></span>
             </i>
@@ -35,7 +38,9 @@
         <!--end::Chat-->
 
         <!--begin::My apps Tab Toggle-->
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_apps" title="{{ $isV2 ? 'Quick Links' : 'My Apps' }}">
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_apps"
+            data-kt-translate-title="menu.my_apps"
+            title="{{ __('menu.my_apps') }}">
             <i class="ki-duotone ki-element-11 {{ $iconSize }}">
                 <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span>
             </i>
@@ -43,7 +48,9 @@
         <!--end::My apps Tab Toggle-->
 
         <!--begin::Notifications Tab Toggle-->
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_notif" title="Notifications">
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_notif"
+            data-kt-translate-title="menu.notifications"
+            title="{{ __('menu.notifications') }}">
             <i class="ki-duotone {{ $isV2 ? 'ki-binance' : 'ki-notification-status' }} {{ $iconSize }}">
                 <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span>@if($isV2)<span class="path5"></span>@endif
             </i>
@@ -51,7 +58,9 @@
         <!--end::Notifications Tab Toggle-->
 
         <!--begin::Theme mode Tab Toggle-->
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_theme" title="Theme Mode">
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_theme"
+            data-kt-translate-title="menu.theme_mode"
+            title="{{ __('menu.theme_mode') }}">
             <i class="ki-duotone ki-night-day theme-light-show {{ $iconSize }}">
                 <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span>
             </i>
@@ -62,23 +71,29 @@
         <!--end::Theme mode Tab Toggle-->
 
         <!--begin::Icon style Tab Toggle-->
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_icons" title="Gaya Icon (Duotone / Solid / Outline)">
-            <span class="icon-style-preview" data-kt-icon-preview-style="duotone">
-                <i class="ki-duotone ki-chart {{ $iconSize }}">
+        @if(auth()->user()?->isMasterOrAdmin())
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_icons"
+            data-kt-translate-title="menu.icon_style"
+            title="{{ __('menu.icon_style') }}">
+            <span class="icon-style-preview {{ $currentIconStyle !== 'duotone' ? 'd-none' : '' }}" data-kt-icon-preview-style="duotone">
+                <i class="ki-duotone ki-chart {{ $iconSize }}" data-kt-icon-style-ignore="true">
                     <span class="path1"></span><span class="path2"></span>
                 </i>
             </span>
-            <span class="icon-style-preview d-none" data-kt-icon-preview-style="solid">
-                <i class="ki-solid ki-chart {{ $iconSize }}"></i>
+            <span class="icon-style-preview {{ $currentIconStyle !== 'solid' ? 'd-none' : '' }}" data-kt-icon-preview-style="solid">
+                <i class="ki-solid ki-chart {{ $iconSize }}" data-kt-icon-style-ignore="true"></i>
             </span>
-            <span class="icon-style-preview d-none" data-kt-icon-preview-style="outline">
-                <i class="ki-outline ki-chart {{ $iconSize }}"></i>
+            <span class="icon-style-preview {{ $currentIconStyle !== 'outline' ? 'd-none' : '' }}" data-kt-icon-preview-style="outline">
+                <i class="ki-outline ki-chart {{ $iconSize }}" data-kt-icon-style-ignore="true"></i>
             </span>
         </button>
+        @endif
         <!--end::Icon style Tab Toggle-->
 
         <!--begin::Language Tab Toggle-->
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_lang" title="Pilih Bahasa / Language">
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_lang"
+            data-kt-translate-title="menu.language"
+            title="{{ __('menu.language') }}">
             <img class="w-20px h-20px rounded-1" data-kt-element="lang-flag-current"
                 src="{{ asset(($theme_asset_base ?? 'assets') . '/media/flags/' . (\App\Support\LanguageManager::current() === 'id' ? 'indonesia.svg' : 'united-states.svg')) }}"
                 alt="Language" />
@@ -86,11 +101,15 @@
         <!--end::Language Tab Toggle-->
 
         <!--begin::Version switcher Tab Toggle-->
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_version" title="Theme Version">
+        @if(auth()->user()?->isMasterOrAdmin())
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_version"
+            data-kt-translate-title="menu.theme_version"
+            title="{{ __('menu.theme_version') }}">
             <i class="ki-duotone ki-cube-2 {{ $iconSize }}">
                 <span class="path1"></span><span class="path2"></span><span class="path3"></span>
             </i>
         </button>
+        @endif
         <!--end::Version switcher Tab Toggle-->
     </div>
     <!--end::Top Toolbar Icons Row-->
@@ -116,43 +135,43 @@
         <!--begin::Panel Theme Mode-->
         <div class="mobile-hub-panel d-none" id="hub_panel_theme">
             <div class="d-flex align-items-center justify-content-between mb-2">
-                <span class="fs-7 fw-bold text-gray-700 text-uppercase">Pilih Theme Mode</span>
+                <span class="fs-7 fw-bold text-gray-700 text-uppercase" data-kt-translate="menu.select_theme_mode">{{ __('menu.select_theme_mode') }}</span>
                 <span class="badge badge-light-primary fs-8 py-1 px-2" id="mobile_active_theme_label">Light</span>
             </div>
             <div class="d-flex flex-column gap-1">
                 <!--Light-->
-                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-theme-item" data-kt-mobile-mode="light">
+                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-theme-item" data-kt-value="light">
                     <div class="d-flex align-items-center">
                         <span class="menu-icon me-2">
-                            <i class="ki-duotone ki-night-day fs-2 text-warning">
+                            <i class="ki-duotone ki-night-day fs-2 text-primary">
                                 <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span>
                             </i>
                         </span>
-                        <span class="fw-semibold fs-7 text-gray-800">Light Mode</span>
+                        <span class="fw-semibold fs-7 text-gray-800" data-kt-translate="menu.light">{{ __('menu.light') }}</span>
                     </div>
                     <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon d-none"></i>
                 </a>
                 <!--Dark-->
-                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-theme-item" data-kt-mobile-mode="dark">
+                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-theme-item" data-kt-value="dark">
                     <div class="d-flex align-items-center">
                         <span class="menu-icon me-2">
                             <i class="ki-duotone ki-moon fs-2 text-primary">
                                 <span class="path1"></span><span class="path2"></span>
                             </i>
                         </span>
-                        <span class="fw-semibold fs-7 text-gray-800">Dark Mode</span>
+                        <span class="fw-semibold fs-7 text-gray-800" data-kt-translate="menu.dark">{{ __('menu.dark') }}</span>
                     </div>
                     <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon d-none"></i>
                 </a>
                 <!--System-->
-                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-theme-item" data-kt-mobile-mode="system">
+                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-theme-item" data-kt-value="system">
                     <div class="d-flex align-items-center">
                         <span class="menu-icon me-2">
-                            <i class="ki-duotone ki-screen fs-2 text-info">
+                            <i class="ki-duotone ki-screen fs-2 text-primary">
                                 <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span>
                             </i>
                         </span>
-                        <span class="fw-semibold fs-7 text-gray-800">System Mode</span>
+                        <span class="fw-semibold fs-7 text-gray-800" data-kt-translate="menu.system">{{ __('menu.system') }}</span>
                     </div>
                     <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon d-none"></i>
                 </a>
@@ -161,55 +180,59 @@
         <!--end::Panel Theme Mode-->
 
         <!--begin::Panel Icon Style-->
+        @if(auth()->user()?->isMasterOrAdmin())
         <div class="mobile-hub-panel d-none" id="hub_panel_icons">
             <div class="d-flex align-items-center justify-content-between mb-2">
-                <span class="fs-7 fw-bold text-gray-700 text-uppercase">Pilih Gaya Icon</span>
-                <span class="badge badge-light-primary fs-8 py-1 px-2" id="mobile_active_icon_label">Duotone</span>
+                <span class="fs-7 fw-bold text-gray-700 text-uppercase" data-kt-translate="menu.select_icon_style">{{ __('menu.select_icon_style') }}</span>
+                <span class="badge badge-light-primary fs-8 py-1 px-2" id="mobile_active_icon_label">{{ ucfirst($currentIconStyle) }}</span>
             </div>
             <div class="d-flex flex-column gap-1">
                 <!--Duotone-->
-                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-icon-item" data-kt-mobile-icon-style="duotone">
+                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-icon-item {{ $currentIconStyle === 'duotone' ? 'active' : '' }}" data-kt-mobile-icon-style="duotone">
                     <div class="d-flex align-items-center">
                         <span class="menu-icon me-2">
-                            <i class="ki-duotone ki-chart fs-2 text-primary">
+                            <i class="ki-duotone ki-chart fs-2 text-primary" data-kt-icon-style-ignore="true">
                                 <span class="path1"></span><span class="path2"></span>
                             </i>
                         </span>
                         <div class="d-flex flex-column">
-                            <span class="fw-semibold fs-7 text-gray-800">Duotone</span>
+                            <span class="fw-semibold fs-7 text-gray-800" data-kt-translate="menu.duotone">{{ __('menu.duotone') }}</span>
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-2">
-                        <span class="badge badge-light-primary fs-8 px-2 py-1">Default</span>
-                        <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon d-none"></i>
+                        <span class="badge badge-light-primary fs-8 px-2 py-1" data-kt-translate="menu.default">{{ __('menu.default') }}</span>
+                        <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon {{ $currentIconStyle === 'duotone' ? '' : 'd-none' }}" data-kt-icon-style-ignore="true"></i>
                     </div>
                 </a>
                 <!--Solid-->
-                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-icon-item" data-kt-mobile-icon-style="solid">
+                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-icon-item {{ $currentIconStyle === 'solid' ? 'active' : '' }}" data-kt-mobile-icon-style="solid">
                     <div class="d-flex align-items-center">
                         <span class="menu-icon me-2">
-                            <i class="ki-solid ki-chart fs-2 text-primary"></i>
+                            <i class="ki-solid ki-chart fs-2 text-primary" data-kt-icon-style-ignore="true"></i>
                         </span>
-                        <span class="fw-semibold fs-7 text-gray-800">Solid</span>
+                        <span class="fw-semibold fs-7 text-gray-800" data-kt-translate="menu.solid">{{ __('menu.solid') }}</span>
                     </div>
-                    <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon d-none"></i>
+                    <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon {{ $currentIconStyle === 'solid' ? '' : 'd-none' }}" data-kt-icon-style-ignore="true"></i>
                 </a>
                 <!--Outline-->
-                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-icon-item" data-kt-mobile-icon-style="outline">
+                <a href="javascript:void(0)" class="menu-link px-3 py-2 rounded-2 d-flex align-items-center justify-content-between mobile-icon-item {{ $currentIconStyle === 'outline' ? 'active' : '' }}" data-kt-mobile-icon-style="outline">
                     <div class="d-flex align-items-center">
                         <span class="menu-icon me-2">
-                            <i class="ki-outline ki-chart fs-2 text-primary"></i>
+                            <i class="ki-outline ki-chart fs-2 text-primary" data-kt-icon-style-ignore="true"></i>
                         </span>
-                        <span class="fw-semibold fs-7 text-gray-800">Outline</span>
+                        <span class="fw-semibold fs-7 text-gray-800" data-kt-translate="menu.outline">{{ __('menu.outline') }}</span>
                     </div>
-                    <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon d-none"></i>
+                    <i class="ki-duotone ki-check fs-2 text-primary mobile-check-icon {{ $currentIconStyle === 'outline' ? '' : 'd-none' }}" data-kt-icon-style-ignore="true"></i>
                 </a>
             </div>
         </div>
+        @endif
+        <!--end::Panel Icon Style-->
+
         <!--begin::Panel Language-->
         <div class="mobile-hub-panel d-none" id="hub_panel_lang">
             <div class="d-flex align-items-center justify-content-between mb-2">
-                <span class="fs-7 fw-bold text-gray-700 text-uppercase" data-kt-translate="menu.language_selection">Pilih Bahasa</span>
+                <span class="fs-7 fw-bold text-gray-700 text-uppercase" data-kt-translate="menu.select_language">{{ __('menu.select_language') }}</span>
                 <span class="badge badge-light-primary fs-8 py-1 px-2" id="mobile_active_lang_label">{{ \App\Support\LanguageManager::current() === 'id' ? 'Bahasa Indonesia' : 'English' }}</span>
             </div>
             <div class="d-flex flex-column gap-1">
@@ -238,9 +261,10 @@
         <!--end::Panel Language-->
 
         <!--begin::Panel Theme Version-->
+        @if(auth()->user()?->isMasterOrAdmin())
         <div class="mobile-hub-panel d-none" id="hub_panel_version">
             <div class="d-flex align-items-center justify-content-between mb-2">
-                <span class="fs-7 fw-bold text-gray-700 text-uppercase">Theme Version</span>
+                <span class="fs-7 fw-bold text-gray-700 text-uppercase" data-kt-translate="menu.theme_version">{{ __('menu.theme_version') }}</span>
                 <span class="badge badge-light-primary fs-8 py-1 px-2">{{ strtoupper($currentVersion) }}</span>
             </div>
             <div class="d-flex flex-column gap-1">
@@ -258,6 +282,7 @@
                 @endforeach
             </div>
         </div>
+        @endif
         <!--end::Panel Theme Version-->
     </div>
     <!--end::Hub Panels Container-->

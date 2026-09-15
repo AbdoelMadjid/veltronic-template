@@ -6,22 +6,21 @@
             <div class="card mb-5 mb-xl-8" data-kt-lang-ignore="true">
                 <div class="card-header border-0 pt-6">
                     <div class="card-title">
-                        <h2 class="fw-bold">Skema Pemrograman</h2>
+                        <h2 class="fw-bold">Overview Skema &amp; Dokumentasi Pemrograman</h2>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <p class="text-gray-700 fs-6 mb-8">
-                        Halaman ini adalah pusat dokumentasi internal untuk alur scripting proyek. Anda bisa menambahkan
-                        topik baru kapan saja tanpa mengubah struktur utama menu.
+                        Halaman ini merupakan pusat dokumentasi internal untuk seluruh alur arsitektur, coding standard, dan developer guide proyek. Anda dapat explore panduan teknis maupun menambahkan topik baru secara terstruktur.
                     </p>
                     <div class="row g-5">
                         <!--begin::Col Skema-->
                         <div class="col-12 col-xxl-6">
                             <div class="d-flex align-items-center gap-3 mb-3">
-                                <span class="badge badge-light-primary">Kategori</span>
-                                <h3 class="mb-0 fs-3">Skema</h3>
+                                <span class="badge badge-light-primary">Blueprint</span>
+                                <h3 class="mb-0 fs-3">Skema &amp; Architecture</h3>
                             </div>
-                            <p class="text-gray-700 fs-7 mb-5">Dokumen arsitektur dan alur teknis inti aplikasi.</p>
+                            <p class="text-gray-700 fs-7 mb-5">Dokumentasi cetak biru arsitektur teknis dan core foundation flow aplikasi.</p>
 
                             <div class="row g-5">
                                 <div class="col-12">
@@ -32,8 +31,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span><span class="path4"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Route</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Alur dari URL ke file Blade melalui route otomatis.</p>
+                                                <h3 class="mb-1 fs-4">Skema Route (Routing Flow)</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Alur request dari URL path ke file Blade view melalui dynamic auto-routing dan manual route.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -45,8 +44,8 @@
                                             <i class="ki-duotone ki-abstract-46 fs-2hx text-danger flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Layout</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Struktur base layout, partial, dan area konten per halaman.</p>
+                                                <h3 class="mb-1 fs-4">Skema Layout (Template Structure)</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Struktur master layout dasar, partial template, section content, dan slot rendering per halaman.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -59,8 +58,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span><span class="path4"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Komponen Blade & Partial</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Konvensi include/extend/component dan kapan pakai partial vs component.</p>
+                                                <h3 class="mb-1 fs-4">Skema Blade Component &amp; Partial</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Konvensi include, component extend, props passing, serta best practice partial vs component.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -73,8 +72,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span><span class="path4"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Theme Assets</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Struktur CSS/JS global, vendor page-specific, dan urutan load.</p>
+                                                <h3 class="mb-1 fs-4">Skema Theme Assets &amp; Bundling</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Struktur global CSS/JS assets, vendor library per halaman, dan script load sequence.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -86,8 +85,8 @@
                                             <i class="ki-duotone ki-shield-tick fs-2hx text-dark flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Auth dan Middleware</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Alur login, proteksi route, dan middleware custom aplikasi.</p>
+                                                <h3 class="mb-1 fs-4">Skema Auth &amp; Middleware Guard</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Alur autentikasi user, role &amp; permission hierarchy (Spatie), serta route security protection.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -99,8 +98,8 @@
                                             <i class="ki-duotone ki-setting-2 fs-2hx text-success flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Struktur Config Menu</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Relasi config sidebar/header, translasi lang, dan renderer Blade.</p>
+                                                <h3 class="mb-1 fs-4">Skema Config Menu Structure</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Struktur array konfigurasi menu seeder, sinkronisasi translation keys, dan dynamic Blade renderer.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -114,7 +113,7 @@
                                                     class="path3"></span></i>
                                             <div>
                                                 <h3 class="mb-1 fs-4">Skema Sidebar Menu</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Struktur konfigurasi menu dan cara render recursive.</p>
+                                                <p class="text-gray-700 fs-7 mb-0">Hierarki tree menu navigasi sidebar, accordion group, active state handling, dan recursive rendering.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -126,8 +125,8 @@
                                             <i class="ki-duotone ki-abstract-14 fs-2hx text-warning flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Header Menu</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Alur konfigurasi menu help pada bagian header.</p>
+                                                <h3 class="mb-1 fs-4">Skema Header Menu (Top Navigation)</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Alur konfigurasi navigasi horizontal header bar, mega-menu, dropdown help, dan quick action bar.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -139,8 +138,8 @@
                                             <i class="ki-duotone ki-book-open fs-2hx text-danger flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Data Layer</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Struktur model, relasi, migration, seeder, dan pattern query proyek.</p>
+                                                <h3 class="mb-1 fs-4">Skema Data Layer &amp; Eloquent</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Struktur model Eloquent, relasi database, migration, database seeder, dan query patterns.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -153,8 +152,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Error Handling & Fallback</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">404 fallback, exception handling, dan halaman error custom.</p>
+                                                <h3 class="mb-1 fs-4">Skema Error Handling &amp; Fallback</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Fallback rute 404/500 inside dashboard layout, custom exception handling, dan panel diagnostics.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -166,8 +165,8 @@
                                             <i class="ki-duotone ki-cloud-add fs-2hx text-info flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Cache & Deployment</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Strategi cache artisan, clear cache, dan checklist release.</p>
+                                                <h3 class="mb-1 fs-4">Skema Cache &amp; Deployment Flow</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Strategi Artisan caching (config, route, view), cache clearing, dan production release checklist.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -179,8 +178,8 @@
                                             <i class="ki-duotone ki-flag fs-2hx text-info flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Pemilihan Bahasa</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Mekanisme switch bahasa dan sumber terjemahan menu.</p>
+                                                <h3 class="mb-1 fs-4">Skema Language Switcher (i18n)</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Mekanisme dynamic language switch (ID/EN), translation dictionary source, dan session persistence.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -192,8 +191,8 @@
                                             <i class="ki-duotone ki-abstract-39 fs-2hx text-dark flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema i18n Lanjutan</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Standar key translasi, governance, dan proses tambah bahasa baru.</p>
+                                                <h3 class="mb-1 fs-4">Skema Advanced i18n &amp; Localization</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Standar translation keys, scalable lang files governance, dan pipeline integrasi bahasa baru.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -206,8 +205,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Pergantian Versi Tampilan</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Blueprint multi-versi Metronic (v1 & v2), suffix view resolver, dan asset packaging.</p>
+                                                <h3 class="mb-1 fs-4">Skema Theme Version Switcher</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Multi-version theme blueprint (v1 &amp; v2), dynamic view resolver, dan layout suffix engine.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -220,8 +219,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span><span class="path4"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Pergantian Frontpage</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Arsitektur dynamic frontpage loader, registrasi template, dan integrasi root view.</p>
+                                                <h3 class="mb-1 fs-4">Skema Frontpage Switcher</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Dynamic landing page loader, registrasi template frontpage registry, dan routing switcher.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -233,8 +232,8 @@
                                             <i class="ki-duotone ki-chart fs-2hx text-info flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Pergantian Icon</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Arsitektur dinamisasi gaya icon KeenIcons (Duotone, Solid, Outline) dan DOM transformation.</p>
+                                                <h3 class="mb-1 fs-4">Skema Icon Style Switcher</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Arsitektur switch variasi KeenIcons (Duotone, Solid, Outline) dan helper icon path rendering.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -247,8 +246,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span><span class="path4"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Skema Page Title &amp; Breadcrumb</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Arsitektur resolusi otomatis tanpa boilerplate slot berbasis seeder hierarkis dan database.</p>
+                                                <h3 class="mb-1 fs-4">Skema Page Title &amp; Breadcrumbs</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Automated dynamic title &amp; breadcrumb generator dari route path tanpa manual boilerplate slot.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -260,10 +259,10 @@
                         <!--begin::Col Operasional-->
                         <div class="col-12 col-xxl-6">
                             <div class="d-flex align-items-center gap-3 mb-3">
-                                <span class="badge badge-light-warning">Kategori</span>
-                                <h3 class="mb-0 fs-3">Operasional</h3>
+                                <span class="badge badge-light-warning">Guide</span>
+                                <h3 class="mb-0 fs-3">Panduan Operasional</h3>
                             </div>
-                            <p class="text-gray-700 fs-7 mb-5">Panduan implementasi harian, standar tim, dan quality gate.</p>
+                            <p class="text-gray-700 fs-7 mb-5">SOP implementasi harian, developer standard, best practices, dan quality gate checks.</p>
 
                             <div class="row g-5">
                                 <div class="col-12">
@@ -274,8 +273,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Panduan Tambah Halaman</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Langkah praktis tambah halaman dari file Blade sampai publish menu.</p>
+                                                <h3 class="mb-1 fs-4">Panduan Add New Page (Tambah Halaman)</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Step-by-step membuat view Blade baru, auto-generated route, hingga registrasi ke menu.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -288,8 +287,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Panduan Tambah Menu</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Panduan operasional tambah item sidebar/header yang aman.</p>
+                                                <h3 class="mb-1 fs-4">Panduan Add New Menu (Tambah Menu)</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Tata cara menambahkan item navigasi baru pada config sidebar dan header seeder secara clean.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -302,8 +301,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Panduan Pergantian Versi Metronic</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Playbook tambah versi tema baru tanpa hardcode dan tanpa duplikasi berlebih.</p>
+                                                <h3 class="mb-1 fs-4">Panduan Switch Theme Version</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Panduan menambah versi layout baru tanpa duplikasi kode dan tanpa hardcoded markup.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -313,11 +312,10 @@
                                         class="card card-flush h-100 bg-light-warning">
                                         <div class="card-body d-flex align-items-start gap-3 py-4">
                                             <i class="ki-duotone ki-screen fs-2hx text-warning flex-shrink-0 mt-1"><span
-                                                    class="path1"></span><span class="path2"></span><span
-                                                    class="path3"></span></i>
+                                                    class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Panduan Pergantian Frontpage</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Langkah memilih frontpage via topbar dan cara menambah template baru.</p>
+                                                <h3 class="mb-1 fs-4">Panduan Switch Frontpage Layout</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Langkah memilih frontpage layout aktif serta cara mendaftarkan template landing page baru.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -330,8 +328,8 @@
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Panduan Page Title &amp; Breadcrumb</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Cara membuat view baru tanpa deklarasi slot manual dan kustomisasi title.</p>
+                                                <h3 class="mb-1 fs-4">Panduan Page Title &amp; Breadcrumbs</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Best practice membuat view tanpa boilerplate slot serta tata cara kustomisasi title override.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -343,8 +341,8 @@
                                             <i class="ki-duotone ki-text fs-2hx text-info flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Konvensi Penamaan</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Standar nama file, route, dan key translasi agar konsisten.</p>
+                                                <h3 class="mb-1 fs-4">Standard Naming Conventions</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Standar baku penamaan file view, routing URL, controller, model, dan translation keys.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -358,8 +356,8 @@
                                                     class="path3"></span><span class="path4"></span><span
                                                     class="path5"></span><span class="path6"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Workflow Developer Harian</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Panduan ritme kerja developer dari start day sampai DoD.</p>
+                                                <h3 class="mb-1 fs-4">Daily Developer Workflow</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Ritme kerja harian engineer dari Git branch, coding standard, code review, hingga Definition of Done.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -372,7 +370,7 @@
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
                                                 <h3 class="mb-1 fs-4">Checklist QA Smoke Test</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Checklist smoke test minimum sebelum merge/release.</p>
+                                                <p class="text-gray-700 fs-7 mb-0">Daftar test case minimum yang wajib lolos sebelum merge pull request atau release deployment.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -384,8 +382,8 @@
                                             <i class="ki-duotone ki-shield-tick fs-2hx text-warning flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
-                                                <h3 class="mb-1 fs-4">Playbook Incident Response</h3>
-                                                <p class="text-gray-700 fs-7 mb-0">Panduan aksi 0-15 menit per severity dan peran saat incident.</p>
+                                                <h3 class="mb-1 fs-4">Incident Response Playbook</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Action guide darurat 0–15 menit, escalation flow, dan pembagian role saat terjadi outage/incident.</p>
                                             </div>
                                         </div>
                                     </a>

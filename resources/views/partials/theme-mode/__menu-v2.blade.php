@@ -18,8 +18,8 @@
                     <span class="path10"></span>
                 </i>
             </span>
-            <span class="menu-title">
-                Light
+            <span class="menu-title" data-kt-translate="menu.light">
+                {{ __('menu.light') }}
             </span>
         </a>
     </div>
@@ -33,8 +33,8 @@
                     <span class="path2"></span>
                 </i>
             </span>
-            <span class="menu-title">
-                Dark
+            <span class="menu-title" data-kt-translate="menu.dark">
+                {{ __('menu.dark') }}
             </span>
         </a>
     </div>
@@ -50,8 +50,8 @@
                     <span class="path4"></span>
                 </i>
             </span>
-            <span class="menu-title">
-                System
+            <span class="menu-title" data-kt-translate="menu.system">
+                {{ __('menu.system') }}
             </span>
         </a>
     </div>

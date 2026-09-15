@@ -328,8 +328,11 @@ var KTLanguage = (function () {
                         }));
                     } catch (e) { }
 
-                    // Re-apply translation across the entire page
-                    applyTranslations(document.body, currentLocale);
+                    // Re-apply translation across the entire page only if locale differs from server render
+                    var serverLocale = (window.KTLanguageConfig && window.KTLanguageConfig.serverLocale) || defaultLocale;
+                    if (currentLocale !== serverLocale) {
+                        applyTranslations(document.body, currentLocale);
+                    }
                 }
             })
             .catch(function (err) {
@@ -774,6 +777,7 @@ var KTLanguage = (function () {
 
             fetch(syncUrl, {
                 method: "GET",
+                credentials: "same-origin",
                 headers: {
                     "X-Requested-With": "XMLHttpRequest",
                     "Accept": "application/json"
@@ -801,12 +805,16 @@ var KTLanguage = (function () {
 
     // Initialize module
     var init = function () {
+        if (window.KTLanguageConfig && window.KTLanguageConfig.defaultLocale) {
+            defaultLocale = window.KTLanguageConfig.defaultLocale;
+        }
         populateInitialDictionaries();
         currentLocale = getLanguage();
         updateUIControls(currentLocale);
 
-        // Only translate DOM on startup if active locale differs from default or explicit elements exist
-        if (currentLocale !== defaultLocale) {
+        // Only translate DOM on startup if active locale differs from server rendered HTML
+        var serverLocale = (window.KTLanguageConfig && window.KTLanguageConfig.serverLocale) || defaultLocale;
+        if (currentLocale !== serverLocale) {
             applyTranslations(document.body, currentLocale);
         }
 

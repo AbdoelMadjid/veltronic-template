@@ -28,9 +28,9 @@
                                 </span>
                                 <span class="d-flex flex-column">
                                     <span
-                                        class="fs-6 fw-bold text-gray-800">{{ __($titleKey) != $titleKey ? __($titleKey) : $card['title'] }}</span>
+                                        class="fs-6 fw-bold text-gray-800" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($card['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $card['title']) }}</span>
                                     <span
-                                        class="fs-7 text-gray-600">{{ __($descKey) != $descKey ? __($descKey) : $card['description'] }}</span>
+                                        class="fs-7 text-gray-600" data-kt-translate="{{ $descKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($descKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($card['description']) : null) ?? (__($descKey) != $descKey ? __($descKey) : $card['description']) }}</span>
                                 </span>
                             </a>
                         </div>
@@ -43,14 +43,14 @@
             <!--begin:Landing-->
             <div class="d-flex flex-stack flex-wrap flex-lg-nowrap gap-2 mx-5">
                 <div class="d-flex flex-column me-5">
-                    <div class="fs-6 fw-bold text-gray-800">
+                    <div class="fs-6 fw-bold text-gray-800" data-kt-translate="menu.landing_page_template">
                         {{ __('menu.landing_page_template') }}
                     </div>
-                    <div class="fs-7 fw-semibold text-muted">
+                    <div class="fs-7 fw-semibold text-muted" data-kt-translate="menu.landing_page_description">
                         {{ __('menu.landing_page_description') }}
                     </div>
                 </div>
-                <a href="{{ url('/landing') }}" class="btn btn-sm btn-primary fw-bold">
+                <a href="{{ url('/landing') }}" class="btn btn-sm btn-primary fw-bold" data-kt-translate="menu.explore">
                     {{ __('menu.explore') }}
                 </a>
             </div>
@@ -60,7 +60,7 @@
         <!--begin:Col-->
         <div class="menu-more bg-light col-lg-4 py-3 px-3 py-lg-6 px-lg-6 rounded-end">
             <!--begin:Heading-->
-            <h4 class="fs-6 fs-lg-4 text-gray-800 fw-bold mt-3 mb-3 ms-4">{{ __('menu.more_dashboards') }}</h4>
+            <h4 class="fs-6 fs-lg-4 text-gray-800 fw-bold mt-3 mb-3 ms-4" data-kt-translate="menu.more_dashboards">{{ __('menu.more_dashboards') }}</h4>
             <!--end:Heading-->
             <!--begin:Menu item-->
             @foreach (config('header._header_dashboard.header_dashboard_other') as $menu)
@@ -69,7 +69,7 @@
                     <a href="{{ route($menu['route']) }}"
                         class="menu-link py-2 {{ request()->routeIs($menu['route']) ? 'active' : '' }}">
                         <span
-                            class="menu-title">{{ __($titleKey) != $titleKey ? __($titleKey) : $menu['title'] }}</span>
+                            class="menu-title" data-kt-translate="{{ $titleKey }}">{{ (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($titleKey) : null) ?? (function_exists('translateMenuTitleSafely') ? translateMenuTitleSafely($menu['title']) : null) ?? (__($titleKey) != $titleKey ? __($titleKey) : $menu['title']) }}</span>
                     </a>
                 </div>
             @endforeach

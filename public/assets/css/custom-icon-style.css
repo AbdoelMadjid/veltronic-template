@@ -33,10 +33,26 @@
     display: none !important;
 }
 
-/* Hide path spans when converted to Solid or Outline style */
+/* Instant Anti-Flicker: Hide path spans ONLY on converted icons, never inside dropdowns/previews/ignore items */
 .ki-solid:not([data-kt-icon-style-ignore]) > [class^="path"],
-.ki-outline:not([data-kt-icon-style-ignore]) > [class^="path"] {
+.ki-outline:not([data-kt-icon-style-ignore]) > [class^="path"],
+[data-kt-icon-style="solid"] .ki-duotone:not([data-kt-icon-style-ignore]):not([data-kt-element="icon-style-menu"] *):not([data-kt-element="icon-style-toggle"] *):not(#hub_panel_icons *):not([data-kt-icon-preview] *) > [class^="path"],
+[data-kt-icon-style="outline"] .ki-duotone:not([data-kt-icon-style-ignore]):not([data-kt-element="icon-style-menu"] *):not([data-kt-element="icon-style-toggle"] *):not(#hub_panel_icons *):not([data-kt-icon-preview] *) > [class^="path"] {
     display: none !important;
+}
+
+/* Always force-display path spans for duotone preview icons, dropdown menus, and explicit ignore elements */
+[data-kt-icon-style-ignore] > [class^="path"],
+[data-kt-icon-style-ignore="true"] > [class^="path"],
+[data-kt-element="icon-style-menu"] .ki-duotone > [class^="path"],
+[data-kt-element="icon-style-toggle"] .ki-duotone > [class^="path"],
+[data-kt-icon-preview-style="duotone"] .ki-duotone > [class^="path"],
+#hub_panel_icons .ki-duotone > [class^="path"],
+.mobile-toolbar-hub-menu [data-kt-icon-preview-style="duotone"] .ki-duotone > [class^="path"],
+.mobile-toolbar-hub-menu [data-kt-mobile-icon-style="duotone"] .ki-duotone > [class^="path"],
+[data-kt-icon-preview="true"] .ki-duotone > [class^="path"],
+[data-kt-icon-preview] .ki-duotone > [class^="path"] {
+    display: inline-block !important;
 }
 
 /* Dropdown Menu Item Active State */

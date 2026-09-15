@@ -10,7 +10,7 @@ var KTIconStyle = (function () {
     var observer = null;
     var isTransforming = false;
 
-    // Get current active style from attribute, localStorage or default
+    // Get current active style from localStorage, cookie, attribute, or default
     var getStyle = function () {
         if (document.documentElement && document.documentElement.hasAttribute("data-kt-icon-style")) {
             var attrStyle = document.documentElement.getAttribute("data-kt-icon-style");
@@ -24,8 +24,14 @@ var KTIconStyle = (function () {
             if (stored && supportedStyles.indexOf(stored) !== -1) {
                 return stored;
             }
-        } catch (e) {
-            // LocalStorage might be disabled
+        } catch (e) {}
+
+        var match = document.cookie.match(new RegExp('(^| )kt_icon_style=([^;]+)'));
+        if (match && match[2]) {
+            var cookieStyle = decodeURIComponent(match[2]);
+            if (supportedStyles.indexOf(cookieStyle) !== -1) {
+                return cookieStyle;
+            }
         }
 
         return defaultStyle;
@@ -54,6 +60,9 @@ var KTIconStyle = (function () {
         if (el.closest('[data-kt-icon-style-ignore]')) return true;
         if (el.closest('[data-kt-element="icon-style-menu"]')) return true;
         if (el.closest('[data-kt-element="icon-style-toggle"]')) return true;
+        if (el.closest('#hub_panel_icons')) return true;
+        if (el.closest('#kt_mobile_toolbar_hub_menu')) return true;
+        if (el.closest('.mobile-toolbar-hub-menu')) return true;
         if (el.closest('#kt_docs_keenicons_listing')) return true;
         if (el.closest('[data-kt-icon-preview="true"]')) return true;
         if (el.closest('[data-kt-icon-preview]')) return true;
@@ -79,6 +88,20 @@ var KTIconStyle = (function () {
         if (currentClass !== targetClass) {
             classList.remove("ki-duotone", "ki-solid", "ki-outline");
             classList.add(targetClass);
+        }
+
+        // When switching to duotone, guarantee path spans exist inside the icon
+        if (targetStyle === "duotone") {
+            var existingPaths = el.querySelectorAll('[class^="path"]');
+            if (existingPaths.length === 0) {
+                var fragment = document.createDocumentFragment();
+                for (var i = 1; i <= 10; i++) {
+                    var span = document.createElement("span");
+                    span.className = "path" + i;
+                    fragment.appendChild(span);
+                }
+                el.appendChild(fragment);
+            }
         }
     };
 
@@ -137,11 +160,20 @@ var KTIconStyle = (function () {
         // 1. Set root attribute
         document.documentElement.setAttribute("data-kt-icon-style", style);
 
-        // 2. Persist in localStorage and cookie
+        // 2. Persist in localStorage and cookie & sync to backend settings
         if (persist !== false) {
             try {
                 localStorage.setItem("data-kt-icon-style", style);
-                document.cookie = "kt_icon_style=" + style + ";path=/;max-age=31536000";
+                document.cookie = "kt_icon_style=" + style + ";path=/;max-age=31536000;SameSite=Lax";
+                if (window.fetch) {
+                    fetch('/icon-style/switch/' + encodeURIComponent(style), {
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    }).catch(function () {});
+                }
             } catch (e) {
                 // Ignore storage errors
             }

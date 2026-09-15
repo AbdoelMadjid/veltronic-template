@@ -50,6 +50,16 @@
             </div><!--end:Menu item-->
         @endforeach
 
+        @php
+            $authUser = auth()->user();
+            $canViewTemplateHeader = $authUser && (
+                (method_exists($authUser, 'isMasterOrAdmin') && $authUser->isMasterOrAdmin()) ||
+                (method_exists($authUser, 'hasAnyRole') && $authUser->hasAnyRole(['master', 'admin'])) ||
+                in_array($authUser->role ?? '', ['master', 'admin'])
+            );
+        @endphp
+
+        @if ($canViewTemplateHeader)
         <!--begin:Menu item-->
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
             data-kt-feature-menu="top_menu_dashboard"
@@ -145,6 +155,7 @@
                 <!--end:Menu item-->
             </div><!--end:Menu sub-->
         </div><!--end:Menu item-->
+        @endif
     </div>
     <!--end::Menu-->
 </div>

@@ -34,13 +34,81 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.12.1
+                            Versi Saat Ini: v1.14.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.14.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.14.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.14.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>15 Sep 2026, 14:35 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Islamic Hijri Day Names &amp; Two-Line Toolbar Date, Zero-Flicker Bilingual Engine, and Realtime Icon Style Switcher</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penambahan nama hari Islam pada helper kalender Hijriah dan penataan tampilan tanggal 2-baris (Masehi &amp; Hijriah) di toolbar tanpa menambah tinggi header, eliminasi kedipan bahasa (<i>zero-flicker bilingual engine</i>) pada Server-Side Rendering (SSR) dan DOM TreeWalker, perbaikan gaya ikon realtime di toolbar dengan preservasi ikon duotone, preservasi route publik welcome/landing page, serta pencatatan aturan ketat anti-regresi agen.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Islamic Hijri Day Names &amp; 2-Baris Toolbar:</strong> Integrasi nama hari Islam (<i>Al-Ahad</i>, <i>Al-Ithnayn</i>, <i>Al-Thulatha</i>, <i>Al-Arbi'a</i>, <i>Al-Khamis</i>, <i>Al-Jum'ah</i>, <i>Al-Sabt</i>) pada helper <code>toHijriah()</code> dan tata letak 2 baris tanggal di toolbar dengan tooltip responsif.</li>
+                                        <li class="mb-1"><strong>Zero-Flicker Bilingual SSR:</strong> Peningkatan fungsi <code>translateMenuTitleSafely()</code> dengan pemetaan dua arah otomatis (<i>textMap id $\leftrightarrow$ en</i>) dari <code>LanguageManager</code>, partisi cache locale pada <code>sidebarAdditionalMenuSections()</code>, dan atribut <code>data-kt-translate</code> pada seluruh komponen menu header, sidebar, dan judul halaman.</li>
+                                        <li class="mb-1"><strong>Realtime Icon Style Switcher:</strong> Perbaikan switcher gaya ikon (<code>duotone</code>, <code>solid</code>, <code>outline</code>) dengan isolasi <code>data-kt-icon-style-ignore="true"</code>, pemulihan 4-paths duotone pada sidebar, dan sinkronisasi realtime ke database &amp; tab Settings.</li>
+                                        <li class="mb-1"><strong>Public Welcome Route:</strong> Akses rute halaman landing / welcome tetap terbuka untuk publik dan tamu setelah logout tanpa redirect tak diinginkan.</li>
+                                        <li class="mb-1"><strong>Antigravity Agent Rules:</strong> Pembuatan <code>AGENTS.md</code> dan <code>.agents/rules/efficiency-and-targeted-execution.md</code> untuk mencegah eksekusi full test suite yang memakan waktu dan menjamin kompatibilitas ke belakang tanpa regresi.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.14.0-->
+
+                        <!--begin::Item v1.13.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.13.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold">v1.13.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>09 Sep 2026, 19:05 WIB
+                                    </span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Manajemen Pengguna (User Management) Full CRUD Module with DataTables &amp; Pure Indonesian UI</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembangunan modul CRUD lengkap Manajemen Pengguna berbasis AJAX dan Yajra DataTables, unggah avatar profil multipart, dialog interaktif SweetAlert2, migrasi database, dan standarisasi antarmuka bahasa Indonesia murni.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Full CRUD User Controller:</strong> Implementasi <code>UserController.php</code> dengan operasi tambah, edit, hapus, reset password, dan transaksi database.</li>
+                                        <li class="mb-1"><strong>Yajra DataTables Service Class:</strong> Integrasi <code>UserDataTable.php</code> untuk pencarian dan pemilahan data pengguna secara cepat dan terstruktur.</li>
+                                        <li class="mb-1"><strong>Avatar Image Upload:</strong> Penambahan kolom <code>avatar</code> pada tabel <code>users</code> dan validasi upload pada <code>UserRequest.php</code>.</li>
+                                        <li class="mb-1"><strong>Pure Indonesian UI:</strong> Pembersihan seluruh sisa notasi ganda bilingual pada modul pengguna menjadi bahasa Indonesia baku dan natural.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.13.0-->
+
                         <!--begin::Item v1.12.1 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.12.1</div>
@@ -56,7 +124,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>09 Sep 2026, 14:30 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">High-Performance In-Memory Static Memoization &amp; Query Overhead Elimination</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

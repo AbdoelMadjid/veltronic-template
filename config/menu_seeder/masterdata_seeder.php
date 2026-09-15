@@ -2,7 +2,7 @@
 
 $parentMenuFiles = [
     __DIR__ . '/identitaspengguna_seeder.php',
-    __DIR__ . '/masterdata/masterdata-manajemenpengguna_seeder.php',
+    __DIR__ . '/masterdata/masterdata-usermanagement_seeder.php',
     __DIR__ . '/masterdata/masterdata-appsupport_seeder.php',
 ];
 

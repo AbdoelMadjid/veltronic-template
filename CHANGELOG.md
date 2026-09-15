@@ -5,6 +5,50 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.14.0] - 2026-09-15
+
+### Added
+- **Islamic Hijri Day Names & Two-Line Toolbar Date Display**:
+  - Added Islamic day names (`Al-Ahad`, `Al-Ithnayn`, `Al-Thulatha`, `Al-Arbi'a`, `Al-Khamis`, `Al-Jum'ah`, `Al-Sabt`) to `toHijriah()` in `app/Helpers/helpers.php`.
+  - Implemented a 2-line Gregorian & Islamic Hijri date layout in the toolbar without increasing header, page title, or breadcrumb height.
+  - Retained responsive mobile tooltip displaying complete bilingual date information.
+- **Agent Guidelines & Anti-Regression Rules**:
+  - Added `AGENTS.md` and `.agents/rules/efficiency-and-targeted-execution.md` enforcing targeted testing and strict backward-compatibility preservation.
+
+### Enhanced & Fixed
+- **Zero-Flicker Instant Bilingual Localization (SSR & DOM Sync)**:
+  - Enhanced `translateMenuTitleSafely()` in `app/Helpers/GetPageTitle.php` with bidirectional `textMap` lookup (`id_to_en` & `en_to_id`) from `LanguageManager`, completely eliminating language flicker/flash on page refresh or navigation for both English and Indonesian.
+  - Partitioned `sidebarAdditionalMenuSections()` static cache by `app()->getLocale()`.
+  - Added `data-kt-translate` and safe translation resolvers across sidebar menu items, header mega menus, and page title components.
+- **Realtime Icon Style Switcher & Database Sync Authority**:
+  - Fixed toolbar/topbar icon switcher (`duotone`, `solid`, `outline`) to preview and switch in realtime without breaking dropdown checkmarks or losing duotone sidebar paths.
+  - Added path protection (`data-kt-icon-style-ignore="true"`) to icon previews.
+  - Synchronized icon style updates with database settings and App Support settings tab.
+- **Public Route & Welcome Page Authentication Independence**:
+  - Fixed routing so guests and all user roles can access the frontpage/welcome page after logout without authentication redirect loops.
+
+---
+
+## [v1.13.0] - 2026-09-09
+
+### Added
+- **Manajemen Pengguna (User Management) Full CRUD Module**:
+  - `app/Http/Controllers/ManajemenPengguna/UserController.php`: Full CRUD operations (list, create, store, edit, update, delete, reset-password) with database transaction safety and validation.
+  - `app/DataTable/ManajemenPengguna/UserDataTable.php`: Dedicated Yajra DataTables service class using `use Illuminate\Database\Eloquent\Builder as QueryBuilder;` and `DataTables::eloquent()`.
+  - `app/Http/Requests/ManajemenPengguna/UserRequest.php`: Robust validation for avatar image uploads, unique email per user, passwords, and Spatie roles.
+  - `resources/views/pages/usermanagement/users.blade.php`: Modern Metronic card UI with responsive search, role filters, real-time reload, and action tooltips.
+  - `resources/views/pages/usermanagement/partials/users-form-modal.blade.php` & `users-detail-modal.blade.php`: Form modal with avatar preview, edit support, and detail view.
+  - `public/assets/js/manajemenpengguna/users.js`: Client-side AJAX submission with FormData multipart, real-time header avatar live update, SweetAlert2 confirm dialogs, and toast notifications.
+  - `database/migrations/2026_09_09_000001_add_avatar_to_users_table.php`: Added nullable `avatar` column to `users` table.
+
+### Enhanced
+- **Pure Indonesian UI & Zero Bilingual Leftovers**:
+  - Refined all text labels, table headers, modal fields, validation messages, and action tooltips across the User Management module to pure, natural Indonesian (removed all bilingual dual notations such as `(Role)`, `(Avatar)`, `Master Data` $\rightarrow$ `Data Master`, `Refresh` $\rightarrow$ `Segarkan`, `Reset` $\rightarrow$ `Atur Ulang`).
+  - Updated DataTables language dictionary and SweetAlert prompt messages to pure Indonesian.
+  - Updated user account dropdown (`resources/views/partials/menus/_user-account-menu.blade.php`) to use Indonesian translations directly.
+
+---
+
 ## [v1.12.1] - 2026-09-09
 
 ### Fixed & Optimized

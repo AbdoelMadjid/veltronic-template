@@ -7,6 +7,12 @@ class ThemeVersion
     protected static ?string $cachedDefault = null;
     protected static ?array $cachedAvailable = null;
 
+    public static function clearCache(): void
+    {
+        self::$cachedDefault = null;
+        self::$cachedAvailable = null;
+    }
+
     public static function default(): string
     {
         if (self::$cachedDefault !== null) {

@@ -25,7 +25,15 @@ class AppFiturController extends Controller
             'sidebar_menus' => $allFiturs->where('category', 'sidebar_menus')->values(),
         ];
 
-        $settings = AppSetting::all()->pluck('value', 'key')->toArray();
+        $dbSettings = AppSetting::all()->pluck('value', 'key')->toArray();
+        $settings = array_merge([
+            'default_icon_style' => 'duotone',
+            'default_language' => 'id',
+            'default_theme_version' => 'v1',
+            'default_frontpage' => 'landing',
+            'enable_registration' => '1',
+            'session_lifetime' => '120',
+        ], $dbSettings);
 
         $stats = [
             'total' => $allFiturs->count(),
@@ -169,9 +177,27 @@ class AppFiturController extends Controller
             AppSetting::set($key, $value, $group);
         }
 
+        // Synchronize active admin session & cookies
+        if (isset($data['default_theme_version'])) {
+            session(['theme_version' => $data['default_theme_version']]);
+        }
+        if (isset($data['default_frontpage'])) {
+            session(['frontpage' => $data['default_frontpage']]);
+            \Illuminate\Support\Facades\Cookie::queue('frontpage', $data['default_frontpage'], 525600);
+        }
+        if (isset($data['default_icon_style'])) {
+            session(['kt_icon_style' => $data['default_icon_style']]);
+            \Illuminate\Support\Facades\Cookie::queue('kt_icon_style', $data['default_icon_style'], 525600);
+        }
+        if (isset($data['default_language'])) {
+            session(['locale' => $data['default_language']]);
+            \Illuminate\Support\Facades\Cookie::queue('kt_lang', $data['default_language'], 525600);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Pengaturan aplikasi berhasil disimpan ke database.',
+            'settings' => $data,
         ]);
     }
 

@@ -17,19 +17,33 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = null;
-        if (Session::has('locale')) {
-            $locale = Session::get('locale');
-        } elseif ($request->hasCookie('kt_lang')) {
+        $cookieLocale = null;
+        if ($request->hasCookie('kt_lang') && in_array($request->cookie('kt_lang'), ['en', 'id'], true)) {
             $cookieLocale = $request->cookie('kt_lang');
-            if (in_array($cookieLocale, ['en', 'id'], true)) {
-                $locale = $cookieLocale;
-                Session::put('locale', $locale);
-            }
+        } elseif (isset($_COOKIE['kt_lang']) && in_array($_COOKIE['kt_lang'], ['en', 'id'], true)) {
+            $cookieLocale = $_COOKIE['kt_lang'];
+        } elseif (isset($_COOKIE['data-kt-lang']) && in_array($_COOKIE['data-kt-lang'], ['en', 'id'], true)) {
+            $cookieLocale = $_COOKIE['data-kt-lang'];
         }
+
+        $sessionLocale = Session::get('locale');
+        $defaultDbLocale = null;
+        try {
+            if (class_exists(\App\Models\AppSetting::class)) {
+                $defaultDbLocale = \App\Models\AppSetting::get('default_language');
+            }
+        } catch (\Throwable $e) {
+            // fallback
+        }
+
+        // Prefer active client cookie if present, fallback to session, then database default, then config
+        $locale = $cookieLocale ?: ($sessionLocale ?: ($defaultDbLocale ?: config('app.locale', 'id')));
 
         if ($locale && in_array($locale, ['en', 'id'], true)) {
             App::setLocale($locale);
+            if (!Session::has('locale') || Session::get('locale') !== $locale) {
+                Session::put('locale', $locale);
+            }
         }
 
         return $next($request);

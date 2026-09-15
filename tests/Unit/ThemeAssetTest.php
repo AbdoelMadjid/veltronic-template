@@ -39,4 +39,17 @@ class ThemeAssetTest extends TestCase
 
         $this->assertStringEndsWith('/assets/css/style.bundle.css', $url);
     }
+
+    public function test_it_resolves_v2_bundle_even_when_default_version_is_v2(): void
+    {
+        config()->set('theme.default_version', 'v2');
+        config()->set('theme.versions', ['v1', 'v2']);
+        config()->set('theme.asset_bases', ['v1' => 'assets', 'v2' => 'assets']);
+
+        $urlV2 = ThemeAsset::url('css/style.bundle.css', 'v2');
+        $this->assertStringEndsWith('/assets/css/style.bundle-v2.css', $urlV2);
+
+        $urlV1 = ThemeAsset::url('css/style.bundle.css', 'v1');
+        $this->assertStringEndsWith('/assets/css/style.bundle.css', $urlV1);
+    }
 }

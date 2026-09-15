@@ -11,6 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->encryptCookies(except: [
+            'kt_lang',
+            'data-kt-lang',
+            'kt_icon_style',
+            'data-kt-icon-style',
+        ]);
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);

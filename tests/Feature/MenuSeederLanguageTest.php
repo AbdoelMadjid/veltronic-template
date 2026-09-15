@@ -134,4 +134,78 @@ class MenuSeederLanguageTest extends TestCase
             ->get('/help/pemrograman/operasional/panduan-page-title-dan-breadcrumbs');
         $responseOperasional->assertStatus(200);
     }
+
+    public function test_widgets_cards_renders_bilingual_title_and_clean_breadcrumbs(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        // Test Indonesian
+        $responseId = $this->actingAs($admin)
+            ->withSession(['locale' => 'id'])
+            ->get('/pages/widgets/cards');
+
+        $responseId->assertStatus(200);
+        $responseId->assertSee('Kartu');
+        $responseId->assertSee('Beranda');
+        $responseId->assertSee('Halaman');
+        $responseId->assertSee('Widget');
+
+        // Test English
+        $responseEn = $this->actingAs($admin)
+            ->withSession(['locale' => 'en'])
+            ->get('/pages/widgets/cards');
+
+        $responseEn->assertStatus(200);
+        $responseEn->assertSee('Cards');
+        $responseEn->assertSee('Home');
+        $responseEn->assertSee('Pages');
+        $responseEn->assertSee('Widgets');
+    }
+
+    public function test_widgets_calendar_renders_bilingual_title_and_clean_breadcrumbs(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        // Test Indonesian
+        $responseId = $this->actingAs($admin)
+            ->withSession(['locale' => 'id'])
+            ->get('/pages/widgets/calendar');
+
+        $responseId->assertStatus(200);
+        $responseId->assertSee('Kalender');
+        $responseId->assertSee('Beranda');
+        $responseId->assertSee('Halaman');
+        $responseId->assertSee('Widget');
+
+        // Test English
+        $responseEn = $this->actingAs($admin)
+            ->withSession(['locale' => 'en'])
+            ->get('/pages/widgets/calendar');
+
+        $responseEn->assertStatus(200);
+        $responseEn->assertSee('Calendar');
+        $responseEn->assertSee('Home');
+        $responseEn->assertSee('Pages');
+        $responseEn->assertSee('Widgets');
+    }
+
+    public function test_icon_style_persists_from_cookie_without_reverting(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        // Test outline icon style switch
+        $this->actingAs($admin)->getJson('/icon-style/switch/outline');
+        $responseOutline = $this->actingAs($admin)->get('/dashboard');
+        $responseOutline->assertStatus(200);
+        $responseOutline->assertSee('data-kt-icon-style="outline"', false);
+
+        // Test solid icon style switch
+        $this->actingAs($admin)->getJson('/icon-style/switch/solid');
+        $responseSolid = $this->actingAs($admin)->get('/dashboard');
+        $responseSolid->assertStatus(200);
+        $responseSolid->assertSee('data-kt-icon-style="solid"', false);
+    }
 }

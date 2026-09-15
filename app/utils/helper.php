@@ -57,15 +57,17 @@ if (!function_exists('menuNormalizePath')) {
 }
 
 if (!function_exists('sidebarAdditionalMenuSections')) {
-    function sidebarAdditionalMenuSections(): array
+    function sidebarAdditionalMenuSections(bool $fresh = false): array
     {
-        static $cachedSections = null;
-        if ($cachedSections !== null) {
-            return $cachedSections;
-        }
+        static $cachedSections = [];
 
         if (!auth()->check()) {
             return [];
+        }
+
+        $cacheKey = (string) (auth()->id() ?? 'guest') . '_' . app()->getLocale();
+        if (!$fresh && !app()->runningUnitTests() && isset($cachedSections[$cacheKey])) {
+            return $cachedSections[$cacheKey];
         }
 
         // Tentukan jenis link:
@@ -208,10 +210,17 @@ if (!function_exists('sidebarAdditionalMenuSections')) {
             // Label section prioritaskan title_key dari config seeder kategori.
             $categoryConfig = config("menu_seeder.categories.{$category}", []);
             $categoryTitleKey = trim((string) ($categoryConfig['title_key'] ?? ''));
-            $categorySlug = Str::of($category)->lower()->replace(' ', '_')->toString();
-            $labelKey = 'menu.' . ($categoryTitleKey !== '' ? $categoryTitleKey : $categorySlug);
-            $translated = __($labelKey);
-            $label = $translated !== $labelKey ? $translated : Str::headline(strtolower($category));
+            $label = null;
+            if ($categoryTitleKey !== '') {
+                $label = translateMenuTitleSafely('menu.' . $categoryTitleKey);
+            }
+            if (!$label) {
+                $categorySlug = Str::of($category)->lower()->replace(' ', '_')->toString();
+                $label = translateMenuTitleSafely('menu.' . $categorySlug) ?? translateMenuTitleSafely($category);
+            }
+            if (!$label) {
+                $label = Str::headline(strtolower($category));
+            }
             $sections[] = [
                 'key' => $category,
                 'label' => $label,
@@ -219,7 +228,7 @@ if (!function_exists('sidebarAdditionalMenuSections')) {
             ];
         }
 
-        $cachedSections = $sections;
+        $cachedSections[$cacheKey] = $sections;
 
         return $sections;
     }
@@ -244,16 +253,57 @@ if (!function_exists('isFeatureActive')) {
     }
 }
 
+if (!function_exists('getActiveIconStyle')) {
+    function getActiveIconStyle(): string
+    {
+        try {
+            if (class_exists(\App\Models\AppSetting::class) && \Illuminate\Support\Facades\Schema::hasTable('app_settings')) {
+                $dbStyle = \App\Models\AppSetting::get('default_icon_style');
+                if (!empty($dbStyle) && in_array($dbStyle, ['duotone', 'solid', 'outline'], true)) {
+                    return $dbStyle;
+                }
+            }
+        } catch (\Throwable $e) {}
+
+        if (session()->has('kt_icon_style')) {
+            $sessionStyle = session('kt_icon_style');
+            if (in_array($sessionStyle, ['duotone', 'solid', 'outline'], true)) {
+                return $sessionStyle;
+            }
+        }
+
+        return 'duotone';
+    }
+}
+
 if (!function_exists('formatIconClass')) {
     function formatIconClass(?string $icon): string
     {
-        return trim((string) $icon);
+        $icon = trim((string) $icon);
+        if ($icon === '') {
+            return '';
+        }
+
+        $activeStyle = getActiveIconStyle();
+        if ($activeStyle === 'duotone') {
+            return $icon;
+        }
+
+        if (str_contains($icon, 'ki-duotone')) {
+            return str_replace('ki-duotone', 'ki-' . $activeStyle, $icon);
+        }
+
+        return $icon;
     }
 }
 
 if (!function_exists('keenicon_paths')) {
     function keenicon_paths(?string $icon, int $paths = 0): int
     {
-        return max(0, $paths);
+        if ($paths > 0) {
+            return $paths;
+        }
+
+        return 4;
     }
 }

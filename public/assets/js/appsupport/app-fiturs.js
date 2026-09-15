@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (filterStatusSelect) filterStatusSelect.addEventListener('change', applyFeatureFilters);
 
     // ========================================================
-    // TAB 2: SYSTEM SETTINGS FORM HANDLING (AJAX)
+    // TAB 2: SYSTEM SETTINGS FORM & REALTIME SYNC
     // ========================================================
     const settingsForm = document.getElementById('system_settings_form');
     const btnSaveSettings = document.getElementById('btn_save_system_settings');
@@ -303,7 +303,42 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnImportConfig = document.getElementById('btn_import_features_config');
     const importFileInput = document.getElementById('import_config_file_input');
 
+    // Sync radio card visual active state helper
+    function syncRadioGroupVisual(groupName, selectedValue) {
+        if (!settingsForm) return;
+        const radios = settingsForm.querySelectorAll(`input[name="${groupName}"]`);
+        radios.forEach(radio => {
+            const isMatch = (radio.value === selectedValue);
+            radio.checked = isMatch;
+            const label = radio.closest('[data-kt-button]');
+            if (label) {
+                if (isMatch) {
+                    label.classList.add('active');
+                } else {
+                    label.classList.remove('active');
+                }
+            }
+        });
+    }
+
+    // Realtime sync when Icon Style is changed from toolbar / mobile hub
+    function handleIconStyleChange(e) {
+        const style = e.detail?.style || (typeof KTIconStyle !== 'undefined' ? KTIconStyle.getStyle() : null);
+        if (style) {
+            syncRadioGroupVisual('default_icon_style', style);
+        }
+    }
+
+    document.documentElement.addEventListener('kt.iconstyle.change', handleIconStyleChange);
+
+    // Bind change event to all radio buttons in settings form to ensure .active class consistency
     if (settingsForm) {
+        settingsForm.addEventListener('change', function (e) {
+            if (e.target && e.target.type === 'radio') {
+                syncRadioGroupVisual(e.target.name, e.target.value);
+            }
+        });
+
         settingsForm.addEventListener('submit', function (e) {
             e.preventDefault();
             if (btnSaveSettings) {
@@ -312,6 +347,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const formData = new FormData(settingsForm);
+            const chosenIconStyle = settingsForm.querySelector('input[name="default_icon_style"]:checked')?.value;
 
             fetch('/appsupport/app-fiturs/settings', {
                 method: 'POST',
@@ -329,6 +365,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 if (data.success) {
+                    // Instantly apply icon style to page if modified
+                    if (chosenIconStyle && typeof KTIconStyle !== 'undefined' && KTIconStyle.setStyle) {
+                        KTIconStyle.setStyle(chosenIconStyle, false);
+                    }
+
                     Notify.alert({
                         text: data.message,
                         icon: 'success',

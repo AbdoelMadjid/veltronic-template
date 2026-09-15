@@ -468,6 +468,8 @@ return [
     'layouts' => 'Tata Letak',
     'docs_components' => 'Dok. & Komponen',
     'docs_components_tooltip' => '200+ komponen internal dan plugin pihak ketiga',
+    'about' => 'Tentang',
+    'about_tooltip' => 'Tentang aplikasi dan pengembang',
     'components_tooltip' => 'Lihat 200+ komponen internal, plugin, dan solusi siap pakai',
     'documentation_tooltip' => 'Lihat dokumentasi lengkap',
     'show' => 'Tampilkan',
@@ -540,14 +542,85 @@ return [
     'md_app_support' => 'Dukungan Aplikasi',
     'md_backup_db' => 'Backup DB',
     'md_data_login' => 'Data Login',
-    'md_manajemen_pengguna' => 'Manajemen Pengguna',
     'md_masterdata' => 'Master Data',
     'md_menu' => 'Menu',
     'md_permission' => 'Permission',
     'md_role' => 'Role',
     'md_theme_frontpage' => 'Tema Halaman Depan',
     'md_user' => 'User',
+    'md_user_management' => 'Manajemen Pengguna',
+    'activities' => 'Aktivitas',
+    'notifications' => 'Notifikasi',
+    'chat' => 'Obrolan',
+    'my_apps' => 'Aplikasi Saya',
+    'theme_mode' => 'Mode Tema',
+    'icon_style' => 'Gaya Ikon',
+    'language' => 'Bahasa',
+    'theme_version' => 'Versi Tema',
+    'frontpages_and_templates' => 'Halaman Depan & Template',
+    'quick_tools' => 'Peralatan Cepat',
+    'show_header_menu' => 'Tampilkan menu header',
+    'show_aside' => 'Tampilkan panel samping',
+    'frontpage_selection' => 'Pilihan Frontpage (Default: /)',
+    'frontpage_selection_desc' => 'Pilih halaman awal yang tampil saat website diakses',
+    'active_frontpage_notice' => 'Frontpage aktif saat ini:',
+    'selected_active' => 'Terpilih (Aktif)',
+    'select_default' => 'Pilih Default',
+    'open_landing' => 'Buka Landing',
+    'light' => 'Terang',
+    'dark' => 'Gelap',
+    'system' => 'Sistem',
+    'light_mode' => 'Mode Terang',
+    'dark_mode' => 'Mode Gelap',
+    'system_mode' => 'Mode Sistem',
+    'duotone' => 'Duotone',
+    'solid' => 'Solid',
+    'outline' => 'Outline',
+    'select_theme_mode' => 'Pilih Mode Tema',
+    'quick_links' => 'Tautan Cepat',
+    'administration' => 'Administrasi',
+    'widgets' => 'Widget',
+    'widgets_demos' => 'Demo Widget',
+    'feeds' => 'Feed',
+    'engage' => 'Engage',
+    'lists' => 'Daftar',
+    'maps' => 'Peta',
+    'misc' => 'Lain-lain',
+    'mixed' => 'Campuran',
+    'player' => 'Pemutar',
+    'sliders' => 'Slider',
+    'social' => 'Sosial',
+    'statistics' => 'Statistik',
+    'tables' => 'Tabel',
+    'tiles' => 'Tile',
+    'timeline' => 'Linimasa',
+    'video' => 'Video',
+    'forms' => 'Formulir',
+    'general' => 'Umum',
+    'utilities' => 'Utilitas',
+    'wizards' => 'Wizard',
+    'search' => 'Pencarian',
+    'user_profile' => 'Profil Pengguna',
+    'corporate' => 'Perusahaan',
+    'documentation' => 'Dokumentasi',
+    'calendar' => 'Kalender',
+    'cards' => 'Kartu',
+    'charts' => 'Grafik',
 ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

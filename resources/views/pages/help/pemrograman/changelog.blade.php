@@ -34,13 +34,47 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.15.1
+                            Versi Saat Ini: v1.16.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.16.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.16.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.16.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>15 Sep 2026, 23:15 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Reorganisasi Domain Namespace Model, Controller, &amp; Factory</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Restrukturisasi menyeluruh arsitektur kode backend ke dalam namespace domain modular (<code>AppSupport</code>, <code>UserManagement</code>, dan <code>Profil</code>) untuk meningkatkan maintainability dan standardisasi proyek, merapikan model duplikat di root <code>app/Models</code>, memindahkan <code>UserController</code> ke <code>UserManagement</code>, serta menyelaraskan database factory dan seeders.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Domain Models Sub-Namespaces:</strong> Pengelompokan model ke <code>App\Models\AppSupport</code> (<code>AppFitur</code>, <code>AppSetting</code>, <code>Menu</code>), <code>App\Models\UserManagement</code> (<code>User</code>, <code>Role</code>, <code>Permission</code>), dan <code>App\Models\Profil</code> (<code>UserDetail</code>, <code>UserLog</code>, <code>UserSetting</code>).</li>
+                                        <li class="mb-1"><strong>Controller &amp; Asset Realignment:</strong> Memindahkan <code>UserController</code> ke <code>App\Http\Controllers\UserManagement\UserController</code>, menyelaraskan route prefix ke <code>usermanagement.users.*</code>, dan merelokasi asset JS ke <code>public/assets/js/usermanagement/users.js</code>.</li>
+                                        <li class="mb-1"><strong>UserFactory &amp; Config Alignment:</strong> Memindahkan factory ke <code>Database\Factories\UserManagement\UserFactory</code> serta memperbarui konfigurasi <code>config/auth.php</code> dan <code>config/permission.php</code>.</li>
+                                        <li class="mb-1"><strong>Full Seeders &amp; Test Suite Synchronization:</strong> Memperbarui seluruh seeder dan unit/feature tests agar mengacu ke namespace baru tanpa regresi.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.16.0-->
+
                         <!--begin::Item v1.15.1 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.15.1</div>
@@ -56,7 +90,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>15 Sep 2026, 22:35 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Zero-Flicker Bilingual Multi-Environment &amp; Fresh-Seed Hardening</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

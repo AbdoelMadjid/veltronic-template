@@ -5,6 +5,26 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.16.0] - 2026-09-15
+
+### Refactored & Reorganized
+- **Domain Namespaces Reorganization for Models, Controllers, & Factories**:
+  - **Models Sub-Namespacing (`app/Models/`)**:
+    - `App\Models\AppSupport`: `AppFitur.php`, `AppSetting.php`, and `Menu.php`.
+    - `App\Models\UserManagement`: `User.php`, `Role.php`, and `Permission.php`.
+    - `App\Models\Profil`: `UserDetail.php`, `UserLog.php`, and `UserSetting.php`.
+    - Removed duplicate root models from `app/Models/`.
+  - **Controllers & Assets Realignment**:
+    - Moved `UserController.php` to `App\Http\Controllers\UserManagement\UserController.php` with updated routes (`usermanagement.users.*`).
+    - Moved user management assets to `public/assets/js/usermanagement/users.js`.
+    - Cleaned up obsolete `ManajemenPengguna` folders and references.
+  - **Database & Factories**:
+    - Reorganized `UserFactory` into `Database\Factories\UserManagement\UserFactory.php` with explicit model resolution.
+    - Updated `config/auth.php` and `config/permission.php` with new model namespaces.
+    - Re-aligned all seeders (`DatabaseSeeder`, `UserSeeder`, `RoleSeeder`, `MenuSeeder`, `AppFiturSeeder`, `AppSettingSeeder`) and test suites.
+
+---
+
 ## [v1.15.1] - 2026-09-15
 
 ### Fixed & Enhanced

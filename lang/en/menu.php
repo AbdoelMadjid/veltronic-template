@@ -609,30 +609,3 @@ return [
     'cards' => 'Cards',
     'charts' => 'Charts',
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

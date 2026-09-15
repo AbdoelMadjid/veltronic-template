@@ -89,20 +89,20 @@
                                     <span class="badge badge-light text-gray-700 fs-8 border">
                                         <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
-                                        </i>09 Sep 2026, 19:05 WIB
+                                        </i>09 Sep 2026, 18:45 WIB
                                     </span>
                                 </div>
-                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Manajemen Pengguna (User Management) Full CRUD Module with DataTables &amp; Pure Indonesian UI</h4>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Modul CRUD Manajemen Pengguna, UserDataTable QueryBuilder Service, &amp; Antarmuka Murni Bahasa Indonesia</h4>
                                 <p class="text-gray-700 fs-7 mb-3">
-                                    Pembangunan modul CRUD lengkap Manajemen Pengguna berbasis AJAX dan Yajra DataTables, unggah avatar profil multipart, dialog interaktif SweetAlert2, migrasi database, dan standarisasi antarmuka bahasa Indonesia murni.
+                                    Implementasi menyeluruh modul <b>Manajemen Pengguna</b> (<code>manajemenpengguna/users</code>) dengan class service <code>UserDataTable</code> berbasis <code>use Illuminate\Database\Eloquent\Builder as QueryBuilder;</code>, upload avatar foto profil dengan sinkronisasi realtime pada avatar header, modal CRUD interaktif, validasi <code>UserRequest</code>, serta standardisasi antarmuka murni Bahasa Indonesia tanpa istilah bilingual / dual language.
                                 </p>
                                 <div class="bg-light rounded p-4 border border-dashed border-gray-300">
                                     <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
                                     <ul class="text-gray-700 fs-7 mb-0 ps-4">
-                                        <li class="mb-1"><strong>Full CRUD User Controller:</strong> Implementasi <code>UserController.php</code> dengan operasi tambah, edit, hapus, reset password, dan transaksi database.</li>
-                                        <li class="mb-1"><strong>Yajra DataTables Service Class:</strong> Integrasi <code>UserDataTable.php</code> untuk pencarian dan pemilahan data pengguna secara cepat dan terstruktur.</li>
-                                        <li class="mb-1"><strong>Avatar Image Upload:</strong> Penambahan kolom <code>avatar</code> pada tabel <code>users</code> dan validasi upload pada <code>UserRequest.php</code>.</li>
-                                        <li class="mb-1"><strong>Pure Indonesian UI:</strong> Pembersihan seluruh sisa notasi ganda bilingual pada modul pengguna menjadi bahasa Indonesia baku dan natural.</li>
+                                        <li class="mb-1"><strong>Dedicated Yajra UserDataTable Service:</strong> Pemisahan logika datatable ke <code>app/DataTable/ManajemenPengguna/UserDataTable.php</code> menggunakan Eloquent QueryBuilder dan inject di <code>UserController@@index</code>.</li>
+                                        <li class="mb-1"><strong>Full CRUD &amp; Transaction Safety:</strong> Controller <code>UserController.php</code> menangani operasi store, edit, update, delete, dan reset password default (<code>password123</code>) berbalut DB transaction.</li>
+                                        <li class="mb-1"><strong>Avatar Management &amp; Realtime Header Sync:</strong> Dukungan upload dan preview foto profil, serta update dinamis avatar pojok kanan atas secara realtime jika akun aktif diedit.</li>
+                                        <li class="mb-1"><strong>Standardisasi Bahasa Indonesia Murni:</strong> Pembersihan seluruh notasi ganda/bilingual (menghapus <code>(Role)</code>, <code>(Avatar)</code>, mengubah <code>Master Data</code> &rarr; <code>Data Master</code>, <code>Refresh</code> &rarr; <code>Segarkan</code>, <code>Reset</code> &rarr; <code>Atur Ulang</code>) pada view, modal form, modal detail, DataTables language, dan notifikasi SweetAlert.</li>
                                     </ul>
                                 </div>
                             </div>

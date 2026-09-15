@@ -607,30 +607,3 @@ return [
     'cards' => 'Kartu',
     'charts' => 'Grafik',
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

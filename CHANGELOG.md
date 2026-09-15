@@ -40,6 +40,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `resources/views/pages/usermanagement/partials/users-form-modal.blade.php` & `users-detail-modal.blade.php`: Form modal with avatar preview, edit support, and detail view.
   - `public/assets/js/manajemenpengguna/users.js`: Client-side AJAX submission with FormData multipart, real-time header avatar live update, SweetAlert2 confirm dialogs, and toast notifications.
   - `database/migrations/2026_09_09_000001_add_avatar_to_users_table.php`: Added nullable `avatar` column to `users` table.
+  - `public/assets/js/manajemenpengguna/users.js`: Client-side AJAX submission with FormData multipart, real-time header avatar live update, SweetAlert2 confirm dialogs, and toast notifications.
+  - `database/migrations/2026_09_09_000001_add_avatar_to_users_table.php`: Added nullable `avatar` column to `users` table.
 
 ### Enhanced
 - **Pure Indonesian UI & Zero Bilingual Leftovers**:

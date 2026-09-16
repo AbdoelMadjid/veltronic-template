@@ -479,16 +479,18 @@ if (!function_exists('getPageBreadcrumbs')) {
         // =========================================================================
         $staticConfigGroups = [
             [
-                'group' => 'menu.dashboards',
+                'parents' => ['menu.mainmenu', 'menu.dashboard'],
+                'group' => 'menu.dashboard',
                 'configs' => [
-                    'sidebar._sidebar_dashboard' => ['menus_dashboard', 'menus_dashboard_collapsed'],
+                    'sidebar._sidebar_main' => ['menus_dashboard', 'menus_dashboard_collapsed'],
                     'header._header_dashboard' => ['header_dashboard_other', 'header_dashboard_card'],
                 ],
             ],
             [
+                'parents' => ['menu.mainmenu'],
                 'group' => 'menu.demo',
                 'configs' => [
-                    'sidebar._sidebar_demo' => ['menu_demos'],
+                    'sidebar._sidebar_main' => ['menu_demos'],
                     'header._header_demo' => ['demo_menus', 'menu_demos'],
                 ],
             ],
@@ -549,7 +551,14 @@ if (!function_exists('getPageBreadcrumbs')) {
         ];
 
         foreach ($staticConfigGroups as $groupInfo) {
-            $rootLabel = translateMenuTitleSafely($groupInfo['group']) ?? $groupInfo['group'];
+            $prefixLabels = [];
+            if (!empty($groupInfo['parents']) && is_array($groupInfo['parents'])) {
+                foreach ($groupInfo['parents'] as $parentKey) {
+                    $prefixLabels[] = translateMenuTitleSafely($parentKey) ?? $parentKey;
+                }
+            } elseif (!empty($groupInfo['group'])) {
+                $prefixLabels[] = translateMenuTitleSafely($groupInfo['group']) ?? $groupInfo['group'];
+            }
 
             foreach ($groupInfo['configs'] as $configFile => $keyDefinitions) {
                 $configData = config($configFile, []);
@@ -563,7 +572,9 @@ if (!function_exists('getPageBreadcrumbs')) {
                         if (!empty($menus)) {
                             $trail = searchMenuBreadcrumbTrail($menus, $currentRoute);
                             if ($trail !== null) {
-                                array_unshift($trail, $rootLabel);
+                                foreach (array_reverse($prefixLabels) as $pLabel) {
+                                    array_unshift($trail, $pLabel);
+                                }
                                 return array_values(array_filter($trail));
                             }
                         }
@@ -577,7 +588,9 @@ if (!function_exists('getPageBreadcrumbs')) {
                             $trail = searchMenuBreadcrumbTrail($menus, $currentRoute);
                             if ($trail !== null) {
                                 array_unshift($trail, $sectionLabel);
-                                array_unshift($trail, $rootLabel);
+                                foreach (array_reverse($prefixLabels) as $pLabel) {
+                                    array_unshift($trail, $pLabel);
+                                }
                                 return array_values(array_filter($trail));
                             }
                         }
@@ -610,9 +623,11 @@ if (!function_exists('getPageTitle')) {
      *
      * @return string
      */
-    function getPageTitle(): string
+    function getPageTitle(?string $currentRoute = null): string
     {
-        $currentRoute = Route::current() ? Route::current()->getName() : '';
+        if (empty($currentRoute)) {
+            $currentRoute = Route::current() ? Route::current()->getName() : '';
+        }
         if (empty($currentRoute)) {
             $currentRoute = trim(request()->path(), '/');
         }
@@ -670,9 +685,8 @@ if (!function_exists('getPageTitle')) {
 
         // 3. Cek dari konfigurasi statis sidebar, header, dan docs
         $configs = [
-            'sidebar._sidebar_dashboard' => ['menus_dashboard', 'menus_dashboard_collapsed'],
+            'sidebar._sidebar_main' => ['menus_dashboard', 'menus_dashboard_collapsed', 'menu_demos'],
             'header._header_dashboard' => ['header_dashboard_other', 'header_dashboard_card'],
-            'sidebar._sidebar_demo' => ['menu_demos'],
             'header._header_demo' => ['demo_menus', 'menu_demos'],
             'sidebar._sidebar_pages' => ['pages_menus'],
             'header._header_pages' => ['user_profile', 'corporate', 'careers', 'faq', 'blog', 'pricing', 'social', 'account_col1', 'account_col2', 'search_modal', 'search', 'wizards', 'widgets'],

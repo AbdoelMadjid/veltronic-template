@@ -460,6 +460,7 @@ return [
     'widgets' => 'Widgets',
     'wizards' => 'Wizards',
     'dashboards' => 'Dashboards',
+    'dashboard' => 'Dashboard',
     'homepage' => 'Home Page',
     'pages' => 'Pages',
     'apps' => 'Apps',
@@ -608,7 +609,9 @@ return [
     'documentation' => 'Documentation',
     'calendar' => 'Calendar',
     'cards' => 'Cards',
-    'charts' => 'Charts',
+    'mainmenu' => 'Main Menu',
+    'main_menu' => 'Main Menu',
+    'main' => 'Main Menu',
 ];
 
 

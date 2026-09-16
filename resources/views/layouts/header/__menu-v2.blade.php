@@ -64,7 +64,7 @@
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
             data-kt-feature-menu="top_menu_dashboard"
             style="{{ !app_fitur('top_menu_dashboard') ? 'display: none !important;' : '' }}"
-            class="menu-item {{ request()->routeIs(['dashboard', 'dashboards.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_dashboard') ? 'd-none' : '' }} menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
+            class="menu-item {{ request()->routeIs(['dashboard', 'main.dashboards.*', 'dashboards.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_dashboard') ? 'd-none' : '' }} menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
                 <span class="menu-title" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>

@@ -1,5 +1,5 @@
 param(
-    [string]$PagesRoot = 'resources/views/pages/demo',
+    [string]$PagesRoot = $(if (Test-Path 'resources/views/pages/main/demo') { 'resources/views/pages/main/demo' } else { 'resources/views/pages/demo' }),
     [string]$PartialsRoot = 'resources/views/partials/widgets-demo',
     [string]$ViewsRoot = 'resources/views'
 )

@@ -5,6 +5,29 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.17.0] - 2026-09-16
+
+### Refactored & Reorganized
+- **Main Menu Domain Architecture & Restructuring (Dashboards & Demos)**:
+  - **View Relocation**: Moved view templates from `pages/dashboards/` and `pages/demo/` to `resources/views/pages/main/` (`main/dashboards/` and `main/demo/`).
+  - **Unified Sidebar Config**: Consolidated all dashboard and demo sidebar menus into `config/sidebar/_sidebar_main.php` and cleaned up deprecated files (`_sidebar_dashboard.php` & `_sidebar_demo.php`).
+  - **Routing & URL Prefix Alignment**: Dynamic route generator in `routes/menu.php` now serves `/main/dashboards/*` and `/main/demo/*` with route names `main.dashboards.*` and `main.demo.*`.
+  - **Header Menu Synchronization**: Updated `config/header/_header_dashboard.php` and `config/header/_header_demo.php` along with active state matching.
+  - **Hierarchical Breadcrumbs**: Enhanced `app/Helpers/GetPageTitle.php` to resolve 3-level breadcrumb ancestors: `Home` → `Main Menu` → `Dashboard` / `Demo` → `[Active Page]`.
+  - **Bilingual Translations**: Added dictionary keys (`mainmenu`, `main_menu`, `main`, `dashboard`, `dashboards`) in `lang/id/menu.php`, `lang/en/menu.php`, and `public/assets/js/custom/language.js`.
+  - **Widget Automation**: Updated scan paths in `distribusi-widget.blade.php`, `distribusi-demo.blade.php`, and scripts (`sync-widgets-demo.ps1`, `merge-flexible-widgets.ps1`).
+
+---
+
+## [v1.16.2] - 2026-09-16
+
+### Enhanced
+- **Button Loading Spinners & Validation Visual Consistency**:
+  - Added button loading spinner standards and indicators across auth and UI forms.
+  - Standardized toolbar actions and login/register visual feedback.
+
+---
+
 ## [v1.16.1] - 2026-09-15
 
 ### Fixed & Enhanced

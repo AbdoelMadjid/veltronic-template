@@ -73,6 +73,7 @@ var KTLanguage = (function () {
     var coreTranslations = {
         en: {
             "menu.dashboards": "Dashboards",
+            "menu.mainmenu": "Main Menu",
             "menu.pages": "Pages",
             "menu.apps": "Apps",
             "menu.layouts": "Layouts",
@@ -149,6 +150,7 @@ var KTLanguage = (function () {
         },
         id: {
             "menu.dashboards": "Dasbor",
+            "menu.mainmenu": "Menu Utama",
             "menu.pages": "Halaman",
             "menu.apps": "Aplikasi",
             "menu.layouts": "Tata Letak",

@@ -1,7 +1,11 @@
 @php
-    $demoWidgetMap = [];
-    $demoDir = resource_path('views/pages/demo');
-    $demoFiles = \Illuminate\Support\Facades\File::allFiles($demoDir);
+    $demoDir = resource_path('views/pages/main/demo');
+    if (!\Illuminate\Support\Facades\File::isDirectory($demoDir)) {
+        $demoDir = resource_path('views/pages/demo');
+    }
+    $demoFiles = \Illuminate\Support\Facades\File::isDirectory($demoDir)
+        ? \Illuminate\Support\Facades\File::allFiles($demoDir)
+        : [];
 
     foreach ($demoFiles as $demoFile) {
         $relativePath = str_replace('\\', '/', $demoFile->getRelativePathname());

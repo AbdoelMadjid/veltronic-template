@@ -76,12 +76,12 @@
                         style="{{ !app_fitur('side_menu_dashboard') ? 'display: none !important;' : '' }}">
                         <div class="menu-item pt-5">
                             <div class="menu-content">
-                                <span class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>
+                                <span class="menu-heading fw-bold text-uppercase fs-7" data-kt-translate="menu.mainmenu">{{ __('menu.mainmenu') }}</span>
                             </div>
                         </div>
 
                         <div data-kt-menu-trigger="click"
-                            class="menu-item {{ request()->routeIs(['dashboards.*']) ? 'here show' : '' }} menu-accordion">
+                            class="menu-item {{ request()->routeIs(['main.dashboards.*', 'dashboards.*']) ? 'here show' : '' }} menu-accordion">
                             <!--begin:Menu link-->
                             <span class="menu-link">
                                 <span class="menu-icon"><i class="ki-duotone ki-screen fs-2">
@@ -99,7 +99,7 @@
                             <!--begin:Menu sub-->
                             <div class="menu-sub menu-sub-accordion">
                                 <!--begin:Menu item-->
-                                @foreach (config('sidebar._sidebar_dashboard.menus_dashboard') as $menu)
+                                @foreach (config('sidebar._sidebar_main.menus_dashboard', []) as $menu)
                                     @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menu['title'])); @endphp
                                     <div class="menu-item">
                                         <a class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}"
@@ -112,7 +112,7 @@
                                 @endforeach
 
                                 @php
-                                    $collapsedMenus = config('sidebar._sidebar_dashboard.menus_dashboard_collapsed') ?? [];
+                                    $collapsedMenus = config('sidebar._sidebar_main.menus_dashboard_collapsed', []);
                                     $collapsedCount = count($collapsedMenus);
                                     $isActiveCollapse = collect($collapsedMenus)
                                         ->pluck('route')
@@ -129,7 +129,7 @@
                                 <!--end:Menu item-->
                                 <div class="menu-inner flex-column collapse {{ $isActiveCollapse ? 'show' : '' }}"
                                     id="kt_app_sidebar_menu_dashboards_collapse">
-                                    @foreach (config('sidebar._sidebar_dashboard.menus_dashboard_collapsed') as $menu)
+                                    @foreach (config('sidebar._sidebar_main.menus_dashboard_collapsed', []) as $menu)
                                         @php $titleKey = 'menu.' . strtolower(str_replace([' ', '&', '/'], ['_', 'and', '_'], $menu['title'])); @endphp
                                         <div class="menu-item">
                                             <a class="menu-link {{ request()->routeIs($menu['route']) ? 'active' : '' }}"
@@ -171,7 +171,7 @@
                     <div data-kt-feature-sidebar="side_menu_demo"
                         class="{{ !app_fitur('side_menu_demo') ? 'd-none' : '' }}"
                         style="{{ !app_fitur('side_menu_demo') ? 'display: none !important;' : '' }}">
-                        @foreach (config('sidebar._sidebar_demo.menu_demos') as $menu)
+                        @foreach (config('sidebar._sidebar_main.menu_demos', []) as $menu)
                             @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
                         @endforeach
                     </div>

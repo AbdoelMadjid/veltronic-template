@@ -460,6 +460,7 @@ return [
     'widgets' => 'Widget',
     'wizards' => 'Wizard',
     'dashboards' => 'Dashboard',
+    'dashboard' => 'Dashboard',
     'homepage' => 'Halaman Utama',
     'pages' => 'Halaman',
     'apps' => 'Aplikasi',
@@ -606,7 +607,9 @@ return [
     'documentation' => 'Dokumentasi',
     'calendar' => 'Kalender',
     'cards' => 'Kartu',
-    'charts' => 'Grafik',
+    'mainmenu' => 'Menu Utama',
+    'main_menu' => 'Menu Utama',
+    'main' => 'Menu Utama',
 ];
 
 

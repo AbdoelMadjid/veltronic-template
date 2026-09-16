@@ -13,22 +13,54 @@
 @section('content')
     @php
         $tab = $activeTab ?? 'profil-saya';
+        $authUser = $user ?? auth()->user();
+        $coverBgUrl = $authUser?->cover_bg_url ?: asset('assets/img-temp/1200x800/img1.jpg');
+        $coverOpacity = (int) ($authUser?->setting('cover_opacity', '35') ?? '35');
+        $coverOverlayColor = $authUser?->setting('cover_overlay_color', '#000000') ?? '#000000';
+        $coverPositionY = (int) ($authUser?->setting('cover_position_y', '0') ?? '0');
+        $coverHeight = (int) ($authUser?->setting('cover_height', '280') ?? '280');
+        $coverBlur = (int) ($authUser?->setting('cover_blur', '0') ?? '0');
     @endphp
 
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-fluid">
             <!--begin::Navbar / Header Card-->
-            <div class="card mb-5 mb-xl-10">
-                <div class="card-body pt-9 pb-0">
-                    <!--begin::Details-->
-                    @include('pages.profil.partials.details')
-                    <!--end::Details-->
-                    
-                    <!--begin::Navs-->
-                    @include('pages.profil.partials.navs', ['activeTab' => $tab])
-                    <!--end::Navs-->
+            <div class="card mb-5 mb-xl-10 position-relative overflow-hidden" id="profile_header_card">
+                <!--begin::Details Section with Cover Background & Overlay-->
+                <div class="position-relative overflow-hidden rounded-top p-6 p-lg-9 d-flex flex-column justify-content-center" id="profile_cover_wrapper" style="min-height: {{ $coverHeight }}px; transition: min-height 0.2s ease;">
+                    <!-- Cover Background Image -->
+                    <div id="profile_cover_bg" class="w-100 h-100 position-absolute top-0 start-0" style="
+                        background-image: url('{{ $coverBgUrl }}');
+                        background-size: cover;
+                        background-position: center {{ $coverPositionY }}%;
+                        background-repeat: no-repeat;
+                        filter: blur({{ $coverBlur }}px);
+                        -webkit-filter: blur({{ $coverBlur }}px);
+                        transform: scale({{ $coverBlur > 0 ? 1.05 : 1 }});
+                        transition: background-image 0.3s ease, background-position 0.1s ease, filter 0.2s ease, transform 0.2s ease;
+                    "></div>
+
+                    <!-- Adjustable Overlay Layer (Penutup Kontras) -->
+                    <div id="profile_cover_overlay" class="w-100 h-100 position-absolute top-0 start-0" style="
+                        background-color: {{ $coverOverlayColor }};
+                        opacity: {{ $coverOpacity / 100 }};
+                        transition: opacity 0.2s ease, background-color 0.2s ease;
+                    "></div>
+
+                    <!--begin::Details Content (Vertically Centered)-->
+                    <div class="position-relative w-100 my-auto" style="z-index: 2;">
+                        @include('pages.profil.partials.details')
+                    </div>
+                    <!--end::Details Content-->
                 </div>
+                <!--end::Details Section with Cover Background & Overlay-->
+
+                <!--begin::Navs Container-->
+                <div class="card-body py-0 px-6 px-lg-9 border-top border-gray-200">
+                    @include('pages.profil.partials.navs', ['activeTab' => $tab])
+                </div>
+                <!--end::Navs Container-->
             </div>
             <!--end::Navbar / Header Card-->
 
@@ -177,6 +209,9 @@
                 if (data.user) {
                     const headerName = document.getElementById('profile_header_user_name');
                     if (headerName) headerName.innerText = data.user.name || '-';
+
+                    const headerEmail = document.getElementById('profile_header_user_email');
+                    if (headerEmail) headerEmail.innerText = data.user.email || '-';
 
                     const profilUserName = document.getElementById('profil_display_user_name');
                     if (profilUserName) profilUserName.innerText = data.user.name || '-';
@@ -433,6 +468,148 @@
                 });
             }
 
+            // ==========================================
+            // Live Preview & Controls for Cover Background & Contrast
+            // ==========================================
+            const coverBgHeader = document.getElementById('profile_cover_bg');
+            const coverOverlayHeader = document.getElementById('profile_cover_overlay');
+            const coverBgPreview = document.getElementById('konfigurasi_cover_preview_img');
+            const coverOverlayPreview = document.getElementById('konfigurasi_cover_preview_overlay');
+            
+            const coverPosInput = document.getElementById('input_cover_position_y');
+            const coverPosLabel = document.getElementById('label_cover_position_y_val');
+            const coverPosPresetBtns = document.querySelectorAll('.btn-cover-pos');
+
+            const coverOpacityInput = document.getElementById('input_cover_opacity');
+            const coverOpacityLabel = document.getElementById('label_cover_opacity_val');
+
+            const coverColorRadios = document.querySelectorAll('.radio-cover-color');
+
+            const coverBlurInput = document.getElementById('input_cover_blur');
+            const coverBlurLabel = document.getElementById('label_cover_blur_val');
+
+            const coverFileInput = document.getElementById('input_cover_background_file');
+            const coverChangeBtn = document.getElementById('btn_cover_change');
+            const coverRemoveBtn = document.getElementById('btn_cover_remove');
+            const coverRemoveInput = document.getElementById('input_cover_background_remove');
+            const defaultCoverPattern = "{{ asset('assets/img-temp/1200x800/img1.jpg') }}";
+
+            const coverHeightInput = document.getElementById('input_cover_height');
+            const coverHeightLabel = document.getElementById('label_cover_height_val');
+            const coverHeightPresetBtns = document.querySelectorAll('.btn-cover-height');
+            const coverWrapperEl = document.getElementById('profile_cover_wrapper');
+
+            // 1. Live Vertical Position Slider
+            if (coverPosInput) {
+                coverPosInput.addEventListener('input', function () {
+                    const val = parseInt(this.value) || 0;
+                    let suffix = '';
+                    if (val === 0) suffix = ' (Atas)';
+                    else if (val === 50) suffix = ' (Tengah)';
+                    else if (val === 100) suffix = ' (Bawah)';
+                    
+                    if (coverPosLabel) coverPosLabel.innerText = val + '%' + suffix;
+                    if (coverBgHeader) coverBgHeader.style.backgroundPosition = 'center ' + val + '%';
+                });
+            }
+
+            // Quick Preset Buttons for Vertical Position
+            coverPosPresetBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const pos = this.getAttribute('data-pos');
+                    if (coverPosInput) {
+                        coverPosInput.value = pos;
+                        coverPosInput.dispatchEvent(new Event('input'));
+                    }
+                });
+            });
+
+            // 1b. Live Cover Height Slider
+            if (coverHeightInput) {
+                coverHeightInput.addEventListener('input', function () {
+                    const val = parseInt(this.value) || 280;
+                    if (coverHeightLabel) coverHeightLabel.innerText = val + 'px';
+                    if (coverWrapperEl) coverWrapperEl.style.minHeight = val + 'px';
+                });
+            }
+
+            // Quick Preset Buttons for Cover Height
+            coverHeightPresetBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const h = this.getAttribute('data-height');
+                    if (coverHeightInput) {
+                        coverHeightInput.value = h;
+                        coverHeightInput.dispatchEvent(new Event('input'));
+                    }
+                });
+            });
+
+            // 2. Live Opacity (Ketebalan Penutup) Slider
+            if (coverOpacityInput) {
+                coverOpacityInput.addEventListener('input', function () {
+                    const val = parseInt(this.value) || 0;
+                    if (coverOpacityLabel) coverOpacityLabel.innerText = val + '%';
+                    const opacityDecimal = val / 100;
+                    if (coverOverlayHeader) coverOverlayHeader.style.opacity = opacityDecimal;
+                    if (coverOverlayPreview) coverOverlayPreview.style.opacity = opacityDecimal;
+                });
+            }
+
+            // 3. Live Overlay Color Selector
+            coverColorRadios.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    if (this.checked) {
+                        const color = this.value;
+                        if (coverOverlayHeader) coverOverlayHeader.style.backgroundColor = color;
+                        if (coverOverlayPreview) coverOverlayPreview.style.backgroundColor = color;
+                    }
+                });
+            });
+
+            // 4. Live Blur Slider
+            if (coverBlurInput) {
+                coverBlurInput.addEventListener('input', function () {
+                    const val = parseInt(this.value) || 0;
+                    if (coverBlurLabel) coverBlurLabel.innerText = val + 'px';
+                    const blurFilter = 'blur(' + val + 'px)';
+                    if (coverBgHeader) {
+                        coverBgHeader.style.filter = blurFilter;
+                        coverBgHeader.style.webkitFilter = blurFilter;
+                        coverBgHeader.style.transform = val > 0 ? 'scale(1.05)' : 'none';
+                    }
+                });
+            }
+
+            // 5. File Selection & FileReader Instant Preview
+            if (coverChangeBtn && coverFileInput) {
+                coverChangeBtn.addEventListener('click', function () {
+                    coverFileInput.click();
+                });
+
+                coverFileInput.addEventListener('change', function () {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const dataUrl = e.target.result;
+                            if (coverBgHeader) coverBgHeader.style.backgroundImage = "url('" + dataUrl + "')";
+                            if (coverRemoveInput) coverRemoveInput.value = '0';
+                            if (coverRemoveBtn) coverRemoveBtn.classList.remove('d-none');
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+            }
+
+            // 6. Reset / Remove Cover Button
+            if (coverRemoveBtn) {
+                coverRemoveBtn.addEventListener('click', function () {
+                    if (coverRemoveInput) coverRemoveInput.value = '1';
+                    if (coverFileInput) coverFileInput.value = '';
+                    if (coverBgHeader) coverBgHeader.style.backgroundImage = "url('" + defaultCoverPattern + "')";
+                    coverRemoveBtn.classList.add('d-none');
+                });
+            }
+
             // Bind forms without reload
             handleAjaxForm('form_identitas_diri', 'btn_save_identitas', function (data) {
                 updateIdentitasDisplay(data);
@@ -443,7 +620,58 @@
                 if (form) form.reset();
             });
 
-            handleAjaxForm('form_konfigurasi', 'btn_save_konfigurasi');
+            const handleCoverSettingsSync = function (data) {
+                if (data && data.settings) {
+                    const s = data.settings;
+                    if (s.cover_background_url) {
+                        if (coverBgHeader) coverBgHeader.style.backgroundImage = "url('" + s.cover_background_url + "')";
+                    }
+                    if (typeof s.cover_position_y !== 'undefined') {
+                        if (coverBgHeader) coverBgHeader.style.backgroundPosition = 'center ' + s.cover_position_y + '%';
+                        if (coverPosInput) coverPosInput.value = s.cover_position_y;
+                    }
+                    if (typeof s.cover_height !== 'undefined') {
+                        if (coverWrapperEl) coverWrapperEl.style.minHeight = s.cover_height + 'px';
+                        if (coverHeightInput) coverHeightInput.value = s.cover_height;
+                        if (coverHeightLabel) coverHeightLabel.innerText = s.cover_height + 'px';
+                    }
+                    if (typeof s.cover_opacity !== 'undefined') {
+                        const opacityDec = s.cover_opacity / 100;
+                        if (coverOverlayHeader) coverOverlayHeader.style.opacity = opacityDec;
+                        if (coverOpacityInput) coverOpacityInput.value = s.cover_opacity;
+                    }
+                    if (s.cover_overlay_color) {
+                        if (coverOverlayHeader) coverOverlayHeader.style.backgroundColor = s.cover_overlay_color;
+                    }
+                    if (typeof s.cover_blur !== 'undefined') {
+                        const blurVal = 'blur(' + s.cover_blur + 'px)';
+                        if (coverBgHeader) {
+                            coverBgHeader.style.filter = blurVal;
+                            coverBgHeader.style.webkitFilter = blurVal;
+                            coverBgHeader.style.transform = s.cover_blur > 0 ? 'scale(1.05)' : 'none';
+                        }
+                    }
+                    if (coverRemoveBtn) {
+                        if (s.cover_has_custom) {
+                            coverRemoveBtn.classList.remove('d-none');
+                        } else {
+                            coverRemoveBtn.classList.add('d-none');
+                        }
+                    }
+                    if (coverRemoveInput) coverRemoveInput.value = '0';
+                }
+            };
+
+            // Form 1: Kustomisasi Background & Kontras Header Profil
+            handleAjaxForm('form_cover_konfigurasi', 'btn_save_cover_konfigurasi', handleCoverSettingsSync);
+
+            // Form 2: Preferensi & Notifikasi Pengguna
+            handleAjaxForm('form_preferensi_konfigurasi', 'btn_save_preferensi_konfigurasi', function (data) {
+                // Berhasil disimpan
+            });
+
+            // Backward compatibility
+            handleAjaxForm('form_konfigurasi', 'btn_save_konfigurasi', handleCoverSettingsSync);
         });
     </script>
     <!--end::Profil Pengguna Actions-->

@@ -248,36 +248,112 @@ class ProfilPenggunaController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        $allowedSettings = [
-            'notifikasi_email' => 'boolean',
-            'notifikasi_wa' => 'boolean',
-            'autolock_screen' => 'boolean',
-            'bahasa_default' => 'string',
-            'tema_default' => 'string',
-            'dua_faktor' => 'boolean',
-        ];
+        $request->validate([
+            'cover_background' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:3072'],
+            'cover_opacity' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'cover_overlay_color' => ['nullable', 'string', 'max:20'],
+            'cover_position_y' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'cover_height' => ['nullable', 'integer', 'min:180', 'max:700'],
+            'cover_blur' => ['nullable', 'integer', 'min:0', 'max:20'],
+            'cover_background_remove' => ['nullable', 'string'],
+        ], [
+            'cover_background.image' => 'File background harus berupa gambar.',
+            'cover_background.mimes' => 'Format background yang didukung: JPG, JPEG, PNG, WEBP.',
+            'cover_background.max' => 'Ukuran file background maksimal 3MB.',
+        ]);
 
-        foreach ($allowedSettings as $key => $type) {
-            if ($type === 'boolean') {
-                $val = $request->boolean($key) ? '1' : '0';
-            } else {
-                $val = (string) $request->input($key, '');
+        $section = $request->input('section');
+
+        // 1. Handle Cover Background & Styling Section
+        if (!$section || $section === 'cover') {
+            // Handle Cover Background Removal
+            if ($request->input('cover_background_remove') == '1' || $request->input('cover_background_remove') == 'true') {
+                $oldCover = $user->setting('cover_background');
+                if ($oldCover && Storage::disk('public')->exists($oldCover)) {
+                    Storage::disk('public')->delete($oldCover);
+                }
+                $user->setSetting('cover_background', null, 'profile_cover');
+                UserLog::log('Pembaruan Background Profil', 'Foto background cover dihapus (kembali ke default).', $user);
+            }
+            // Handle Cover Background Upload
+            elseif ($request->hasFile('cover_background')) {
+                $oldCover = $user->setting('cover_background');
+                if ($oldCover && Storage::disk('public')->exists($oldCover)) {
+                    Storage::disk('public')->delete($oldCover);
+                }
+                $coverPath = $request->file('cover_background')->store('covers', 'public');
+                $user->setSetting('cover_background', $coverPath, 'profile_cover');
+                UserLog::log('Pembaruan Background Profil', 'Foto background cover diperbarui.', $user);
             }
 
-            $user->setSetting($key, $val, 'preferences');
+            // Cover Customization Settings
+            if ($request->has('cover_opacity')) {
+                $user->setSetting('cover_opacity', (string) $request->input('cover_opacity', '35'), 'profile_cover');
+            }
+            if ($request->has('cover_overlay_color')) {
+                $user->setSetting('cover_overlay_color', (string) $request->input('cover_overlay_color', '#000000'), 'profile_cover');
+            }
+            if ($request->has('cover_position_y')) {
+                $user->setSetting('cover_position_y', (string) $request->input('cover_position_y', '0'), 'profile_cover');
+            }
+            if ($request->has('cover_height')) {
+                $user->setSetting('cover_height', (string) $request->input('cover_height', '280'), 'profile_cover');
+            }
+            if ($request->has('cover_blur')) {
+                $user->setSetting('cover_blur', (string) $request->input('cover_blur', '0'), 'profile_cover');
+            }
         }
 
-        UserLog::log('Pembaruan Konfigurasi', 'Memperbarui konfigurasi preferensi pengguna.', $user);
+        // 2. Handle Preferences & Notification Section
+        if (!$section || $section === 'preferensi') {
+            $allowedSettings = [
+                'notifikasi_email' => 'boolean',
+                'notifikasi_wa' => 'boolean',
+                'autolock_screen' => 'boolean',
+                'bahasa_default' => 'string',
+                'tema_default' => 'string',
+                'dua_faktor' => 'boolean',
+            ];
+
+            foreach ($allowedSettings as $key => $type) {
+                if ($type === 'boolean') {
+                    $val = $request->boolean($key) ? '1' : '0';
+                } else {
+                    $val = (string) $request->input($key, '');
+                }
+
+                $user->setSetting($key, $val, 'preferences');
+            }
+
+            UserLog::log('Pembaruan Preferensi', 'Memperbarui konfigurasi preferensi dan tampilan pengguna.', $user);
+        }
+
+        $freshUser = $user->fresh();
+
+        $successMessage = $section === 'cover' 
+            ? 'Kustomisasi background & kontras header profil berhasil disimpan.' 
+            : ($section === 'preferensi' 
+                ? 'Preferensi dan notifikasi pengguna berhasil disimpan.' 
+                : 'Pengaturan konfigurasi pengguna berhasil disimpan.');
 
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Pengaturan konfigurasi pengguna berhasil disimpan.',
+                'message' => $successMessage,
+                'settings' => [
+                    'cover_background_url' => $freshUser->cover_bg_url,
+                    'cover_has_custom' => !empty($freshUser->setting('cover_background')),
+                    'cover_opacity' => (int) $freshUser->setting('cover_opacity', '35'),
+                    'cover_overlay_color' => $freshUser->setting('cover_overlay_color', '#000000'),
+                    'cover_position_y' => (int) $freshUser->setting('cover_position_y', '0'),
+                    'cover_height' => (int) $freshUser->setting('cover_height', '280'),
+                    'cover_blur' => (int) $freshUser->setting('cover_blur', '0'),
+                ],
             ]);
         }
 
         return redirect()->route('profil.profil-pengguna', ['tab' => 'konfigurasi'])
-            ->with('success', 'Pengaturan konfigurasi pengguna berhasil disimpan.');
+            ->with('success', $successMessage);
     }
 
     /**

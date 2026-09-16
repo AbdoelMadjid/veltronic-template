@@ -43,6 +43,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'avatar_url',
+        'cover_bg_url',
     ];
 
     /**
@@ -57,6 +58,21 @@ class User extends Authenticatable
             return asset('storage/' . $this->avatar);
         }
         return \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg');
+    }
+
+    /**
+     * Get cover background URL attribute.
+     */
+    public function getCoverBgUrlAttribute(): string
+    {
+        $cover = $this->setting('cover_background');
+        if ($cover) {
+            if (str_starts_with($cover, 'http://') || str_starts_with($cover, 'https://')) {
+                return $cover;
+            }
+            return asset('storage/' . $cover);
+        }
+        return asset('assets/img-temp/1200x800/img1.jpg');
     }
 
     /**

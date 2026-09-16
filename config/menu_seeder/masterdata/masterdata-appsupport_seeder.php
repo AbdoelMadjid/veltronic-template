@@ -42,14 +42,7 @@ return [
             'permissions' => ['read'],
             'roles' => ['admin', 'master'],
         ],
-        [
-            'title' => 'Data Login',
-            'title_en' => 'Login Data',
-            'title_key' => 'md_data_login',
-            'route' => 'appsupport.data-login',
-            'permissions' => ['read'],
-            'roles' => ['admin', 'master'],
-        ],
+
         [
             'title' => 'Tema Halaman Depan',
             'title_en' => 'Theme Front Page',

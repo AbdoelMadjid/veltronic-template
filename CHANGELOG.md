@@ -5,6 +5,22 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.18.0] - 2026-09-16
+
+### Added & Enhanced
+- **Profile Cover Background & Live Contrast Customization Studio**:
+  - **Live Cover Customization Controls (`konfigurasi.blade.php`)**: Added interactive controls for profile header cover including custom image upload with instant client-side `FileReader` preview, reset/remove action, vertical position slider & quick presets (Top 0%, Middle 50%, Bottom 100%), header minimum height slider & presets (Compact 220px, Normal 280px, Tall 360px, Extra 450px), opacity overlay slider (0–100%), color tint picker (Dark Slate, Dark Navy, Pitch Black, Emerald, Royal Violet), and backdrop blur filter (0–15px).
+  - **Zero-Reload Realtime Sync (`details.blade.php` & `profil-pengguna.blade.php`)**: Realtime dynamic DOM style synchronization between the configuration studio sliders/inputs and the active profile header details banner without requiring page reload.
+  - **Dual-Section Configuration Form**: Structured into two dedicated card forms: "Kustomisasi Background & Kontras Header Profil" (`form_cover_konfigurasi`) and "Preferensi & Notifikasi Pengguna" (`form_preferensi_konfigurasi`) with full backward-compatibility for standard form submissions.
+  - **Model & Controller Support (`User.php` & `ProfilPenggunaController.php`)**: Added `cover_bg_url` computed attribute on `User` model, file storage handling under `public/covers`, removal logic, and setting persistence (`cover_opacity`, `cover_overlay_color`, `cover_position_y`, `cover_height`, `cover_blur`).
+  - **Automated Feature Tests (`ProfilPenggunaTest.php`)**: Added test cases for cover background upload, custom settings persistence, and cover removal.
+
+### Refactored
+- **Master Data Menu Seeder Realignment**:
+  - Relocated `Data Login` menu definition from `masterdata-appsupport_seeder.php` to `masterdata-usermanagement_seeder.php` targeting route `usermanagement.data-login`.
+
+---
+
 ## [v1.17.1] - 2026-09-16
 
 ### Enhanced & Fixed

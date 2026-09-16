@@ -139,14 +139,71 @@ class ProfilPenggunaTest extends TestCase
             'bahasa_default' => 'id',
             'tema_default' => 'dark',
             'dua_faktor' => '1',
+            'cover_opacity' => '45',
+            'cover_overlay_color' => '#0f172a',
+            'cover_position_y' => '25',
+            'cover_blur' => '3',
         ]);
 
         $response->assertStatus(200);
         $response->assertJson([
             'success' => true,
+            'settings' => [
+                'cover_opacity' => 45,
+                'cover_overlay_color' => '#0f172a',
+                'cover_position_y' => 25,
+                'cover_blur' => 3,
+            ],
         ]);
 
         $this->assertEquals('1', $user->setting('notifikasi_email'));
         $this->assertEquals('dark', $user->setting('tema_default'));
+        $this->assertEquals('45', $user->setting('cover_opacity'));
+        $this->assertEquals('#0f172a', $user->setting('cover_overlay_color'));
+        $this->assertEquals('25', $user->setting('cover_position_y'));
+        $this->assertEquals('3', $user->setting('cover_blur'));
+    }
+
+    public function test_user_can_upload_and_remove_cover_background(): void
+    {
+        Storage::fake('public');
+        $user = User::factory()->create();
+
+        $coverFile = UploadedFile::fake()->image('banner.jpg', 1200, 400);
+
+        $response = $this->actingAs($user)->postJson('/profil/profil-pengguna/konfigurasi', [
+            'cover_background' => $coverFile,
+            'cover_position_y' => '10',
+            'cover_opacity' => '50',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'settings' => [
+                'cover_has_custom' => true,
+                'cover_position_y' => 10,
+                'cover_opacity' => 50,
+            ],
+        ]);
+
+        $coverPath = $user->setting('cover_background');
+        $this->assertNotNull($coverPath);
+        Storage::disk('public')->assertExists($coverPath);
+
+        // Test remove cover background
+        $removeResponse = $this->actingAs($user)->postJson('/profil/profil-pengguna/konfigurasi', [
+            'cover_background_remove' => '1',
+        ]);
+
+        $removeResponse->assertStatus(200);
+        $removeResponse->assertJson([
+            'success' => true,
+            'settings' => [
+                'cover_has_custom' => false,
+            ],
+        ]);
+
+        $this->assertNull($user->setting('cover_background'));
     }
 }

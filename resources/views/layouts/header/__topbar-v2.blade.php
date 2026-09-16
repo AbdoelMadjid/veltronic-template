@@ -164,7 +164,7 @@
         <!--end::Menu wrapper-->
     </div>
     <!--end::Mobile Toolbar Hub-->
-    <!--begin::User-->
+    <!--begin::User menu-->
     <div class="d-flex align-items-center me-lg-n2 ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
         <!--begin::Menu wrapper-->
         @php
@@ -174,12 +174,13 @@
             $profileEmail = $authUser?->email ?? ($current_user_display['email'] ?? '');
             $initial = strtoupper(substr($profileName, 0, 1));
         @endphp
-        <div class="cursor-pointer d-flex align-items-center"
-            data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+        <div class="cursor-pointer d-flex align-items-center" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+            data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" id="header_user_avatar_toggle">
             <!--begin::Avatar-->
             <div class="symbol symbol-35px symbol-md-40px">
-                <img src="{{ $authUser?->avatar_url ?? '' }}" class="header-user-avatar-img object-fit-cover rounded-3 w-35px h-35px w-md-40px h-md-40px {{ $hasAvatar ? '' : 'd-none' }}" alt="user" />
-                <div class="symbol-label fs-5 fw-bold bg-light-primary text-primary header-user-avatar-initial rounded-3 w-35px h-35px w-md-40px h-md-40px {{ $hasAvatar ? 'd-none' : '' }}">{{ $initial }}</div>
+                <div class="image-input-wrapper w-35px h-35px w-md-40px h-md-40px rounded-3" id="header_navbar_user_avatar"
+                    style="background-image: url('{{ $authUser?->avatar_url ?: \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg') }}'); background-position: top center; background-size: cover;">
+                </div>
             </div>
             <!--end::Avatar-->
             <!--begin::User Info-->
@@ -193,7 +194,7 @@
         @include('partials.menus._user-account-menu')
         <!--end::Menu wrapper-->
     </div>
-    <!--end::User -->
+    <!--end::User menu-->
     <!--begin::Aside mobile toggle-->
     <!--end::Aside mobile toggle-->
 </div>

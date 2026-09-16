@@ -93,6 +93,31 @@
                     <span class="fw-semibold text-gray-600 fs-6">Nomor HP / WhatsApp</span>
                     <span class="fw-bold text-gray-800 fs-6" id="profil_display_no_hp">{{ $detailData?->no_hp ?? '-' }}</span>
                 </div>
+                <!--begin::Moto Hidup Input-->
+                <div class="py-4 border-bottom border-gray-200">
+                    <form id="form_moto_hidup" action="{{ route('profil.profil-pengguna.moto-hidup') }}" method="POST">
+                        @csrf
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="fw-semibold text-gray-600 fs-6 mb-0">Moto Hidup</label>
+                            <span class="text-muted fs-8">Ditampilkan pada banner dashboard</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" name="moto_hidup" id="input_profil_saya_moto_hidup" class="form-control form-control-solid" 
+                                placeholder="Tuliskan moto hidup Anda di sini..." 
+                                value="{{ $detailData?->moto_hidup ?? '' }}" maxlength="500" />
+                            <button type="submit" class="btn btn-primary" id="btn_save_moto_hidup">
+                                <span class="indicator-label">
+                                    <i class="ki-duotone ki-check fs-4 me-1"></i> Simpan
+                                </span>
+                                <span class="indicator-progress">
+                                    Menyimpan...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!--end::Moto Hidup Input-->
                 <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
                     <span class="fw-semibold text-gray-600 fs-6">Status Email</span>
                     <span class="badge badge-light-success fw-bold fs-8">

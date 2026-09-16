@@ -5,6 +5,22 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.20.0] - 2026-09-16
+
+### Added & Enhanced
+- **Dashboard Dynamic Hero Banner Integration (v1 & v2)**:
+  - **Dynamic Cover & User Identity (`_content.blade.php`)**: Connected dashboard hero banner with authenticated user's dynamic cover (`cover_bg_url`), vertical focus position (`cover_position_y`), overlay contrast, and backdrop filters.
+  - **Side-by-Side User Avatar & Motto Presentation**: Embedded user avatar (`symbol-70px symbol-lg-90px`) aligned horizontally to the left of the user's full name and life motto with high-contrast text shadowing.
+  - **Dashboard v2 Synchronization**: Updated `dashboard-content-v2.blade.php` and `_dashboard-v2.blade.php` to render the unified dashboard layout and hero identity banner.
+- **User Life Motto ("Moto Hidup") Field & Multi-Tab Management**:
+  - **Database Migration (`2026_09_16_061820_add_moto_hidup_to_users_details_table.php`)**: Added `moto_hidup` (`TEXT`, nullable) column to `users_details` table.
+  - **Model & Controller (`UserDetail.php` & `ProfilPenggunaController.php`)**: Added fillable attribute and dedicated endpoint `POST /profil/profil-pengguna/moto-hidup` (`updateMotoHidup`).
+  - **Tab Profil Saya & Identitas Diri Inputs**: Added realtime AJAX form with Metronic button spinner (`data-kt-indicator="on"`) and zero-reload DOM synchronization.
+- **Topbar User Avatar Alignment for Version v2**:
+  - Replaced legacy image tag in `__topbar-v2.blade.php` with the standardized `image-input-wrapper` pattern and element IDs (`header_navbar_user_avatar`, `header_user_avatar_toggle`) matching v1 (`_navbar.blade.php`).
+
+---
+
 ## [v1.19.0] - 2026-09-16
 
 ### Added & Refactored

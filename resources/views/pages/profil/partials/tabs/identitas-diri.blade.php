@@ -112,6 +112,17 @@
                 </div>
             </div>
             <!--end::Row-->
+
+            <!--begin::Row Moto Hidup-->
+            <div class="row mb-6">
+                <div class="col-12">
+                    <label class="col-form-label fw-semibold fs-6">Moto Hidup</label>
+                    <input type="text" name="moto_hidup" class="form-control form-control-lg form-control-solid" 
+                           placeholder="Contoh: Terus berinovasi dan bermanfaat untuk sesama" value="{{ old('moto_hidup', $detailData?->moto_hidup) }}" maxlength="500" />
+                    <div class="form-text text-muted">Moto hidup ini akan ditampilkan di banner dashboard dan profil Anda.</div>
+                </div>
+            </div>
+            <!--end::Row-->
         </div>
     </div>
     <!--end::Card Data Profil & KTP-->

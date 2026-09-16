@@ -293,6 +293,11 @@
                         const el = document.getElementById(id);
                         if (el) el.innerText = (value !== null && typeof value !== 'undefined' && value !== '') ? value : '-';
                     }
+
+                    if (typeof data.detail.moto_hidup !== 'undefined') {
+                        const inputMotoProfilSaya = document.getElementById('input_profil_saya_moto_hidup');
+                        if (inputMotoProfilSaya) inputMotoProfilSaya.value = data.detail.moto_hidup;
+                    }
                 }
 
                 if (typeof data.completion_percent !== 'undefined') {
@@ -652,6 +657,13 @@
             // Bind forms without reload
             handleAjaxForm('form_identitas_diri', 'btn_save_identitas', function (data) {
                 updateIdentitasDisplay(data);
+            });
+
+            handleAjaxForm('form_moto_hidup', 'btn_save_moto_hidup', function (data) {
+                if (data && typeof data.moto_hidup !== 'undefined') {
+                    const inputIdentitas = document.querySelector('#form_identitas_diri input[name="moto_hidup"]');
+                    if (inputIdentitas) inputIdentitas.value = data.moto_hidup;
+                }
             });
 
             handleAjaxForm('form_ganti_password', 'btn_save_password', function (data) {

@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/profil-pengguna/konfigurasi', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateKonfigurasi'])->name('profil-pengguna.konfigurasi');
         Route::post('/profil-pengguna/avatar', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateAvatar'])->name('profil-pengguna.avatar');
         Route::post('/profil-pengguna/ktp', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateFotoKtp'])->name('profil-pengguna.ktp');
+        Route::post('/profil-pengguna/moto-hidup', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateMotoHidup'])->name('profil-pengguna.moto-hidup');
     });
 
     // Tempat untuk menambahkan route modul admin / master data lainnya yang berkaitan dengan database menu seeder di masa mendatang.

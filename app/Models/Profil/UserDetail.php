@@ -24,6 +24,7 @@ class UserDetail extends Model
         'agama',
         'status_perkawinan',
         'pekerjaan',
+        'moto_hidup',
         'kewarganegaraan',
         'berlaku_hingga',
         'foto_ktp',

@@ -105,6 +105,7 @@ class ProfilPenggunaController extends Controller
             'agama' => ['nullable', 'string', 'max:50'],
             'status_perkawinan' => ['nullable', 'string', 'max:50'],
             'pekerjaan' => ['nullable', 'string', 'max:100'],
+            'moto_hidup' => ['nullable', 'string', 'max:500'],
             'kewarganegaraan' => ['nullable', 'string', 'max:50'],
             'berlaku_hingga' => ['nullable', 'string', 'max:50'],
             'alamat_jalan' => ['nullable', 'string', 'max:255'],
@@ -175,6 +176,7 @@ class ProfilPenggunaController extends Controller
                     'agama' => $freshDetail->agama ?? '-',
                     'status_perkawinan' => $freshDetail->status_perkawinan ?? '-',
                     'pekerjaan' => $freshDetail->pekerjaan ?? '-',
+                    'moto_hidup' => $freshDetail->moto_hidup ?? '',
                     'kewarganegaraan' => $freshDetail->kewarganegaraan ?? 'WNI',
                     'berlaku_hingga' => $freshDetail->berlaku_hingga ?? 'Seumur Hidup',
                     'no_hp' => $freshDetail->no_hp ?? '-',
@@ -203,6 +205,37 @@ class ProfilPenggunaController extends Controller
 
         return redirect()->route('profil.profil-pengguna', ['tab' => 'identitas-diri'])
             ->with('success', 'Identitas diri dan data KTP berhasil disimpan.');
+    }
+
+    /**
+     * Update user life motto (Moto Hidup).
+     */
+    public function updateMotoHidup(Request $request): JsonResponse|RedirectResponse
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'moto_hidup' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $detail = $user->detail ?? new UserDetail(['user_id' => $user->id]);
+        $detail->moto_hidup = $validated['moto_hidup'] ?? null;
+        $detail->user_id = $user->id;
+        $detail->save();
+
+        UserLog::log('Pembaruan Moto Hidup', 'Memperbarui kalimat moto hidup pengguna.', $user);
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Moto hidup berhasil disimpan.',
+                'moto_hidup' => $detail->moto_hidup ?? '',
+            ]);
+        }
+
+        return redirect()->route('profil.profil-pengguna', ['tab' => 'profil-saya'])
+            ->with('success', 'Moto hidup berhasil disimpan.');
     }
 
     /**

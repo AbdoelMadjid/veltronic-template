@@ -34,13 +34,47 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.19.0
+                            Versi Saat Ini: v1.20.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.20.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.20.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.20.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>16 Sep 2026, 13:45 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Integrasi Profil Hero Banner Dashboard (v1 &amp; v2), Input &amp; Field Moto Hidup Pengguna, serta Penyelarasan Topbar Avatar v2</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Integrasi penuh hero banner dashboard utama (versi v1 dan v2) yang menampilkan cover background dinamis, letak avatar berdampingan di kiri nama dan moto hidup, penambahan kolom dan formulir Moto Hidup pada tab Profil Saya dan Identitas Diri dengan indikator loading spinner dan sinkronisasi realtime, serta standarisasi avatar user pada topbar v2.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Dashboard Hero Banner (v1 &amp; v2)</strong>: Merender cover background, posisi vertikal, efek blur/overlay kontras dinamis pengguna, serta avatar berdampingan dengan nama dan moto hidup.</li>
+                                        <li><strong>Field Moto Hidup Database</strong>: Migrasi <code>2026_09_16_061820_add_moto_hidup_to_users_details_table.php</code> menambahkan kolom <code>moto_hidup</code> pada <code>users_details</code>.</li>
+                                        <li><strong>Manajemen Moto Hidup Multi-Tab</strong>: Form input Moto Hidup di Tab Profil Saya dan Identitas Diri dengan AJAX Zero-Reload dan button loading spinner.</li>
+                                        <li><strong>Penyelarasan Avatar Topbar v2</strong>: Standarisasi <code>__topbar-v2.blade.php</code> dengan wrapper <code>image-input-wrapper</code> dan ID elemen yang sinkron dengan v1.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.20.0-->
+
                         <!--begin::Item v1.19.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.19.0</div>
@@ -56,7 +90,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>16 Sep 2026, 12:00 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Arsitektur 1-User-1-Baris JSON Settings, Sinkronisasi Avatar Realtime Lock Screen, &amp; Layout 2 Kolom Preferensi</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

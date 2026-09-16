@@ -206,4 +206,30 @@ class ProfilPenggunaTest extends TestCase
 
         $this->assertNull($user->setting('cover_background'));
     }
+
+    public function test_user_can_update_moto_hidup(): void
+    {
+        $user = User::factory()->create();
+        $user->assignRole('user');
+
+        $response = $this->actingAs($user)->postJson('/profil/profil-pengguna/moto-hidup', [
+            'moto_hidup' => 'Pantang menyerah sebelum berhasil',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'moto_hidup' => 'Pantang menyerah sebelum berhasil',
+        ]);
+
+        $this->assertDatabaseHas('users_details', [
+            'user_id' => $user->id,
+            'moto_hidup' => 'Pantang menyerah sebelum berhasil',
+        ]);
+
+        $this->assertDatabaseHas('users_logs', [
+            'user_id' => $user->id,
+            'activity' => 'Pembaruan Moto Hidup',
+        ]);
+    }
 }

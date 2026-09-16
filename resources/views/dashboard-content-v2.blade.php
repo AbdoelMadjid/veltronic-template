@@ -1,1 +1,1 @@
-@include('partials.content._dashboard-v2')
+@include('layouts.partials._content')

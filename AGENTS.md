@@ -20,3 +20,10 @@
 - Saat proses berhasil, tampilkan notifikasi (SweetAlert2/Toastr), dan setelah notifikasi ditutup/dikonfirmasi maka seluruh data di UI **wajib berubah secara realtime**.
 - Tab yang sedang aktif harus **tetap berada di tab yang sama** tanpa mereset posisi scroll atau navigasi pengguna.
 - Detail lengkap diatur di `.agents/rules/crud-zero-reload-realtime-standards.md`.
+
+## 5. Standar Indikator Loading Spinner Tombol (Button Loading Policy)
+- Setiap tombol submit / eksekusi aksi (CRUD, autentikasi login/register, simpan data, modal, upload, lock screen, dll.) **WAJIB** menampilkan animasi spinner proses via `data-kt-indicator="on"` dan dinonaktifkan (`disabled = true`) selama proses berjalan untuk mencegah double-click.
+- Tombol harus memiliki struktur standar `.indicator-label` dan `.indicator-progress`.
+- Setelah proses selesai (berhasil / gagal), status tombol **wajib dipulihkan** ke kondisi normal.
+- Detail lengkap diatur di `.agents/rules/button-loading-spinner-standards.md`.
+

@@ -167,8 +167,67 @@
         }
     };
 
+    /**
+     * Global Button Loading Manager (Metronic Spinner Indicator)
+     */
+    const ButtonLoader = {
+        show: function (btn, text = null) {
+            if (!btn) return;
+            ButtonLoader.init(btn);
+            if (text) {
+                const progressEl = btn.querySelector('.indicator-progress');
+                if (progressEl) {
+                    progressEl.innerHTML = `${text} <span class="spinner-border spinner-border-sm align-middle ms-2"></span>`;
+                }
+            }
+            btn.setAttribute('data-kt-indicator', 'on');
+            btn.disabled = true;
+        },
+        hide: function (btn) {
+            if (!btn) return;
+            btn.removeAttribute('data-kt-indicator');
+            btn.disabled = false;
+        },
+        init: function (btn, labelText = null, progressText = 'Mohon tunggu...') {
+            if (!btn) return;
+            if (!btn.querySelector('.indicator-label')) {
+                const currentContent = labelText || btn.innerHTML;
+                btn.innerHTML = `
+                    <span class="indicator-label">${currentContent}</span>
+                    <span class="indicator-progress">${progressText} <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                `;
+            }
+        }
+    };
+
+    // Auto-intercept form submissions to show loading indicators
+    document.addEventListener('submit', function (e) {
+        const form = e.target;
+        if (!form || form.tagName !== 'FORM') return;
+        if (e.defaultPrevented) return;
+
+        // Skip if form is currently invalid
+        if (typeof form.checkValidity === 'function' && !form.checkValidity()) {
+            return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]:not([data-kt-indicator-disabled]), button[id*="submit"]:not([data-kt-indicator-disabled]), button[id*="save"]:not([data-kt-indicator-disabled]), button[id*="btn_save"]:not([data-kt-indicator-disabled]), button[id*="btn_update"]:not([data-kt-indicator-disabled])');
+        if (submitBtn) {
+            ButtonLoader.show(submitBtn);
+        }
+    });
+
+    // Reset button indicators when navigating back
+    window.addEventListener('pageshow', function () {
+        document.querySelectorAll('[data-kt-indicator="on"]').forEach(btn => {
+            ButtonLoader.hide(btn);
+        });
+    });
+
     // Expose to window global scope
     window.Notify = Notify;
     window.AppNotify = Notify;
+    window.KTButtonLoader = ButtonLoader;
+    window.ButtonLoader = ButtonLoader;
 
 })(window);

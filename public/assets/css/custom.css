@@ -55,3 +55,39 @@
     justify-content: center !important;
     border-radius: 0.475rem !important;
 }
+
+/* ==========================================================================
+   Form Validation - Red Exclamation Circle & Spacing Alignment
+   ========================================================================== */
+.form-control.is-invalid,
+.form-select.is-invalid,
+.was-validated .form-control:invalid,
+.was-validated .form-select:invalid {
+    border-color: #f1416c !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23f1416c'%3e%3cpath d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.875rem center !important;
+    background-size: 1.15rem 1.15rem !important;
+}
+
+.form-control.is-invalid:focus,
+.was-validated .form-control:invalid:focus {
+    border-color: #f1416c !important;
+    box-shadow: 0 0 0 0.25rem rgba(241, 65, 108, 0.25) !important;
+}
+
+/* For password inputs with toggle visibility button, shift the red exclamation icon further to the left */
+.position-relative:has(.toggle-password, #togglePassword, [data-kt-password-meter-control="visibility"], .btn-icon) .form-control.is-invalid,
+.position-relative:has(.toggle-password, #togglePassword, [data-kt-password-meter-control="visibility"], .btn-icon) .form-control.is-invalid:focus,
+.position-relative .form-control.pe-12.is-invalid,
+.position-relative .form-control.pe-15.is-invalid,
+.position-relative .form-control.pe-20.is-invalid,
+#kt_sign_up_form .position-relative .form-control.is-invalid,
+#kt_sign_in_form .position-relative .form-control.is-invalid,
+#kt_password_reset_form .position-relative .form-control.is-invalid,
+#form_ganti_password .position-relative .form-control.is-invalid {
+    background-position: right 4.25rem center !important;
+    padding-right: 6rem !important;
+}
+
+

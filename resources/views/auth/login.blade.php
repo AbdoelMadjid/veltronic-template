@@ -89,19 +89,13 @@
                             </div>
 
                             <div class="separator separator-content my-14">
-                                <span class="w-125px text-gray-500 fw-semibold fs-7">{{ __('auth.or_with_email') }}</span>
+                                <span class="w-125px text-gray-500 fw-semibold fs-7" data-kt-translate="auth.or">{{ __('auth.or') }}</span>
                             </div>
 
                             <div class="fv-row mb-8">
-                                <div class="position-relative">
-                                    <input id="emailInput" type="text" placeholder="{{ __('auth.email') }}" name="email"
-                                        autocomplete="off" value="{{ old('email') }}"
-                                        class="form-control bg-transparent @if ($emailHasError) is-invalid border-danger pe-12 @endif" />
-                                    <span id="emailErrorIcon"
-                                        class="position-absolute top-50 end-0 translate-middle-y me-4 text-danger d-flex align-items-center @if (! $emailHasError) d-none @endif">
-                                        <i class="bi bi-exclamation-circle-fill fs-4"></i>
-                                    </span>
-                                </div>
+                                <input id="emailInput" type="text" placeholder="{{ __('auth.email') }}" name="email"
+                                    autocomplete="off" value="{{ old('email') }}"
+                                    class="form-control bg-transparent @if ($emailHasError) is-invalid @endif" />
                                 <div id="emailFieldError" class="invalid-feedback @if ($emailHasError) d-block @endif">
                                     {{ $errors->first('email') }}
                                 </div>
@@ -111,11 +105,7 @@
                                 <div class="position-relative">
                                     <input type="password" placeholder="{{ __('auth.password_label') }}" name="password"
                                         autocomplete="off" id="passwordInput" value=""
-                                        class="form-control bg-transparent @if ($passwordHasError) is-invalid border-danger pe-15 @endif" />
-                                    <span id="passwordErrorIcon"
-                                        class="position-absolute top-50 end-0 translate-middle-y me-12 text-danger d-flex align-items-center @if (! $passwordHasError) d-none @endif">
-                                        <i class="bi bi-exclamation-circle-fill fs-4"></i>
-                                    </span>
+                                        class="form-control bg-transparent pe-12 @if ($passwordHasError) is-invalid @endif" />
                                     <button type="button" id="togglePassword"
                                         class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2">
                                         <i id="toggleIcon" class="bi bi-eye-slash fs-2"></i>
@@ -135,8 +125,6 @@
                                     const toggleIcon = document.getElementById("toggleIcon");
                                     const emailFieldError = document.getElementById("emailFieldError");
                                     const passwordFieldError = document.getElementById("passwordFieldError");
-                                    const emailErrorIcon = document.getElementById("emailErrorIcon");
-                                    const passwordErrorIcon = document.getElementById("passwordErrorIcon");
 
                                     toggleBtn.addEventListener("click", function() {
                                         const isPassword = passwordInput.getAttribute("type") === "password";
@@ -145,43 +133,41 @@
                                         toggleIcon.classList.toggle("bi-eye-slash", !isPassword);
                                     });
 
-                                    function setFieldError(input, feedback, icon, message) {
-                                        input.classList.add("is-invalid", "border-danger");
+                                    function setFieldError(input, feedback, message) {
+                                        input.classList.add("is-invalid");
                                         feedback.textContent = message;
                                         feedback.classList.add("d-block");
-                                        icon.classList.remove("d-none");
                                     }
 
-                                    function clearFieldError(input, feedback, icon) {
-                                        input.classList.remove("is-invalid", "border-danger");
+                                    function clearFieldError(input, feedback) {
+                                        input.classList.remove("is-invalid");
                                         feedback.classList.remove("d-block");
-                                        icon.classList.add("d-none");
                                     }
 
                                     function validateEmailInline() {
                                         const value = emailInput.value.trim();
                                         if (value.length === 0) {
-                                            setFieldError(emailInput, emailFieldError, emailErrorIcon, @json(__('auth.js.email_required')));
+                                            setFieldError(emailInput, emailFieldError, @json(__('auth.js.email_required')));
                                             return false;
                                         }
 
                                         const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
                                         if (!isValid) {
-                                            setFieldError(emailInput, emailFieldError, emailErrorIcon, @json(__('auth.js.invalid_email')));
+                                            setFieldError(emailInput, emailFieldError, @json(__('auth.js.invalid_email')));
                                             return false;
                                         }
 
-                                        clearFieldError(emailInput, emailFieldError, emailErrorIcon);
+                                        clearFieldError(emailInput, emailFieldError);
                                         return true;
                                     }
 
                                     function validatePasswordInline() {
                                         if (passwordInput.value.length === 0) {
-                                            setFieldError(passwordInput, passwordFieldError, passwordErrorIcon, @json(__('auth.js.password_required')));
+                                            setFieldError(passwordInput, passwordFieldError, @json(__('auth.js.password_required')));
                                             return false;
                                         }
 
-                                        clearFieldError(passwordInput, passwordFieldError, passwordErrorIcon);
+                                        clearFieldError(passwordInput, passwordFieldError);
                                         return true;
                                     }
 
@@ -195,6 +181,13 @@
                                         const validPassword = validatePasswordInline();
                                         if (!validEmail || !validPassword) {
                                             e.preventDefault();
+                                            return;
+                                        }
+
+                                        const submitBtn = document.getElementById("kt_sign_in_submit") || form.querySelector('button[type="submit"]');
+                                        if (submitBtn) {
+                                            submitBtn.setAttribute("data-kt-indicator", "on");
+                                            submitBtn.disabled = true;
                                         }
                                     });
                                 });

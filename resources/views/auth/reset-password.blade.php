@@ -59,6 +59,23 @@
                                     autocomplete="new-password" class="form-control bg-transparent" />
                             </div>
 
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    const resetForm = document.querySelector('form[action="{{ route('password.store') }}"]');
+                                    if (resetForm) {
+                                        resetForm.addEventListener("submit", function(e) {
+                                            if (resetForm.checkValidity && resetForm.checkValidity()) {
+                                                const submitBtn = resetForm.querySelector('button[type="submit"]');
+                                                if (submitBtn) {
+                                                    submitBtn.setAttribute("data-kt-indicator", "on");
+                                                    submitBtn.disabled = true;
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            </script>
+
                             <div class="d-grid mb-10">
                                 <button type="submit" class="btn btn-primary">
                                     <span class="indicator-label">{{ __('auth.submit_reset_password') }}</span>

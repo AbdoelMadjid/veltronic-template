@@ -34,13 +34,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.16.1
+                            Versi Saat Ini: v1.16.2
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.16.2 (Patch)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.16.2</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-warning fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-warning fw-bold text-white">v1.16.2</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>16 Sep 2026, 07:55 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Standardisasi Indikator Loading Spinner Tombol, Ikon Validasi Password, &amp; Penyelarasan Header Welcome</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembaruan pemeliharaan yang menetapkan kebijakan baku indikator proses loading spinner pada seluruh tombol submit/eksekusi aksi, perbaikan ikon validasi seru merah tunggal dengan pemisahan jarak dari tombol toggle password, penyelarasan tampilan toolbar landing/welcome page, serta pembaruan teks pemisah autentikasi.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Kebijakan Loading Spinner Tombol:</strong> Implementasi utilitas <code>KTButtonLoader</code> pada <code>notification-helper.js</code> dan penerapan class <code>.indicator-label</code> &amp; <code>.indicator-progress</code> pada tombol submit halaman autentikasi (Login, Register, Forgot Password, Reset Password) untuk mencegah double-click.</li>
+                                        <li class="mb-1"><strong>Aturan Standar Agen:</strong> Pembuatan aturan resmi <code>.agents/rules/button-loading-spinner-standards.md</code> dan penambahan poin pedoman ke <code>AGENTS.md</code>.</li>
+                                        <li class="mb-1"><strong>Ikon Validasi Password &amp; Spacing:</strong> Menghilangkan duplikasi ikon validasi browser, memastikan warna merah solid (#f1416c) universal untuk <code>.is-invalid</code>, dan memberikan jarak aman (~30px) antara ikon seru dengan ikon eye toggle show/hide password.</li>
+                                        <li class="mb-1"><strong>Penyelarasan Toolbar Welcome / Landing:</strong> Menyamakan tinggi tombol Login/Dashboard menjadi 35px, menonaktifkan tooltip tombol di header welcome, dan memberikan efek frosted non-transparan pada tombol dropdown bahasa.</li>
+                                        <li class="mb-1"><strong>Penyederhanaan Teks Pemisah Autentikasi:</strong> Mengubah teks pemisah autentikasi <em>"Or with email"</em> menjadi <em>"Or"</em> (EN) dan <em>"Atau"</em> (ID) di view dan sistem terjemahan.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.16.2-->
+
                         <!--begin::Item v1.16.1 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.16.1</div>
@@ -56,7 +91,6 @@
                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>15 Sep 2026, 23:45 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Penyempurnaan Auto Lock Screen, Sinkronisasi Ukuran Avatar Profil &amp; .env.example</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

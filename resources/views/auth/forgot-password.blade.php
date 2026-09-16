@@ -78,6 +78,13 @@
                                         if (!validateEmailField()) {
                                             e.preventDefault();
                                             emailInput.focus();
+                                            return;
+                                        }
+
+                                        const submitBtn = forgotPasswordForm.querySelector('button[type="submit"]');
+                                        if (submitBtn) {
+                                            submitBtn.setAttribute("data-kt-indicator", "on");
+                                            submitBtn.disabled = true;
                                         }
                                     });
                                 });

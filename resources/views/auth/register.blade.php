@@ -59,7 +59,7 @@
                                 <div class="position-relative">
                                     <input id="password" type="password" placeholder="{{ __('auth.password_label') }}"
                                         name="password" required autocomplete="new-password"
-                                        class="form-control bg-transparent" />
+                                        class="form-control bg-transparent pe-12" />
                                     <button type="button"
                                         class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2 toggle-password"
                                         data-target="password">
@@ -89,7 +89,7 @@
                                 <div class="position-relative">
                                     <input id="password_confirmation" type="password"
                                         placeholder="{{ __('auth.confirm_password') }}" name="password_confirmation" required
-                                        autocomplete="new-password" class="form-control bg-transparent" />
+                                        autocomplete="new-password" class="form-control bg-transparent pe-12" />
                                     <button type="button"
                                         class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2 toggle-password"
                                         data-target="password_confirmation">
@@ -232,6 +232,13 @@
                                             } else {
                                                 passwordConfirmationInput.focus();
                                             }
+                                            return;
+                                        }
+
+                                        const submitBtn = registerForm.querySelector('button[type="submit"]');
+                                        if (submitBtn) {
+                                            submitBtn.setAttribute("data-kt-indicator", "on");
+                                            submitBtn.disabled = true;
                                         }
                                     });
 

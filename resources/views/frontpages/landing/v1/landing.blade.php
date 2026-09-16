@@ -187,21 +187,22 @@ License: For each use you must have a valid license purchased only from above li
                                 <div class="flex-equal d-flex align-items-center justify-content-end ms-1">
                                     @include('partials.lang._main', [
                                         'wrapper_class' => 'd-inline-flex align-items-center me-2 me-lg-3',
-                                        'button_class' => 'btn btn-icon btn-custom btn-active-light btn-active-color-primary w-35px h-35px'
+                                        'button_class' => 'btn btn-icon btn-custom bg-white bg-opacity-10 bg-hover-opacity-20 border border-white border-opacity-15 shadow-sm btn-active-light btn-active-color-primary w-35px h-35px',
+                                        'show_tooltip' => false
                                     ])
 
                                     @if (Route::has('login'))
                                         @auth
-                                            <a href="{{ url('/dashboard') }}" class="btn btn-success" data-kt-translate="landing.dashboard">
+                                            <a href="{{ url('/dashboard') }}" class="btn btn-sm btn-success fw-bold d-inline-flex align-items-center justify-content-center h-35px px-4" data-kt-translate="landing.dashboard">
                                                 {{ __('landing.dashboard') }}
                                             </a>
                                         @else
-                                            <a href="{{ route('login') }}" class="btn btn-success" data-kt-translate="landing.login">
+                                            <a href="{{ route('login') }}" class="btn btn-sm btn-success fw-bold d-inline-flex align-items-center justify-content-center h-35px px-4" data-kt-translate="landing.login">
                                                 {{ __('landing.login') }}
                                             </a>
 
                                             {{--  @if (Route::has('register'))
-                                                <a href="{{ route('register') }}" class="btn btn-success" data-kt-translate="landing.register">
+                                                <a href="{{ route('register') }}" class="btn btn-sm btn-success fw-bold d-inline-flex align-items-center justify-content-center h-35px px-4" data-kt-translate="landing.register">
                                                     {{ __('landing.register') }}
                                                 </a>
                                             @endif --}}

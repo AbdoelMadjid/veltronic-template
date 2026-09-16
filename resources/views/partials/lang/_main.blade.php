@@ -3,6 +3,7 @@
     $assetBase = $theme_asset_base ?? 'assets';
     $wrapperClass = $wrapper_class ?? 'app-navbar-item ms-1 ms-md-4';
     $btnClass = $button_class ?? 'btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px';
+    $showTooltip = $show_tooltip ?? true;
 @endphp
 
 <!--begin::Language dropdown-->
@@ -12,9 +13,11 @@
         class="{{ $btnClass }}"
         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
         data-kt-menu-placement="bottom-end"
+        @if ($showTooltip)
         data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
         data-kt-translate-title="menu.language"
         title="{{ __('menu.language') }}"
+        @endif
         data-kt-element="lang-toggle">
         <img class="w-20px h-20px rounded-1"
             data-kt-element="lang-flag-current"

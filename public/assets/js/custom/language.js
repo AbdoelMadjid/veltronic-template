@@ -143,7 +143,9 @@ var KTLanguage = (function () {
             "auth.indonesian": "Bahasa Indonesia",
             "auth.terms": "Terms",
             "auth.plans": "Plans",
-            "auth.contact_us": "Contact Us"
+            "auth.contact_us": "Contact Us",
+            "auth.or": "Or",
+            "auth.or_with_email": "Or"
         },
         id: {
             "menu.dashboards": "Dasbor",
@@ -217,7 +219,9 @@ var KTLanguage = (function () {
             "auth.indonesian": "Bahasa Indonesia",
             "auth.terms": "Ketentuan",
             "auth.plans": "Paket",
-            "auth.contact_us": "Hubungi Kami"
+            "auth.contact_us": "Hubungi Kami",
+            "auth.or": "Atau",
+            "auth.or_with_email": "Atau"
         }
     };
 

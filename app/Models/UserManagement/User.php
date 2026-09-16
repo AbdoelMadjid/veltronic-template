@@ -119,11 +119,19 @@ class User extends Authenticatable
     }
 
     /**
-     * Get user custom settings.
+     * Get user custom setting record (1 User = 1 Baris).
      */
-    public function settings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function settingRecord(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasMany(UserSetting::class, 'user_id');
+        return $this->hasOne(UserSetting::class, 'user_id');
+    }
+
+    /**
+     * Get user custom setting record (Alias hasOne for settings).
+     */
+    public function settings(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(UserSetting::class, 'user_id');
     }
 
     /**
@@ -139,8 +147,8 @@ class User extends Authenticatable
      */
     public function setting(string $key, $default = null)
     {
-        $setting = $this->settings()->where('key', $key)->first();
-        return $setting ? $setting->value : $default;
+        $setting = $this->settingRecord;
+        return $setting ? $setting->getSetting($key, $default) : $default;
     }
 
     /**
@@ -148,9 +156,14 @@ class User extends Authenticatable
      */
     public function setSetting(string $key, $value, string $group = 'general'): UserSetting
     {
-        return $this->settings()->updateOrCreate(
-            ['key' => $key],
-            ['value' => $value, 'group' => $group]
-        );
+        $record = $this->settingRecord ?? new UserSetting(['user_id' => $this->id]);
+        $record->user_id = $this->id;
+        $record->setSetting($key, $value, $group);
+        $record->save();
+
+        $this->setRelation('settingRecord', $record);
+        $this->setRelation('settings', $record);
+
+        return $record;
     }
 }

@@ -316,6 +316,34 @@ const KTLockScreen = (function () {
                 if (passwordInput) passwordInput.focus();
             });
         }
+
+        // Listen to global user profile update events in realtime
+        window.addEventListener('kt.user.updated', function (e) {
+            if (e.detail) {
+                updateUser(e.detail);
+            }
+        });
+    };
+
+    // Update user info in lock screen modal dynamically
+    const updateUser = (userData) => {
+        if (!userData) return;
+        if (typeof userData.avatar_url !== 'undefined') {
+            const avatarImg = document.getElementById('lock_screen_avatar_img');
+            if (avatarImg) {
+                const defaultUrl = '/assets/media/svg/avatars/blank.svg';
+                const url = userData.avatar_url || defaultUrl;
+                avatarImg.style.backgroundImage = `url('${url}')`;
+            }
+        }
+        if (typeof userData.name !== 'undefined' && userData.name) {
+            const nameEl = document.getElementById('lock_screen_user_name');
+            if (nameEl) nameEl.textContent = userData.name;
+        }
+        if (typeof userData.email !== 'undefined' && userData.email) {
+            const emailEl = document.getElementById('lock_screen_user_email');
+            if (emailEl) emailEl.textContent = userData.email;
+        }
     };
 
     // Initialize module
@@ -387,6 +415,7 @@ const KTLockScreen = (function () {
         lock: lock,
         unlock: unlock,
         updateLifetime: updateLifetime,
+        updateUser: updateUser,
         isLocked: () => isLocked,
         getRemainingSeconds: () => {
             const elapsed = Date.now() - lastActivityTime;

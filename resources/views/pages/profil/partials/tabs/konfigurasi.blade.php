@@ -2,10 +2,10 @@
     $userSettings = $settings ?? [];
     $authUser = auth()->user();
     $coverBgUrl = $authUser?->cover_bg_url ?: asset('assets/img-temp/1200x800/img1.jpg');
-    $coverOpacity = (int) ($userSettings['cover_opacity'] ?? '35');
+    $coverOpacity = (int) ($userSettings['cover_opacity'] ?? '60');
     $coverOverlayColor = $userSettings['cover_overlay_color'] ?? '#000000';
-    $coverPositionY = (int) ($userSettings['cover_position_y'] ?? '0');
-    $coverHeight = (int) ($userSettings['cover_height'] ?? '280');
+    $coverPositionY = (int) ($userSettings['cover_position_y'] ?? '30');
+    $coverHeight = (int) ($userSettings['cover_height'] ?? '250');
     $coverBlur = (int) ($userSettings['cover_blur'] ?? '0');
     $hasCustomCover = !empty($userSettings['cover_background']);
 @endphp
@@ -195,7 +195,7 @@
                                    value="{{ $coverHeight }}" />
                             <div class="d-flex justify-content-between text-muted fs-9 px-1">
                                 <span>200px (Kompak)</span>
-                                <span>280px (Standar)</span>
+                                <span>250px (Standar)</span>
                                 <span>500px (Lega)</span>
                             </div>
                         </div>
@@ -203,9 +203,9 @@
                         <div class="mb-4">
                             <span class="fs-8 fw-semibold text-gray-600 d-block mb-1">Preset Cepat Tinggi:</span>
                             <div class="btn-group w-100" role="group">
-                                <button type="button" class="btn btn-xs btn-light btn-active-light-primary btn-cover-height" data-height="240">240px</button>
-                                <button type="button" class="btn btn-xs btn-light btn-active-light-primary btn-cover-height" data-height="280">280px</button>
-                                <button type="button" class="btn btn-xs btn-light btn-active-light-primary btn-cover-height" data-height="360">360px</button>
+                                <button type="button" class="btn btn-xs btn-light btn-active-light-primary btn-cover-height" data-height="200">200px</button>
+                                <button type="button" class="btn btn-xs btn-light btn-active-light-primary btn-cover-height" data-height="250">250px</button>
+                                <button type="button" class="btn btn-xs btn-light btn-active-light-primary btn-cover-height" data-height="300">300px</button>
                             </div>
                         </div>
 
@@ -247,86 +247,162 @@
             </div>
         </div>
 
-        <div class="card-body border-top p-9">
-            <!--begin::Option Notifikasi Email-->
-            <div class="d-flex flex-stack py-4 border-bottom border-gray-200">
-                <div class="d-flex flex-column pe-4">
-                    <div class="fs-5 fw-bold text-gray-900 mb-1">Notifikasi Email</div>
-                    <div class="fs-7 fw-semibold text-gray-500">Terima pemberitahuan sistem dan aktivitas penting melalui email terdaftar.</div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <label class="form-check form-switch form-check-custom form-check-solid">
-                        <input class="form-check-input h-25px w-45px" type="checkbox" name="notifikasi_email" value="1" 
-                               {{ ($userSettings['notifikasi_email'] ?? '1') === '1' ? 'checked' : '' }} />
-                    </label>
-                </div>
-            </div>
-            <!--end::Option Notifikasi Email-->
+        <div class="card-body border-top p-7 p-lg-9">
+            <div class="row g-7 g-xl-10">
+                <!--begin::Kolom 1: Preferensi, Keamanan & Notifikasi-->
+                <div class="col-lg-6 border-end-lg pe-lg-8">
+                    <h4 class="fw-bold text-gray-800 fs-5 mb-5 d-flex align-items-center">
+                        <i class="ki-duotone ki-notification-on fs-3 text-primary me-2">
+                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span>
+                        </i>
+                        Notifikasi &amp; Keamanan Akun
+                    </h4>
 
-            <!--begin::Option Notifikasi WA-->
-            <div class="d-flex flex-stack py-4 border-bottom border-gray-200">
-                <div class="d-flex flex-column pe-4">
-                    <div class="fs-5 fw-bold text-gray-900 mb-1">Notifikasi WhatsApp / SMS</div>
-                    <div class="fs-7 fw-semibold text-gray-500">Terima verifikasi kode OTP dan pesan darurat lewat WhatsApp.</div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <label class="form-check form-switch form-check-custom form-check-solid">
-                        <input class="form-check-input h-25px w-45px" type="checkbox" name="notifikasi_wa" value="1" 
-                               {{ ($userSettings['notifikasi_wa'] ?? '0') === '1' ? 'checked' : '' }} />
-                    </label>
-                </div>
-            </div>
-            <!--end::Option Notifikasi WA-->
+                    <!--begin::Option Notifikasi Email-->
+                    <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
+                        <div class="d-flex flex-column pe-4">
+                            <div class="fs-6 fw-bold text-gray-900 mb-1">Notifikasi Email</div>
+                            <div class="fs-7 fw-semibold text-gray-500">Pemberitahuan sistem &amp; aktivitas via email terdaftar.</div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <label class="form-check form-switch form-check-custom form-check-solid">
+                                <input class="form-check-input h-25px w-45px" type="checkbox" name="notifikasi_email" value="1" 
+                                       {{ ($userSettings['notifikasi_email'] ?? '1') === '1' ? 'checked' : '' }} />
+                            </label>
+                        </div>
+                    </div>
+                    <!--end::Option Notifikasi Email-->
 
-            <!--begin::Option Autolock Screen-->
-            <div class="d-flex flex-stack py-4 border-bottom border-gray-200">
-                <div class="d-flex flex-column pe-4">
-                    <div class="fs-5 fw-bold text-gray-900 mb-1">Kunci Layar Otomatis (Auto Lock Screen)</div>
-                    <div class="fs-7 fw-semibold text-gray-500">Kunci antarmuka aplikasi secara otomatis saat tidak ada aktivitas.</div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <label class="form-check form-switch form-check-custom form-check-solid">
-                        <input class="form-check-input h-25px w-45px" type="checkbox" name="autolock_screen" value="1" 
-                               {{ ($userSettings['autolock_screen'] ?? '1') === '1' ? 'checked' : '' }} />
-                    </label>
-                </div>
-            </div>
-            <!--end::Option Autolock Screen-->
+                    <!--begin::Option Notifikasi WA-->
+                    <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
+                        <div class="d-flex flex-column pe-4">
+                            <div class="fs-6 fw-bold text-gray-900 mb-1">Notifikasi WhatsApp / SMS</div>
+                            <div class="fs-7 fw-semibold text-gray-500">Verifikasi kode OTP &amp; pesan darurat lewat WhatsApp.</div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <label class="form-check form-switch form-check-custom form-check-solid">
+                                <input class="form-check-input h-25px w-45px" type="checkbox" name="notifikasi_wa" value="1" 
+                                       {{ ($userSettings['notifikasi_wa'] ?? '0') === '1' ? 'checked' : '' }} />
+                            </label>
+                        </div>
+                    </div>
+                    <!--end::Option Notifikasi WA-->
 
-            <!--begin::Option Autentikasi 2 Langkah-->
-            <div class="d-flex flex-stack py-4 border-bottom border-gray-200">
-                <div class="d-flex flex-column pe-4">
-                    <div class="fs-5 fw-bold text-gray-900 mb-1">Autentikasi Dua Faktor (2FA)</div>
-                    <div class="fs-7 fw-semibold text-gray-500">Tingkatkan proteksi akun dengan lapisan verifikasi tambahan saat login.</div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <label class="form-check form-switch form-check-custom form-check-solid">
-                        <input class="form-check-input h-25px w-45px" type="checkbox" name="dua_faktor" value="1" 
-                               {{ ($userSettings['dua_faktor'] ?? '0') === '1' ? 'checked' : '' }} />
-                    </label>
-                </div>
-            </div>
-            <!--end::Option Autentikasi 2 Langkah-->
+                    <!--begin::Option Autolock Screen-->
+                    <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
+                        <div class="d-flex flex-column pe-4">
+                            <div class="fs-6 fw-bold text-gray-900 mb-1">Kunci Layar Otomatis (Auto Lock)</div>
+                            <div class="fs-7 fw-semibold text-gray-500">Kunci antarmuka otomatis saat idle / tidak ada aktivitas.</div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <label class="form-check form-switch form-check-custom form-check-solid">
+                                <input class="form-check-input h-25px w-45px" type="checkbox" name="autolock_screen" value="1" 
+                                       {{ ($userSettings['autolock_screen'] ?? '1') === '1' ? 'checked' : '' }} />
+                            </label>
+                        </div>
+                    </div>
+                    <!--end::Option Autolock Screen-->
 
-            <!--begin::Row Preferensi Tampilan-->
-            <div class="row pt-6">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <label class="form-label fw-bold text-gray-800 fs-6">Bahasa Default Antarmuka</label>
-                    <select name="bahasa_default" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
-                        <option value="id" {{ ($userSettings['bahasa_default'] ?? 'id') === 'id' ? 'selected' : '' }}>Bahasa Indonesia (ID)</option>
-                        <option value="en" {{ ($userSettings['bahasa_default'] ?? 'id') === 'en' ? 'selected' : '' }}>English (EN)</option>
-                    </select>
+                    <!--begin::Option Autentikasi 2 Langkah-->
+                    <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
+                        <div class="d-flex flex-column pe-4">
+                            <div class="fs-6 fw-bold text-gray-900 mb-1">Autentikasi Dua Faktor (2FA)</div>
+                            <div class="fs-7 fw-semibold text-gray-500">Tingkatkan keamanan akun dengan lapisan verifikasi tambahan.</div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <label class="form-check form-switch form-check-custom form-check-solid">
+                                <input class="form-check-input h-25px w-45px" type="checkbox" name="dua_faktor" value="1" 
+                                       {{ ($userSettings['dua_faktor'] ?? '0') === '1' ? 'checked' : '' }} />
+                            </label>
+                        </div>
+                    </div>
+                    <!--end::Option Autentikasi 2 Langkah-->
+
+                    <!--begin::Row Preferensi Tampilan & Bahasa-->
+                    <div class="row pt-4 g-4">
+                        <div class="col-sm-6">
+                            <label class="form-label fw-bold text-gray-800 fs-7 mb-1">Bahasa Default Antarmuka</label>
+                            <select name="bahasa_default" class="form-select form-select-solid form-select-sm" data-control="select2" data-hide-search="true">
+                                <option value="id" {{ ($userSettings['bahasa_default'] ?? 'id') === 'id' ? 'selected' : '' }}>Bahasa Indonesia (ID)</option>
+                                <option value="en" {{ ($userSettings['bahasa_default'] ?? 'id') === 'en' ? 'selected' : '' }}>English (EN)</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label fw-bold text-gray-800 fs-7 mb-1">Tema Tampilan Default</label>
+                            <select name="tema_default" class="form-select form-select-solid form-select-sm" data-control="select2" data-hide-search="true">
+                                <option value="light" {{ ($userSettings['tema_default'] ?? 'light') === 'light' ? 'selected' : '' }}>Terang (Light Mode)</option>
+                                <option value="dark" {{ ($userSettings['tema_default'] ?? 'light') === 'dark' ? 'selected' : '' }}>Gelap (Dark Mode)</option>
+                                <option value="system" {{ ($userSettings['tema_default'] ?? 'light') === 'system' ? 'selected' : '' }}>Mengikuti Sistem (Auto)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--end::Row Preferensi Tampilan & Bahasa-->
                 </div>
-                <div class="col-lg-6">
-                    <label class="form-label fw-bold text-gray-800 fs-6">Tema Tampilan Default</label>
-                    <select name="tema_default" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
-                        <option value="light" {{ ($userSettings['tema_default'] ?? 'light') === 'light' ? 'selected' : '' }}>Terang (Light Mode)</option>
-                        <option value="dark" {{ ($userSettings['tema_default'] ?? 'light') === 'dark' ? 'selected' : '' }}>Gelap (Dark Mode)</option>
-                        <option value="system" {{ ($userSettings['tema_default'] ?? 'light') === 'system' ? 'selected' : '' }}>Mengikuti Sistem (System)</option>
-                    </select>
+                <!--end::Kolom 1: Preferensi, Keamanan & Notifikasi-->
+
+                <!--begin::Kolom 2: Pengaturan Lanjutan / Slot Kustomisasi Lainnya-->
+                <div class="col-lg-6 ps-lg-8 d-flex flex-column justify-content-between">
+                    <div>
+                        <h4 class="fw-bold text-gray-800 fs-5 mb-5 d-flex align-items-center">
+                            <i class="ki-duotone ki-setting-3 fs-3 text-success me-2">
+                                <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span>
+                            </i>
+                            Pengaturan Lanjutan &amp; Preferensi Tambahan
+                        </h4>
+
+                        <!-- Placeholder Info Card -->
+                        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-5 mb-5">
+                            <i class="ki-duotone ki-information-5 fs-2tx text-primary me-4">
+                                <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+                            </i>
+                            <div class="d-flex flex-stack flex-grow-1">
+                                <div class="fw-semibold">
+                                    <h5 class="text-gray-900 fw-bold fs-6 mb-1">Area Kustomisasi Khusus</h5>
+                                    <div class="fs-7 text-gray-600">
+                                        Kolom ini disiapkan untuk opsi pengaturan tambahan (seperti Privasi Akun, Integrasi Sistem, Ringkasan Laporan, dsb.).
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Opsi Tambahan 1: Mode Hemat Data -->
+                        <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
+                            <div class="d-flex flex-column pe-4">
+                                <div class="fs-6 fw-bold text-gray-900 mb-1">Mode Hemat Data / Bandwidth</div>
+                                <div class="fs-7 fw-semibold text-gray-500">Kompresi aset gambar dan grafik untuk jaringan lambat.</div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input h-25px w-45px" type="checkbox" name="hemat_data" value="1" 
+                                           {{ ($userSettings['hemat_data'] ?? '0') === '1' ? 'checked' : '' }} />
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Opsi Tambahan 2: Rekap Mingguan -->
+                        <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
+                            <div class="d-flex flex-column pe-4">
+                                <div class="fs-6 fw-bold text-gray-900 mb-1">Ringkasan Aktivitas Mingguan</div>
+                                <div class="fs-7 fw-semibold text-gray-500">Kirimkan rekap log audit dan aktivitas akun setiap awal pekan.</div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input h-25px w-45px" type="checkbox" name="rekap_mingguan" value="1" 
+                                           {{ ($userSettings['rekap_mingguan'] ?? '0') === '1' ? 'checked' : '' }} />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-muted fs-8 mt-5 pt-3 border-top border-gray-200">
+                        <i class="ki-duotone ki-shield-tick fs-6 text-success me-1">
+                            <span class="path1"></span><span class="path2"></span>
+                        </i>
+                        Perubahan disimpan realtime ke profil akun pengguna Anda tanpa reload.
+                    </div>
                 </div>
+                <!--end::Kolom 2: Pengaturan Lanjutan / Slot Kustomisasi Lainnya-->
             </div>
-            <!--end::Row Preferensi Tampilan-->
         </div>
     </div>
 </form>

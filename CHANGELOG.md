@@ -5,6 +5,24 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.19.0] - 2026-09-16
+
+### Added & Refactored
+- **User Settings 1-Row-Per-User JSON Schema Architecture**:
+  - **Database Migration (`2026_09_16_000001_rebuild_users_settings_table_to_json_structure.php`)**: Rebuilt `users_settings` table from an Entity-Attribute-Value (EAV) multi-row design into an optimized 1-row-per-user schema with categorized `JSON` columns (`profile_cover`, `preferences`, `custom`) and seamless automated data aggregation migration (*Zero Data Loss*).
+  - **Model & Helper Harmonization (`UserSetting.php` & `User.php`)**: Implemented attribute casting, column mapping (`getColumnForKey`), and helper methods (`getSetting`, `setSetting`, `toFlatArray`) maintaining 100% backward compatibility for `$user->setting()` and `$user->setSetting()`.
+- **Realtime Lock Screen Modal Avatar Synchronization**:
+  - **Dynamic Modal Updater (`profil-pengguna.blade.php`)**: Enhanced `updateAvatarImages()` to instantly update `#lock_screen_avatar_img` and dispatch global `kt.user.updated` events whenever user uploads or removes their avatar.
+  - **Lock Screen Module API (`lock-screen.js`)**: Added `updateUser(userData)` API and event listener to ensure lock screen modal avatar and user info stay in sync without requiring page reloads (*Zero-Reload Policy*).
+- **Profile Cover Default Settings & Live Adjustment**:
+  - Refined default cover settings to 30% vertical focus position, 250px header height, 60% overlay contrast thickness, and dark tint overlay (`#000000`) across controller, blade views, and quick preset controls.
+- **Two-Column Responsive Layout for User Preferences Card**:
+  - Reorganized `form_preferensi_konfigurasi` in `konfigurasi.blade.php` into a sleek 2-column responsive layout:
+    - **Column 1**: Notification channels (Email, WhatsApp/SMS), Account Security (Auto Lock Screen, 2FA), and Interface Appearance (Language & Theme).
+    - **Column 2**: Advanced Preferences & Extension Slots (Data Saver mode, Weekly Activity Digest callouts).
+
+---
+
 ## [v1.18.0] - 2026-09-16
 
 ### Added & Enhanced

@@ -33,7 +33,7 @@ class ProfilPenggunaController extends Controller
             'berlaku_hingga' => 'Seumur Hidup',
         ]);
 
-        $settings = $user->settings->pluck('value', 'key')->toArray();
+        $settings = $user->settingRecord?->toFlatArray() ?? [];
         $logs = $user->logs()->take(25)->get();
 
         // Get active login sessions
@@ -288,16 +288,16 @@ class ProfilPenggunaController extends Controller
 
             // Cover Customization Settings
             if ($request->has('cover_opacity')) {
-                $user->setSetting('cover_opacity', (string) $request->input('cover_opacity', '35'), 'profile_cover');
+                $user->setSetting('cover_opacity', (string) $request->input('cover_opacity', '60'), 'profile_cover');
             }
             if ($request->has('cover_overlay_color')) {
                 $user->setSetting('cover_overlay_color', (string) $request->input('cover_overlay_color', '#000000'), 'profile_cover');
             }
             if ($request->has('cover_position_y')) {
-                $user->setSetting('cover_position_y', (string) $request->input('cover_position_y', '0'), 'profile_cover');
+                $user->setSetting('cover_position_y', (string) $request->input('cover_position_y', '30'), 'profile_cover');
             }
             if ($request->has('cover_height')) {
-                $user->setSetting('cover_height', (string) $request->input('cover_height', '280'), 'profile_cover');
+                $user->setSetting('cover_height', (string) $request->input('cover_height', '250'), 'profile_cover');
             }
             if ($request->has('cover_blur')) {
                 $user->setSetting('cover_blur', (string) $request->input('cover_blur', '0'), 'profile_cover');
@@ -313,6 +313,8 @@ class ProfilPenggunaController extends Controller
                 'bahasa_default' => 'string',
                 'tema_default' => 'string',
                 'dua_faktor' => 'boolean',
+                'hemat_data' => 'boolean',
+                'rekap_mingguan' => 'boolean',
             ];
 
             foreach ($allowedSettings as $key => $type) {
@@ -343,10 +345,10 @@ class ProfilPenggunaController extends Controller
                 'settings' => [
                     'cover_background_url' => $freshUser->cover_bg_url,
                     'cover_has_custom' => !empty($freshUser->setting('cover_background')),
-                    'cover_opacity' => (int) $freshUser->setting('cover_opacity', '35'),
+                    'cover_opacity' => (int) $freshUser->setting('cover_opacity', '60'),
                     'cover_overlay_color' => $freshUser->setting('cover_overlay_color', '#000000'),
-                    'cover_position_y' => (int) $freshUser->setting('cover_position_y', '0'),
-                    'cover_height' => (int) $freshUser->setting('cover_height', '280'),
+                    'cover_position_y' => (int) $freshUser->setting('cover_position_y', '30'),
+                    'cover_height' => (int) $freshUser->setting('cover_height', '250'),
                     'cover_blur' => (int) $freshUser->setting('cover_blur', '0'),
                 ],
             ]);

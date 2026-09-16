@@ -15,10 +15,10 @@
         $tab = $activeTab ?? 'profil-saya';
         $authUser = $user ?? auth()->user();
         $coverBgUrl = $authUser?->cover_bg_url ?: asset('assets/img-temp/1200x800/img1.jpg');
-        $coverOpacity = (int) ($authUser?->setting('cover_opacity', '35') ?? '35');
+        $coverOpacity = (int) ($authUser?->setting('cover_opacity', '60') ?? '60');
         $coverOverlayColor = $authUser?->setting('cover_overlay_color', '#000000') ?? '#000000';
-        $coverPositionY = (int) ($authUser?->setting('cover_position_y', '0') ?? '0');
-        $coverHeight = (int) ($authUser?->setting('cover_height', '280') ?? '280');
+        $coverPositionY = (int) ($authUser?->setting('cover_position_y', '30') ?? '30');
+        $coverHeight = (int) ($authUser?->setting('cover_height', '250') ?? '250');
         $coverBlur = (int) ($authUser?->setting('cover_blur', '0') ?? '0');
     @endphp
 
@@ -154,7 +154,7 @@
                 }
             }
 
-            // Realtime updater: Avatar images across navbar, header, and profile
+            // Realtime updater: Avatar images across navbar, header, profile, and lock screen
             function updateAvatarImages(avatarUrl) {
                 const defaultUrl = "{{ \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null) }}";
                 const targetUrl = avatarUrl || defaultUrl;
@@ -164,6 +164,23 @@
 
                 const navImg = document.getElementById('header_navbar_user_avatar');
                 if (navImg) navImg.style.backgroundImage = `url('${targetUrl}')`;
+
+                const lockScreenImg = document.getElementById('lock_screen_avatar_img');
+                if (lockScreenImg) lockScreenImg.style.backgroundImage = `url('${targetUrl}')`;
+
+                const topbarImg = document.querySelector('.header-user-avatar-img');
+                const topbarInitial = document.querySelector('.header-user-avatar-initial');
+                if (topbarImg) {
+                    if (avatarUrl) {
+                        topbarImg.src = targetUrl;
+                        topbarImg.classList.remove('d-none');
+                        if (topbarInitial) topbarInitial.classList.add('d-none');
+                    } else {
+                        topbarImg.src = '';
+                        topbarImg.classList.add('d-none');
+                        if (topbarInitial) topbarInitial.classList.remove('d-none');
+                    }
+                }
 
                 const wrapper = document.getElementById('profil_saya_avatar_wrapper');
                 if (wrapper) {
@@ -177,6 +194,11 @@
                         }
                     }
                 }
+
+                // Dispatch global event for modular components (like KTLockScreen)
+                window.dispatchEvent(new CustomEvent('kt.user.updated', {
+                    detail: { avatar_url: avatarUrl }
+                }));
             }
 
             // Realtime updater: KTP card preview, modal, and placeholder
@@ -202,7 +224,7 @@
                 }
             }
 
-            // Realtime updater: Identitas diri text displays in Profil Saya tab
+            // Realtime updater: Identitas diri text displays in Profil Saya tab & Lock Screen
             function updateIdentitasDisplay(data) {
                 if (!data) return;
 
@@ -213,15 +235,32 @@
                     const headerEmail = document.getElementById('profile_header_user_email');
                     if (headerEmail) headerEmail.innerText = data.user.email || '-';
 
+                    const navName = document.getElementById('header_navbar_user_name');
+                    if (navName) navName.innerText = data.user.name || '-';
+
+                    const navEmail = document.getElementById('header_navbar_user_email');
+                    if (navEmail) navEmail.innerText = data.user.email || '-';
+
+                    const lockName = document.getElementById('lock_screen_user_name');
+                    if (lockName) lockName.innerText = data.user.name || '-';
+
+                    const lockEmail = document.getElementById('lock_screen_user_email');
+                    if (lockEmail) lockEmail.innerText = data.user.email || '-';
+
                     const profilUserName = document.getElementById('profil_display_user_name');
                     if (profilUserName) profilUserName.innerText = data.user.name || '-';
 
                     const profilUserEmail = document.getElementById('profil_display_user_email');
                     if (profilUserEmail) profilUserEmail.innerText = data.user.email || '-';
 
-                    if (data.user.avatar_url) {
+                    if (typeof data.user.avatar_url !== 'undefined') {
                         updateAvatarImages(data.user.avatar_url);
                     }
+
+                    // Dispatch global event
+                    window.dispatchEvent(new CustomEvent('kt.user.updated', {
+                        detail: data.user
+                    }));
                 }
 
                 if (data.detail) {
@@ -527,7 +566,7 @@
             // 1b. Live Cover Height Slider
             if (coverHeightInput) {
                 coverHeightInput.addEventListener('input', function () {
-                    const val = parseInt(this.value) || 280;
+                    const val = parseInt(this.value) || 250;
                     if (coverHeightLabel) coverHeightLabel.innerText = val + 'px';
                     if (coverWrapperEl) coverWrapperEl.style.minHeight = val + 'px';
                 });

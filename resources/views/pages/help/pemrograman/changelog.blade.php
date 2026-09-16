@@ -34,13 +34,72 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.17.1
+                            Versi Saat Ini: v1.19.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.19.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.19.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.19.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>16 Sep 2026, 12:00 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Arsitektur 1-User-1-Baris JSON Settings, Sinkronisasi Avatar Realtime Lock Screen, &amp; Layout 2 Kolom Preferensi</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembaruan arsitektur basis data yang mentransformasi tabel konfigurasi pengguna (<code>users_settings</code>) menjadi format 1 baris per user dengan kolom JSON terstruktur per kategori, implementasi sinkronisasi foto avatar modal lock screen secara realtime tanpa reload, penyesuaian nilai default banner cover profil, serta restrukturisasi kartu preferensi menjadi 2 kolom responsif.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Skema Database 1-User-1-Baris JSON:</strong> Mengubah <code>users_settings</code> menjadi tabel berbasis kolom JSON (<code>profile_cover</code>, <code>preferences</code>, <code>custom</code>) dengan migrasi otomatis tanpa kehilangan data (*Zero Data Loss*).</li>
+                                        <li class="mb-1"><strong>Model &amp; Helper Harmonization:</strong> Menjaga kompabilitas fungsi <code>$user->setting()</code> dan <code>$user->setSetting()</code> secara transparan.</li>
+                                        <li class="mb-1"><strong>Realtime Lock Screen Avatar Sync:</strong> Sinkronisasi instan elemen <code>#lock_screen_avatar_img</code> saat avatar diunggah/dihapus via event global <code>kt.user.updated</code> dan API <code>KTLockScreen.updateUser()</code>.</li>
+                                        <li class="mb-1"><strong>Default Profile Cover Banner:</strong> Mengatur default fokus vertikal ke 30%, tinggi cover 250px, ketebalan penutup 60%, dan warna penutup gelap (#000000).</li>
+                                        <li class="mb-1"><strong>Tata Letak 2 Kolom Preferensi:</strong> Membagi form preferensi menjadi Kolom 1 (Notifikasi, Keamanan, Bahasa, Tema) dan Kolom 2 (Area Kustomisasi Khusus, Hemat Data, Rekap Mingguan).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.19.0 (Minor)-->
+
+                        <!--begin::Item v1.18.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.18.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.18.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>16 Sep 2026, 10:15 WIB
+                                    </span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Profile Cover Background Studio &amp; Kontras Dinamis Header Profil</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembaruan fitur kustomisasi banner header profil pengguna dengan live preview client-side, slider posisi vertikal, pengaturan tinggi cover, ketebalan overlay kontras, filter blur, dan pemisahan formulir konfigurasi profil.
+                                </p>
+                            </div>
+                        </div>
+                        <!--end::Item v1.18.0 (Minor)-->
+
                         <!--begin::Item v1.17.1 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.17.1</div>
@@ -56,7 +115,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>16 Sep 2026, 08:55 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Dukungan Dark Mode Adaptif &amp; Penyelarasan Kontras Visual Seluruh Rute Dokumentasi Help (Skema &amp; Operasional)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

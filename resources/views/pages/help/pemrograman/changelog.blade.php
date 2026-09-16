@@ -34,13 +34,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.20.0
+                            Versi Saat Ini: v1.21.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.21.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.21.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.21.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>16 Sep 2026, 15:10 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Implementasi Penuh Modul User Management, Arsitektur Partials &amp; Petunjuk Modul, Multi-Role Badges, serta Header Cover Dinamis</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembangunan modul User Management (<code>usermanagement/users</code>) lengkap dengan arsitektur MVC dan Form Request, modularisasi komponen Blade ke sub-folder <code>partials/</code>, penyertaan petunjuk operasional modul dinamis, penanganan Multi-Role (Select2 multi-select &amp; badge per peran), visualisasi Card View dengan header cover dari basis data profil pengguna, modal rincian pengguna berlatar cover dinamis, avatar kotak sudut tumpul (<code>rounded-3</code>) tanpa penanda dot, serta integrasi Yajra DataTables AJAX Zero-Reload.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Modul User Management Lengkap</strong>: Endpoint CRUD, Form Requests (<code>UserStoreRequest</code>, <code>UserUpdateRequest</code>), pencarian instan, filter peran, status verifikasi email, dan pengurutan dinamis.</li>
+                                        <li><strong>Standar Partials &amp; Petunjuk Modul</strong>: Pemisahan 6 sub-komponen (filter, cards-pane, cards-list, table-pane, form-modal, detail-modal) dan panduan operasional (<code>users-petunjuk.blade.php</code>) sesuai aturan baku <code>module-partials-and-operational-guidelines.md</code>.</li>
+                                        <li><strong>Multi-Role Assignment &amp; Presentation</strong>: Dukungan banyak peran per pengguna dengan Select2 multi-select, sinkronisasi <code>syncRoles</code>, dan multi-badge berpenampilan harmonis.</li>
+                                        <li><strong>Header Cover Kartu &amp; Modal Detail</strong>: Header kartu dan modal detail terintegrasi langsung dengan database cover profil pengguna (<code>cover_background</code>, <code>cover_opacity</code>, <code>cover_overlay_color</code>, <code>cover_position_y</code>, <code>cover_blur</code>).</li>
+                                        <li><strong>Standarisasi Avatar</strong>: Avatar kotak sudut tumpul (<code>rounded-3</code>) fokus bagian atas gambar (<code>background-position: top center; background-size: cover;</code>) tanpa bulatan status dot.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.21.0-->
+
                         <!--begin::Item v1.20.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.20.0</div>
@@ -56,7 +91,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>16 Sep 2026, 13:45 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Integrasi Profil Hero Banner Dashboard (v1 &amp; v2), Input &amp; Field Moto Hidup Pengguna, serta Penyelarasan Topbar Avatar v2</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

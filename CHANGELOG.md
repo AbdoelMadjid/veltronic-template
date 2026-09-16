@@ -5,6 +5,23 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.21.0] - 2026-09-16
+
+### Added & Enhanced
+- **User Management Module (`usermanagement/users`)**:
+  - **Full MVC & Form Request Architecture**: Implemented `UserController` with complete CRUD, searching, role filtering, verification status filtering, sorting, and dedicated Form Requests (`UserStoreRequest` & `UserUpdateRequest`).
+  - **Zero-Reload Realtime CRUD & DataTables AJAX**: Integrated server-side Yajra DataTables and instant Card View synchronization with SweetAlert2 notifications and button loading indicators (`data-kt-indicator="on"`).
+  - **Multi-Role Assignment & Presentation**: Supported multiple roles per user with Select2 multi-select (`name="roles[]"`), automated role synchronization (`syncRoles`), and multi-badge color-coded rendering.
+  - **Profile Cover Header Integration for Cards & Detail Modal**:
+    - Connected cards header and detail modal header with the user's database cover settings (`cover_background`, `cover_opacity`, `cover_overlay_color`, `cover_position_y`, `cover_blur`).
+    - Standardized square avatars (`rounded-3`) focusing on the top part of the image with a clean presentation.
+- **Modular Blade Partials & Operational Guidelines Policy**:
+  - Structured module views into 6 modular partials under `resources/views/pages/usermanagement/partials/` (`users-filter-aside.blade.php`, `users-cards-pane.blade.php`, `users-cards-list.blade.php`, `users-table-pane.blade.php`, `users-form-modal.blade.php`, `users-detail-modal.blade.php`).
+  - Added operational guideline partial (`users-petunjuk.blade.php`).
+  - Established system rule #6 in `AGENTS.md` and created standard rule documentation `.agents/rules/module-partials-and-operational-guidelines.md`.
+
+---
+
 ## [v1.20.0] - 2026-09-16
 
 ### Added & Enhanced

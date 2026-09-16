@@ -27,3 +27,8 @@
 - Setelah proses selesai (berhasil / gagal), status tombol **wajib dipulihkan** ke kondisi normal.
 - Detail lengkap diatur di `.agents/rules/button-loading-spinner-standards.md`.
 
+## 6. Modular Blade Partials & Operational Guidelines Policy
+- **WAJIB** memisahkan komponen antarmuka yang kompleks (modal formulir, modal detail, tab panel, sidebar filter) ke dalam sub-folder `resources/views/pages/[kategori]/partials/`. File Blade utama hanya bertindak sebagai koordinator layout dengan pemanggilan `@include`.
+- **WAJIB** menyertakan file petunjuk operasional (`[modul]-petunjuk.blade.php`) di setiap modul baru agar pengguna memahami fungsi modul, alur operasi, dan batasan hak akses peran.
+- Detail lengkap diatur di `.agents/rules/module-partials-and-operational-guidelines.md`.
+

@@ -32,10 +32,19 @@
 <div class="d-flex flex-wrap flex-sm-nowrap align-items-center w-100">
     <!--begin: Pic-->
     <div class="me-7 mb-4 mb-sm-0">
-        <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-            <div class="symbol-label border border-4 border-body shadow-sm" id="profile_header_avatar_img"
+        <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative cursor-pointer"
+             data-bs-toggle="modal" data-bs-target="#kt_modal_update_avatar"
+             title="Klik untuk mengubah foto & fokus avatar">
+            <div class="symbol-label border border-4 border-body shadow-sm position-relative overflow-hidden" id="profile_header_avatar_img"
                 style="{{ user_avatar_style($authUser) }} transition: background-position 0.15s ease, background-size 0.15s ease;">
             </div>
+            <!-- Edit Badge Icon on bottom-right corner -->
+            <button type="button" class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px w-lg-35px h-lg-35px bg-body shadow position-absolute bottom-0 end-0 mb-n1 me-n1"
+                    data-bs-toggle="modal" data-bs-target="#kt_modal_update_avatar" title="Ubah Foto & Fokus Avatar">
+                <i class="ki-duotone ki-pencil fs-6 fs-lg-4 text-gray-700">
+                    <span class="path1"></span><span class="path2"></span>
+                </i>
+            </button>
         </div>
     </div>
     <!--end::Pic-->

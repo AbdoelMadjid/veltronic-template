@@ -2,15 +2,11 @@
     $authUser = $user ?? auth()->user();
     $detailData = $detail ?? ($authUser?->detail ?? null);
     $userRoles = $authUser?->roles ?? collect();
-    $avatarSrc = $authUser?->avatar_url ?: \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null);
-    $avatarPosY = (int) ($authUser?->setting('avatar_position_y', '0') ?? '0');
-    $avatarPosX = (int) ($authUser?->setting('avatar_position_x', '50') ?? '50');
-    $avatarZoom = (int) ($authUser?->setting('avatar_zoom', '100') ?? '100');
-    $avatarBgSize = $avatarZoom === 100 ? 'cover' : $avatarZoom . '%';
+    $hasKtp = !empty($detailData?->foto_ktp_url);
 @endphp
 
 <div class="row g-5 g-xl-10">
-    <!--begin::Col Data Akun & Kontak-->
+    <!--begin::Col 1 - Informasi Akun-->
     <div class="col-xl-6">
         <div class="card card-flush h-xl-100">
             <div class="card-header pt-7">
@@ -20,61 +16,6 @@
                 </h3>
             </div>
             <div class="card-body pt-5">
-                <!--begin::Avatar Input Auto Save-->
-                <div class="d-flex flex-stack py-4 border-bottom border-gray-200">
-                    <div class="d-flex flex-column pe-4">
-                        <span class="fw-semibold text-gray-600 fs-6">Foto Profil / Avatar</span>
-                        <span class="text-muted fs-7">Ubah foto profil (Tersimpan otomatis)</span>
-                    </div>
-                    <div>
-                        <form id="form_auto_avatar" action="{{ route('profil.profil-pengguna.avatar') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <!--begin::Image input-->
-                            <div class="image-input image-input-outline {{ empty($authUser?->avatar) ? 'image-input-empty' : '' }}" data-kt-image-input="true"
-                                style="background-image: url('{{ \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null) }}');">
-                                <!--begin::Preview existing avatar-->
-                                <div class="image-input-wrapper w-100px h-100px" id="profil_saya_avatar_wrapper"
-                                    style="{{ user_avatar_style($authUser) }} transition: background-position 0.15s ease, background-size 0.15s ease;">
-                                </div>
-                                <!--end::Preview existing avatar-->
-                                <!--begin::Label-->
-                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Ubah avatar">
-                                    <i class="ki-duotone ki-pencil fs-7">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                    <!--begin::Inputs-->
-                                    <input type="file" name="avatar" id="input_auto_avatar_file" accept=".png, .jpg, .jpeg, .webp" />
-                                    <input type="hidden" name="avatar_remove" id="input_auto_avatar_remove" />
-                                    <!--end::Inputs-->
-                                </label>
-                                <!--end::Label-->
-                                <!--begin::Cancel-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Batal">
-                                    <i class="ki-duotone ki-cross fs-2">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </span>
-                                <!--end::Cancel-->
-                                <!--begin::Remove-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" id="btn_auto_avatar_remove"
-                                    data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Hapus avatar">
-                                    <i class="ki-duotone ki-cross fs-2">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </span>
-                                <!--end::Remove-->
-                            </div>
-                            <!--end::Image input-->
-                        </form>
-                    </div>
-                </div>
-                <!--end::Avatar Input Auto Save-->
-
                 <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
                     <span class="fw-semibold text-gray-600 fs-6">Nama Pengguna</span>
                     <span class="fw-bold text-gray-800 fs-6" id="profil_display_user_name">{{ $authUser?->name }}</span>
@@ -128,202 +69,82 @@
                         {{ $authUser?->email_verified_at ? 'Terverifikasi' : 'Belum Verifikasi' }}
                     </span>
                 </div>
-                <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
+                <div class="d-flex flex-stack py-3">
                     <span class="fw-semibold text-gray-600 fs-6">Tanggal Pendaftaran</span>
                     <span class="fw-bold text-gray-800 fs-6">
                         {{ $authUser?->created_at ? $authUser->created_at->translatedFormat('d F Y, H:i') : '-' }}
                     </span>
                 </div>
-
-                <!--begin::Foto KTP Section-->
-                <div class="pt-5 text-center d-flex flex-column align-items-center justify-content-center">
-                    <div class="d-flex align-items-center justify-content-between w-100 mb-3">
-                        <div class="d-flex flex-column text-start">
-                            <span class="fw-semibold text-gray-800 fs-6">Foto Kartu Tanda Penduduk (KTP)</span>
-                            <span class="text-muted fs-7">Dokumen identitas resmi pengguna</span>
-                        </div>
-                    </div>
-                    <form id="form_profil_ktp" action="{{ route('profil.profil-pengguna.ktp') }}" method="POST" enctype="multipart/form-data" class="w-100">
-                        @csrf
-                        <input type="file" name="foto_ktp" id="input_profil_ktp_file" accept=".png, .jpg, .jpeg, .webp" class="d-none" />
-                        <input type="hidden" name="ktp_remove" id="input_profil_ktp_remove" value="" />
-
-                        @php
-                            $hasKtp = !empty($detailData?->foto_ktp_url);
-                        @endphp
-
-                        <!--begin::Container KTP Preview-->
-                        <div class="border border-2 border-dashed border-primary rounded-4 p-3 bg-light-primary w-100 max-w-400px mx-auto position-relative {{ $hasKtp ? '' : 'd-none' }}" id="container_ktp_preview">
-                            <img src="{{ $detailData?->foto_ktp_url ?? '' }}" alt="Foto KTP" class="img-fluid rounded-3 shadow-sm w-100 max-h-250px object-fit-contain" id="img_profil_ktp_preview" />
-                            <div class="mt-3 d-flex justify-content-center gap-2 flex-wrap">
-                                <button type="button" class="btn btn-sm btn-light-primary fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_view_ktp" id="btn_profil_ktp_view">
-                                    <i class="ki-duotone ki-eye fs-5 me-1">
-                                        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                                    </i>
-                                    Lihat Gambar
-                                </button>
-                                <button type="button" class="btn btn-sm btn-primary fw-bold" id="btn_profil_ktp_change">
-                                    <i class="ki-duotone ki-pencil fs-5 me-1">
-                                        <span class="path1"></span><span class="path2"></span>
-                                    </i>
-                                    Ganti KTP
-                                </button>
-                                <button type="button" class="btn btn-sm btn-light-danger fw-bold" id="btn_profil_ktp_remove">
-                                    <i class="ki-duotone ki-trash fs-5 me-1">
-                                        <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span>
-                                    </i>
-                                    Hapus
-                                </button>
-                            </div>
-                        </div>
-                        <!--end::Container KTP Preview-->
-
-                        <!--begin::Container KTP Placeholder-->
-                        <div class="border border-2 border-dashed border-gray-300 rounded-4 p-6 bg-light w-100 d-flex flex-column align-items-center justify-content-center {{ $hasKtp ? 'd-none' : '' }}" id="container_ktp_placeholder">
-                            <i class="ki-duotone ki-badge fs-3x text-gray-400 mb-2">
-                                <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span>
-                            </i>
-                            <span class="fw-bold text-gray-700 fs-6 mb-1">Foto KTP Belum Diunggah</span>
-                            <span class="text-gray-500 fs-7 mb-3">Unggah foto KTP resmi Anda (Format JPG, PNG, WEBP maks 2MB)</span>
-                            <button type="button" class="btn btn-sm btn-primary fw-bold" id="btn_profil_ktp_upload">
-                                <i class="ki-duotone ki-file-up fs-5 me-1">
-                                    <span class="path1"></span><span class="path2"></span>
-                                </i>
-                                Unggah Foto KTP Sekarang
-                            </button>
-                        </div>
-                        <!--end::Container KTP Placeholder-->
-                    </form>
-                </div>
-                <!--end::Foto KTP Section-->
             </div>
         </div>
     </div>
-    <!--end::Col Data Akun & Kontak-->
+    <!--end::Col 1 - Informasi Akun-->
 
-    <!--begin::Col Kanan: Fokus Avatar-->
+    <!--begin::Col 2 - Foto KTP (Sebelah Kanan Informasi Akun)-->
     <div class="col-xl-6">
-        <!--begin::Card Fokus & Posisi Gambar Avatar-->
-        <div class="card card-flush h-xl-100 mb-5 mb-xl-10" id="card_avatar_position">
+        <div class="card card-flush h-xl-100">
             <div class="card-header pt-7">
                 <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bold text-gray-800 fs-4">Fokus &amp; Posisi Gambar Avatar</span>
-                    <span class="text-gray-500 mt-1 fw-semibold fs-7">Geser/scroll untuk menentukan bagian gambar yang diambil</span>
+                    <span class="card-label fw-bold text-gray-800 fs-4">Foto Kartu Tanda Penduduk (KTP)</span>
+                    <span class="text-gray-500 mt-1 fw-semibold fs-7">Dokumen identitas resmi kependudukan</span>
                 </h3>
-                <div class="card-toolbar">
-                    <button type="submit" form="form_avatar_position" class="btn btn-sm btn-primary" id="btn_save_avatar_position">
-                        <span class="indicator-label">
-                            <i class="ki-duotone ki-check fs-4 me-1"><span class="path1"></span><span class="path2"></span></i>
-                            Simpan Posisi
-                        </span>
-                        <span class="indicator-progress">
-                            Menyimpan...
-                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                        </span>
-                    </button>
-                </div>
             </div>
-            <div class="card-body pt-5">
-                <form id="form_avatar_position" action="{{ route('profil.profil-pengguna.avatar') }}" method="POST">
+            <div class="card-body pt-5 d-flex flex-column align-items-center justify-content-center">
+                <form id="form_profil_ktp" action="{{ route('profil.profil-pengguna.ktp') }}" method="POST" enctype="multipart/form-data" class="w-100">
                     @csrf
-                    
-                    <!-- Baris 1: Zoom / Perbesaran (Skala Gambar) -->
-                    <div class="mb-5 pb-4 border-bottom border-gray-200">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="d-flex align-items-center">
-                                <span class="fs-6 fw-bold text-gray-800 me-2">1. Zoom / Perbesaran Gambar</span>
-                                <i class="ki-duotone ki-information-5 text-gray-500 fs-6" data-bs-toggle="tooltip" title="Perbesar gambar avatar hingga 5x (500%) agar fokus ke wajah atau bagian tertentu.">
-                                    <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                                </i>
-                            </div>
-                            <span class="badge badge-light-success fw-bold fs-7" id="label_avatar_zoom_val">
-                                {{ $avatarZoom }}% {{ $avatarZoom === 100 ? '(Normal / 1x)' : ($avatarZoom === 150 ? '(1.5x)' : ($avatarZoom === 200 ? '(2x)' : ($avatarZoom === 300 ? '(3x)' : ($avatarZoom === 400 ? '(4x)' : ($avatarZoom === 500 ? '(5x / Maksimal)' : '('.number_format($avatarZoom/100, 1).'x)'))))) }}
-                            </span>
-                        </div>
-                        <input type="range" class="form-range w-100" min="100" max="500" step="5" 
-                               name="avatar_zoom" id="input_avatar_zoom" 
-                               value="{{ $avatarZoom }}" />
-                        <div class="d-flex justify-content-between text-muted fs-9 px-1 mb-2">
-                            <span>100% (1x)</span>
-                            <span>200% (2x)</span>
-                            <span>300% (3x)</span>
-                            <span>400% (4x)</span>
-                            <span>500% (5x / Maks)</span>
-                        </div>
-                        <div class="d-flex gap-2 flex-wrap">
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-zoom py-1 px-3 fs-8" data-zoom="100">Normal (1x)</button>
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-zoom py-1 px-3 fs-8" data-zoom="150">1.5x</button>
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-zoom py-1 px-3 fs-8" data-zoom="200">2x</button>
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-zoom py-1 px-3 fs-8" data-zoom="300">3x</button>
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-zoom py-1 px-3 fs-8" data-zoom="400">4x</button>
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-zoom py-1 px-3 fs-8" data-zoom="500">5x (Maks)</button>
-                        </div>
-                    </div>
+                    <input type="file" name="foto_ktp" id="input_profil_ktp_file" accept=".png, .jpg, .jpeg, .webp" class="d-none" />
+                    <input type="hidden" name="ktp_remove" id="input_profil_ktp_remove" value="" />
 
-                    <!-- Baris 2: Fokus Vertikal (Y) -->
-                    <div class="mb-5 pb-4 border-bottom border-gray-200">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="d-flex align-items-center">
-                                <span class="fs-6 fw-bold text-gray-800 me-2">2. Fokus Vertikal (Atas - Bawah)</span>
-                                <i class="ki-duotone ki-information-5 text-gray-500 fs-6" data-bs-toggle="tooltip" title="Geser ke atas atau ke bawah untuk menentukan tinggi fokus gambar avatar.">
+                    <!--begin::Container KTP Preview-->
+                    <div class="border border-2 border-dashed border-primary rounded-4 p-4 bg-light-primary w-100 max-w-450px mx-auto text-center position-relative {{ $hasKtp ? '' : 'd-none' }}" id="container_ktp_preview">
+                        <img src="{{ $detailData?->foto_ktp_url ?? '' }}" alt="Foto KTP" class="img-fluid rounded-3 shadow-sm w-100 max-h-250px object-fit-contain" id="img_profil_ktp_preview" />
+                        <div class="mt-4 d-flex justify-content-center gap-2 flex-wrap">
+                            <button type="button" class="btn btn-sm btn-light-primary fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_view_ktp" id="btn_profil_ktp_view">
+                                <i class="ki-duotone ki-eye fs-5 me-1">
                                     <span class="path1"></span><span class="path2"></span><span class="path3"></span>
                                 </i>
-                            </div>
-                            <span class="badge badge-light-primary fw-bold fs-7" id="label_avatar_position_y_val">
-                                {{ $avatarPosY }}% {{ $avatarPosY === 0 ? '(Atas)' : ($avatarPosY === 50 ? '(Tengah)' : ($avatarPosY === 100 ? '(Bawah)' : '')) }}
-                            </span>
-                        </div>
-                        <input type="range" class="form-range w-100" min="0" max="100" step="1" 
-                               name="avatar_position_y" id="input_avatar_position_y" 
-                               value="{{ $avatarPosY }}" />
-                        <div class="d-flex justify-content-between text-muted fs-9 px-1 mb-2">
-                            <span>Atas (0%)</span>
-                            <span>Tengah (50%)</span>
-                            <span>Bawah (100%)</span>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-pos-y py-1 px-3 fs-8" data-pos="0">Atas (0%)</button>
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-pos-y py-1 px-3 fs-8" data-pos="50">Tengah (50%)</button>
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-pos-y py-1 px-3 fs-8" data-pos="100">Bawah (100%)</button>
+                                Lihat Gambar
+                            </button>
+                            <button type="button" class="btn btn-sm btn-primary fw-bold" id="btn_profil_ktp_change">
+                                <i class="ki-duotone ki-pencil fs-5 me-1">
+                                    <span class="path1"></span><span class="path2"></span>
+                                </i>
+                                Ganti KTP
+                            </button>
+                            <button type="button" class="btn btn-sm btn-light-danger fw-bold" id="btn_profil_ktp_remove">
+                                <i class="ki-duotone ki-trash fs-5 me-1">
+                                    <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span>
+                                </i>
+                                Hapus
+                            </button>
                         </div>
                     </div>
+                    <!--end::Container KTP Preview-->
 
-                    <!-- Baris 3: Fokus Horizontal (X) -->
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="d-flex align-items-center">
-                                <span class="fs-6 fw-bold text-gray-800 me-2">3. Fokus Horizontal (Kiri - Kanan)</span>
-                                <i class="ki-duotone ki-information-5 text-gray-500 fs-6" data-bs-toggle="tooltip" title="Geser ke kiri atau ke kanan untuk menentukan lebar fokus gambar avatar.">
-                                    <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                                </i>
-                            </div>
-                            <span class="badge badge-light-info fw-bold fs-7" id="label_avatar_position_x_val">
-                                {{ $avatarPosX }}% {{ $avatarPosX === 0 ? '(Kiri)' : ($avatarPosX === 50 ? '(Tengah)' : ($avatarPosX === 100 ? '(Kanan)' : '')) }}
-                            </span>
-                        </div>
-                        <input type="range" class="form-range w-100" min="0" max="100" step="1" 
-                               name="avatar_position_x" id="input_avatar_position_x" 
-                               value="{{ $avatarPosX }}" />
-                        <div class="d-flex justify-content-between text-muted fs-9 px-1 mb-2">
-                            <span>Kiri (0%)</span>
-                            <span>Tengah (50%)</span>
-                            <span>Kanan (100%)</span>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-pos-x py-1 px-3 fs-8" data-pos="0">Kiri (0%)</button>
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-pos-x py-1 px-3 fs-8" data-pos="50">Tengah (50%)</button>
-                            <button type="button" class="btn btn-xs btn-light btn-avatar-pos-x py-1 px-3 fs-8" data-pos="100">Kanan (100%)</button>
-                        </div>
+                    <!--begin::Container KTP Placeholder-->
+                    <div class="border border-2 border-dashed border-gray-300 rounded-4 p-8 bg-light w-100 d-flex flex-column align-items-center justify-content-center {{ $hasKtp ? 'd-none' : '' }}" id="container_ktp_placeholder">
+                        <i class="ki-duotone ki-badge fs-3x text-gray-400 mb-3">
+                            <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span>
+                        </i>
+                        <span class="fw-bold text-gray-700 fs-5 mb-1">Foto KTP Belum Diunggah</span>
+                        <span class="text-gray-500 fs-7 mb-4 text-center">Unggah foto KTP resmi Anda (Format JPG, PNG, WEBP maks 2MB) untuk kelengkapan identitas</span>
+                        <button type="button" class="btn btn-sm btn-primary fw-bold px-4" id="btn_profil_ktp_upload">
+                            <i class="ki-duotone ki-file-up fs-5 me-1">
+                                <span class="path1"></span><span class="path2"></span>
+                            </i>
+                            Unggah Foto KTP Sekarang
+                        </button>
                     </div>
+                    <!--end::Container KTP Placeholder-->
                 </form>
             </div>
         </div>
     </div>
-    <!--end::Col Kanan-->
+    <!--end::Col 2 - Foto KTP-->
 
-    <!--begin::Col Detail Data KTP-->
+    <!--begin::Col 3 - Data Kependudukan (KTP) (Posisi Awal di Bawah)-->
     <div class="col-xl-6">
-        <div class="card card-flush">
+        <div class="card card-flush h-xl-100">
             <div class="card-header pt-7">
                 <h3 class="card-title align-items-start flex-column">
                     <span class="card-label fw-bold text-gray-800 fs-4">Data Kependudukan (KTP)</span>
@@ -376,11 +197,11 @@
             </div>
         </div>
     </div>
-    <!--end::Col Detail Data KTP-->
+    <!--end::Col 3 - Data Kependudukan (KTP)-->
 
-    <!--begin::Col Detail Alamat Terpisah-->
+    <!--begin::Col 4 - Alamat Domisili / KTP-->
     <div class="col-xl-6">
-        <div class="card card-flush">
+        <div class="card card-flush h-xl-100">
             <div class="card-header pt-7">
                 <h3 class="card-title align-items-start flex-column">
                     <span class="card-label fw-bold text-gray-800 fs-4">Alamat Domisili / KTP</span>
@@ -431,7 +252,7 @@
             </div>
         </div>
     </div>
-    <!--end::Col Detail Alamat Terpisah-->
+    <!--end::Col 4 - Alamat Domisili / KTP-->
 </div>
 
 <!--begin::Modal View KTP-->

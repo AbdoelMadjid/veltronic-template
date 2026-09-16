@@ -420,6 +420,10 @@ class ProfilPenggunaController extends Controller
                 Storage::disk('public')->delete($user->avatar);
             }
             $user->update(['avatar' => null]);
+            $user->setSetting('avatar_position_y', '50', 'profile_cover');
+            $user->setSetting('avatar_position_x', '50', 'profile_cover');
+            $user->setSetting('avatar_zoom', '100', 'profile_cover');
+
             UserLog::log('Pembaruan Avatar', 'Foto profil dihapus.', $user);
 
             $freshUser = $user->fresh();
@@ -429,9 +433,9 @@ class ProfilPenggunaController extends Controller
                     'success' => true,
                     'message' => 'Foto profil berhasil dihapus.',
                     'avatar_url' => null,
-                    'avatar_position_y' => (int) $freshUser->setting('avatar_position_y', '0'),
-                    'avatar_position_x' => (int) $freshUser->setting('avatar_position_x', '50'),
-                    'avatar_zoom' => (int) $freshUser->setting('avatar_zoom', '100'),
+                    'avatar_position_y' => 50,
+                    'avatar_position_x' => 50,
+                    'avatar_zoom' => 100,
                     'completion_percent' => $this->calculateCompletionPercent($freshUser),
                 ]);
             }

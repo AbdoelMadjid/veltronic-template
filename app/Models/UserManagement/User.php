@@ -73,7 +73,8 @@ class User extends Authenticatable
      */
     public function getAvatarPosYAttribute(): int
     {
-        return (int) ($this->setting('avatar_position_y', '0') ?? 0);
+        $default = $this->avatar ? '0' : '50';
+        return (int) ($this->setting('avatar_position_y', $default) ?? $default);
     }
 
     /**

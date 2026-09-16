@@ -96,10 +96,13 @@
                 </div>
                 <!--end:::Tab pane Riwayat Pengguna-->
             </div>
-            <!--end::Tab Content-->
         </div>
         <!--end::Content container-->
     </div>
+
+    <!--begin::Modal Update Avatar & Fokus Posisi-->
+    @include('pages.profil.partials.modals.avatar-modal')
+    <!--end::Modal Update Avatar & Fokus Posisi-->
 @endsection
 
 @section('scripts')
@@ -154,7 +157,14 @@
                 }
             }
 
-            // Realtime updater: Avatar images position & zoom across navbar, header, profile, and lock screen
+            let savedAvatarState = {
+                url: "{{ $authUser?->avatar_url ?? \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null) }}",
+                posX: {{ (int) ($authUser?->setting('avatar_position_x', '50') ?? '50') }},
+                posY: {{ (int) ($authUser?->setting('avatar_position_y', $authUser?->avatar ? '0' : '50') ?? ($authUser?->avatar ? '0' : '50')) }},
+                zoom: {{ (int) ($authUser?->setting('avatar_zoom', '100') ?? '100') }}
+            };
+
+            // Realtime updater: Avatar images position & zoom across navbar, header, profile, modal, and lock screen
             function updateAvatarPosition(posX, posY, zoom) {
                 const posStyle = `${posX}% ${posY}%`;
                 const sizeStyle = (zoom && parseInt(zoom) !== 100) ? `${zoom}%` : 'cover';
@@ -177,14 +187,14 @@
                     lockScreenImg.style.backgroundSize = sizeStyle;
                 }
 
-                const wrapper = document.getElementById('profil_saya_avatar_wrapper');
-                if (wrapper) {
-                    wrapper.style.backgroundPosition = posStyle;
-                    wrapper.style.backgroundSize = sizeStyle;
+                const modalWrapper = document.getElementById('modal_avatar_preview_wrapper');
+                if (modalWrapper) {
+                    modalWrapper.style.backgroundPosition = posStyle;
+                    modalWrapper.style.backgroundSize = sizeStyle;
                 }
             }
 
-            // Realtime updater: Avatar images across navbar, header, profile, and lock screen
+            // Realtime updater: Avatar images across navbar, header, profile, modal, and lock screen
             function updateAvatarImages(avatarUrl, posX, posY, zoom) {
                 const defaultUrl = "{{ \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null) }}";
                 const targetUrl = avatarUrl || defaultUrl;
@@ -197,6 +207,9 @@
 
                 const lockScreenImg = document.getElementById('lock_screen_avatar_img');
                 if (lockScreenImg) lockScreenImg.style.backgroundImage = `url('${targetUrl}')`;
+
+                const modalWrapper = document.getElementById('modal_avatar_preview_wrapper');
+                if (modalWrapper) modalWrapper.style.backgroundImage = `url('${targetUrl}')`;
 
                 const topbarImg = document.querySelector('.header-user-avatar-img');
                 const topbarInitial = document.querySelector('.header-user-avatar-initial');
@@ -212,22 +225,13 @@
                     }
                 }
 
-                const wrapper = document.getElementById('profil_saya_avatar_wrapper');
-                if (wrapper) {
-                    wrapper.style.backgroundImage = `url('${targetUrl}')`;
-                    const imageInputEl = wrapper.closest('.image-input');
-                    if (imageInputEl) {
-                        if (avatarUrl) {
-                            imageInputEl.classList.remove('image-input-empty');
-                        } else {
-                            imageInputEl.classList.add('image-input-empty');
-                        }
-                    }
-                }
-
                 if (typeof posX !== 'undefined' && typeof posY !== 'undefined') {
                     updateAvatarPosition(posX, posY, zoom);
+                    savedAvatarState.posX = posX;
+                    savedAvatarState.posY = posY;
+                    savedAvatarState.zoom = zoom;
                 }
+                savedAvatarState.url = targetUrl;
 
                 // Dispatch global event for modular components (like KTLockScreen)
                 window.dispatchEvent(new CustomEvent('kt.user.updated', {
@@ -392,65 +396,6 @@
                         }
                         showNotification('error', 'Gagal memproses permintaan ke server.', 'Kesalahan');
                     });
-                });
-            }
-
-            // Auto-save avatar handler on change / remove
-            const avatarFileInput = document.getElementById('input_auto_avatar_file');
-            const avatarForm = document.getElementById('form_auto_avatar');
-            const avatarRemoveBtn = document.getElementById('btn_auto_avatar_remove');
-            const avatarRemoveInput = document.getElementById('input_auto_avatar_remove');
-
-            function submitAvatarForm() {
-                if (!avatarForm) return;
-                const formData = new FormData(avatarForm);
-
-                fetch(avatarForm.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    },
-                    body: formData
-                })
-                .then(async res => {
-                    const data = await res.json();
-                    if (res.ok && data.success) {
-                        showNotification('success', data.message || 'Foto profil berhasil disimpan.', 'Berhasil');
-                        updateAvatarImages(data.avatar_url);
-                        if (typeof data.completion_percent !== 'undefined') {
-                            updateCompletionProgress(data.completion_percent);
-                        }
-                    } else {
-                        showNotification('error', data.message || 'Gagal menyimpan foto profil.', 'Peringatan');
-                    }
-                })
-                .catch(err => {
-                    console.error('Avatar upload error:', err);
-                    showNotification('error', 'Terjadi kesalahan saat mengunggah foto profil.', 'Kesalahan');
-                });
-            }
-
-            if (avatarFileInput) {
-                avatarFileInput.addEventListener('change', function () {
-                    if (this.files && this.files.length > 0) {
-                        if (avatarRemoveInput) avatarRemoveInput.value = '';
-                        submitAvatarForm();
-                    }
-                });
-            }
-
-            if (avatarRemoveBtn) {
-                avatarRemoveBtn.addEventListener('click', function () {
-                    // Sembunyikan dan bersihkan tooltip yang sedang aktif
-                    const tooltipInstance = bootstrap.Tooltip.getInstance(this);
-                    if (tooltipInstance) {
-                        tooltipInstance.hide();
-                    }
-                    document.querySelectorAll('.tooltip').forEach(el => el.remove());
-
-                    if (avatarRemoveInput) avatarRemoveInput.value = '1';
-                    setTimeout(submitAvatarForm, 100);
                 });
             }
 
@@ -689,25 +634,33 @@
             }
 
             // ==========================================
-            // Live Preview & Controls for Avatar Position & Zoom
+            // Modal Update Avatar & Live Focus/Zoom Handler
             // ==========================================
-            const avatarZoomInput = document.getElementById('input_avatar_zoom');
-            const avatarZoomLabel = document.getElementById('label_avatar_zoom_val');
-            const avatarZoomPresetBtns = document.querySelectorAll('.btn-avatar-zoom');
+            const modalAvatarFileInput = document.getElementById('input_modal_avatar_file');
+            const modalAvatarChooseBtn = document.getElementById('btn_modal_avatar_choose');
+            const modalAvatarRemoveBtn = document.getElementById('btn_modal_avatar_remove');
+            const modalAvatarRemoveInput = document.getElementById('input_modal_avatar_remove');
+            const modalAvatarPreviewWrapper = document.getElementById('modal_avatar_preview_wrapper');
+            const modalAvatarFileInfo = document.getElementById('modal_avatar_file_info');
+            const modalAvatarFileName = document.getElementById('modal_avatar_file_name');
 
-            const avatarPosYInput = document.getElementById('input_avatar_position_y');
-            const avatarPosXInput = document.getElementById('input_avatar_position_x');
-            const avatarPosYLabel = document.getElementById('label_avatar_position_y_val');
-            const avatarPosXLabel = document.getElementById('label_avatar_position_x_val');
-            const avatarPosYPresetBtns = document.querySelectorAll('.btn-avatar-pos-y');
-            const avatarPosXPresetBtns = document.querySelectorAll('.btn-avatar-pos-x');
+            const modalAvatarZoomInput = document.getElementById('input_modal_avatar_zoom');
+            const modalAvatarZoomLabel = document.getElementById('label_modal_avatar_zoom_val');
+            const modalAvatarZoomPresetBtns = document.querySelectorAll('.btn-modal-avatar-zoom');
 
-            function handleLiveAvatarPosition() {
-                const zoom = avatarZoomInput ? (parseInt(avatarZoomInput.value) || 100) : 100;
-                const posY = avatarPosYInput ? (parseInt(avatarPosYInput.value) || 0) : 0;
-                const posX = avatarPosXInput ? (parseInt(avatarPosXInput.value) || 50) : 50;
+            const modalAvatarPosYInput = document.getElementById('input_modal_avatar_position_y');
+            const modalAvatarPosXInput = document.getElementById('input_modal_avatar_position_x');
+            const modalAvatarPosYLabel = document.getElementById('label_modal_avatar_position_y_val');
+            const modalAvatarPosXLabel = document.getElementById('label_modal_avatar_position_x_val');
+            const modalAvatarPosYPresetBtns = document.querySelectorAll('.btn-modal-avatar-pos-y');
+            const modalAvatarPosXPresetBtns = document.querySelectorAll('.btn-modal-avatar-pos-x');
 
-                if (avatarZoomLabel) {
+            function handleModalLiveAvatarPosition() {
+                const zoom = modalAvatarZoomInput ? (parseInt(modalAvatarZoomInput.value) || 100) : 100;
+                const posY = modalAvatarPosYInput ? (parseInt(modalAvatarPosYInput.value) || 0) : 0;
+                const posX = modalAvatarPosXInput ? (parseInt(modalAvatarPosXInput.value) || 50) : 50;
+
+                if (modalAvatarZoomLabel) {
                     let suffixZoom = '';
                     if (zoom === 100) suffixZoom = ' (Normal / 1x)';
                     else if (zoom === 150) suffixZoom = ' (1.5x)';
@@ -716,77 +669,178 @@
                     else if (zoom === 400) suffixZoom = ' (4x)';
                     else if (zoom === 500) suffixZoom = ' (5x / Maksimal)';
                     else suffixZoom = ` (${(zoom / 100).toFixed(1).replace(/\.0$/, '')}x)`;
-                    avatarZoomLabel.innerText = zoom + '%' + suffixZoom;
+                    modalAvatarZoomLabel.innerText = zoom + '%' + suffixZoom;
                 }
 
-                if (avatarPosYLabel) {
+                if (modalAvatarPosYLabel) {
                     let suffixY = '';
                     if (posY === 0) suffixY = ' (Atas)';
                     else if (posY === 50) suffixY = ' (Tengah)';
                     else if (posY === 100) suffixY = ' (Bawah)';
-                    avatarPosYLabel.innerText = posY + '%' + suffixY;
+                    modalAvatarPosYLabel.innerText = posY + '%' + suffixY;
                 }
 
-                if (avatarPosXLabel) {
+                if (modalAvatarPosXLabel) {
                     let suffixX = '';
                     if (posX === 0) suffixX = ' (Kiri)';
                     else if (posX === 50) suffixX = ' (Tengah)';
                     else if (posX === 100) suffixX = ' (Kanan)';
-                    avatarPosXLabel.innerText = posX + '%' + suffixX;
+                    modalAvatarPosXLabel.innerText = posX + '%' + suffixX;
                 }
 
-                // Live preview hanya di komponen input avatar Profil Saya saat slider digeser
-                const wrapper = document.getElementById('profil_saya_avatar_wrapper');
-                if (wrapper) {
-                    wrapper.style.backgroundPosition = `${posX}% ${posY}%`;
-                    wrapper.style.backgroundSize = zoom !== 100 ? `${zoom}%` : 'cover';
+                if (modalAvatarPreviewWrapper) {
+                    modalAvatarPreviewWrapper.style.backgroundPosition = `${posX}% ${posY}%`;
+                    modalAvatarPreviewWrapper.style.backgroundSize = zoom !== 100 ? `${zoom}%` : 'cover';
                 }
             }
 
-            if (avatarZoomInput) {
-                avatarZoomInput.addEventListener('input', handleLiveAvatarPosition);
-            }
-            if (avatarPosYInput) {
-                avatarPosYInput.addEventListener('input', handleLiveAvatarPosition);
-            }
-            if (avatarPosXInput) {
-                avatarPosXInput.addEventListener('input', handleLiveAvatarPosition);
+            if (modalAvatarChooseBtn && modalAvatarFileInput) {
+                modalAvatarChooseBtn.addEventListener('click', function () {
+                    modalAvatarFileInput.click();
+                });
             }
 
-            avatarZoomPresetBtns.forEach(btn => {
+            if (modalAvatarFileInput) {
+                modalAvatarFileInput.addEventListener('change', function () {
+                    if (this.files && this.files[0]) {
+                        const file = this.files[0];
+                        if (modalAvatarFileName) modalAvatarFileName.innerText = file.name;
+                        if (modalAvatarFileInfo) modalAvatarFileInfo.classList.remove('d-none');
+                        if (modalAvatarRemoveInput) modalAvatarRemoveInput.value = '';
+                        if (modalAvatarRemoveBtn) modalAvatarRemoveBtn.classList.remove('d-none');
+
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            if (modalAvatarPreviewWrapper) {
+                                modalAvatarPreviewWrapper.style.backgroundImage = `url('${e.target.result}')`;
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            if (modalAvatarRemoveBtn) {
+                modalAvatarRemoveBtn.addEventListener('click', function () {
+                    if (modalAvatarRemoveInput) modalAvatarRemoveInput.value = '1';
+                    if (modalAvatarFileInput) modalAvatarFileInput.value = '';
+                    if (modalAvatarFileInfo) modalAvatarFileInfo.classList.add('d-none');
+                    modalAvatarRemoveBtn.classList.add('d-none');
+
+                    // Reset sliders ke posisi default center (X: 50%, Y: 50%, Zoom: 100%)
+                    if (modalAvatarZoomInput) modalAvatarZoomInput.value = 100;
+                    if (modalAvatarPosYInput) modalAvatarPosYInput.value = 50;
+                    if (modalAvatarPosXInput) modalAvatarPosXInput.value = 50;
+                    handleModalLiveAvatarPosition();
+
+                    const defaultBlank = "{{ \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null) }}";
+                    if (modalAvatarPreviewWrapper) {
+                        modalAvatarPreviewWrapper.style.backgroundImage = `url('${defaultBlank}')`;
+                    }
+                });
+            }
+
+            if (modalAvatarZoomInput) {
+                modalAvatarZoomInput.addEventListener('input', handleModalLiveAvatarPosition);
+            }
+            if (modalAvatarPosYInput) {
+                modalAvatarPosYInput.addEventListener('input', handleModalLiveAvatarPosition);
+            }
+            if (modalAvatarPosXInput) {
+                modalAvatarPosXInput.addEventListener('input', handleModalLiveAvatarPosition);
+            }
+
+            modalAvatarZoomPresetBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
                     const z = this.getAttribute('data-zoom');
-                    if (avatarZoomInput) {
-                        avatarZoomInput.value = z;
-                        handleLiveAvatarPosition();
+                    if (modalAvatarZoomInput) {
+                        modalAvatarZoomInput.value = z;
+                        handleModalLiveAvatarPosition();
                     }
                 });
             });
 
-            avatarPosYPresetBtns.forEach(btn => {
+            modalAvatarPosYPresetBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
                     const pos = this.getAttribute('data-pos');
-                    if (avatarPosYInput) {
-                        avatarPosYInput.value = pos;
-                        handleLiveAvatarPosition();
+                    if (modalAvatarPosYInput) {
+                        modalAvatarPosYInput.value = pos;
+                        handleModalLiveAvatarPosition();
                     }
                 });
             });
 
-            avatarPosXPresetBtns.forEach(btn => {
+            modalAvatarPosXPresetBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
                     const pos = this.getAttribute('data-pos');
-                    if (avatarPosXInput) {
-                        avatarPosXInput.value = pos;
-                        handleLiveAvatarPosition();
+                    if (modalAvatarPosXInput) {
+                        modalAvatarPosXInput.value = pos;
+                        handleModalLiveAvatarPosition();
                     }
                 });
             });
 
-            handleAjaxForm('form_avatar_position', 'btn_save_avatar_position', function (data) {
-                if (data && typeof data.avatar_position_x !== 'undefined' && typeof data.avatar_position_y !== 'undefined') {
-                    updateAvatarPosition(data.avatar_position_x, data.avatar_position_y, data.avatar_zoom);
+            const modalAvatarEl = document.getElementById('kt_modal_update_avatar');
+            if (modalAvatarEl) {
+                modalAvatarEl.addEventListener('show.bs.modal', function () {
+                    // Pastikan saat modal dibuka, preview & slider sinkron dengan data tersimpan
+                    if (modalAvatarZoomInput && savedAvatarState) modalAvatarZoomInput.value = savedAvatarState.zoom;
+                    if (modalAvatarPosYInput && savedAvatarState) modalAvatarPosYInput.value = savedAvatarState.posY;
+                    if (modalAvatarPosXInput && savedAvatarState) modalAvatarPosXInput.value = savedAvatarState.posX;
+                    if (savedAvatarState) {
+                        handleModalLiveAvatarPosition();
+                        if (modalAvatarPreviewWrapper) {
+                            modalAvatarPreviewWrapper.style.backgroundImage = `url('${savedAvatarState.url}')`;
+                        }
+                    }
+                    if (modalAvatarRemoveBtn) {
+                        const defaultBlank = "{{ \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null) }}";
+                        if (savedAvatarState && savedAvatarState.url && savedAvatarState.url !== defaultBlank) {
+                            modalAvatarRemoveBtn.classList.remove('d-none');
+                        } else {
+                            modalAvatarRemoveBtn.classList.add('d-none');
+                        }
+                    }
+                });
+
+                modalAvatarEl.addEventListener('hidden.bs.modal', function () {
+                    // Reset input file & kembalikan pratinjau jika batal menyimpan
+                    if (modalAvatarFileInput) modalAvatarFileInput.value = '';
+                    if (modalAvatarFileInfo) modalAvatarFileInfo.classList.add('d-none');
+                    if (modalAvatarRemoveInput) modalAvatarRemoveInput.value = '';
+
+                    if (modalAvatarZoomInput && savedAvatarState) modalAvatarZoomInput.value = savedAvatarState.zoom;
+                    if (modalAvatarPosYInput && savedAvatarState) modalAvatarPosYInput.value = savedAvatarState.posY;
+                    if (modalAvatarPosXInput && savedAvatarState) modalAvatarPosXInput.value = savedAvatarState.posX;
+                    if (savedAvatarState) {
+                        handleModalLiveAvatarPosition();
+                        if (modalAvatarPreviewWrapper) {
+                            modalAvatarPreviewWrapper.style.backgroundImage = `url('${savedAvatarState.url}')`;
+                        }
+                    }
+                });
+            }
+
+            handleAjaxForm('form_modal_avatar', 'btn_modal_avatar_save', function (data) {
+                // Sembunyikan modal
+                if (modalAvatarEl) {
+                    const modalObj = bootstrap.Modal.getInstance(modalAvatarEl) || new bootstrap.Modal(modalAvatarEl);
+                    if (modalObj) modalObj.hide();
                 }
+
+                // Perbarui avatar realtime di semua tempat
+                if (data && typeof data.avatar_url !== 'undefined') {
+                    updateAvatarImages(data.avatar_url, data.avatar_position_x, data.avatar_position_y, data.avatar_zoom);
+                }
+
+                if (data && typeof data.completion_percent !== 'undefined') {
+                    updateCompletionProgress(data.completion_percent);
+                }
+
+                // Reset file info
+                if (modalAvatarFileInfo) modalAvatarFileInfo.classList.add('d-none');
+                if (modalAvatarFileInput) modalAvatarFileInput.value = '';
+                if (modalAvatarRemoveInput) modalAvatarRemoveInput.value = '';
             });
 
             // Bind forms without reload

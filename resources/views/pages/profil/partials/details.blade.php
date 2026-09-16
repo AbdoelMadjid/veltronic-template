@@ -2,7 +2,6 @@
     $authUser = $user ?? auth()->user();
     $userRoles = $authUser?->roles ?? collect();
     $detailData = $detail ?? ($authUser?->detail ?? null);
-    $avatarSrc = $authUser?->avatar_url ?: \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null);
     $roleName = $userRoles->first()?->name ? ucfirst($userRoles->first()->name) : 'User';
 
     // Hitung kelengkapan data KTP & Profil
@@ -35,10 +34,7 @@
     <div class="me-7 mb-4 mb-sm-0">
         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
             <div class="symbol-label border border-4 border-body shadow-sm" id="profile_header_avatar_img"
-                style="background-image: url('{{ $avatarSrc }}'); background-position: top center; background-size: cover;">
-            </div>
-            <div
-                class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px">
+                style="{{ user_avatar_style($authUser) }} transition: background-position 0.15s ease, background-size 0.15s ease;">
             </div>
         </div>
     </div>

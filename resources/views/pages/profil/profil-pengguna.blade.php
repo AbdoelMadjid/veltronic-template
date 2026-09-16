@@ -154,8 +154,38 @@
                 }
             }
 
+            // Realtime updater: Avatar images position & zoom across navbar, header, profile, and lock screen
+            function updateAvatarPosition(posX, posY, zoom) {
+                const posStyle = `${posX}% ${posY}%`;
+                const sizeStyle = (zoom && parseInt(zoom) !== 100) ? `${zoom}%` : 'cover';
+
+                const headerImg = document.getElementById('profile_header_avatar_img');
+                if (headerImg) {
+                    headerImg.style.backgroundPosition = posStyle;
+                    headerImg.style.backgroundSize = sizeStyle;
+                }
+
+                const navImg = document.getElementById('header_navbar_user_avatar');
+                if (navImg) {
+                    navImg.style.backgroundPosition = posStyle;
+                    navImg.style.backgroundSize = sizeStyle;
+                }
+
+                const lockScreenImg = document.getElementById('lock_screen_avatar_img');
+                if (lockScreenImg) {
+                    lockScreenImg.style.backgroundPosition = posStyle;
+                    lockScreenImg.style.backgroundSize = sizeStyle;
+                }
+
+                const wrapper = document.getElementById('profil_saya_avatar_wrapper');
+                if (wrapper) {
+                    wrapper.style.backgroundPosition = posStyle;
+                    wrapper.style.backgroundSize = sizeStyle;
+                }
+            }
+
             // Realtime updater: Avatar images across navbar, header, profile, and lock screen
-            function updateAvatarImages(avatarUrl) {
+            function updateAvatarImages(avatarUrl, posX, posY, zoom) {
                 const defaultUrl = "{{ \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null) }}";
                 const targetUrl = avatarUrl || defaultUrl;
 
@@ -195,9 +225,13 @@
                     }
                 }
 
+                if (typeof posX !== 'undefined' && typeof posY !== 'undefined') {
+                    updateAvatarPosition(posX, posY, zoom);
+                }
+
                 // Dispatch global event for modular components (like KTLockScreen)
                 window.dispatchEvent(new CustomEvent('kt.user.updated', {
-                    detail: { avatar_url: avatarUrl }
+                    detail: { avatar_url: avatarUrl, avatar_position_x: posX, avatar_position_y: posY, avatar_zoom: zoom }
                 }));
             }
 
@@ -653,6 +687,107 @@
                     coverRemoveBtn.classList.add('d-none');
                 });
             }
+
+            // ==========================================
+            // Live Preview & Controls for Avatar Position & Zoom
+            // ==========================================
+            const avatarZoomInput = document.getElementById('input_avatar_zoom');
+            const avatarZoomLabel = document.getElementById('label_avatar_zoom_val');
+            const avatarZoomPresetBtns = document.querySelectorAll('.btn-avatar-zoom');
+
+            const avatarPosYInput = document.getElementById('input_avatar_position_y');
+            const avatarPosXInput = document.getElementById('input_avatar_position_x');
+            const avatarPosYLabel = document.getElementById('label_avatar_position_y_val');
+            const avatarPosXLabel = document.getElementById('label_avatar_position_x_val');
+            const avatarPosYPresetBtns = document.querySelectorAll('.btn-avatar-pos-y');
+            const avatarPosXPresetBtns = document.querySelectorAll('.btn-avatar-pos-x');
+
+            function handleLiveAvatarPosition() {
+                const zoom = avatarZoomInput ? (parseInt(avatarZoomInput.value) || 100) : 100;
+                const posY = avatarPosYInput ? (parseInt(avatarPosYInput.value) || 0) : 0;
+                const posX = avatarPosXInput ? (parseInt(avatarPosXInput.value) || 50) : 50;
+
+                if (avatarZoomLabel) {
+                    let suffixZoom = '';
+                    if (zoom === 100) suffixZoom = ' (Normal / 1x)';
+                    else if (zoom === 150) suffixZoom = ' (1.5x)';
+                    else if (zoom === 200) suffixZoom = ' (2x)';
+                    else if (zoom === 300) suffixZoom = ' (3x)';
+                    else if (zoom === 400) suffixZoom = ' (4x)';
+                    else if (zoom === 500) suffixZoom = ' (5x / Maksimal)';
+                    else suffixZoom = ` (${(zoom / 100).toFixed(1).replace(/\.0$/, '')}x)`;
+                    avatarZoomLabel.innerText = zoom + '%' + suffixZoom;
+                }
+
+                if (avatarPosYLabel) {
+                    let suffixY = '';
+                    if (posY === 0) suffixY = ' (Atas)';
+                    else if (posY === 50) suffixY = ' (Tengah)';
+                    else if (posY === 100) suffixY = ' (Bawah)';
+                    avatarPosYLabel.innerText = posY + '%' + suffixY;
+                }
+
+                if (avatarPosXLabel) {
+                    let suffixX = '';
+                    if (posX === 0) suffixX = ' (Kiri)';
+                    else if (posX === 50) suffixX = ' (Tengah)';
+                    else if (posX === 100) suffixX = ' (Kanan)';
+                    avatarPosXLabel.innerText = posX + '%' + suffixX;
+                }
+
+                // Live preview hanya di komponen input avatar Profil Saya saat slider digeser
+                const wrapper = document.getElementById('profil_saya_avatar_wrapper');
+                if (wrapper) {
+                    wrapper.style.backgroundPosition = `${posX}% ${posY}%`;
+                    wrapper.style.backgroundSize = zoom !== 100 ? `${zoom}%` : 'cover';
+                }
+            }
+
+            if (avatarZoomInput) {
+                avatarZoomInput.addEventListener('input', handleLiveAvatarPosition);
+            }
+            if (avatarPosYInput) {
+                avatarPosYInput.addEventListener('input', handleLiveAvatarPosition);
+            }
+            if (avatarPosXInput) {
+                avatarPosXInput.addEventListener('input', handleLiveAvatarPosition);
+            }
+
+            avatarZoomPresetBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const z = this.getAttribute('data-zoom');
+                    if (avatarZoomInput) {
+                        avatarZoomInput.value = z;
+                        handleLiveAvatarPosition();
+                    }
+                });
+            });
+
+            avatarPosYPresetBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const pos = this.getAttribute('data-pos');
+                    if (avatarPosYInput) {
+                        avatarPosYInput.value = pos;
+                        handleLiveAvatarPosition();
+                    }
+                });
+            });
+
+            avatarPosXPresetBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const pos = this.getAttribute('data-pos');
+                    if (avatarPosXInput) {
+                        avatarPosXInput.value = pos;
+                        handleLiveAvatarPosition();
+                    }
+                });
+            });
+
+            handleAjaxForm('form_avatar_position', 'btn_save_avatar_position', function (data) {
+                if (data && typeof data.avatar_position_x !== 'undefined' && typeof data.avatar_position_y !== 'undefined') {
+                    updateAvatarPosition(data.avatar_position_x, data.avatar_position_y, data.avatar_zoom);
+                }
+            });
 
             // Bind forms without reload
             handleAjaxForm('form_identitas_diri', 'btn_save_identitas', function (data) {

@@ -179,7 +179,7 @@
             <!--begin::Avatar-->
             <div class="symbol symbol-35px symbol-md-40px">
                 <div class="image-input-wrapper w-35px h-35px w-md-40px h-md-40px rounded-3" id="header_navbar_user_avatar"
-                    style="background-image: url('{{ $authUser?->avatar_url ?: \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg') }}'); background-position: top center; background-size: cover;">
+                    style="{{ user_avatar_style($authUser) }}">
                 </div>
             </div>
             <!--end::Avatar-->

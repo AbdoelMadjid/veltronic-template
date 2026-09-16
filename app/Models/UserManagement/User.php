@@ -61,6 +61,79 @@ class User extends Authenticatable
     }
 
     /**
+     * Get avatar horizontal focus position (X).
+     */
+    public function getAvatarPosXAttribute(): int
+    {
+        return (int) ($this->setting('avatar_position_x', '50') ?? 50);
+    }
+
+    /**
+     * Get avatar vertical focus position (Y).
+     */
+    public function getAvatarPosYAttribute(): int
+    {
+        return (int) ($this->setting('avatar_position_y', '0') ?? 0);
+    }
+
+    /**
+     * Get avatar zoom level percentage.
+     */
+    public function getAvatarZoomAttribute(): int
+    {
+        return (int) ($this->setting('avatar_zoom', '100') ?? 100);
+    }
+
+    /**
+     * Get avatar CSS background-size value ('cover' or '{zoom}%').
+     */
+    public function getAvatarBgSizeAttribute(): string
+    {
+        $zoom = $this->avatar_zoom;
+        return ($zoom && $zoom !== 100) ? $zoom . '%' : 'cover';
+    }
+
+    /**
+     * Get complete dynamic avatar inline CSS style.
+     */
+    public function getAvatarStyleAttribute(): string
+    {
+        return "background-image: url('{$this->avatar_url}'); background-position: {$this->avatar_pos_x}% {$this->avatar_pos_y}%; background-size: {$this->avatar_bg_size};";
+    }
+
+    /**
+     * Get single letter initial uppercase.
+     */
+    public function getInitialAttribute(): string
+    {
+        return strtoupper(substr(trim($this->name ?? 'U'), 0, 1)) ?: 'U';
+    }
+
+    /**
+     * Render HTML avatar element with dynamic sizing and user's saved position & zoom.
+     */
+    public function renderAvatar(
+        string|int $size = '40px',
+        string $class = 'rounded-3',
+        string $id = '',
+        array $attributes = [],
+        bool $asSymbol = false
+    ): \Illuminate\Support\HtmlString {
+        if (function_exists('user_avatar')) {
+            return user_avatar($this, $size, $class, $id, $attributes, $asSymbol);
+        }
+
+        $style = $this->avatar_style;
+        if (is_numeric($size)) $size .= 'px';
+        $sizeClass = (str_contains($size, 'w-') || str_contains($size, 'h-')) ? $size : '';
+        $inlineStyle = $style . ($sizeClass ? '' : " width: {$size}; height: {$size};");
+        $classes = trim("image-input-wrapper {$sizeClass} {$class}");
+        $idAttr = $id ? ' id="' . htmlspecialchars($id) . '"' : '';
+
+        return new \Illuminate\Support\HtmlString('<div class="' . htmlspecialchars($classes) . '"' . $idAttr . ' style="' . $inlineStyle . '"></div>');
+    }
+
+    /**
      * Get cover background URL attribute.
      */
     public function getCoverBgUrlAttribute(): string

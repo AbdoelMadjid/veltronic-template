@@ -33,7 +33,7 @@
                 <div class="text-center mb-6">
                     <div class="symbol symbol-75px symbol-circle mb-3 position-relative d-inline-block">
                         <div class="image-input-wrapper w-75px h-75px rounded-circle border border-3 border-light shadow-sm" id="lock_screen_avatar_img"
-                            style="background-image: url('{{ $authUser?->avatar_url ?: \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg') }}'); background-position: top center; background-size: cover;">
+                            style="{{ user_avatar_style($authUser) }}">
                         </div>
                     </div>
 

@@ -7,61 +7,66 @@
     $coverOverlayOpacity = ((int) ($authUser?->setting('cover_opacity', '60') ?? '60')) / 100;
     $coverBlur = (int) ($authUser?->setting('cover_blur', '0') ?? '0');
     $userName = $authUser?->name ?? 'Pengguna';
-    $avatarSrc = $authUser?->avatar_url ?: \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg', $theme_asset_pack ?? null);
     $motoHidup = $authUser?->detail?->moto_hidup ?: 'You sit down. You stare at your screen. The cursor blinks.';
 @endphp
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-fluid">
             <!--begin::Careers - Apply-->
-            <div class="card">
-                <!--begin::Body-->
-                <div class="card-body p-lg-17">
-                    <!--begin::Hero-->
-                    <div class="position-relative mb-17 overflow-hidden rounded">
-                        <!--begin::Overlay-->
-                        <div class="overlay overlay-show">
-                            <!--begin::Image-->
-                            <div class="bgi-no-repeat bgi-size-cover card-rounded"
-                                style="min-height: {{ $coverHeight }}px; background-position: center {{ $coverPositionY }}%; background-image: url('{{ $coverBgUrl }}'); {{ $coverBlur > 0 ? 'filter: blur('.$coverBlur.'px); transform: scale(1.05);' : '' }}">
-                            </div>
-                            <!--end::Image-->
-                            <!--begin::layer-->
-                            <div class="overlay-layer rounded" style="background-color: {{ $coverOverlayColor }}; opacity: {{ $coverOverlayOpacity }};"></div>
-                            <!--end::layer-->
-                        </div>
-                        <!--end::Overlay-->
-                        <!--begin::Heading-->
-                        <div class="position-absolute text-white mb-8 ms-8 ms-lg-10 bottom-0 d-flex align-items-center flex-wrap flex-sm-nowrap" style="z-index: 2;">
-                            <!--begin::Avatar-->
-                            <div class="me-5 me-lg-7 mb-3 mb-sm-0">
-                                <div class="symbol symbol-70px symbol-lg-90px symbol-fixed position-relative">
-                                    <div class="symbol-label border border-3 border-body shadow-sm"
-                                        style="background-image: url('{{ $avatarSrc }}'); background-position: top center; background-size: cover;">
-                                    </div>
-                                    <div class="position-absolute translate-middle bottom-0 start-100 mb-3 bg-success rounded-circle border border-2 border-body h-15px w-15px"></div>
-                                </div>
-                            </div>
-                            <!--end::Avatar-->
+            <div class="card position-relative overflow-hidden">
+                <!--begin::Hero Header Cover (Full Width)-->
+                <div class="position-relative overflow-hidden rounded-top p-6 p-lg-10 d-flex flex-column justify-content-end"
+                    style="min-height: {{ $coverHeight }}px; transition: min-height 0.2s ease;">
+                    <!-- Cover Background Image -->
+                    <div class="w-100 h-100 position-absolute top-0 start-0" style="
+                        background-image: url('{{ $coverBgUrl }}');
+                        background-size: cover;
+                        background-position: center {{ $coverPositionY }}%;
+                        background-repeat: no-repeat;
+                        {{ $coverBlur > 0 ? 'filter: blur('.$coverBlur.'px); -webkit-filter: blur('.$coverBlur.'px); transform: scale(1.05);' : '' }}
+                        transition: background-image 0.3s ease, background-position 0.1s ease, filter 0.2s ease, transform 0.2s ease;
+                    "></div>
 
-                            <!--begin::User Details-->
-                            <div class="d-flex flex-column justify-content-center">
-                                <!--begin::Title-->
-                                <h3 class="text-white fs-2qx fw-bold mb-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.65);">
-                                    {{ $userName }}
-                                </h3>
-                                <!--end::Title-->
-                                <!--begin::Text-->
-                                <div class="fs-5 fw-semibold text-white text-opacity-90" style="text-shadow: 0 1px 3px rgba(0,0,0,0.55);">
-                                    {{ $motoHidup }}
+                    <!-- Adjustable Overlay Layer (Penutup Kontras) -->
+                    <div class="w-100 h-100 position-absolute top-0 start-0" style="
+                        background-color: {{ $coverOverlayColor }};
+                        opacity: {{ $coverOverlayOpacity }};
+                        transition: opacity 0.2s ease, background-color 0.2s ease;
+                    "></div>
+
+                    <!--begin::Heading-->
+                    <div class="position-relative text-white d-flex align-items-center flex-wrap flex-sm-nowrap" style="z-index: 2;">
+                        <!--begin::Avatar-->
+                        <div class="me-5 me-lg-7 mb-3 mb-sm-0">
+                            <div class="symbol symbol-70px symbol-lg-90px symbol-fixed position-relative">
+                                <div class="symbol-label border border-3 border-body shadow-sm"
+                                    style="{{ user_avatar_style($authUser) }}">
                                 </div>
-                                <!--end::Text-->
                             </div>
-                            <!--end::User Details-->
                         </div>
-                        <!--end::Heading-->
+                        <!--end::Avatar-->
+
+                        <!--begin::User Details-->
+                        <div class="d-flex flex-column justify-content-center">
+                            <!--begin::Title-->
+                            <h3 class="text-white fs-2qx fw-bold mb-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.65), 0 0 10px rgba(0,0,0,0.5);">
+                                {{ $userName }}
+                            </h3>
+                            <!--end::Title-->
+                            <!--begin::Text-->
+                            <div class="fs-5 fw-semibold text-white text-opacity-90" style="text-shadow: 0 1px 3px rgba(0,0,0,0.55);">
+                                {{ $motoHidup }}
+                            </div>
+                            <!--end::Text-->
+                        </div>
+                        <!--end::User Details-->
                     </div>
-                    <!--end::-->
+                    <!--end::Heading-->
+                </div>
+                <!--end::Hero Header Cover (Full Width)-->
+
+                <!--begin::Body-->
+                <div class="card-body p-lg-17 pt-lg-12">
                     <!--begin::Layout-->
                     <div class="d-flex flex-column flex-lg-row mb-17">
                         <!--begin::Content-->

@@ -664,3 +664,86 @@ if (!function_exists('has_default_password')) {
             || Hash::check('siswaSKAONE30', $user->password);
     }
 }
+
+if (!function_exists('user_avatar_url')) {
+    /**
+     * Dapatkan URL avatar pengguna atau default blank SVG.
+     */
+    function user_avatar_url($user = null): string
+    {
+        $u = $user instanceof User ? $user : (auth()->user() ?? null);
+        return $u?->avatar_url ?? \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg');
+    }
+}
+
+if (!function_exists('user_avatar_style')) {
+    /**
+     * Dapatkan inline CSS style avatar pengguna sesuai posisi X/Y & zoom masing-masing.
+     * Contoh hasil: "background-image: url('...'); background-position: 50% 0%; background-size: 150%;"
+     */
+    function user_avatar_style($user = null): string
+    {
+        $u = $user instanceof User ? $user : (auth()->user() ?? null);
+        if ($u instanceof User) {
+            return $u->avatar_style;
+        }
+
+        $defaultUrl = \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg');
+        return "background-image: url('{$defaultUrl}'); background-position: 50% 0%; background-size: cover;";
+    }
+}
+
+if (!function_exists('user_avatar')) {
+    /**
+     * Render elemen HTML avatar dinamis sesuai ukuran, class, id, serta posisi & zoom pengguna.
+     *
+     * @param User|null $user Model User (default: auth user)
+     * @param string|int $size Ukuran (e.g. '40px', 40, 'w-35px h-35px w-md-40px h-md-40px', 'symbol-80px')
+     * @param string $class Class CSS tambahan (e.g. 'rounded-3 shadow-sm border border-2')
+     * @param string $id ID elemen HTML (e.g. 'header_navbar_user_avatar')
+     * @param array $attributes Atribut HTML tambahan
+     * @param bool $asSymbol Bungkus dengan wrapper .symbol Metronic
+     * @return HtmlString
+     */
+    function user_avatar(
+        $user = null,
+        string|int $size = '40px',
+        string $class = 'rounded-3',
+        string $id = '',
+        array $attributes = [],
+        bool $asSymbol = false
+    ): HtmlString {
+        $u = $user instanceof User ? $user : (auth()->user() ?? null);
+        $style = user_avatar_style($u);
+
+        $sizeClass = '';
+        $inlineStyle = $style;
+
+        if (is_numeric($size)) {
+            $size = $size . 'px';
+        }
+
+        if (str_contains($size, 'w-') || str_contains($size, 'h-')) {
+            $sizeClass = $size;
+        } else {
+            $inlineStyle .= " width: {$size}; height: {$size};";
+        }
+
+        $classes = trim("image-input-wrapper {$sizeClass} {$class}");
+        $idAttr = $id ? ' id="' . htmlspecialchars($id) . '"' : '';
+
+        $attrHtml = '';
+        foreach ($attributes as $k => $v) {
+            $attrHtml .= ' ' . htmlspecialchars($k) . '="' . htmlspecialchars($v) . '"';
+        }
+
+        $imgHtml = '<div class="' . htmlspecialchars($classes) . '"' . $idAttr . ' style="' . $inlineStyle . '"' . $attrHtml . '></div>';
+
+        if ($asSymbol) {
+            $symbolSize = (is_numeric($size) || str_ends_with($size, 'px')) ? 'symbol-' . $size : '';
+            return new HtmlString('<div class="symbol ' . $symbolSize . '">' . $imgHtml . '</div>');
+        }
+
+        return new HtmlString($imgHtml);
+    }
+}

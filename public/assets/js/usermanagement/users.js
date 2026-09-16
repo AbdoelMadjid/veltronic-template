@@ -235,9 +235,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (!data) return row.name || '-';
                         let avatarHtml = '';
                         if (data.avatar) {
+                            const posX = (data.avatar_position_x !== undefined && data.avatar_position_x !== null) ? data.avatar_position_x : 50;
+                            const posY = (data.avatar_position_y !== undefined && data.avatar_position_y !== null) ? data.avatar_position_y : 0;
+                            const zoom = (data.avatar_zoom !== undefined && data.avatar_zoom !== null) ? parseInt(data.avatar_zoom) : 100;
+                            const bgSize = zoom !== 100 ? `${zoom}%` : 'cover';
+
                             avatarHtml = `
                                 <div class="symbol symbol-45px me-3 flex-shrink-0">
-                                    <div class="symbol-label shadow-sm" style="background-image: url('${data.avatar}'); background-position: top center; background-size: cover;"></div>
+                                    <div class="symbol-label shadow-sm" style="background-image: url('${data.avatar}'); background-position: ${posX}% ${posY}%; background-size: ${bgSize};"></div>
                                 </div>
                             `;
                         } else {
@@ -591,7 +596,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 const symbolSpan = document.getElementById('detail_user_symbol');
 
                 if (data.avatar) {
+                    const posX = (data.avatar_position_x !== undefined && data.avatar_position_x !== null) ? data.avatar_position_x : 50;
+                    const posY = (data.avatar_position_y !== undefined && data.avatar_position_y !== null) ? data.avatar_position_y : 0;
+                    const zoom = (data.avatar_zoom !== undefined && data.avatar_zoom !== null) ? parseInt(data.avatar_zoom) : 100;
+                    const bgSize = zoom !== 100 ? `${zoom}%` : 'cover';
+
                     avatarImg.style.backgroundImage = `url('${data.avatar}')`;
+                    avatarImg.style.backgroundPosition = `${posX}% ${posY}%`;
+                    avatarImg.style.backgroundSize = bgSize;
                     avatarImg.classList.remove('d-none');
                     symbolSpan.classList.add('d-none');
                 } else {

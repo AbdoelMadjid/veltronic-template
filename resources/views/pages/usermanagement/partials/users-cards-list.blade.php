@@ -1,6 +1,6 @@
 @forelse ($users as $u)
     @php
-        $initial = strtoupper(substr($u->name, 0, 1));
+        $initial = $u->initial;
 
         // Ambil setting background cover & styling dari database (Profil Pengguna)
         $coverBgUrl = $u->cover_bg_url ?: asset('assets/img-temp/1200x800/img1.jpg');
@@ -43,48 +43,46 @@
                                     default => 'bg-white bg-opacity-90 text-gray-800',
                                 };
                             @endphp
-                            <span class="badge {{ $badgeClass }} fw-bold px-2 py-1 fs-8 text-uppercase shadow-xs">
+                            <span class="badge {{ $badgeClass }} fw-bold px-2 py-1 text-uppercase fs-8 shadow-xs">
                                 {{ $r->name }}
                             </span>
                         @empty
-                            <span class="badge bg-white bg-opacity-90 text-gray-800 fw-bold px-2 py-1 fs-8 shadow-xs">USER</span>
+                            <span class="badge bg-white bg-opacity-90 text-gray-800 fw-bold px-2 py-1 fs-8 shadow-xs">
+                                USER
+                            </span>
                         @endforelse
                     </div>
                 </div>
                 <!--end::Card title-->
 
-                <!--begin::Card toolbar-->
+                <!--begin::Card toolbar (Actions dropdown)-->
                 <div class="card-toolbar m-0 position-relative z-index-1">
-                    <button type="button" class="btn btn-sm btn-icon btn-color-white bg-white bg-opacity-20 bg-hover-opacity-100 bg-hover-white text-hover-primary shadow-xs"
-                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                        <i class="ki-duotone ki-dots-vertical fs-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                    <button type="button" class="btn btn-sm btn-icon btn-color-white bg-black bg-opacity-25 bg-hover-opacity-50 text-hover-white shadow-xs" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                        <i class="ki-duotone ki-dots-vertical fs-5"><span class="path1"></span><span class="path2"></span></i>
                     </button>
                     <!--begin::Menu-->
-                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-175px py-3"
-                        data-kt-menu="true">
+                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-175px py-3" data-kt-menu="true">
                         <div class="menu-item px-3">
                             <a href="javascript:void(0)" class="menu-link px-3 btn-view-user" data-id="{{ $u->id }}">
-                                <i class="ki-duotone ki-eye fs-5 me-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                <i class="ki-duotone ki-eye fs-5 me-2 text-primary"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
                                 Lihat Detail
                             </a>
                         </div>
                         <div class="menu-item px-3">
                             <a href="javascript:void(0)" class="menu-link px-3 btn-edit-user" data-id="{{ $u->id }}">
-                                <i class="ki-duotone ki-pencil fs-5 me-2"><span class="path1"></span><span class="path2"></span></i>
-                                Ubah Data
+                                <i class="ki-duotone ki-pencil fs-5 me-2 text-warning"><span class="path1"></span><span class="path2"></span></i>
+                                Edit Pengguna
                             </a>
                         </div>
                         <div class="menu-item px-3">
-                            <a href="javascript:void(0)" class="menu-link px-3 text-info btn-reset-password"
-                                data-id="{{ $u->id }}" data-name="{{ $u->name }}">
+                            <a href="javascript:void(0)" class="menu-link px-3 btn-reset-password" data-id="{{ $u->id }}" data-name="{{ $u->name }}">
                                 <i class="ki-duotone ki-key fs-5 me-2 text-info"><span class="path1"></span><span class="path2"></span></i>
                                 Reset Password
                             </a>
                         </div>
                         <div class="separator my-2"></div>
                         <div class="menu-item px-3">
-                            <a href="javascript:void(0)" class="menu-link px-3 text-danger btn-delete-user"
-                                data-id="{{ $u->id }}" data-name="{{ $u->name }}">
+                            <a href="javascript:void(0)" class="menu-link px-3 text-danger btn-delete-user" data-id="{{ $u->id }}" data-name="{{ $u->name }}">
                                 <i class="ki-duotone ki-trash fs-5 me-2 text-danger"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
                                 Hapus Pengguna
                             </a>
@@ -102,7 +100,7 @@
                 <div class="symbol symbol-80px mb-3 mt-n12">
                     @if ($u->avatar)
                         <div class="symbol-label shadow-sm border border-4 border-body rounded-3"
-                            style="background-image: url('{{ $u->avatar_url }}'); background-position: top center; background-size: cover;">
+                            style="{{ user_avatar_style($u) }}">
                         </div>
                     @else
                         <div class="symbol-label fs-1 fw-bold bg-light-primary text-primary shadow-sm border border-4 border-body rounded-3">

@@ -289,6 +289,9 @@ class ProfilPenggunaController extends Controller
             'cover_height' => ['nullable', 'integer', 'min:180', 'max:700'],
             'cover_blur' => ['nullable', 'integer', 'min:0', 'max:20'],
             'cover_background_remove' => ['nullable', 'string'],
+            'avatar_position_y' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'avatar_position_x' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'avatar_zoom' => ['nullable', 'integer', 'min:50', 'max:500'],
         ], [
             'cover_background.image' => 'File background harus berupa gambar.',
             'cover_background.mimes' => 'Format background yang didukung: JPG, JPEG, PNG, WEBP.',
@@ -334,6 +337,15 @@ class ProfilPenggunaController extends Controller
             }
             if ($request->has('cover_blur')) {
                 $user->setSetting('cover_blur', (string) $request->input('cover_blur', '0'), 'profile_cover');
+            }
+            if ($request->has('avatar_position_y')) {
+                $user->setSetting('avatar_position_y', (string) $request->input('avatar_position_y', '0'), 'profile_cover');
+            }
+            if ($request->has('avatar_position_x')) {
+                $user->setSetting('avatar_position_x', (string) $request->input('avatar_position_x', '50'), 'profile_cover');
+            }
+            if ($request->has('avatar_zoom')) {
+                $user->setSetting('avatar_zoom', (string) $request->input('avatar_zoom', '100'), 'profile_cover');
             }
         }
 
@@ -383,6 +395,9 @@ class ProfilPenggunaController extends Controller
                     'cover_position_y' => (int) $freshUser->setting('cover_position_y', '30'),
                     'cover_height' => (int) $freshUser->setting('cover_height', '250'),
                     'cover_blur' => (int) $freshUser->setting('cover_blur', '0'),
+                    'avatar_position_y' => (int) $freshUser->setting('avatar_position_y', '0'),
+                    'avatar_position_x' => (int) $freshUser->setting('avatar_position_x', '50'),
+                    'avatar_zoom' => (int) $freshUser->setting('avatar_zoom', '100'),
                 ],
             ]);
         }
@@ -392,13 +407,14 @@ class ProfilPenggunaController extends Controller
     }
 
     /**
-     * Update user profile avatar.
+     * Update user profile avatar or avatar focus position.
      */
     public function updateAvatar(Request $request): JsonResponse|RedirectResponse
     {
         /** @var User $user */
         $user = Auth::user();
 
+        // 1. Handle Avatar Removal
         if ($request->input('avatar_remove') == '1' || $request->input('avatar_remove') == 'true') {
             if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
                 Storage::disk('public')->delete($user->avatar);
@@ -413,6 +429,9 @@ class ProfilPenggunaController extends Controller
                     'success' => true,
                     'message' => 'Foto profil berhasil dihapus.',
                     'avatar_url' => null,
+                    'avatar_position_y' => (int) $freshUser->setting('avatar_position_y', '0'),
+                    'avatar_position_x' => (int) $freshUser->setting('avatar_position_x', '50'),
+                    'avatar_zoom' => (int) $freshUser->setting('avatar_zoom', '100'),
                     'completion_percent' => $this->calculateCompletionPercent($freshUser),
                 ]);
             }
@@ -421,8 +440,50 @@ class ProfilPenggunaController extends Controller
                 ->with('success', 'Foto profil berhasil dihapus.');
         }
 
+        // 2. Handle Position/Zoom-only Update (Scroll/Slider adjustment without re-upload)
+        if (!$request->hasFile('avatar') && ($request->has('avatar_position_y') || $request->has('avatar_position_x') || $request->has('avatar_zoom'))) {
+            $request->validate([
+                'avatar_position_y' => ['nullable', 'integer', 'min:0', 'max:100'],
+                'avatar_position_x' => ['nullable', 'integer', 'min:0', 'max:100'],
+                'avatar_zoom' => ['nullable', 'integer', 'min:50', 'max:500'],
+            ]);
+
+            if ($request->has('avatar_position_y')) {
+                $user->setSetting('avatar_position_y', (string) $request->input('avatar_position_y', '0'), 'profile_cover');
+            }
+            if ($request->has('avatar_position_x')) {
+                $user->setSetting('avatar_position_x', (string) $request->input('avatar_position_x', '50'), 'profile_cover');
+            }
+            if ($request->has('avatar_zoom')) {
+                $user->setSetting('avatar_zoom', (string) $request->input('avatar_zoom', '100'), 'profile_cover');
+            }
+
+            UserLog::log('Pembaruan Posisi Avatar', 'Posisi & perbesaran fokus avatar diperbarui.', $user);
+
+            $freshUser = $user->fresh();
+
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Posisi & zoom avatar berhasil disimpan.',
+                    'avatar_url' => $freshUser->avatar_url,
+                    'avatar_position_y' => (int) $freshUser->setting('avatar_position_y', '0'),
+                    'avatar_position_x' => (int) $freshUser->setting('avatar_position_x', '50'),
+                    'avatar_zoom' => (int) $freshUser->setting('avatar_zoom', '100'),
+                    'completion_percent' => $this->calculateCompletionPercent($freshUser),
+                ]);
+            }
+
+            return redirect()->route('profil.profil-pengguna')
+                ->with('success', 'Posisi & zoom avatar berhasil disimpan.');
+        }
+
+        // 3. Handle Avatar File Upload
         $request->validate([
             'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'avatar_position_y' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'avatar_position_x' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'avatar_zoom' => ['nullable', 'integer', 'min:50', 'max:500'],
         ]);
 
         if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
@@ -431,6 +492,16 @@ class ProfilPenggunaController extends Controller
 
         $avatarPath = $request->file('avatar')->store('avatars', 'public');
         $user->update(['avatar' => $avatarPath]);
+
+        if ($request->has('avatar_position_y')) {
+            $user->setSetting('avatar_position_y', (string) $request->input('avatar_position_y', '0'), 'profile_cover');
+        }
+        if ($request->has('avatar_position_x')) {
+            $user->setSetting('avatar_position_x', (string) $request->input('avatar_position_x', '50'), 'profile_cover');
+        }
+        if ($request->has('avatar_zoom')) {
+            $user->setSetting('avatar_zoom', (string) $request->input('avatar_zoom', '100'), 'profile_cover');
+        }
 
         UserLog::log('Pembaruan Avatar', 'Foto profil pengguna diperbarui.', $user);
 
@@ -441,6 +512,9 @@ class ProfilPenggunaController extends Controller
                 'success' => true,
                 'message' => 'Foto profil berhasil diperbarui.',
                 'avatar_url' => $freshUser->avatar_url,
+                'avatar_position_y' => (int) $freshUser->setting('avatar_position_y', '0'),
+                'avatar_position_x' => (int) $freshUser->setting('avatar_position_x', '50'),
+                'avatar_zoom' => (int) $freshUser->setting('avatar_zoom', '100'),
                 'completion_percent' => $this->calculateCompletionPercent($freshUser),
             ]);
         }

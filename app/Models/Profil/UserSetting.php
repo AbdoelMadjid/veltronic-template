@@ -38,7 +38,8 @@ class UserSetting extends Model
     {
         if ($group === 'profile_cover' || in_array($key, [
             'cover_background', 'cover_opacity', 'cover_overlay_color',
-            'cover_position_y', 'cover_height', 'cover_blur'
+            'cover_position_y', 'cover_height', 'cover_blur',
+            'avatar_position_y', 'avatar_position_x', 'avatar_zoom',
         ])) {
             return 'profile_cover';
         }

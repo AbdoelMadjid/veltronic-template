@@ -5,6 +5,16 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.17.1] - 2026-09-16
+
+### Enhanced & Fixed
+- **Dark Mode Support & Visual Alignment for Help Documentation Routes**:
+  - **Adaptive Design Tokens (`_schema-ui.blade.php`)**: Implemented complete dark mode CSS variables (`[data-bs-theme="dark"]`, `[data-theme="dark"]`, `.dark-mode`) for backgrounds, surface cards, text colors, and borders across all 26 schema and operational help pages.
+  - **High-Contrast Code & Shell Styling**: Styled `pre.schema-code`, inline `<code>`, `.schema-shell`, `.schema-hero`, `.schema-card`, `.schema-note`, `.schema-warn`, `.schema-step`, and `.schema-chip` with high contrast, legible typography, and sleek Metronic-aligned dark aesthetics.
+  - **Overview Page Optimization**: Refined card and icon classes in `overview.blade.php` to ensure sharp contrast in dark mode without text/background collision.
+
+---
+
 ## [v1.17.0] - 2026-09-16
 
 ### Refactored & Reorganized

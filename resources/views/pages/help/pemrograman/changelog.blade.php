@@ -34,13 +34,47 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.17.0
+                            Versi Saat Ini: v1.17.1
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.17.1 (Patch)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.17.1</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-warning fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-warning fw-bold text-white">v1.17.1</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>16 Sep 2026, 08:55 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Dukungan Dark Mode Adaptif &amp; Penyelarasan Kontras Visual Seluruh Rute Dokumentasi Help (Skema &amp; Operasional)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembaruan perbaikan visual yang mengimplementasikan dukungan penuh mode gelap (dark mode) pada seluruh 26 halaman dokumentasi skema arsitektur dan panduan operasional pemrograman melalui design tokens adaptif, optimasi kontras blok kode, kontainer shell, kartu, dan kartu overview.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Rincian Lengkap Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li class="mb-1"><strong>Design Tokens Dark Mode (<code>_schema-ui.blade.php</code>):</strong> Mendefinisikan rule scoped <code>[data-bs-theme="dark"]</code>, <code>[data-theme="dark"]</code>, dan <code>.dark-mode</code> untuk seluruh variabel warna surface, teks, border, dan gradient.</li>
+                                        <li class="mb-1"><strong>Kontras Blok Kode &amp; Shell:</strong> Menyesuaikan blok kode terminal <code>pre.schema-code</code>, inline <code>&lt;code&gt;</code>, dan <code>.schema-step</code> agar memiliki kontras tajam, bebas pantulan putih menyilaukan, dan nyaman dibaca dalam kondisi gelap.</li>
+                                        <li class="mb-1"><strong>Penyelarasan Kartu Catatan &amp; Peringatan:</strong> Optimasi saturasi transparan untuk <code>.schema-note</code>, <code>.schema-warn</code>, dan <code>.schema-chip</code>.</li>
+                                        <li class="mb-1"><strong>Penyelarasan Kartu Overview (<code>overview.blade.php</code>):</strong> Memperbaiki perpaduan warna latar dan ikon agar tidak terjadi benturan warna gelap pada mode dark.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.17.1 (Patch)-->
+
                         <!--begin::Item v1.17.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.17.0</div>
@@ -56,7 +90,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>16 Sep 2026, 08:40 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Restrukturisasi Arsitektur Domain Main Menu (Dashboards &amp; Demo), Routing Prefix, dan Penyelarasan Hierarki Breadcrumbs</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

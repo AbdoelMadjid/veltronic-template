@@ -80,9 +80,9 @@
                                 </div>
                                 <div class="col-12">
                                     <a href="{{ route('help.pemrograman.skema.auth-dan-middleware') }}"
-                                        class="card card-flush h-100 bg-light-dark">
+                                        class="card card-flush h-100 bg-light-primary">
                                         <div class="card-body d-flex align-items-start gap-3 py-4">
-                                            <i class="ki-duotone ki-shield-tick fs-2hx text-dark flex-shrink-0 mt-1"><span
+                                            <i class="ki-duotone ki-shield-tick fs-2hx text-primary flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
                                                 <h3 class="mb-1 fs-4">Skema Auth &amp; Middleware Guard</h3>
@@ -186,9 +186,9 @@
                                 </div>
                                 <div class="col-12">
                                     <a href="{{ route('help.pemrograman.skema.i18n-lanjutan') }}"
-                                        class="card card-flush h-100 bg-light-dark">
+                                        class="card card-flush h-100 bg-light-info">
                                         <div class="card-body d-flex align-items-start gap-3 py-4">
-                                            <i class="ki-duotone ki-abstract-39 fs-2hx text-dark flex-shrink-0 mt-1"><span
+                                            <i class="ki-duotone ki-abstract-39 fs-2hx text-info flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span></i>
                                             <div>
                                                 <h3 class="mb-1 fs-4">Skema Advanced i18n &amp; Localization</h3>
@@ -351,7 +351,7 @@
                                     <a href="{{ route('help.pemrograman.operasional.workflow-developer-harian') }}"
                                         class="card card-flush h-100 bg-light-secondary">
                                         <div class="card-body d-flex align-items-start gap-3 py-4">
-                                            <i class="ki-duotone ki-calendar-8 fs-2hx text-dark flex-shrink-0 mt-1"><span
+                                            <i class="ki-duotone ki-calendar-8 fs-2hx text-primary flex-shrink-0 mt-1"><span
                                                     class="path1"></span><span class="path2"></span><span
                                                     class="path3"></span><span class="path4"></span><span
                                                     class="path5"></span><span class="path6"></span></i>

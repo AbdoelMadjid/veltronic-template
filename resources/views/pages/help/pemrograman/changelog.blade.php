@@ -67,7 +67,7 @@
                                     <ul class="text-gray-700 fs-7 mb-0 ps-4">
                                         <li><strong>User Management Partials</strong>: Pengelompokan 8 berkas partials pengguna ke folder <code>resources/views/pages/usermanagement/partials/users/</code>.</li>
                                         <li><strong>App Support Menu Partials</strong>: Pengelompokan berkas modal &amp; petunjuk menu ke folder <code>resources/views/pages/appsupport/partials/menu/</code>.</li>
-                                        <li><strong>Sinkronisasi View &amp; Controller</strong>: Penyesuaian seluruh pemanggilan <code>@include</code> di Blade dan render view AJAX di <code>UserController@index</code>.</li>
+                                        <li><strong>Sinkronisasi View &amp; Controller</strong>: Penyesuaian seluruh pemanggilan <code>&#64;include</code> di Blade dan render view AJAX di <code>UserController@index</code>.</li>
                                     </ul>
                                 </div>
                             </div>

@@ -5,6 +5,16 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.25.2] - 2026-09-17
+
+### Restructured & Optimized
+- **Help Log Section Reorganization (`pages/help/log/`)**:
+  - **Dedicated Log Directory**: Moved `changelog.blade.php` and `console-developer.blade.php` from `pages/help/pemrograman/` into `pages/help/log/`.
+  - **Sidebar & Routes Sync**: Registered new routes (`help.log.changelog` & `help.log.console-developer`) and created a dedicated `Log` sub-group in `_sidebar_helps.php`.
+  - **Bilingual & Test Alignment**: Added bilingual dictionary keys in `lang/id/menu.php` and `lang/en/menu.php`, updated breadcrumbs, and aligned feature test endpoints.
+
+---
+
 ## [v1.25.1] - 2026-09-17
 
 ### Restructured & Optimized

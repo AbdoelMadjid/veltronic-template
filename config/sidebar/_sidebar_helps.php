@@ -157,14 +157,20 @@ return [
                     ],
                 ],
                 [
-                    'title'     => 'Changelog',
-                    'title_key' => 'changelog',
-                    'route'     => 'help.pemrograman.changelog',
-                ],
-                [
-                    'title'     => 'Console Developer',
-                    'title_key' => 'console_developer',
-                    'route'     => 'help.pemrograman.console-developer',
+                    'title'     => 'Log',
+                    'title_key' => 'log',
+                    'children'  => [
+                        [
+                            'title'     => 'Changelog',
+                            'title_key' => 'changelog',
+                            'route'     => 'help.log.changelog',
+                        ],
+                        [
+                            'title'     => 'Console Developer',
+                            'title_key' => 'console_developer',
+                            'route'     => 'help.log.console-developer',
+                        ],
+                    ],
                 ],
             ],
         ],

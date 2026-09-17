@@ -261,6 +261,7 @@ return [
     'lists' => 'Lists',
     'localization' => 'Localization',
     'logistics' => 'Logistics',
+    'log' => 'Log',
     'logs' => 'Logs',
     'logs_and_notifcations' => 'Logs and Notifcations',
     'lozad' => 'Lozad',

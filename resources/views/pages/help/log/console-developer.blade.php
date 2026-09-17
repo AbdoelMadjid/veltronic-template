@@ -10,7 +10,7 @@
             Help
         @endslot
         @slot('li_2')
-            Skema Pemrograman
+            Log
         @endslot
         @slot('li_3')
             Console Developer

@@ -117,7 +117,7 @@ class MenuSeederLanguageTest extends TestCase
         $admin->assignRole('admin');
 
         $responseChangelog = $this->actingAs($admin)
-            ->get('/help/pemrograman/changelog');
+            ->get('/help/log/changelog');
         $responseChangelog->assertStatus(200);
         $responseChangelog->assertSee('Riwayat Versi');
         $responseChangelog->assertSee('v1.12.1');

@@ -261,6 +261,7 @@ return [
     'lists' => 'Daftar',
     'localization' => 'Lokalisasi',
     'logistics' => 'Logistik',
+    'log' => 'Log',
     'logs' => 'Log',
     'logs_and_notifcations' => 'Log dan Notifikasi',
     'lozad' => 'Lozad',

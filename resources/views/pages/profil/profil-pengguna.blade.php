@@ -343,6 +343,43 @@
                 }
             }
 
+            // Realtime updater: Prepend new log item to Riwayat Pengguna table
+            function prependUserLog(activity, description, ipAddress) {
+                if (!activity) return;
+                const tbody = document.getElementById('user_logs_tbody');
+                if (!tbody) return;
+
+                // Remove empty state row if present
+                const emptyRow = tbody.querySelector('td[colspan="3"]')?.closest('tr');
+                if (emptyRow) emptyRow.remove();
+
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-35px me-3">
+                                <span class="symbol-label bg-light-info text-info">
+                                    <i class="ki-duotone ki-abstract-26 fs-4">
+                                        <span class="path1"></span><span class="path2"></span>
+                                    </i>
+                                </span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <span class="text-gray-800 fw-bold fs-7">${activity}</span>
+                                <span class="text-gray-400 fs-8">${ipAddress || '127.0.0.1'}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-gray-600 fs-7">${description || '-'}</span>
+                    </td>
+                    <td class="text-end">
+                        <span class="text-gray-500 fs-8 fw-semibold">Baru saja</span>
+                    </td>
+                `;
+                tbody.prepend(newRow);
+            }
+
             // Generic AJAX Form Handler with Button Indicator
             function handleAjaxForm(formId, btnId, successCallback) {
                 const form = document.getElementById(formId);
@@ -375,6 +412,9 @@
                         }
 
                         if (response.ok && data.success) {
+                            if (data.log) {
+                                prependUserLog(data.log.activity, data.log.description, data.log.ip_address);
+                            }
                             showNotification('success', data.message || 'Perubahan berhasil disimpan.', 'Berhasil');
                             if (typeof successCallback === 'function') {
                                 successCallback(data);
@@ -434,6 +474,9 @@
                 .then(async res => {
                     const data = await res.json();
                     if (res.ok && data.success) {
+                        if (data.log) {
+                            prependUserLog(data.log.activity, data.log.description, data.log.ip_address);
+                        }
                         showNotification('success', data.message || 'Foto KTP berhasil diperbarui.', 'Berhasil');
                         updateKtpDisplay(data.foto_ktp_url);
                         if (typeof data.completion_percent !== 'undefined') {

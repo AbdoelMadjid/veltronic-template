@@ -180,8 +180,71 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Reset selection checkboxes after applying bulk action
                     checkedBoxes.forEach(cb => cb.checked = false);
                     updateSectionSelectionToolbar(category);
+
+                    // Realtime sync to Activity Logs tab
+                    if (activityLogsDt) {
+                        activityLogsDt.ajax.reload(null, false);
+                    }
                 } else {
                     Notify.error(data.message || 'Gagal menjalankan aksi massal.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                Notify.error('Terjadi kesalahan saat memproses permintaan.');
+            });
+        }
+    });
+
+    // Single Feature Toggle via clicking status badge
+    document.addEventListener('click', function (e) {
+        const badge = e.target.closest('.feature-status-badge');
+        if (badge) {
+            const card = badge.closest('.feature-card');
+            if (!card) return;
+
+            const key = card.dataset.featureKey;
+            const currentEnabled = card.getAttribute('data-is-enabled') === '1' || card.dataset.isEnabled === '1';
+            const nextEnabled = !currentEnabled;
+
+            // Optimistic UI update
+            card.setAttribute('data-is-enabled', nextEnabled ? '1' : '0');
+            card.dataset.isEnabled = nextEnabled ? '1' : '0';
+            if (nextEnabled) {
+                card.classList.remove('bg-light', 'opacity-75');
+                badge.className = 'badge badge-light-success fs-8 fw-semibold feature-status-badge mt-1';
+                badge.innerText = 'Aktif';
+            } else {
+                card.classList.add('bg-light', 'opacity-75');
+                badge.className = 'badge badge-light-danger fs-8 fw-semibold feature-status-badge mt-1';
+                badge.innerText = 'Tersembunyi';
+            }
+            updateElementInDOM(key, nextEnabled);
+
+            fetch('/appsupport/app-fiturs/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    key: key,
+                    is_enabled: nextEnabled ? 1 : 0
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    Notify.success(data.message);
+                    if (data.stats) {
+                        updateStatsFromData(data.stats);
+                    }
+                    if (activityLogsDt) {
+                        activityLogsDt.ajax.reload(null, false);
+                    }
+                } else {
+                    Notify.error(data.message || 'Gagal mengubah status fitur.');
                 }
             })
             .catch(err => {
@@ -242,6 +305,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         ['topbar_tools', 'topbar_menus', 'sidebar_menus'].forEach(cat => {
                             updateSectionSelectionToolbar(cat);
                         });
+
+                        if (activityLogsDt) {
+                            activityLogsDt.ajax.reload(null, false);
+                        }
                     } else {
                         Notify.error(data.message || 'Gagal menjalankan reset.');
                     }
@@ -375,6 +442,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         KTLockScreen.updateLifetime(data.settings.session_lifetime);
                     }
 
+                    if (activityLogsDt) {
+                        activityLogsDt.ajax.reload(null, false);
+                    }
+
                     Notify.alert({
                         text: data.message,
                         icon: 'success',
@@ -421,6 +492,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 this.innerHTML = originalHtml;
                 if (data.success) {
                     Notify.success(data.message);
+                    if (activityLogsDt) {
+                        activityLogsDt.ajax.reload(null, false);
+                    }
                 } else {
                     Notify.error(data.message);
                 }
@@ -441,7 +515,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const tableEl = document.getElementById('kt_activity_logs_table');
 
     function initActivityLogsDataTable() {
-        if (!tableEl || activityLogsDt) return;
+        if (!tableEl || activityLogsDt || typeof $ === 'undefined' || !$.fn.DataTable) return;
 
         activityLogsDt = $(tableEl).DataTable({
             processing: true,
@@ -605,14 +679,33 @@ document.addEventListener('DOMContentLoaded', function () {
         setVal('stat_profil_logs', stats.profil_logs);
     }
 
-    // Tab change event: Initialize DataTable when Activity Logs tab is shown
-    const tabBtnLogs = document.getElementById('tab_btn_activity_logs');
-    if (tabBtnLogs) {
-        tabBtnLogs.addEventListener('shown.bs.tab', function () {
+    // Auto-init or tab switch listener (both native Bootstrap and jQuery)
+    const logTabPane = document.getElementById('kt_app_fiturs_tab_activity_logs');
+    if (logTabPane && logTabPane.classList.contains('active')) {
+        initActivityLogsDataTable();
+    }
+
+    // Tab change event via document delegation
+    document.addEventListener('shown.bs.tab', function (e) {
+        const target = e.target.getAttribute('href') || e.target.getAttribute('data-bs-target');
+        if (target === '#kt_app_fiturs_tab_activity_logs') {
             if (!activityLogsDt) {
                 initActivityLogsDataTable();
             } else {
                 activityLogsDt.ajax.reload(null, false);
+            }
+        }
+    });
+
+    if (typeof $ !== 'undefined') {
+        $(document).on('shown.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
+            const target = $(this).attr('href') || $(this).data('bs-target');
+            if (target === '#kt_app_fiturs_tab_activity_logs') {
+                if (!activityLogsDt) {
+                    initActivityLogsDataTable();
+                } else {
+                    activityLogsDt.ajax.reload(null, false);
+                }
             }
         });
     }
@@ -705,4 +798,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
 

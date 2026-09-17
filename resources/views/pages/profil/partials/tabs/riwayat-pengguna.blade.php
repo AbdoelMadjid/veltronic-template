@@ -76,7 +76,7 @@
                                 <th class="min-w-120px text-end">Waktu</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="user_logs_tbody">
                             @forelse ($userLogs as $log)
                                 <tr>
                                     <td>

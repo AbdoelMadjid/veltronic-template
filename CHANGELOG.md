@@ -21,6 +21,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Summary Statistics Cards**: Live counters for *Total Rekaman*, *Aktivitas Hari Ini*, *Backend Errors*, *User Management*, *App Support*, and *Profil Pengguna*.
   - **Zero-Reload DataTables**: Fast server-side pagination, searching, sorting, and filtering by Module, Log Level, and Date Range (Today, Yesterday, This Week, This Month).
   - **Audit Detail Modal (`log-detail-modal.blade.php`)**: Interactive modal displaying user info, IP address, user-agent string, exact timestamp, and formatted error trace / event payload.
+- **Zero-Reload Realtime Sync & Profile Audit Isolation**:
+  - **User Profile Audit Isolation**: Strictly filtered `profil/profil-pengguna` (Tab *Riwayat Pengguna*) to only display personal profile logs (`module = 'profil'`), keeping administrative and system-wide logs separate.
+  - **Realtime DOM Prepending**: Dynamically injected newly generated audit entries into the user's *Riwayat Pengguna* timeline instantly on form save without page reload.
+  - **Realtime DataTables Refresh**: Automatically refreshed the DataTables instance in *Log Aktivitas Sistem* on all toggle, batch action, and settings updates in `appsupport/app-fiturs`.
+  - **Instant Badge Status Toggle**: Enabled direct click-to-toggle on feature status badges in the App Fiturs table.
+- **Operational Guidelines Modal & Header Toolbar Integration (`appsupport/app-fiturs`)**:
+  - **Modal Petunjuk (`app-fiturs-petunjuk.blade.php`)**: Created comprehensive operational guidelines modal utilizing `<x-petunjuk-modal>` with feature explanations, logging policies, and best practices.
+  - **Toolbar Action Button**: Integrated `@section('toolbar')` action button with `layouts.partials._action-petunjuk-button` for consistent UX across modules.
 
 ---
 

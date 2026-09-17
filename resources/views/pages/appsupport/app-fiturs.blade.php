@@ -1,7 +1,18 @@
 @extends('layouts.index')
 
 @section('toolbar')
-    @include('layouts.partials._toolbar')
+    @include('layouts.partials._toolbar', [
+        'action' => view()->make('layouts.partials._action-petunjuk-button', [
+            'targetModal' => '#kt_modal_app_fiturs_petunjuk',
+            'title' => 'Petunjuk Operasional Manajer Fitur & Pengaturan Sistem',
+        ]),
+    ])
+@endsection
+
+@section('styles')
+    <!--begin::Vendor Stylesheets-->
+    <link href="{{ \App\Support\ThemeAsset::url('plugins/custom/datatables/datatables.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
+    <!--end::Vendor Stylesheets-->
 @endsection
 
 @section('content')
@@ -43,9 +54,10 @@
         </div>
         <!--end::Tab Content-->
 
-        <!--begin::Modal - Log Detail-->
+        <!--begin::Modals-->
+        @include('pages.appsupport.partials.app-fiturs.modals.app-fiturs-petunjuk')
         @include('pages.appsupport.partials.app-fiturs.modals.log-detail-modal')
-        <!--end::Modal - Log Detail-->
+        <!--end::Modals-->
 
     </div>
     <!--end::Content container-->
@@ -53,5 +65,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('assets/js/appsupport/app-fiturs.js') }}"></script>
+    <!--begin::Vendors Javascript-->
+    <script src="{{ \App\Support\ThemeAsset::url('plugins/custom/datatables/datatables.bundle.js', $theme_asset_pack ?? null) }}"></script>
+    <!--end::Vendors Javascript-->
+    <script src="{{ asset('assets/js/appsupport/app-fiturs.js') }}"></script>
 @endsection

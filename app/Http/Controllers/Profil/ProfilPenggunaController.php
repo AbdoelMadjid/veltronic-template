@@ -34,7 +34,7 @@ class ProfilPenggunaController extends Controller
         ]);
 
         $settings = $user->settingRecord?->toFlatArray() ?? [];
-        $logs = $user->logs()->take(25)->get();
+        $logs = $user->logs()->where('module', 'profil')->take(25)->get();
 
         // Get active login sessions
         $sessions = [];
@@ -155,7 +155,7 @@ class ProfilPenggunaController extends Controller
         $detail->user_id = $user->id;
         $detail->save();
 
-        UserLog::log('Pembaruan Identitas Diri', 'Memperbarui data KTP dan alamat terperinci.', $user);
+        $log = UserLog::log('Pembaruan Identitas Diri', 'Memperbarui data KTP dan alamat terperinci.', $user);
 
         $freshUser = $user->fresh();
         $freshDetail = $detail->fresh();
@@ -164,6 +164,12 @@ class ProfilPenggunaController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Identitas diri dan data KTP berhasil disimpan.',
+                'log' => [
+                    'activity' => $log->activity,
+                    'description' => $log->description,
+                    'ip_address' => $log->ip_address,
+                    'time' => 'Baru saja',
+                ],
                 'detail' => [
                     'nik' => $freshDetail->nik ?? '-',
                     'nama_lengkap' => $freshDetail->nama_lengkap ?? '-',
@@ -224,12 +230,18 @@ class ProfilPenggunaController extends Controller
         $detail->user_id = $user->id;
         $detail->save();
 
-        UserLog::log('Pembaruan Moto Hidup', 'Memperbarui kalimat moto hidup pengguna.', $user);
+        $log = UserLog::log('Pembaruan Moto Hidup', 'Memperbarui kalimat moto hidup pengguna.', $user);
 
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Moto hidup berhasil disimpan.',
+                'log' => [
+                    'activity' => $log->activity,
+                    'description' => $log->description,
+                    'ip_address' => $log->ip_address,
+                    'time' => 'Baru saja',
+                ],
                 'moto_hidup' => $detail->moto_hidup ?? '',
             ]);
         }
@@ -260,12 +272,18 @@ class ProfilPenggunaController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        UserLog::log('Perubahan Password', 'Password akun berhasil diubah.', $user);
+        $log = UserLog::log('Perubahan Password', 'Password akun berhasil diubah.', $user);
 
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Password akun Anda berhasil diperbarui.',
+                'log' => [
+                    'activity' => $log->activity,
+                    'description' => $log->description,
+                    'ip_address' => $log->ip_address,
+                    'time' => 'Baru saja',
+                ],
             ]);
         }
 
@@ -299,6 +317,7 @@ class ProfilPenggunaController extends Controller
         ]);
 
         $section = $request->input('section');
+        $lastLog = null;
 
         // 1. Handle Cover Background & Styling Section
         if (!$section || $section === 'cover') {
@@ -309,7 +328,7 @@ class ProfilPenggunaController extends Controller
                     Storage::disk('public')->delete($oldCover);
                 }
                 $user->setSetting('cover_background', null, 'profile_cover');
-                UserLog::log('Pembaruan Background Profil', 'Foto background cover dihapus (kembali ke default).', $user);
+                $lastLog = UserLog::log('Pembaruan Background Profil', 'Foto background cover dihapus (kembali ke default).', $user);
             }
             // Handle Cover Background Upload
             elseif ($request->hasFile('cover_background')) {
@@ -319,7 +338,9 @@ class ProfilPenggunaController extends Controller
                 }
                 $coverPath = $request->file('cover_background')->store('covers', 'public');
                 $user->setSetting('cover_background', $coverPath, 'profile_cover');
-                UserLog::log('Pembaruan Background Profil', 'Foto background cover diperbarui.', $user);
+                $lastLog = UserLog::log('Pembaruan Background Profil', 'Foto background cover diperbarui.', $user);
+            } else {
+                $lastLog = UserLog::log('Kustomisasi Header Cover', 'Menyesuaikan tata letak, transparansi, atau warna overlay cover profil.', $user);
             }
 
             // Cover Customization Settings
@@ -372,7 +393,7 @@ class ProfilPenggunaController extends Controller
                 $user->setSetting($key, $val, 'preferences');
             }
 
-            UserLog::log('Pembaruan Preferensi', 'Memperbarui konfigurasi preferensi dan tampilan pengguna.', $user);
+            $lastLog = UserLog::log('Pembaruan Preferensi', 'Memperbarui konfigurasi preferensi dan tampilan pengguna.', $user);
         }
 
         $freshUser = $user->fresh();
@@ -387,6 +408,12 @@ class ProfilPenggunaController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => $successMessage,
+                'log' => $lastLog ? [
+                    'activity' => $lastLog->activity,
+                    'description' => $lastLog->description,
+                    'ip_address' => $lastLog->ip_address,
+                    'time' => 'Baru saja',
+                ] : null,
                 'settings' => [
                     'cover_background_url' => $freshUser->cover_bg_url,
                     'cover_has_custom' => !empty($freshUser->setting('cover_background')),
@@ -424,7 +451,7 @@ class ProfilPenggunaController extends Controller
             $user->setSetting('avatar_position_x', '50', 'profile_cover');
             $user->setSetting('avatar_zoom', '100', 'profile_cover');
 
-            UserLog::log('Pembaruan Avatar', 'Foto profil dihapus.', $user);
+            $log = UserLog::log('Pembaruan Avatar', 'Foto profil dihapus.', $user);
 
             $freshUser = $user->fresh();
 
@@ -432,6 +459,12 @@ class ProfilPenggunaController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => 'Foto profil berhasil dihapus.',
+                    'log' => [
+                        'activity' => $log->activity,
+                        'description' => $log->description,
+                        'ip_address' => $log->ip_address,
+                        'time' => 'Baru saja',
+                    ],
                     'avatar_url' => null,
                     'avatar_position_y' => 50,
                     'avatar_position_x' => 50,
@@ -462,7 +495,7 @@ class ProfilPenggunaController extends Controller
                 $user->setSetting('avatar_zoom', (string) $request->input('avatar_zoom', '100'), 'profile_cover');
             }
 
-            UserLog::log('Pembaruan Posisi Avatar', 'Posisi & perbesaran fokus avatar diperbarui.', $user);
+            $log = UserLog::log('Pembaruan Posisi Avatar', 'Posisi & perbesaran fokus avatar diperbarui.', $user);
 
             $freshUser = $user->fresh();
 
@@ -470,6 +503,12 @@ class ProfilPenggunaController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => 'Posisi & zoom avatar berhasil disimpan.',
+                    'log' => [
+                        'activity' => $log->activity,
+                        'description' => $log->description,
+                        'ip_address' => $log->ip_address,
+                        'time' => 'Baru saja',
+                    ],
                     'avatar_url' => $freshUser->avatar_url,
                     'avatar_position_y' => (int) $freshUser->setting('avatar_position_y', '0'),
                     'avatar_position_x' => (int) $freshUser->setting('avatar_position_x', '50'),
@@ -507,7 +546,7 @@ class ProfilPenggunaController extends Controller
             $user->setSetting('avatar_zoom', (string) $request->input('avatar_zoom', '100'), 'profile_cover');
         }
 
-        UserLog::log('Pembaruan Avatar', 'Foto profil pengguna diperbarui.', $user);
+        $log = UserLog::log('Pembaruan Avatar', 'Foto profil pengguna diperbarui.', $user);
 
         $freshUser = $user->fresh();
 
@@ -515,6 +554,12 @@ class ProfilPenggunaController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Foto profil berhasil diperbarui.',
+                'log' => [
+                    'activity' => $log->activity,
+                    'description' => $log->description,
+                    'ip_address' => $log->ip_address,
+                    'time' => 'Baru saja',
+                ],
                 'avatar_url' => $freshUser->avatar_url,
                 'avatar_position_y' => (int) $freshUser->setting('avatar_position_y', '0'),
                 'avatar_position_x' => (int) $freshUser->setting('avatar_position_x', '50'),
@@ -543,7 +588,7 @@ class ProfilPenggunaController extends Controller
             $detail->foto_ktp = null;
             $detail->save();
 
-            UserLog::log('Pembaruan Dokumen KTP', 'Foto KTP dihapus.', $user);
+            $log = UserLog::log('Pembaruan Dokumen KTP', 'Foto KTP dihapus.', $user);
 
             $freshUser = $user->fresh();
 
@@ -551,6 +596,12 @@ class ProfilPenggunaController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => 'Foto KTP berhasil dihapus.',
+                    'log' => [
+                        'activity' => $log->activity,
+                        'description' => $log->description,
+                        'ip_address' => $log->ip_address,
+                        'time' => 'Baru saja',
+                    ],
                     'foto_ktp_url' => null,
                     'completion_percent' => $this->calculateCompletionPercent($freshUser),
                 ]);
@@ -573,7 +624,7 @@ class ProfilPenggunaController extends Controller
         $detail->user_id = $user->id;
         $detail->save();
 
-        UserLog::log('Pembaruan Dokumen KTP', 'Foto KTP pengguna diperbarui.', $user);
+        $log = UserLog::log('Pembaruan Dokumen KTP', 'Foto KTP pengguna diperbarui.', $user);
 
         $freshUser = $user->fresh();
         $freshDetail = $detail->fresh();
@@ -582,6 +633,12 @@ class ProfilPenggunaController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Foto KTP berhasil diunggah.',
+                'log' => [
+                    'activity' => $log->activity,
+                    'description' => $log->description,
+                    'ip_address' => $log->ip_address,
+                    'time' => 'Baru saja',
+                ],
                 'foto_ktp_url' => $freshDetail->foto_ktp_url,
                 'completion_percent' => $this->calculateCompletionPercent($freshUser),
             ]);

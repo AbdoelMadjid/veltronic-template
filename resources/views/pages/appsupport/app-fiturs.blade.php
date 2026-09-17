@@ -34,8 +34,18 @@
                 @include('pages.appsupport.partials.app-fiturs.tabs.settings')
             </div>
             <!--end:::Tab pane settings-->
+
+            <!--begin:::Tab pane activity logs-->
+            <div class="tab-pane fade" id="kt_app_fiturs_tab_activity_logs" role="tabpanel">
+                @include('pages.appsupport.partials.app-fiturs.tabs.activity-logs')
+            </div>
+            <!--end:::Tab pane activity logs-->
         </div>
         <!--end::Tab Content-->
+
+        <!--begin::Modal - Log Detail-->
+        @include('pages.appsupport.partials.app-fiturs.modals.log-detail-modal')
+        <!--end::Modal - Log Detail-->
 
     </div>
     <!--end::Content container-->

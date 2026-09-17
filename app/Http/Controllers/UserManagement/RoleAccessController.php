@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profil\UserLog;
 use App\Models\UserManagement\Permission;
 use App\Models\UserManagement\Role;
 use App\Services\UserManagement\PermissionMatrixService;
@@ -55,6 +56,8 @@ class RoleAccessController extends Controller
         $role->syncPermissions($permissions);
         app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
+        UserLog::record('usermanagement', 'akses-role', 'Sinkronisasi Akses Role', "Menyelaraskan " . count($permissions) . " izin untuk peran: {$role->name}", null, 'info');
+
         return response()->json([
             'success' => true,
             'message' => "Matriks hak akses untuk peran '{$role->name}' berhasil diperbarui.",
@@ -85,6 +88,8 @@ class RoleAccessController extends Controller
             $role->revokePermissionTo($permission);
             $message = "Izin '{$permission->name}' berhasil dicabut dari peran '{$role->name}'.";
         }
+
+        UserLog::record('usermanagement', 'akses-role', 'Toggle Izin Peran', $message, null, 'info');
 
         return response()->json([
             'success' => true,
@@ -124,6 +129,8 @@ class RoleAccessController extends Controller
                 'message' => 'Aksi massal tidak valid.',
             ], 422);
         }
+
+        UserLog::record('usermanagement', 'akses-role', 'Toggle Izin Massal', $message, null, 'info');
 
         return response()->json([
             'success' => true,

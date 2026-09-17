@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AppSupport;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profil\UserLog;
 use App\Services\AppSupport\DatabaseBackupService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -101,11 +102,29 @@ class BackupDbController extends Controller
         $result = $this->backupService->createBackup($type, $selectedTables, $compression, $executor);
 
         if (!$result['success']) {
+            UserLog::record(
+                'appsupport',
+                'backup-db',
+                'Gagal Membuat Backup DB',
+                "Gagal membuat cadangan database tipe: {$type}. Pesan: " . ($result['message'] ?? '-'),
+                null,
+                'error'
+            );
+
             return response()->json([
                 'success' => false,
                 'message' => $result['message'] ?? 'Gagal membuat file cadangan database.',
             ], 422);
         }
+
+        UserLog::record(
+            'appsupport',
+            'backup-db',
+            'Buat Backup Database',
+            "Berhasil membuat berkas cadangan database {$result['file_name']} (Tipe: " . strtoupper($type) . ", Ukuran: " . ($result['file_size_formatted'] ?? '-') . ")",
+            null,
+            'success'
+        );
 
         // Kembalikan daftar file terbaru untuk update DOM realtime
         $updatedFiles = $this->backupService->getBackupFiles();
@@ -135,6 +154,13 @@ class BackupDbController extends Controller
             ], 404);
         }
 
+        UserLog::record(
+            'appsupport',
+            'backup-db',
+            'Unduh Backup Database',
+            "Mengunduh berkas cadangan database '{$safeFileName}'"
+        );
+
         return response()->download($filePath, $safeFileName);
     }
 
@@ -156,6 +182,13 @@ class BackupDbController extends Controller
                 'message' => "Gagal menghapus berkas {$fileName}. Berkas mungkin tidak ditemukan.",
             ], 404);
         }
+
+        UserLog::record(
+            'appsupport',
+            'backup-db',
+            'Hapus Berkas Backup DB',
+            "Menghapus berkas cadangan database '{$fileName}' dari penyimpanan storage"
+        );
 
         $updatedFiles = $this->backupService->getBackupFiles();
         $overview = $this->backupService->getDatabaseOverview();
@@ -181,11 +214,29 @@ class BackupDbController extends Controller
         $result = $this->backupService->restoreBackup($fileName);
 
         if (!$result['success']) {
+            UserLog::record(
+                'appsupport',
+                'backup-db',
+                'Gagal Restore Database',
+                "Gagal memulihkan database dari berkas '{$fileName}'. Pesan: " . ($result['message'] ?? '-'),
+                null,
+                'error'
+            );
+
             return response()->json([
                 'success' => false,
                 'message' => $result['message'],
             ], 500);
         }
+
+        UserLog::record(
+            'appsupport',
+            'backup-db',
+            'Restore Database',
+            "Berhasil memulihkan (restore) skema & data database dari berkas '{$fileName}'",
+            null,
+            'warning'
+        );
 
         $overview = $this->backupService->getDatabaseOverview();
         $tables = $this->backupService->getTablesWithRelations();
@@ -224,6 +275,13 @@ class BackupDbController extends Controller
         $this->backupService->saveAutoBackupSettings($data);
         $savedSettings = $this->backupService->getAutoBackupSettings();
 
+        UserLog::record(
+            'appsupport',
+            'backup-db',
+            'Simpan Pengaturan Auto Backup',
+            "Memperbarui konfigurasi jadwal otomatisasi backup (Frekuensi: {$data['frequency']}, Jam: {$data['time']}, Retensi: {$data['retention_days']} hari)"
+        );
+
         return response()->json([
             'success' => true,
             'message' => 'Pengaturan otomatisasi backup berhasil diperbarui.',
@@ -251,11 +309,29 @@ class BackupDbController extends Controller
         $result = $this->backupService->runScheduledAutoBackup(true, $executor);
 
         if (!$result['success']) {
+            UserLog::record(
+                'appsupport',
+                'backup-db',
+                'Gagal Uji Coba Auto Backup',
+                "Gagal menjalankan uji coba otomatisasi backup. Pesan: " . ($result['message'] ?? '-'),
+                null,
+                'error'
+            );
+
             return response()->json([
                 'success' => false,
                 'message' => $result['message'] ?? 'Gagal mengeksekusi uji coba otomatisasi backup.',
             ], 422);
         }
+
+        UserLog::record(
+            'appsupport',
+            'backup-db',
+            'Uji Coba Auto Backup',
+            "Berhasil mengeksekusi uji coba backup otomatis: " . ($result['file_name'] ?? '-'),
+            null,
+            'success'
+        );
 
         $updatedFiles = $this->backupService->getBackupFiles();
         $overview = $this->backupService->getDatabaseOverview();
@@ -271,3 +347,4 @@ class BackupDbController extends Controller
         ]);
     }
 }
+

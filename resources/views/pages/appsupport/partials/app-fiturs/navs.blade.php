@@ -3,13 +3,19 @@
     <li class="nav-item" role="presentation">
         <a class="nav-link text-active-primary py-4 {{ ($active ?? 'visibility') === 'visibility' ? 'active' : '' }}"
             data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_visibility">
-            Visibilitas Fitur Dashboard
+            <i class="ki-outline ki-eye fs-4 me-2"></i> Visibilitas Fitur Dashboard
         </a>
     </li>
     <li class="nav-item" role="presentation">
         <a class="nav-link text-active-primary py-4 {{ ($active ?? '') === 'settings' ? 'active' : '' }}"
             data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_settings">
-            Pengaturan Aplikasi (Settings)
+            <i class="ki-outline ki-setting-2 fs-4 me-2"></i> Pengaturan Aplikasi (Settings)
+        </a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-active-primary py-4 {{ ($active ?? '') === 'activity_logs' ? 'active' : '' }}"
+            data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_activity_logs" id="tab_btn_activity_logs">
+            <i class="ki-outline ki-time fs-4 me-2"></i> Log Aktivitas Sistem
         </a>
     </li>
 </ul>

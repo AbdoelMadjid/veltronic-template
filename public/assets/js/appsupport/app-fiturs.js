@@ -434,4 +434,275 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // ========================================================
+    // TAB 3: SYSTEM ACTIVITY LOGS (DATATABLES & ZERO-RELOAD)
+    // ========================================================
+    let activityLogsDt = null;
+    const tableEl = document.getElementById('kt_activity_logs_table');
+
+    function initActivityLogsDataTable() {
+        if (!tableEl || activityLogsDt) return;
+
+        activityLogsDt = $(tableEl).DataTable({
+            processing: true,
+            serverSide: true,
+            order: [[6, 'desc']], // Waktu kejadian
+            ajax: {
+                url: '/appsupport/app-fiturs/activity-logs',
+                type: 'GET',
+                data: function (d) {
+                    d.module = $('#filter_log_module').val() || 'all';
+                    d.level = $('#filter_log_level').val() || 'all';
+                    d.date_range = $('#filter_log_date_range').val() || '';
+                    d.search = $('#log_search_input').val() || '';
+                },
+                dataSrc: function (json) {
+                    if (json.stats) {
+                        updateActivityLogStats(json.stats);
+                    }
+                    return json.data;
+                },
+                error: function (xhr, error, thrown) {
+                    console.error('Error loading activity logs:', thrown);
+                }
+            },
+            columns: [
+                {
+                    data: null,
+                    className: 'text-center text-muted fs-7',
+                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: 'user',
+                    orderable: false,
+                    render: function (data) {
+                        if (!data) return '-';
+                        return `
+                            <div class="d-flex align-items-center">
+                                ${data.avatar_html}
+                                <div class="d-flex flex-column">
+                                    <span class="text-gray-800 fw-bold text-hover-primary mb-1 fs-7">${data.name}</span>
+                                    <span class="text-muted fs-8">${data.email}</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                },
+                {
+                    data: null,
+                    orderable: false,
+                    render: function (data) {
+                        return `
+                            <div class="d-flex flex-column gap-1">
+                                <div>${data.module_badge}</div>
+                                <span class="text-muted fs-8 font-monospace">${data.menu}</span>
+                            </div>
+                        `;
+                    }
+                },
+                {
+                    data: null,
+                    orderable: false,
+                    render: function (data) {
+                        const shortDesc = data.description && data.description.length > 70 
+                            ? data.description.substring(0, 70) + '...' 
+                            : (data.description || '-');
+                        return `
+                            <div class="d-flex flex-column">
+                                <span class="text-gray-900 fw-bold fs-7 mb-1">${data.activity}</span>
+                                <span class="text-muted fs-8" title="${data.description || ''}">${shortDesc}</span>
+                            </div>
+                        `;
+                    }
+                },
+                {
+                    data: 'level_badge',
+                    className: 'text-center',
+                    orderable: true
+                },
+                {
+                    data: null,
+                    orderable: false,
+                    render: function (data) {
+                        return `
+                            <div class="d-flex flex-column">
+                                <span class="text-gray-800 font-monospace fs-8 fw-semibold">${data.ip_address}</span>
+                                <span class="text-muted fs-8" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${data.user_agent}">
+                                    ${data.user_agent}
+                                </span>
+                            </div>
+                        `;
+                    }
+                },
+                {
+                    data: null,
+                    orderable: true,
+                    render: function (data) {
+                        return `
+                            <div class="d-flex flex-column">
+                                <span class="text-gray-800 fw-semibold fs-7">${data.created_at_formatted}</span>
+                                <span class="text-muted fs-8">${data.created_at_relative}</span>
+                            </div>
+                        `;
+                    }
+                },
+                {
+                    data: null,
+                    className: 'text-end',
+                    orderable: false,
+                    render: function (data) {
+                        const jsonStr = encodeURIComponent(JSON.stringify(data));
+                        return `
+                            <button type="button" class="btn btn-icon btn-light-primary btn-sm btn-view-log-detail"
+                                data-log-data="${jsonStr}" data-bs-toggle="tooltip" title="Lihat Rincian Lengkap">
+                                <i class="ki-outline ki-eye fs-4"></i>
+                            </button>
+                        `;
+                    }
+                }
+            ],
+            language: {
+                search: "",
+                searchPlaceholder: "Cari data...",
+                lengthMenu: "Tampilkan _MENU_",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data log",
+                infoEmpty: "Menampilkan 0 data",
+                infoFiltered: "(disaring dari _MAX_ total data)",
+                zeroRecords: "Tidak ada riwayat aktivitas yang sesuai filter",
+                loadingRecords: "Memuat rekaman log...",
+                processing: '<span class="spinner-border spinner-border-sm text-primary me-2"></span> Memproses...',
+                paginate: {
+                    first: '<i class="ki-outline ki-double-left fs-4"></i>',
+                    last: '<i class="ki-outline ki-double-right fs-4"></i>',
+                    next: '<i class="ki-outline ki-right fs-4"></i>',
+                    previous: '<i class="ki-outline ki-left fs-4"></i>'
+                }
+            },
+            dom: "<'row'<'col-sm-12'tr>><'row align-items-center mt-4'<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'li><'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>>",
+            drawCallback: function () {
+                if (typeof KTComponents !== 'undefined' && KTComponents.initTooltips) {
+                    KTComponents.initTooltips();
+                }
+            }
+        });
+    }
+
+    function updateActivityLogStats(stats) {
+        if (!stats) return;
+        const setVal = (id, val) => {
+            const el = document.getElementById(id);
+            if (el) el.innerText = Number(val || 0).toLocaleString('id-ID');
+        };
+
+        setVal('stat_total_logs', stats.total_logs);
+        setVal('stat_today_logs', stats.today_logs);
+        setVal('stat_error_logs', stats.error_logs);
+        setVal('stat_um_logs', stats.user_management_logs);
+        setVal('stat_app_logs', stats.app_support_logs);
+        setVal('stat_profil_logs', stats.profil_logs);
+    }
+
+    // Tab change event: Initialize DataTable when Activity Logs tab is shown
+    const tabBtnLogs = document.getElementById('tab_btn_activity_logs');
+    if (tabBtnLogs) {
+        tabBtnLogs.addEventListener('shown.bs.tab', function () {
+            if (!activityLogsDt) {
+                initActivityLogsDataTable();
+            } else {
+                activityLogsDt.ajax.reload(null, false);
+            }
+        });
+    }
+
+    // Filter listeners
+    $('#filter_log_module, #filter_log_level, #filter_log_date_range').on('change', function () {
+        if (activityLogsDt) {
+            activityLogsDt.ajax.reload();
+        }
+    });
+
+    // Debounced search input
+    let searchDebounceTimeout = null;
+    const logSearchInput = document.getElementById('log_search_input');
+    if (logSearchInput) {
+        logSearchInput.addEventListener('input', function () {
+            clearTimeout(searchDebounceTimeout);
+            searchDebounceTimeout = setTimeout(function () {
+                if (activityLogsDt) {
+                    activityLogsDt.ajax.reload();
+                }
+            }, 300);
+        });
+    }
+
+    // Reset filters
+    const btnResetLogFilter = document.getElementById('btn_reset_log_filter');
+    if (btnResetLogFilter) {
+        btnResetLogFilter.addEventListener('click', function () {
+            if (logSearchInput) logSearchInput.value = '';
+            $('#filter_log_module').val('all').trigger('change.select2');
+            $('#filter_log_level').val('all').trigger('change.select2');
+            $('#filter_log_date_range').val('').trigger('change.select2');
+            if (activityLogsDt) {
+                activityLogsDt.ajax.reload();
+            }
+        });
+    }
+
+    // Refresh button
+    const btnRefreshLogs = document.getElementById('btn_refresh_logs');
+    if (btnRefreshLogs) {
+        btnRefreshLogs.addEventListener('click', function () {
+            if (activityLogsDt) {
+                activityLogsDt.ajax.reload(null, false);
+                Notify.success('Data riwayat log berhasil diperbarui.');
+            }
+        });
+    }
+
+    // Detail Modal Handler
+    document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.btn-view-log-detail');
+        if (btn) {
+            try {
+                const rawJson = decodeURIComponent(btn.dataset.logData);
+                const log = JSON.parse(rawJson);
+
+                document.getElementById('modal_log_title').innerText = log.activity || 'Rincian Log Aktivitas';
+                document.getElementById('modal_log_subtitle').innerText = `ID Rekaman #${log.id} • ${log.created_at_formatted}`;
+                document.getElementById('modal_log_level_badge').innerHTML = log.level_badge || '';
+                document.getElementById('modal_log_module_badge').innerHTML = log.module_badge || '';
+                document.getElementById('modal_log_menu_badge').innerText = `Menu: ${log.menu || '-'}`;
+                document.getElementById('modal_log_time').innerText = `${log.created_at_formatted} (${log.created_at_relative})`;
+
+                const userContainer = document.getElementById('modal_log_user_info');
+                if (userContainer) {
+                    userContainer.innerHTML = `
+                        ${log.user?.avatar_html || ''}
+                        <div class="d-flex flex-column">
+                            <span class="fs-7 fw-bold text-gray-900">${log.user?.name || 'Sistem'}</span>
+                            <span class="fs-8 text-muted">${log.user?.email || '-'} • <span class="badge badge-light-primary fs-9">${log.user?.role || 'System'}</span></span>
+                        </div>
+                    `;
+                }
+
+                document.getElementById('modal_log_ip').innerText = log.ip_address || '-';
+                document.getElementById('modal_log_description').innerText = log.description || 'Tidak ada keterangan tambahan.';
+                document.getElementById('modal_log_user_agent').innerText = log.user_agent || '-';
+
+                const modalEl = document.getElementById('modal_activity_log_detail');
+                if (modalEl && typeof bootstrap !== 'undefined') {
+                    const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                    modal.show();
+                }
+            } catch (err) {
+                console.error('Failed to parse log detail:', err);
+            }
+        }
+    });
+
 });
+

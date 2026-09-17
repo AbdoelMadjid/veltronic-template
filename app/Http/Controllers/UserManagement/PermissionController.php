@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profil\UserLog;
 use App\Models\UserManagement\Permission;
 use App\Models\UserManagement\Role;
 use Illuminate\Http\JsonResponse;
@@ -97,6 +98,8 @@ class PermissionController extends Controller
         $permission->loadCount('roles');
         $permission->load('roles');
 
+        UserLog::record('usermanagement', 'permissions', 'Tambah Permission Baru', "Menambahkan perizinan baru: {$permName}", null, 'success');
+
         return response()->json([
             'success' => true,
             'message' => "Permission `{$permName}` berhasil ditambahkan.",
@@ -139,6 +142,8 @@ class PermissionController extends Controller
         $permission->loadCount('roles');
         $permission->load('roles');
 
+        UserLog::record('usermanagement', 'permissions', 'Ubah Permission', "Memperbarui perizinan: {$permName}", null, 'info');
+
         return response()->json([
             'success' => true,
             'message' => "Permission `{$permName}` berhasil diperbarui.",
@@ -153,6 +158,8 @@ class PermissionController extends Controller
     {
         $permName = $permission->name;
         $permission->delete();
+
+        UserLog::record('usermanagement', 'permissions', 'Hapus Permission', "Menghapus perizinan: {$permName}", null, 'warning');
 
         return response()->json([
             'success' => true,
@@ -222,6 +229,8 @@ class PermissionController extends Controller
                 }
             }
         }
+
+        UserLog::record('usermanagement', 'permissions', 'Generate Permission Modul', "Membuat/menyelaraskan " . count($createdPermObjects) . " izin untuk modul: {$prefix}", null, 'info');
 
         return response()->json([
             'success' => true,

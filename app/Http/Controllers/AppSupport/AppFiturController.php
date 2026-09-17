@@ -5,7 +5,10 @@ namespace App\Http\Controllers\AppSupport;
 use App\Http\Controllers\Controller;
 use App\Models\AppSupport\AppFitur;
 use App\Models\AppSupport\AppSetting;
+use App\Models\Profil\UserLog;
+use Carbon\Carbon;
 use Database\Seeders\AppFiturSeeder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -64,6 +67,14 @@ class AppFiturController extends Controller
         $fitur->is_enabled = (bool) $request->is_enabled;
         $fitur->save();
 
+        $statusText = $fitur->is_enabled ? 'diaktifkan' : 'dinonaktifkan/disembunyikan';
+        UserLog::record(
+            'appsupport',
+            'app-fiturs',
+            'Toggle Fitur Aplikasi',
+            "Mengubah status fitur '{$fitur->name}' ({$fitur->key}) menjadi {$statusText}"
+        );
+
         return response()->json([
             'success' => true,
             'message' => $fitur->is_enabled
@@ -108,6 +119,13 @@ class AppFiturController extends Controller
                 ? "{$count} fitur terpilih berhasil diaktifkan."
                 : "{$count} fitur terpilih berhasil disembunyikan.";
 
+            UserLog::record(
+                'appsupport',
+                'app-fiturs',
+                'Bulk Toggle Fitur',
+                "Mengubah status " . ($isEnabled ? 'aktif' : 'nonaktif') . " untuk {$count} fitur terpilih: " . implode(', ', $keys)
+            );
+
             return response()->json([
                 'success' => true,
                 'message' => $msg,
@@ -130,6 +148,13 @@ class AppFiturController extends Controller
                 ? "Semua fitur " . ($category !== 'all' ? "kategori {$category}" : "") . " berhasil diaktifkan."
                 : "Semua fitur " . ($category !== 'all' ? "kategori {$category}" : "") . " berhasil disembunyikan.";
 
+            UserLog::record(
+                'appsupport',
+                'app-fiturs',
+                'Bulk Toggle Semua Fitur',
+                "Mengubah semua fitur pada kategori '{$category}' menjadi " . ($isEnabled ? 'aktif' : 'nonaktif')
+            );
+
             return response()->json([
                 'success' => true,
                 'message' => $msg,
@@ -141,6 +166,13 @@ class AppFiturController extends Controller
             // Re-run the seeder to restore defaults
             $seeder = new AppFiturSeeder();
             $seeder->run();
+
+            UserLog::record(
+                'appsupport',
+                'app-fiturs',
+                'Reset Pengaturan Fitur',
+                "Mengembalikan konfigurasi fitur aplikasi ke pengaturan bawaan (default seeder)"
+            );
 
             return response()->json([
                 'success' => true,
@@ -194,6 +226,13 @@ class AppFiturController extends Controller
             \Illuminate\Support\Facades\Cookie::queue('kt_lang', $data['default_language'], 525600);
         }
 
+        UserLog::record(
+            'appsupport',
+            'app-fiturs',
+            'Simpan Pengaturan Aplikasi',
+            'Memperbarui konfigurasi parameter sistem & preferensi tampilan aplikasi'
+        );
+
         return response()->json([
             'success' => true,
             'message' => 'Pengaturan aplikasi berhasil disimpan ke database.',
@@ -233,6 +272,13 @@ class AppFiturController extends Controller
                     break;
             }
 
+            UserLog::record(
+                'appsupport',
+                'app-fiturs',
+                'Bersihkan Cache',
+                "Membersihkan cache sistem aplikasi (Tipe: " . strtoupper($type) . ")"
+            );
+
             return response()->json([
                 'success' => true,
                 'message' => "Cache " . strtoupper($type) . " berhasil dibersihkan & di-refresh!",
@@ -243,6 +289,177 @@ class AppFiturController extends Controller
                 'message' => "Gagal membersihkan cache: " . $e->getMessage(),
             ], 500);
         }
+    }
+
+    /**
+     * AJAX DataTables endpoint for System Activity Logs.
+     */
+    public function activityLogs(Request $request): JsonResponse
+    {
+        $query = UserLog::with(['user.roles']);
+
+        // 1. Search keyword
+        $rawSearch = $request->input('search');
+        $search = '';
+        if (is_array($rawSearch)) {
+            $search = trim($rawSearch['value'] ?? '');
+        } elseif (is_string($rawSearch)) {
+            $search = trim($rawSearch);
+        }
+
+        if (!empty($search)) {
+            $query->searchKeyword($search);
+        }
+
+        // 2. Filter Module
+        $module = $request->input('module');
+        if (is_array($module)) {
+            $module = $module[0] ?? '';
+        }
+        if (!empty($module) && $module !== 'all') {
+            $query->module($module);
+        }
+
+        // 3. Filter Menu
+        $menu = $request->input('menu');
+        if (is_array($menu)) {
+            $menu = $menu[0] ?? '';
+        }
+        if (!empty($menu) && $menu !== 'all') {
+            $query->menu($menu);
+        }
+
+        // 4. Filter Level
+        $level = $request->input('level');
+        if (is_array($level)) {
+            $level = $level[0] ?? '';
+        }
+        if (!empty($level) && $level !== 'all') {
+            $query->level($level);
+        }
+
+        // 5. Filter Date Range
+        $dateRange = $request->input('date_range');
+        if (!empty($dateRange)) {
+            if ($dateRange === 'today') {
+                $query->whereDate('created_at', Carbon::today());
+            } elseif ($dateRange === 'yesterday') {
+                $query->whereDate('created_at', Carbon::yesterday());
+            } elseif ($dateRange === 'this_week') {
+                $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+            } elseif ($dateRange === 'this_month') {
+                $query->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year);
+            } elseif (str_contains($dateRange, ' - ')) {
+                $parts = explode(' - ', $dateRange);
+                if (count($parts) === 2) {
+                    try {
+                        $start = Carbon::createFromFormat('Y-m-d', trim($parts[0]))->startOfDay();
+                        $end = Carbon::createFromFormat('Y-m-d', trim($parts[1]))->endOfDay();
+                        $query->whereBetween('created_at', [$start, $end]);
+                    } catch (\Throwable $e) {
+                        // Ignore date parse errors
+                    }
+                }
+            }
+        }
+
+        // 6. Sorting
+        if ($request->has('order') && is_array($request->input('order')) && isset($request->input('order')[0])) {
+            $orderColIndex = (int) ($request->input('order')[0]['column'] ?? 6);
+            $orderDir = strtolower($request->input('order')[0]['dir'] ?? 'desc') === 'asc' ? 'asc' : 'desc';
+
+            $columnMap = [
+                0 => 'id',
+                1 => 'user_id',
+                2 => 'module',
+                3 => 'activity',
+                4 => 'level',
+                5 => 'ip_address',
+                6 => 'created_at',
+            ];
+
+            $sortColumn = $columnMap[$orderColIndex] ?? 'created_at';
+            $query->orderBy($sortColumn, $orderDir);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $start = (int) $request->input('start', 0);
+        $length = (int) $request->input('length', 10);
+        if ($length <= 0) $length = 10;
+
+        $totalRecords = UserLog::count();
+        $filteredRecords = (clone $query)->count();
+
+        $logs = $query->skip($start)->take($length)->get();
+
+        $data = $logs->map(function (UserLog $log) {
+            $user = $log->user;
+            $avatarHtml = $user
+                ? (string) $user->renderAvatar('35px', 'rounded-3 me-3')
+                : '<div class="symbol symbol-35px symbol-circle bg-light-primary me-3"><span class="symbol-label text-primary fw-bold"><i class="ki-outline ki-shield-tick fs-5"></i></span></div>';
+
+            $userName = $user ? htmlspecialchars($user->name) : '<span class="text-muted fw-semibold">Sistem / Otomatis</span>';
+            $userRole = $user ? htmlspecialchars($user->roles->first()?->name ?? 'User') : 'System';
+
+            // Module Badge Color & Label
+            $moduleConfig = [
+                'usermanagement' => ['label' => 'User Management', 'class' => 'badge-light-primary'],
+                'appsupport' => ['label' => 'App Support', 'class' => 'badge-light-info'],
+                'profil' => ['label' => 'Profil Pengguna', 'class' => 'badge-light-success'],
+                'sistem' => ['label' => 'Sistem Backend', 'class' => 'badge-light-danger'],
+            ];
+            $modInfo = $moduleConfig[$log->module] ?? ['label' => ucfirst($log->module ?? 'Sistem'), 'class' => 'badge-light-secondary'];
+            $moduleBadge = '<span class="badge ' . $modInfo['class'] . ' fw-bold px-2 py-1 fs-8">' . $modInfo['label'] . '</span>';
+
+            // Level Badge
+            $levelBadge = match ($log->level ?? 'info') {
+                'error' => '<span class="badge badge-light-danger fw-bolder px-2 py-1 fs-8"><i class="ki-outline ki-cross-circle fs-8 text-danger me-1"></i> Error</span>',
+                'warning' => '<span class="badge badge-light-warning fw-bolder px-2 py-1 fs-8"><i class="ki-outline ki-information fs-8 text-warning me-1"></i> Warning</span>',
+                'success' => '<span class="badge badge-light-success fw-bolder px-2 py-1 fs-8"><i class="ki-outline ki-check-circle fs-8 text-success me-1"></i> Success</span>',
+                default => '<span class="badge badge-light-primary fw-bolder px-2 py-1 fs-8"><i class="ki-outline ki-information-2 fs-8 text-primary me-1"></i> Info</span>',
+            };
+
+            return [
+                'id' => $log->id,
+                'user' => [
+                    'id' => $user?->id,
+                    'name' => $user?->name ?? 'Sistem / Otomatis',
+                    'email' => $user?->email ?? 'system@veltronic',
+                    'role' => $userRole,
+                    'avatar_html' => $avatarHtml,
+                ],
+                'module' => $log->module ?? 'sistem',
+                'module_badge' => $moduleBadge,
+                'menu' => $log->menu ?? '-',
+                'activity' => htmlspecialchars($log->activity ?? '-'),
+                'description' => htmlspecialchars($log->description ?? '-'),
+                'level' => $log->level ?? 'info',
+                'level_badge' => $levelBadge,
+                'ip_address' => $log->ip_address ?? '-',
+                'user_agent' => $log->user_agent ?? '-',
+                'created_at_formatted' => $log->created_at ? $log->created_at->translatedFormat('d M Y, H:i:s') : '-',
+                'created_at_relative' => $log->created_at ? $log->created_at->diffForHumans() : '-',
+            ];
+        });
+
+        // Live stats for activity logs tab
+        $stats = [
+            'total_logs' => $totalRecords,
+            'today_logs' => UserLog::whereDate('created_at', Carbon::today())->count(),
+            'error_logs' => UserLog::where('level', 'error')->count(),
+            'user_management_logs' => UserLog::where('module', 'usermanagement')->count(),
+            'app_support_logs' => UserLog::where('module', 'appsupport')->count(),
+            'profil_logs' => UserLog::where('module', 'profil')->count(),
+        ];
+
+        return response()->json([
+            'draw' => (int) $request->input('draw', 1),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => $data,
+            'stats' => $stats,
+        ]);
     }
 
     /**
@@ -264,3 +481,4 @@ class AppFiturController extends Controller
         ];
     }
 }
+

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profil\UserLog;
 use App\Models\UserManagement\User;
 use App\Models\UserManagement\UserLogin;
 use Carbon\Carbon;
@@ -232,7 +233,15 @@ class DataLoginController extends Controller
      */
     public function destroy(UserLogin $login, Request $request): JsonResponse|RedirectResponse
     {
+        $targetUserName = $login->user?->name ?? 'Pengguna ID #'.$login->user_id;
         $login->delete();
+
+        UserLog::record(
+            'usermanagement',
+            'data-login',
+            'Hapus Riwayat Login',
+            "Menghapus riwayat login milik {$targetUserName} (ID #{$login->id})"
+        );
 
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([
@@ -258,6 +267,13 @@ class DataLoginController extends Controller
 
         $ids = $request->input('ids', []);
         $deletedCount = UserLogin::whereIn('id', $ids)->delete();
+
+        UserLog::record(
+            'usermanagement',
+            'data-login',
+            'Hapus Massal Riwayat Login',
+            "Menghapus secara massal {$deletedCount} catatan riwayat login pengguna"
+        );
 
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([
@@ -286,6 +302,13 @@ class DataLoginController extends Controller
         }
 
         $deletedCount = $query->delete();
+
+        UserLog::record(
+            'usermanagement',
+            'data-login',
+            'Bersihkan Riwayat Login',
+            "Membersihkan {$deletedCount} riwayat login dengan periode filter: {$period}"
+        );
 
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([

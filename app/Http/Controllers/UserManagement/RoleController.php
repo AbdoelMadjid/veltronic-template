@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profil\UserLog;
 use App\Models\UserManagement\Permission;
 use App\Models\UserManagement\Role;
 use App\Models\UserManagement\User;
@@ -72,6 +73,8 @@ class RoleController extends Controller
 
         $role->loadCount(['users', 'permissions']);
 
+        UserLog::record('usermanagement', 'roles', 'Tambah Peran Baru', "Membuat peran baru: {$roleName}", null, 'success');
+
         return response()->json([
             'success' => true,
             'message' => "Role `{$roleName}` berhasil dibuat.",
@@ -140,6 +143,8 @@ class RoleController extends Controller
 
         $role->loadCount(['users', 'permissions']);
 
+        UserLog::record('usermanagement', 'roles', 'Ubah Peran & Izin', "Memperbarui peran {$role->name} dan menyelaraskan perizinan", null, 'info');
+
         return response()->json([
             'success' => true,
             'message' => "Peran `{$role->name}` berhasil diperbarui.",
@@ -168,6 +173,8 @@ class RoleController extends Controller
 
         $roleName = $role->name;
         $role->delete();
+
+        UserLog::record('usermanagement', 'roles', 'Hapus Peran', "Menghapus peran: {$roleName}", null, 'warning');
 
         return response()->json([
             'success' => true,

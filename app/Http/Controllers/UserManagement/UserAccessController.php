@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profil\UserLog;
 use App\Models\UserManagement\Permission;
 use App\Models\UserManagement\Role;
 use App\Models\UserManagement\User;
@@ -66,6 +67,8 @@ class UserAccessController extends Controller
         $user = User::findOrFail($request->user_id);
         $user->syncRoles($request->roles);
         app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+
+        UserLog::record('usermanagement', 'akses-user', 'Penetapan Peran Pengguna', "Menetapkan peran [" . implode(', ', $request->roles) . "] untuk pengguna: {$user->name}", null, 'info');
 
         $roleBadges = $user->roles->map(function ($r) {
             return [
@@ -136,6 +139,8 @@ class UserAccessController extends Controller
         $permissions = $request->input('permissions', []);
         $user->syncPermissions($permissions);
         app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+
+        UserLog::record('usermanagement', 'akses-user', 'Penetapan Izin Langsung', "Menetapkan " . count($permissions) . " perizinan langsung untuk pengguna: {$user->name}", null, 'info');
 
         return response()->json([
             'success' => true,

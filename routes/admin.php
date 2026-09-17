@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Fitur & Setting Management (App Fiturs)
         Route::get('/app-fiturs', [AppFiturController::class, 'index'])->name('app-fiturs');
+        Route::get('/app-fiturs/activity-logs', [AppFiturController::class, 'activityLogs'])->name('app-fiturs.activity-logs');
         Route::post('/app-fiturs/toggle', [AppFiturController::class, 'toggle'])->name('app-fiturs.toggle');
         Route::post('/app-fiturs/bulk-toggle', [AppFiturController::class, 'bulkToggle'])->name('app-fiturs.bulk-toggle');
         Route::post('/app-fiturs/settings', [AppFiturController::class, 'saveSettings'])->name('app-fiturs.settings');

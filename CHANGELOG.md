@@ -5,6 +5,35 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.27.0] - 2026-09-17
+
+### Added & Enhanced
+- **Centralized System Activity & Audit Logging Engine (`users_logs`)**:
+  - **Database & Model Extension**: Added indexed columns `module`, `menu`, and `level` to `users_logs`, with nullable `user_id` for automated/system processes.
+  - **Unified Log Recorder (`UserLog::record`)**: Centralized static logging helper supporting module categorization (`usermanagement`, `appsupport`, `profil`, `sistem`), log levels (`info`, `warning`, `error`, `success`), request IP/User-Agent capture, and custom user binding with full backward compatibility.
+  - **Automatic Backend Exception Logger (`bootstrap/app.php`)**: Captured non-fatal and unexpected backend exceptions in Laravel's exception handler with `level = 'error'`, recording error message, file, and line traces without interrupting application execution.
+- **Comprehensive Activity Logging across User Management & App Support**:
+  - **User Management**: Recorded audit events for `UserController` (create, edit, delete, password reset, bulk role assignment), `RoleController` (create, update, delete), `PermissionController` (create, update, delete, module permission generator), `RoleAccessController` (matrix sync, toggle, bulk toggle), `UserAccessController` (role assignment, direct permission assignment), and `DataLoginController` (delete, bulk delete, clear).
+  - **App Support**: Recorded audit events for `AppFiturController` (toggle feature, bulk toggle, save settings, clear cache), `BackupDbController` (create backup, restore database, delete backup, save auto backup settings, test run), and `MenuController` (create menu, update menu, delete menu, drag-and-drop reorder).
+  - **Profil Pengguna**: Recorded all user profile actions (KTP upload/delete, avatar update/crop/zoom, life motto update, password changes, cover background adjustments, user preferences).
+- **Interactive Activity Logs Dashboard Tab (`appsupport/app-fiturs`)**:
+  - **Dedicated Nav Tab**: Added **Log Aktivitas Sistem** tab in `appsupport/app-fiturs`.
+  - **Summary Statistics Cards**: Live counters for *Total Rekaman*, *Aktivitas Hari Ini*, *Backend Errors*, *User Management*, *App Support*, and *Profil Pengguna*.
+  - **Zero-Reload DataTables**: Fast server-side pagination, searching, sorting, and filtering by Module, Log Level, and Date Range (Today, Yesterday, This Week, This Month).
+  - **Audit Detail Modal (`log-detail-modal.blade.php`)**: Interactive modal displaying user info, IP address, user-agent string, exact timestamp, and formatted error trace / event payload.
+
+---
+
+## [v1.26.0] - 2026-09-17
+
+### Added & Enhanced
+- **Login Rewards & Daily Point System (1 Point per 24 Hours)**:
+  - **Automated Point Allocation**: Implemented 24-hour reward throttle on web logins and lock screen unlock events, ensuring users receive at most 1 point per 24 hours while accurately tracking total login frequency.
+  - **Dedicated Audit Modul (`usermanagement/data-login`)**: Built comprehensive DataTables dashboard with live statistic counters, multi-level filtering (Action Type, Point Earned, Role, Date Range), bulk deletion, and automated history cleanup.
+  - **Zero-Reload Realtime CRUD & Operational Guides**: Designed modular partials and operational guide modal following Metronic/Veltronic design standards.
+
+---
+
 ## [v1.25.2] - 2026-09-17
 
 ### Restructured & Optimized

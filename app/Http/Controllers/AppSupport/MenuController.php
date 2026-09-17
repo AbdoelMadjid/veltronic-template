@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AppSupport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppSupport\MenuRequest;
 use App\Models\AppSupport\Menu;
+use App\Models\Profil\UserLog;
 use App\Models\UserManagement\Permission;
 use App\Models\UserManagement\Role;
 use Illuminate\Http\Request;
@@ -178,6 +179,13 @@ class MenuController extends Controller
 
             DB::commit();
 
+            UserLog::record(
+                'appsupport',
+                'menu',
+                'Tambah Menu Baru',
+                "Menambahkan menu baru '{$menu->name}' dengan URL: '{$menu->url}'" . ($menu->category ? " (Kategori: {$menu->category})" : '')
+            );
+
             if ($request->wantsJson() || $request->ajax()) {
                 return response()->json([
                     'success' => true,
@@ -286,6 +294,13 @@ class MenuController extends Controller
 
             DB::commit();
 
+            UserLog::record(
+                'appsupport',
+                'menu',
+                'Perbarui Menu',
+                "Memperbarui konfigurasi menu '{$menu->name}' (ID #{$menu->id}, URL: '{$menu->url}')"
+            );
+
             if ($request->wantsJson() || $request->ajax()) {
                 return response()->json([
                     'success' => true,
@@ -384,11 +399,21 @@ class MenuController extends Controller
      */
     public function destroy(Request $request, Menu $menu)
     {
+        $menuName = $menu->name;
+        $menuId = $menu->id;
+
         DB::beginTransaction();
         try {
             $menu->permissions()->detach();
             $menu->delete();
             DB::commit();
+
+            UserLog::record(
+                'appsupport',
+                'menu',
+                'Hapus Menu',
+                "Menghapus menu '{$menuName}' (ID #{$menuId}) beserta relasi hak aksesnya"
+            );
 
             if ($request->wantsJson() || $request->ajax()) {
                 return response()->json([
@@ -435,6 +460,13 @@ class MenuController extends Controller
                 }
             }
             DB::commit();
+
+            UserLog::record(
+                'appsupport',
+                'menu',
+                'Ubah Urutan Menu',
+                "Memperbarui urutan tata letak " . count($items) . " item menu pada sidebar navigasi"
+            );
 
             // Render fresh sidebar additional HTML for real-time DOM update
             $sidebarHtml = view('layouts.partials.sidebar._menu-section-additional')->render();

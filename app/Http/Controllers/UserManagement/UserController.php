@@ -5,6 +5,7 @@ namespace App\Http\Controllers\UserManagement;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserManagement\UserStoreRequest;
 use App\Http\Requests\UserManagement\UserUpdateRequest;
+use App\Models\Profil\UserLog;
 use App\Models\UserManagement\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -253,6 +254,8 @@ class UserController extends Controller
 
             DB::commit();
 
+            UserLog::record('usermanagement', 'users', 'Tambah Pengguna Baru', "Menambahkan pengguna baru: {$user->name} ({$user->email})", null, 'success');
+
             if ($request->expectsJson() || $request->ajax()) {
                 return response()->json([
                     'status' => 'success',
@@ -379,6 +382,8 @@ class UserController extends Controller
 
             DB::commit();
 
+            UserLog::record('usermanagement', 'users', 'Ubah Data Pengguna', "Memperbarui akun pengguna: {$user->name} ({$user->email})", null, 'info');
+
             $isAuthUser = (Auth::id() === $user->id);
 
             if ($request->expectsJson() || $request->ajax()) {
@@ -421,11 +426,16 @@ class UserController extends Controller
         }
 
         try {
+            $deletedName = $user->name;
+            $deletedEmail = $user->email;
+
             if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
                 Storage::disk('public')->delete($user->avatar);
             }
 
             $user->delete();
+
+            UserLog::record('usermanagement', 'users', 'Hapus Pengguna', "Menghapus akun pengguna: {$deletedName} ({$deletedEmail})", null, 'warning');
 
             if (request()->expectsJson() || request()->ajax()) {
                 return response()->json([
@@ -459,6 +469,8 @@ class UserController extends Controller
             $user->update([
                 'password' => Hash::make($newPassword),
             ]);
+
+            UserLog::record('usermanagement', 'users', 'Reset Password Pengguna', "Mereset kata sandi pengguna: {$user->name} ({$user->email})", null, 'warning');
 
             if (request()->expectsJson() || request()->ajax()) {
                 return response()->json([
@@ -519,6 +531,8 @@ class UserController extends Controller
             }
 
             DB::commit();
+
+            UserLog::record('usermanagement', 'users', 'Penugasan Peran Massal', "Menerapkan peran [" . implode(', ', $roleNames) . "] (mode: {$mode}) kepada {$count} pengguna", null, 'info');
 
             return response()->json([
                 'status' => 'success',

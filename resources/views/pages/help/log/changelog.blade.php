@@ -34,13 +34,49 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.26.0
+                            Versi Saat Ini: v1.27.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.27.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.27.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.27.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>17 Sep 2026, 21:55 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Sistem Log Aktivitas Sentral (Audit Log Engine), Pencatatan Error Backend, Isolasi Riwayat Profil &amp; Petunjuk App Fiturs</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi arsitektur perekaman log aktivitas terpusat (<em>System Activity &amp; Audit Engine</em>) pada seluruh modul Manajemen Pengguna &amp; Pendukung Aplikasi, penangkapan error backend otomatis (<code>level = 'error'</code>), tab interaktif <strong>Log Aktivitas Sistem</strong> di modul Fitur Aplikasi dengan DataTables Zero-Reload, isolasi ketat riwayat aktivitas profil pengguna, pembaruan realtime dinamis tanpa reload halaman, serta penambahan modal petunjuk operasional <code>&lt;x-petunjuk-modal&gt;</code>.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Centralized Audit Logging Engine</strong>: Perluasan skema tabel <code>users_logs</code> dengan kolom terindeks <code>module</code>, <code>menu</code>, <code>level</code>, dan <code>user_id</code> (nullable), didukung helper serbaguna <code>UserLog::record()</code>.</li>
+                                        <li><strong>Comprehensive Audit Across Modules</strong>: Perekaman audit di seluruh aksi <em>User Management</em> (User, Role, Permission, Akses Role, Akses User, Data Login) dan <em>App Support</em> (App Fitur, Backup Database, Menu Management).</li>
+                                        <li><strong>Automatic Backend Exception Catcher</strong>: Integrasi penanganan error di <code>bootstrap/app.php</code> untuk mencatat pesan error, file, dan baris kode ke log sistem secara otomatis tanpa mengganggu alur aplikasi.</li>
+                                        <li><strong>Interactive Activity Logs Tab (<code>appsupport/app-fiturs</code>)</strong>: Tab baru <em>Log Aktivitas Sistem</em> dilengkapi 6 widget statistik realtime, filter dinamis (Modul, Level, Rentang Tanggal), DataTables Zero-Reload, dan modal inspeksi detail log teknis.</li>
+                                        <li><strong>Profile Audit Isolation &amp; Realtime Sync</strong>: Isolasi tampilan riwayat di <em>Profil Pengguna</em> khusus untuk aktivitas profil pengguna (<code>module = 'profil'</code>) dengan penyuntikan instan entri baru ke timeline tanpa reload halaman.</li>
+                                        <li><strong>Operational Guidelines Modal &amp; Badge Toggle</strong>: Penambahan modal petunjuk operasional <code>&lt;x-petunjuk-modal&gt;</code> untuk modul Fitur Aplikasi serta aktivasi toggle status langsung via klik badge di tabel.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.27.0-->
+
                         <!--begin::Item v1.26.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.26.0</div>
@@ -56,7 +92,7 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>17 Sep 2026, 20:55 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                    <span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Sistem Reward 1 Poin Login 24 Jam, Pencatatan Sesi Layar Kunci, &amp; Modul Riwayat Data Login</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

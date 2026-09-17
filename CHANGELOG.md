@@ -5,6 +5,38 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.23.0] - 2026-09-17
+
+### Added & Enhanced
+- **Database Backup Engine & Automation (`appsupport/backup-db`)**:
+  - **Intelligent Relational Backup Service (`DatabaseBackupService.php`)**: Implemented schema inspection, exact row counting (`SELECT COUNT(*)`), smart Foreign Key dependency auto-selection, and gzip streaming compression.
+  - **Executor Audit Trail**: Recorded and displayed the actual user name (`$user->name`) executing backups across manual and automated operations in the manifest history.
+  - **Interactive Table Structure & Data Row Preview**: Added multi-tab modal in `backup-db` allowing administrators to inspect column schemas, foreign key mappings, and actual live data row records.
+  - **Automated Scheduled Backup Command**: Created `AutoBackupDatabase` artisan command and registered in `routes/console.php` with configurable retention policies and cron scheduler.
+- **Hierarchical Visual CRUD Permissions Matrix (`usermanagement/*`)**:
+  - **Permission Matrix Engine (`PermissionMatrixService.php`)**: Built dynamic hierarchical mapping connecting Main Menus and Sub-Menus with standard CRUD actions (`create`, `read`, `update`, `delete`), non-standard actions (`sort`, `export`), and row-level toggle switches.
+  - **Reusable Matrix Blade Component (`crud-matrix-table.blade.php` & `crud-matrix-helper.js`)**: Designed a unified visual matrix featuring search filtering, *Pilih Semua*, *Kosongkan*, indent tree branches (`└─`), parent/sub-module badges, and row-level toggle master checkboxes.
+- **Complete User Management Suite**:
+  - **Roles Management (`usermanagement/roles`)**: Interactive Metronic cards grid, avatar stack, CRUD Matrix add/edit/view modals, and system role protection (`master` & `admin`).
+  - **Permissions Management (`usermanagement/permissions`)**: Full CRUD DataTables, module grouping, and automated CRUD permission generator (`create,read,update,delete,sort,export`).
+  - **Role Access Matrix (`usermanagement/akses-role`)**: Multi-role tabbed matrix management with realtime zero-reload permission syncing and button loading spinners.
+  - **User Access & Direct Permission Override (`usermanagement/akses-user`)**: User role assignment dialog and direct permission override modal integrated with the visual CRUD Matrix.
+- **UI/UX & System Standards Compliance**:
+  - Full adherence to Zero-Reload Realtime Policy (AJAX/Fetch + SweetAlert2 + live DOM sync).
+  - Standardized button loading spinners (`data-kt-indicator="on"`).
+  - Pure Metronic 8.3.2 utility styling with zero custom per-page CSS, clean heading typography (No-Icon Policy), and full Dark/Light Mode harmony.
+
+---
+
+## [v1.22.0] - 2026-09-16
+
+### Added & Enhanced
+- **Avatar Studio Modal Khusus**:
+  - Dynamic zoom control up to 5x with 2-axis (X/Y) focal adjustment.
+  - Grid alignment for "Profil Saya" tab and global avatar rendering helper.
+
+---
+
 ## [v1.21.0] - 2026-09-16
 
 ### Added & Enhanced

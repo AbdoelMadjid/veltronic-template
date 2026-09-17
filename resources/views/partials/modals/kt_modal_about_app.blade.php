@@ -134,12 +134,19 @@
                 <!--end::Features Grid-->
 
                 <!--begin::Actions-->
-                <div class="d-flex align-items-center justify-content-between pt-3 border-top">
-                    <a href="https://github.com/AbdoelMadjid/veltronic-template" target="_blank"
-                        class="btn btn-sm btn-light-primary d-inline-flex align-items-center gap-2">
-                        <i class="ki-outline ki-abstract-26 fs-4"></i>
-                        <span data-kt-translate="about.visit_github">{{ __('about.visit_github') }}</span>
-                    </a>
+                <div class="d-flex align-items-center justify-content-between pt-3 border-top flex-wrap gap-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="https://github.com/AbdoelMadjid/veltronic-template" target="_blank"
+                            class="btn btn-sm btn-light-primary d-inline-flex align-items-center gap-2">
+                            <i class="ki-outline ki-abstract-26 fs-4"></i>
+                            <span data-kt-translate="about.visit_github">{{ __('about.visit_github') }}</span>
+                        </a>
+                        <a href="{{ url('help/log/changelog') }}"
+                            class="btn btn-sm btn-light-info d-inline-flex align-items-center gap-2">
+                            <i class="ki-outline ki-document fs-4"></i>
+                            <span data-kt-translate="about.changelog">{{ __('about.changelog') }}</span>
+                        </a>
+                    </div>
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal" data-kt-translate="about.close">
                         {{ __('about.close') }}
                     </button>

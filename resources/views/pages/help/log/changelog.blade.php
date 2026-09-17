@@ -71,6 +71,8 @@
                                         <li><strong>Interactive Activity Logs Tab (<code>appsupport/app-fiturs</code>)</strong>: Tab baru <em>Log Aktivitas Sistem</em> dilengkapi 6 widget statistik realtime, filter dinamis (Modul, Level, Rentang Tanggal), DataTables Zero-Reload, dan modal inspeksi detail log teknis.</li>
                                         <li><strong>Profile Audit Isolation &amp; Realtime Sync</strong>: Isolasi tampilan riwayat di <em>Profil Pengguna</em> khusus untuk aktivitas profil pengguna (<code>module = 'profil'</code>) dengan penyuntikan instan entri baru ke timeline tanpa reload halaman.</li>
                                         <li><strong>Operational Guidelines Modal &amp; Badge Toggle</strong>: Penambahan modal petunjuk operasional <code>&lt;x-petunjuk-modal&gt;</code> untuk modul Fitur Aplikasi serta aktivasi toggle status langsung via klik badge di tabel.</li>
+                                        <li><strong>Standarisasi Avatar Lock Screen &amp; Modal Tentang</strong>: Penyesuaian bentuk avatar layar kunci ke kotak rounded-3 squircle standar dan integrasi link cepat Changelog pada modal Tentang Aplikasi dengan dukungan dwibahasa (EN/ID).</li>
+                                        <li><strong>Penyelarasan Rute Distribusi Widget Demo</strong>: Pembaruan seluruh link pratinjau demo pada modul Distribusi Widget ke rute kanonikal <code>main/demo/*</code>.</li>
                                     </ul>
                                 </div>
                             </div>

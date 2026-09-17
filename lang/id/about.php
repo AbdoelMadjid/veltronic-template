@@ -22,6 +22,7 @@ return [
     'feature_auth' => 'Lapisan Keamanan Spatie Role & Permission',
     'github_repository' => 'Repositori GitHub',
     'visit_github' => 'Kunjungi Repositori',
+    'changelog' => 'Changelog',
     'documentation' => 'Dokumentasi',
     'close' => 'Tutup',
 ];

@@ -29,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Operational Guidelines Modal & Header Toolbar Integration (`appsupport/app-fiturs`)**:
   - **Modal Petunjuk (`app-fiturs-petunjuk.blade.php`)**: Created comprehensive operational guidelines modal utilizing `<x-petunjuk-modal>` with feature explanations, logging policies, and best practices.
   - **Toolbar Action Button**: Integrated `@section('toolbar')` action button with `layouts.partials._action-petunjuk-button` for consistent UX across modules.
+- **UI Consistency & Navigation Alignments**:
+  - **Lock Screen Avatar Standardization**: Aligned lock screen avatar from `rounded-circle` to standard project squircle `rounded-3` with `image-input-wrapper` and shadow styling.
+  - **About App Changelog Link**: Integrated direct Changelog button in `kt_modal_about_app.blade.php` alongside Visit Repository with complete bilingual support (EN/ID).
+  - **Widget Distribution Demo Routes**: Aligned all demo link references in `distribusi-widget.blade.php` and `distribusi-demo.blade.php` to the canonical `main/demo/*` routing path.
 
 ---
 

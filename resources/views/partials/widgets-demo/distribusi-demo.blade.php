@@ -54,7 +54,7 @@
                 <div class="widget-category-box">
                     <div class="widget-category-head">
                         <h5 class="widget-category-title mb-0">
-                            <a href="{{ url('demo/' . $demo) }}" target="_blank" rel="noopener noreferrer"
+                            <a href="{{ url('main/demo/' . $demo) }}" target="_blank" rel="noopener noreferrer"
                                 class="text-gray-800 text-hover-primary">
                                 Demo {{ $meta['number'] }}
                             </a>

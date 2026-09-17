@@ -222,7 +222,7 @@
                                     </div>
                                     <div class="d-flex flex-wrap gap-2 mt-3 widget-demo-links widget-row-indent">
                                         @foreach ($demos as $demo)
-                                            <a href="{{ url('demo/' . $demo) }}" target="_blank" rel="noopener noreferrer"
+                                            <a href="{{ url('main/demo/' . $demo) }}" target="_blank" rel="noopener noreferrer"
                                                 class="badge badge-light-primary fw-semibold fs-8 px-3 py-2 text-hover-primary">
                                                 {{ \Illuminate\Support\Str::afterLast($demo, '/') }}
                                             </a>
@@ -256,7 +256,7 @@
                                         </div>
                                         <div class="d-flex flex-wrap gap-2 mt-3 widget-demo-links">
                                             @foreach ($topWidget['demos'] as $demo)
-                                                <a href="{{ url('demo/' . $demo) }}" target="_blank"
+                                                <a href="{{ url('main/demo/' . $demo) }}" target="_blank"
                                                     rel="noopener noreferrer"
                                                     class="badge badge-light-dark fw-semibold fs-8 px-3 py-2 text-hover-primary">
                                                     {{ \Illuminate\Support\Str::afterLast($demo, '/') }}

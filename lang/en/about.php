@@ -22,6 +22,7 @@ return [
     'feature_auth' => 'Spatie Role & Permission Security Layer',
     'github_repository' => 'GitHub Repository',
     'visit_github' => 'Visit Repository',
+    'changelog' => 'Changelog',
     'documentation' => 'Documentation',
     'close' => 'Close',
 ];

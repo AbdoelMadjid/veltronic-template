@@ -31,8 +31,8 @@
             <div class="modal-body p-8">
                 <!--begin::User Profile Info-->
                 <div class="text-center mb-6">
-                    <div class="symbol symbol-75px symbol-circle mb-3 position-relative d-inline-block">
-                        <div class="image-input-wrapper w-75px h-75px rounded-circle border border-3 border-light shadow-sm" id="lock_screen_avatar_img"
+                    <div class="symbol symbol-75px mb-3 position-relative d-inline-block">
+                        <div class="image-input-wrapper w-75px h-75px rounded-3 border border-3 border-light shadow-sm" id="lock_screen_avatar_img"
                             style="{{ user_avatar_style($authUser) }}">
                         </div>
                     </div>

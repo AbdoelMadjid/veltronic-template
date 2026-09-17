@@ -210,74 +210,65 @@
             <div class="d-flex flex-column flex-grow-1 pe-8">
                 <!--begin::Stats-->
                 <div class="d-flex flex-wrap">
-                    <!--begin::Stat-->
+                    <!--begin::Stat: Total Poin-->
                     <div
                         class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3 bg-body bg-opacity-75 backdrop-blur-sm shadow-xs">
                         <!--begin::Number-->
                         <div class="d-flex align-items-center">
-                            <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                            <div class="fs-2 fw-bold" data-kt-countup="true"
-                                data-kt-countup-value="4500" data-kt-countup-prefix="$">
-                                0
+                            <i class="ki-outline ki-crown-2 fs-3 text-success me-2"></i>
+                            <div class="fs-2 fw-bold text-gray-900" data-kt-countup="true"
+                                data-kt-countup-value="{{ (int) ($authUser?->points ?? 0) }}">
+                                {{ (int) ($authUser?->points ?? 0) }}
                             </div>
                         </div>
                         <!--end::Number-->
                         <!--begin::Label-->
                         <div class="fw-semibold fs-6 text-gray-600">
-                            Earnings
+                            Reward Poin
                         </div>
                         <!--end::Label-->
                     </div>
-                    <!--end::Stat-->
+                    <!--end::Stat: Total Poin-->
 
-                    <!--begin::Stat-->
+                    <!--begin::Stat: Total Login-->
                     <div
                         class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3 bg-body bg-opacity-75 backdrop-blur-sm shadow-xs">
                         <!--begin::Number-->
                         <div class="d-flex align-items-center">
-                            <i class="ki-duotone ki-arrow-down fs-3 text-danger me-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                            <div class="fs-2 fw-bold" data-kt-countup="true"
-                                data-kt-countup-value="80">
-                                0
+                            <i class="ki-outline ki-entrance-right fs-3 text-primary me-2"></i>
+                            <div class="fs-2 fw-bold text-gray-900" data-kt-countup="true"
+                                data-kt-countup-value="{{ (int) ($authUser?->login_count ?? 0) }}">
+                                {{ (int) ($authUser?->login_count ?? 0) }}
                             </div>
                         </div>
                         <!--end::Number-->
                         <!--begin::Label-->
                         <div class="fw-semibold fs-6 text-gray-600">
-                            Projects
+                            Total Login
                         </div>
                         <!--end::Label-->
                     </div>
-                    <!--end::Stat-->
+                    <!--end::Stat: Total Login-->
 
-                    <!--begin::Stat-->
+                    <!--begin::Stat: Kelengkapan Data-->
                     <div
                         class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3 bg-body bg-opacity-75 backdrop-blur-sm shadow-xs">
                         <!--begin::Number-->
                         <div class="d-flex align-items-center">
-                            <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                            <div class="fs-2 fw-bold" data-kt-countup="true"
-                                data-kt-countup-value="60" data-kt-countup-prefix="%">
-                                0
+                            <i class="ki-outline ki-check-circle fs-3 text-info me-2"></i>
+                            <div class="fs-2 fw-bold text-gray-900" data-kt-countup="true"
+                                data-kt-countup-value="{{ $completionPercent }}" data-kt-countup-suffix="%">
+                                {{ $completionPercent }}%
                             </div>
                         </div>
                         <!--end::Number-->
                         <!--begin::Label-->
                         <div class="fw-semibold fs-6 text-gray-600">
-                            Success Rate
+                            Kelengkapan Profil
                         </div>
                         <!--end::Label-->
                     </div>
-                    <!--end::Stat-->
+                    <!--end::Stat: Kelengkapan Data-->
                 </div>
                 <!--end::Stats-->
             </div>

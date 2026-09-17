@@ -38,6 +38,9 @@ class LockScreenController extends Controller
         // Touch the session / mark unlocked
         $request->session()->put('last_activity', now()->timestamp);
 
+        // Record lock screen unlock activity & check 24h point eligibility
+        $user->recordLogin('lockscreen', $request);
+
         return response()->json([
             'success' => true,
             'message' => 'Layar berhasil dibuka.',

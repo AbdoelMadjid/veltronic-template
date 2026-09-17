@@ -34,6 +34,10 @@ class User extends Authenticatable
         'email',
         'avatar',
         'password',
+        'points',
+        'login_count',
+        'last_login_at',
+        'last_point_at',
     ];
 
     /**
@@ -174,6 +178,10 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'points' => 'integer',
+            'login_count' => 'integer',
+            'last_login_at' => 'datetime',
+            'last_point_at' => 'datetime',
         ];
     }
 
@@ -219,6 +227,55 @@ class User extends Authenticatable
     public function logs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserLog::class, 'user_id')->latest('created_at');
+    }
+
+    /**
+     * Get user login history.
+     */
+    public function logins(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserLogin::class, 'user_id')->latest('created_at');
+    }
+
+    /**
+     * Record login / lockscreen unlock session & award 1 point per 24 hours.
+     */
+    public function recordLogin(string $type = 'login', ?\Illuminate\Http\Request $request = null): UserLogin
+    {
+        $req = $request ?? request();
+        $now = now();
+
+        // Check if 24 hours have elapsed since the last point reward
+        $canEarnPoint = is_null($this->last_point_at) || \Carbon\Carbon::parse($this->last_point_at)->diffInHours($now) >= 24;
+        $pointEarned = 0;
+
+        if ($canEarnPoint) {
+            $this->points = (int) ($this->points ?? 0) + 1;
+            $this->last_point_at = $now;
+            $pointEarned = 1;
+        }
+
+        // Increment total login count & update last login time
+        $this->login_count = (int) ($this->login_count ?? 0) + 1;
+        $this->last_login_at = $now;
+        $this->save();
+
+        // Parse user agent
+        $userAgent = $req->userAgent();
+        $agentInfo = UserLogin::parseUserAgent($userAgent);
+
+        // Create login history record
+        return UserLogin::create([
+            'user_id' => $this->id,
+            'type' => $type, // 'login' or 'lockscreen'
+            'ip_address' => $req->ip(),
+            'user_agent' => $userAgent,
+            'device' => $agentInfo['device'],
+            'browser' => $agentInfo['browser'],
+            'platform' => $agentInfo['platform'],
+            'point_earned' => $pointEarned,
+            'created_at' => $now,
+        ]);
     }
 
     /**

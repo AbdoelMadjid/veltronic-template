@@ -36,6 +36,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Record login activity & award 1 point per 24 hours
+        $request->user()?->recordLogin('login', $request);
+
         if (in_array($locale, ['en', 'id'], true)) {
             $request->session()->put('locale', $locale);
         }

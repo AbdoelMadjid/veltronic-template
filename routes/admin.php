@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppSupport\AppFiturController;
 use App\Http\Controllers\AppSupport\BackupDbController;
 use App\Http\Controllers\AppSupport\MenuController as AppSupportMenuController;
+use App\Http\Controllers\UserManagement\DataLoginController;
 use App\Http\Controllers\UserManagement\PermissionController;
 use App\Http\Controllers\UserManagement\RoleAccessController;
 use App\Http\Controllers\UserManagement\RoleController;
@@ -42,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('menu', AppSupportMenuController::class);
     });
 
-    // User Management (Users, Roles, Permissions, Akses)
+    // User Management (Users, Roles, Permissions, Akses, Data Login)
     Route::prefix('usermanagement')->name('usermanagement.')->group(function () {
         // Users
         Route::post('users/bulk-assign-role', [UserController::class, 'bulkAssignRole'])->name('users.bulk-assign-role');
@@ -68,6 +69,12 @@ Route::middleware(['auth'])->group(function () {
         Route::post('akses-user/assign-role', [UserAccessController::class, 'assignRole'])->name('akses-user.assign-role');
         Route::get('akses-user/{user}/permissions', [UserAccessController::class, 'getUserPermissions'])->name('akses-user.permissions');
         Route::post('akses-user/{user}/direct-permissions', [UserAccessController::class, 'updateDirectPermissions'])->name('akses-user.direct-permissions');
+
+        // Data Login & Riwayat Poin
+        Route::get('data-login', [DataLoginController::class, 'index'])->name('data-login');
+        Route::post('data-login/bulk-delete', [DataLoginController::class, 'bulkDestroy'])->name('data-login.bulk-delete');
+        Route::post('data-login/clear', [DataLoginController::class, 'clear'])->name('data-login.clear');
+        Route::delete('data-login/{login}', [DataLoginController::class, 'destroy'])->name('data-login.destroy');
     });
 
     // Alias URL Bahasa Indonesia (/manajemenpengguna/*)
@@ -77,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('akses-role', [RoleAccessController::class, 'index']);
         Route::get('akses-user', [UserAccessController::class, 'index']);
         Route::get('users', [UserController::class, 'index']);
+        Route::get('data-login', [DataLoginController::class, 'index']);
     });
 
     // Profil Pengguna (Identitas Diri, Ganti Password, Konfigurasi, Riwayat)

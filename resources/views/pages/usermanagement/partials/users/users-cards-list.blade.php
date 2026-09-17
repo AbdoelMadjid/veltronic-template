@@ -109,17 +109,23 @@
 
                 <!--begin::Info grid-->
                 <div class="d-flex flex-center flex-wrap w-100 mb-2 gap-2">
-                    <div class="border border-gray-200 border-dashed rounded min-w-90px py-2 px-3 text-center flex-grow-1">
-                        <div class="fs-7 fw-bolder text-gray-800">
-                            {{ $u->created_at ? $u->created_at->format('d M Y') : '-' }}
+                    <div class="border border-gray-200 border-dashed rounded min-w-80px py-2 px-2 text-center flex-grow-1">
+                        <div class="fs-7 fw-bolder text-success">
+                            {{ (int) ($u->points ?? 0) }}
                         </div>
-                        <div class="fw-semibold text-muted fs-9">Terdaftar</div>
+                        <div class="fw-semibold text-muted fs-9">Poin</div>
                     </div>
-                    <div class="border border-gray-200 border-dashed rounded min-w-90px py-2 px-3 text-center flex-grow-1">
-                        <div class="fs-7 fw-bolder {{ $u->email_verified_at ? 'text-success' : 'text-warning' }}">
-                            {{ $u->email_verified_at ? 'Terverifikasi' : 'Belum Verifikasi' }}
+                    <div class="border border-gray-200 border-dashed rounded min-w-80px py-2 px-2 text-center flex-grow-1">
+                        <div class="fs-7 fw-bolder text-primary">
+                            {{ (int) ($u->login_count ?? 0) }}x
                         </div>
-                        <div class="fw-semibold text-muted fs-9">Status Email</div>
+                        <div class="fw-semibold text-muted fs-9">Login</div>
+                    </div>
+                    <div class="border border-gray-200 border-dashed rounded min-w-80px py-2 px-2 text-center flex-grow-1">
+                        <div class="fs-7 fw-bolder {{ $u->email_verified_at ? 'text-success' : 'text-warning' }}">
+                            {{ $u->email_verified_at ? 'Aktif' : 'Belum' }}
+                        </div>
+                        <div class="fw-semibold text-muted fs-9">Status</div>
                     </div>
                 </div>
                 <!--end::Info grid-->

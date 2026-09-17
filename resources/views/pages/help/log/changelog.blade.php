@@ -34,13 +34,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.25.2
+                            Versi Saat Ini: v1.26.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.26.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.26.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.26.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>17 Sep 2026, 20:55 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Sistem Reward 1 Poin Login 24 Jam, Pencatatan Sesi Layar Kunci, &amp; Modul Riwayat Data Login</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi sistem reward otomatis 1 poin per siklus 24 jam saat pengguna login, pencatatan komprehensif seluruh frekuensi sesi Login Web dan Buka Layar Kunci (<em>Lock Screen</em>), modul antarmuka Data Login terstandarisasi (<code>usermanagement/data-login</code>) dengan 4 widget statistik, filter dinamis, DataTables Zero-Reload, modal inspeksi detail teknis, petunjuk operasional <code>&lt;x-petunjuk-modal&gt;</code>, serta visualisasi badge poin pengguna di seluruh antarmuka.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>24-Hour Point Reward Engine</strong>: Penambahan kolom <code>points</code>, <code>login_count</code>, <code>last_login_at</code>, dan <code>last_point_at</code> pada tabel <code>users</code>. Pengguna mendapatkan reward +1 poin pada login pertama dalam interval &ge; 24 jam. Login berulang dalam rentang &lt; 24 jam tidak menduplikasi poin.</li>
+                                        <li><strong>Comprehensive Session Activity Logging</strong>: Pembuatan tabel <code>users_logins</code> untuk mencatat seluruh sesi masuk sistem via <em>Login Web</em> maupun <em>Buka Layar Kunci (Lock Screen)</em> memuat tipe aksi, IP klien, peramban (browser), sistem operasi (platform), perangkat (desktop/mobile/tablet), dan user agent mentah.</li>
+                                        <li><strong>Data Login Module (<code>usermanagement/data-login</code>)</strong>: Antarmuka pemantauan log dengan Header Banner mandiri, 4 widget statistik realtime (Total Logins, Web vs Kunci, Reward Poin 24 Jam, Pengguna Aktif Hari Ini), filter interaktif (Tipe, Poin, Peran, Tanggal), DataTables Zero-Reload, modal detail teknis, hapus massal (<em>Bulk Delete</em>), dan pembersihan log (<em>Clear Logs</em>).</li>
+                                        <li><strong>Operational Guidelines Standardization</strong>: Integrasi modal panduan <code>&lt;x-petunjuk-modal&gt;</code> terstruktur dengan 4 kotak informasi sesuai standar Manajemen Pengguna.</li>
+                                        <li><strong>Global User Points Visualization</strong>: Penambahan indikator poin pada menu dropdown akun navbar, header profil pengguna, dan kartu daftar pengguna.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.26.0-->
+
                         <!--begin::Item v1.25.2 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.25.2</div>
@@ -56,7 +91,7 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>17 Sep 2026, 15:15 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                    <span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Pemisahan &amp; Restrukturisasi Folder Log (Changelog &amp; Console Developer)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

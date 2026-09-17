@@ -76,6 +76,9 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        // Record initial login & award first 24h point
+        $user->recordLogin('login', $request);
+
         return redirect(route('dashboard', absolute: false));
     }
 }

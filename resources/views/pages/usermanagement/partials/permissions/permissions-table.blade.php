@@ -1,117 +1,191 @@
-<!--begin::Permissions Table Card-->
+<!--begin::Header Banner-->
+<div class="card card-flush shadow-sm border-0 mb-6">
+    <div class="card-body p-6 d-flex flex-wrap align-items-center justify-content-between gap-4">
+        <div class="d-flex align-items-center">
+            <div class="symbol symbol-45px symbol-circle bg-light-primary me-4 d-flex align-items-center justify-content-center">
+                <i class="ki-outline ki-key text-primary fs-2"></i>
+            </div>
+            <div>
+                <h2 class="fw-bolder text-gray-900 m-0 fs-3">Manajemen Permission & Hak Akses Fitur</h2>
+                <span class="text-muted fs-7">Kelola izin akses fitur sistem, pengelompokan modul, dan generator permission CRUD.</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <button type="button" class="btn btn-primary btn-sm fw-bold rounded-pill px-4" id="kt_btn_open_generate_modal">
+                <i class="ki-outline ki-flash fs-4 me-1"></i> Modul CRUD (Praktis)
+            </button>
+            <button type="button" class="btn btn-light-primary btn-sm fw-bold rounded-pill px-4" id="kt_btn_add_permission">
+                <i class="ki-outline ki-plus fs-4 me-1"></i> Single Permission
+            </button>
+        </div>
+    </div>
+</div>
+<!--end::Header Banner-->
+
+<!--begin::Stats Summary Cards-->
+<div class="row g-6 mb-6">
+    <!-- Card 1: Total Permission Terdaftar -->
+    <div class="col-md-4">
+        <div class="card card-flush h-100 p-6 border border-dashed border-primary border-opacity-50 rounded-3 shadow-none bg-body">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <div class="fs-2hx fw-bolder text-primary" id="stat_total_perms">{{ $totalPermissions }}</div>
+                <div class="symbol symbol-45px rounded-3 bg-light-primary d-flex align-items-center justify-content-center">
+                    <i class="ki-outline ki-key text-primary fs-2"></i>
+                </div>
+            </div>
+            <div class="fw-bold text-gray-700 fs-7">Total Permission Terdaftar</div>
+        </div>
+    </div>
+
+    <!-- Card 2: Total Modul / Fitur Aplikasi -->
+    <div class="col-md-4">
+        <div class="card card-flush h-100 p-6 border border-dashed border-info border-opacity-50 rounded-3 shadow-none bg-body">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <div class="fs-2hx fw-bolder text-info" id="stat_total_modules">{{ $totalModules }}</div>
+                <div class="symbol symbol-45px rounded-3 bg-light-info d-flex align-items-center justify-content-center">
+                    <i class="ki-outline ki-element-11 text-info fs-2"></i>
+                </div>
+            </div>
+            <div class="fw-bold text-gray-700 fs-7">Total Modul / Fitur Aplikasi</div>
+        </div>
+    </div>
+
+    <!-- Card 3: Modul Belum Ditugaskan -->
+    <div class="col-md-4">
+        <div class="card card-flush h-100 p-6 border border-dashed border-success border-opacity-50 rounded-3 shadow-none bg-body">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <div class="fs-2hx fw-bolder text-success" id="stat_unassigned_modules">{{ $unassignedModulesCount }}</div>
+                <div class="symbol symbol-45px rounded-3 bg-light-success d-flex align-items-center justify-content-center">
+                    <i class="ki-outline ki-shield-tick text-success fs-2"></i>
+                </div>
+            </div>
+            <div class="fw-bold text-gray-700 fs-7">Modul Belum Ditugaskan</div>
+        </div>
+    </div>
+</div>
+<!--end::Stats Summary Cards-->
+
+<!--begin::Module Permissions Table Card-->
 <div class="card card-flush shadow-sm border-0 mb-6">
     <!--begin::Card header-->
     <div class="card-header border-0 pt-6 px-6">
-        <!--begin::Card title-->
-        <div class="card-title">
+        <div class="card-title d-flex align-items-center gap-4 flex-wrap">
             <!-- Search -->
-            <div class="d-flex align-items-center position-relative my-1 me-4">
-                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4"><span class="path1"></span><span class="path2"></span></i>
-                <input type="text" id="kt_filter_permission_search" class="form-control form-control-solid w-250px ps-12" placeholder="Cari nama izin..." />
+            <div class="d-flex align-items-center position-relative my-1">
+                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+                <input type="text" id="kt_filter_permission_search" class="form-control form-control-solid w-250px ps-12" placeholder="Cari Modul / Fitur..." />
             </div>
 
-            <!-- Filter Modul -->
+            <!-- Filter Role -->
             <div class="w-175px my-1">
-                <select id="kt_filter_permission_module" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
-                    <option value="all" selected>Semua Modul</option>
-                    @foreach($modules as $key => $title)
-                        <option value="{{ $key }}">{{ $title }}</option>
+                <select id="kt_filter_permission_role" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
+                    <option value="all" selected>All / Semua Role</option>
+                    @foreach($roles as $role)
+                        <option value="{{ strtolower($role->name) }}">{{ ucfirst($role->name) }}</option>
                     @endforeach
                 </select>
             </div>
         </div>
-        <!--end::Card title-->
-
-        <!--begin::Card toolbar-->
-        <div class="card-toolbar d-flex align-items-center gap-2 ms-auto flex-shrink-0">
-            <!-- Tombol Generate Modul CRUD -->
-            <button type="button" class="btn btn-sm btn-light-primary fw-bold" id="kt_btn_open_generate_modal"
-                data-bs-toggle="tooltip" title="Buat otomatis izin create, read, update, delete per modul">
-                <i class="ki-duotone ki-element-plus fs-5 me-0 me-sm-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
-                <span class="d-none d-sm-inline">Generate CRUD Modul</span>
-            </button>
-
-            <!-- Tombol Tambah Permission Manual -->
-            <button type="button" class="btn btn-sm btn-primary fw-bold" id="kt_btn_add_permission"
-                data-bs-toggle="tooltip" title="Tambah izin akses individual">
-                <i class="ki-duotone ki-plus fs-5 me-0 me-sm-1"></i>
-                <span class="d-none d-sm-inline">Tambah Izin</span>
-            </button>
-        </div>
-        <!--end::Card toolbar-->
     </div>
     <!--end::Card header-->
 
     <!--begin::Card body-->
     <div class="card-body py-4 px-6">
         <div class="table-responsive">
-            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="kt_permissions_datatable">
+            <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4" id="kt_permissions_datatable">
                 <thead>
-                    <tr class="fw-bolder text-muted bg-light text-uppercase fs-7">
-                        <th class="ps-4 min-w-200px">Nama Izin (Permission)</th>
-                        <th class="min-w-140px">Modul / Fitur</th>
-                        <th class="min-w-80px text-center">Guard</th>
-                        <th class="min-w-200px">Ditetapkan ke Peran (Roles)</th>
-                        <th class="min-w-100px text-end pe-4">Aksi</th>
+                    <tr class="fw-bolder text-muted bg-light text-uppercase fs-8">
+                        <th class="ps-4 min-w-250px">MODUL / FITUR APLIKASI</th>
+                        <th class="min-w-200px">TIPE AKSI TERDAFTAR (CRUD)</th>
+                        <th class="min-w-180px">DITUGASKAN KE ROLE</th>
+                        <th class="min-w-100px">JUMLAH IZIN</th>
+                        <th class="min-w-80px text-end pe-4">AKSI</th>
                     </tr>
                 </thead>
                 <tbody id="kt_permissions_tbody" class="fw-semibold text-gray-800">
-                    @forelse($permissions as $perm)
+                    @forelse($modulesTree as $mod)
                         @php
-                            $parts = explode('.', $perm->name);
-                            $modKey = (count($parts) > 1) ? implode('.', array_slice($parts, 0, -1)) : 'general';
-                            $modTitle = ucwords(str_replace(['_', '-'], ' ', $modKey));
-                            $actionName = end($parts);
+                            $rolesJson = json_encode(array_map('strtolower', $mod['assigned_roles'] ?? []));
                         @endphp
-                        <tr class="perm-row-item" data-perm-name="{{ $perm->name }}" data-mod-key="{{ $modKey }}">
+                        <tr class="module-perm-row" 
+                            id="mod_row_{{ $mod['id'] }}" 
+                            data-module-name="{{ strtolower($mod['name']) }}" 
+                            data-module-url="{{ strtolower($mod['url']) }}"
+                            data-roles="{{ $rolesJson }}">
                             <td class="ps-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex flex-column">
-                                        <span class="text-gray-900 fw-bold fs-6 font-monospace">{{ $perm->name }}</span>
-                                        <span class="text-muted fs-8">Aksi: <strong class="text-primary">{{ strtoupper($actionName) }}</strong></span>
+                                @if($mod['level'] === 1)
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-30px symbol-circle bg-light-primary text-primary me-3 d-flex align-items-center justify-content-center">
+                                            <i class="ki-outline ki-abstract-26 fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-gray-900 fw-bold fs-6 font-monospace">{{ $mod['url'] ?: $mod['name'] }}</span>
+                                            <div class="text-muted fs-8">{{ $mod['name'] }}</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="badge badge-light-secondary fw-bold fs-8">{{ $modTitle }}</span>
-                            </td>
-                            <td class="text-center">
-                                <span class="badge badge-light fw-bold fs-8 text-gray-700">{{ $perm->guard_name }}</span>
+                                @else
+                                    <div class="d-flex align-items-center" style="padding-left: {{ ($mod['level'] - 1) * 28 }}px;">
+                                        <span class="text-muted me-2 font-monospace fs-6">└─</span>
+                                        <div>
+                                            <span class="text-gray-900 fw-bold fs-6 font-monospace">{{ $mod['url'] ?: $mod['name'] }}</span>
+                                            <div class="text-muted fs-8">{{ $mod['name'] }}</div>
+                                        </div>
+                                    </div>
+                                @endif
                             </td>
                             <td>
                                 <div class="d-flex flex-wrap align-items-center gap-1">
-                                    @if($perm->roles->isNotEmpty())
-                                        @foreach($perm->roles as $r)
+                                    @if(!empty($mod['registered_actions']))
+                                        @foreach($mod['registered_actions'] as $act)
                                             @php
-                                                $rClass = in_array(strtolower($r->name), ['master', 'admin']) ? 'badge-light-danger' : 'badge-light-primary';
+                                                $actClass = match($act) {
+                                                    'READ' => 'badge-light-info text-info',
+                                                    'CREATE' => 'badge-light-success text-success',
+                                                    'UPDATE' => 'badge-light-warning text-warning',
+                                                    'DELETE' => 'badge-light-danger text-danger',
+                                                    default => 'badge-light-primary text-primary'
+                                                };
                                             @endphp
-                                            <span class="badge {{ $rClass }} fw-bolder fs-9 px-2 py-0.5">{{ $r->name }}</span>
+                                            <span class="badge {{ $actClass }} fw-bold fs-9 px-2 py-0.5">{{ $act }}</span>
                                         @endforeach
                                     @else
-                                        <span class="text-muted fs-8 fst-italic">Belum diberikan ke peran manapun</span>
+                                        <span class="text-muted fs-8 fst-italic">Belum ada aksi CRUD</span>
                                     @endif
                                 </div>
                             </td>
-                            <td class="text-end pe-4">
-                                <div class="d-flex align-items-center justify-content-end gap-1">
-                                    <button type="button" class="btn btn-icon btn-light-primary btn-sm btn-edit-permission"
-                                        data-id="{{ $perm->id }}" data-name="{{ $perm->name }}"
-                                        data-bs-toggle="tooltip" title="Ubah Nama Izin">
-                                        <i class="ki-duotone ki-pencil fs-5"><span class="path1"></span><span class="path2"></span></i>
-                                    </button>
-
-                                    <button type="button" class="btn btn-icon btn-light-danger btn-sm btn-delete-permission"
-                                        data-id="{{ $perm->id }}" data-name="{{ $perm->name }}"
-                                        data-bs-toggle="tooltip" title="Hapus Izin">
-                                        <i class="ki-duotone ki-trash fs-5"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
-                                    </button>
+                            <td>
+                                <div class="d-flex flex-wrap align-items-center gap-1">
+                                    @if(!empty($mod['assigned_roles']))
+                                        @foreach($mod['assigned_roles'] as $rName)
+                                            @php
+                                                $rBadgeClass = in_array(strtolower($rName), ['master', 'admin']) ? 'badge-light-primary text-primary' : 'badge-light-info text-info';
+                                            @endphp
+                                            <span class="badge {{ $rBadgeClass }} fw-bold fs-9 px-2 py-0.5">{{ ucfirst($rName) }}</span>
+                                        @endforeach
+                                    @else
+                                        <span class="text-muted fs-8 fst-italic">Belum ditugaskan</span>
+                                    @endif
                                 </div>
+                            </td>
+                            <td>
+                                <span class="fw-bolder text-gray-800 fs-7">{{ $mod['total_permissions'] }} Akses</span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <button type="button" class="btn btn-icon btn-light-primary btn-sm btn-edit-module-permissions"
+                                    data-module-id="{{ $mod['id'] }}"
+                                    data-module-name="{{ $mod['name'] }}"
+                                    data-module-url="{{ $mod['url'] ?: $mod['name'] }}"
+                                    data-actions="{{ json_encode(array_map('strtolower', $mod['registered_actions'] ?? [])) }}"
+                                    data-roles="{{ json_encode(array_map('strtolower', $mod['assigned_roles'] ?? [])) }}"
+                                    data-bs-toggle="tooltip" title="Ubah Izin Modul">
+                                    <i class="ki-outline ki-pencil fs-5"></i>
+                                </button>
                             </td>
                         </tr>
                     @empty
-                        <tr>
+                        <tr id="empty_perm_row">
                             <td colspan="5" class="text-center py-8 text-muted">
-                                Belum ada izin (permissions) yang terdaftar.
+                                Belum ada modul yang terdaftar.
                             </td>
                         </tr>
                     @endforelse
@@ -121,4 +195,4 @@
     </div>
     <!--end::Card body-->
 </div>
-<!--end::Permissions Table Card-->
+<!--end::Module Permissions Table Card-->

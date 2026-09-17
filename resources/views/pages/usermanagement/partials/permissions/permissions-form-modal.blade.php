@@ -8,14 +8,14 @@
                 <input type="hidden" name="perm_id" id="perm_form_id" value="" />
 
                 <!--begin::Modal header-->
-                <div class="modal-header border-0 pb-0">
+                <div class="modal-header border-0 pb-0 justify-content-between">
                     <div>
                         <h3 class="fw-bolder text-gray-900 m-0" id="perm_modal_title">Tambah Izin Akses</h3>
                         <span class="text-muted fs-8">Buat izin akses baru untuk mengontrol wewenang fitur.</span>
                     </div>
 
                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="ki-duotone ki-cross fs-2"><span class="path1"></span><span class="path2"></span></i>
+                        <i class="ki-outline ki-cross fs-2"></i>
                     </div>
                 </div>
                 <!--end::Modal header-->
@@ -46,7 +46,7 @@
                     <button type="button" class="btn btn-light fw-bold" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary fw-bold" id="kt_btn_save_permission">
                         <span class="indicator-label">
-                            <i class="ki-duotone ki-check fs-5 me-1"><span class="path1"></span><span class="path2"></span></i>
+                            <i class="ki-outline ki-check fs-5 me-1"></i>
                             Simpan Izin
                         </span>
                         <span class="indicator-progress">

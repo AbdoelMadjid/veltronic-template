@@ -44,6 +44,10 @@
             return true;
         }
 
+        if (function_exists('menuCanReadUrl') && menuCanReadUrl((string) $route)) {
+            return true;
+        }
+
         $candidates = [$route];
         $normalizedDot = str_replace(['\\', '/'], '.', trim((string) $route));
         $normalizedDot = preg_replace('/\.+/', '.', $normalizedDot) ?? $normalizedDot;
@@ -53,7 +57,22 @@
             $candidates[] = str_replace('.', '/', $normalizedDot);
         }
 
-        foreach (array_values(array_unique($candidates)) as $candidate) {
+        $allCandidates = [];
+        foreach ($candidates as $c) {
+            $c = trim((string) $c, '/.');
+            if ($c === '') {
+                continue;
+            }
+            $allCandidates[] = $c;
+            $baseC = preg_replace('/(\.index|\/index)$/', '', $c);
+            if ($baseC !== '' && $baseC !== $c) {
+                $allCandidates[] = $baseC;
+                $allCandidates[] = str_replace('.', '/', $baseC);
+                $allCandidates[] = str_replace('/', '.', $baseC);
+            }
+        }
+
+        foreach (array_values(array_unique($allCandidates)) as $candidate) {
             if (
                 auth()
                     ->user()

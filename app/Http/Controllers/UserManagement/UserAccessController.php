@@ -65,6 +65,7 @@ class UserAccessController extends Controller
 
         $user = User::findOrFail($request->user_id);
         $user->syncRoles($request->roles);
+        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
         $roleBadges = $user->roles->map(function ($r) {
             return [
@@ -90,8 +91,22 @@ class UserAccessController extends Controller
      */
     public function getUserPermissions(User $user): JsonResponse
     {
+        $user->load(['roles.permissions', 'permissions']);
+
         $directPermissions = $user->getDirectPermissions()->pluck('name')->toArray();
-        $rolePermissions = $user->getPermissionsViaRoles()->pluck('name')->unique()->toArray();
+        $inheritedMap = [];
+
+        foreach ($user->roles as $role) {
+            $roleLabel = $role->display_name ?? ucwords(str_replace(['_', '-'], ' ', $role->name));
+            foreach ($role->permissions as $perm) {
+                if (!isset($inheritedMap[$perm->name])) {
+                    $inheritedMap[$perm->name] = [];
+                }
+                $inheritedMap[$perm->name][] = $roleLabel;
+            }
+        }
+
+        $rolePermissions = array_keys($inheritedMap);
         $userRoles = $user->roles->pluck('name')->toArray();
 
         return response()->json([
@@ -104,6 +119,7 @@ class UserAccessController extends Controller
             ],
             'direct_permissions' => $directPermissions,
             'role_permissions' => $rolePermissions,
+            'inherited_map' => $inheritedMap,
         ]);
     }
 
@@ -119,6 +135,7 @@ class UserAccessController extends Controller
 
         $permissions = $request->input('permissions', []);
         $user->syncPermissions($permissions);
+        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
         return response()->json([
             'success' => true,

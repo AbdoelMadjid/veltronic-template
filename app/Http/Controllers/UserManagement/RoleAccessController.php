@@ -53,6 +53,7 @@ class RoleAccessController extends Controller
         $permissions = $request->input('permissions', []);
 
         $role->syncPermissions($permissions);
+        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
         return response()->json([
             'success' => true,

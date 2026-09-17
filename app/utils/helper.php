@@ -11,6 +11,15 @@ if (!function_exists('menuCanReadUrl')) {
             return false;
         }
 
+        $user = auth()->user();
+        if (
+            (method_exists($user, 'isMasterOrAdmin') && $user->isMasterOrAdmin()) ||
+            (method_exists($user, 'hasAnyRole') && $user->hasAnyRole(['master', 'admin'])) ||
+            in_array($user->role ?? '', ['master', 'admin'])
+        ) {
+            return true;
+        }
+
         $keys = [$url];
         $normalizedPath = menuNormalizePath($url);
         if ($normalizedPath !== '') {
@@ -24,8 +33,23 @@ if (!function_exists('menuCanReadUrl')) {
             }
         }
 
-        foreach (array_values(array_unique($keys)) as $key) {
-            if (auth()->user()->can("read {$key}")) {
+        $allKeys = [];
+        foreach ($keys as $k) {
+            $k = trim((string) $k, '/.');
+            if ($k === '') {
+                continue;
+            }
+            $allKeys[] = $k;
+            $baseK = preg_replace('/(\.index|\/index)$/', '', $k);
+            if ($baseK !== '' && $baseK !== $k) {
+                $allKeys[] = $baseK;
+                $allKeys[] = str_replace('.', '/', $baseK);
+                $allKeys[] = str_replace('/', '.', $baseK);
+            }
+        }
+
+        foreach (array_values(array_unique($allKeys)) as $key) {
+            if ($user->can("read {$key}")) {
                 return true;
             }
         }

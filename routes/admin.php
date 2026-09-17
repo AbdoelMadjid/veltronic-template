@@ -69,6 +69,15 @@ Route::middleware(['auth'])->group(function () {
         Route::post('akses-user/{user}/direct-permissions', [UserAccessController::class, 'updateDirectPermissions'])->name('akses-user.direct-permissions');
     });
 
+    // Alias URL Bahasa Indonesia (/manajemenpengguna/*)
+    Route::prefix('manajemenpengguna')->group(function () {
+        Route::get('permissions', [PermissionController::class, 'index']);
+        Route::get('roles', [RoleController::class, 'index']);
+        Route::get('akses-role', [RoleAccessController::class, 'index']);
+        Route::get('akses-user', [UserAccessController::class, 'index']);
+        Route::get('users', [UserController::class, 'index']);
+    });
+
     // Profil Pengguna (Identitas Diri, Ganti Password, Konfigurasi, Riwayat)
     Route::prefix('profil')->name('profil.')->group(function () {
         Route::get('/profil-pengguna', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'index'])->name('profil-pengguna');

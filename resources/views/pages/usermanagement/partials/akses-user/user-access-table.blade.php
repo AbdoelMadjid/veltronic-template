@@ -1,4 +1,26 @@
-<div class="card card-flush shadow-sm">
+<!--begin::Header Banner-->
+<div class="card card-flush shadow-sm border-0 mb-6">
+    <div class="card-body p-6 d-flex flex-wrap align-items-center justify-content-between gap-4">
+        <div class="d-flex align-items-center">
+            <div class="symbol symbol-45px symbol-circle bg-light-primary me-4 d-flex align-items-center justify-content-center">
+                <i class="ki-outline ki-security-user text-primary fs-2"></i>
+            </div>
+            <div>
+                <h2 class="fw-bolder text-gray-900 m-0 fs-3">Manajemen Hak Akses Pengguna (User Access)</h2>
+                <span class="text-muted fs-7">Kelola penetapan peran dan konfigurasi izin perorangan (direct permissions) untuk setiap pengguna sistem.</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <span class="badge badge-light-primary fs-7 fw-bold px-3 py-2">
+                <i class="ki-outline ki-profile-user text-primary fs-6 me-1"></i> Total: {{ $totalUsers ?? (isset($users) ? $users->total() : 0) }} Pengguna
+            </span>
+        </div>
+    </div>
+</div>
+<!--end::Header Banner-->
+
+<!--begin::Table Card-->
+<div class="card card-flush shadow-sm border-0">
     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
         <div class="card-title">
             <div class="d-flex align-items-center position-relative my-1">
@@ -37,19 +59,12 @@
                     @forelse($users as $user)
                         <tr id="user-access-row-{{ $user->id }}">
                             <td class="d-flex align-items-center">
-                                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                <div class="symbol symbol-50px me-3">
                                     @if(!empty($user->avatar))
-                                        <div class="symbol-label">
-                                            <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}" class="w-100" />
-                                        </div>
+                                        <div class="image-input-wrapper w-50px h-50px rounded-3" style="{{ user_avatar_style($user) }}"></div>
                                     @else
-                                        @php
-                                            $stateColors = ['success', 'info', 'primary', 'warning', 'danger'];
-                                            $color = $stateColors[$user->id % count($stateColors)];
-                                            $initial = strtoupper(substr($user->name, 0, 1));
-                                        @endphp
-                                        <div class="symbol-label fs-3 bg-light-{{ $color }} text-{{ $color }}">
-                                            {{ $initial }}
+                                        <div class="symbol-label fs-3 bg-light-primary text-primary fw-bold rounded-3">
+                                            {{ $user->initial }}
                                         </div>
                                     @endif
                                 </div>

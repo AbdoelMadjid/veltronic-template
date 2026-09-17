@@ -1,3 +1,24 @@
+<!--begin::Header Banner-->
+<div class="card card-flush shadow-sm border-0 mb-6">
+    <div class="card-body p-6 d-flex flex-wrap align-items-center justify-content-between gap-4">
+        <div class="d-flex align-items-center">
+            <div class="symbol symbol-45px symbol-circle bg-light-primary me-4 d-flex align-items-center justify-content-center">
+                <i class="ki-outline ki-shield-tick text-primary fs-2"></i>
+            </div>
+            <div>
+                <h2 class="fw-bolder text-gray-900 m-0 fs-3">Manajemen Peran & Wewenang (Roles)</h2>
+                <span class="text-muted fs-7">Kelola kelompok peran pengguna sistem dan konfigurasi matriks hak akses CRUD.</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <button type="button" class="btn btn-primary btn-sm fw-bold rounded-pill px-4" id="kt_btn_add_role_banner">
+                <i class="ki-outline ki-plus fs-4 me-1"></i> Tambah Peran Baru
+            </button>
+        </div>
+    </div>
+</div>
+<!--end::Header Banner-->
+
 <!--begin::Roles Cards Grid-->
 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-6 g-xl-9" id="kt_roles_cards_grid">
     @foreach($roles as $role)
@@ -65,17 +86,17 @@
                     @if($role->users->isNotEmpty())
                         <div class="symbol-group symbol-hover mb-4">
                             @foreach($role->users as $u)
-                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="{{ $u->name }}">
-                                    @if($u->avatar_url)
-                                        <img src="{{ $u->avatar_url }}" alt="{{ $u->name }}" />
+                                <div class="symbol symbol-35px" data-bs-toggle="tooltip" title="{{ $u->name }}">
+                                    @if($u->avatar)
+                                        <div class="image-input-wrapper w-35px h-35px rounded-3" style="{{ user_avatar_style($u) }}"></div>
                                     @else
-                                        <span class="symbol-label bg-light-primary text-primary fw-bold">{{ strtoupper(substr($u->name, 0, 1)) }}</span>
+                                        <span class="symbol-label bg-light-primary text-primary fw-bold rounded-3">{{ $u->initial }}</span>
                                     @endif
                                 </div>
                             @endforeach
                             @if($role->users_count > 5)
-                                <a href="javascript:void(0)" class="symbol symbol-35px symbol-circle btn-view-role" data-id="{{ $role->id }}">
-                                    <span class="symbol-label bg-light-dark text-gray-800 fs-8 fw-bold">+{{ $role->users_count - 5 }}</span>
+                                <a href="javascript:void(0)" class="symbol symbol-35px btn-view-role" data-id="{{ $role->id }}">
+                                    <span class="symbol-label bg-light-dark text-gray-800 fs-8 fw-bold rounded-3">+{{ $role->users_count - 5 }}</span>
                                 </a>
                             @endif
                         </div>
@@ -86,7 +107,12 @@
 
                 <!--begin::Card footer-->
                 <div class="card-footer d-flex align-items-center justify-content-between pt-0 pb-6 border-0">
-                    <button type="button" class="btn btn-light-primary btn-sm fw-bold btn-view-role" data-id="{{ $role->id }}"
+                    <button type="button" class="btn btn-light-primary btn-sm fw-bold btn-view-role" 
+                        data-id="{{ $role->id }}"
+                        data-name="{{ $roleDisplayName }}"
+                        data-is-protected="{{ $isProtected ? '1' : '0' }}"
+                        data-users-count="{{ $role->users_count }}"
+                        data-perms-count="{{ $role->permissions_count }}"
                         data-bs-toggle="tooltip" title="Lihat Anggota & Seluruh Izin">
                         Lihat Rincian
                     </button>
@@ -112,21 +138,13 @@
         <!--end::Col-->
     @endforeach
 
-    <!--begin::Add new Role Card-->
+    <!--begin::Add new Role Card (Clickable Clean Widget)-->
     <div class="col-md-4">
         <!--begin::Card-->
-        <div class="card h-md-100 border-2 border-dashed border-primary border-opacity-50 bg-light-primary d-flex flex-column justify-content-center align-items-center p-8 text-center cursor-pointer"
-            id="kt_btn_add_new_role" data-bs-toggle="tooltip" title="Buat kelompok wewenang peran baru">
-            <div class="symbol symbol-60px mb-4">
-                <span class="symbol-label bg-primary text-white">
-                    <i class="ki-duotone ki-plus fs-1 text-white"></i>
-                </span>
-            </div>
-            <h4 class="fw-bolder text-gray-900 mb-1">Tambah Peran Baru</h4>
-            <span class="text-muted fs-7 mb-4">Buat role baru dan atur izin fitur sesuai kebutuhan wewenang organisasi.</span>
-            <button type="button" class="btn btn-primary btn-sm fw-bold">
-                Buat Peran
-            </button>
+        <div class="card h-md-100 min-h-250px border-2 border-dashed border-primary border-opacity-40 bg-light-primary bg-opacity-20 bg-hover-light-primary border-hover-primary d-flex flex-column justify-content-center align-items-center p-8 text-center cursor-pointer shadow-none shadow-hover transition-all"
+            id="kt_btn_add_new_role" data-bs-toggle="tooltip" title="Klik untuk membuat peran baru">
+            <h4 class="fw-bolder text-gray-900 fs-4 mb-2">Tambah Peran Baru</h4>
+            <span class="text-muted fs-7 max-w-250px">Klik area ini untuk membuat peran wewenang baru dan menentukan hak akses modul sistem.</span>
         </div>
         <!--end::Card-->
     </div>

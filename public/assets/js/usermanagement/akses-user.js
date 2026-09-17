@@ -154,7 +154,13 @@ var KTAksesUser = function () {
                 document.getElementById('direct_perm_user_name_display').textContent = userName;
                 document.getElementById('direct_perm_user_roles_display').textContent = 'Memuat...';
 
-                // Reset semua checkbox matrix
+                // Reset semua checkbox matrix & hapus badge inherited lama
+                document.querySelectorAll('#user_direct_matrix_table .inherited-role-badge').forEach(function (el) {
+                    el.remove();
+                });
+                document.querySelectorAll('#user_direct_matrix_table .form-check').forEach(function (fc) {
+                    fc.classList.remove('d-none');
+                });
                 document.querySelectorAll('#user_direct_matrix_table .matrix-perm-cb').forEach(function (cb) {
                     cb.checked = false;
                 });
@@ -173,16 +179,52 @@ var KTAksesUser = function () {
                         var rolesText = (data.user.roles || []).join(', ') || 'Tanpa Peran';
                         document.getElementById('direct_perm_user_roles_display').textContent = rolesText;
 
-                        // Centang direct permissions
                         var directPerms = data.direct_permissions || [];
+                        var rolePerms = data.role_permissions || [];
+                        var inheritedMap = data.inherited_map || {};
+
+                        // Render status checkbox dan badge inherited peran
                         document.querySelectorAll('#user_direct_matrix_table .matrix-perm-cb').forEach(function (cb) {
-                            if (directPerms.includes(cb.value)) {
-                                cb.checked = true;
+                            var permVal = cb.value;
+                            var isDirect = directPerms.includes(permVal);
+                            var isInherited = rolePerms.includes(permVal);
+
+                            var parentWrapper = cb.closest('.form-check');
+                            var cellContainer = cb.closest('td');
+
+                            if (isInherited && parentWrapper && cellContainer) {
+                                // Sembunyikan checkbox dan tampilkan badge 'Peran' yang rapi dan elegan
+                                parentWrapper.classList.add('d-none');
+                                cb.checked = false; // direct checked false karena sudah dicover peran
+
+                                var roleSources = (inheritedMap[permVal] || []).join(', ') || 'Peran';
+                                var badge = document.createElement('span');
+                                badge.className = 'badge badge-light-primary fw-bold fs-9 py-1 px-2 d-inline-flex align-items-center inherited-role-badge';
+                                badge.setAttribute('data-bs-toggle', 'tooltip');
+                                badge.setAttribute('data-bs-placement', 'top');
+                                badge.setAttribute('title', 'Sudah aktif otomatis dari peran: ' + roleSources);
+                                badge.innerHTML = '<i class="ki-outline ki-shield-tick text-primary fs-8 me-1"></i>Peran';
+
+                                var flexWrapper = cellContainer.querySelector('.d-flex.justify-content-center') || cellContainer;
+                                flexWrapper.appendChild(badge);
+                            } else {
+                                if (parentWrapper) {
+                                    parentWrapper.classList.remove('d-none');
+                                }
+                                cb.checked = isDirect;
                             }
                         });
 
                         if (window.KTCRUDMatrixHelper) {
                             window.KTCRUDMatrixHelper.syncRowCheckStates('#user_direct_matrix_table');
+                        }
+
+                        // Re-inisialisasi Bootstrap Tooltip
+                        if (window.bootstrap && bootstrap.Tooltip) {
+                            var tooltips = [].slice.call(document.querySelectorAll('#user_direct_matrix_table [data-bs-toggle="tooltip"]'));
+                            tooltips.map(function (el) {
+                                return new bootstrap.Tooltip(el);
+                            });
                         }
 
                         directPermModal.show();

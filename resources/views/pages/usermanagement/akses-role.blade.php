@@ -3,17 +3,18 @@
 @section('title', 'Matriks Hak Akses Peran')
 
 @section('toolbar')
-    @include('layouts.partials._toolbar')
+    @include('layouts.partials._toolbar', [
+        'action' => view()->make('layouts.partials._action-petunjuk-button', [
+            'targetModal' => '#kt_modal_akses_role_petunjuk',
+            'title' => 'Petunjuk Operasional Akses Role'
+        ])
+    ])
 @endsection
 
 @section('content')
 <div id="kt_app_content" class="app-content flex-column-fluid">
     <!--begin::Content container-->
     <div id="kt_app_content_container" class="app-container container-fluid">
-
-        <!--begin::Petunjuk Operasional Akses Role-->
-        @include('pages.usermanagement.partials.akses-role.akses-role-petunjuk')
-        <!--end::Petunjuk Operasional Akses Role-->
 
         <!--begin::Matriks Hak Akses Table-->
         @include('pages.usermanagement.partials.akses-role.matrix-table')
@@ -22,6 +23,10 @@
     </div>
     <!--end::Content container-->
 </div>
+
+<!--begin::Modals-->
+@include('pages.usermanagement.partials.akses-role.akses-role-petunjuk')
+<!--end::Modals-->
 @endsection
 
 @section('scripts')
@@ -34,6 +39,6 @@
     };
     window.AKSES_ROLE_MATRIX = @json($matrix);
 </script>
-<script src="{{ asset('assets/js/usermanagement/crud-matrix-helper.js') }}"></script>
-<script src="{{ asset('assets/js/usermanagement/akses-role.js') }}"></script>
+<script src="{{ asset('assets/js/usermanagement/crud-matrix-helper.js') }}?v={{ filemtime(public_path('assets/js/usermanagement/crud-matrix-helper.js')) }}"></script>
+<script src="{{ asset('assets/js/usermanagement/akses-role.js') }}?v={{ filemtime(public_path('assets/js/usermanagement/akses-role.js')) }}"></script>
 @endsection

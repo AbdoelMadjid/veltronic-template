@@ -5,6 +5,25 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.24.0] - 2026-09-17
+
+### Added & Enhanced
+- **Spatie Laravel Permission & Sidebar Access Engine**:
+  - **Sidebar Permission Resolution (`helper.php` & `_menu-item.blade.php`)**: Enhanced `menuCanReadUrl()` and `$canReadRoute()` to intelligently match slash (`read appsupport/menu`), dot (`read appsupport.menu`), and resource route variants (`.index`), ensuring direct permissions on child routes render their parent menus correctly.
+  - **Menu Controller Permission Synchronization**: Unified permission generation in `MenuController@syncPermissions` to standard slash format matching `MenuSeeder`.
+  - **Automatic Permission Cache Invalidation**: Integrated `PermissionRegistrar::forgetCachedPermissions()` across `MenuController`, `RoleAccessController`, and `UserAccessController` for zero-stale instant updates.
+- **Inherited vs Direct Permissions Visual Differentiation (`usermanagement/akses-user`)**:
+  - **Visual Indicator**: Replaced floating overlay indicators with symmetrical, centered role badges (`[ 🛡️ Peran ]` with tooltips indicating granting roles) for permissions inherited via roles.
+  - **Direct Override Matrix**: Left non-role checkboxes cleanly accessible for direct user permission overrides.
+  - **Refined Modal Header**: Upgraded direct permissions modal header to an elegant, dark-mode adaptive `bg-light-subtle rounded-3` card with clear status legends.
+- **Standar Header Banner, Toolbar Petunjuk, & Tema Dinamis (Rule #7)**:
+  - Formally established Rule #7 in `AGENTS.md` and `.agents/rules/module-header-banner-and-toolbar-standards.md`.
+  - Standardized standalone Header Banners with right-aligned action buttons and toolbar-based operational guidance buttons across `roles`, `permissions`, `akses-role`, and `akses-user`.
+- **Akses Role Page Full-Scroll Optimization**:
+  - Added `scrollable` parameter to `crud-matrix-table.blade.php` and disabled internal scroll box on `usermanagement/akses-role` for seamless browser page scrolling.
+
+---
+
 ## [v1.23.0] - 2026-09-17
 
 ### Added & Enhanced

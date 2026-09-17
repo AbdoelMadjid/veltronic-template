@@ -12,42 +12,63 @@ use Illuminate\Support\Str;
 class PermissionController extends Controller
 {
     /**
-     * Tampilan utama daftar Permissions
+     * Tampilan utama daftar Permissions (Tampilan Modul & Fitur Hirarkis)
      */
     public function index()
     {
-        $permissions = Permission::withCount('roles')
-            ->with(['roles' => function ($q) {
-                $q->limit(4);
-            }])
-            ->get();
-
+        $permissions = Permission::with('roles')->get();
         $totalPermissions = $permissions->count();
-        $totalRoles = Role::count();
+        $roles = Role::all();
 
-        // Kelompokkan nama modul unik untuk filter
-        $modules = [];
-        foreach ($permissions as $p) {
-            $parts = explode('.', $p->name);
-            if (count($parts) > 1) {
-                array_pop($parts);
-                $mod = implode('.', $parts);
-            } else {
-                $mod = 'general';
+        // Ambil hierarki modul dari PermissionMatrixService
+        $matrixTree = \App\Services\UserManagement\PermissionMatrixService::getMatrixTree();
+        
+        $totalModules = count($matrixTree);
+        $unassignedModulesCount = 0;
+
+        // Proses setiap modul agar memiliki list actions badge dan list assigned roles
+        $modulesTree = [];
+        foreach ($matrixTree as $mod) {
+            $matchedPerms = $permissions->filter(function ($p) use ($mod) {
+                return in_array($p->name, $mod['all_permissions'] ?? []);
+            });
+
+            $assignedRoleNames = $matchedPerms->flatMap(function ($p) {
+                return $p->roles->pluck('name');
+            })->unique()->values()->all();
+
+            $mod['assigned_roles'] = $assignedRoleNames;
+
+            // List actions yang tersedia
+            $actions = [];
+            if (!empty($mod['read'])) $actions[] = 'READ';
+            if (!empty($mod['create'])) $actions[] = 'CREATE';
+            if (!empty($mod['update'])) $actions[] = 'UPDATE';
+            if (!empty($mod['delete'])) $actions[] = 'DELETE';
+            foreach ($mod['other'] ?? [] as $op) {
+                $actions[] = strtoupper($op['action_label'] ?? 'OTHER');
             }
-            $modules[$mod] = ucwords(str_replace(['_', '-'], ' ', $mod));
+            $mod['registered_actions'] = $actions;
+
+            if (empty($assignedRoleNames)) {
+                $unassignedModulesCount++;
+            }
+
+            $modulesTree[] = $mod;
         }
 
         return view('pages.usermanagement.permissions', compact(
             'permissions',
             'totalPermissions',
-            'totalRoles',
-            'modules'
+            'totalModules',
+            'unassignedModulesCount',
+            'modulesTree',
+            'roles'
         ));
     }
 
     /**
-     * Simpan Permission Baru
+     * Simpan Permission Baru (Single)
      */
     public function store(Request $request): JsonResponse
     {
@@ -58,7 +79,7 @@ class PermissionController extends Controller
             'roles.*' => 'string|exists:roles,name',
         ]);
 
-        $permName = strtolower(trim($request->input('name')));
+        $permName = trim($request->input('name'));
         $guardName = $request->input('guard_name', 'web') ?: 'web';
 
         $permission = Permission::create([
@@ -66,8 +87,11 @@ class PermissionController extends Controller
             'guard_name' => $guardName,
         ]);
 
-        if ($request->has('roles')) {
-            $permission->syncRoles($request->input('roles'));
+        if ($request->has('roles') && !empty($request->input('roles'))) {
+            $roles = Role::whereIn('name', $request->input('roles'))->get();
+            foreach ($roles as $r) {
+                $r->givePermissionTo($permission);
+            }
         }
 
         $permission->loadCount('roles');
@@ -105,7 +129,7 @@ class PermissionController extends Controller
             'roles.*' => 'string|exists:roles,name',
         ]);
 
-        $permName = strtolower(trim($request->input('name')));
+        $permName = trim($request->input('name'));
         $permission->update(['name' => $permName]);
 
         if ($request->has('roles')) {
@@ -137,42 +161,72 @@ class PermissionController extends Controller
     }
 
     /**
-     * Generate Otomatis Izin CRUD untuk Modul Tertentu
+     * Generate Otomatis Izin CRUD untuk Modul Tertentu (Batch CRUD & Edit Modul)
      */
     public function generateModulePermissions(Request $request): JsonResponse
     {
         $request->validate([
-            'module_prefix' => 'required|string|max:50',
+            'module_prefix' => 'required|string|max:100',
             'actions' => 'required|array|min:1',
-            'actions.*' => 'string|in:create,read,update,delete,sort,export,import',
+            'actions.*' => 'string',
+            'roles' => 'nullable|array',
+            'roles.*' => 'string|exists:roles,name',
             'assign_to_master' => 'nullable|boolean',
         ]);
 
-        $prefix = Str::slug($request->input('module_prefix'), '.');
+        $prefix = trim($request->input('module_prefix'));
         $actions = $request->input('actions', []);
-        $assignToMaster = $request->boolean('assign_to_master', true);
+        $selectedRoles = $request->input('roles', []);
 
-        $masterRole = Role::where('name', 'master')->first();
-        $createdPerms = [];
+        $allRoles = Role::all();
+        $rolesToAssign = !empty($selectedRoles) ? Role::whereIn('name', $selectedRoles)->get() : collect();
+
+        if ($request->boolean('assign_to_master', false) && !$rolesToAssign->contains('name', 'master')) {
+            $masterRole = Role::where('name', 'master')->first();
+            if ($masterRole) $rolesToAssign->push($masterRole);
+        }
+
+        $allPossibleActions = ['create', 'read', 'update', 'delete'];
+        $createdPermObjects = [];
 
         foreach ($actions as $act) {
-            $permName = "{$prefix}.{$act}";
+            $actLower = strtolower($act);
+            $permName = "{$actLower} {$prefix}";
+
             $perm = Permission::firstOrCreate([
                 'name' => $permName,
                 'guard_name' => 'web',
             ]);
 
-            if ($assignToMaster && $masterRole) {
-                $masterRole->givePermissionTo($perm);
+            // Sinkronisasi roles pada permission ini
+            foreach ($allRoles as $role) {
+                if ($rolesToAssign->contains('name', $role->name)) {
+                    $role->givePermissionTo($perm);
+                } else {
+                    $role->revokePermissionTo($perm);
+                }
             }
 
-            $createdPerms[] = $permName;
+            $perm->load('roles');
+            $createdPermObjects[] = $perm;
+        }
+
+        // Cabut role dari aksi CRUD yang tidak dipilih jika permission lama pernah ada
+        $unselectedActions = array_diff($allPossibleActions, array_map('strtolower', $actions));
+        foreach ($unselectedActions as $unAct) {
+            $unPermName = "{$unAct} {$prefix}";
+            $unPerm = Permission::where('name', $unPermName)->first();
+            if ($unPerm) {
+                foreach ($allRoles as $role) {
+                    $role->revokePermissionTo($unPerm);
+                }
+            }
         }
 
         return response()->json([
             'success' => true,
-            'message' => count($createdPerms) . " izin akses untuk modul `{$prefix}` berhasil digenerate.",
-            'permissions' => $createdPerms,
+            'message' => count($createdPermObjects) . " izin akses untuk modul `{$prefix}` berhasil diperbarui dan disinkronkan.",
+            'permissions' => $createdPermObjects,
         ]);
     }
 }

@@ -12,7 +12,7 @@
 
             <!--begin::Actions-->
             @isset($action)
-                {{ $action }}
+                {!! $action !!}
             @else
                 <!--begin::Actions-->
                 {{-- @include('layouts.partials._action-filter') --}}

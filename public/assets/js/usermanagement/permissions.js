@@ -1,5 +1,5 @@
 /**
- * Modul Manajemen Izin Akses (Permissions)
+ * Modul Manajemen Izin Akses (Permissions) - Hierarchical Module Layout & Unified Modal
  * Zero-Reload Realtime AJAX & Metronic Interactive Components
  */
 "use strict";
@@ -16,38 +16,48 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     initTooltips();
 
-    const permFormModalEl = document.getElementById('kt_modal_permission_form');
-    const permFormModal = permFormModalEl ? new bootstrap.Modal(permFormModalEl) : null;
+    const permUnifiedModalEl = document.getElementById('kt_modal_permission_generate');
+    const permUnifiedModal = permUnifiedModalEl ? new bootstrap.Modal(permUnifiedModalEl) : null;
 
-    const permGenModalEl = document.getElementById('kt_modal_permission_generate');
-    const permGenModal = permGenModalEl ? new bootstrap.Modal(permGenModalEl) : null;
+    const modalMainTitle = document.getElementById('unified_modal_main_title');
+    const modalSubTitle = document.getElementById('unified_modal_sub_title');
+    const modalNavTabs = document.getElementById('perm_modal_nav_tabs');
 
-    const permForm = document.getElementById('kt_form_permission');
-    const btnSavePerm = document.getElementById('kt_btn_save_permission');
-    const inputPermName = document.getElementById('perm_input_name');
-    const formPermMethod = document.getElementById('perm_form_method');
-    const formPermId = document.getElementById('perm_form_id');
-    const permModalTitle = document.getElementById('perm_modal_title');
+    const tabBtnBatch = document.getElementById('tab_btn_batch_crud');
+    const tabBtnSingle = document.getElementById('tab_btn_single_perm');
+
+    const formBatch = document.getElementById('kt_form_generate_permissions');
+    const formSingle = document.getElementById('kt_form_permission');
+    const btnSubmitBatch = document.getElementById('kt_btn_submit_generate_perm');
+    const btnSubmitSingle = document.getElementById('kt_btn_save_permission');
+    const genInputPrefix = document.getElementById('gen_input_prefix');
+    const btnBatchText = document.getElementById('btn_batch_text');
 
     // =========================================================================
-    // 1. FILTER & PENCARIAN
+    // 1. FILTER & PENCARIAN (Cari Modul / Fitur & Filter Role)
     // =========================================================================
     const searchInput = document.getElementById('kt_filter_permission_search');
-    const moduleSelect = document.getElementById('kt_filter_permission_module');
+    const roleSelect = document.getElementById('kt_filter_permission_role');
 
-    const filterPermissions = () => {
+    const filterModuleRows = () => {
         const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
-        const selectedMod = moduleSelect ? moduleSelect.value : 'all';
-        const rows = document.querySelectorAll('#kt_permissions_tbody tr.perm-row-item');
+        const selectedRole = (roleSelect ? roleSelect.value : 'all').toLowerCase();
+        const rows = document.querySelectorAll('#kt_permissions_tbody tr.module-perm-row');
 
         rows.forEach(row => {
-            const permName = (row.getAttribute('data-perm-name') || '').toLowerCase();
-            const modKey = row.getAttribute('data-mod-key') || 'general';
+            const modName = (row.getAttribute('data-module-name') || '').toLowerCase();
+            const modUrl = (row.getAttribute('data-module-url') || '').toLowerCase();
+            let rowRoles = [];
+            try {
+                rowRoles = JSON.parse(row.getAttribute('data-roles') || '[]');
+            } catch (e) {
+                rowRoles = [];
+            }
 
-            let matchesSearch = permName.includes(query);
-            let matchesMod = (selectedMod === 'all' || modKey === selectedMod);
+            const matchesSearch = modName.includes(query) || modUrl.includes(query) || query === '';
+            const matchesRole = (selectedRole === 'all') || rowRoles.includes(selectedRole);
 
-            if (matchesSearch && matchesMod) {
+            if (matchesSearch && matchesRole) {
                 row.style.display = '';
             } else {
                 row.style.display = 'none';
@@ -56,146 +66,268 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     if (searchInput) {
-        searchInput.addEventListener('input', filterPermissions);
+        searchInput.addEventListener('input', filterModuleRows);
     }
-    if (moduleSelect) {
-        $(moduleSelect).on('change', filterPermissions);
-    }
-
-    // =========================================================================
-    // 2. MODAL TAMBAH PERMISSION MANUAL
-    // =========================================================================
-    const btnAddPerm = document.getElementById('kt_btn_add_permission');
-    if (btnAddPerm && permFormModal) {
-        btnAddPerm.addEventListener('click', function () {
-            if (permForm) permForm.reset();
-            if (formPermMethod) formPermMethod.value = 'POST';
-            if (formPermId) formPermId.value = '';
-            if (permForm) permForm.action = routes.store;
-            if (permModalTitle) permModalTitle.textContent = 'Tambah Izin Akses';
-            permFormModal.show();
-        });
+    if (roleSelect) {
+        $(roleSelect).on('change', filterModuleRows);
     }
 
     // =========================================================================
-    // 3. MODAL GENERATE CRUD MODUL
+    // 2. DINAMIKA JUMLAH AKSI CRUD & ROLE SELECTION
     // =========================================================================
-    const btnOpenGen = document.getElementById('kt_btn_open_generate_modal');
-    const formGen = document.getElementById('kt_form_generate_permissions');
-    const btnSubmitGen = document.getElementById('kt_btn_submit_generate_perm');
+    let isCurrentEditMode = false;
 
-    if (btnOpenGen && permGenModal) {
-        btnOpenGen.addEventListener('click', function () {
-            if (formGen) formGen.reset();
-            permGenModal.show();
-        });
-    }
+    const updateBatchBtnText = (isEdit = false) => {
+        isCurrentEditMode = isEdit;
+        const checkedCount = document.querySelectorAll('.batch-action-cb:checked').length;
+        if (btnBatchText) {
+            btnBatchText.textContent = isEdit 
+                ? `Simpan Perubahan (${checkedCount} Akses CRUD)` 
+                : `Simpan ${checkedCount} Akses CRUD`;
+        }
+    };
 
-    if (formGen) {
-        formGen.addEventListener('submit', function (e) {
+    document.querySelectorAll('.batch-action-cb').forEach(cb => {
+        cb.addEventListener('change', () => updateBatchBtnText(isCurrentEditMode));
+    });
+
+    // Pilih Semua / Kosongkan Role di Batch CRUD
+    const btnBatchRoleAll = document.getElementById('btn_batch_role_all');
+    const btnBatchRoleNone = document.getElementById('btn_batch_role_none');
+
+    if (btnBatchRoleAll) {
+        btnBatchRoleAll.addEventListener('click', function (e) {
             e.preventDefault();
+            document.querySelectorAll('.batch-role-cb').forEach(cb => cb.checked = true);
+        });
+    }
+    if (btnBatchRoleNone) {
+        btnBatchRoleNone.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelectorAll('.batch-role-cb').forEach(cb => cb.checked = false);
+        });
+    }
 
-            if (btnSubmitGen) {
-                btnSubmitGen.setAttribute('data-kt-indicator', 'on');
-                btnSubmitGen.disabled = true;
-            }
+    // Pilih Semua / Kosongkan Role di Single Permission
+    const btnSingleRoleAll = document.getElementById('btn_single_role_all');
+    const btnSingleRoleNone = document.getElementById('btn_single_role_none');
 
-            const formData = new FormData(formGen);
+    if (btnSingleRoleAll) {
+        btnSingleRoleAll.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelectorAll('.single-role-cb').forEach(cb => cb.checked = true);
+        });
+    }
+    if (btnSingleRoleNone) {
+        btnSingleRoleNone.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelectorAll('.single-role-cb').forEach(cb => cb.checked = false);
+        });
+    }
 
-            fetch(formGen.action, {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
+    const dynamicCustomActionsWrapper = document.getElementById('dynamic_custom_actions_wrapper');
+    const btnAddCustomAction = document.getElementById('btn_add_custom_action');
+
+    // Tambah Checkbox Aksi Kustom Dinamis
+    const addDynamicActionCheckbox = (actionName, isChecked = true) => {
+        const cleanName = actionName.toLowerCase().trim();
+        if (!cleanName) return;
+
+        // Cek jika sudah ada
+        const existingCb = document.querySelector(`.batch-action-cb[value="${cleanName}"]`);
+        if (existingCb) {
+            existingCb.checked = isChecked;
+            updateBatchBtnText(isCurrentEditMode);
+            return;
+        }
+
+        const actionId = 'act_cb_' + cleanName.replace(/[^a-z0-9]/g, '_');
+        const div = document.createElement('div');
+        div.className = 'form-check form-check-custom form-check-solid dynamic-custom-action-item';
+        div.innerHTML = `
+            <input class="form-check-input batch-action-cb" type="checkbox" name="actions[]" value="${cleanName}" id="${actionId}" ${isChecked ? 'checked' : ''} />
+            <label class="form-check-label text-gray-800 fw-bold fs-7 cursor-pointer" for="${actionId}">
+                ${actionName.charAt(0).toUpperCase() + actionName.slice(1)}
+            </label>
+        `;
+
+        const inputCb = div.querySelector('input');
+        inputCb.addEventListener('change', () => updateBatchBtnText(isCurrentEditMode));
+
+        if (dynamicCustomActionsWrapper) {
+            dynamicCustomActionsWrapper.appendChild(div);
+        }
+        updateBatchBtnText(isCurrentEditMode);
+    };
+
+    if (btnAddCustomAction) {
+        btnAddCustomAction.addEventListener('click', function () {
+            Swal.fire({
+                title: 'Tambah Aksi Khusus / Kustom',
+                text: 'Masukkan nama aksi tambahan (contoh: export, import, approve, generate)',
+                input: 'text',
+                inputPlaceholder: 'Nama aksi (contoh: export)',
+                showCancelButton: true,
+                confirmButtonText: 'Tambahkan',
+                cancelButtonText: 'Batal',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-light'
                 },
-                body: formData
-            })
-            .then(async response => {
-                const data = await response.json();
-                if (btnSubmitGen) {
-                    btnSubmitGen.removeAttribute('data-kt-indicator');
-                    btnSubmitGen.disabled = false;
-                }
-
-                if (response.ok && data.success) {
-                    if (permGenModal) permGenModal.hide();
-
-                    Swal.fire({
-                        title: 'Generate Berhasil!',
-                        text: data.message,
-                        icon: 'success',
-                        buttonsStyling: false,
-                        confirmButtonText: 'OK',
-                        customClass: { confirmButton: 'btn btn-primary' }
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                } else {
-                    let errMsg = data.message || 'Terjadi kesalahan saat generate izin.';
-                    if (data.errors) {
-                        errMsg = Object.values(data.errors).flat().join('<br>');
+                inputValidator: (value) => {
+                    if (!value || !value.trim()) {
+                        return 'Nama aksi tidak boleh kosong!';
                     }
-                    Swal.fire({
-                        html: errMsg,
-                        icon: 'error',
-                        buttonsStyling: false,
-                        confirmButtonText: 'Tutup',
-                        customClass: { confirmButton: 'btn btn-primary' }
-                    });
                 }
-            })
-            .catch(err => {
-                if (btnSubmitGen) {
-                    btnSubmitGen.removeAttribute('data-kt-indicator');
-                    btnSubmitGen.disabled = false;
+            }).then((result) => {
+                if (result.isConfirmed && result.value) {
+                    addDynamicActionCheckbox(result.value, true);
                 }
-                Swal.fire({
-                    text: 'Gagal terhubung ke server: ' + err.message,
-                    icon: 'error',
-                    buttonsStyling: false,
-                    confirmButtonText: 'Tutup',
-                    customClass: { confirmButton: 'btn btn-primary' }
-                });
             });
         });
     }
 
     // =========================================================================
-    // 4. EDIT PERMISSION MANUAL
+    // 3. TRIGGER BUKA MODAL DARI BANNER & TABEL
     // =========================================================================
+    // Tombol Tambah Modul CRUD (Praktis)
+    const btnOpenBatch = document.getElementById('kt_btn_open_generate_modal');
+    if (btnOpenBatch && permUnifiedModal) {
+        btnOpenBatch.addEventListener('click', function () {
+            if (modalNavTabs) modalNavTabs.classList.remove('d-none');
+            if (modalMainTitle) modalMainTitle.innerHTML = '<i class="ki-outline ki-flash text-warning fs-3 me-2"></i>Tambah Permission Modul (Batch CRUD)';
+            if (modalSubTitle) modalSubTitle.textContent = 'Buat permission baru secara batch CRUD atau single manual';
+
+            if (formBatch) formBatch.reset();
+            if (genInputPrefix) genInputPrefix.value = '';
+            if (dynamicCustomActionsWrapper) dynamicCustomActionsWrapper.innerHTML = '';
+
+            // Default: create, read, update, delete tercentang; sort tidak tercentang saat tambah baru
+            document.querySelectorAll('.batch-action-cb').forEach(cb => {
+                if (['create', 'read', 'update', 'delete'].includes(cb.value)) {
+                    cb.checked = true;
+                } else {
+                    cb.checked = false;
+                }
+            });
+            document.querySelectorAll('.batch-role-cb').forEach(cb => cb.checked = false);
+            updateBatchBtnText(false);
+
+            if (tabBtnBatch) {
+                bootstrap.Tab.getOrCreateInstance(tabBtnBatch).show();
+            }
+            permUnifiedModal.show();
+        });
+    }
+
+    // Tombol Tambah Single Permission
+    const btnOpenSingle = document.getElementById('kt_btn_add_permission');
+    if (btnOpenSingle && permUnifiedModal) {
+        btnOpenSingle.addEventListener('click', function () {
+            if (modalNavTabs) modalNavTabs.classList.remove('d-none');
+            if (modalMainTitle) modalMainTitle.innerHTML = '<i class="ki-outline ki-key text-primary fs-3 me-2"></i>Tambah Single Permission (Kustom)';
+            if (modalSubTitle) modalSubTitle.textContent = 'Daftarkan 1 permission khusus secara mandiri ke dalam sistem';
+
+            if (formSingle) formSingle.reset();
+            document.querySelectorAll('.single-role-cb').forEach(cb => cb.checked = false);
+
+            if (tabBtnSingle) {
+                bootstrap.Tab.getOrCreateInstance(tabBtnSingle).show();
+            }
+            permUnifiedModal.show();
+        });
+    }
+
+    // Tombol Edit Pensil di Baris Modul (Populate Data Sesuai Modul)
     document.addEventListener('click', function (e) {
-        const btnEdit = e.target.closest('.btn-edit-permission');
-        if (btnEdit && permFormModal) {
-            const permId = btnEdit.getAttribute('data-id');
-            const permName = btnEdit.getAttribute('data-name');
-            if (!permId) return;
+        const btnEditMod = e.target.closest('.btn-edit-module-permissions');
+        if (btnEditMod && permUnifiedModal) {
+            const modName = btnEditMod.getAttribute('data-module-name') || '';
+            const modUrl = btnEditMod.getAttribute('data-module-url') || '';
+            let registeredActions = [];
+            let assignedRoles = [];
 
-            if (permForm) permForm.reset();
-            if (permModalTitle) permModalTitle.textContent = 'Ubah Nama Izin Akses';
-            if (formPermMethod) formPermMethod.value = 'PUT';
-            if (formPermId) formPermId.value = permId;
-            if (inputPermName) inputPermName.value = permName;
-            if (permForm) permForm.action = `${routes.base}/${permId}`;
+            try {
+                registeredActions = JSON.parse(btnEditMod.getAttribute('data-actions') || '[]');
+            } catch (err) {
+                registeredActions = [];
+            }
 
-            permFormModal.show();
+            try {
+                assignedRoles = JSON.parse(btnEditMod.getAttribute('data-roles') || '[]');
+            } catch (err) {
+                assignedRoles = [];
+            }
+
+            // Sembunyikan Nav Tabs saat mode Edit agar langsung fokus ke form konfigurasi modul
+            if (modalNavTabs) {
+                modalNavTabs.classList.add('d-none');
+            }
+
+            if (modalMainTitle) {
+                modalMainTitle.innerHTML = '<i class="ki-outline ki-pencil text-primary fs-3 me-2"></i>Ubah Izin Modul: <span class="text-primary font-monospace">' + (modUrl || modName) + '</span>';
+            }
+            if (modalSubTitle) {
+                modalSubTitle.textContent = 'Perbarui konfigurasi aksi CRUD dan penugasan peran untuk modul ini';
+            }
+
+            if (formBatch) formBatch.reset();
+            if (genInputPrefix) {
+                genInputPrefix.value = modUrl || modName;
+            }
+            if (dynamicCustomActionsWrapper) {
+                dynamicCustomActionsWrapper.innerHTML = '';
+            }
+
+            const standardActions = ['create', 'read', 'update', 'delete', 'sort'];
+
+            // Checklist aksi bawaan
+            document.querySelectorAll('.batch-action-cb').forEach(cb => {
+                if (registeredActions.length > 0) {
+                    cb.checked = registeredActions.includes(cb.value.toLowerCase());
+                } else {
+                    cb.checked = ['create', 'read', 'update', 'delete'].includes(cb.value.toLowerCase());
+                }
+            });
+
+            // Buat checkbox untuk aksi kustom non-standar yang terdaftar pada modul ini
+            registeredActions.forEach(act => {
+                const actLower = act.toLowerCase();
+                if (!standardActions.includes(actLower)) {
+                    addDynamicActionCheckbox(actLower, true);
+                }
+            });
+
+            // Checklist role yang saat ini ditugaskan
+            document.querySelectorAll('.batch-role-cb').forEach(cb => {
+                cb.checked = assignedRoles.includes(cb.value.toLowerCase());
+            });
+
+            updateBatchBtnText(true);
+
+            if (tabBtnBatch) {
+                bootstrap.Tab.getOrCreateInstance(tabBtnBatch).show();
+            }
+            permUnifiedModal.show();
         }
     });
 
     // =========================================================================
-    // 5. SUBMIT FORM PERMISSION (TAMBAH / UBAH)
+    // 4. SUBMIT FORM BATCH CRUD
     // =========================================================================
-    if (permForm) {
-        permForm.addEventListener('submit', function (e) {
+    if (formBatch) {
+        formBatch.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            if (btnSavePerm) {
-                btnSavePerm.setAttribute('data-kt-indicator', 'on');
-                btnSavePerm.disabled = true;
+            if (btnSubmitBatch) {
+                btnSubmitBatch.setAttribute('data-kt-indicator', 'on');
+                btnSubmitBatch.disabled = true;
             }
 
-            const formData = new FormData(permForm);
+            const formData = new FormData(formBatch);
 
-            fetch(permForm.action, {
+            fetch(formBatch.action, {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
@@ -205,19 +337,20 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(async response => {
                 const data = await response.json();
-                if (btnSavePerm) {
-                    btnSavePerm.removeAttribute('data-kt-indicator');
-                    btnSavePerm.disabled = false;
+                if (btnSubmitBatch) {
+                    btnSubmitBatch.removeAttribute('data-kt-indicator');
+                    btnSubmitBatch.disabled = false;
                 }
 
                 if (response.ok && data.success) {
-                    if (permFormModal) permFormModal.hide();
+                    if (permUnifiedModal) permUnifiedModal.hide();
 
                     Swal.fire({
+                        title: 'Berhasil!',
                         text: data.message,
                         icon: 'success',
                         buttonsStyling: false,
-                        confirmButtonText: 'OK',
+                        confirmButtonText: 'Selesai',
                         customClass: { confirmButton: 'btn btn-primary' }
                     }).then(() => {
                         window.location.reload();
@@ -237,9 +370,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(err => {
-                if (btnSavePerm) {
-                    btnSavePerm.removeAttribute('data-kt-indicator');
-                    btnSavePerm.disabled = false;
+                if (btnSubmitBatch) {
+                    btnSubmitBatch.removeAttribute('data-kt-indicator');
+                    btnSubmitBatch.disabled = false;
                 }
                 Swal.fire({
                     text: 'Gagal terhubung ke server: ' + err.message,
@@ -253,79 +386,74 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // =========================================================================
-    // 6. HAPUS PERMISSION
+    // 5. SUBMIT FORM SINGLE PERMISSION
     // =========================================================================
-    document.addEventListener('click', function (e) {
-        const btnDelete = e.target.closest('.btn-delete-permission');
-        if (btnDelete) {
-            const permId = btnDelete.getAttribute('data-id');
-            const permName = btnDelete.getAttribute('data-name');
-            if (!permId) return;
+    if (formSingle) {
+        formSingle.addEventListener('submit', function (e) {
+            e.preventDefault();
 
-            Swal.fire({
-                title: `Hapus Izin \`${permName}\`?`,
-                text: 'Izin ini akan dicabut dari seluruh peran yang memilikinya.',
-                icon: 'warning',
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: 'Ya, Hapus',
-                cancelButtonText: 'Batal',
-                customClass: {
-                    confirmButton: 'btn btn-danger',
-                    cancelButton: 'btn btn-light'
+            if (btnSubmitSingle) {
+                btnSubmitSingle.setAttribute('data-kt-indicator', 'on');
+                btnSubmitSingle.disabled = true;
+            }
+
+            const formData = new FormData(formSingle);
+
+            fetch(formSingle.action, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(async response => {
+                const data = await response.json();
+                if (btnSubmitSingle) {
+                    btnSubmitSingle.removeAttribute('data-kt-indicator');
+                    btnSubmitSingle.disabled = false;
                 }
-            }).then(result => {
-                if (result.isConfirmed) {
-                    btnDelete.disabled = true;
 
-                    fetch(`${routes.base}/${permId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': routes.csrfToken,
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: JSON.stringify({ _method: 'DELETE' })
-                    })
-                    .then(async response => {
-                        const data = await response.json();
-                        btnDelete.disabled = false;
+                if (response.ok && data.success) {
+                    if (permUnifiedModal) permUnifiedModal.hide();
 
-                        if (response.ok && data.success) {
-                            Swal.fire({
-                                text: data.message,
-                                icon: 'success',
-                                buttonsStyling: false,
-                                confirmButtonText: 'OK',
-                                customClass: { confirmButton: 'btn btn-primary' }
-                            }).then(() => {
-                                const tr = btnDelete.closest('tr');
-                                if (tr) tr.remove();
-                            });
-                        } else {
-                            Swal.fire({
-                                title: 'Gagal Menghapus',
-                                text: data.message || 'Izin gagal dihapus.',
-                                icon: 'error',
-                                buttonsStyling: false,
-                                confirmButtonText: 'Tutup',
-                                customClass: { confirmButton: 'btn btn-primary' }
-                            });
-                        }
-                    })
-                    .catch(err => {
-                        btnDelete.disabled = false;
-                        Swal.fire({
-                            text: 'Gagal menghubungi server: ' + err.message,
-                            icon: 'error',
-                            buttonsStyling: false,
-                            confirmButtonText: 'Tutup',
-                            customClass: { confirmButton: 'btn btn-primary' }
-                        });
+                    Swal.fire({
+                        title: 'Tersimpan!',
+                        text: data.message,
+                        icon: 'success',
+                        buttonsStyling: false,
+                        confirmButtonText: 'Selesai',
+                        customClass: { confirmButton: 'btn btn-primary' }
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    let errMsg = data.message || 'Terjadi kesalahan saat menyimpan izin.';
+                    if (data.errors) {
+                        errMsg = Object.values(data.errors).flat().join('<br>');
+                    }
+                    Swal.fire({
+                        html: errMsg,
+                        icon: 'error',
+                        buttonsStyling: false,
+                        confirmButtonText: 'Tutup',
+                        customClass: { confirmButton: 'btn btn-primary' }
                     });
                 }
+            })
+            .catch(err => {
+                if (btnSubmitSingle) {
+                    btnSubmitSingle.removeAttribute('data-kt-indicator');
+                    btnSubmitSingle.disabled = false;
+                }
+                Swal.fire({
+                    text: 'Gagal terhubung ke server: ' + err.message,
+                    icon: 'error',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Tutup',
+                    customClass: { confirmButton: 'btn btn-primary' }
+                });
             });
-        }
-    });
+        });
+    }
 });

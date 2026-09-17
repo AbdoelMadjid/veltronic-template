@@ -32,3 +32,10 @@
 - **WAJIB** menyertakan file petunjuk operasional (`[modul]-petunjuk.blade.php`) di setiap modul baru agar pengguna memahami fungsi modul, alur operasi, dan batasan hak akses peran.
 - Detail lengkap diatur di `.agents/rules/module-partials-and-operational-guidelines.md`.
 
+## 7. Standar Header Banner, Toolbar Petunjuk, & Tema Dinamis Modul
+- **WAJIB** membuat kartu Header Banner terpisah (`card card-flush shadow-sm border-0 mb-6`) di atas konten halaman dengan judul modul, deskripsi, dan tombol aksi utama di sisi paling kanan.
+- **WAJIB** menempatkan pemicu petunjuk operasional di toolbar atas (`@section('toolbar')`) menggunakan partial `layouts.partials._action-petunjuk-button`.
+- **WAJIB** menggunakan token tema dinamis (`bg-body`, `text-gray-900`, `text-muted`, `border-gray-200`, `rounded-3`) tanpa warna hardcoded agar sempurna di Dark Mode & Light Mode.
+- Detail lengkap dan contoh implementasi (Role, Permission, Akses Role, Akses User) diatur di `.agents/rules/module-header-banner-and-toolbar-standards.md`.
+
+

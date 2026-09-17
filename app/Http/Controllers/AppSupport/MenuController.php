@@ -314,9 +314,10 @@ class MenuController extends Controller
      */
     protected function syncPermissions(Menu $menu, array $permissions, string $url, array $roles = []): void
     {
-        $routeKey = trim(str_replace(['/', '\\'], '.', trim($url, '/')));
-        if (empty($permissions) || empty($routeKey)) {
+        $normalizedUrl = trim(str_replace(['\\', '.'], '/', trim($url, '/')));
+        if (empty($permissions) || empty($normalizedUrl)) {
             $menu->permissions()->detach();
+            app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
             return;
         }
 
@@ -325,7 +326,7 @@ class MenuController extends Controller
             $action = strtolower(trim(explode(' ', $perm)[0] ?? $perm));
             if ($action === '') continue;
 
-            $permName = "{$action} {$routeKey}";
+            $permName = "{$action} {$normalizedUrl}";
             $permission = Permission::firstOrCreate([
                 'name' => $permName,
                 'guard_name' => 'web',
@@ -339,6 +340,7 @@ class MenuController extends Controller
         }
 
         $menu->permissions()->sync(array_unique($permissionIds));
+        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
     /**

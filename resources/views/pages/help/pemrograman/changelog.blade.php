@@ -34,13 +34,81 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.22.0
+                            Versi Saat Ini: v1.24.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.24.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.24.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.24.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>17 Sep 2026, 12:40 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Penyelarasan Spatie Laravel Permission, Visualisasi Izin Terwarisi vs Langsung, Standarisasi Header Banner (Rule #7), dan Optimasi Scroll Akses Role</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyelarasan menyeluruh resolusi hak akses menu sidebar dengan dukungan multi-format (titik dan garis miring) serta penghapusan otomatis suffix <code>.index</code>, standarisasi format izin GUI Tambah Menu sesuai seeder, penambahan visualisasi badge <code>[🛡️ Peran]</code> untuk izin terwarisi pada modal Izin Khusus Akses User, pelepasan scroll internal tabel matriks pada halaman Akses Role untuk scrolling halaman yang lebih alami, serta formalisasi aturan sistem Rule #7 (Header Banner, Toolbar Petunjuk &amp; Tema Dinamis).
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Sidebar Permission Resolution</strong>: Peningkatan <code>menuCanReadUrl()</code> dan <code>$canReadRoute</code> untuk mengenali format izin slash maupun dot serta auto-strip <code>.index</code>.</li>
+                                        <li><strong>Visualisasi Izin Terwarisi (Inherited vs Direct)</strong>: Cell tabel modal izin khusus menampilkan badge elegan simetris untuk izin bawaan peran dan checkbox bersih untuk izin langsung.</li>
+                                        <li><strong>Standar Header Banner &amp; Toolbar Petunjuk (Rule #7)</strong>: Standardisasi kartu banner judul modul mandiri dan penempatan petunjuk di toolbar atas.</li>
+                                        <li><strong>Optimasi Full Scroll Akses Role</strong>: Penambahan parameter <code>scrollable</code> untuk menonaktifkan kotak scroll ganda pada halaman matriks peran.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.24.0-->
+
+                        <!--begin::Item v1.23.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.23.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.23.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>17 Sep 2026, 09:30 WIB
+                                    </span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Database Backup Engine Berelasi Cerdas, Auto-Backup Scheduler, Matriks CRUD Izin Visual Hierarki, dan Rangkaian User Management</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi menyeluruh modul Backup Database Cerdas (<code>appsupport/backup-db</code>) dengan inspeksi skema relasional, penghitungan baris tepat (<code>SELECT COUNT(*)</code>), auto-select Foreign Key dependensi, kompresi streaming gzip, pencatatan jejak audit pelaksana cadangan, inspeksi struktur &amp; preview baris data live, serta scheduler otomatis. Dilengkapi antarmuka Matriks Izin Visual CRUD berhierarki interaktif (<code>PermissionMatrixService</code>, <code>crud-matrix-table.blade.php</code>) pada seluruh modul Manajemen Peran, Izin, Akses Peran, dan Akses Pengguna.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Mesin Backup Database Berelasi (<code>DatabaseBackupService</code>)</strong>: Ekstraksi skema tabel, auto-select relasi tabel anak/induk, kompresi <code>.sql.gz</code>, dan pencatatan nama eksekutor backup.</li>
+                                        <li><strong>Preview Struktur Skema &amp; Data Live</strong>: Modal multi-tab untuk memeriksa kolom, tipe data, indeks, FK, dan 10 baris live data tabel.</li>
+                                        <li><strong>Scheduler Auto-Backup Database</strong>: Perintah artisan <code>db:auto-backup</code> terjadwal otomatis dengan konfigurasi retensi cadangan.</li>
+                                        <li><strong>Matriks Izin CRUD Visual Interaktif</strong>: Visual tree hierarki menu utama &amp; sub-menu dengan toggle CRUD (create, read, update, delete, sort, export) dan checkbox massal.</li>
+                                        <li><strong>Modul User Management Suite</strong>: Manajemen Peran (Roles), Izin (Permissions), Akses Peran (Akses Role), dan Akses Pengguna (Akses User) dengan Zero-Reload Realtime CRUD dan Button Loading Spinner.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.23.0-->
+
                         <!--begin::Item v1.22.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.22.0</div>
@@ -56,7 +124,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>16 Sep 2026, 23:45 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Avatar Studio Modal Khusus, Kontrol Zoom Dinamis hingga 5x &amp; Fokus 2-Axis (X/Y), Penataan Grid Tab Profil Saya, serta Helper Render Avatar Global</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

@@ -32,31 +32,16 @@
                     opacity: {{ $coverOpacity / 100 }};
                 "></div>
 
-                <!--begin::Card title (Badges)-->
-                <div class="card-title m-0 position-relative z-index-1">
-                    <div class="d-flex flex-wrap gap-1">
-                        @forelse ($u->roles as $r)
-                            @php
-                                $badgeClass = match (strtolower($r->name)) {
-                                    'master' => 'bg-danger text-white',
-                                    'admin' => 'bg-primary text-white',
-                                    default => 'bg-white bg-opacity-90 text-gray-800',
-                                };
-                            @endphp
-                            <span class="badge {{ $badgeClass }} fw-bold px-2 py-1 text-uppercase fs-8 shadow-xs">
-                                {{ $r->name }}
-                            </span>
-                        @empty
-                            <span class="badge bg-white bg-opacity-90 text-gray-800 fw-bold px-2 py-1 fs-8 shadow-xs">
-                                USER
-                            </span>
-                        @endforelse
+                <!--begin::Checkbox Seleksi Pengguna Massal-->
+                <div class="position-absolute top-0 start-0 m-4 z-index-1">
+                    <div class="form-check form-check-custom form-check-solid form-check-sm">
+                        <input class="form-check-input user-bulk-checkbox cursor-pointer shadow-sm" type="checkbox" value="{{ $u->id }}" id="chk_card_user_{{ $u->id }}" title="Pilih Pengguna" />
                     </div>
                 </div>
-                <!--end::Card title-->
+                <!--end::Checkbox Seleksi Pengguna Massal-->
 
                 <!--begin::Card toolbar (Actions dropdown)-->
-                <div class="card-toolbar m-0 position-relative z-index-1">
+                <div class="card-toolbar m-0 position-relative z-index-1 ms-auto">
                     <button type="button" class="btn btn-sm btn-icon btn-color-white bg-black bg-opacity-25 bg-hover-opacity-50 text-hover-white shadow-xs" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                         <i class="ki-duotone ki-dots-vertical fs-5"><span class="path1"></span><span class="path2"></span></i>
                     </button>
@@ -138,6 +123,27 @@
                     </div>
                 </div>
                 <!--end::Info grid-->
+
+                <!--begin::Roles Badges (Centered Inline)-->
+                <div class="d-flex flex-center flex-wrap gap-2 mt-4 w-100">
+                    @forelse ($u->roles as $r)
+                        @php
+                            $badgeClass = match (strtolower($r->name)) {
+                                'master' => 'bg-danger text-white',
+                                'admin' => 'bg-primary text-white',
+                                default => 'bg-light text-gray-800 border border-gray-200',
+                            };
+                        @endphp
+                        <span class="badge {{ $badgeClass }} fw-bold px-3 py-1 text-uppercase fs-8 shadow-xs">
+                            {{ $r->name }}
+                        </span>
+                    @empty
+                        <span class="badge bg-light text-gray-800 border border-gray-200 fw-bold px-3 py-1 fs-8 shadow-xs">
+                            USER
+                        </span>
+                    @endforelse
+                </div>
+                <!--end::Roles Badges-->
             </div>
             <!--end::Card body-->
 

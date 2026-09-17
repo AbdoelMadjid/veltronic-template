@@ -1,82 +1,60 @@
-<!--begin::Modal Petunjuk Operasional Role-->
-<div class="modal fade" id="kt_modal_role_petunjuk" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered mw-700px">
-        <div class="modal-content">
-            <div class="modal-header pb-0 border-0 justify-content-between">
-                <div class="d-flex align-items-center">
-                    <div class="symbol symbol-40px symbol-circle bg-light-primary me-3 d-flex align-items-center justify-content-center">
-                        <i class="ki-outline ki-information-5 text-primary fs-2"></i>
-                    </div>
-                    <div>
-                        <h3 class="fw-bolder text-gray-900 m-0">Petunjuk Operasional Manajemen Peran</h3>
-                        <span class="text-muted fs-8">Alur dan panduan penggunaan tombol aksi pada modul Peran.</span>
-                    </div>
-                </div>
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="ki-outline ki-cross fs-2"></i>
-                </div>
-            </div>
+<x-petunjuk-modal 
+    id="kt_modal_role_petunjuk"
+    title="Petunjuk Operasional: Manajemen Peran (Roles)"
+    subtitle="Panduan operasional lengkap pengelolaan grup peran dan penetapan hak akses default pengguna"
+    box1Title="Gambaran Umum & Manajemen Peran"
+    box1Icon="ki-diamonds"
+    box2Title="Komponen Kartu & Struktur Peran"
+    box2Icon="ki-element-11"
+    box3Title="Alur Operasional Pengelolaan Peran"
+    box3Icon="ki-key"
+    box4Title="Aturan & Proteksi Sistem"
+    box4Icon="ki-security-user">
 
-            <div class="modal-body py-6 px-8">
-                <div class="d-flex flex-column gap-4">
-                    <!-- Step 1: Tambah Peran -->
-                    <div class="d-flex align-items-start p-4 bg-light rounded">
-                        <div class="symbol symbol-35px symbol-circle me-4 flex-shrink-0">
-                            <span class="symbol-label bg-light-primary text-primary fw-bolder fs-6">1</span>
-                        </div>
-                        <div>
-                            <div class="fw-bold text-gray-800 fs-6 mb-1">Cara Menambah Peran Baru</div>
-                            <div class="text-gray-700 fs-7">
-                                Klik langsung kartu garis putus-putus <strong>"Tambah Peran Baru"</strong> di akhir daftar kartu. Pada jendela yang muncul, ketikkan nama peran baru, centang hak akses pada tabel matriks CRUD (bisa menggunakan tombol <em>Pilih Semua</em> atau per baris modul), lalu klik tombol <strong>Simpan Peran</strong>.
-                            </div>
-                        </div>
-                    </div>
+    <x-slot:box1>
+        Modul <strong>Manajemen Peran (Roles)</strong> memungkinkan administrator mengelompokkan hak akses pengguna ke dalam tingkatan wewenang tertentu. Setiap peran menentukan batasan menu dan aksi yang dapat diakses oleh anggotanya secara terstruktur.
+    </x-slot:box1>
 
-                    <!-- Step 2: Lihat Rincian -->
-                    <div class="d-flex align-items-start p-4 bg-light rounded">
-                        <div class="symbol symbol-35px symbol-circle me-4 flex-shrink-0">
-                            <span class="symbol-label bg-light-primary text-primary fw-bolder fs-6">2</span>
-                        </div>
-                        <div>
-                            <div class="fw-bold text-gray-800 fs-6 mb-1">Cara Melihat Anggota & Rincian Izin</div>
-                            <div class="text-gray-700 fs-7">
-                                Klik tombol <strong>"Lihat Rincian"</strong> di sudut kiri bawah kartu peran. Sistem akan membuka jendela rincian yang menampilkan daftar akun pengguna pemegang peran tersebut serta pratinjau matriks izin yang sedang aktif.
-                            </div>
-                        </div>
-                    </div>
+    <x-slot:box2>
+        <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Daftar Kartu Peran:</strong> Setiap kartu menampilkan nama peran, status proteksi sistem, daftar perizinan utama, serta total akun pengguna aktif.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Kartu Tambah Cepat:</strong> Kartu bergaris putus-putus (<em>dashed border</em>) di akhir daftar untuk membuat peran baru secara instan.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Menu Aksi Peran:</strong> Tersedia tombol <span class="badge badge-light-secondary text-gray-700 fs-8">Rincian</span>, <span class="badge badge-light-secondary text-gray-700 fs-8">Ubah</span>, dan <span class="badge badge-light-danger text-danger fs-8">Hapus</span> pada masing-masing kartu peran.</div>
+            </li>
+        </ul>
+    </x-slot:box2>
 
-                    <!-- Step 3: Ubah Peran -->
-                    <div class="d-flex align-items-start p-4 bg-light rounded">
-                        <div class="symbol symbol-35px symbol-circle me-4 flex-shrink-0">
-                            <span class="symbol-label bg-light-primary text-primary fw-bolder fs-6">3</span>
-                        </div>
-                        <div>
-                            <div class="fw-bold text-gray-800 fs-6 mb-1">Cara Mengubah Hak Akses Peran</div>
-                            <div class="text-gray-700 fs-7">
-                                Klik tombol <strong>"Ubah"</strong> di sudut kanan bawah kartu peran. Sesuaikan tanda centang izin modul yang ingin ditambah atau dikurangi pada tabel matriks CRUD, kemudian klik tombol <strong>Simpan Peran</strong>.
-                            </div>
-                        </div>
-                    </div>
+    <x-slot:box3>
+        <ol class="text-gray-700 fs-7 mb-0 ps-4 d-flex flex-column gap-2">
+            <li><strong>Tambah Peran Baru:</strong> Klik kartu <em>Tambah Peran Baru</em> atau tombol di banner, ketikkan nama peran serta centang matriks izinnya.</li>
+            <li><strong>Lihat Rincian & Anggota:</strong> Klik tombol <em>Rincian</em> untuk melihat informasi peran dan daftar akun pengguna pemegang peran tersebut.</li>
+            <li><strong>Ubah Data & Izin:</strong> Klik tombol <em>Ubah</em> untuk memperbarui nama peran atau menyesuaikan tanda centang matriks hak aksesnya.</li>
+            <li><strong>Hapus Peran Kustom:</strong> Klik tombol <em>Hapus</em> (ikon tempat sampah) untuk menghapus peran kustom yang sudah tidak digunakan.</li>
+        </ol>
+    </x-slot:box3>
 
-                    <!-- Step 4: Hapus Peran -->
-                    <div class="d-flex align-items-start p-4 bg-light rounded">
-                        <div class="symbol symbol-35px symbol-circle me-4 flex-shrink-0">
-                            <span class="symbol-label bg-light-primary text-primary fw-bolder fs-6">4</span>
-                        </div>
-                        <div>
-                            <div class="fw-bold text-gray-800 fs-6 mb-1">Cara Menghapus Peran</div>
-                            <div class="text-gray-700 fs-7">
-                                Klik tombol icon tempat sampah merah <strong>"Hapus"</strong> di samping tombol Ubah (tombol ini hanya muncul pada peran kustom di luar peran bawaan sistem). Konfirmasi dialog pop-up untuk menghapus peran secara permanen.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer border-0 pt-0 px-8 pb-6">
-                <button type="button" class="btn btn-primary fw-bold" data-bs-dismiss="modal">Tutup Petunjuk</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--end::Modal Petunjuk Operasional Role-->
+    <x-slot:box4>
+        <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Proteksi Peran Bawaan:</strong> Peran bawaan sistem (<span class="badge badge-light-danger text-danger fs-8">Master</span> / <span class="badge badge-light-primary text-primary fs-8">Admin</span>) diproteksi secara otomatis agar tidak dapat dihapus demi integritas sistem.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Sinkronisasi Real-Time:</strong> Perubahan izin pada suatu peran langsung diterapkan ke seluruh pengguna terkait secara otomatis (Zero-Reload).</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Relasi Pengguna:</strong> Pastikan anggota dalam peran telah dialihkan sebelum peran kustom dihapus dari sistem.</div>
+            </li>
+        </ul>
+    </x-slot:box4>
+</x-petunjuk-modal>

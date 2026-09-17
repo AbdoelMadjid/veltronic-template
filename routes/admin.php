@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     // User Management (Users, Roles, Permissions, Akses)
     Route::prefix('usermanagement')->name('usermanagement.')->group(function () {
         // Users
+        Route::post('users/bulk-assign-role', [UserController::class, 'bulkAssignRole'])->name('users.bulk-assign-role');
         Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
         Route::resource('users', UserController::class);
 

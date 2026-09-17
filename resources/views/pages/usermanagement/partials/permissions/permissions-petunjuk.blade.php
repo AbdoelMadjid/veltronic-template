@@ -1,82 +1,60 @@
-<!--begin::Modal Petunjuk Operasional Permissions-->
-<div class="modal fade" id="kt_modal_permissions_petunjuk" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered mw-700px">
-        <div class="modal-content">
-            <div class="modal-header pb-0 border-0 justify-content-between">
-                <div class="d-flex align-items-center">
-                    <div class="symbol symbol-40px symbol-circle bg-light-primary me-3 d-flex align-items-center justify-content-center">
-                        <i class="ki-outline ki-information-5 text-primary fs-2"></i>
-                    </div>
-                    <div>
-                        <h3 class="fw-bolder text-gray-900 m-0">Petunjuk Operasional Manajemen Izin</h3>
-                        <span class="text-muted fs-8">Alur dan panduan penggunaan tombol aksi pada modul izin (permissions).</span>
-                    </div>
-                </div>
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="ki-outline ki-cross fs-2"></i>
-                </div>
-            </div>
+<x-petunjuk-modal 
+    id="kt_modal_permissions_petunjuk"
+    title="Petunjuk Operasional: Manajemen Izin (Permissions)"
+    subtitle="Panduan operasional lengkap pembuatan, generator CRUD, dan pengelolaan unit izin sistem"
+    box1Title="Gambaran Umum & Manajemen Izin"
+    box1Icon="ki-diamonds"
+    box2Title="Komponen & Format Standar Izin"
+    box2Icon="ki-element-11"
+    box3Title="Alur Operasional Pengelolaan Izin"
+    box3Icon="ki-key"
+    box4Title="Aturan & Proteksi Sistem"
+    box4Icon="ki-security-user">
 
-            <div class="modal-body py-6 px-8">
-                <div class="d-flex flex-column gap-4">
-                    <!-- Step 1: Generate CRUD Otomatis -->
-                    <div class="d-flex align-items-start p-4 bg-light rounded">
-                        <div class="symbol symbol-35px symbol-circle me-4 flex-shrink-0">
-                            <span class="symbol-label bg-light-primary text-primary fw-bolder fs-6">1</span>
-                        </div>
-                        <div>
-                            <div class="fw-bold text-gray-800 fs-6 mb-1">Cara Generate Izin CRUD Modul Otomatis</div>
-                            <div class="text-gray-700 fs-7">
-                                Klik tombol biru <strong>"Generate CRUD Modul"</strong> di atas tabel. Pada jendela yang muncul, masukkan prefix nama modul (contoh: <code>masterdata.barang</code>), centang pilihan aksi (seperti <em>read, create, update, delete, sort, export</em>), lalu klik tombol <strong>Generate Izin Sekarang</strong>.
-                            </div>
-                        </div>
-                    </div>
+    <x-slot:box1>
+        Modul <strong>Manajemen Izin (Permissions)</strong> mengelola unit perizinan individual terkecil (<em>atomic permissions</em>) berbasis Spatie. Izin ini menjadi dasar penentu wewenang controller, route, dan elemen antarmuka di seluruh modul aplikasi.
+    </x-slot:box1>
 
-                    <!-- Step 2: Tambah Izin Manual -->
-                    <div class="d-flex align-items-start p-4 bg-light rounded">
-                        <div class="symbol symbol-35px symbol-circle me-4 flex-shrink-0">
-                            <span class="symbol-label bg-light-primary text-primary fw-bolder fs-6">2</span>
-                        </div>
-                        <div>
-                            <div class="fw-bold text-gray-800 fs-6 mb-1">Cara Menambah Izin Akses Manual</div>
-                            <div class="text-gray-700 fs-7">
-                                Klik tombol <strong>"Tambah Izin"</strong> di samping tombol generate. Ketikkan nama izin sesuai format konvensi (contoh: <code>laporan.cetak</code>) dan pilih modul induknya, kemudian klik tombol <strong>Simpan Izin</strong>.
-                            </div>
-                        </div>
-                    </div>
+    <x-slot:box2>
+        <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Generator CRUD Otomatis:</strong> Fasilitas untuk membuat 6 aksi CRUD standar (<span class="badge badge-light-secondary text-gray-700 fs-8">read</span>, <span class="badge badge-light-secondary text-gray-700 fs-8">create</span>, <span class="badge badge-light-secondary text-gray-700 fs-8">update</span>, <span class="badge badge-light-secondary text-gray-700 fs-8">delete</span>, <span class="badge badge-light-secondary text-gray-700 fs-8">sort</span>, <span class="badge badge-light-secondary text-gray-700 fs-8">export</span>) sekaligus.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Konvensi Penamaan:</strong> Menggunakan format standar titik (<code>modul.aksi</code>), contoh: <span class="badge badge-light text-gray-700 fs-8 font-monospace">usermanagement.users.read</span>.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Pengelompokan Modul:</strong> Setiap izin dikelompokkan secara otomatis berdasarkan modul induknya agar mudah disaring.</div>
+            </li>
+        </ul>
+    </x-slot:box2>
 
-                    <!-- Step 3: Ubah / Hapus Izin -->
-                    <div class="d-flex align-items-start p-4 bg-light rounded">
-                        <div class="symbol symbol-35px symbol-circle me-4 flex-shrink-0">
-                            <span class="symbol-label bg-light-primary text-primary fw-bolder fs-6">3</span>
-                        </div>
-                        <div>
-                            <div class="fw-bold text-gray-800 fs-6 mb-1">Cara Mengubah atau Menghapus Izin</div>
-                            <div class="text-gray-700 fs-7">
-                                Klik tombol ikon pensil <strong>"Ubah"</strong> pada baris izin untuk mengubah rincian izin, atau klik tombol ikon tempat sampah <strong>"Hapus"</strong> untuk menghapus izin yang tidak lagi digunakan setelah mengonfirmasi pesan pop-up.
-                            </div>
-                        </div>
-                    </div>
+    <x-slot:box3>
+        <ol class="text-gray-700 fs-7 mb-0 ps-4 d-flex flex-column gap-2">
+            <li><strong>Generate Izin Praktis:</strong> Klik tombol <span class="badge bg-primary text-white fs-8">Modul CRUD Praktis</span> di header banner, ketik nama modul, centang opsi aksi, lalu generate.</li>
+            <li><strong>Tambah Izin Tunggal:</strong> Klik tombol <span class="badge badge-light-primary text-primary fs-8">Single Permission</span> untuk menambah izin non-CRUD (misal: export, approve, verify).</li>
+            <li><strong>Ubah / Hapus Izin:</strong> Gunakan tombol ikon pensil untuk mengubah atau ikon tempat sampah untuk menghapus izin dari tabel.</li>
+            <li><strong>Filter & Pencarian Realtime:</strong> Ketikkan kata kunci pada <em>Cari Izin...</em> atau filter berdasarkan grup modul di atas tabel.</li>
+        </ol>
+    </x-slot:box3>
 
-                    <!-- Step 4: Pencarian & Filter Modul -->
-                    <div class="d-flex align-items-start p-4 bg-light rounded">
-                        <div class="symbol symbol-35px symbol-circle me-4 flex-shrink-0">
-                            <span class="symbol-label bg-light-primary text-primary fw-bolder fs-6">4</span>
-                        </div>
-                        <div>
-                            <div class="fw-bold text-gray-800 fs-6 mb-1">Cara Mencari & Memfilter Izin</div>
-                            <div class="text-gray-700 fs-7">
-                                Ketikkan kata kunci pada kotak <strong>"Cari Izin..."</strong> atau pilih kelompok modul pada dropdown <strong>"Semua Modul"</strong> di atas tabel. Daftar izin akan langsung disaring secara realtime.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer border-0 pt-0 px-8 pb-6">
-                <button type="button" class="btn btn-primary fw-bold" data-bs-dismiss="modal">Tutup Petunjuk</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--end::Modal Petunjuk Operasional Permissions-->
+    <x-slot:box4>
+        <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Integritas Route & Middleware:</strong> Pastikan izin yang dihapus tidak lagi digunakan sebagai penjaga (guard) pada route controller sistem.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Pembersihan Cache Otomatis:</strong> Sistem secara otomatis mereset cache perizinan Spatie setiap kali ada izin yang dibuat, diubah, atau dihapus (Zero-Reload).</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Penamaan Unik:</strong> Setiap nama izin bersifat unik (unique) dan tidak boleh terduplikasi dalam database.</div>
+            </li>
+        </ul>
+    </x-slot:box4>
+</x-petunjuk-modal>

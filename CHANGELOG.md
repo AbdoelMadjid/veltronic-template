@@ -5,6 +5,28 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.25.0] - 2026-09-17
+
+### Added & Enhanced
+- **Bulk Assign Role & Multi-Selection Engine (`usermanagement/users`)**:
+  - **Selection Checkboxes**: Added interactive checkboxes across both Card View (top-left card header) and Table View (row checkboxes with *Select All* header checkbox).
+  - **Dynamic Bulk Action Toolbar**: Implemented an automated toolbar action button (`Beri Role Massal`) with live badge counter reflecting selected users.
+  - **Bulk Role Modal (`users-bulk-role-modal.blade.php`)**: Designed modal for assigning multiple roles with flexible application methods (*Append* to existing roles vs *Replace/Sync* all roles).
+  - **Backend Controller & Route**: Added `UserController@bulkAssignRole` and `POST /usermanagement/users/bulk-assign-role` wrapped in database transaction with validation.
+  - **Zero-Reload Realtime Sync**: Instantly updates both Card View and DataTables without page reload upon role assignment.
+- **DataTables Multi-Role & Filter Robustness**:
+  - **Type-Safe Search & Filter Handling**: Fixed PHP 8+ `TypeError` in `UserController@index` by safely handling DataTables array-formatted search and order parameters.
+  - **Multi-Role Relational Querying**: Optimized `whereHas('roles')` to accurately filter users holding multiple simultaneous roles.
+- **Top-Aligned Avatar Preview Optimization**:
+  - Enhanced `users.js` and `users-form-modal.blade.php` with FileReader and KTImageInput hooks so newly selected avatar images immediately focus on the top (`background-position: 50% 0%`, `background-size: cover`), matching `profil-pengguna` standards.
+- **Universal Reusable Petunjuk Modal Component (`<x-petunjuk-modal>`)**:
+  - Built `<x-petunjuk-modal>` Blade component with standardized 4-box layout and valid KeenIcons (`ki-diamonds`, `ki-element-11`, `ki-key`, `ki-security-user`).
+  - Standardized toolbar action petunjuk buttons (`_action-petunjuk-button`) across `users`, `roles`, `permissions`, `akses-role`, `akses-user`, `backup-db`, and `menu`.
+- **Akses Role 2-Column Vertical Sidebar Layout**:
+  - Redesigned `usermanagement/akses-role` into an intuitive 2-column layout with vertical role selector tabs on the left and full-width matrix table on the right.
+
+---
+
 ## [v1.24.0] - 2026-09-17
 
 ### Added & Enhanced

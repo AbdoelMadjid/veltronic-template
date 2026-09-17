@@ -72,7 +72,7 @@ var KTAksesRoleMatrix = function () {
                     // Update counter badge di tab
                     var tabBadge = document.getElementById('tab_badge_role_' + roleId);
                     if (tabBadge && data.total_permissions !== undefined) {
-                        tabBadge.textContent = data.total_permissions;
+                        tabBadge.textContent = data.total_permissions + ' Izin';
                     }
 
                     // Update memory state

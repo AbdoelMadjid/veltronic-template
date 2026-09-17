@@ -53,8 +53,19 @@ document.addEventListener('DOMContentLoaded', function () {
     // DOM Elements - Detail Modal
     const modalDetailEl = document.getElementById('kt_modal_user_detail');
 
+    // DOM Elements - Bulk Role Modal & State
+    const selectedUserIds = new Set();
+    const btnBulkRole = document.getElementById('btn_open_bulk_role');
+    const badgeBulkCount = document.getElementById('bulk_role_selected_badge');
+    const modalBulkRoleEl = document.getElementById('kt_modal_bulk_assign_role');
+    const formBulkRole = document.getElementById('kt_modal_bulk_role_form');
+    const submitBulkRoleBtn = document.getElementById('kt_modal_bulk_role_submit');
+    const modalBulkCountEl = document.getElementById('bulk_role_modal_count');
+    const checkAllUsersHeader = document.getElementById('check_all_users');
+
     let modalForm = null;
     let modalDetail = null;
+    let modalBulkRole = null;
     let dataTable = null;
 
     if (modalFormEl && typeof bootstrap !== 'undefined') {
@@ -62,6 +73,43 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if (modalDetailEl && typeof bootstrap !== 'undefined') {
         modalDetail = new bootstrap.Modal(modalDetailEl);
+    }
+    if (modalBulkRoleEl && typeof bootstrap !== 'undefined') {
+        modalBulkRole = new bootstrap.Modal(modalBulkRoleEl);
+    }
+
+    // Helper: Update UI Seleksi Pengguna Massal
+    function updateBulkActionUI() {
+        const count = selectedUserIds.size;
+        if (badgeBulkCount) {
+            badgeBulkCount.textContent = count;
+        }
+        if (btnBulkRole) {
+            if (count > 0) {
+                btnBulkRole.classList.remove('d-none');
+            } else {
+                btnBulkRole.classList.add('d-none');
+            }
+        }
+        if (modalBulkCountEl) {
+            modalBulkCountEl.textContent = count;
+        }
+
+        // Sinkronisasi status checkbox pada DOM kartu & tabel
+        document.querySelectorAll('.user-bulk-checkbox').forEach(cb => {
+            cb.checked = selectedUserIds.has(String(cb.value));
+        });
+
+        // Sinkronisasi status Select All Checkbox di header tabel
+        if (checkAllUsersHeader) {
+            const allVisible = document.querySelectorAll('#kt_table_users .user-bulk-checkbox');
+            if (allVisible.length > 0) {
+                const allChecked = Array.from(allVisible).every(cb => cb.checked);
+                checkAllUsersHeader.checked = allChecked;
+            } else {
+                checkAllUsersHeader.checked = false;
+            }
+        }
     }
 
     // Helper: Initialize Tooltips safely
@@ -80,16 +128,49 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Helper: Set Avatar Preview
-    function setAvatarPreview(url) {
+    function setAvatarPreview(url, posX = 50, posY = 0, zoom = 100) {
         if (!avatarWrapper) return;
         if (url) {
             avatarWrapper.style.backgroundImage = `url('${url}')`;
-            avatarWrapper.style.backgroundPosition = 'top center';
-            avatarWrapper.style.backgroundSize = 'cover';
+            avatarWrapper.style.backgroundPosition = `${posX}% ${posY}%`;
+            avatarWrapper.style.backgroundSize = zoom > 100 ? `${zoom}%` : 'cover';
         } else {
             avatarWrapper.style.backgroundImage = defaultBlankAvatar ? `url('${defaultBlankAvatar}')` : '';
-            avatarWrapper.style.backgroundPosition = 'center center';
+            avatarWrapper.style.backgroundPosition = '50% 0%';
             avatarWrapper.style.backgroundSize = 'cover';
+        }
+    }
+
+    // Event: Handle File Input Change (Tampilkan foto langsung ambil bagian paling atas 50% 0%)
+    if (avatarInput) {
+        avatarInput.addEventListener('change', function (e) {
+            const file = e.target.files && e.target.files[0];
+            if (file) {
+                if (removeAvatarInput) removeAvatarInput.value = '0';
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    if (avatarWrapper) {
+                        avatarWrapper.style.backgroundImage = `url('${event.target.result}')`;
+                        avatarWrapper.style.backgroundPosition = '50% 0%';
+                        avatarWrapper.style.backgroundSize = 'cover';
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Event: Handle KTImageInput instance events if available
+    const imageInputEl = modalFormEl ? modalFormEl.querySelector('[data-kt-image-input="true"]') : null;
+    if (imageInputEl && typeof KTImageInput !== 'undefined') {
+        const imageInputInstance = KTImageInput.getInstance(imageInputEl) || new KTImageInput(imageInputEl);
+        if (imageInputInstance) {
+            imageInputInstance.on('kt.imageinput.change', function () {
+                if (avatarWrapper) {
+                    avatarWrapper.style.backgroundPosition = '50% 0%';
+                    avatarWrapper.style.backgroundSize = 'cover';
+                }
+            });
         }
     }
 
@@ -173,6 +254,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         KTMenu.createInstances();
                     }
                     initTooltips();
+                    updateBulkActionUI();
                 }
                 if (cardsPagination) {
                     const paginationLinksContainer = cardsPagination.querySelector('.users-pagination-links');
@@ -221,6 +303,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             },
             columns: [
+                {
+                    data: 'id',
+                    name: 'checkbox',
+                    orderable: false,
+                    searchable: false,
+                    className: 'w-10px pe-2',
+                    render: function (data, type, row) {
+                        const isChecked = selectedUserIds.has(String(row.id)) ? 'checked' : '';
+                        return `
+                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                <input class="form-check-input user-bulk-checkbox" type="checkbox" value="${row.id}" ${isChecked} />
+                            </div>
+                        `;
+                    }
+                },
                 {
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -309,6 +406,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             drawCallback: function () {
                 initTooltips();
+                updateBulkActionUI();
             }
         });
     }
@@ -462,7 +560,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     inputRoles.value = rolesList.length > 0 ? rolesList[0] : '';
                 }
 
-                setAvatarPreview(data.avatar || null);
+                setAvatarPreview(
+                    data.avatar || null,
+                    data.avatar_position_x ?? 50,
+                    data.avatar_position_y ?? 0,
+                    data.avatar_zoom ?? 100
+                );
 
                 if (modalForm) modalForm.show();
             } else {
@@ -822,6 +925,149 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
+
+    // 10. Event Delegation: Checkbox Selection (Cards & Table) & Select All
+    document.addEventListener('change', function (e) {
+        const cb = e.target.closest('.user-bulk-checkbox');
+        if (cb) {
+            const userId = String(cb.value);
+            if (cb.checked) {
+                selectedUserIds.add(userId);
+            } else {
+                selectedUserIds.delete(userId);
+            }
+            updateBulkActionUI();
+            return;
+        }
+
+        if (e.target && e.target.id === 'check_all_users') {
+            const isChecked = e.target.checked;
+            document.querySelectorAll('#kt_table_users .user-bulk-checkbox').forEach(rowCb => {
+                rowCb.checked = isChecked;
+                const userId = String(rowCb.value);
+                if (isChecked) {
+                    selectedUserIds.add(userId);
+                } else {
+                    selectedUserIds.delete(userId);
+                }
+            });
+            updateBulkActionUI();
+        }
+    });
+
+    // 11. Buka Modal Berikan Role Massal
+    if (btnBulkRole) {
+        btnBulkRole.addEventListener('click', function () {
+            if (selectedUserIds.size === 0) {
+                if (typeof Notify !== 'undefined') {
+                    Notify.warning('Silakan pilih minimal satu pengguna terlebih dahulu.');
+                }
+                return;
+            }
+            if (formBulkRole) {
+                formBulkRole.querySelectorAll('.bulk-role-checkbox').forEach(cb => {
+                    cb.checked = false;
+                });
+                const defaultRadio = document.getElementById('bulk_mode_append');
+                if (defaultRadio) defaultRadio.checked = true;
+                const errorEl = document.getElementById('error_bulk_roles');
+                if (errorEl) errorEl.textContent = '';
+            }
+            if (modalBulkCountEl) {
+                modalBulkCountEl.textContent = selectedUserIds.size;
+            }
+            if (modalBulkRole) {
+                modalBulkRole.show();
+            }
+        });
+    }
+
+    // 12. Submit Form Berikan Role Massal (AJAX Zero-Reload)
+    if (formBulkRole) {
+        formBulkRole.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const errorEl = document.getElementById('error_bulk_roles');
+            if (errorEl) errorEl.textContent = '';
+
+            const checkedRoles = Array.from(formBulkRole.querySelectorAll('.bulk-role-checkbox:checked')).map(cb => cb.value);
+            if (checkedRoles.length === 0) {
+                if (errorEl) errorEl.textContent = 'Pilih minimal satu peran yang akan diberikan.';
+                if (typeof Notify !== 'undefined') {
+                    Notify.warning('Pilih minimal satu peran yang akan diberikan.');
+                }
+                return;
+            }
+
+            const modeEl = formBulkRole.querySelector('input[name="bulk_mode"]:checked');
+            const mode = modeEl ? modeEl.value : 'append';
+            const userIds = Array.from(selectedUserIds);
+
+            if (submitBulkRoleBtn) {
+                submitBulkRoleBtn.setAttribute('data-kt-indicator', 'on');
+                submitBulkRoleBtn.disabled = true;
+            }
+
+            try {
+                const response = await fetch(routes.bulkAssignRole, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({
+                        user_ids: userIds,
+                        roles: checkedRoles,
+                        mode: mode
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && (data.status === 'success' || data.success)) {
+                    if (modalBulkRole) modalBulkRole.hide();
+
+                    selectedUserIds.clear();
+                    updateBulkActionUI();
+
+                    if (typeof Notify !== 'undefined') {
+                        Notify.success(data.message || 'Peran berhasil diperbarui secara massal!', 'Sukses');
+                    } else if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            text: data.message || 'Peran berhasil diperbarui secara massal!',
+                            icon: 'success',
+                            buttonsStyling: false,
+                            confirmButtonText: 'OK',
+                            customClass: { confirmButton: 'btn btn-primary' }
+                        });
+                    }
+
+                    // Refresh both Card View and Table View in Realtime
+                    if (dataTable) {
+                        dataTable.ajax.reload(null, false);
+                    }
+                    fetchCards();
+                } else {
+                    const msg = data.message || 'Gagal menerapkan peran secara massal.';
+                    if (errorEl) errorEl.textContent = msg;
+                    if (typeof Notify !== 'undefined') {
+                        Notify.error(msg);
+                    }
+                }
+            } catch (err) {
+                if (typeof Notify !== 'undefined') {
+                    Notify.error('Terjadi kesalahan saat memproses permintaan.');
+                }
+            } finally {
+                if (submitBulkRoleBtn) {
+                    submitBulkRoleBtn.removeAttribute('data-kt-indicator');
+                    submitBulkRoleBtn.disabled = false;
+                }
+            }
+        });
+    }
 
     // Initialize tooltips on load
     initTooltips();

@@ -29,8 +29,15 @@ class UserController extends Controller
         $query = User::with(['roles', 'detail', 'settings']);
 
         // 1. Filter: Keyword Search (Name or Email)
-        if ($request->filled('search')) {
-            $search = trim($request->input('search'));
+        $rawSearch = $request->input('search');
+        $search = '';
+        if (is_array($rawSearch)) {
+            $search = trim($rawSearch['value'] ?? '');
+        } elseif (is_string($rawSearch)) {
+            $search = trim($rawSearch);
+        }
+
+        if (!empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%");
@@ -38,16 +45,22 @@ class UserController extends Controller
         }
 
         // 2. Filter: Role
-        if ($request->filled('role')) {
-            $roleName = $request->input('role');
+        $roleName = $request->input('role');
+        if (is_array($roleName)) {
+            $roleName = $roleName[0] ?? '';
+        }
+        if (!empty($roleName)) {
             $query->whereHas('roles', function ($q) use ($roleName) {
                 $q->where('name', $roleName);
             });
         }
 
         // 3. Filter: Status Email Verification
-        if ($request->filled('status')) {
-            $status = $request->input('status');
+        $status = $request->input('status');
+        if (is_array($status)) {
+            $status = $status[0] ?? '';
+        }
+        if (!empty($status)) {
             if ($status === 'verified') {
                 $query->whereNotNull('email_verified_at');
             } elseif ($status === 'unverified') {
@@ -56,21 +69,42 @@ class UserController extends Controller
         }
 
         // 4. Sorting
-        $sort = $request->input('sort', 'recent');
-        switch ($sort) {
-            case 'oldest':
-                $query->oldest('created_at');
-                break;
-            case 'name_asc':
-                $query->orderBy('name', 'asc');
-                break;
-            case 'name_desc':
-                $query->orderBy('name', 'desc');
-                break;
-            case 'recent':
-            default:
+        if ($request->has('order') && is_array($request->input('order')) && isset($request->input('order')[0])) {
+            $orderColIndex = (int) ($request->input('order')[0]['column'] ?? 5);
+            $orderDir = strtolower($request->input('order')[0]['dir'] ?? 'desc') === 'asc' ? 'asc' : 'desc';
+
+            // Map DataTables column index to database table column
+            $columnMap = [
+                2 => 'name',
+                4 => 'email_verified_at',
+                5 => 'created_at',
+            ];
+
+            if (isset($columnMap[$orderColIndex])) {
+                $query->orderBy($columnMap[$orderColIndex], $orderDir);
+            } else {
                 $query->latest('updated_at');
-                break;
+            }
+        } else {
+            $sort = $request->input('sort', 'recent');
+            if (is_array($sort)) {
+                $sort = $sort[0] ?? 'recent';
+            }
+            switch ($sort) {
+                case 'oldest':
+                    $query->oldest('created_at');
+                    break;
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 'recent':
+                default:
+                    $query->latest('updated_at');
+                    break;
+            }
         }
 
         // Total Counts for Statistics
@@ -296,6 +330,10 @@ class UserController extends Controller
                 'roles' => $user->roles->pluck('name')->toArray(),
                 'role' => $user->roles->first()?->name ?? 'user',
                 'avatar' => $user->avatar ? $user->avatar_url : null,
+                'avatar_position_x' => (int) ($user->setting('avatar_position_x', '50') ?? '50'),
+                'avatar_position_y' => (int) ($user->setting('avatar_position_y', '0') ?? '0'),
+                'avatar_zoom' => (int) ($user->setting('avatar_zoom', '100') ?? '100'),
+                'avatar_style' => $user->avatar_style,
             ],
         ]);
     }
@@ -440,6 +478,65 @@ class UserController extends Controller
                 ], 500);
             }
             return back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Assign roles in bulk to selected users.
+     */
+    public function bulkAssignRole(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'user_ids' => ['required', 'array', 'min:1'],
+            'user_ids.*' => ['required', 'integer', 'exists:users,id'],
+            'roles' => ['required', 'array', 'min:1'],
+            'roles.*' => ['required', 'string', 'exists:roles,name'],
+            'mode' => ['required', 'in:append,replace'],
+        ], [
+            'user_ids.required' => 'Pilih minimal satu pengguna.',
+            'user_ids.min' => 'Pilih minimal satu pengguna.',
+            'roles.required' => 'Pilih minimal satu peran yang akan diberikan.',
+            'roles.min' => 'Pilih minimal satu peran yang akan diberikan.',
+            'mode.required' => 'Pilih metode penerapan peran.',
+        ]);
+
+        $userIds = $validated['user_ids'];
+        $roleNames = $validated['roles'];
+        $mode = $validated['mode'];
+
+        DB::beginTransaction();
+        try {
+            $users = User::whereIn('id', $userIds)->get();
+            $count = 0;
+
+            foreach ($users as $user) {
+                if ($mode === 'replace') {
+                    $user->syncRoles($roleNames);
+                } else {
+                    $user->assignRole($roleNames);
+                }
+                $count++;
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'success' => true,
+                'message' => "Berhasil menerapkan peran kepada {$count} pengguna terpilih.",
+                'data' => [
+                    'updated_count' => $count,
+                    'roles' => $roleNames,
+                    'mode' => $mode,
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 'error',
+                'success' => false,
+                'message' => 'Gagal menerapkan peran secara massal: ' . $e->getMessage(),
+            ], 500);
         }
     }
 }

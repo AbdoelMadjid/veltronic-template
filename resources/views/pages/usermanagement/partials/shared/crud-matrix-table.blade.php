@@ -23,10 +23,10 @@
             </div>
             @if(!$isReadonly)
                 <button type="button" class="btn btn-sm btn-light-primary fw-bold btn-matrix-check-all" data-target="#{{ $prefix }}_table">
-                    Pilih Semua
+                    <i class="ki-outline ki-check-square fs-6 me-1"></i>Pilih Semua
                 </button>
                 <button type="button" class="btn btn-sm btn-light-danger fw-bold btn-matrix-uncheck-all" data-target="#{{ $prefix }}_table">
-                    Kosongkan
+                    <i class="ki-outline ki-cross-square fs-6 me-1"></i>Kosongkan
                 </button>
             @endif
         </div>

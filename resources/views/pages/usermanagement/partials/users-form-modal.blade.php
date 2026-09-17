@@ -43,7 +43,7 @@
                         <div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true">
                             <!--begin::Preview existing avatar-->
                             <div class="image-input-wrapper w-125px h-125px rounded-3 shadow-sm" id="user_avatar_wrapper"
-                                style="background-image: url('{{ \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg') }}'); background-position: top center; background-size: cover;">
+                                style="background-image: url('{{ \App\Support\ThemeAsset::url('media/svg/avatars/blank.svg') }}'); background-position: 50% 0%; background-size: cover;">
                             </div>
                             <!--end::Preview existing avatar-->
 

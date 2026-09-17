@@ -1,44 +1,46 @@
 @extends('layouts.index')
 
-@section('title', 'Matriks Hak Akses Peran')
-
 @section('toolbar')
     @include('layouts.partials._toolbar', [
         'action' => view()->make('layouts.partials._action-petunjuk-button', [
             'targetModal' => '#kt_modal_akses_role_petunjuk',
-            'title' => 'Petunjuk Operasional Akses Role'
-        ])
+            'title' => 'Petunjuk Operasional Akses Role',
+        ]),
     ])
 @endsection
 
 @section('content')
-<div id="kt_app_content" class="app-content flex-column-fluid">
-    <!--begin::Content container-->
-    <div id="kt_app_content_container" class="app-container container-fluid">
+    <div id="kt_app_content" class="app-content flex-column-fluid">
+        <!--begin::Content container-->
+        <div id="kt_app_content_container" class="app-container container-fluid">
 
-        <!--begin::Matriks Hak Akses Table-->
-        @include('pages.usermanagement.partials.akses-role.matrix-table')
-        <!--end::Matriks Hak Akses Table-->
+            <!--begin::Matriks Hak Akses Table-->
+            @include('pages.usermanagement.partials.akses-role.matrix-table')
+            <!--end::Matriks Hak Akses Table-->
 
+        </div>
+        <!--end::Content container-->
     </div>
-    <!--end::Content container-->
-</div>
 
-<!--begin::Modals-->
-@include('pages.usermanagement.partials.akses-role.akses-role-petunjuk')
-<!--end::Modals-->
+    <!--begin::Modals-->
+    @include('pages.usermanagement.partials.akses-role.akses-role-petunjuk')
+    <!--end::Modals-->
 @endsection
 
 @section('scripts')
-<script>
-    window.AKSES_ROLE_ROUTES = {
-        sync: "{{ route('usermanagement.akses-role.sync') }}",
-        toggle: "{{ route('usermanagement.akses-role.toggle') }}",
-        bulkToggle: "{{ route('usermanagement.akses-role.bulk-toggle') }}",
-        csrfToken: "{{ csrf_token() }}"
-    };
-    window.AKSES_ROLE_MATRIX = @json($matrix);
-</script>
-<script src="{{ asset('assets/js/usermanagement/crud-matrix-helper.js') }}?v={{ filemtime(public_path('assets/js/usermanagement/crud-matrix-helper.js')) }}"></script>
-<script src="{{ asset('assets/js/usermanagement/akses-role.js') }}?v={{ filemtime(public_path('assets/js/usermanagement/akses-role.js')) }}"></script>
+    <script>
+        window.AKSES_ROLE_ROUTES = {
+            sync: "{{ route('usermanagement.akses-role.sync') }}",
+            toggle: "{{ route('usermanagement.akses-role.toggle') }}",
+            bulkToggle: "{{ route('usermanagement.akses-role.bulk-toggle') }}",
+            csrfToken: "{{ csrf_token() }}"
+        };
+        window.AKSES_ROLE_MATRIX = @json($matrix);
+    </script>
+    <script
+        src="{{ asset('assets/js/usermanagement/crud-matrix-helper.js') }}?v={{ filemtime(public_path('assets/js/usermanagement/crud-matrix-helper.js')) }}">
+    </script>
+    <script
+        src="{{ asset('assets/js/usermanagement/akses-role.js') }}?v={{ filemtime(public_path('assets/js/usermanagement/akses-role.js')) }}">
+    </script>
 @endsection

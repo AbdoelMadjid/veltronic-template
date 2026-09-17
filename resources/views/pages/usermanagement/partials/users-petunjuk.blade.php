@@ -1,80 +1,60 @@
-<!--begin::Petunjuk Operasional Modul Users-->
-<div class="card card-flush border-0 bg-light-primary mb-6 shadow-sm">
-    <div class="card-body py-6 px-8">
-        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-4">
-            <!-- Sisi Kiri: Judul & Deskripsi -->
-            <div class="flex-grow-1">
-                <div class="d-flex align-items-center gap-2 flex-wrap">
-                    <h3 class="fw-bolder text-gray-900 m-0 fs-3">Petunjuk Operasional & Panduan Pengguna</h3>
-                    <span class="badge badge-primary fw-bold fs-8 px-3 py-1">Modul User Management</span>
-                </div>
-                <span class="text-muted fs-7 d-block mt-1">
-                    Pelajari alur operasional pengelolaan akun pengguna, struktur peran (*roles*), dan panduan penyaringan data.
-                </span>
-            </div>
+<x-petunjuk-modal 
+    id="kt_modal_users_petunjuk"
+    title="Petunjuk Operasional: Manajemen Pengguna (Users)"
+    subtitle="Panduan operasional pengelolaan akun pengguna, penugasan peran massal, dan penyaringan data"
+    box1Title="Gambaran Umum & Manajemen Pengguna"
+    box1Icon="ki-diamonds"
+    box2Title="Struktur Data & Mode Tampilan"
+    box2Icon="ki-element-11"
+    box3Title="Alur Operasi Akun & Peran Massal"
+    box3Icon="ki-key"
+    box4Title="Aturan, Proteksi & Keamanan Akun"
+    box4Icon="ki-security-user">
 
-            <!-- Sisi Kanan: Tombol Buka Detail Petunjuk (Right-Aligned & Responsive) -->
-            <div class="d-flex align-items-center justify-content-end w-100 w-md-auto flex-shrink-0 ms-md-auto gap-2">
-                <button type="button" class="btn btn-sm btn-light-primary fw-bold" data-bs-toggle="collapse"
-                    data-bs-target="#kt_users_petunjuk_content" aria-expanded="false"
-                    aria-controls="kt_users_petunjuk_content">
-                    <span class="d-none d-sm-inline">Buka / Tutup Panduan</span>
-                    <i class="ki-duotone ki-down fs-5 ms-0 ms-sm-1"><span class="path1"></span><span class="path2"></span></i>
-                </button>
-            </div>
-        </div>
+    <x-slot:box1>
+        Modul <strong>Manajemen Pengguna (Users)</strong> memungkinkan administrator mengelola seluruh akun pengguna sistem Veltronic secara terpusat. Fitur ini mencakup pembuatan akun baru, pembaruan profil dan avatar, pengaturan peran ganda (<em>multi-role</em>), penetapan peran massal (<em>bulk assign</em>), serta kontrol keamanan kata sandi.
+    </x-slot:box1>
 
-        <!--begin::Collapse Content-->
-        <div class="collapse mt-6" id="kt_users_petunjuk_content">
-            <div class="separator separator-dashed my-4"></div>
-            <div class="row g-6">
-                <!-- Panduan 1: Otorisasi & Peran Pengguna -->
-                <div class="col-md-4">
-                    <div class="bg-body rounded p-5 h-100 border border-dashed border-gray-300">
-                        <h5 class="fw-bolder text-gray-900 mb-3">1. Otorisasi & Peran Akun</h5>
-                        <p class="text-muted fs-7 mb-3">
-                            Setiap pengguna memiliki peran (*role*) yang mengatur hak akses modul dan izin tindakan dalam sistem:
-                        </p>
-                        <ul class="text-gray-700 fs-7 ps-4 mb-0 space-y-2">
-                            <li><strong>Penugasan Peran:</strong> Peran dipilih saat membuat atau mengubah data akun pengguna.</li>
-                            <li><strong>Izin Fitur:</strong> Hak akses menu dan fungsionalitas mengikuti konfigurasi peran yang berlaku.</li>
-                            <li><strong>Dinamis:</strong> Penambahan atau perubahan daftar peran dapat dikelola fleksibel sesuai kebutuhan organisasi.</li>
-                        </ul>
-                    </div>
-                </div>
+    <x-slot:box2>
+        <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Tampilan Kartu (Card View):</strong> Menampilkan profil visual interaktif, foto avatar dengan fokus vertikal, badge peran aktif, dan cover kustom masing-masing pengguna.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Tampilan Tabel (Table View):</strong> Menyajikan data terstruktur yang mendukung penomoran, sortir kolom dinamis, dan seleksi baris secara cepat.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Sidebar Filter Canggih:</strong> Saring data berdasarkan kata kunci (nama/email), peran spesifik, status verifikasi akun, dan urutan tanggal/abjad.</div>
+            </li>
+        </ul>
+    </x-slot:box2>
 
-                <!-- Panduan 2: Operasi CRUD & Zero-Reload -->
-                <div class="col-md-4">
-                    <div class="bg-body rounded p-5 h-100 border border-dashed border-gray-300">
-                        <h5 class="fw-bolder text-gray-900 mb-3">2. Pengelolaan Akun Realtime</h5>
-                        <p class="text-muted fs-7 mb-3">
-                            Semua tindakan pada modul ini diproses secara instan tanpa me-reload halaman (*Zero-Reload*):
-                        </p>
-                        <ul class="text-gray-700 fs-7 ps-4 mb-0 space-y-2">
-                            <li><strong>Tambah/Ubah:</strong> Gunakan modal untuk memperbarui profil dan foto avatar.</li>
-                            <li><strong>Reset Sandi:</strong> Mengembalikan kata sandi ke standar <code>password123</code>.</li>
-                            <li><strong>Hapus Akun:</strong> Akun yang dihapus bersifat permanen. Akun login Anda sendiri diproteksi dari penghapusan mandiri.</li>
-                        </ul>
-                    </div>
-                </div>
+    <x-slot:box3>
+        <ol class="text-gray-700 fs-7 mb-0 ps-4 d-flex flex-column gap-2">
+            <li><strong>Tambah Pengguna Baru:</strong> Klik tombol <em>Tambah Pengguna</em> di kanan atas, lengkapi identitas, peran, kata sandi, dan foto avatar.</li>
+            <li><strong>Pemberian Peran Massal (Bulk Assign):</strong> Centang satu atau beberapa pengguna (di kartu atau tabel), lalu klik tombol <em>Beri Role Massal</em> untuk menambahkan atau mengganti peran sekaligus.</li>
+            <li><strong>Ubah Data & Foto Profil:</strong> Klik tombol <em>Ubah</em> untuk memperbarui data akun dan foto profil (posisi foto otomatis fokus di bagian atas).</li>
+            <li><strong>Reset Kata Sandi:</strong> Klik opsi <em>Reset Password</em> pada menu aksi pengguna untuk mengembalikan kata sandi ke standar <code>password123</code>.</li>
+        </ol>
+    </x-slot:box3>
 
-                <!-- Panduan 3: Pencarian & Mode Tampilan -->
-                <div class="col-md-4">
-                    <div class="bg-body rounded p-5 h-100 border border-dashed border-gray-300">
-                        <h5 class="fw-bolder text-gray-900 mb-3">3. Pencarian & Mode Tampilan</h5>
-                        <p class="text-muted fs-7 mb-3">
-                            Gunakan sidebar filter kiri untuk menyaring pengguna berdasarkan nama, email, peran, status verifikasi, dan urutan:
-                        </p>
-                        <ul class="text-gray-700 fs-7 ps-4 mb-0 space-y-2">
-                            <li><strong>Card View:</strong> Menampilkan ringkasan visual kartu profil pengguna yang interaktif.</li>
-                            <li><strong>Table View:</strong> Menampilkan tabel data yang mendukung sorting dan pencarian dinamis.</li>
-                            <li><strong>Sidebar Filter:</strong> Klik <em>Terapkan Filter</em> untuk memperbarui daftar data secara realtime.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--end::Collapse Content-->
-    </div>
-</div>
-<!--end::Petunjuk Operasional Modul Users-->
+    <x-slot:box4>
+        <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Proteksi Akun Aktif:</strong> Anda tidak dapat menghapus akun Anda sendiri yang sedang digunakan saat ini demi integritas sistem.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Dukungan Multi-Role:</strong> Pengguna dapat memiliki lebih dari satu peran secara bersamaan (misal: Admin sekaligus Anggota).</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Zero-Reload Realtime:</strong> Seluruh pembaruan data, filter, dan penetapan peran diproses seketika tanpa perlu me-reload halaman peramban.</div>
+            </li>
+        </ul>
+    </x-slot:box4>
+</x-petunjuk-modal>

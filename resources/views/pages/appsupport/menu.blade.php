@@ -5,7 +5,12 @@
 @endsection
 
 @section('toolbar')
-    @include('layouts.partials._toolbar')
+    @include('layouts.partials._toolbar', [
+        'action' => view()->make('layouts.partials._action-petunjuk-button', [
+            'targetModal' => '#kt_modal_menu_petunjuk',
+            'title' => 'Petunjuk Operasional Menu'
+        ])
+    ])
 @endsection
 
 @section('content')
@@ -336,6 +341,7 @@
     </div>
 
     <!--begin::Modals-->
+    @include('pages.appsupport.partials.menu-petunjuk')
     @include('pages.appsupport.partials.menu-form-modal')
     <!--end::Modals-->
 @endsection

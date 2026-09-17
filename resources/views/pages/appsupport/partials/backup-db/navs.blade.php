@@ -30,12 +30,5 @@
     </li>
     <!--end::Nav item 3-->
 
-    <!--begin::Nav item 4 (Petunjuk)-->
-    <li class="nav-item mt-2">
-        <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#kt_backup_tab_petunjuk" role="tab">
-            Petunjuk Operasional
-        </a>
-    </li>
-    <!--end::Nav item 4-->
 </ul>
 <!--end::Navs-->

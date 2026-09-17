@@ -34,13 +34,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.24.0
+                            Versi Saat Ini: v1.25.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.25.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.25.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.25.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>17 Sep 2026, 14:40 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Pemberian Role Massal (Bulk Assign Role), Checkbox Seleksi Pengguna, Komponen Universal Petunjuk Modal, Perbaikan Filter Multi-Role, &amp; Pratinjau Avatar Fokus Atas</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi fitur pemberian peran secara massal (<em>Bulk Assign Role</em>) lengkap dengan checkbox seleksi di tampilan Kartu &amp; Tabel, modal penetapan peran multi-opsi (<em>Append</em> / <em>Replace</em>), perbaikan <em>type-safety</em> pencarian dan filter multi-role pada DataTables, optimalisasi pratinjau unggah foto avatar langsung fokus bagian atas (<em>top-aligned</em> 50% 0%), standarisasi komponen Blade universal <code>&lt;x-petunjuk-modal&gt;</code> di seluruh modul sistem, serta perombakan layout matriks Akses Role menjadi 2-kolom dengan sidebar vertikal.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Bulk Assign Role Engine</strong>: Checkbox seleksi pada kartu dan tabel, tombol aksi massal dinamis di toolbar, modal <code>users-bulk-role-modal.blade.php</code>, dan controller <code>UserController@bulkAssignRole</code> berbasis database transaction.</li>
+                                        <li><strong>DataTables Multi-Role &amp; Filter Robustness</strong>: Penanganan aman tipe input pencarian (mencegah error PHP 8+) dan optimasi query <code>whereHas('roles')</code> untuk pengguna multi-role.</li>
+                                        <li><strong>Top-Aligned Avatar Preview</strong>: Penyelarasan pratinjau unggah avatar baru agar langsung terfokus pada bagian atas gambar (<code>50% 0%</code>), konsisten dengan profil pengguna.</li>
+                                        <li><strong>Universal Reusable Petunjuk Modal Component</strong>: Pembuatan <code>&lt;x-petunjuk-modal&gt;</code> Blade component dan standarisasi toolbar pemicu petunjuk di <code>users</code>, <code>roles</code>, <code>permissions</code>, <code>akses-role</code>, <code>akses-user</code>, <code>backup-db</code>, dan <code>menu</code>.</li>
+                                        <li><strong>Akses Role 2-Column Sidebar Layout</strong>: Restrukturisasi visual matriks hak akses dengan tab vertikal role di sebelah kiri dan tabel matriks di sebelah kanan.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.25.0-->
+
                         <!--begin::Item v1.24.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.24.0</div>
@@ -56,7 +91,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>17 Sep 2026, 12:40 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Penyelarasan Spatie Laravel Permission, Visualisasi Izin Terwarisi vs Langsung, Standarisasi Header Banner (Rule #7), dan Optimasi Scroll Akses Role</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

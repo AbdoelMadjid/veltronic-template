@@ -1,80 +1,60 @@
-<!--begin::Petunjuk Operasional Card-->
-<div class="card card-flush shadow-sm border-0 mb-6">
-    <!--begin::Card header (Judul tanpa ikon sesuai aturan)-->
-    <div class="card-header border-0 pt-6 px-6">
-        <div>
-            <h4 class="fw-bolder text-gray-900 m-0">Petunjuk Operasional & Panduan Modul Database Backup</h4>
-            <span class="text-muted fs-8">Panduan komprehensif mengenai prosedur pencadangan, inspeksi relasi skema, dan pemulihan data aplikasi.</span>
-        </div>
-    </div>
-    <!--end::Card header-->
+<x-petunjuk-modal 
+    id="kt_modal_backup_db_petunjuk"
+    title="Petunjuk Operasional: Database Backup & Relasi"
+    subtitle="Panduan operasional lengkap pencadangan basis data, inspeksi skema relasi, dan prosedur pemulihan data"
+    box1Title="Gambaran Umum & Manajemen Cadangan"
+    box1Icon="ki-diamonds"
+    box2Title="Inspeksi Skema & Komponen Modul"
+    box2Icon="ki-element-11"
+    box3Title="Alur & Prosedur Pencadangan/Pemulihan"
+    box3Icon="ki-key"
+    box4Title="Aturan, Proteksi & Otomatisasi"
+    box4Icon="ki-security-user">
 
-    <!--begin::Card body-->
-    <div class="card-body py-4 px-6">
-        <div class="row g-6">
-            <!-- Seksi 1: Tujuan & Fungsi Modul -->
-            <div class="col-lg-6">
-                <div class="card card-bordered p-6 bg-light h-100">
-                    <h5 class="fw-bolder text-gray-900 mb-3">1. Tujuan & Fungsi Modul</h5>
-                    <p class="text-gray-700 fs-7 mb-3">
-                        Modul ini dirancang untuk menjaga keberlangsungan data (*Data Continuity & Disaster Recovery*) sistem Veltronic. Pengguna dapat memantau keterhubungan antar tabel dalam database dan menghasilkan berkas dump SQL yang valid secara instan.
-                    </p>
-                    <ul class="text-gray-700 fs-7 ps-4 mb-0">
-                        <li class="mb-2"><strong>Inspeksi Relasi Skema:</strong> Memetakan Foreign Key untuk mencegah terjadinya *orphaned data* saat proses migrasi atau backup sebagian.</li>
-                        <li class="mb-2"><strong>Full vs Selective Backup:</strong> Mendukung pembuatan cadangan keseluruhan database maupun tabel spesifik yang dipilih.</li>
-                        <li><strong>Kompresi GZIP:</strong> Mengurangi ukuran berkas hingga 80% untuk menghemat kapasitas penyimpanan server.</li>
-                    </ul>
-                </div>
-            </div>
+    <x-slot:box1>
+        Modul <strong>Database Backup & Relasi</strong> dirancang untuk menjaga integritas serta keberlangsungan data (<em>Data Continuity & Disaster Recovery</em>) sistem Veltronic. Pengguna dapat memantau keterhubungan relasional antar tabel dalam basis data, mengekspor berkas <em>dump</em> SQL terkompresi GZIP, serta memulihkan (<em>restore</em>) data aplikasi saat dibutuhkan secara aman.
+    </x-slot:box1>
 
-            <!-- Seksi 2: Alur Pembuatan Cadangan (Backup) -->
-            <div class="col-lg-6">
-                <div class="card card-bordered p-6 bg-light h-100">
-                    <h5 class="fw-bolder text-gray-900 mb-3">2. Alur & Prosedur Pencadangan</h5>
-                    <p class="text-gray-700 fs-7 mb-3">
-                        Terdapat dua metode pencadangan data yang dapat digunakan sesuai kebutuhan:
-                    </p>
-                    <ul class="text-gray-700 fs-7 ps-4 mb-0">
-                        <li class="mb-2"><strong>Backup Seluruh DB:</strong> Klik tombol "Backup Seluruh DB" pada toolbar tabel. Seluruh struktur (DDL) dan rekaman (DML) akan diekspor dalam satu berkas terpadu.</li>
-                        <li class="mb-2"><strong>Backup Selektif:</strong> Centang satu atau beberapa checkbox tabel pada tabel skema, lalu klik "Backup Terpilih".</li>
-                        <li><strong>Backup Satuan:</strong> Klik tombol ikon download pada kolom aksi baris tabel tertentu untuk mencadangkan tabel tersebut secara cepat.</li>
-                    </ul>
-                </div>
-            </div>
+    <x-slot:box2>
+        <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Struktur & Relasi Skema:</strong> Memetakan nama tabel, estimasi baris data (<em>row count</em>), ukuran penyimpanan, serta keterhubungan <em>Foreign Key</em> untuk mencegah data terputus (<em>orphaned data</em>).</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Riwayat & Berkas Cadangan:</strong> Menampung seluruh berkas hasil dump SQL (.sql / .sql.gz) lengkap dengan info ukuran, tanggal pembuatan, dan opsi unduh / pulihkan / hapus.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Pengaturan Backup Otomatis:</strong> Konfigurasi frekuensi pencadangan otomatis (harian, mingguan, atau bulanan) dan batasan retensi berkas cadangan lama.</div>
+            </li>
+        </ul>
+    </x-slot:box2>
 
-            <!-- Seksi 3: Pemulihan Data & Keamanan (Disaster Recovery) -->
-            <div class="col-lg-6">
-                <div class="card card-bordered p-6 bg-light-warning h-100 border-warning border-opacity-25">
-                    <h5 class="fw-bolder text-gray-900 mb-3">3. Pemulihan Data (Restore) & Catatan Kritis</h5>
-                    <div class="notice d-flex bg-white rounded p-4 mb-3 border border-warning border-dashed">
-                        <div class="fs-7 text-gray-800">
-                            <strong>PERINGATAN RESTORE:</strong> Proses pemulihan data (*restore*) akan menimpa (*drop & recreate*) tabel yang ada di dalam database dengan data yang tersimpan pada berkas cadangan.
-                        </div>
-                    </div>
-                    <ul class="text-gray-700 fs-7 ps-4 mb-0">
-                        <li class="mb-2">Pastikan telah membuat cadangan terbaru sebelum melakukan proses <em>Restore</em>.</li>
-                        <li class="mb-2">Proses restore menonaktifkan sementara Foreign Key Checks agar penyisipan data relasional berjalan tanpa konflik *foreign constraint*.</li>
-                        <li>Jangan menutup peramban web selama proses restore berlangsung.</li>
-                    </ul>
-                </div>
-            </div>
+    <x-slot:box3>
+        <ol class="text-gray-700 fs-7 mb-0 ps-4 d-flex flex-column gap-2">
+            <li><strong>Backup Seluruh Database:</strong> Klik tombol <em>Backup Seluruh DB</em> di header tabel untuk mengekspor seluruh skema DDL dan data DML ke dalam satu berkas SQL terkompresi.</li>
+            <li><strong>Backup Selektif / Parsial:</strong> Centang satu atau beberapa checkbox tabel pada daftar, lalu klik <em>Backup Terpilih</em> untuk mencadangkan tabel tertentu beserta relasinya.</li>
+            <li><strong>Unduh Berkas Cadangan:</strong> Buka tab <em>Riwayat & Berkas Cadangan</em>, lalu klik tombol unduh untuk menyimpan berkas dump SQL ke penyimpanan lokal Anda.</li>
+            <li><strong>Pemulihan Data (Restore):</strong> Klik tombol <em>Restore</em> pada baris berkas cadangan di riwayat untuk memulihkan seluruh struktur dan data database ke kondisi saat cadangan dibuat.</li>
+        </ol>
+    </x-slot:box3>
 
-            <!-- Seksi 4: Otomatisasi & Cron Scheduler -->
-            <div class="col-lg-6">
-                <div class="card card-bordered p-6 bg-light h-100">
-                    <h5 class="fw-bolder text-gray-900 mb-3">4. Penjadwalan Otomatis (Cron Scheduler)</h5>
-                    <p class="text-gray-700 fs-7 mb-3">
-                        Sistem mendukung eksekusi otomatis tanpa intervensi manual menggunakan Laravel Task Scheduling:
-                    </p>
-                    <ul class="text-gray-700 fs-7 ps-4 mb-0">
-                        <li class="mb-2"><strong>Cron Server:</strong> Pastikan cron job server Laravel telah aktif: <code>* * * * * cd /path-to-project && php artisan schedule:run >> /dev/null 2>&1</code></li>
-                        <li class="mb-2"><strong>Artisan Manual:</strong> Eksekusi cadangan otomatis dapat diuji manual melalui command <code>php artisan backup:auto-run</code>.</li>
-                        <li><strong>Pembersihan Otomatis:</strong> Berkas yang usianya melebihi masa retensi (misal 7 hari) akan dibersihkan otomatis oleh sistem.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--end::Card body-->
-</div>
-<!--end::Petunjuk Operasional Card-->
+    <x-slot:box4>
+        <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Peringatan Kritis Restore:</strong> Proses <em>Restore</em> akan menimpa (<em>drop & recreate</em>) tabel database. Pastikan Anda telah membuat cadangan terbaru sebelum menjalankan pemulihan.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Foreign Key Checks:</strong> Sistem secara otomatis menonaktifkan pengecekan kunci asing selama proses pemulihan agar tidak terjadi konflik dependensi antar tabel.</div>
+            </li>
+            <li class="d-flex align-items-start">
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Pembersihan Otomatis (Retention):</strong> Berkas cadangan yang melampaui batas retensi hari yang telah dikonfigurasi akan dibersihkan secara otomatis oleh task scheduler.</div>
+            </li>
+        </ul>
+    </x-slot:box4>
+</x-petunjuk-modal>

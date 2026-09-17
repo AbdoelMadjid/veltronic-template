@@ -1,11 +1,12 @@
 @extends('layouts.index')
 
-@section('title', 'Manajemen Pengguna')
-
 @section('toolbar')
-    @component('layouts.partials._toolbar')
-        @slot('li_1') User Management @endslot
-    @endcomponent
+    @include('layouts.partials._toolbar', [
+        'action' => view()->make('layouts.partials._action-petunjuk-button', [
+            'targetModal' => '#kt_modal_users_petunjuk',
+            'title' => 'Petunjuk Operasional Pengguna',
+        ]),
+    ])
 @endsection
 
 @section('styles')
@@ -20,10 +21,6 @@
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-fluid">
-
-            <!--begin::Petunjuk Operasional Modul-->
-            @include('pages.usermanagement.partials.users-petunjuk')
-            <!--end::Petunjuk Operasional Modul-->
 
             <!--begin::Search Vertical Layout-->
             <div class="d-flex flex-column flex-lg-row">
@@ -53,7 +50,8 @@
                             <ul class="nav nav-pills me-2">
                                 <li class="nav-item m-0">
                                     <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary me-2 active"
-                                        data-bs-toggle="tab" href="#kt_project_users_card_pane" data-bs-toggle="tooltip" title="Tampilan Kartu">
+                                        data-bs-toggle="tab" href="#kt_project_users_card_pane" data-bs-toggle="tooltip"
+                                        title="Tampilan Kartu">
                                         <i class="ki-duotone ki-element-plus fs-2">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
@@ -65,7 +63,8 @@
                                 </li>
                                 <li class="nav-item m-0">
                                     <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary"
-                                        data-bs-toggle="tab" href="#kt_project_users_table_pane" data-bs-toggle="tooltip" title="Tampilan Tabel">
+                                        data-bs-toggle="tab" href="#kt_project_users_table_pane" data-bs-toggle="tooltip"
+                                        title="Tampilan Tabel">
                                         <i class="ki-duotone ki-row-horizontal fs-2">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
@@ -74,6 +73,15 @@
                                 </li>
                             </ul>
                             <!--end::Tab nav-->
+
+                            <!--begin::Tombol Beri Role Massal-->
+                            <button type="button" id="btn_open_bulk_role" class="btn btn-sm btn-light-primary fw-bold d-none"
+                                data-bs-toggle="tooltip" title="Berikan Peran Massal ke Pengguna Terpilih">
+                                <i class="ki-duotone ki-shield-tick fs-4 me-1"><span class="path1"></span><span class="path2"></span></i>
+                                <span id="bulk_role_selected_badge" class="badge badge-primary me-1">0</span>
+                                <span>Beri Role Massal</span>
+                            </button>
+                            <!--end::Tombol Beri Role Massal-->
 
                             <!--begin::Tombol Tambah Pengguna-->
                             <button type="button" id="btn_open_add_user" class="btn btn-sm btn-primary fw-bold"
@@ -109,6 +117,8 @@
     </div>
 
     <!--begin::Modals-->
+    @include('pages.usermanagement.partials.users-petunjuk')
+    @include('pages.usermanagement.partials.users-bulk-role-modal')
     @include('pages.usermanagement.partials.users-form-modal')
     @include('pages.usermanagement.partials.users-detail-modal')
     <!--end::Modals-->
@@ -126,6 +136,7 @@
         window.USER_MANAGEMENT_ROUTES = {
             datatable: "{{ route('usermanagement.users.index') }}",
             store: "{{ route('usermanagement.users.store') }}",
+            bulkAssignRole: "{{ route('usermanagement.users.bulk-assign-role') }}",
             base: "{{ url('usermanagement/users') }}",
             auth_id: "{{ auth()->id() }}"
         };

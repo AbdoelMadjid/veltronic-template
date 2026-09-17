@@ -341,8 +341,8 @@
     </div>
 
     <!--begin::Modals-->
-    @include('pages.appsupport.partials.menu-petunjuk')
-    @include('pages.appsupport.partials.menu-form-modal')
+    @include('pages.appsupport.partials.menu.menu-petunjuk')
+    @include('pages.appsupport.partials.menu.menu-form-modal')
     <!--end::Modals-->
 @endsection
 

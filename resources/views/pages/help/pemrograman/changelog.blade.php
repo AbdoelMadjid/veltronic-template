@@ -34,13 +34,46 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.25.0
+                            Versi Saat Ini: v1.25.1
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.25.1 (Patch)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.25.1</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-warning fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-warning fw-bold text-white">v1.25.1</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>17 Sep 2026, 14:55 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Restrukturisasi Direktori Partials User Management &amp; App Support Menu</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyelarasan arsitektur folder modular partials dengan memindahkan berkas-berkas parsial Pengguna ke sub-folder <code>partials/users/</code> dan Menu ke <code>partials/menu/</code> agar konsisten dengan standar sub-folder modul lainnya (Rule #6).
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>User Management Partials</strong>: Pengelompokan 8 berkas partials pengguna ke folder <code>resources/views/pages/usermanagement/partials/users/</code>.</li>
+                                        <li><strong>App Support Menu Partials</strong>: Pengelompokan berkas modal &amp; petunjuk menu ke folder <code>resources/views/pages/appsupport/partials/menu/</code>.</li>
+                                        <li><strong>Sinkronisasi View &amp; Controller</strong>: Penyesuaian seluruh pemanggilan <code>@include</code> di Blade dan render view AJAX di <code>UserController@index</code>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.25.1-->
+
                         <!--begin::Item v1.25.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.25.0</div>
@@ -56,7 +89,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>17 Sep 2026, 14:40 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Pemberian Role Massal (Bulk Assign Role), Checkbox Seleksi Pengguna, Komponen Universal Petunjuk Modal, Perbaikan Filter Multi-Role, &amp; Pratinjau Avatar Fokus Atas</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

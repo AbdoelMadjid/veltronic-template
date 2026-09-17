@@ -193,7 +193,7 @@ class UserController extends Controller
         $users = $query->paginate($perPage)->withQueryString();
 
         if ($request->expectsJson() && $request->header('X-Fetch-Cards')) {
-            $cardsHtml = view('pages.usermanagement.partials.users-cards-list', compact('users'))->render();
+            $cardsHtml = view('pages.usermanagement.partials.users.users-cards-list', compact('users'))->render();
             $paginationHtml = $users->links('pagination::bootstrap-5')->render();
 
             return response()->json([

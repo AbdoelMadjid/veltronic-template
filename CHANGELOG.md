@@ -5,6 +5,16 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.25.1] - 2026-09-17
+
+### Restructured & Optimized
+- **Modular Partials Organization (`usermanagement` & `appsupport`)**:
+  - **User Management Partials Subdirectory (`usermanagement/partials/users/`)**: Moved all 8 user partials (`users-cards-list`, `users-cards-pane`, `users-table-pane`, `users-filter-aside`, `users-form-modal`, `users-detail-modal`, `users-bulk-role-modal`, `users-petunjuk`) into a dedicated `users/` subdirectory.
+  - **App Support Menu Partials Subdirectory (`appsupport/partials/menu/`)**: Moved menu partials (`menu-form-modal`, `menu-petunjuk`) into a dedicated `menu/` subdirectory.
+  - **Synchronized View References**: Updated all `@include` statements and controller render paths (`UserController@index` AJAX cards) to match the new nested folder architecture.
+
+---
+
 ## [v1.25.0] - 2026-09-17
 
 ### Added & Enhanced

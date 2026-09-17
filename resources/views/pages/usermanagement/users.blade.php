@@ -26,7 +26,7 @@
             <div class="d-flex flex-column flex-lg-row">
 
                 <!--begin::Aside Filter Sidebar-->
-                @include('pages.usermanagement.partials.users-filter-aside')
+                @include('pages.usermanagement.partials.users.users-filter-aside')
                 <!--end::Aside Filter Sidebar-->
 
                 <!--begin::Layout Content-->
@@ -98,11 +98,11 @@
                     <!--begin::Tab Content-->
                     <div class="tab-content">
                         <!--begin::Tab pane: Card View-->
-                        @include('pages.usermanagement.partials.users-cards-pane')
+                        @include('pages.usermanagement.partials.users.users-cards-pane')
                         <!--end::Tab pane: Card View-->
 
                         <!--begin::Tab pane: Table View-->
-                        @include('pages.usermanagement.partials.users-table-pane')
+                        @include('pages.usermanagement.partials.users.users-table-pane')
                         <!--end::Tab pane: Table View-->
                     </div>
                     <!--end::Tab Content-->
@@ -117,10 +117,10 @@
     </div>
 
     <!--begin::Modals-->
-    @include('pages.usermanagement.partials.users-petunjuk')
-    @include('pages.usermanagement.partials.users-bulk-role-modal')
-    @include('pages.usermanagement.partials.users-form-modal')
-    @include('pages.usermanagement.partials.users-detail-modal')
+    @include('pages.usermanagement.partials.users.users-petunjuk')
+    @include('pages.usermanagement.partials.users.users-bulk-role-modal')
+    @include('pages.usermanagement.partials.users.users-form-modal')
+    @include('pages.usermanagement.partials.users.users-detail-modal')
     <!--end::Modals-->
 @endsection
 

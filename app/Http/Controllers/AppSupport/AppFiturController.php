@@ -5,9 +5,13 @@ namespace App\Http\Controllers\AppSupport;
 use App\Http\Controllers\Controller;
 use App\Models\AppSupport\AppFitur;
 use App\Models\AppSupport\AppSetting;
+use App\Models\AppSupport\AppShortcut;
+use App\Models\AppSupport\Menu;
 use App\Models\Profil\UserLog;
+use App\Models\UserManagement\Role;
 use Carbon\Carbon;
 use Database\Seeders\AppFiturSeeder;
+use Database\Seeders\AppShortcutSeeder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -50,7 +54,309 @@ class AppFiturController extends Controller
             'sidebar_menus_active' => $fitursGrouped['sidebar_menus']->where('is_enabled', true)->count(),
         ];
 
-        return view('pages.appsupport.app-fiturs', compact('allFiturs', 'fitursGrouped', 'settings', 'stats'));
+        // Shortcuts & Action Targets Catalog
+        $shortcuts = AppShortcut::orderBy('order')->get();
+        
+        $availableRoles = [];
+        try {
+            $availableRoles = Role::pluck('name')->toArray();
+        } catch (\Throwable $e) {
+            $availableRoles = ['master', 'admin', 'operator', 'user'];
+        }
+        if (empty($availableRoles)) {
+            $availableRoles = ['master', 'admin', 'operator', 'user'];
+        }
+
+        $menuTargets = [];
+        try {
+            $menuTargets = Menu::orderBy('name')->get()->map(function($m) {
+                return [
+                    'id' => 'menu_' . $m->id,
+                    'label' => $m->name . ' (' . ($m->url ?: '-') . ')',
+                    'type' => 'open_url',
+                    'target' => $m->url,
+                    'category' => 'navigation',
+                ];
+            })->values()->toArray();
+        } catch (\Throwable $e) {
+            $menuTargets = [];
+        }
+
+        $shortcutCategories = [
+            'visibility' => [
+                'name' => 'Toggle Visibilitas UI',
+                'icon' => 'ki-eye',
+                'color' => 'primary',
+                'badge_class' => 'badge-light-primary',
+                'description' => 'Menampilkan atau menyembunyikan elemen UI seperti toolbar, navbar, header, atau sidebar secara realtime dan tersimpan persisten ke basis data.',
+                'targets' => [
+                    ['id' => 'sys_toggle_topbar_tools', 'label' => 'Fitur & Tools di Topbar Navbar (Ctrl + Alt + T)', 'type' => 'toggle_topbar_tools', 'target' => 'topbar_tools', 'default_name' => 'Toggle Fitur & Tools di Topbar Navbar', 'default_key' => 't', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'sys_toggle_topbar_menus', 'label' => 'Menu Utama di Topbar Header (Ctrl + Alt + H)', 'type' => 'toggle_topbar_menus', 'target' => 'topbar_menus', 'default_name' => 'Toggle Menu Utama di Topbar Header', 'default_key' => 'h', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'sys_toggle_sidebar', 'label' => 'Menu Template di Sidebar (Ctrl + Alt + M)', 'type' => 'toggle_sidebar_menus', 'target' => 'sidebar_menus', 'default_name' => 'Toggle Menu Template di Sidebar', 'default_key' => 'm', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'custom_visibility', 'label' => '+ Target Visibilitas Kustom (Selector Elemen)', 'type' => 'visibility_toggle', 'target' => 'custom', 'default_name' => 'Toggle Visibilitas Elemen Kustom', 'default_key' => '', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                ]
+            ],
+            'navigation' => [
+                'name' => 'Navigasi Menu & Rute',
+                'icon' => 'ki-route',
+                'color' => 'info',
+                'badge_class' => 'badge-light-info',
+                'description' => 'Membuka halaman navigasi aplikasi atau URL eksternal tertentu secara instan.',
+                'targets' => array_merge($menuTargets, [
+                    ['id' => 'custom_url', 'label' => '+ Tambah Rute / URL Kustom Baru...', 'type' => 'open_url', 'target' => 'custom', 'default_name' => 'Buka Halaman Kustom', 'default_key' => '', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true]
+                ])
+            ],
+            'appearance' => [
+                'name' => 'Tema, Gaya Ikon & Bahasa',
+                'icon' => 'ki-color-filter',
+                'color' => 'success',
+                'badge_class' => 'badge-light-success',
+                'description' => 'Mengubah mode tema (Dark/Light), berganti varian KeenIcons, beralih bahasa antarmuka, atau beralih versi layout aplikasi secara instan.',
+                'targets' => [
+                    ['id' => 'sys_theme_mode', 'label' => 'Beralih Mode Gelap / Terang (Ctrl + Alt + B)', 'type' => 'theme_mode', 'target' => 'theme_mode', 'default_name' => 'Beralih Mode Gelap & Terang', 'default_key' => 'b', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'sys_lang_id', 'label' => 'Pilihan Bahasa: Indonesia (Ctrl + Alt + I)', 'type' => 'switch_language', 'target' => 'id', 'default_name' => 'Ganti Bahasa: Indonesia', 'default_key' => 'i', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'sys_lang_en', 'label' => 'Pilihan Bahasa: English (Ctrl + Alt + E)', 'type' => 'switch_language', 'target' => 'en', 'default_name' => 'Ganti Bahasa: English', 'default_key' => 'e', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'sys_version_v1', 'label' => 'Pilihan Versi: Layout Versi 1 (Ctrl + Alt + 1)', 'type' => 'switch_version', 'target' => 'v1', 'default_name' => 'Beralih ke Layout Versi 1', 'default_key' => '1', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'sys_version_v2', 'label' => 'Pilihan Versi: Layout Versi 2 (Ctrl + Alt + 2)', 'type' => 'switch_version', 'target' => 'v2', 'default_name' => 'Beralih ke Layout Versi 2', 'default_key' => '2', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'sys_icon_duotone', 'label' => 'Gaya Ikon: Duotone (Ctrl + Alt + D)', 'type' => 'icon_style', 'target' => 'duotone', 'default_name' => 'Gaya Ikon: Duotone', 'default_key' => 'd', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'sys_icon_solid', 'label' => 'Gaya Ikon: Solid (Ctrl + Alt + S)', 'type' => 'icon_style', 'target' => 'solid', 'default_name' => 'Gaya Ikon: Solid', 'default_key' => 's', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'sys_icon_outline', 'label' => 'Gaya Ikon: Outline (Ctrl + Alt + O)', 'type' => 'icon_style', 'target' => 'outline', 'default_name' => 'Gaya Ikon: Outline', 'default_key' => 'o', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                ]
+            ],
+            'system' => [
+                'name' => 'Aksi Sistem & Keamanan',
+                'icon' => 'ki-shield-tick',
+                'color' => 'danger',
+                'badge_class' => 'badge-light-danger',
+                'description' => 'Memicu utilitas sistem seperti modal pencarian global terpusat atau kunci layar sesi saat meninggalkan workstation.',
+                'targets' => [
+                    ['id' => 'sys_search', 'label' => 'Pencarian Cepat Global (Ctrl + Alt + F)', 'type' => 'search', 'target' => 'global_search', 'default_name' => 'Pencarian Cepat Global (Global Search)', 'default_key' => 'f', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                    ['id' => 'sys_lock_screen', 'label' => 'Kunci Layar Pengguna / Lock Screen (Ctrl + Alt + L)', 'type' => 'lock_screen', 'target' => 'lock_screen', 'default_name' => 'Kunci Layar Pengguna (Lock Screen)', 'default_key' => 'l', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => true],
+                ]
+            ],
+            'element' => [
+                'name' => 'Klik Elemen / Drawer',
+                'icon' => 'ki-cursor',
+                'color' => 'warning',
+                'badge_class' => 'badge-light-warning',
+                'description' => 'Memicu aksi klik JavaScript pada tombol, panel samping (drawer), atau modal interaktif secara otomatis.',
+                'targets' => [
+                    ['id' => 'sys_chat_drawer', 'label' => 'Buka Quick Chat Drawer', 'type' => 'click_element', 'target' => '#kt_drawer_chat_toggle', 'default_name' => 'Buka Quick Chat Drawer', 'default_key' => '', 'default_ctrl' => true, 'default_shift' => true, 'default_alt' => false],
+                    ['id' => 'sys_activities_drawer', 'label' => 'Buka Activities Drawer', 'type' => 'click_element', 'target' => '#kt_activities_toggle', 'default_name' => 'Buka Activities Drawer', 'default_key' => '', 'default_ctrl' => true, 'default_shift' => true, 'default_alt' => false],
+                    ['id' => 'custom_element', 'label' => '+ Target Selector Elemen Kustom (#ID / .Class)', 'type' => 'click_element', 'target' => 'custom', 'default_name' => 'Klik Elemen Kustom', 'default_key' => '', 'default_ctrl' => true, 'default_shift' => false, 'default_alt' => false],
+                ]
+            ]
+        ];
+
+        // Flat actionTargets list for backward compatibility
+        $actionTargets = [];
+        foreach ($shortcutCategories as $catKey => $catData) {
+            foreach ($catData['targets'] as $tgt) {
+                $tgt['category'] = $catKey;
+                $actionTargets[] = $tgt;
+            }
+        }
+
+        $shortcutStats = [
+            'total' => $shortcuts->count(),
+            'active' => $shortcuts->where('is_enabled', true)->count(),
+            'admin_restricted' => $shortcuts->filter(fn($s) => !empty($s->roles))->count(),
+            'by_category' => [
+                'visibility' => $shortcuts->filter(fn($s) => $s->category === 'visibility')->count(),
+                'navigation' => $shortcuts->filter(fn($s) => $s->category === 'navigation')->count(),
+                'appearance' => $shortcuts->filter(fn($s) => $s->category === 'appearance')->count(),
+                'system' => $shortcuts->filter(fn($s) => $s->category === 'system')->count(),
+                'element' => $shortcuts->filter(fn($s) => $s->category === 'element')->count(),
+            ]
+        ];
+
+        return view('pages.appsupport.app-fiturs', compact(
+            'allFiturs', 
+            'fitursGrouped', 
+            'settings', 
+            'stats',
+            'shortcuts',
+            'availableRoles',
+            'actionTargets',
+            'shortcutCategories',
+            'shortcutStats'
+        ));
+    }
+
+    /**
+     * Store a newly created shortcut.
+     */
+    public function shortcutStore(Request $request): JsonResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'key' => 'required|string|max:20',
+            'action_type' => 'required|string|in:toggle_sidebar_menus,toggle_topbar_tools,toggle_topbar_menus,open_url,click_element,search,theme_mode,lock_screen,icon_style,switch_language,switch_version,custom',
+            'action_target' => 'nullable|string|max:500',
+            'roles' => 'nullable|array',
+            'roles.*' => 'string',
+            'description' => 'nullable|string|max:500',
+            'is_enabled' => 'nullable|boolean',
+        ]);
+
+        $roles = $request->input('roles', []);
+        if (empty($roles) || in_array('all', $roles)) {
+            $roles = null; // All roles
+        }
+
+        $shortcut = AppShortcut::create([
+            'name' => $request->name,
+            'key' => strtolower(trim($request->key)),
+            'ctrl' => $request->boolean('ctrl'),
+            'alt' => $request->boolean('alt'),
+            'shift' => $request->boolean('shift'),
+            'meta' => $request->boolean('meta'),
+            'action_type' => $request->action_type,
+            'action_target' => $request->action_target,
+            'roles' => $roles,
+            'description' => $request->description,
+            'is_enabled' => $request->boolean('is_enabled', true),
+            'order' => (AppShortcut::max('order') ?? 0) + 1,
+        ]);
+
+        UserLog::record(
+            'appsupport',
+            'app-fiturs',
+            'Tambah Pintasan Keyboard',
+            "Menambahkan pintasan keyboard baru '{$shortcut->name}' ({$shortcut->formatted_combination})"
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => "Pintasan keyboard '{$shortcut->name}' berhasil ditambahkan.",
+            'data' => $shortcut,
+            'formatted_combination' => $shortcut->formatted_combination,
+            'mac_combination' => $shortcut->mac_combination,
+            'user_shortcuts' => AppShortcut::getActiveForCurrentUser(),
+        ]);
+    }
+
+    /**
+     * Show shortcut data.
+     */
+    public function shortcutShow(AppShortcut $appShortcut): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $appShortcut,
+        ]);
+    }
+
+    /**
+     * Update shortcut.
+     */
+    public function shortcutUpdate(Request $request, AppShortcut $appShortcut): JsonResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'key' => 'required|string|max:20',
+            'action_type' => 'required|string|in:toggle_sidebar_menus,toggle_topbar_tools,toggle_topbar_menus,open_url,click_element,search,theme_mode,lock_screen,icon_style,switch_language,switch_version,custom',
+            'action_target' => 'nullable|string|max:500',
+            'roles' => 'nullable|array',
+            'roles.*' => 'string',
+            'description' => 'nullable|string|max:500',
+            'is_enabled' => 'nullable|boolean',
+        ]);
+
+        $roles = $request->input('roles', []);
+        if (empty($roles) || in_array('all', $roles)) {
+            $roles = null;
+        }
+
+        $appShortcut->update([
+            'name' => $request->name,
+            'key' => strtolower(trim($request->key)),
+            'ctrl' => $request->boolean('ctrl'),
+            'alt' => $request->boolean('alt'),
+            'shift' => $request->boolean('shift'),
+            'meta' => $request->boolean('meta'),
+            'action_type' => $request->action_type,
+            'action_target' => $request->action_target,
+            'roles' => $roles,
+            'description' => $request->description,
+            'is_enabled' => $request->has('is_enabled') ? $request->boolean('is_enabled') : $appShortcut->is_enabled,
+        ]);
+
+        UserLog::record(
+            'appsupport',
+            'app-fiturs',
+            'Perbarui Pintasan Keyboard',
+            "Memperbarui konfigurasi pintasan keyboard '{$appShortcut->name}' ({$appShortcut->formatted_combination})"
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => "Pintasan keyboard '{$appShortcut->name}' berhasil diperbarui.",
+            'data' => $appShortcut->fresh(),
+            'formatted_combination' => $appShortcut->fresh()->formatted_combination,
+            'mac_combination' => $appShortcut->fresh()->mac_combination,
+            'user_shortcuts' => AppShortcut::getActiveForCurrentUser(),
+        ]);
+    }
+
+    /**
+     * Toggle shortcut active state.
+     */
+    public function shortcutToggle(Request $request, AppShortcut $appShortcut): JsonResponse
+    {
+        $appShortcut->is_enabled = !$appShortcut->is_enabled;
+        $appShortcut->save();
+
+        $statusStr = $appShortcut->is_enabled ? 'diaktifkan' : 'dinonaktifkan';
+        UserLog::record(
+            'appsupport',
+            'app-fiturs',
+            'Toggle Pintasan Keyboard',
+            "Mengubah status pintasan '{$appShortcut->name}' menjadi {$statusStr}"
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => "Pintasan '{$appShortcut->name}' berhasil {$statusStr}.",
+            'data' => $appShortcut,
+            'user_shortcuts' => AppShortcut::getActiveForCurrentUser(),
+        ]);
+    }
+
+    /**
+     * Delete shortcut.
+     */
+    public function shortcutDestroy(Request $request, AppShortcut $appShortcut): JsonResponse
+    {
+        $name = $appShortcut->name;
+        $combo = $appShortcut->formatted_combination;
+        $id = $appShortcut->id;
+        $appShortcut->delete();
+
+        UserLog::record(
+            'appsupport',
+            'app-fiturs',
+            'Hapus Pintasan Keyboard',
+            "Menghapus pintasan keyboard '{$name}' ({$combo})"
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => "Pintasan keyboard '{$name}' berhasil dihapus.",
+            'id' => $id,
+            'user_shortcuts' => AppShortcut::getActiveForCurrentUser(),
+        ]);
+    }
+
+    /**
+     * Get active shortcuts for current user.
+     */
+    public function getUserShortcutsJson(): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'shortcuts' => AppShortcut::getActiveForCurrentUser(),
+        ]);
     }
 
     /**
@@ -163,20 +469,25 @@ class AppFiturController extends Controller
         }
 
         if ($action === 'reset_all' || $action === 'reset_category') {
-            // Re-run the seeder to restore defaults
+            // Re-run the seeders to restore defaults
             $seeder = new AppFiturSeeder();
             $seeder->run();
+
+            if ($action === 'reset_all') {
+                $shortcutSeeder = new AppShortcutSeeder();
+                $shortcutSeeder->run();
+            }
 
             UserLog::record(
                 'appsupport',
                 'app-fiturs',
-                'Reset Pengaturan Fitur',
-                "Mengembalikan konfigurasi fitur aplikasi ke pengaturan bawaan (default seeder)"
+                'Reset Pengaturan Fitur & Pintasan',
+                "Mengembalikan konfigurasi fitur dan pintasan keyboard aplikasi ke pengaturan bawaan (default seeder)"
             );
 
             return response()->json([
                 'success' => true,
-                'message' => 'Pengaturan fitur berhasil dikembalikan ke kondisi default!',
+                'message' => 'Pengaturan fitur dan pintasan keyboard berhasil dikembalikan ke kondisi default!',
                 'stats' => $this->getStatsSummary(),
             ]);
         }

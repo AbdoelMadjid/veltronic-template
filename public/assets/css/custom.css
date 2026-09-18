@@ -90,4 +90,84 @@
     padding-right: 6rem !important;
 }
 
+/* ==========================================================================
+   Toastr Notification Container & Progress Bar Fix
+   ========================================================================== */
+#toast-container,
+.toast-container {
+    position: fixed !important;
+    z-index: 999999 !important;
+    pointer-events: auto !important;
+    width: auto !important;
+    max-width: 420px !important;
+}
+
+#toast-container.toastr-top-right,
+#toast-container.toast-top-right,
+.toastr-top-right {
+    top: 24px !important;
+    right: 24px !important;
+    left: auto !important;
+    bottom: auto !important;
+}
+
+#toast-container.toastr-top-left,
+#toast-container.toast-top-left,
+.toastr-top-left {
+    top: 24px !important;
+    left: 24px !important;
+    right: auto !important;
+    bottom: auto !important;
+}
+
+#toast-container.toastr-bottom-right,
+#toast-container.toast-bottom-right,
+.toastr-bottom-right {
+    bottom: 24px !important;
+    right: 24px !important;
+    left: auto !important;
+    top: auto !important;
+}
+
+#toast-container.toastr-bottom-left,
+#toast-container.toast-bottom-left,
+.toastr-bottom-left {
+    bottom: 24px !important;
+    left: 24px !important;
+    right: auto !important;
+    top: auto !important;
+}
+
+#toast-container > div.toast,
+#toast-container > .toast {
+    position: relative !important;
+    overflow: hidden !important;
+    margin: 0 0 10px !important;
+    padding: 15px 15px 15px 50px !important;
+    width: 320px !important;
+    max-width: 100% !important;
+    border-radius: 0.475rem !important;
+    background-position: 15px center !important;
+    background-repeat: no-repeat !important;
+    box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.08) !important;
+    border: none !important;
+}
+
+/* Eliminate full-width progress bar and pseudo-element lines */
+#toast-container .toast-progress,
+.toast .toast-progress {
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+}
+
+#toast-container::before,
+#toast-container::after,
+#toast-container > .toast::before,
+#toast-container > .toast::after {
+    border: none !important;
+    box-shadow: none !important;
+}
+
 

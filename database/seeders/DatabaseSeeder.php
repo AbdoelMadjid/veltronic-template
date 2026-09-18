@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             AppFiturSeeder::class,
             AppSettingSeeder::class,
+            AppShortcutSeeder::class,
         ]);
 
         if (class_exists(\App\Support\LanguageManager::class)) {

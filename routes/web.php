@@ -36,11 +36,19 @@ Route::get('/lang/translations.json', function () {
         ->header('Cache-Control', 'public, max-age=3600');
 })->name('lang.translations');
 
-Route::get('/theme/version/{version}', function ($version) {
+Route::get('/theme/version/{version}', function (Request $request, $version) {
     if (in_array($version, ThemeVersion::available(), true)) {
         session(['theme_version' => $version]);
         if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
             \App\Models\AppSupport\AppSetting::set('default_theme_version', $version, 'appearance');
+        }
+
+        if ($request->expectsJson() || $request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
+            return response()->json([
+                'status' => 'success',
+                'version' => $version,
+                'message' => 'Theme layout version switched to ' . strtoupper($version)
+            ]);
         }
     }
     return redirect()->back();

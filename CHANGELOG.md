@@ -5,6 +5,37 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.28.0] - 2026-09-18
+
+### Added & Enhanced
+- **Dynamic & Categorized Keyboard Shortcuts Management System (`appsupport/app-fiturs`)**:
+  - **Database & Model Architecture**: Created `app_shortcuts` migration and `AppShortcut` model with JSON role filtering (`isAllowedForUser`), formatted badge accessors (`formatted_combination`, `mac_combination`), structured categories (`CATEGORIES`), and query scopes (`getActiveForCurrentUser`).
+  - **Categorized 5-Tier Shortcut Structure**:
+    - 👁️ **Visibilitas Fitur (`visibility`)**: Global toggle for Topbar Navbar Tools (`Ctrl + Alt + T`), Topbar Header Menus (`Ctrl + Alt + H`), and Sidebar Template Menus (`Ctrl + Alt + M`) with persistent backend state synchronization via `/appsupport/app-fiturs/bulk-toggle`.
+    - 🎨 **Tema, Gaya Ikon, Bahasa & Versi Layout (`appearance`)**: Instant theme mode toggle (`Ctrl + Alt + B`), KeenIcons variant switcher (`Ctrl + Alt + D/S/O`), bilingual language switcher (`Ctrl + Alt + I/E`), and layout version switcher (`Ctrl + Alt + 1/2`).
+    - ⚡ **Aksi Sistem & Keamanan (`system`)**: Global search trigger (`Ctrl + Alt + F`), instant lock screen session lock (`Ctrl + Alt + L`), and operational guidelines modal trigger.
+    - 🔗 **Navigasi Menu (`navigation`)**: Instant route opening to core application modules.
+    - 🎯 **Aksi Elemen (`element`)**: Automated trigger clicks on Metronic side drawers and modals.
+  - **Modular Frontend Action Registry (`public/assets/js/custom/shortcuts.js`)**:
+    - Decoupled `ActionRegistry` architecture separating global keydown listeners from domain-specific action handlers.
+    - Public extensibility API via `window.VeltronicShortcuts.registerActionHandler()`.
+    - Dual key/code matching (`e.key` and `e.code`) ensuring 100% compatibility across operating systems, international keyboard layouts, and AltGr keystrokes.
+    - Conflict-free keystroke standard (`Ctrl + Alt + [Letter]`) preventing collisions with native browser hotkeys.
+  - **2-Column Guided Form & Live Collision Warning**:
+    - Interactive Category Grid selector with dynamic target dropdown population from `window.SHORTCUT_CATEGORIES_CATALOG`.
+    - Realtime key collision detector displaying visual warnings when a key combination is already registered.
+    - Realtime zero-reload AJAX CRUD with SweetAlert2 confirmations and Metronic button indicator spinners.
+  - **Interactive Table & Category Filtering**:
+    - Category filter navigation tabs (`Semua`, `Visibilitas`, `Tema, Ikon & Bahasa`, `Aksi Sistem`, `Navigasi`, `Elemen`).
+    - Categorized reference cheatsheet cards with Windows/Linux vs macOS keyboard shortcuts.
+  - **Toastr & Notification Container Optimization**:
+    - Disabled raw `progressBar` and standardized `#toast-container` CSS in `custom.css` to eliminate full-width horizontal black lines across the viewport.
+  - **Database Seeder & Operational Guidelines Integration**:
+    - Created `AppShortcutSeeder` with 13 comprehensive default shortcuts registered in `DatabaseSeeder.php` and reset default actions in `AppFiturController.php`.
+    - Updated operational guidelines modal (`app-fiturs-petunjuk.blade.php`) and bilingual language dictionaries (`lang/id/menu.php`, `lang/en/menu.php`).
+
+---
+
 ## [v1.27.0] - 2026-09-17
 
 ### Added & Enhanced

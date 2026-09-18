@@ -7,14 +7,14 @@
 (function (window) {
     'use strict';
 
-    // Default Toastr Config (Top Right, Close Button, Progress Bar)
+    // Default Toastr Config (Top Right, Close Button, Clean Minimal Toast)
     const defaultToastrOptions = {
         closeButton: true,
         debug: false,
         newestOnTop: true,
-        progressBar: true,
+        progressBar: false,
         positionClass: "toastr-top-right",
-        preventDuplicates: false,
+        preventDuplicates: true,
         showDuration: "300",
         hideDuration: "1000",
         timeOut: "4000",

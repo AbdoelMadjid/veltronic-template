@@ -46,6 +46,12 @@
             </div>
             <!--end:::Tab pane settings-->
 
+            <!--begin:::Tab pane shortcuts-->
+            <div class="tab-pane fade" id="kt_app_fiturs_tab_shortcuts" role="tabpanel">
+                @include('pages.appsupport.partials.app-fiturs.tabs.shortcuts')
+            </div>
+            <!--end:::Tab pane shortcuts-->
+
             <!--begin:::Tab pane activity logs-->
             <div class="tab-pane fade" id="kt_app_fiturs_tab_activity_logs" role="tabpanel">
                 @include('pages.appsupport.partials.app-fiturs.tabs.activity-logs')

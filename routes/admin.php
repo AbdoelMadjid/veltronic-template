@@ -28,6 +28,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/app-fiturs/settings', [AppFiturController::class, 'saveSettings'])->name('app-fiturs.settings');
         Route::post('/app-fiturs/clear-cache', [AppFiturController::class, 'clearCache'])->name('app-fiturs.clear-cache');
 
+        // Keyboard Shortcuts CRUD
+        Route::post('/shortcuts', [AppFiturController::class, 'shortcutStore'])->name('shortcuts.store');
+        Route::get('/shortcuts/{appShortcut}', [AppFiturController::class, 'shortcutShow'])->name('shortcuts.show');
+        Route::put('/shortcuts/{appShortcut}', [AppFiturController::class, 'shortcutUpdate'])->name('shortcuts.update');
+        Route::post('/shortcuts/{appShortcut}/toggle', [AppFiturController::class, 'shortcutToggle'])->name('shortcuts.toggle');
+        Route::delete('/shortcuts/{appShortcut}', [AppFiturController::class, 'shortcutDestroy'])->name('shortcuts.destroy');
+        Route::get('/shortcuts-active', [AppFiturController::class, 'getUserShortcutsJson'])->name('shortcuts.active');
+
         // Database Backup & Table Relations (Backup DB)
         Route::get('/backup-db', [BackupDbController::class, 'index'])->name('backup-db');
         Route::get('/backup-db/tables', [BackupDbController::class, 'getTablesData'])->name('backup-db.tables');

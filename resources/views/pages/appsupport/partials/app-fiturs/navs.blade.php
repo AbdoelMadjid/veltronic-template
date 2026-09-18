@@ -13,6 +13,12 @@
         </a>
     </li>
     <li class="nav-item" role="presentation">
+        <a class="nav-link text-active-primary py-4 {{ ($active ?? '') === 'shortcuts' ? 'active' : '' }}"
+            data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_shortcuts" id="tab_btn_shortcuts">
+            <i class="ki-outline ki-keyboard fs-4 me-2"></i> Pintasan Keyboard (Shortcuts)
+        </a>
+    </li>
+    <li class="nav-item" role="presentation">
         <a class="nav-link text-active-primary py-4 {{ ($active ?? '') === 'activity_logs' ? 'active' : '' }}"
             data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_activity_logs" id="tab_btn_activity_logs">
             <i class="ki-outline ki-time fs-4 me-2"></i> Log Aktivitas Sistem

@@ -509,7 +509,763 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ========================================================
-    // TAB 3: SYSTEM ACTIVITY LOGS (DATATABLES & ZERO-RELOAD)
+    // TAB 3: KEYBOARD SHORTCUTS MANAGER INTERACTIONS (2-COLUMN CRUD)
+    // ========================================================
+    const masterShortcutsSwitch = document.getElementById('global_shortcuts_master_switch');
+    if (masterShortcutsSwitch) {
+        masterShortcutsSwitch.addEventListener('change', function () {
+            const isEnabled = this.checked;
+            if (typeof KTAppShortcuts !== 'undefined') {
+                KTAppShortcuts.setEnabled(isEnabled);
+            }
+            if (isEnabled) {
+                Notify.success('Pintasan keyboard global diaktifkan.');
+            } else {
+                Notify.info('Pintasan keyboard global dinonaktifkan sementara.');
+            }
+        });
+    }
+
+    const formShortcut = document.getElementById('form_shortcut_manage');
+    const btnSaveShortcut = document.getElementById('btn_save_shortcut_manage');
+    const btnResetShortcutForm = document.getElementById('btn_reset_shortcut_form');
+    const btnNewShortcutFocus = document.getElementById('btn_new_shortcut_focus');
+    const targetSelect = document.getElementById('shortcut_target_select');
+    const customTargetWrapper = document.getElementById('wrapper_custom_target');
+    const customTargetValInput = document.getElementById('custom_target_value_input');
+    const hiddenActionType = document.getElementById('hidden_action_type');
+    const hiddenActionTarget = document.getElementById('hidden_action_target');
+    const inputKey = document.getElementById('shortcut_input_key');
+    const inputName = document.getElementById('shortcut_input_name');
+    const checkCtrl = document.getElementById('shortcut_check_ctrl');
+    const checkAlt = document.getElementById('shortcut_check_alt');
+    const checkShift = document.getElementById('shortcut_check_shift');
+    const liveBadgePreview = document.getElementById('shortcut_live_badge_preview');
+    const roleCheckAll = document.getElementById('shortcut_role_all');
+    const searchShortcutsInput = document.getElementById('shortcut_table_search');
+    const conflictWarningEl = document.getElementById('shortcut_conflict_warning');
+    const conflictMsgEl = document.getElementById('conflict_warning_message');
+
+    let currentSelectedCategory = 'visibility';
+    let currentTableCategoryFilter = 'all';
+
+    // 1. Live Badge Preview & Conflict Detector Helper
+    function updateLiveBadgePreview() {
+        if (!liveBadgePreview) return;
+        const key = (inputKey?.value || 'T').toUpperCase();
+        const parts = [];
+        if (checkCtrl?.checked) parts.push('Ctrl');
+        if (checkAlt?.checked) parts.push('Alt');
+        if (checkShift?.checked) parts.push('Shift');
+        parts.push(key || '?');
+
+        const comboString = parts.join(' + ');
+        liveBadgePreview.innerHTML = `<kbd class="bg-primary text-white px-2 py-1 rounded fw-bold fs-8 shadow-sm">${comboString}</kbd>`;
+
+        // Conflict check against other shortcuts
+        checkShortcutConflict(parts.join(' + ').toLowerCase());
+    }
+
+    function checkShortcutConflict(currentComboLower) {
+        if (!conflictWarningEl) return;
+        const currentId = document.getElementById('shortcut_form_id')?.value;
+        const rows = document.querySelectorAll('.shortcut-row');
+        let conflictingName = null;
+
+        rows.forEach(row => {
+            const rowId = row.dataset.id;
+            if (currentId && rowId === currentId) return;
+
+            const comboBadge = row.querySelector('.shortcut-combo-badge');
+            const rowCombo = comboBadge ? comboBadge.innerText.toLowerCase().trim() : '';
+            if (rowCombo && rowCombo === currentComboLower) {
+                const nameEl = row.querySelector('.shortcut-name-text');
+                conflictingName = nameEl ? nameEl.innerText.trim() : 'Pintasan lain';
+            }
+        });
+
+        if (conflictingName) {
+            conflictWarningEl.classList.remove('d-none');
+            if (conflictMsgEl) {
+                conflictMsgEl.innerHTML = `Peringatan: Tombol ini sudah dipakai oleh <strong>"${conflictingName}"</strong>.`;
+            }
+        } else {
+            conflictWarningEl.classList.add('d-none');
+        }
+    }
+
+    if (inputKey) inputKey.addEventListener('input', updateLiveBadgePreview);
+    [checkCtrl, checkAlt, checkShift].forEach(chk => {
+        if (chk) chk.addEventListener('change', updateLiveBadgePreview);
+    });
+
+    // 2. Populate Target Select based on Selected Category
+    function populateTargetOptionsForCategory(catKey, preserveTarget = null) {
+        if (!targetSelect || !window.SHORTCUT_CATEGORIES_CATALOG) return;
+
+        const catalog = window.SHORTCUT_CATEGORIES_CATALOG[catKey];
+        if (!catalog) return;
+
+        // Clear existing options
+        $(targetSelect).empty();
+
+        const targets = catalog.targets || [];
+        targets.forEach(tgt => {
+            const opt = new Option(tgt.label, tgt.id, false, false);
+            opt.setAttribute('data-type', tgt.type || 'open_url');
+            opt.setAttribute('data-target', tgt.target || '');
+            opt.setAttribute('data-name', tgt.default_name || tgt.label || '');
+            opt.setAttribute('data-key', tgt.default_key || '');
+            opt.setAttribute('data-ctrl', tgt.default_ctrl ? '1' : '0');
+            opt.setAttribute('data-alt', tgt.default_alt ? '1' : '0');
+            opt.setAttribute('data-shift', tgt.default_shift ? '1' : '0');
+            targetSelect.appendChild(opt);
+        });
+
+        if (preserveTarget) {
+            $(targetSelect).val(preserveTarget).trigger('change');
+        } else if (targets.length > 0) {
+            $(targetSelect).val(targets[0].id).trigger('change');
+        }
+    }
+
+    // 3. Category Selector Grid Click Handlers
+    document.querySelectorAll('.btn-category-select').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const cat = this.dataset.category;
+            if (!cat) return;
+
+            document.querySelectorAll('.btn-category-select').forEach(b => {
+                b.classList.remove('active', 'btn-primary', 'btn-info', 'btn-success', 'btn-danger', 'btn-warning');
+                b.classList.add('btn-outline');
+            });
+
+            this.classList.add('active');
+            currentSelectedCategory = cat;
+
+            // Update badge & hint
+            const catalog = window.SHORTCUT_CATEGORIES_CATALOG ? window.SHORTCUT_CATEGORIES_CATALOG[cat] : null;
+            if (catalog) {
+                const badgeSelected = document.getElementById('badge_selected_category');
+                if (badgeSelected) {
+                    badgeSelected.innerText = catalog.name;
+                    badgeSelected.className = `badge ${catalog.badge_class} fs-9`;
+                }
+                const hintEl = document.getElementById('category_description_hint');
+                if (hintEl) {
+                    hintEl.innerText = catalog.description;
+                }
+            }
+
+            populateTargetOptionsForCategory(cat);
+        });
+    });
+
+    // 4. Target Selection Dropdown Change Handler
+    if (targetSelect) {
+        $(targetSelect).on('change', function () {
+            const selectedOpt = this.options[this.selectedIndex];
+            if (!selectedOpt) return;
+
+            const val = this.value;
+            const type = selectedOpt.getAttribute('data-type') || 'open_url';
+            const target = selectedOpt.getAttribute('data-target') || '';
+            const defaultName = selectedOpt.getAttribute('data-name') || '';
+            const defaultKey = selectedOpt.getAttribute('data-key') || '';
+            const defaultCtrl = selectedOpt.getAttribute('data-ctrl') === '1';
+            const defaultAlt = selectedOpt.getAttribute('data-alt') === '1';
+            const defaultShift = selectedOpt.getAttribute('data-shift') === '1';
+
+            if (target === 'custom' || val.startsWith('custom_')) {
+                if (customTargetWrapper) customTargetWrapper.classList.remove('d-none');
+                if (hiddenActionType) hiddenActionType.value = (currentSelectedCategory === 'element') ? 'click_element' : (currentSelectedCategory === 'visibility' ? 'visibility_toggle' : 'open_url');
+                if (hiddenActionTarget) hiddenActionTarget.value = customTargetValInput?.value || '';
+
+                const label = document.getElementById('custom_target_input_label');
+                const addon = document.getElementById('custom_target_addon');
+                const helpText = document.getElementById('custom_target_help_text');
+                if (currentSelectedCategory === 'element') {
+                    if (label) label.innerText = 'Selector Elemen Tombol/Drawer (#ID atau .Class):';
+                    if (addon) addon.innerText = '#';
+                    if (helpText) helpText.innerHTML = 'Contoh: <code>#kt_drawer_chat_toggle</code> atau <code>.btn-submit-order</code>';
+                } else if (currentSelectedCategory === 'visibility') {
+                    if (label) label.innerText = 'Selector Elemen yang Di-Toggle (#ID atau [data-attr]):';
+                    if (addon) addon.innerText = '#';
+                    if (helpText) helpText.innerHTML = 'Contoh: <code>#kt_header</code> atau <code>[data-kt-feature-tool="tool_search"]</code>';
+                } else {
+                    if (label) label.innerText = 'URL Target Halaman:';
+                    if (addon) addon.innerText = '/';
+                    if (helpText) helpText.innerHTML = 'Contoh: <code>apps/ecommerce/sales/add-order</code>';
+                }
+            } else {
+                if (customTargetWrapper) customTargetWrapper.classList.add('d-none');
+                if (hiddenActionType) hiddenActionType.value = type;
+                if (hiddenActionTarget) hiddenActionTarget.value = target;
+
+                // Auto fill name and keys if adding new shortcut
+                const formMethod = document.getElementById('shortcut_form_method')?.value;
+                if (formMethod === 'POST') {
+                    if (inputName && defaultName) inputName.value = defaultName;
+                    if (inputKey && defaultKey) inputKey.value = defaultKey;
+                    if (checkCtrl) checkCtrl.checked = defaultCtrl;
+                    if (checkAlt) checkAlt.checked = defaultAlt;
+                    if (checkShift) checkShift.checked = defaultShift;
+                    updateLiveBadgePreview();
+                }
+            }
+        });
+    }
+
+    if (customTargetValInput) {
+        customTargetValInput.addEventListener('input', function () {
+            if (hiddenActionTarget) hiddenActionTarget.value = this.value.trim();
+        });
+    }
+
+    // 5. Role Filter Logic
+    if (roleCheckAll) {
+        roleCheckAll.addEventListener('change', function () {
+            const isAll = this.checked;
+            document.querySelectorAll('.role-item-checkbox').forEach(cb => {
+                cb.disabled = isAll;
+                if (isAll) cb.checked = false;
+            });
+        });
+    }
+
+    document.querySelectorAll('.role-item-checkbox').forEach(cb => {
+        cb.addEventListener('change', function () {
+            if (this.checked && roleCheckAll) {
+                roleCheckAll.checked = false;
+            }
+        });
+    });
+
+    // 6. Reset Form to Create Mode
+    function resetShortcutForm() {
+        if (!formShortcut) return;
+        formShortcut.reset();
+        formShortcut.action = '/appsupport/shortcuts';
+        document.getElementById('shortcut_form_method').value = 'POST';
+        document.getElementById('shortcut_form_id').value = '';
+        if (inputName) inputName.value = 'Toggle Fitur & Tools di Topbar Navbar';
+        if (inputKey) inputKey.value = 't';
+        if (checkCtrl) checkCtrl.checked = true;
+        if (checkAlt) checkAlt.checked = false;
+        if (checkShift) checkShift.checked = true;
+        document.getElementById('shortcut_input_description').value = '';
+        document.getElementById('shortcut_input_is_enabled').checked = true;
+
+        if (roleCheckAll) roleCheckAll.checked = false;
+        document.querySelectorAll('.role-item-checkbox').forEach(cb => {
+            cb.disabled = false;
+            cb.checked = ['master', 'admin'].includes(cb.value.toLowerCase());
+        });
+
+        // Trigger category 1 (visibility)
+        const firstCatBtn = document.querySelector('.btn-category-select[data-category="visibility"]');
+        if (firstCatBtn) firstCatBtn.click();
+
+        document.getElementById('shortcut_form_card_title').innerHTML = `<i class="ki-outline ki-plus-circle fs-3 text-primary me-2"></i> Tambah Pintasan Baru`;
+        document.getElementById('shortcut_form_card_subtitle').innerText = 'Pilih kelompok aksi, kombinasi tombol, dan filter hak akses';
+        updateLiveBadgePreview();
+    }
+
+    if (btnResetShortcutForm) {
+        btnResetShortcutForm.addEventListener('click', resetShortcutForm);
+    }
+
+    if (btnNewShortcutFocus) {
+        btnNewShortcutFocus.addEventListener('click', function () {
+            resetShortcutForm();
+            if (inputName) {
+                inputName.focus();
+                inputName.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    }
+
+    // 7. Form Submit Handler (Zero-Reload Realtime CRUD)
+    if (formShortcut) {
+        formShortcut.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            if (btnSaveShortcut) {
+                btnSaveShortcut.setAttribute('data-kt-indicator', 'on');
+                btnSaveShortcut.disabled = true;
+            }
+
+            const formData = new FormData(formShortcut);
+            const actionUrl = formShortcut.action;
+            const method = document.getElementById('shortcut_form_method').value || 'POST';
+
+            fetch(actionUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (btnSaveShortcut) {
+                    btnSaveShortcut.removeAttribute('data-kt-indicator');
+                    btnSaveShortcut.disabled = false;
+                }
+
+                if (data.success && data.data) {
+                    const item = data.data;
+                    const isNew = (method === 'POST');
+
+                    // Update or Insert Row into Table
+                    updateOrInsertShortcutRow(item, data.formatted_combination, data.mac_combination, isNew);
+
+                    // Reload dynamic global shortcuts in memory
+                    if (typeof KTAppShortcuts !== 'undefined' && KTAppShortcuts.reloadShortcuts) {
+                        KTAppShortcuts.reloadShortcuts();
+                    }
+
+                    // Reset form back to create mode
+                    resetShortcutForm();
+
+                    Notify.alert({
+                        text: data.message || 'Pintasan keyboard berhasil disimpan.',
+                        icon: 'success',
+                        confirmButtonText: 'Ok, Mengerti'
+                    });
+                } else {
+                    let errMsg = data.message || 'Gagal menyimpan pintasan.';
+                    if (data.errors) {
+                        errMsg = Object.values(data.errors).flat().join('<br>');
+                    }
+                    Notify.error(errMsg);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                if (btnSaveShortcut) {
+                    btnSaveShortcut.removeAttribute('data-kt-indicator');
+                    btnSaveShortcut.disabled = false;
+                }
+                Notify.error('Terjadi kesalahan jaringan.');
+            });
+        });
+    }
+
+    // 8. Edit Shortcut Button Click Handler (Populate Form)
+    document.addEventListener('click', function (e) {
+        const editBtn = e.target.closest('.btn-edit-shortcut-row');
+        if (editBtn) {
+            const id = editBtn.dataset.id;
+            if (!id) return;
+
+            fetch(`/appsupport/shortcuts/${id}`, {
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(res => res.json())
+            .then(resData => {
+                if (resData.success && resData.data) {
+                    const data = resData.data;
+
+                    document.getElementById('shortcut_form_method').value = 'PUT';
+                    document.getElementById('shortcut_form_id').value = data.id;
+                    formShortcut.action = `/appsupport/shortcuts/${data.id}`;
+
+                    if (inputName) inputName.value = data.name || '';
+                    if (inputKey) inputKey.value = data.key || 'm';
+                    if (checkCtrl) checkCtrl.checked = Boolean(data.ctrl || data.meta);
+                    if (checkAlt) checkAlt.checked = Boolean(data.alt);
+                    if (checkShift) checkShift.checked = Boolean(data.shift);
+                    document.getElementById('shortcut_input_description').value = data.description || '';
+                    document.getElementById('shortcut_input_is_enabled').checked = Boolean(data.is_enabled);
+
+                    // Roles
+                    const roles = Array.isArray(data.roles) ? data.roles : [];
+                    if (roles.length === 0) {
+                        if (roleCheckAll) {
+                            roleCheckAll.checked = true;
+                            document.querySelectorAll('.role-item-checkbox').forEach(cb => {
+                                cb.checked = false;
+                                cb.disabled = true;
+                            });
+                        }
+                    } else {
+                        if (roleCheckAll) roleCheckAll.checked = false;
+                        document.querySelectorAll('.role-item-checkbox').forEach(cb => {
+                            cb.disabled = false;
+                            cb.checked = roles.map(r => r.toLowerCase()).includes(cb.value.toLowerCase());
+                        });
+                    }
+
+                    // Determine Category
+                    let categoryKey = 'navigation';
+                    if (['toggle_sidebar_menus', 'toggle_topbar_tools', 'toggle_topbar_menus', 'visibility_toggle'].includes(data.action_type)) {
+                        categoryKey = 'visibility';
+                    } else if (['icon_style', 'theme_mode', 'appearance'].includes(data.action_type)) {
+                        categoryKey = 'appearance';
+                    } else if (['search', 'lock_screen', 'system_action'].includes(data.action_type)) {
+                        categoryKey = 'system';
+                    } else if (data.action_type === 'click_element') {
+                        categoryKey = 'element';
+                    }
+
+                    // Activate category button
+                    const catBtn = document.querySelector(`.btn-category-select[data-category="${categoryKey}"]`);
+                    if (catBtn) catBtn.click();
+
+                    // Match Target within category
+                    setTimeout(() => {
+                        let matched = false;
+                        if (targetSelect) {
+                            for (let i = 0; i < targetSelect.options.length; i++) {
+                                const opt = targetSelect.options[i];
+                                if (opt.getAttribute('data-type') === data.action_type && opt.getAttribute('data-target') === (data.action_target || '')) {
+                                    $(targetSelect).val(opt.value).trigger('change');
+                                    matched = true;
+                                    break;
+                                }
+                            }
+
+                            if (!matched) {
+                                $(targetSelect).val(`custom_${categoryKey === 'element' ? 'element' : (categoryKey === 'visibility' ? 'visibility' : 'url')}`).trigger('change');
+                                if (customTargetWrapper) customTargetWrapper.classList.remove('d-none');
+                                if (customTargetValInput) customTargetValInput.value = data.action_target || '';
+                                if (hiddenActionType) hiddenActionType.value = data.action_type;
+                                if (hiddenActionTarget) hiddenActionTarget.value = data.action_target;
+                            }
+                        }
+                    }, 50);
+
+                    document.getElementById('shortcut_form_card_title').innerHTML = `<i class="ki-outline ki-pencil fs-3 text-primary me-2"></i> Edit Pintasan Keyboard`;
+                    document.getElementById('shortcut_form_card_subtitle').innerText = `ID #${data.id} • ${data.name}`;
+
+                    updateLiveBadgePreview();
+
+                    const formCard = document.getElementById('card_shortcut_form');
+                    if (formCard) {
+                        formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                } else {
+                    Notify.error('Gagal memuat data pintasan.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                Notify.error('Gagal terhubung ke server.');
+            });
+        }
+    });
+
+    // 9. Toggle Shortcut Row Switch
+    document.addEventListener('change', function (e) {
+        if (e.target.classList.contains('btn-toggle-shortcut-row')) {
+            const id = e.target.dataset.id;
+            if (!id) return;
+
+            fetch(`/appsupport/shortcuts/${id}/toggle`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    Notify.success(data.message);
+                    if (typeof KTAppShortcuts !== 'undefined' && KTAppShortcuts.reloadShortcuts) {
+                        KTAppShortcuts.reloadShortcuts();
+                    }
+                    updateShortcutStatsTable();
+                } else {
+                    e.target.checked = !e.target.checked;
+                    Notify.error(data.message || 'Gagal mengubah status pintasan.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                e.target.checked = !e.target.checked;
+                Notify.error('Gagal terhubung ke server.');
+            });
+        }
+    });
+
+    // 10. Delete Shortcut Row Handler
+    document.addEventListener('click', function (e) {
+        const delBtn = e.target.closest('.btn-delete-shortcut-row');
+        if (delBtn) {
+            const id = delBtn.dataset.id;
+            const name = delBtn.dataset.name || 'pintasan ini';
+            if (!id) return;
+
+            const executeDelete = () => {
+                fetch(`/appsupport/shortcuts/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({ _method: 'DELETE' })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const tr = document.querySelector(`.shortcut-row[data-id="${id}"]`);
+                        if (tr) {
+                            tr.style.transition = 'all 0.3s ease';
+                            tr.style.opacity = '0';
+                            setTimeout(() => {
+                                tr.remove();
+                                updateShortcutStatsTable();
+                            }, 300);
+                        }
+
+                        if (typeof KTAppShortcuts !== 'undefined' && KTAppShortcuts.reloadShortcuts) {
+                            KTAppShortcuts.reloadShortcuts();
+                        }
+
+                        Notify.success(data.message);
+                    } else {
+                        Notify.error(data.message || 'Gagal menghapus pintasan.');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    Notify.error('Terjadi kesalahan jaringan.');
+                });
+            };
+
+            Notify.confirm({
+                title: 'Hapus Pintasan Keyboard?',
+                text: `Apakah Anda yakin ingin menghapus pintasan "${name}"?`,
+                icon: 'warning',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                onConfirm: executeDelete
+            });
+        }
+    });
+
+    // 11. Test Shortcut Single Row Handler
+    document.addEventListener('click', function (e) {
+        const testBtn = e.target.closest('.btn-test-single-shortcut');
+        if (testBtn) {
+            const type = testBtn.dataset.actionType;
+            const target = testBtn.dataset.actionTarget;
+
+            if (typeof KTAppShortcuts === 'undefined') {
+                Notify.error('Modul pintasan belum siap.');
+                return;
+            }
+
+            KTAppShortcuts.executeAction({
+                action_type: type,
+                action_target: target
+            });
+        }
+    });
+
+    // 12. Helper to dynamically update/insert table row
+    function updateOrInsertShortcutRow(item, formattedCombo, macCombo, isNew) {
+        const tbody = document.getElementById('tbody_app_shortcuts');
+        const emptyTr = document.getElementById('tr_empty_shortcuts');
+        if (emptyTr) emptyTr.remove();
+
+        const rolesArr = Array.isArray(item.roles) ? item.roles : [];
+        let rolesHtml = '';
+        if (rolesArr.length === 0) {
+            rolesHtml = '<span class="badge badge-light-success fs-9 fw-semibold">Semua Role</span>';
+        } else {
+            rolesHtml = rolesArr.map(r => {
+                const color = r.toLowerCase() === 'master' ? 'badge-light-danger' : (r.toLowerCase() === 'admin' ? 'badge-light-primary' : 'badge-light-secondary');
+                return `<span class="badge ${color} fs-9 fw-bold me-1">${r}</span>`;
+            }).join('');
+        }
+
+        let catKey = 'navigation';
+        let catName = 'Navigasi';
+        let catIcon = 'ki-route';
+        let catBadge = 'badge-light-info';
+
+        if (['toggle_sidebar_menus', 'toggle_topbar_tools', 'toggle_topbar_menus', 'visibility_toggle'].includes(item.action_type)) {
+            catKey = 'visibility';
+            catName = 'Visibilitas';
+            catIcon = 'ki-eye';
+            catBadge = 'badge-light-primary';
+        } else if (['icon_style', 'theme_mode', 'appearance'].includes(item.action_type)) {
+            catKey = 'appearance';
+            catName = 'Tema & Ikon';
+            catIcon = 'ki-color-filter';
+            catBadge = 'badge-light-success';
+        } else if (['search', 'lock_screen', 'system_action'].includes(item.action_type)) {
+            catKey = 'system';
+            catName = 'Aksi Sistem';
+            catIcon = 'ki-shield-tick';
+            catBadge = 'badge-light-danger';
+        } else if (item.action_type === 'click_element') {
+            catKey = 'element';
+            catName = 'Klik Elemen';
+            catIcon = 'ki-cursor';
+            catBadge = 'badge-light-warning';
+        }
+
+        let targetHtml = '';
+        if (item.action_type === 'toggle_topbar_tools') {
+            targetHtml = '<span class="badge badge-light-primary fw-bold fs-8 w-fit mb-1">Toggle Topbar Navbar Tools</span><span class="text-muted fs-9 font-monospace">topbar_tools</span>';
+        } else if (item.action_type === 'toggle_topbar_menus') {
+            targetHtml = '<span class="badge badge-light-primary fw-bold fs-8 w-fit mb-1">Toggle Topbar Header Menus</span><span class="text-muted fs-9 font-monospace">topbar_menus</span>';
+        } else if (item.action_type === 'toggle_sidebar_menus') {
+            targetHtml = '<span class="badge badge-light-primary fw-bold fs-8 w-fit mb-1">Toggle Menu Template Sidebar</span><span class="text-muted fs-9 font-monospace">sidebar_menus</span>';
+        } else if (item.action_type === 'open_url' || item.action_type === 'nav_link') {
+            targetHtml = `<span class="badge badge-light-info fw-bold fs-8 w-fit mb-1">Buka Halaman (URL)</span><span class="text-muted fs-9 font-monospace text-truncate mw-150px">${item.action_target || '/'}</span>`;
+        } else if (item.action_type === 'click_element') {
+            targetHtml = `<span class="badge badge-light-warning fw-bold fs-8 w-fit mb-1">Klik Elemen Tombol</span><span class="text-muted fs-9 font-monospace text-truncate mw-150px">${item.action_target}</span>`;
+        } else if (item.action_type === 'search') {
+            targetHtml = '<span class="badge badge-light-danger fw-bold fs-8 w-fit mb-1">Pencarian Global</span><span class="text-muted fs-9">global_search</span>';
+        } else if (item.action_type === 'theme_mode') {
+            targetHtml = '<span class="badge badge-light-success fw-bold fs-8 w-fit mb-1">Mode Gelap / Terang</span><span class="text-muted fs-9">theme_mode</span>';
+        } else if (item.action_type === 'icon_style') {
+            const styleTgt = (item.action_target || 'duotone').toLowerCase();
+            const color = (styleTgt === 'solid' ? 'badge-light-success' : (styleTgt === 'outline' ? 'badge-light-info' : 'badge-light-primary'));
+            const lbl = styleTgt.charAt(0).toUpperCase() + styleTgt.slice(1);
+            targetHtml = `<span class="badge ${color} fw-bold fs-8 w-fit mb-1">Gaya Ikon: ${lbl}</span><span class="text-muted fs-9 font-monospace">icon_style:${styleTgt}</span>`;
+        } else if (item.action_type === 'lock_screen') {
+            targetHtml = '<span class="badge badge-light-danger fw-bold fs-8 w-fit mb-1">Kunci Layar (Lock Screen)</span><span class="text-muted fs-9">lock_screen</span>';
+        } else {
+            targetHtml = `<span class="badge badge-light-secondary fw-bold fs-8 w-fit mb-1">${item.action_type}</span><span class="text-muted fs-9 font-monospace">${item.action_target || '-'}</span>`;
+        }
+
+        const isEnabled = Boolean(item.is_enabled);
+        const searchKeywords = `${item.name} ${formattedCombo} ${item.action_type} ${item.action_target || ''} ${rolesArr.join(' ')} ${catKey}`.toLowerCase();
+
+        const rowHtml = `
+            <tr class="shortcut-row" data-id="${item.id}" data-category="${catKey}" data-search="${searchKeywords}">
+                <td class="ps-4">
+                    <div class="d-flex flex-column">
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge ${catBadge} fs-9 px-2 py-0 fw-bold">
+                                <i class="ki-outline ${catIcon} fs-8 me-1"></i> ${catName}
+                            </span>
+                        </div>
+                        <span class="fw-bold text-gray-900 shortcut-name-text">${item.name}</span>
+                        <span class="text-muted fs-9 shortcut-desc-text">${item.description || '-'}</span>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <div class="d-flex flex-column align-items-center gap-1">
+                        <kbd class="bg-light-primary text-primary px-2 py-1 rounded fw-bold border fs-8 shortcut-combo-badge shadow-xs">
+                            ${formattedCombo || 'Ctrl + ' + item.key.toUpperCase()}
+                        </kbd>
+                        <span class="text-muted fs-9 font-monospace shortcut-mac-combo">${macCombo || '⌘ + ' + item.key.toUpperCase()}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex flex-column">
+                        ${targetHtml}
+                    </div>
+                </td>
+                <td class="text-center">
+                    <div class="d-flex flex-wrap justify-content-center gap-1">
+                        ${rolesHtml}
+                    </div>
+                </td>
+                <td class="text-center">
+                    <div class="form-check form-switch form-check-custom form-check-solid d-inline-block">
+                        <input class="form-check-input h-18px w-30px btn-toggle-shortcut-row" type="checkbox" data-id="${item.id}" ${isEnabled ? 'checked' : ''} />
+                    </div>
+                </td>
+                <td class="text-end pe-4">
+                    <div class="d-flex justify-content-end align-items-center gap-1">
+                        <button type="button" class="btn btn-icon btn-light-success btn-sm btn-test-single-shortcut" data-id="${item.id}" data-action-type="${item.action_type}" data-action-target="${item.action_target || ''}" data-bs-toggle="tooltip" title="Uji Coba Langsung">
+                            <i class="ki-outline ki-eye fs-5"></i>
+                        </button>
+                        <button type="button" class="btn btn-icon btn-light-info btn-sm btn-edit-shortcut-row" data-id="${item.id}" data-bs-toggle="tooltip" title="Edit Pintasan">
+                            <i class="ki-outline ki-pencil fs-5"></i>
+                        </button>
+                        <button type="button" class="btn btn-icon btn-light-danger btn-sm btn-delete-shortcut-row" data-id="${item.id}" data-name="${item.name}" data-bs-toggle="tooltip" title="Hapus Pintasan">
+                            <i class="ki-outline ki-trash fs-5"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        const existingRow = document.querySelector(`.shortcut-row[data-id="${item.id}"]`);
+        if (existingRow && !isNew) {
+            existingRow.outerHTML = rowHtml;
+        } else if (tbody) {
+            tbody.insertAdjacentHTML('beforeend', rowHtml);
+        }
+
+        if (typeof KTComponents !== 'undefined' && KTComponents.initTooltips) {
+            KTComponents.initTooltips();
+        }
+
+        updateShortcutStatsTable();
+    }
+
+    // 13. Update table stats summary
+    function updateShortcutStatsTable() {
+        const rows = document.querySelectorAll('.shortcut-row');
+        const checkedSwitches = document.querySelectorAll('.btn-toggle-shortcut-row:checked');
+        const statTotal = document.getElementById('stat_shortcut_total');
+        const statActive = document.getElementById('stat_shortcut_active');
+
+        if (statTotal) statTotal.innerText = rows.length;
+        if (statActive) statActive.innerText = checkedSwitches.length;
+    }
+
+    // 14. Table Category Filter Tabs & Table Search
+    function applyShortcutTableFilters() {
+        const searchQuery = (searchShortcutsInput?.value || '').toLowerCase().trim();
+        const rows = document.querySelectorAll('.shortcut-row');
+
+        rows.forEach(row => {
+            const rowCat = row.dataset.category || 'navigation';
+            const rowSearchData = (row.dataset.search || '').toLowerCase();
+
+            const matchesCategory = (currentTableCategoryFilter === 'all' || rowCat === currentTableCategoryFilter);
+            const matchesSearch = (!searchQuery || rowSearchData.includes(searchQuery));
+
+            if (matchesCategory && matchesSearch) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    if (searchShortcutsInput) {
+        searchShortcutsInput.addEventListener('input', applyShortcutTableFilters);
+    }
+
+    document.querySelectorAll('.btn-filter-table-category').forEach(btn => {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('.btn-filter-table-category').forEach(b => {
+                b.classList.remove('active', 'btn-light-primary');
+                b.classList.add('btn-light');
+            });
+            this.classList.add('active', 'btn-light-primary');
+            this.classList.remove('btn-light');
+
+            currentTableCategoryFilter = this.dataset.filter || 'all';
+            applyShortcutTableFilters();
+        });
+    });
+
+    // Initialize initial category population on tab load
+    if (window.SHORTCUT_CATEGORIES_CATALOG) {
+        populateTargetOptionsForCategory('visibility');
+    }
+
+    // ========================================================
+    // TAB 4: SYSTEM ACTIVITY LOGS (DATATABLES & ZERO-RELOAD)
     // ========================================================
     let activityLogsDt = null;
     const tableEl = document.getElementById('kt_activity_logs_table');

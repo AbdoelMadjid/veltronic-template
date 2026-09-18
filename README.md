@@ -28,7 +28,7 @@
   - [1. Clone Repositori](#1-clone-repositori)
   - [2. Install Dependensi](#2-install-dependensi)
   - [3. Konfigurasi Environment](#3-konfigurasi-environment)
-  - [4. Konfigurasi Database & Migrasi](#4-konfigurasi-database--migrasi)
+  - [4. Konfigurasi Database, Migrasi & Storage](#4-konfigurasi-database-migrasi--storage)
   - [5. Menjalankan Server Development](#5-menjalankan-server-development)
   - [Opsi Otomatisasi (Setup Cepat & All-in-One Dev)](#opsi-otomatisasi-setup-cepat--all-in-one-dev)
 - [Kredensial Akun Default (Development)](#kredensial-akun-default-development)
@@ -36,8 +36,16 @@
 - [Arsitektur Alur Kerja & Routing Dinamis](#arsitektur-alur-kerja--routing-dinamis)
 - [Struktur Direktori Proyek](#struktur-direktori-proyek)
 - [Indeks Skema Pemrograman & Dokumentasi Pengembang](#indeks-skema-pemrograman--dokumentasi-pengembang)
-  - [Kelompok 1: Skema Arsitektur (21 Topik)](#kelompok-1-skema-arsitektur-21-topik)
+  - [Kelompok 1: Skema & Arsitektur Sistem (21 Topik)](#kelompok-1-skema--arsitektur-sistem-21-topik)
+    - [1. Pondasi Inti & Arsitektur Tata Letak (5 Topik)](#1-pondasi-inti--arsitektur-tata-letak-5-topik)
+    - [2. Keamanan, Hak Akses & Profil Pengguna (2 Topik)](#2-keamanan-hak-akses--profil-pengguna-2-topik)
+    - [3. Struktur Menu, Navigasi & Pintasan Papan Ketik (4 Topik)](#3-struktur-menu-navigasi--pintasan-papan-ketik-4-topik)
+    - [4. Lapisan Data, Cadangan & Diagnostik Sistem (5 Topik)](#4-lapisan-data-cadangan--diagnostik-sistem-5-topik)
+    - [5. Penyesuaian Tema, Halaman Depan & Bahasa (5 Topik)](#5-penyesuaian-tema-halaman-depan--bahasa-5-topik)
   - [Kelompok 2: Panduan Operasional & Developer Playbook (13 Topik)](#kelompok-2-panduan-operasional--developer-playbook-13-topik)
+    - [1. Standar Rekayasa & Jaminan Mutu (5 Topik)](#1-standar-rekayasa--jaminan-mutu-5-topik)
+    - [2. Prosedur Penambahan Halaman, Menu & Pintasan (4 Topik)](#2-prosedur-penambahan-halaman-menu--pintasan-4-topik)
+    - [3. Pemeliharaan Sistem, Rekam Jejak & Tata Letak (4 Topik)](#3-pemeliharaan-sistem-rekam-jejak--tata-letak-4-topik)
 - [Panduan Deployment Production](#panduan-deployment-production)
 - [Pembuat & Pengembang](#pembuat--pengembang)
 - [Lisensi](#lisensi)
@@ -75,6 +83,8 @@ Veltronic dirancang dengan fokus pada skalabilitas enterprise, isolasi modular, 
 
 Sebelum memulai, pastikan server atau workstation development Anda telah memenuhi spesifikasi berikut:
 
+### Perangkat Lunak & Runtime Utama
+
 | Perangkat Lunak / Runtime | Versi Minimum | Keterangan |
 | :--- | :--- | :--- |
 | **PHP** | `>= 8.2` | Direkomendasikan PHP 8.3+ (Ekstensi: `pdo_mysql`, `mbstring`, `openssl`, `curl`, `zip`, `zlib`, `gd`/`imagick`) |
@@ -83,6 +93,15 @@ Sebelum memulai, pastikan server atau workstation development Anda telah memenuh
 | **NPM** | `>= 9.x` | Pengelola paket frontend |
 | **Basis Data** | MySQL `8.0+` / MariaDB `10.4+` | Didukung juga SQLite untuk testing isolation |
 | **Web Server** | Nginx / Apache / Laragon / Sail | Virtual host diarahkan ke root folder `/public` |
+
+### Paket & Ekstensi Framework Inti
+
+| Paket / Dependensi | Versi Terpasang | Peran & Deskripsi |
+| :--- | :--- | :--- |
+| **Laravel Framework** | `^13.0` | Core framework backend PHP modern & modular |
+| **Laravel Breeze** | `^2.4` | Scaffolding autentikasi, manajemen sesi login, reset password, dan profil pengguna |
+| **Spatie Laravel Permission** | `^8.3` | Manajemen otorisasi peran (*Roles*) & izin (*Permissions*) hierarkis |
+| **Yajra Laravel DataTables** | `^13.3` | Pemrosesan server-side data tabel berkecepatan tinggi dengan respons JSON instan |
 
 ---
 
@@ -122,7 +141,7 @@ Generate application encryption key:
 php artisan key:generate
 ```
 
-### 4. Konfigurasi Database & Migrasi
+### 4. Konfigurasi Database, Migrasi & Storage
 
 Buka file `.env` dan sesuaikan kredensial koneksi basis data Anda:
 
@@ -142,7 +161,13 @@ php artisan migrate --seed
 ```
 
 > [!TIP]
-> Perintah `--seed` akan secara otomatis mengeksekusi seeder peran (*Roles*), izin (*Permissions*), pengguna demo (*Users*), profil aplikasi (*App Profile*), serta 13 pintasan keyboard bawaan (*Shortcuts*).
+> Perintah `--seed` akan secara otomatis mengeksekusi seeder peran (*Roles*), izin (*Permissions*), pengguna demo (*Users*: `master@gmail.com`, `admin@gmail.com`, `user@gmail.com`), profil aplikasi (*App Profile*), serta 13 pintasan keyboard bawaan (*Shortcuts*).
+
+Buat symlink storage agar berkas upload (avatar profil, logo aplikasi, favicon, KTP) dapat diakses publik:
+
+```bash
+php artisan storage:link
+```
 
 ### 5. Menjalankan Server Development
 
@@ -186,7 +211,9 @@ Setelah database berhasil di-seed, gunakan akun berikut untuk masuk ke sistem:
 
 | Peran (Role) | Email | Password | Hak Akses Utama |
 | :--- | :--- | :--- | :--- |
-| **Super Admin / Master** | `test@example.com` | `password` | Akses penuh seluruh modul (User Management, App Support, Database Backup, Menu, dll.) |
+| **Super Admin / Master** | `master@gmail.com` | `password` | Akses penuh (*Superuser*) seluruh modul sistem, konfigurasi peran, perizinan, menu navigasi, audit log aktivitas, cadangan basis data, dan pendukung aplikasi. |
+| **Administrator** | `admin@gmail.com` | `password` | Akses tingkat administratif untuk manajemen pengguna, pemantauan aktivitas sistem, dan pengelolaan konten operasional. |
+| **Pengguna Standar (User)** | `user@gmail.com` | `password` | Akses tingkat pengguna umum untuk modul standar, halaman depan, pengubahan profil pribadi, dan avatar studio. |
 
 > [!NOTE]
 > Setelah login, Anda dapat mengelola data profil, mengganti avatar, melihat audit log, atau menambahkan pengguna baru pada menu **Manajemen Pengguna**.
@@ -288,51 +315,87 @@ veltronic-template/
 
 Sistem Veltronic dilengkapi portal dokumentasi bawaan sebanyak **34 topik komprehensif** yang dapat diakses langsung dari menu **Help > Skema Pemrograman** (`/help/pemrograman/overview`) atau via berkas Markdown di direktori [`docs/skema-pemrograman/`](./docs/skema-pemrograman/README.md).
 
-### Kelompok 1: Skema Arsitektur (21 Topik)
+---
+
+### Kelompok 1: Skema & Arsitektur Sistem (21 Topik)
+
+#### 1. Pondasi Inti & Arsitektur Tata Letak (5 Topik)
 
 | No | Modul Skema | Deskripsi Arsitektur | URL Internal | Dokumentasi File |
 | :---: | :--- | :--- | :--- | :--- |
-| **01** | **Skema Route** | Pemetaan otomatis file Blade di folder `pages` ke rute URL. | `/help/pemrograman/skema/route` | [`route.md`](./docs/skema-pemrograman/skema/route.md) |
-| **02** | **Skema Layout** | Struktur shell layout global, header, sidebar, dan container konten. | `/help/pemrograman/skema/layout` | [`layout.md`](./docs/skema-pemrograman/skema/layout.md) |
-| **03** | **Skema Komponen & Partial** | Standarisasi reusable Blade components & partials modul. | `/help/pemrograman/skema/komponen-blade-partial` | [`komponen-blade-partial.md`](./docs/skema-pemrograman/skema/komponen-blade-partial.md) |
-| **04** | **Skema Theme Assets** | Resolver bundle asset Metronic, path CDN, dan isolasi versi tema. | `/help/pemrograman/skema/theme-assets` | [`theme-assets.md`](./docs/skema-pemrograman/skema/theme-assets.md) |
-| **05** | **Skema Auth & Middleware** | Matriks Spatie Permission, otorisasi peran, & proteksi rute. | `/help/pemrograman/skema/auth-dan-middleware` | [`auth-dan-middleware.md`](./docs/skema-pemrograman/skema/auth-dan-middleware.md) |
-| **06** | **Skema Struktur Config Menu** | Format array definisi menu sidebar dan header topbar. | `/help/pemrograman/skema/struktur-config-menu` | [`struktur-config-menu.md`](./docs/skema-pemrograman/skema/struktur-config-menu.md) |
-| **07** | **Skema Sidebar Menu** | Rendering menu bilah samping hirarkis multi-level & active state. | `/help/pemrograman/skema/sidebar-menu` | [`sidebar-menu.md`](./docs/skema-pemrograman/skema/sidebar-menu.md) |
-| **08** | **Skema Header Menu** | Pola navigasi menu tajuk untuk tautan internal dan eksternal. | `/help/pemrograman/skema/header-menu` | [`header-menu.md`](./docs/skema-pemrograman/skema/header-menu.md) |
-| **09** | **Skema Data Layer** | Pemisahan Model Eloquent, Query Scope, dan DB Transaction. | `/help/pemrograman/skema/data-layer` | [`data-layer.md`](./docs/skema-pemrograman/skema/data-layer.md) |
-| **10** | **Skema Error & Fallback** | Penanganan exception otomatis, error 404, dan fallback graceful. | `/help/pemrograman/skema/error-handling-dan-fallback` | [`error-handling-dan-fallback.md`](./docs/skema-pemrograman/skema/error-handling-dan-fallback.md) |
-| **11** | **Skema Cache & Deployment** | Kebijakan caching konfigurasi, view, dan urutan zero-downtime deploy. | `/help/pemrograman/skema/cache-dan-deployment` | [`cache-dan-deployment.md`](./docs/skema-pemrograman/skema/cache-dan-deployment.md) |
-| **12** | **Skema Pemilihan Bahasa** | Arsitektur engine translasi realtime zero-reload (KTLanguage). | `/help/pemrograman/skema/pemilihan-bahasa` | [`pemilihan-bahasa.md`](./docs/skema-pemrograman/skema/pemilihan-bahasa.md) |
-| **13** | **Skema i18n Lanjutan** | Konvensi penamaan kunci dwibahasa, fallback, & text mapper. | `/help/pemrograman/skema/i18n-lanjutan` | [`i18n-lanjutan.md`](./docs/skema-pemrograman/skema/i18n-lanjutan.md) |
-| **14** | **Skema Versi Tampilan** | Multi-version layout resolver (V1 & V2) dan theme switcher. | `/help/pemrograman/skema/pergantian-versi-tampilan` | [`pergantian-versi-tampilan.md`](./docs/skema-pemrograman/skema/pergantian-versi-tampilan.md) |
-| **15** | **Skema Pergantian Frontpage** | Dynamic frontpage loader dan pemilihan landing page root. | `/help/pemrograman/skema/pergantian-frontpage` | [`pergantian-frontpage.md`](./docs/skema-pemrograman/skema/pergantian-frontpage.md) |
-| **16** | **Skema Pergantian Icon** | Zero-flicker middleware rendering engine gaya KeenIcons. | `/help/pemrograman/skema/pergantian-icon` | [`pergantian-icon.md`](./docs/skema-pemrograman/skema/pergantian-icon.md) |
-| **17** | **Skema Title & Breadcrumb** | Dinamisasi judul tab browser, breadcrumb trail, dan schema SEO. | `/help/pemrograman/skema/page-title-dan-breadcrumbs` | [`page-title-dan-breadcrumbs.md`](./docs/skema-pemrograman/skema/page-title-dan-breadcrumbs.md) |
-| **18** | **Skema Keyboard Shortcuts** | Blueprint hotkeys global, action registry, & deteksi tabrakan. | `/help/pemrograman/skema/keyboard-shortcuts` | [`keyboard-shortcuts.md`](./docs/skema-pemrograman/skema/keyboard-shortcuts.md) |
-| **19** | **Skema Audit Log & Error** | Log aktivitas sentral `users_logs`, filter level, dan error catcher. | `/help/pemrograman/skema/audit-log-dan-error-tracking` | [`audit-log-dan-error-tracking.md`](./docs/skema-pemrograman/skema/audit-log-dan-error-tracking.md) |
-| **20** | **Skema DB Backup & Relasi** | Backup relasional cerdas deteksi dependensi FK & Gzip streaming. | `/help/pemrograman/skema/database-backup-dan-relasi-tabel` | [`database-backup-dan-relasi-tabel.md`](./docs/skema-pemrograman/skema/database-backup-dan-relasi-tabel.md) |
-| **21** | **Skema Profil & Avatar Studio** | Manajemen profil, avatar fokus atas (50% 0%), & data login. | `/help/pemrograman/skema/profil-pengguna-dan-avatar-studio` | [`profil-pengguna-dan-avatar-studio.md`](./docs/skema-pemrograman/skema/profil-pengguna-dan-avatar-studio.md) |
+| **01** | **Skema Alur Perutean Sistem** | Alur permintaan jalur URL ke berkas tampilan Blade melalui perutean otomatis dinamis dan rute manual terdaftar. | `/help/pemrograman/skema/route` | [`route.md`](./docs/skema-pemrograman/skema/route.md) |
+| **02** | **Skema Struktur Tata Letak Halaman** | Struktur tata letak utama, komponen bagian modular, area konten, dan perenderan slot pada setiap halaman aplikasi. | `/help/pemrograman/skema/layout` | [`layout.md`](./docs/skema-pemrograman/skema/layout.md) |
+| **03** | **Skema Komponen & Bagian Tampilan Modular** | Konvensi pemisahan berkas tampilan modular, pewarisan template, pengiriman parameter data, dan standar penataan. | `/help/pemrograman/skema/komponen-blade-partial` | [`komponen-blade-partial.md`](./docs/skema-pemrograman/skema/komponen-blade-partial.md) |
+| **04** | **Skema Pengelolaan Aset Tema & Berkas Skrip** | Struktur aset gaya tampilan dan skrip logika global, integrasi pustaka pihak ketiga per modul, serta urutan pemuatan. | `/help/pemrograman/skema/theme-assets` | [`theme-assets.md`](./docs/skema-pemrograman/skema/theme-assets.md) |
+| **05** | **Skema Judul Halaman & Jejak Navigasi** | Mekanisme otomatis pembentukan judul dinamis dan jejak rekam navigasi berdasarkan struktur jalur rute aktif. | `/help/pemrograman/skema/page-title-dan-breadcrumbs` | [`page-title-dan-breadcrumbs.md`](./docs/skema-pemrograman/skema/page-title-dan-breadcrumbs.md) |
+
+#### 2. Keamanan, Hak Akses & Profil Pengguna (2 Topik)
+
+| No | Modul Skema | Deskripsi Arsitektur | URL Internal | Dokumentasi File |
+| :---: | :--- | :--- | :--- | :--- |
+| **06** | **Skema Autentikasi, Lapisan Penengah & Hak Akses Peran** | Autentikasi berlapis, matriks izin peran Spatie, pemisahan hak akses langsung vs terwarisi, penugasan massal, serta poin login. | `/help/pemrograman/skema/auth-dan-middleware` | [`auth-dan-middleware.md`](./docs/skema-pemrograman/skema/auth-dan-middleware.md) |
+| **07** | **Skema Profil Pengguna & Pengaturan Foto Diri** | Struktur data profil multi-tab, penyesuaian perbesaran dan posisi foto dua sumbu, penyimpanan preferensi, dan pembaruan seketika. | `/help/pemrograman/skema/profil-pengguna-dan-avatar-studio` | [`profil-pengguna-dan-avatar-studio.md`](./docs/skema-pemrograman/skema/profil-pengguna-dan-avatar-studio.md) |
+
+#### 3. Struktur Menu, Navigasi & Pintasan Papan Ketik (4 Topik)
+
+| No | Modul Skema | Deskripsi Arsitektur | URL Internal | Dokumentasi File |
+| :---: | :--- | :--- | :--- | :--- |
+| **08** | **Skema Struktur Konfigurasi Menu** | Struktur larik konfigurasi menu data awal, sinkronisasi kunci terjemahan multi-bahasa, dan perenderan navigasi dinamis. | `/help/pemrograman/skema/struktur-config-menu` | [`struktur-config-menu.md`](./docs/skema-pemrograman/skema/struktur-config-menu.md) |
+| **09** | **Skema Menu Bilah Samping Navigasi** | Hierarki berjenjang menu navigasi samping, pengelompokan menu lipat, penentuan status aktif, dan perenderan otomatis. | `/help/pemrograman/skema/sidebar-menu` | [`sidebar-menu.md`](./docs/skema-pemrograman/skema/sidebar-menu.md) |
+| **10** | **Skema Menu Bilah Tajuk Atas** | Konfigurasi menu navigasi mendatar di bagian atas, menu tarik-turun bantuan, dan tombol pintasan aksi cepat. | `/help/pemrograman/skema/header-menu` | [`header-menu.md`](./docs/skema-pemrograman/skema/header-menu.md) |
+| **11** | **Skema Pintasan Papan Ketik Terpadu** | Arsitektur kombinasi tombol pintasan sistem, pendaftaran aksi modular bebas konflik, dan pembatasan izin peran pengguna. | `/help/pemrograman/skema/keyboard-shortcuts` | [`keyboard-shortcuts.md`](./docs/skema-pemrograman/skema/keyboard-shortcuts.md) |
+
+#### 4. Lapisan Data, Cadangan & Diagnostik Sistem (5 Topik)
+
+| No | Modul Skema | Deskripsi Arsitektur | URL Internal | Dokumentasi File |
+| :---: | :--- | :--- | :--- | :--- |
+| **12** | **Skema Lapisan Data & Pemodelan Basis Data** | Struktur model data, relasi antar tabel basis data, berkas migrasi, data awal terstruktur, dan standar kueri data. | `/help/pemrograman/skema/data-layer` | [`data-layer.md`](./docs/skema-pemrograman/skema/data-layer.md) |
+| **13** | **Skema Cadangan Basis Data & Relasi Antar Tabel** | Mekanisme pencadangan ganda mandiri, inspeksi integritas relasi tabel dan kunci asing, serta jadwal pembersihan arsip. | `/help/pemrograman/skema/database-backup-dan-relasi-tabel` | [`database-backup-dan-relasi-tabel.md`](./docs/skema-pemrograman/skema/database-backup-dan-relasi-tabel.md) |
+| **14** | **Skema Rekam Jejak Audit & Pelacakan Kesalahan** | Pencatatan riwayat aktivitas pengguna terpusat, penangkapan galat sistem secara otomatis, dan pemisahan catatan profil. | `/help/pemrograman/skema/audit-log-dan-error-tracking` | [`audit-log-dan-error-tracking.md`](./docs/skema-pemrograman/skema/audit-log-dan-error-tracking.md) |
+| **15** | **Skema Penanganan Galat & Tampilan Cadangan** | Penyajian halaman alternatif saat terjadi rute tidak ditemukan atau galat server di dalam tata letak aplikasi yang konsisten. | `/help/pemrograman/skema/error-handling-dan-fallback` | [`error-handling-dan-fallback.md`](./docs/skema-pemrograman/skema/error-handling-dan-fallback.md) |
+| **16** | **Skema Memori Singgah & Alur Penerapan Sistem** | Strategi penyimpanan memori singgah untuk konfigurasi, rute, dan tampilan, panduan pembersihan, serta alur rilis produksi. | `/help/pemrograman/skema/cache-dan-deployment` | [`cache-dan-deployment.md`](./docs/skema-pemrograman/skema/cache-dan-deployment.md) |
+
+#### 5. Penyesuaian Tema, Halaman Depan & Bahasa (5 Topik)
+
+| No | Modul Skema | Deskripsi Arsitektur | URL Internal | Dokumentasi File |
+| :---: | :--- | :--- | :--- | :--- |
+| **17** | **Skema Penggantian Bahasa Aplikasi** | Mekanisme perpindahan bahasa antarmuka secara dinamis, pengelolaan kamus terjemahan, dan persistensi sesi pengguna. | `/help/pemrograman/skema/pemilihan-bahasa` | [`pemilihan-bahasa.md`](./docs/skema-pemrograman/skema/pemilihan-bahasa.md) |
+| **18** | **Skema Internasionalisasi Lanjutan & Lokalisasi** | Standarisasi penulisan kunci terjemahan, pengelolaan berkas bahasa berskala besar, dan integrasi penambahan bahasa baru. | `/help/pemrograman/skema/i18n-lanjutan` | [`i18n-lanjutan.md`](./docs/skema-pemrograman/skema/i18n-lanjutan.md) |
+| **19** | **Skema Penggantian Versi Tampilan Tema** | Cetak biru arsitektur multi-versi tema aplikasi, penentu tampilan otomatis, dan mekanisme sufiks berkas tata letak. | `/help/pemrograman/skema/pergantian-versi-tampilan` | [`pergantian-versi-tampilan.md`](./docs/skema-pemrograman/skema/pergantian-versi-tampilan.md) |
+| **20** | **Skema Penggantian Tata Letak Halaman Depan** | Mekanisme pemuatan halaman depan dinamis, pendaftaran template beranda tambahan, dan penanganan rute awal. | `/help/pemrograman/skema/pergantian-frontpage` | [`pergantian-frontpage.md`](./docs/skema-pemrograman/skema/pergantian-frontpage.md) |
+| **21** | **Skema Penggantian Ragam Gaya Ikon** | Arsitektur peralihan variasi gaya ikon visual (Duotone, Solid, Outline) dan helper pembuat elemen grafis otomatis. | `/help/pemrograman/skema/pergantian-icon` | [`pergantian-icon.md`](./docs/skema-pemrograman/skema/pergantian-icon.md) |
 
 ---
 
 ### Kelompok 2: Panduan Operasional & Developer Playbook (13 Topik)
 
+#### 1. Standar Rekayasa & Jaminan Mutu (5 Topik)
+
 | No | Modul Panduan | Ruang Lingkup Petunjuk Praktis | URL Internal | Dokumentasi File |
 | :---: | :--- | :--- | :--- | :--- |
-| **01** | **Panduan Tambah Halaman** | Prosedur pembuatan halaman baru end-to-end hingga registrasi menu. | `/help/pemrograman/operasional/panduan-tambah-halaman` | [`panduan-tambah-halaman.md`](./docs/skema-pemrograman/operasional/panduan-tambah-halaman.md) |
-| **02** | **Panduan Tambah Menu** | Standar menambahkan item menu di config sidebar dan header topbar. | `/help/pemrograman/operasional/panduan-tambah-menu` | [`panduan-tambah-menu.md`](./docs/skema-pemrograman/operasional/panduan-tambah-menu.md) |
-| **03** | **Panduan Upgrade Metronic** | Panduan upgrade versi library Metronic tanpa merusak logika kustom. | `/help/pemrograman/operasional/panduan-pergantian-versi-metronic` | [`panduan-pergantian-versi-metronic.md`](./docs/skema-pemrograman/operasional/panduan-pergantian-versi-metronic.md) |
-| **04** | **Panduan Switch Frontpage** | Langkah memilih frontpage default via UI atau konfigurasi `.env`. | `/help/pemrograman/operasional/panduan-pergantian-frontpage` | [`panduan-pergantian-frontpage.md`](./docs/skema-pemrograman/operasional/panduan-pergantian-frontpage.md) |
-| **05** | **Panduan Title & Breadcrumb** | Standardisasi section title, deskripsi modul, dan navigasi hierarki. | `/help/pemrograman/operasional/panduan-page-title-dan-breadcrumbs` | [`panduan-page-title-dan-breadcrumbs.md`](./docs/skema-pemrograman/operasional/panduan-page-title-dan-breadcrumbs.md) |
-| **06** | **Konvensi Penamaan** | Standar penamaan file Blade, rute, tabel database, & kunci kamus. | `/help/pemrograman/operasional/konvensi-penamaan` | [`konvensi-penamaan.md`](./docs/skema-pemrograman/operasional/konvensi-penamaan.md) |
-| **07** | **Workflow Developer Harian** | Ritme kerja harian: aturan non-destruktif, anti-regresi, & quality gate. | `/help/pemrograman/operasional/workflow-developer-harian` | [`workflow-developer-harian.md`](./docs/skema-pemrograman/operasional/workflow-developer-harian.md) |
-| **08** | **Checklist QA Smoke Test** | Daftar uji minimum sebelum rilis untuk memastikan zero-regression. | `/help/pemrograman/operasional/checklist-qa-smoke-test` | [`checklist-qa-smoke-test.md`](./docs/skema-pemrograman/operasional/checklist-qa-smoke-test.md) |
-| **09** | **Playbook Incident Response** | Tanggap darurat penanganan insiden bug/down time skala 0–15 menit. | `/help/pemrograman/operasional/playbook-incident-response` | [`playbook-incident-response.md`](./docs/skema-pemrograman/operasional/playbook-incident-response.md) |
-| **10** | **Panduan Hotkeys Engine** | Panduan pendaftaran aksi kustom pada `window.VeltronicShortcuts`. | `/help/pemrograman/operasional/panduan-keyboard-shortcuts` | [`panduan-keyboard-shortcuts.md`](./docs/skema-pemrograman/operasional/panduan-keyboard-shortcuts.md) |
-| **11** | **Panduan Investigasi Error** | Langkah membaca audit log terpusat dan investigasi exception log. | `/help/pemrograman/operasional/panduan-audit-log-dan-investigasi-error` | [`panduan-audit-log-dan-investigasi-error.md`](./docs/skema-pemrograman/operasional/panduan-audit-log-dan-investigasi-error.md) |
-| **12** | **Panduan Backup & Restore** | Prosedur pencadangan parsial/penuh, inspeksi file gzip, dan restore DB. | `/help/pemrograman/operasional/panduan-backup-dan-restore-database` | [`panduan-backup-dan-restore-database.md`](./docs/skema-pemrograman/operasional/panduan-backup-dan-restore-database.md) |
-| **13** | **Panduan Zero-Reload CRUD** | Standar penulisan AJAX CRUD, respons JSON, dan button loading indicator. | `/help/pemrograman/operasional/panduan-standar-zero-reload-dan-button-loading` | [`panduan-standar-zero-reload-dan-button-loading.md`](./docs/skema-pemrograman/operasional/panduan-standar-zero-reload-dan-button-loading.md) |
+| **01** | **Alur Kerja Harian Pengembang & Prosedur Baku** | Ritme kerja harian pengembang: sinkronisasi cabang kode, verifikasi terarah, pencegahan regresi, hingga kriteria selesai tugas. | `/help/pemrograman/operasional/workflow-developer-harian` | [`workflow-developer-harian.md`](./docs/skema-pemrograman/operasional/workflow-developer-harian.md) |
+| **02** | **Panduan Olah Data Tanpa Muat Ulang & Animasi Tombol** | Standar interaksi formulir tanpa segarkan halaman, indikator pemrosesan tombol interaktif, banner tajuk, dan bagian tampilan modular. | `/help/pemrograman/operasional/panduan-standar-zero-reload-dan-button-loading` | [`panduan-standar-zero-reload-dan-button-loading.md`](./docs/skema-pemrograman/operasional/panduan-standar-zero-reload-dan-button-loading.md) |
+| **03** | **Standar Konvensi Penamaan Berkas & Variabel** | Aturan baku penamaan berkas tampilan, penetapan jalur rute, pengendali logika, model data, dan kunci kamus terjemahan. | `/help/pemrograman/operasional/konvensi-penamaan` | [`konvensi-penamaan.md`](./docs/skema-pemrograman/operasional/konvensi-penamaan.md) |
+| **04** | **Daftar Periksa Uji Cepat Jaminan Mutu Sistem** | Daftar skenario pengujian minimum yang wajib dipenuhi sebelum penggabungan kode atau rilis pembaruan ke server produksi. | `/help/pemrograman/operasional/checklist-qa-smoke-test` | [`checklist-qa-smoke-test.md`](./docs/skema-pemrograman/operasional/checklist-qa-smoke-test.md) |
+| **05** | **Buku Panduan Penanganan Insiden & Gangguan Sistem** | Prosedur tindakan cepat 15 menit pertama, alur eskalasi penanganan, dan pembagian tanggung jawab saat terjadi gangguan sistem. | `/help/pemrograman/operasional/playbook-incident-response` | [`playbook-incident-response.md`](./docs/skema-pemrograman/operasional/playbook-incident-response.md) |
+
+#### 2. Prosedur Penambahan Halaman, Menu & Pintasan (4 Topik)
+
+| No | Modul Panduan | Ruang Lingkup Petunjuk Praktis | URL Internal | Dokumentasi File |
+| :---: | :--- | :--- | :--- | :--- |
+| **06** | **Panduan Penambahan Halaman Baru** | Langkah terstruktur membuat berkas tampilan baru, pengaturan perutean otomatis, hingga pendaftaran ke navigasi menu sistem. | `/help/pemrograman/operasional/panduan-tambah-halaman` | [`panduan-tambah-halaman.md`](./docs/skema-pemrograman/operasional/panduan-tambah-halaman.md) |
+| **07** | **Panduan Penambahan Item Menu Baru** | Tata cara menambahkan entri navigasi baru pada konfigurasi menu bilah samping dan data awal sistem secara terstruktur. | `/help/pemrograman/operasional/panduan-tambah-menu` | [`panduan-tambah-menu.md`](./docs/skema-pemrograman/operasional/panduan-tambah-menu.md) |
+| **08** | **Panduan Judul Halaman & Jejak Navigasi** | Praktik terbaik menyusun tampilan tanpa penulisan kode berulang serta teknik penyesuaian judul manual bila diperlukan. | `/help/pemrograman/operasional/panduan-page-title-dan-breadcrumbs` | [`panduan-page-title-dan-breadcrumbs.md`](./docs/skema-pemrograman/operasional/panduan-page-title-dan-breadcrumbs.md) |
+| **09** | **Panduan Pengelolaan Pintasan Papan Ketik** | Prosedur pengelolaan tombol pintasan melalui panel administrasi, pendaftaran aksi skrip kustom, dan pencegahan konflik tombol. | `/help/pemrograman/operasional/panduan-keyboard-shortcuts` | [`panduan-keyboard-shortcuts.md`](./docs/skema-pemrograman/operasional/panduan-keyboard-shortcuts.md) |
+
+#### 3. Pemeliharaan Sistem, Rekam Jejak & Tata Letak (4 Topik)
+
+| No | Modul Panduan | Ruang Lingkup Petunjuk Praktis | URL Internal | Dokumentasi File |
+| :---: | :--- | :--- | :--- | :--- |
+| **10** | **Panduan Penggantian Versi Tata Letak Tema** | Panduan menambahkan varian versi tata letak baru dan beralih antarmuka secara dinamis tanpa duplikasi berkas rute. | `/help/pemrograman/operasional/panduan-pergantian-versi-metronic` | [`panduan-pergantian-versi-metronic.md`](./docs/skema-pemrograman/operasional/panduan-pergantian-versi-metronic.md) |
+| **11** | **Panduan Penggantian Tata Letak Halaman Depan** | Langkah pemilihan desain halaman beranda aktif serta tata cara mendaftarkan rancangan halaman depan baru ke sistem. | `/help/pemrograman/operasional/panduan-pergantian-frontpage` | [`panduan-pergantian-frontpage.md`](./docs/skema-pemrograman/operasional/panduan-pergantian-frontpage.md) |
+| **12** | **Panduan Pengelolaan Rekam Jejak Audit & Investigasi Galat** | Prosedur pemantauan aktivitas sistem, penyaringan tingkat urgensi catatan, dan investigasi teknis jejak galat sistem. | `/help/pemrograman/operasional/panduan-audit-log-dan-investigasi-error` | [`panduan-audit-log-dan-investigasi-error.md`](./docs/skema-pemrograman/operasional/panduan-audit-log-dan-investigasi-error.md) |
+| **13** | **Panduan Cadangan & Pemulihan Basis Data** | Tata cara pembuatan salinan data mandiri, pemulihan data yang aman, pengunduhan berkas SQL, dan pengujian jadwal otomatis. | `/help/pemrograman/operasional/panduan-backup-dan-restore-database` | [`panduan-backup-dan-restore-database.md`](./docs/skema-pemrograman/operasional/panduan-backup-dan-restore-database.md) |
 
 ---
 

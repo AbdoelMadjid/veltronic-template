@@ -29,7 +29,11 @@
                 data-bs-target="{{ $targetModal }}"
                 data-bs-toggle-second="tooltip" 
                 title="{{ $title ?? 'Petunjuk Operasional' }}">
-            <i class="ki-outline ki-information-5 fs-4"></i>
+            <i class="ki-duotone ki-information-5 fs-4">
+                <span class="path1"></span>
+                <span class="path2"></span>
+                <span class="path3"></span>
+            </i>
         </button>
     @endif
     <!--end::Petunjuk Modal Button-->

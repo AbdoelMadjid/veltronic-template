@@ -1,61 +1,52 @@
+<!--begin::Preload KeenIcons Font (Zero-FOIT / Instant Rendering)-->
+<link rel="preload" href="{{ \App\Support\ThemeAsset::url('plugins/global/fonts/keenicons/keenicons-duotone.woff', $theme_asset_pack ?? null) }}?eut7fk" as="font" type="font/woff" crossorigin="anonymous" />
+<link rel="preload" href="{{ \App\Support\ThemeAsset::url('plugins/global/fonts/keenicons/keenicons-outline.woff', $theme_asset_pack ?? null) }}?fzo4bm" as="font" type="font/woff" crossorigin="anonymous" />
+<link rel="preload" href="{{ \App\Support\ThemeAsset::url('plugins/global/fonts/keenicons/keenicons-solid.woff', $theme_asset_pack ?? null) }}?812fv7" as="font" type="font/woff" crossorigin="anonymous" />
+<!--end::Preload KeenIcons Font-->
+
 <!--begin::Icon style setup on page load (Anti-Flicker)-->
 <script>
     (function () {
-        var serverIconStyle = "{{ getActiveIconStyle() }}";
         var supportedStyles = ["duotone", "solid", "outline"];
-        var iconStyle = serverIconStyle && supportedStyles.indexOf(serverIconStyle) !== -1 ? serverIconStyle : "duotone";
+        var iconStyle = null;
 
-        if (document.documentElement) {
-            document.documentElement.setAttribute("data-kt-icon-style", iconStyle);
+        // 1. Check attribute set by server
+        if (document.documentElement && document.documentElement.hasAttribute("data-kt-icon-style")) {
+            var attr = document.documentElement.getAttribute("data-kt-icon-style");
+            if (supportedStyles.indexOf(attr) !== -1) {
+                iconStyle = attr;
+            }
         }
 
+        // 2. Check localStorage (prioritas preferensi client jika ada)
         try {
-            localStorage.setItem("data-kt-icon-style", iconStyle);
-            document.cookie = "kt_icon_style=" + iconStyle + ";path=/;max-age=31536000;SameSite=Lax";
+            var stored = localStorage.getItem("data-kt-icon-style");
+            if (stored && supportedStyles.indexOf(stored) !== -1) {
+                iconStyle = stored;
+            }
         } catch (e) {}
 
-        // Anti-Flicker: transform icon classes synchronously during HTML parsing before first paint
-        if (iconStyle && iconStyle !== 'duotone' && typeof MutationObserver !== 'undefined') {
-            var targetClass = 'ki-' + iconStyle;
-
-            var transformNode = function (el) {
-                if (!el || el.nodeType !== 1) return;
-                if (el.hasAttribute && (el.hasAttribute('data-kt-icon-style-ignore') || el.getAttribute('data-kt-icon-style-ignore') === 'true')) return;
-                if (el.closest && (el.closest('[data-kt-icon-style-ignore]') || el.closest('[data-kt-element="icon-style-menu"]') || el.closest('[data-kt-element="icon-style-toggle"]'))) return;
-
-                var cl = el.classList;
-                if (cl && (cl.contains('ki-duotone') || cl.contains('ki-solid') || cl.contains('ki-outline'))) {
-                    cl.remove('ki-duotone', 'ki-solid', 'ki-outline');
-                    cl.add(targetClass);
+        // 3. Check Cookie jika belum ada
+        if (!iconStyle) {
+            var match = document.cookie.match(new RegExp('(^| )kt_icon_style=([^;]+)'));
+            if (match && match[2]) {
+                var cookieStyle = decodeURIComponent(match[2]);
+                if (supportedStyles.indexOf(cookieStyle) !== -1) {
+                    iconStyle = cookieStyle;
                 }
-            };
+            }
+        }
 
-            var earlyObserver = new MutationObserver(function (mutations) {
-                for (var i = 0; i < mutations.length; i++) {
-                    var added = mutations[i].addedNodes;
-                    for (var j = 0; j < added.length; j++) {
-                        var node = added[j];
-                        if (node.nodeType === 1) {
-                            transformNode(node);
-                            if (node.querySelectorAll) {
-                                var icons = node.querySelectorAll('.ki-duotone, .ki-solid, .ki-outline');
-                                for (var k = 0; k < icons.length; k++) {
-                                    transformNode(icons[k]);
-                                }
-                            }
-                        }
-                    }
-                }
-            });
+        if (!iconStyle) {
+            iconStyle = "{{ getActiveIconStyle() }}";
+        }
+        if (supportedStyles.indexOf(iconStyle) === -1) {
+            iconStyle = "duotone";
+        }
 
-            earlyObserver.observe(document.documentElement, {
-                childList: true,
-                subtree: true
-            });
-
-            document.addEventListener('DOMContentLoaded', function () {
-                earlyObserver.disconnect();
-            }, { once: true });
+        // Apply immediately to root before DOM paints
+        if (document.documentElement) {
+            document.documentElement.setAttribute("data-kt-icon-style", iconStyle);
         }
     })();
 </script>

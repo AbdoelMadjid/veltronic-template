@@ -8,7 +8,11 @@
         <span class="btn-label" data-kt-translate="about.btn_about">
             {{ __('about.btn_about') }}
         </span>
-        <i class="ki-outline ki-information-5 btn-icon fs-2 m-0 text-white"></i>
+        <i class="ki-duotone ki-information-5 btn-icon fs-2 m-0 text-white">
+            <span class="path1"></span>
+            <span class="path2"></span>
+            <span class="path3"></span>
+        </i>
     </button>
 </div>
 <!--end::Footer-->

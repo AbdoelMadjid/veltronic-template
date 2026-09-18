@@ -280,6 +280,21 @@ if (!function_exists('isFeatureActive')) {
 if (!function_exists('getActiveIconStyle')) {
     function getActiveIconStyle(): string
     {
+        // 1. Prioritize user cookie from browser request
+        $cookieStyle = request()->cookie('kt_icon_style');
+        if (!empty($cookieStyle) && in_array($cookieStyle, ['duotone', 'solid', 'outline'], true)) {
+            return $cookieStyle;
+        }
+
+        // 2. Check session
+        if (session()->has('kt_icon_style')) {
+            $sessionStyle = session('kt_icon_style');
+            if (in_array($sessionStyle, ['duotone', 'solid', 'outline'], true)) {
+                return $sessionStyle;
+            }
+        }
+
+        // 3. Check DB default setting
         try {
             if (class_exists(\App\Models\AppSupport\AppSetting::class) && \Illuminate\Support\Facades\Schema::hasTable('app_settings')) {
                 $dbStyle = \App\Models\AppSupport\AppSetting::get('default_icon_style');
@@ -288,13 +303,6 @@ if (!function_exists('getActiveIconStyle')) {
                 }
             }
         } catch (\Throwable $e) {}
-
-        if (session()->has('kt_icon_style')) {
-            $sessionStyle = session('kt_icon_style');
-            if (in_array($sessionStyle, ['duotone', 'solid', 'outline'], true)) {
-                return $sessionStyle;
-            }
-        }
 
         return 'duotone';
     }
@@ -309,12 +317,13 @@ if (!function_exists('formatIconClass')) {
         }
 
         $activeStyle = getActiveIconStyle();
-        if ($activeStyle === 'duotone') {
-            return $icon;
+
+        if (preg_match('/\bki-(duotone|outline|solid)\b/', $icon)) {
+            return (string) preg_replace('/\bki-(duotone|outline|solid)\b/', 'ki-' . $activeStyle, $icon);
         }
 
-        if (str_contains($icon, 'ki-duotone')) {
-            return str_replace('ki-duotone', 'ki-' . $activeStyle, $icon);
+        if (str_starts_with($icon, 'ki-')) {
+            return 'ki-' . $activeStyle . ' ' . $icon;
         }
 
         return $icon;

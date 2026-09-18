@@ -34,13 +34,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.29.0
+                            Versi Saat Ini: v1.30.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.30.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.30.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.30.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>18 Sep 2026, 15:15 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Zero-Flicker Server-Side Icon Rendering Engine (ApplyIconStyle Middleware), Card Wrapping Overview Dokumentasi, Standardisasi Ikon &amp; Perbaikan Empty State Profil</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi arsitektur <em>Zero-Flicker Server-Side Icon Rendering Engine</em> melalui middleware <code>\App\Http\Middleware\ApplyIconStyle</code> untuk menormalisasi kelas ikon KeenIcons langsung dari perenderan backend sesuai preferensi pengguna (Duotone, Solid, Outline) tanpa kedipan saat muat/refresh halaman, pembaharuan tata visual halaman ikhtisar skema &amp; dokumentasi di <code>help/pemrograman/overview</code> dengan pengelompokan card rapi per kategori, perbaikan kontainer empty state audit log pada profil pengguna, serta standardisasi elemen ikon duotone dan proteksi layer path pada seluruh master layout.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Zero-Flicker Icon Rendering Engine (<code>ApplyIconStyle Middleware</code>)</strong>: Middleware backend otomatis membaca cookie/session preferensi ikon pengguna dan mengonversi kelas HTML ke <code>ki-solid</code>, <code>ki-outline</code>, atau <code>ki-duotone</code> sebelum respon dikirim ke browser, mengeliminasi kedipan (flicker/FOIT) secara 100%.</li>
+                                        <li><strong>Sinkronisasi &amp; Live Switching Client-Side (<code>icon-style.js</code> &amp; <code>custom-icon-style.css</code>)</strong>: Integrasi pergantian gaya instan di sisi klien dengan proteksi penyembunyian layer span path pada mode solid/outline dan pembuatan span dinamis pada mode duotone.</li>
+                                        <li><strong>Card Pengelompokan Kategori Ikhtisar Dokumentasi (<code>help/pemrograman/overview</code>)</strong>: Membungkus seluruh 34 topik skema dan panduan operasional ke dalam kartu komponen Card Metronic bernomor urut dengan badge jumlah topik, bilah penyaring kategori interaktif, dan pencarian cepat.</li>
+                                        <li><strong>Penyempurnaan Empty State Ikon Riwayat Pengguna</strong>: Memperbaiki kontainer simbol jam tabel audit log di <code>pages/profil/partials/tabs/riwayat-pengguna.blade.php</code> dengan lingkaran <code>symbol symbol-55px symbol-circle bg-light-primary</code>.</li>
+                                        <li><strong>Standardisasi Ikon Komponen Layout</strong>: Penyelarasan ikon toolbar petunjuk, footer sidebar, menu project, dan menu akun pengguna ke standar duotone multi-path.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.30.0-->
+
                         <!--begin::Item v1.29.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.29.0</div>
@@ -56,7 +91,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>18 Sep 2026, 14:00 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Modul Manajemen Profil Aplikasi &amp; Meta SEO, Validasi Logo Resolusi Ketat, Dinamisasi Seluruh Layout, Audit Log Otomatis, Polishing Layout V2 &amp; Proteksi Database Pengujian</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

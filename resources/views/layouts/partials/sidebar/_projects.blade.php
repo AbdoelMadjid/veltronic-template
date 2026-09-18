@@ -144,8 +144,14 @@
         <a class="menu-link menu-collapse-toggle toggle collapsible collapsed" data-bs-toggle="collapse"
             href="#kt_app_sidebar_menu_projects_collapse" data-kt-toggle-text="Show less">
             <span class="menu-icon">
-                <i class="ki-outline ki-down toggle-off fs-2 me-0"></i>
-                <i class="ki-outline ki-up toggle-on fs-2 me-0"></i>
+                <i class="ki-duotone ki-down toggle-off fs-2 me-0">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+                <i class="ki-duotone ki-up toggle-on fs-2 me-0">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
             </span>
             <!--begin::Title-->
             <span class="menu-title" data-kt-toggle-text-target="true">Show more</span>

@@ -105,11 +105,17 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-center text-muted py-8">
-                                        <i class="ki-duotone ki-time fs-2tx text-gray-400 d-block mb-2">
-                                            <span class="path1"></span><span class="path2"></span>
-                                        </i>
-                                        Belum ada rekaman riwayat aktivitas.
+                                    <td colspan="3" class="text-center py-10">
+                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                            <div class="symbol symbol-55px symbol-circle bg-light-primary mb-3 d-flex align-items-center justify-content-center">
+                                                <i class="ki-duotone ki-time fs-2x text-primary">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                            </div>
+                                            <span class="fs-6 fw-bold text-gray-800 mb-1">Belum Ada Rekaman Riwayat Aktivitas</span>
+                                            <span class="fs-7 text-muted max-w-350px">Seluruh aktivitas login, pembaruan data identitas, atau perubahan kata sandi akun Anda akan tercatat otomatis di sini.</span>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforelse

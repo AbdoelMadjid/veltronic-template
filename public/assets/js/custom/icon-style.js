@@ -85,7 +85,12 @@ var KTIconStyle = (function () {
         var currentClass = hasDuotone ? "ki-duotone" : (hasSolid ? "ki-solid" : "ki-outline");
         var targetClass = "ki-" + targetStyle;
 
-        if (currentClass !== targetClass) {
+        // Early exit if element already matches target class and has path spans for duotone
+        if (currentClass === targetClass) {
+            if (targetStyle !== "duotone" || el.firstElementChild) {
+                return;
+            }
+        } else {
             classList.remove("ki-duotone", "ki-solid", "ki-outline");
             classList.add(targetClass);
         }
@@ -111,12 +116,10 @@ var KTIconStyle = (function () {
         if (!container) return;
 
         isTransforming = true;
-
         var icons = container.querySelectorAll(".ki-duotone, .ki-solid, .ki-outline");
         icons.forEach(function (icon) {
-            transformIconElement(icon, targetStyle);
+            transformIconElement(icon, targetStyle || getStyle());
         });
-
         isTransforming = false;
     };
 
@@ -197,7 +200,15 @@ var KTIconStyle = (function () {
     // Initialize module
     var init = function () {
         var activeStyle = getStyle();
-        setStyle(activeStyle, true);
+        if (document.documentElement && document.documentElement.getAttribute("data-kt-icon-style") !== activeStyle) {
+            document.documentElement.setAttribute("data-kt-icon-style", activeStyle);
+        }
+
+        // Synchronize menu links state
+        updateMenuState(activeStyle);
+
+        // Transform any icon on page load to match active style
+        applyStyleToElements(document.body, activeStyle);
 
         // Bind menu click events
         document.addEventListener("click", function (e) {

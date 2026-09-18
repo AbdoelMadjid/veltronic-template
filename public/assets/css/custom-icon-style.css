@@ -33,11 +33,9 @@
     display: none !important;
 }
 
-/* Instant Anti-Flicker: Hide path spans ONLY on converted icons, never inside dropdowns/previews/ignore items */
+/* Hide duotone path spans when icon class is converted to ki-solid or ki-outline */
 .ki-solid:not([data-kt-icon-style-ignore]) > [class^="path"],
-.ki-outline:not([data-kt-icon-style-ignore]) > [class^="path"],
-[data-kt-icon-style="solid"] .ki-duotone:not([data-kt-icon-style-ignore]):not([data-kt-element="icon-style-menu"] *):not([data-kt-element="icon-style-toggle"] *):not(#hub_panel_icons *):not([data-kt-icon-preview] *) > [class^="path"],
-[data-kt-icon-style="outline"] .ki-duotone:not([data-kt-icon-style-ignore]):not([data-kt-element="icon-style-menu"] *):not([data-kt-element="icon-style-toggle"] *):not(#hub_panel_icons *):not([data-kt-icon-preview] *) > [class^="path"] {
+.ki-outline:not([data-kt-icon-style-ignore]) > [class^="path"] {
     display: none !important;
 }
 

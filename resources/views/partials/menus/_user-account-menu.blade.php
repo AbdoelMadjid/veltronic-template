@@ -12,7 +12,13 @@
     <!--begin::Menu item (User Points Display)-->
     <div class="menu-item px-3 my-1">
         <div class="d-flex align-items-center justify-content-between px-3 py-2 bg-light rounded-3">
-            <span class="fs-7 text-muted fw-semibold"><i class="ki-outline ki-crown-2 fs-6 text-success me-1"></i> Reward Poin</span>
+            <span class="fs-7 text-muted fw-semibold">
+                <i class="ki-duotone ki-crown-2 fs-6 text-success me-1">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+                Reward Poin
+            </span>
             <span class="badge badge-light-success fw-bolder fs-7 px-2 py-1">{{ number_format($authUser?->points ?? 0) }} Poin</span>
         </div>
     </div>

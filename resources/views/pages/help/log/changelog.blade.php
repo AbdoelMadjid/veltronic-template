@@ -34,13 +34,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.32.0
+                            Versi Saat Ini: v1.33.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.33.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.33.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.33.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>18 Sep 2026, 16:35 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Modul Inti Manajemen Theme Frontpage, Multi-Versi Dinamis Landing Page (v1, v2), Modularisasi Partials Seksi, serta GUI Script &amp; Source Code Editor</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi menyeluruh modul manajemen <strong>Theme Frontpage</strong> (<code>appsupport/theme-frontpage</code>) dengan arsitektur peralihan dinamis tema utama (<em>Landing Single Page</em> vs <em>Education Portal</em>), selektor versi landing dinamis (<code>v1</code>, <code>v2</code>, dst.), pemisahan seluruh struktur landing menjadi 9 file partial modular di <code>resources/views/frontpages/landing/v1/sections/</code>, penyediaan modal <strong>GUI Script &amp; Source Code Editor</strong> (<code>#modal_section_code</code>) untuk mengedit kode HTML/Blade tiap section secara langsung dari browser, serta kepatuhan standar Veltronic (Zero-Reload Realtime CRUD, Button Loading Indicator <code>data-kt-indicator="on"</code>, dan modal petunjuk terstruktur <code>&lt;x-petunjuk-modal&gt;</code>).
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Dukungan Multi-Versi Landing Dinamis</strong>: Deteksi otomatis direktori versi template landing (<code>availableLandingVersions()</code>) dan rendering dinamis <code>frontpages.landing.{$version}.landing</code>.</li>
+                                        <li><strong>Modularisasi Script Seksi</strong>: Pemisahan partial <code>hero.blade.php</code>, <code>how-it-works.blade.php</code>, <code>achievements.blade.php</code>, <code>team.blade.php</code>, <code>portfolio.blade.php</code>, <code>pricing.blade.php</code>, <code>clients.blade.php</code>, <code>custom.blade.php</code>, dan <code>footer.blade.php</code> dengan koordinator layout bersih di <code>landing.blade.php</code>.</li>
+                                        <li><strong>Editor Source Code / Blade GUI Seksi (<code>#modal_section_code</code>)</strong>: Tombol <em>Edit Script</em> pada setiap seksi konten dengan editor gelap monospace, auto-wrap, reset, dan penyimpanan instan via AJAX.</li>
+                                        <li><strong>Resolusi Cerdas File Partial (<code>resolveSectionFile</code>)</strong>: Pemetaan otomatis ID seksi bawaan ber-prefix <code>section-</code> maupun ID ringkas ke file Blade fisik secara presisi tanpa fallback kosong.</li>
+                                        <li><strong>Backend Terpadu</strong>: Penyediaan 19 endpoint AJAX di <code>ThemeFrontpageController.php</code> dan integrasi helper <code>LandingPageConfig</code>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.33.0-->
+
                         <!--begin::Item v1.32.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.32.0</div>
@@ -56,7 +91,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>18 Sep 2026, 15:30 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Peremajaan Modal Tentang Aplikasi (10 Fitur Arsitektur &amp; Tech Stack Badges), Sinkronisasi Kamus Dwibahasa, serta Revamp Komprehensif README.md &amp; Indeks 34 Dokumentasi Pengembang</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

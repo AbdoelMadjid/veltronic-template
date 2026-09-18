@@ -36,7 +36,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Developer Help Portal (`help/pemrograman`) & Documentation Integration**:
     - Added **Skema Keyboard Shortcuts** (`help/pemrograman/skema/keyboard-shortcuts.blade.php` & `docs/skema-pemrograman/skema/keyboard-shortcuts.md`).
     - Added **Panduan Operasional Keyboard Shortcuts** (`help/pemrograman/operasional/panduan-keyboard-shortcuts.blade.php` & `docs/skema-pemrograman/operasional/panduan-keyboard-shortcuts.md`).
-    - Updated Overview table of contents (`help/pemrograman/overview.blade.php`), docs index (`docs/skema-pemrograman/README.md`), and registered sidebar navigation items (`config/sidebar/_sidebar_helps.php`).
+    - Added **Skema Audit Log & Error Tracking** (`help/pemrograman/skema/audit-log-dan-error-tracking.blade.php` & `docs/skema-pemrograman/skema/audit-log-dan-error-tracking.md`).
+    - Added **Skema Database Backup & Relasi Tabel** (`help/pemrograman/skema/database-backup-dan-relasi-tabel.blade.php` & `docs/skema-pemrograman/skema/database-backup-dan-relasi-tabel.md`).
+    - Added **Skema Profil Pengguna & Avatar Studio** (`help/pemrograman/skema/profil-pengguna-dan-avatar-studio.blade.php` & `docs/skema-pemrograman/skema/profil-pengguna-dan-avatar-studio.md`).
+    - Added **Panduan Audit Log & Investigasi Error** (`help/pemrograman/operasional/panduan-audit-log-dan-investigasi-error.blade.php` & `docs/skema-pemrograman/operasional/panduan-audit-log-dan-investigasi-error.md`).
+    - Added **Panduan Backup & Restore Database** (`help/pemrograman/operasional/panduan-backup-dan-restore-database.blade.php` & `docs/skema-pemrograman/operasional/panduan-backup-dan-restore-database.md`).
+    - Added **Panduan Standar Zero-Reload & Button Loading** (`help/pemrograman/operasional/panduan-standar-zero-reload-dan-button-loading.blade.php` & `docs/skema-pemrograman/operasional/panduan-standar-zero-reload-dan-button-loading.md`).
+    - Modernized **Skema Auth & Middleware** (`help/pemrograman/skema/auth-dan-middleware.blade.php`) with Spatie Role-Permission Matrix, Direct vs Inherited Permissions, and Login Points/Lockscreen.
+    - Updated **Workflow Developer Harian** (`help/pemrograman/operasional/workflow-developer-harian.blade.php`) with Active Agent Guidelines (Rules 4, 5, 6, 7) and anti-regression policies.
+    - Updated Overview table of contents (`help/pemrograman/overview.blade.php`), docs index (`docs/skema-pemrograman/README.md`), and registered sidebar navigation items (`config/sidebar/_sidebar_helps.php`) with bilingual dictionary keys.
 
 ---
 

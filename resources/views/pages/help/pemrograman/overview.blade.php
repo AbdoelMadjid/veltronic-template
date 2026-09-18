@@ -265,6 +265,47 @@
                                         </div>
                                     </a>
                                 </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.skema.audit-log-dan-error-tracking') }}"
+                                        class="card card-flush h-100 bg-light-danger">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-shield-search fs-2hx text-danger flex-shrink-0 mt-1"><span
+                                                    class="path1"></span><span class="path2"></span><span
+                                                    class="path3"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Skema Audit Log &amp; Error Tracking</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Arsitektur audit trail terpusat (users_logs), penangkapan error backend otomatis, dan isolasi log profil.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.skema.database-backup-dan-relasi-tabel') }}"
+                                        class="card card-flush h-100 bg-light-success">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-data-download fs-2hx text-success flex-shrink-0 mt-1"><span
+                                                    class="path1"></span><span class="path2"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Skema Database Backup &amp; Relasi Tabel</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Dual-engine backup (mysqldump &amp; pure PHP), inspeksi foreign key dinamis, dan jadwal retensi.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.skema.profil-pengguna-dan-avatar-studio') }}"
+                                        class="card card-flush h-100 bg-light-primary">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-user-square fs-2hx text-primary flex-shrink-0 mt-1"><span
+                                                    class="path1"></span><span class="path2"></span><span
+                                                    class="path3"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Skema Profil Pengguna &amp; Avatar Studio</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Struktur 5-tab profil, kontrol zoom/pan avatar 2-axis, dan JSON preferensi 1-User-1-Row.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <!--end::Col Skema-->
@@ -356,6 +397,46 @@
                                             <div>
                                                 <h3 class="mb-1 fs-4">Panduan Keyboard Shortcuts</h3>
                                                 <p class="text-gray-700 fs-7 mb-0">Tata cara kelola pintasan di admin, registrasi handler JS kustom, dan tips deteksi tabrakan tombol.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.operasional.panduan-audit-log-dan-investigasi-error') }}"
+                                        class="card card-flush h-100 bg-light-danger">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-shield-search fs-2hx text-danger flex-shrink-0 mt-1"><span
+                                                    class="path1"></span><span class="path2"></span><span
+                                                    class="path3"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Panduan Audit Log &amp; Investigasi Error</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">SOP monitoring log sistem, filtering level (info/warn/error), dan inspeksi payload error teknis.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.operasional.panduan-backup-dan-restore-database') }}"
+                                        class="card card-flush h-100 bg-light-success">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-data-download fs-2hx text-success flex-shrink-0 mt-1"><span
+                                                    class="path1"></span><span class="path2"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Panduan Backup &amp; Restore Database</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Langkah backup on-demand, restore database aman, download arsip SQL, dan pengujian cron.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.operasional.panduan-standar-zero-reload-dan-button-loading') }}"
+                                        class="card card-flush h-100 bg-light-primary">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-loading fs-2hx text-primary flex-shrink-0 mt-1"><span
+                                                    class="path1"></span><span class="path2"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Panduan Zero-Reload &amp; Button Loading</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Standar anti-refresh CRUD, spinner data-kt-indicator, banner header modul, dan modular partials.</p>
                                             </div>
                                         </div>
                                     </a>

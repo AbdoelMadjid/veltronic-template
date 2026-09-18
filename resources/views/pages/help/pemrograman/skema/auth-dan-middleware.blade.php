@@ -22,126 +22,161 @@
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <div id="kt_app_content_container" class="app-container container-fluid" data-kt-lang-ignore="true">
             <div class="schema-shell">
+                <!--begin::Hero-->
                 <div class="schema-hero">
-                    <span class="schema-pill">Auth Blueprint</span>
-                    <h2 class="fw-bold">Skema Auth dan Middleware</h2>
+                    <span class="schema-pill">Auth &amp; RBAC Architecture</span>
+                    <h2 class="fw-bold">Skema Autentikasi, Middleware &amp; Spatie Role-Permission</h2>
                     <p class="schema-lead">
-                        Pondasi keamanan proyek: route auth bawaan Laravel + proteksi middleware + middleware custom locale.
+                        Pondasi keamanan menyeluruh: autentikasi Laravel, proteksi middleware, otorisasi Role &amp; Permission berbasis Spatie, matriks akses 2D, pembedaan izin langsung vs terwarisi, pemberian peran massal, serta sistem reward login &amp; lockscreen session.
                     </p>
                 </div>
+                <!--end::Hero-->
 
+                <!--begin::Grid-->
                 <div class="schema-grid">
+                    <!--begin::Col 1: Flow Login & Reward Poin-->
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>Flow Login dan Akses Halaman</h4>
+                            <h4>1. Flow Login, Reward 1 Poin 24 Jam &amp; Lockscreen</h4>
                             <div class="schema-flow">
-                                <div class="schema-step">1. Guest akses <code>/login</code> (dari <code>routes/auth.php</code>).</div>
-                                <div class="schema-step">2. Submit login ke <code>POST /login</code>.</div>
-                                <div class="schema-step">3. Jika sukses, session auth aktif dan user diarahkan ke halaman aplikasi.</div>
-                                <div class="schema-step">4. Route protected (dashboard/menu pages) hanya bisa dibuka jika lolos middleware <code>auth</code>.</div>
-                                <div class="schema-step">5. Route tertentu juga pakai <code>verified</code> untuk email verification.</div>
+                                <div class="schema-step">
+                                    <strong>1. Autentikasi Kredensial:</strong>
+                                    <p class="fs-8 text-muted mb-1">Pengguna login via <code>POST /login</code> dengan proteksi rate limit <code>throttle:5,1</code>.</p>
+                                </div>
+                                <div class="schema-step">
+                                    <strong>2. Reward 1 Poin Login (Cooldown 24 Jam):</strong>
+                                    <p class="fs-8 text-muted mb-1">Jika login pertama dalam 24 jam terakhir, sistem menambahkan 1 poin reward dan mencatat riwayat ke <code>data-login</code>.</p>
+                                </div>
+                                <div class="schema-step">
+                                    <strong>3. Sesi Kunci Layar (Lock Screen):</strong>
+                                    <p class="fs-8 text-muted mb-0">Fitur <code>/lock-screen</code> mengunci sesi aktif tanpa menghapus token auth; pengguna cukup memasukkan password untuk membuka kembali.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!--end::Col 1-->
 
+                    <!--begin::Col 2: Spatie Role & Permission Hierarchy-->
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>Peta Route Auth Penting</h4>
-                            <pre class="schema-code"><code>guest middleware:
-- GET  /login
-- POST /login
-- GET  /register
-- POST /register
-- forgot/reset password routes
+                            <h4>2. Hierarki Spatie Role &amp; Permission</h4>
+                            <p class="text-gray-700 fs-7">
+                                Menggunakan pustaka resmi <code>spatie/laravel-permission</code> dengan konvensi penamaan seragam:
+                            </p>
+                            <pre class="schema-code"><code>// Konvensi Penamaan Permission Modul:
+[nama_modul]_[aksi] (contoh: user_create, role_update, backup_delete)
 
-auth middleware:
-- GET  /verify-email
-- POST /email/verification-notification
-- PUT  /password
-- POST /logout</code></pre>
-                            <div class="schema-meta">
-                                <span class="schema-chip">source: routes/auth.php</span>
+// Penggunaan di Controller / Route:
+Route::middleware(['role:master|admin'])->group(...);
+Route::middleware(['permission:user_create'])->group(...);
+
+// Pengecekan di Blade View:
+@can('user_delete')
+    &lt;button class="btn btn-danger"&gt;Hapus&lt;/button&gt;
+@endcan</code></pre>
+                            <div class="schema-meta mt-3">
+                                <span class="schema-chip">spatie/laravel-permission</span>
+                                <span class="schema-chip">Multi-Role Support</span>
+                                <span class="schema-chip">Blade Directives</span>
                             </div>
                         </div>
                     </div>
+                    <!--end::Col 2-->
 
+                    <!--begin::Col 3: Matriks Akses Role 2D-->
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>Proteksi Route di Proyek</h4>
-                            <ul class="schema-list">
-                                <li><code>/dashboard</code> memakai middleware <code>auth</code> + <code>verified</code>.</li>
-                                <li>Semua route generator di <code>routes/menu.php</code> dibungkus middleware <code>auth</code>.</li>
-                                <li>Profile management di <code>routes/web.php</code> juga ada dalam group <code>auth</code>.</li>
-                                <li>Fallback 404 ditempatkan di luar auth agar respons error tetap konsisten.</li>
-                            </ul>
-                            <div class="schema-note mt-4">Dampak: user belum login tidak bisa akses halaman konten internal di bawah <code>resources/views/pages</code>.</div>
+                            <h4>3. Matriks 2D Akses Role (Role-Permission Matrix)</h4>
+                            <p class="text-gray-700 fs-7">
+                                Modul <code>usermanagement/akses-role</code> menyediakan visualisasi kisi matriks peran vs izin:
+                            </p>
+                            <div class="schema-flow">
+                                <div class="schema-step">
+                                    <strong>Kolom Peran Dinamis:</strong>
+                                    <p class="fs-8 text-muted mb-1">Menampilkan seluruh role terdaftar (Master, Admin, Operator, User, dll).</p>
+                                </div>
+                                <div class="schema-step">
+                                    <strong>Grup Permission per Modul:</strong>
+                                    <p class="fs-8 text-muted mb-1">Izin dikelompokkan berdasarkan modul (User Management, App Support, Master Data, Transaksi).</p>
+                                </div>
+                                <div class="schema-step">
+                                    <strong>Toggle &amp; Bulk Checkbox Realtime:</strong>
+                                    <p class="fs-8 text-muted mb-0">Admin dapat mencentang/membatalkan izin per role atau massal satu modul secara realtime tanpa reload halaman.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!--end::Col 3-->
 
+                    <!--begin::Col 4: Akses User - Izin Terwarisi vs Langsung-->
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>Middleware Custom: SetLocale</h4>
-                            <pre class="schema-code"><code>// bootstrap/app.php
-$middleware->web(append: [
-  \App\Http\Middleware\SetLocale::class,
-]);
-
-// SetLocale
-if (Session::has('locale')) {
-  App::setLocale(Session::get('locale'));
-}</code></pre>
-                            <div class="schema-warn mt-4">Middleware ini berjalan di group <code>web</code>, jadi seluruh request web otomatis mengikuti locale session.</div>
+                            <h4>4. Akses User: Izin Terwarisi vs Izin Langsung</h4>
+                            <p class="text-gray-700 fs-7">
+                                Modul <code>usermanagement/akses-user</code> membedakan sumber hak akses pengguna:
+                            </p>
+                            <div class="schema-flow">
+                                <div class="schema-step">
+                                    <strong>Izin Terwarisi (Inherited Permission):</strong>
+                                    <p class="fs-8 text-muted mb-1">Izin yang diperoleh secara otomatis karena pengguna memiliki Role tertentu (ditandai dengan badge badge-light-primary dan terkunci secara aman).</p>
+                                </div>
+                                <div class="schema-step">
+                                    <strong>Izin Langsung (Direct Permission):</strong>
+                                    <p class="fs-8 text-muted mb-1">Izin spesifik yang diberikan khusus kepada user tertentu di luar peran standarnya.</p>
+                                </div>
+                                <div class="schema-step">
+                                    <strong>Pemberian Role Massal (Bulk Assign Role):</strong>
+                                    <p class="fs-8 text-muted mb-0">Fitur untuk mengubah/menambahkan role ke puluhan user terpilih sekaligus via modal centang.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!--end::Col 4-->
 
+                    <!--begin::Col 5: Matrix Middleware-->
                     <div class="schema-col-12">
                         <div class="schema-card">
-                            <h4>Checklist Security Minimum</h4>
-                            <ol class="schema-list">
-                                <li>Pastikan route sensitif selalu berada di middleware <code>auth</code>.</li>
-                                <li>Untuk area kritikal, tambahkan <code>verified</code> atau middleware tambahan lain sesuai kebutuhan.</li>
-                                <li>Gunakan <code>signed</code> dan <code>throttle</code> seperti pada route verifikasi email.</li>
-                                <li>Validasi redirect dan guard flow saat login/logout agar tidak ada open redirect.</li>
-                                <li>Uji skenario guest vs authenticated untuk setiap halaman blueprint baru.</li>
-                            </ol>
-                            <div class="schema-meta">
-                                <span class="schema-chip">auth</span>
-                                <span class="schema-chip">verified</span>
-                                <span class="schema-chip">signed</span>
-                                <span class="schema-chip">throttle</span>
+                            <h4>5. Matriks Middleware &amp; Guard Aplikasi</h4>
+                            <div class="schema-grid">
+                                <div class="schema-col-4">
+                                    <div class="p-4 rounded border bg-light h-100">
+                                        <h5 class="fs-6 fw-bold mb-2">Public Guard</h5>
+                                        <p class="fs-8 text-gray-700 mb-1"><code>guest</code> / Bebas Akses</p>
+                                        <ul class="fs-8 text-muted ps-3 mb-0">
+                                            <li>Landing Page (<code>/</code>, <code>/landing</code>)</li>
+                                            <li>Halaman Login (<code>/login</code>)</li>
+                                            <li>Lupa Sandi &amp; Registrasi</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="schema-col-4">
+                                    <div class="p-4 rounded border bg-light h-100">
+                                        <h5 class="fs-6 fw-bold mb-2">Authenticated Guard</h5>
+                                        <p class="fs-8 text-gray-700 mb-1"><code>auth</code> + <code>SetLocale</code></p>
+                                        <ul class="fs-8 text-muted ps-3 mb-0">
+                                            <li>Dashboard (<code>/dashboard</code>)</li>
+                                            <li>Profil Pengguna (<code>/profil/*</code>)</li>
+                                            <li>Halaman Panduan Help (<code>/help/*</code>)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="schema-col-4">
+                                    <div class="p-4 rounded border bg-light h-100">
+                                        <h5 class="fs-6 fw-bold mb-2">Role &amp; Permission Guard</h5>
+                                        <p class="fs-8 text-gray-700 mb-1"><code>role:master|admin</code> / <code>permission:*</code></p>
+                                        <ul class="fs-8 text-muted ps-3 mb-0">
+                                            <li>User Management (<code>/usermanagement/*</code>)</li>
+                                            <li>Fitur &amp; Setting (<code>/appsupport/*</code>)</li>
+                                            <li>Backup Database (<code>/appsupport/backup-db</code>)</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="schema-col-6">
-                        <div class="schema-card">
-                            <h4>Matrix Middleware (Praktis)</h4>
-                            <pre class="schema-code"><code>Public:
-- landing, login, register, forgot password
-
-Authenticated:
-- dashboard, pages/*, profile/*
-
-Authenticated + Verified:
-- fitur yang butuh email terverifikasi
-
-Signed/Throttle:
-- verification link, resend verification</code></pre>
-                        </div>
-                    </div>
-
-                    <div class="schema-col-6">
-                        <div class="schema-card">
-                            <h4>Standar Tim (Strict) Auth</h4>
-                            <div class="schema-flow">
-                                <div class="schema-step"><strong>Rule wajib:</strong> route baru harus diklasifikasikan jelas: public vs auth vs auth+verified.</div>
-                                <div class="schema-step"><strong>Rule wajib:</strong> endpoint sensitif harus punya throttle jika rawan abuse.</div>
-                                <div class="schema-step"><strong>Rule wajib:</strong> tidak boleh expose detail autentikasi internal pada pesan error user.</div>
-                                <div class="schema-step"><strong>Rule wajib:</strong> setiap perubahan auth flow harus diuji guest, user valid, dan user tanpa verifikasi.</div>
-                            </div>
-                        </div>
-                    </div>
+                    <!--end::Col 5-->
                 </div>
+                <!--end::Grid-->
             </div>
         </div>
     </div>

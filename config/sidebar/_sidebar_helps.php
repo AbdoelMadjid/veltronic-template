@@ -108,6 +108,21 @@ return [
                             'title_key' => 'skema_keyboard_shortcuts',
                             'route'     => 'help.pemrograman.skema.keyboard-shortcuts',
                         ],
+                        [
+                            'title'     => 'Skema Audit Log & Error Tracking',
+                            'title_key' => 'skema_audit_log_dan_error_tracking',
+                            'route'     => 'help.pemrograman.skema.audit-log-dan-error-tracking',
+                        ],
+                        [
+                            'title'     => 'Skema Database Backup & Relasi',
+                            'title_key' => 'skema_database_backup_dan_relasi',
+                            'route'     => 'help.pemrograman.skema.database-backup-dan-relasi-tabel',
+                        ],
+                        [
+                            'title'     => 'Skema Profil Pengguna & Avatar Studio',
+                            'title_key' => 'skema_profil_pengguna_dan_avatar_studio',
+                            'route'     => 'help.pemrograman.skema.profil-pengguna-dan-avatar-studio',
+                        ],
                     ],
                 ],
                 [
@@ -143,6 +158,21 @@ return [
                             'title'     => 'Panduan Keyboard Shortcuts',
                             'title_key' => 'panduan_keyboard_shortcuts',
                             'route'     => 'help.pemrograman.operasional.panduan-keyboard-shortcuts',
+                        ],
+                        [
+                            'title'     => 'Panduan Audit Log & Error',
+                            'title_key' => 'panduan_audit_log_dan_error',
+                            'route'     => 'help.pemrograman.operasional.panduan-audit-log-dan-investigasi-error',
+                        ],
+                        [
+                            'title'     => 'Panduan Backup & Restore DB',
+                            'title_key' => 'panduan_backup_dan_restore_db',
+                            'route'     => 'help.pemrograman.operasional.panduan-backup-dan-restore-database',
+                        ],
+                        [
+                            'title'     => 'Panduan Zero-Reload & Loading',
+                            'title_key' => 'panduan_zero_reload_dan_loading',
+                            'route'     => 'help.pemrograman.operasional.panduan-standar-zero-reload-dan-button-loading',
                         ],
                         [
                             'title'     => 'Konvensi Penamaan',

@@ -79,7 +79,16 @@
                                         <li><strong>Form Terpandu 2-Kolom &amp; Realtime Collision Warning</strong>: Pemilihan target aksi dinamis dari katalog JSON, deteksi tabrakan kombinasi tombol secara realtime dengan peringatan visual, serta AJAX CRUD Zero-Reload dengan spinner indikator proses.</li>
                                         <li><strong>Optimalisasi Kontainer Toastr</strong>: Penonaktifan <code>progressBar</code> mentah dan penataan CSS <code>#toast-container</code> pada <code>custom.css</code> untuk menghilangkan garis hitam tebal melintang di layar.</li>
                                         <li><strong>Database Seeder Bawaan</strong>: Pembuatan <code>AppShortcutSeeder</code> dengan 13 pintasan default yang siap pakai dan terintegrasi di <code>DatabaseSeeder.php</code> serta tombol reset default di controller.</li>
-                                        <li><strong>Dokumentasi Developer Skema &amp; Operasional</strong>: Penambahan halaman <em>Skema Keyboard Shortcuts</em> (<code>help/pemrograman/skema/keyboard-shortcuts</code>) dan <em>Panduan Keyboard Shortcuts</em> (<code>help/pemrograman/operasional/panduan-keyboard-shortcuts</code>), pembaruan Overview daftar isi, serta registrasi menu sidebar dan kamus dwibahasa.</li>
+                                        <li><strong>Dokumentasi Developer Skema &amp; Operasional Lengkap</strong>:
+                                            <ul class="ps-3 mt-1 mb-0">
+                                                <li>Penambahan <strong>Skema Keyboard Shortcuts</strong> (<code>help/pemrograman/skema/keyboard-shortcuts</code>) &amp; <strong>Panduan Keyboard Shortcuts</strong> (<code>help/pemrograman/operasional/panduan-keyboard-shortcuts</code>).</li>
+                                                <li>Penambahan <strong>Skema Audit Log &amp; Error Tracking</strong> (<code>help/pemrograman/skema/audit-log-dan-error-tracking</code>) &amp; <strong>Panduan Audit Log &amp; Investigasi Error</strong> (<code>help/pemrograman/operasional/panduan-audit-log-dan-investigasi-error</code>).</li>
+                                                <li>Penambahan <strong>Skema Database Backup &amp; Relasi</strong> (<code>help/pemrograman/skema/database-backup-dan-relasi-tabel</code>) &amp; <strong>Panduan Backup &amp; Restore DB</strong> (<code>help/pemrograman/operasional/panduan-backup-dan-restore-database</code>).</li>
+                                                <li>Penambahan <strong>Skema Profil &amp; Avatar Studio</strong> (<code>help/pemrograman/skema/profil-pengguna-dan-avatar-studio</code>) &amp; <strong>Panduan Zero-Reload &amp; Button Loading</strong> (<code>help/pemrograman/operasional/panduan-standar-zero-reload-dan-button-loading</code>).</li>
+                                                <li>Pembaruan modern <strong>Skema Auth &amp; Middleware</strong> (Spatie Matrix, Izin Terwarisi vs Langsung) &amp; <strong>Workflow Developer Harian</strong> (Rules 4, 5, 6, 7).</li>
+                                                <li>Penyelarasan Overview Daftar Isi, registrasi sidebar navigasi lengkap, dan kamus dwibahasa (ID/EN).</li>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

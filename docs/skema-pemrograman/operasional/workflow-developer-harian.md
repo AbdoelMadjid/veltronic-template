@@ -1,37 +1,14 @@
-# Workflow Developer Harian
+# Workflow Developer Harian & Standar Operasi
 
-URL aplikasi: `/help/pemrograman/operasional/workflow-developer-harian`
+Ritme kerja harian engineer: sinkronisasi branch, targeted verification, kebijakan Zero-Reload CRUD, standarisasi spinner tombol, preservasi logika anti-regresi, hingga Definition of Done.
 
-[⬅ Kembali ke README Docs](../README.md)
+[⬅ Kembali ke Daftar Skema](../README.md)
 
-Alur kerja harian developer untuk proyek Metronic Laravel ini: mulai setup, development loop, quality gate, hingga release readiness.
+---
 
-## 1) Start of Day
-
-- Pull perubahan terbaru branch kerja.
-- Pastikan dependency sinkron (`composer install`, `npm install` jika perlu).
-- Pastikan environment siap (`.env`, DB, cache).
-
-## 2) Development Loop
-
-- Ubah Blade/config sesuai scope task.
-- Gunakan route otomatis dari `resources/views/pages`.
-- Cek active state menu di desktop dan mobile.
-
-## 3) Quality Gate Lokal
-
-> Catatan: Jalankan clear cache saat ada perubahan route/config/lang agar hasil verifikasi akurat.
-
-## 4) Documentation Sync
-
-- Jika menambah halaman/menu baru, update dokumen help terkait.
-- Pastikan key translasi EN + ID tersedia.
-- Validasi helper title tidak fallback ke teks mentah.
-
-## Definition of Done (Praktis)
-
-Langkah/aturan:
-- Perubahan berfungsi sesuai acceptance criteria.
-- Route/menu/title/translasi tervalidasi.
-- Smoke test inti lulus tanpa regresi terlihat.
-- Catatan perubahan dan dampak deploy sudah jelas.
+## 1. Siklus Pengembangan Harian
+1. **Start of Day**: `git pull origin main`, `composer install`, `php artisan optimize:clear`.
+2. **Anti-Regresi**: Modifikasi kode tidak boleh merusak fungsionalitas fitur yang sudah berjalan sebelumnya.
+3. **Zero-Reload CRUD**: Seluruh form dan tombol aksi wajib menggunakan AJAX + SweetAlert2/Toastr dengan preservasi tab.
+4. **Button Loading Spinner**: Wajib menyematkan `data-kt-indicator="on"` dan `disabled = true` selama submit.
+5. **Documentation & Changelog Sync**: Update `help/pemrograman/`, `CHANGELOG.md`, dan `help/log/changelog` sebelum commit rilis.

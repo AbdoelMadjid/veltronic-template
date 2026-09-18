@@ -359,7 +359,7 @@ var KTLanguage = (function () {
         }
 
         // 2. Prefixed search (e.g. 'clients_title' -> 'landing.clients_title', 'dashboards' -> 'menu.dashboards')
-        var prefixes = ["landing.", "menu.", "help.", "auth.", "education.", "passwords."];
+        var prefixes = ["about.", "landing.", "menu.", "help.", "auth.", "education.", "passwords."];
         for (var i = 0; i < prefixes.length; i++) {
             var fullKey = prefixes[i] + key;
             if (typeof dict[fullKey] !== "undefined") {
@@ -368,7 +368,7 @@ var KTLanguage = (function () {
         }
 
         // 3. Normalized slug check (e.g. 'menu.skema_pergantian_icon')
-        var cleanKey = key.replace(/^(landing|menu|help|auth|education|passwords)\./, "");
+        var cleanKey = key.replace(/^(about|landing|menu|help|auth|education|passwords)\./, "");
         var slug = cleanKey.toLowerCase().replace(/[\s\&\/\-]+/g, "_");
         if (typeof dict[slug] !== "undefined") {
             return dict[slug];

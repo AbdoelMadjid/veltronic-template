@@ -144,7 +144,55 @@ class User extends Authenticatable
     }
 
     /**
-     * Get cover background URL attribute.
+     * Get list of curated default stock cover backgrounds.
+     *
+     * @return array<int, string>
+     */
+    public static function getDefaultCovers(): array
+    {
+        return [
+            'assets/img-temp/1200x800/img1.jpg',
+            'assets/img-temp/1200x800/img2.jpg',
+            'assets/media/stock/1600x800/img-1.jpg',
+            'assets/media/stock/1600x800/img-2.jpg',
+            'assets/media/stock/1600x800/img-3.jpg',
+            'assets/media/stock/1600x800/img-4.jpg',
+            'assets/media/stock/900x600/1.jpg',
+            'assets/media/stock/900x600/3.jpg',
+            'assets/media/stock/900x600/8.jpg',
+            'assets/media/stock/900x600/12.jpg',
+            'assets/media/stock/900x600/15.jpg',
+            'assets/media/stock/900x600/17.jpg',
+            'assets/media/stock/900x600/20.jpg',
+            'assets/media/stock/900x600/23.jpg',
+            'assets/media/stock/900x600/27.jpg',
+            'assets/media/stock/900x600/33.jpg',
+            'assets/media/stock/900x600/40.jpg',
+            'assets/media/stock/900x600/48.jpg',
+            'assets/media/stock/900x600/51.jpg',
+            'assets/media/stock/900x600/59.jpg',
+            'assets/media/stock/900x600/69.jpg',
+            'assets/media/stock/900x600/81.jpg',
+        ];
+    }
+
+    /**
+     * Get default random cover background URL based on user ID / seed.
+     */
+    public static function getDefaultCoverUrl(int|string|null $seed = 1): string
+    {
+        $covers = static::getDefaultCovers();
+        $intSeed = is_numeric($seed) ? (int) $seed : abs(crc32((string) ($seed ?: '1')));
+        if ($intSeed <= 0) {
+            $intSeed = 1;
+        }
+
+        $index = ($intSeed - 1) % count($covers);
+        return asset($covers[$index]);
+    }
+
+    /**
+     * Get cover background URL attribute (custom user cover or deterministic default cover).
      */
     public function getCoverBgUrlAttribute(): string
     {
@@ -155,7 +203,7 @@ class User extends Authenticatable
             }
             return asset('storage/' . $cover);
         }
-        return asset('assets/img-temp/1200x800/img1.jpg');
+        return static::getDefaultCoverUrl($this->id ?? 1);
     }
 
     /**

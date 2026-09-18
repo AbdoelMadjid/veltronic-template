@@ -1,314 +1,388 @@
 <form id="system_settings_form" class="form">
 
-    <!-- Group 1: Preferensi Default Tampilan & Antarmuka -->
-    <div class="card mb-5 mb-xl-10 shadow-sm border-0">
-        <div class="card-header border-0 cursor-pointer">
-            <div class="card-title m-0">
-                <h3 class="fw-bold m-0 text-gray-900">1. Preferensi Default Tampilan & Antarmuka</h3>
-            </div>
-            <div class="card-toolbar">
-                <span class="badge badge-light-primary fw-semibold fs-8">Appearance</span>
-            </div>
-        </div>
-        <div class="card-body border-top p-9">
+    <div class="row g-6 mb-6">
 
-            <!-- 1.1 Gaya Icon Default -->
-            <div class="row mb-8">
-                <label class="col-lg-3 col-form-label fw-bold fs-6 text-gray-800">
-                    Gaya Icon Default
-                    <i class="ki-duotone ki-information-5 ms-1 fs-7 text-muted" data-bs-toggle="tooltip" title="Gaya KeenIcons default saat pengguna pertama kali membuka website.">
-                        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                    </i>
-                </label>
-                <div class="col-lg-9">
-                    <div class="row g-4" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]" data-kt-icon-preview="true">
+        <!-- ======================================================== -->
+        <!-- KOLOM KIRI: 1. PREFERENSI DEFAULT TAMPILAN & ANTARMUKA  -->
+        <!-- ======================================================== -->
+        <div class="col-lg-6">
+            <div class="card card-flush shadow-sm border-0 h-100">
+                <!--begin::Card header-->
+                <div class="card-header border-0 pt-6 pb-2">
+                    <div class="card-title d-flex flex-column">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="symbol symbol-35px symbol-circle bg-light-primary text-primary d-flex align-items-center justify-content-center">
+                                <i class="ki-outline ki-color-filter fs-3 text-primary"></i>
+                            </span>
+                            <h4 class="fw-bolder text-gray-900 m-0">1. Preferensi Default Tampilan & Antarmuka</h4>
+                        </div>
+                        <span class="text-muted fs-8 mt-1">Konfigurasi visual, ikonografi, translasi, serta tata letak awal</span>
+                    </div>
+                    <div class="card-toolbar">
+                        <span class="badge badge-light-primary fw-bold fs-9">Tampilan</span>
+                    </div>
+                </div>
+                <!--end::Card header-->
+
+                <!--begin::Card body-->
+                <div class="card-body pt-4">
+
+                    <!-- 1.1 Gaya Icon Default -->
+                    <div class="mb-7">
+                        <label class="form-label fw-bold fs-7 text-gray-800 mb-2 d-flex align-items-center justify-content-between">
+                            <span>
+                                Gaya Ikon Bawaan
+                                <i class="ki-outline ki-information-5 ms-1 fs-7 text-muted" data-bs-toggle="tooltip" title="Gaya ikon default saat pengguna pertama kali membuka website."></i>
+                            </span>
+                            <span class="text-muted fs-9">Varian Ikon</span>
+                        </label>
+
                         @php
                             $currentIconStyle = $settings['default_icon_style'] ?? \App\Models\AppSupport\AppSetting::get('default_icon_style', 'duotone');
                         @endphp
-                        
-                        <!-- Duotone -->
-                        <div class="col-md-4">
-                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-4 mb-0 w-100 {{ $currentIconStyle === 'duotone' ? 'active' : '' }}" data-kt-button="true">
-                                <div class="d-flex align-items-center me-2">
-                                    <div class="form-check form-check-custom form-check-solid form-check-primary me-3">
+
+                        <div class="row g-3" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]" data-kt-icon-preview="true">
+                            <!-- Duotone -->
+                            <div class="col-4">
+                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-column align-items-center text-center p-3 w-100 h-100 {{ $currentIconStyle === 'duotone' ? 'active' : '' }}" data-kt-button="true">
+                                    <div class="form-check form-check-custom form-check-solid form-check-primary d-none">
                                         <input class="form-check-input" type="radio" name="default_icon_style" value="duotone" {{ $currentIconStyle === 'duotone' ? 'checked' : '' }} />
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-bold d-block fs-6 text-gray-800">Duotone</span>
-                                        <span class="text-muted fs-8">Multi-layer SVG</span>
-                                    </div>
-                                </div>
-                                <i class="ki-duotone ki-chart-simple fs-2x text-primary" data-kt-icon-style-ignore="true"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                            </label>
-                        </div>
+                                    <i class="ki-duotone ki-chart-simple fs-2x text-primary mb-2" data-kt-icon-style-ignore="true"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                    <span class="fw-bold fs-7 text-gray-900 d-block">Duotone</span>
+                                    <span class="text-muted fs-10">Dua Nada (SVG)</span>
+                                </label>
+                            </div>
 
-                        <!-- Solid -->
-                        <div class="col-md-4">
-                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-4 mb-0 w-100 {{ $currentIconStyle === 'solid' ? 'active' : '' }}" data-kt-button="true">
-                                <div class="d-flex align-items-center me-2">
-                                    <div class="form-check form-check-custom form-check-solid form-check-primary me-3">
+                            <!-- Solid -->
+                            <div class="col-4">
+                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-column align-items-center text-center p-3 w-100 h-100 {{ $currentIconStyle === 'solid' ? 'active' : '' }}" data-kt-button="true">
+                                    <div class="form-check form-check-custom form-check-solid form-check-primary d-none">
                                         <input class="form-check-input" type="radio" name="default_icon_style" value="solid" {{ $currentIconStyle === 'solid' ? 'checked' : '' }} />
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-bold d-block fs-6 text-gray-800">Solid</span>
-                                        <span class="text-muted fs-8">Filled Bold Icon</span>
-                                    </div>
-                                </div>
-                                <i class="ki-solid ki-chart-simple fs-2x text-success" data-kt-icon-style-ignore="true"></i>
-                            </label>
-                        </div>
+                                    <i class="ki-solid ki-chart-simple fs-2x text-success mb-2" data-kt-icon-style-ignore="true"></i>
+                                    <span class="fw-bold fs-7 text-gray-900 d-block">Solid</span>
+                                    <span class="text-muted fs-10">Penuh Tebal</span>
+                                </label>
+                            </div>
 
-                        <!-- Outline -->
-                        <div class="col-md-4">
-                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-4 mb-0 w-100 {{ $currentIconStyle === 'outline' ? 'active' : '' }}" data-kt-button="true">
-                                <div class="d-flex align-items-center me-2">
-                                    <div class="form-check form-check-custom form-check-solid form-check-primary me-3">
+                            <!-- Outline -->
+                            <div class="col-4">
+                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-column align-items-center text-center p-3 w-100 h-100 {{ $currentIconStyle === 'outline' ? 'active' : '' }}" data-kt-button="true">
+                                    <div class="form-check form-check-custom form-check-solid form-check-primary d-none">
                                         <input class="form-check-input" type="radio" name="default_icon_style" value="outline" {{ $currentIconStyle === 'outline' ? 'checked' : '' }} />
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-bold d-block fs-6 text-gray-800">Outline</span>
-                                        <span class="text-muted fs-8">Minimalist Line</span>
-                                    </div>
-                                </div>
-                                <i class="ki-outline ki-chart-simple fs-2x text-info" data-kt-icon-style-ignore="true"></i>
-                            </label>
+                                    <i class="ki-outline ki-chart-simple fs-2x text-info mb-2" data-kt-icon-style-ignore="true"></i>
+                                    <span class="fw-bold fs-7 text-gray-900 d-block">Outline</span>
+                                    <span class="text-muted fs-10">Garis Minimalis</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="separator separator-dashed my-6"></div>
+                    <div class="separator separator-dashed my-5"></div>
 
-            <!-- 1.2 Bahasa Default -->
-            <div class="row mb-8">
-                <label class="col-lg-3 col-form-label fw-bold fs-6 text-gray-800">
-                    Bahasa Default
-                    <i class="ki-duotone ki-information-5 ms-1 fs-7 text-muted" data-bs-toggle="tooltip" title="Bahasa pengantar awal saat pengguna belum memilih preferensi bahasa.">
-                        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                    </i>
-                </label>
-                <div class="col-lg-9">
-                    <div class="row g-4" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
+                    <!-- 1.2 Bahasa Default -->
+                    <div class="mb-7">
+                        <label class="form-label fw-bold fs-7 text-gray-800 mb-2 d-flex align-items-center justify-content-between">
+                            <span>
+                                Bahasa Bawaan
+                                <i class="ki-outline ki-information-5 ms-1 fs-7 text-muted" data-bs-toggle="tooltip" title="Bahasa pengantar awal saat pengguna belum memilih preferensi bahasa."></i>
+                            </span>
+                            <span class="text-muted fs-9">Pengaturan Bahasa</span>
+                        </label>
+
                         @php
                             $currentLang = $settings['default_language'] ?? \App\Models\AppSupport\AppSetting::get('default_language', 'id');
                         @endphp
 
-                        <!-- Bahasa Indonesia -->
-                        <div class="col-md-6">
-                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-4 mb-0 w-100 {{ $currentLang === 'id' ? 'active' : '' }}" data-kt-button="true">
-                                <div class="d-flex align-items-center me-2">
-                                    <div class="form-check form-check-custom form-check-solid form-check-primary me-3">
-                                        <input class="form-check-input" type="radio" name="default_language" value="id" {{ $currentLang === 'id' ? 'checked' : '' }} />
+                        <div class="row g-3" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
+                            <!-- Bahasa Indonesia -->
+                            <div class="col-12 col-sm-6">
+                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex align-items-center justify-content-between p-3 w-100 {{ $currentLang === 'id' ? 'active' : '' }}" data-kt-button="true">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check form-check-custom form-check-solid form-check-primary me-2">
+                                            <input class="form-check-input" type="radio" name="default_language" value="id" {{ $currentLang === 'id' ? 'checked' : '' }} />
+                                        </div>
+                                        <div class="text-start">
+                                            <span class="fw-bold d-block fs-7 text-gray-900">Indonesia</span>
+                                            <span class="text-muted fs-10">Standar Nasional (ID)</span>
+                                        </div>
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-bold d-block fs-6 text-gray-800">Bahasa Indonesia</span>
-                                        <span class="text-muted fs-8">Standar Nasional (ID)</span>
-                                    </div>
-                                </div>
-                                <img src="{{ asset('assets/media/flags/indonesia.svg') }}" class="w-30px h-30px rounded-1 shadow-xs" alt="Indonesia Flag" />
-                            </label>
-                        </div>
+                                    <img src="{{ asset('assets/media/flags/indonesia.svg') }}" class="w-25px h-25px rounded-1 shadow-xs" alt="Bendera Indonesia" />
+                                </label>
+                            </div>
 
-                        <!-- English -->
-                        <div class="col-md-6">
-                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-4 mb-0 w-100 {{ $currentLang === 'en' ? 'active' : '' }}" data-kt-button="true">
-                                <div class="d-flex align-items-center me-2">
-                                    <div class="form-check form-check-custom form-check-solid form-check-primary me-3">
-                                        <input class="form-check-input" type="radio" name="default_language" value="en" {{ $currentLang === 'en' ? 'checked' : '' }} />
+                            <!-- English -->
+                            <div class="col-12 col-sm-6">
+                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex align-items-center justify-content-between p-3 w-100 {{ $currentLang === 'en' ? 'active' : '' }}" data-kt-button="true">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check form-check-custom form-check-solid form-check-primary me-2">
+                                            <input class="form-check-input" type="radio" name="default_language" value="en" {{ $currentLang === 'en' ? 'checked' : '' }} />
+                                        </div>
+                                        <div class="text-start">
+                                            <span class="fw-bold d-block fs-7 text-gray-900">Inggris (English)</span>
+                                            <span class="text-muted fs-10">Internasional (EN)</span>
+                                        </div>
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-bold d-block fs-6 text-gray-800">English</span>
-                                        <span class="text-muted fs-8">International Standard (EN)</span>
-                                    </div>
-                                </div>
-                                <img src="{{ asset('assets/media/flags/united-states.svg') }}" class="w-30px h-30px rounded-1 shadow-xs" alt="United States Flag" />
-                            </label>
+                                    <img src="{{ asset('assets/media/flags/united-states.svg') }}" class="w-25px h-25px rounded-1 shadow-xs" alt="Bendera Inggris" />
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="separator separator-dashed my-6"></div>
+                    <div class="separator separator-dashed my-5"></div>
 
-            <!-- 1.3 Versi Tema Default -->
-            <div class="row mb-8">
-                <label class="col-lg-3 col-form-label fw-bold fs-6 text-gray-800">
-                    Versi Tema Default
-                    <i class="ki-duotone ki-information-5 ms-1 fs-7 text-muted" data-bs-toggle="tooltip" title="Tata letak tata ruang dashboard bawaan (Theme v1 Sidebar vs Theme v2 Header Navbar).">
-                        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                    </i>
-                </label>
-                <div class="col-lg-9">
-                    <div class="row g-4" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
+                    <!-- 1.3 Versi Tema Default -->
+                    <div class="mb-7">
+                        <label class="form-label fw-bold fs-7 text-gray-800 mb-2 d-flex align-items-center justify-content-between">
+                            <span>
+                                Versi Tata Letak Bawaan
+                                <i class="ki-outline ki-information-5 ms-1 fs-7 text-muted" data-bs-toggle="tooltip" title="Tata letak tata ruang dashboard bawaan (Menu Samping vs Menu Atas)."></i>
+                            </span>
+                            <span class="text-muted fs-9">Varian Tata Letak</span>
+                        </label>
+
                         @php
                             $currentThemeVersion = $settings['default_theme_version'] ?? \App\Models\AppSupport\AppSetting::get('default_theme_version', 'v1');
                         @endphp
 
-                        <!-- Theme v1 -->
-                        <div class="col-md-6">
-                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-4 mb-0 w-100 {{ $currentThemeVersion === 'v1' ? 'active' : '' }}" data-kt-button="true">
-                                <div class="d-flex align-items-center me-2">
-                                    <div class="form-check form-check-custom form-check-solid form-check-primary me-3">
-                                        <input class="form-check-input" type="radio" name="default_theme_version" value="v1" {{ $currentThemeVersion === 'v1' ? 'checked' : '' }} />
+                        <div class="row g-3" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
+                            <!-- Theme v1 -->
+                            <div class="col-12 col-sm-6">
+                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex align-items-center justify-content-between p-3 w-100 {{ $currentThemeVersion === 'v1' ? 'active' : '' }}" data-kt-button="true">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check form-check-custom form-check-solid form-check-primary me-2">
+                                            <input class="form-check-input" type="radio" name="default_theme_version" value="v1" {{ $currentThemeVersion === 'v1' ? 'checked' : '' }} />
+                                        </div>
+                                        <div class="text-start">
+                                            <span class="fw-bold d-block fs-7 text-gray-900">Tema V1 (Menu Samping)</span>
+                                            <span class="text-muted fs-10">Navigasi Vertikal</span>
+                                        </div>
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-bold d-block fs-6 text-gray-800">Theme v1 (Sidebar Classic)</span>
-                                        <span class="text-muted fs-8">Navigasi Vertikal Metronic Demo 1</span>
-                                    </div>
-                                </div>
-                                <span class="badge badge-light-primary fw-bold fs-8 px-2 py-1">Demo 1</span>
-                            </label>
-                        </div>
+                                    <span class="badge badge-light-primary fw-bold fs-9 px-2 py-1">V1</span>
+                                </label>
+                            </div>
 
-                        <!-- Theme v2 -->
-                        <div class="col-md-6">
-                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-4 mb-0 w-100 {{ $currentThemeVersion === 'v2' ? 'active' : '' }}" data-kt-button="true">
-                                <div class="d-flex align-items-center me-2">
-                                    <div class="form-check form-check-custom form-check-solid form-check-primary me-3">
-                                        <input class="form-check-input" type="radio" name="default_theme_version" value="v2" {{ $currentThemeVersion === 'v2' ? 'checked' : '' }} />
+                            <!-- Theme v2 -->
+                            <div class="col-12 col-sm-6">
+                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex align-items-center justify-content-between p-3 w-100 {{ $currentThemeVersion === 'v2' ? 'active' : '' }}" data-kt-button="true">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check form-check-custom form-check-solid form-check-primary me-2">
+                                            <input class="form-check-input" type="radio" name="default_theme_version" value="v2" {{ $currentThemeVersion === 'v2' ? 'checked' : '' }} />
+                                        </div>
+                                        <div class="text-start">
+                                            <span class="fw-bold d-block fs-7 text-gray-900">Tema V2 (Menu Atas)</span>
+                                            <span class="text-muted fs-10">Navigasi Horizontal</span>
+                                        </div>
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-bold d-block fs-6 text-gray-800">Theme v2 (Header Navbar)</span>
-                                        <span class="text-muted fs-8">Navigasi Horizontal Metronic Demo 2</span>
-                                    </div>
-                                </div>
-                                <span class="badge badge-light-success fw-bold fs-8 px-2 py-1">Demo 2</span>
-                            </label>
+                                    <span class="badge badge-light-success fw-bold fs-9 px-2 py-1">V2</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="separator separator-dashed my-6"></div>
+                    <div class="separator separator-dashed my-5"></div>
 
-            <!-- 1.4 Halaman Depan Default -->
-            <div class="row mb-0">
-                <label class="col-lg-3 col-form-label fw-bold fs-6 text-gray-800">
-                    Halaman Depan Default
-                    <i class="ki-duotone ki-information-5 ms-1 fs-7 text-muted" data-bs-toggle="tooltip" title="Landing page yang diakses pada rute root website ('/').">
-                        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                    </i>
-                </label>
-                <div class="col-lg-9">
-                    <div class="row g-4" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
+                    <!-- 1.4 Halaman Depan Default -->
+                    <div class="mb-0">
+                        <label class="form-label fw-bold fs-7 text-gray-800 mb-2 d-flex align-items-center justify-content-between">
+                            <span>
+                                Halaman Depan Bawaan
+                                <i class="ki-outline ki-information-5 ms-1 fs-7 text-muted" data-bs-toggle="tooltip" title="Halaman awal yang diakses pada rute beranda website ('/')."></i>
+                            </span>
+                            <span class="text-muted fs-9">Tujuan Beranda</span>
+                        </label>
+
                         @php
                             $currentFrontpage = $settings['default_frontpage'] ?? \App\Models\AppSupport\AppSetting::get('default_frontpage', 'landing');
                         @endphp
 
-                        <!-- Landing Metronic -->
-                        <div class="col-md-6">
-                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-4 mb-0 w-100 {{ $currentFrontpage === 'landing' ? 'active' : '' }}" data-kt-button="true">
-                                <div class="d-flex align-items-center me-2">
-                                    <div class="form-check form-check-custom form-check-solid form-check-primary me-3">
-                                        <input class="form-check-input" type="radio" name="default_frontpage" value="landing" {{ $currentFrontpage === 'landing' ? 'checked' : '' }} />
+                        <div class="row g-3" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
+                            <!-- Landing Metronic -->
+                            <div class="col-12 col-sm-6">
+                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex align-items-center justify-content-between p-3 w-100 {{ $currentFrontpage === 'landing' ? 'active' : '' }}" data-kt-button="true">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check form-check-custom form-check-solid form-check-primary me-2">
+                                            <input class="form-check-input" type="radio" name="default_frontpage" value="landing" {{ $currentFrontpage === 'landing' ? 'checked' : '' }} />
+                                        </div>
+                                        <div class="text-start">
+                                            <span class="fw-bold d-block fs-7 text-gray-900">Halaman Utama Perusahaan</span>
+                                            <span class="text-muted fs-10">Promosi & Layanan (/landing)</span>
+                                        </div>
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-bold d-block fs-6 text-gray-800">Landing Page Corporate</span>
-                                        <span class="text-muted fs-8">Metronic 8 SaaS & Marketing (/landing)</span>
-                                    </div>
-                                </div>
-                                <i class="ki-duotone ki-rocket fs-2x text-primary" data-kt-icon-style-ignore="true"><span class="path1"></span><span class="path2"></span></i>
-                            </label>
-                        </div>
+                                    <i class="ki-outline ki-rocket fs-3 text-primary"></i>
+                                </label>
+                            </div>
 
-                        <!-- Education Portal -->
-                        <div class="col-md-6">
-                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-4 mb-0 w-100 {{ $currentFrontpage === 'education' ? 'active' : '' }}" data-kt-button="true">
-                                <div class="d-flex align-items-center me-2">
-                                    <div class="form-check form-check-custom form-check-solid form-check-primary me-3">
-                                        <input class="form-check-input" type="radio" name="default_frontpage" value="education" {{ $currentFrontpage === 'education' ? 'checked' : '' }} />
+                            <!-- Education Portal -->
+                            <div class="col-12 col-sm-6">
+                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex align-items-center justify-content-between p-3 w-100 {{ $currentFrontpage === 'education' ? 'active' : '' }}" data-kt-button="true">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check form-check-custom form-check-solid form-check-primary me-2">
+                                            <input class="form-check-input" type="radio" name="default_frontpage" value="education" {{ $currentFrontpage === 'education' ? 'checked' : '' }} />
+                                        </div>
+                                        <div class="text-start">
+                                            <span class="fw-bold d-block fs-7 text-gray-900">Portal Pendidikan</span>
+                                            <span class="text-muted fs-10">Portal Edukasi (/education)</span>
+                                        </div>
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-bold d-block fs-6 text-gray-800">Education Portal</span>
-                                        <span class="text-muted fs-8">Portal Akademik & Pendidikan (/education)</span>
-                                    </div>
-                                </div>
-                                <i class="ki-duotone ki-teacher fs-2x text-warning" data-kt-icon-style-ignore="true"><span class="path1"></span><span class="path2"></span></i>
-                            </label>
+                                    <i class="ki-outline ki-teacher fs-3 text-warning"></i>
+                                </label>
+                            </div>
                         </div>
                     </div>
+
                 </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Group 2: Keamanan & Akses -->
-    <div class="card mb-5 mb-xl-10 shadow-sm border-0">
-        <div class="card-header border-0 cursor-pointer">
-            <div class="card-title m-0">
-                <h3 class="fw-bold m-0 text-gray-900">2. Keamanan & Kebijakan Akses</h3>
-            </div>
-            <div class="card-toolbar">
-                <span class="badge badge-light-danger fw-semibold fs-8">Security</span>
+                <!--end::Card body-->
             </div>
         </div>
-        <div class="card-body border-top p-9">
-            <div class="row mb-6">
-                <label class="col-lg-3 col-form-label fw-semibold fs-6 text-gray-800">Pendaftaran Akun Publik</label>
-                <div class="col-lg-9 d-flex align-items-center">
-                    <div class="form-check form-switch form-check-custom form-check-solid">
-                        <input class="form-check-input" type="checkbox" name="enable_registration" value="1" {{ ($settings['enable_registration'] ?? '1') == '1' ? 'checked' : '' }} />
-                        <span class="form-check-label fs-7 text-muted ms-2">Izinkan pengunjung publik membuat akun melalui halaman register.</span>
+        <!-- ======================================================== -->
+        <!-- END KOLOM KIRI                                           -->
+        <!-- ======================================================== -->
+
+
+        <!-- ======================================================== -->
+        <!-- KOLOM KANAN: 2. KEAMANAN & 3. PEMELIHARAAN CACHE TOOLS   -->
+        <!-- ======================================================== -->
+        <div class="col-lg-6 d-flex flex-column gap-6">
+
+            <!-- Card 2: Keamanan & Kebijakan Akses -->
+            <div class="card card-flush shadow-sm border-0">
+                <div class="card-header border-0 pt-6 pb-2">
+                    <div class="card-title d-flex flex-column">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="symbol symbol-35px symbol-circle bg-light-danger text-danger d-flex align-items-center justify-content-center">
+                                <i class="ki-outline ki-shield-tick fs-3 text-danger"></i>
+                            </span>
+                            <h4 class="fw-bolder text-gray-900 m-0">2. Keamanan & Kebijakan Akses</h4>
+                        </div>
+                        <span class="text-muted fs-8 mt-1">Proteksi sesi otentikasi dan registrasi publik</span>
+                    </div>
+                    <div class="card-toolbar">
+                        <span class="badge badge-light-danger fw-bold fs-9">Keamanan</span>
                     </div>
                 </div>
-            </div>
-            <div class="row mb-0">
-                <label class="col-lg-3 col-form-label fw-semibold fs-6 text-gray-800">Durasi Sesi Timeout</label>
-                <div class="col-lg-9 fv-row d-flex align-items-center">
-                    <input type="number" class="form-control form-control-solid w-150px me-3" name="session_lifetime" value="{{ $settings['session_lifetime'] ?? '120' }}" min="1" max="1440" />
-                    <span class="text-muted fs-7">Menit (Otomatis mengunci layar / Lock Screen saat tidak ada aktivitas).</span>
+                <div class="card-body pt-4">
+
+                    <!-- Pendaftaran Akun Publik -->
+                    <div class="d-flex align-items-center justify-content-between p-4 bg-light rounded-3 border mb-5">
+                        <div class="d-flex flex-column me-3">
+                            <span class="fs-7 fw-bold text-gray-900">Pendaftaran Akun Publik</span>
+                            <span class="fs-9 text-muted mt-1">Izinkan pengunjung umum membuat akun baru melalui halaman pendaftaran.</span>
+                        </div>
+                        <div class="form-check form-switch form-check-custom form-check-solid flex-shrink-0">
+                            <input class="form-check-input h-20px w-35px cursor-pointer" type="checkbox" name="enable_registration" value="1" {{ ($settings['enable_registration'] ?? '1') == '1' ? 'checked' : '' }} />
+                        </div>
+                    </div>
+
+                    <!-- Durasi Sesi Timeout -->
+                    <div class="p-4 bg-light rounded-3 border">
+                        <label class="fs-7 fw-bold text-gray-900 d-block mb-1">Batas Waktu Sesi (Kunci Layar)</label>
+                        <span class="fs-9 text-muted d-block mb-3">Waktu jeda pengguna sebelum sistem mengunci layar otomatis (menit).</span>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="input-group input-group-sm w-150px">
+                                <input type="number" class="form-control form-control-solid fw-bold text-center" name="session_lifetime" value="{{ $settings['session_lifetime'] ?? '120' }}" min="1" max="1440" />
+                                <span class="input-group-text bg-body text-gray-700 fw-semibold">Menit</span>
+                            </div>
+                            <span class="fs-9 text-muted">(Bawaan: 120 Menit / 2 Jam)</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
+            <!-- Card 3: Pemeliharaan Sistem & Cache Tools -->
+            <div class="card card-flush shadow-sm border-0 flex-grow-1">
+                <div class="card-header border-0 pt-6 pb-2">
+                    <div class="card-title d-flex flex-column">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="symbol symbol-35px symbol-circle bg-light-warning text-warning d-flex align-items-center justify-content-center">
+                                <i class="ki-outline ki-arrows-circle fs-3 text-warning"></i>
+                            </span>
+                            <h4 class="fw-bolder text-gray-900 m-0">3. Pemeliharaan Sistem & Alat Cache</h4>
+                        </div>
+                        <span class="text-muted fs-8 mt-1">Pembersihan memori cache dan optimasi server seketika</span>
+                    </div>
+                    <div class="card-toolbar">
+                        <span class="badge badge-light-warning fw-bold fs-9">Pemeliharaan</span>
+                    </div>
+                </div>
+                <div class="card-body pt-4">
+                    <p class="fs-8 text-muted mb-4">
+                        Pilih jenis cache yang ingin dibersihkan secara instan untuk memperbarui template, routing, dan konfigurasi tanpa merestart web server:
+                    </p>
+
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline btn-outline-dashed btn-outline-primary btn-sm w-100 p-3 text-start btn-clear-cache-action" data-cache-type="view" data-bs-toggle="tooltip" title="Membersihkan compiled Blade template view">
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <i class="ki-outline ki-element-plus fs-4 text-primary"></i>
+                                    <span class="fw-bold fs-7 text-gray-900">Bersihkan Tampilan</span>
+                                </div>
+                                <span class="text-muted fs-10 d-block">Cache Blade UI</span>
+                            </button>
+                        </div>
+
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline btn-outline-dashed btn-outline-info btn-sm w-100 p-3 text-start btn-clear-cache-action" data-cache-type="route" data-bs-toggle="tooltip" title="Membersihkan route cache list aplikasi">
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <i class="ki-outline ki-route fs-4 text-info"></i>
+                                    <span class="fw-bold fs-7 text-gray-900">Bersihkan Rute</span>
+                                </div>
+                                <span class="text-muted fs-10 d-block">Daftar Rute URL</span>
+                            </button>
+                        </div>
+
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline btn-outline-dashed btn-outline-success btn-sm w-100 p-3 text-start btn-clear-cache-action" data-cache-type="config" data-bs-toggle="tooltip" title="Membersihkan cache konfigurasi config/">
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <i class="ki-outline ki-setting-2 fs-4 text-success"></i>
+                                    <span class="fw-bold fs-7 text-gray-900">Bersihkan Konfigurasi</span>
+                                </div>
+                                <span class="text-muted fs-10 d-block">Konfigurasi Sistem</span>
+                            </button>
+                        </div>
+
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline btn-outline-dashed btn-outline-danger btn-sm w-100 p-3 text-start btn-clear-cache-action" data-cache-type="all" data-bs-toggle="tooltip" title="Membersihkan seluruh cache aplikasi sekaligus">
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <i class="ki-outline ki-trash fs-4 text-danger"></i>
+                                    <span class="fw-bold fs-7 text-gray-900">Bersihkan Semua Cache</span>
+                                </div>
+                                <span class="text-muted fs-10 d-block">Semua Cache Server</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
+        <!-- ======================================================== -->
+        <!-- END KOLOM KANAN                                          -->
+        <!-- ======================================================== -->
+
     </div>
 
-    <!-- Group 3: Pemeliharaan & Quick Cache Tools -->
-    <div class="card mb-5 mb-xl-10 shadow-sm border-0">
-        <div class="card-header border-0 cursor-pointer">
-            <div class="card-title m-0">
-                <h3 class="fw-bold m-0 text-gray-900">3. Pemeliharaan Sistem & Cache Tools</h3>
-            </div>
-            <div class="card-toolbar">
-                <span class="badge badge-light-dark fw-semibold fs-8">Maintenance</span>
-            </div>
-        </div>
-        <div class="card-body border-top p-9">
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-4">
-                <div>
-                    <h6 class="fw-bold text-gray-900 m-0">Pembersihan Cache Seketika</h6>
-                    <span class="text-muted fs-7">Pilih kategori cache yang ingin dibersihkan secara instan dari server.</span>
+    <!-- Save & Reset Action Bar (Bottom Bar) -->
+    <div class="card card-flush shadow-sm border-0">
+        <div class="card-body p-5">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3">
+                <div class="d-flex align-items-center gap-2 text-muted fs-8">
+                    <i class="ki-outline ki-shield-tick text-success fs-5"></i>
+                    Perubahan pengaturan akan langsung diterapkan persisten ke basis data.
                 </div>
-                <div class="d-flex flex-wrap align-items-center gap-2 ms-auto flex-shrink-0">
-                    <button type="button" class="btn btn-sm btn-light-primary fw-bold btn-clear-cache-action" data-cache-type="view" data-bs-toggle="tooltip" title="Bersihkan Cache Blade View">
-                        <i class="ki-duotone ki-element-plus fs-5 me-0 me-sm-1"><span class="path1"></span><span class="path2"></span></i>
-                        <span class="d-none d-sm-inline">Clear Views</span>
+                <div class="d-flex align-items-center gap-3 w-100 w-sm-auto justify-content-end">
+                    <button type="button" class="btn btn-light btn-sm fw-bold" id="btn_reset_system_settings" onclick="document.getElementById('system_settings_form').reset()">
+                        <i class="ki-outline ki-arrows-circle fs-5 me-1"></i> Reset Formulir
                     </button>
-                    <button type="button" class="btn btn-sm btn-light-warning fw-bold btn-clear-cache-action" data-cache-type="route" data-bs-toggle="tooltip" title="Bersihkan Cache Routing">
-                        <i class="ki-duotone ki-route fs-5 me-0 me-sm-1"><span class="path1"></span><span class="path2"></span></i>
-                        <span class="d-none d-sm-inline">Clear Routes</span>
-                    </button>
-                    <button type="button" class="btn btn-sm btn-light-success fw-bold btn-clear-cache-action" data-cache-type="config" data-bs-toggle="tooltip" title="Bersihkan Cache Konfigurasi">
-                        <i class="ki-duotone ki-gear fs-5 me-0 me-sm-1"><span class="path1"></span><span class="path2"></span></i>
-                        <span class="d-none d-sm-inline">Clear Config</span>
-                    </button>
-                    <button type="button" class="btn btn-sm btn-light-danger fw-bold btn-clear-cache-action" data-cache-type="all" data-bs-toggle="tooltip" title="Bersihkan Semua Cache Sistem">
-                        <i class="ki-duotone ki-arrows-circle fs-5 me-0 me-sm-1"><span class="path1"></span><span class="path2"></span></i>
-                        <span class="d-none d-sm-inline">Clear All Cache</span>
+                    <button type="submit" class="btn btn-primary btn-sm fw-bold px-6" id="btn_save_system_settings">
+                        <i class="ki-outline ki-check fs-4 me-1 text-white"></i> Simpan Pengaturan
                     </button>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Save & Reset Action Bar -->
-    <div class="d-flex align-items-center justify-content-end gap-3 pt-4">
-        <button type="button" class="btn btn-light fw-bold" id="btn_reset_system_settings" onclick="document.getElementById('system_settings_form').reset()">
-            Reset Formulir
-        </button>
-        <button type="submit" class="btn btn-primary fw-bold px-8" id="btn_save_system_settings">
-            <i class="ki-duotone ki-check fs-4 me-1 text-white"><span class="path1"></span><span class="path2"></span></i> Simpan Pengaturan
-        </button>
     </div>
 
 </form>

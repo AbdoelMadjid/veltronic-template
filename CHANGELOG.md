@@ -5,6 +5,23 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.34.0] - 2026-09-19
+
+### Added & Enhanced
+- **Modernisasi Top Filter Pengguna (Single-Row Pure Indonesian), Pengaturan Fitur Aplikasi 2-Kolom & Modal Pintasan Terisolasi, serta Random Deterministik Cover Default Pengguna**:
+  - **Modernisasi Top Filter Pengguna (`/usermanagement/users`)**:
+    - Memindahkan dan merestrukturisasi filter serta pencarian pengguna menjadi 1 baris horizontal rapi (`d-flex flex-nowrap align-items-center gap-3`) di atas tabel/kartu pengguna.
+    - Mengonversi dropdown filter (Peran, Status Akun, dan Pengurutan) ke elemen `<select class="form-select form-select-solid form-select-sm">` bawaan dengan teks bahasa Indonesia murni (`Terbaru`, `Terlama`, `Nama (A - Z)`, `Nama (Z - A)`).
+    - Menerapkan penguncian dimensi tombol & input (`width: 90px; height: 38px;`) serta *silent debounced live search* bebas kedip (*Zero-Flicker & Zero Layout Shift*).
+  - **Restrukturisasi Tab Pengaturan Aplikasi & Modal Pintasan Keyboard (`/appsupport/app-fiturs`)**:
+    - Membagi tampilan tab *Pengaturan Aplikasi* menjadi 2 kolom terstruktur: Sisi Kiri (*Preferensi Default Tampilan & Antarmuka*) dan Sisi Kanan (*Keamanan & Kebijakan Akses* serta *Pemeliharaan Sistem & Cache Tools*).
+    - Memisahkan modal formulir pintasan keyboard ke partial modular terisolasi `modals/shortcut-form-modal.blade.php` dan memperbaiki inisialisasi modal edit pintasan.
+    - Menghilangkan elemen dwibahasa pada konten antarmuka menjadi bahasa Indonesia baku.
+  - **Sistem Random Deterministik Cover Default Pengguna**:
+    - Menambahkan metode `getDefaultCovers()` dan `getDefaultCoverUrl($seed)` pada model `User` (`User.php`) menggunakan 22 stok gambar pemandangan resolusi tinggi.
+    - Mengalokasikan cover unik dan variatif bagi setiap pengguna yang belum mengunggah cover berdasarkan formula deterministik ID pengguna (`$user->id % count(covers)`), menjaga konsistensi tampilan tanpa berubah-ubah saat reload.
+    - Terintegrasi otomatis pada halaman `/profil/profil-pengguna`, tampilan kartu & modal detail `/usermanagement/users`, serta banner hero dasbor.
+
 ## [v1.33.0] - 2026-09-18
 
 ### Added & Enhanced

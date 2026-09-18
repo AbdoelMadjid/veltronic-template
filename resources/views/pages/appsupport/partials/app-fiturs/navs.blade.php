@@ -9,13 +9,13 @@
     <li class="nav-item" role="presentation">
         <a class="nav-link text-active-primary py-4 {{ ($active ?? '') === 'settings' ? 'active' : '' }}"
             data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_settings">
-            <i class="ki-outline ki-setting-2 fs-4 me-2"></i> Pengaturan Aplikasi (Settings)
+            <i class="ki-outline ki-setting-2 fs-4 me-2"></i> Pengaturan Aplikasi
         </a>
     </li>
     <li class="nav-item" role="presentation">
         <a class="nav-link text-active-primary py-4 {{ ($active ?? '') === 'shortcuts' ? 'active' : '' }}"
             data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_shortcuts" id="tab_btn_shortcuts">
-            <i class="ki-outline ki-keyboard fs-4 me-2"></i> Pintasan Keyboard (Shortcuts)
+            <i class="ki-outline ki-keyboard fs-4 me-2"></i> Pintasan Keyboard
         </a>
     </li>
     <li class="nav-item" role="presentation">

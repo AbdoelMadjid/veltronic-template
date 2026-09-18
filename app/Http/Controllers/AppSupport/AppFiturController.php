@@ -239,19 +239,26 @@ class AppFiturController extends Controller
     /**
      * Show shortcut data.
      */
-    public function shortcutShow(AppShortcut $appShortcut): JsonResponse
+    public function shortcutShow($appShortcut): JsonResponse
     {
+        $shortcut = $appShortcut instanceof AppShortcut ? $appShortcut : AppShortcut::findOrFail($appShortcut);
+        
         return response()->json([
             'success' => true,
-            'data' => $appShortcut,
+            'data' => $shortcut,
+            'formatted_combination' => $shortcut->formatted_combination,
+            'mac_combination' => $shortcut->mac_combination,
+            'category' => $shortcut->category,
         ]);
     }
 
     /**
      * Update shortcut.
      */
-    public function shortcutUpdate(Request $request, AppShortcut $appShortcut): JsonResponse
+    public function shortcutUpdate(Request $request, $appShortcut): JsonResponse
     {
+        $shortcut = $appShortcut instanceof AppShortcut ? $appShortcut : AppShortcut::findOrFail($appShortcut);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'key' => 'required|string|max:20',
@@ -268,7 +275,7 @@ class AppFiturController extends Controller
             $roles = null;
         }
 
-        $appShortcut->update([
+        $shortcut->update([
             'name' => $request->name,
             'key' => strtolower(trim($request->key)),
             'ctrl' => $request->boolean('ctrl'),
@@ -279,22 +286,22 @@ class AppFiturController extends Controller
             'action_target' => $request->action_target,
             'roles' => $roles,
             'description' => $request->description,
-            'is_enabled' => $request->has('is_enabled') ? $request->boolean('is_enabled') : $appShortcut->is_enabled,
+            'is_enabled' => $request->has('is_enabled') ? $request->boolean('is_enabled') : $shortcut->is_enabled,
         ]);
 
         UserLog::record(
             'appsupport',
             'app-fiturs',
             'Perbarui Pintasan Keyboard',
-            "Memperbarui konfigurasi pintasan keyboard '{$appShortcut->name}' ({$appShortcut->formatted_combination})"
+            "Memperbarui konfigurasi pintasan keyboard '{$shortcut->name}' ({$shortcut->formatted_combination})"
         );
 
         return response()->json([
             'success' => true,
-            'message' => "Pintasan keyboard '{$appShortcut->name}' berhasil diperbarui.",
-            'data' => $appShortcut->fresh(),
-            'formatted_combination' => $appShortcut->fresh()->formatted_combination,
-            'mac_combination' => $appShortcut->fresh()->mac_combination,
+            'message' => "Pintasan keyboard '{$shortcut->name}' berhasil diperbarui.",
+            'data' => $shortcut->fresh(),
+            'formatted_combination' => $shortcut->fresh()->formatted_combination,
+            'mac_combination' => $shortcut->fresh()->mac_combination,
             'user_shortcuts' => AppShortcut::getActiveForCurrentUser(),
         ]);
     }
@@ -302,23 +309,24 @@ class AppFiturController extends Controller
     /**
      * Toggle shortcut active state.
      */
-    public function shortcutToggle(Request $request, AppShortcut $appShortcut): JsonResponse
+    public function shortcutToggle(Request $request, $appShortcut): JsonResponse
     {
-        $appShortcut->is_enabled = !$appShortcut->is_enabled;
-        $appShortcut->save();
+        $shortcut = $appShortcut instanceof AppShortcut ? $appShortcut : AppShortcut::findOrFail($appShortcut);
+        $shortcut->is_enabled = !$shortcut->is_enabled;
+        $shortcut->save();
 
-        $statusStr = $appShortcut->is_enabled ? 'diaktifkan' : 'dinonaktifkan';
+        $statusStr = $shortcut->is_enabled ? 'diaktifkan' : 'dinonaktifkan';
         UserLog::record(
             'appsupport',
             'app-fiturs',
             'Toggle Pintasan Keyboard',
-            "Mengubah status pintasan '{$appShortcut->name}' menjadi {$statusStr}"
+            "Mengubah status pintasan '{$shortcut->name}' menjadi {$statusStr}"
         );
 
         return response()->json([
             'success' => true,
-            'message' => "Pintasan '{$appShortcut->name}' berhasil {$statusStr}.",
-            'data' => $appShortcut,
+            'message' => "Pintasan '{$shortcut->name}' berhasil {$statusStr}.",
+            'is_enabled' => $shortcut->is_enabled,
             'user_shortcuts' => AppShortcut::getActiveForCurrentUser(),
         ]);
     }
@@ -326,24 +334,22 @@ class AppFiturController extends Controller
     /**
      * Delete shortcut.
      */
-    public function shortcutDestroy(Request $request, AppShortcut $appShortcut): JsonResponse
+    public function shortcutDestroy($appShortcut): JsonResponse
     {
-        $name = $appShortcut->name;
-        $combo = $appShortcut->formatted_combination;
-        $id = $appShortcut->id;
-        $appShortcut->delete();
+        $shortcut = $appShortcut instanceof AppShortcut ? $appShortcut : AppShortcut::findOrFail($appShortcut);
+        $name = $shortcut->name;
+        $shortcut->delete();
 
         UserLog::record(
             'appsupport',
             'app-fiturs',
             'Hapus Pintasan Keyboard',
-            "Menghapus pintasan keyboard '{$name}' ({$combo})"
+            "Menghapus pintasan keyboard '{$name}'"
         );
 
         return response()->json([
             'success' => true,
             'message' => "Pintasan keyboard '{$name}' berhasil dihapus.",
-            'id' => $id,
             'user_shortcuts' => AppShortcut::getActiveForCurrentUser(),
         ]);
     }

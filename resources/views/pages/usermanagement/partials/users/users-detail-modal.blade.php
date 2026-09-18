@@ -54,7 +54,7 @@
                     <!--begin::Badges-->
                     <div class="d-flex align-items-center justify-content-center flex-wrap gap-2">
                         <div id="detail_user_roles" class="d-flex flex-wrap justify-content-center gap-1">
-                            <span class="badge bg-white bg-opacity-90 text-gray-800 fw-bold fs-7 px-3 py-1 text-uppercase shadow-xs">USER</span>
+                            <span class="badge bg-white bg-opacity-90 text-gray-800 fw-bold fs-7 px-3 py-1 text-uppercase shadow-xs">PENGGUNA</span>
                         </div>
                         <span id="detail_user_verified" class="badge bg-success text-white fw-bold fs-7 px-3 py-1 shadow-xs">Terverifikasi</span>
                     </div>

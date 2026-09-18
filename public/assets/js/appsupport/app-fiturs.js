@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (btnSaveSettings) {
                     btnSaveSettings.disabled = false;
-                    btnSaveSettings.innerHTML = `<i class="ki-duotone ki-check fs-4 me-2"><span class="path1"></span><span class="path2"></span></i> Simpan Pengaturan`;
+                    btnSaveSettings.innerHTML = `<i class="ki-outline ki-check fs-4 me-1 text-white"></i> Simpan Pengaturan`;
                 }
 
                 if (data.success) {
@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error(err);
                 if (btnSaveSettings) {
                     btnSaveSettings.disabled = false;
-                    btnSaveSettings.innerHTML = `<i class="ki-duotone ki-check fs-4 me-2"><span class="path1"></span><span class="path2"></span></i> Simpan Pengaturan`;
+                    btnSaveSettings.innerHTML = `<i class="ki-outline ki-check fs-4 me-1 text-white"></i> Simpan Pengaturan`;
                 }
                 Notify.error('Gagal terhubung ke server.');
             });
@@ -766,8 +766,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const firstCatBtn = document.querySelector('.btn-category-select[data-category="visibility"]');
         if (firstCatBtn) firstCatBtn.click();
 
-        document.getElementById('shortcut_form_card_title').innerHTML = `<i class="ki-outline ki-plus-circle fs-3 text-primary me-2"></i> Tambah Pintasan Baru`;
-        document.getElementById('shortcut_form_card_subtitle').innerText = 'Pilih kelompok aksi, kombinasi tombol, dan filter hak akses';
+        const titleEl = document.getElementById('shortcut_form_card_title');
+        if (titleEl) titleEl.innerHTML = `Tambah Pintasan Baru`;
+        const subTitleEl = document.getElementById('shortcut_form_card_subtitle');
+        if (subTitleEl) subTitleEl.innerText = 'Pilih kelompok aksi, kombinasi tombol, dan filter hak akses';
         updateLiveBadgePreview();
     }
 
@@ -775,15 +777,51 @@ document.addEventListener('DOMContentLoaded', function () {
         btnResetShortcutForm.addEventListener('click', resetShortcutForm);
     }
 
-    if (btnNewShortcutFocus) {
-        btnNewShortcutFocus.addEventListener('click', function () {
-            resetShortcutForm();
-            if (inputName) {
-                inputName.focus();
-                inputName.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const getShortcutModal = () => {
+        const modalEl = document.getElementById('kt_modal_shortcut_manage');
+        if (!modalEl) return null;
+        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            return bootstrap.Modal.getOrCreateInstance(modalEl);
+        }
+        return null;
+    };
+
+    const showShortcutModal = () => {
+        const modalEl = document.getElementById('kt_modal_shortcut_manage');
+        if (!modalEl) return;
+        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            if (modal) {
+                modal.show();
+                return;
             }
+        }
+        if (typeof $ !== 'undefined' && $.fn && $.fn.modal) {
+            $(modalEl).modal('show');
+        }
+    };
+
+    const hideShortcutModal = () => {
+        const modalEl = document.getElementById('kt_modal_shortcut_manage');
+        if (!modalEl) return;
+        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) {
+                modal.hide();
+                return;
+            }
+        }
+        if (typeof $ !== 'undefined' && $.fn && $.fn.modal) {
+            $(modalEl).modal('hide');
+        }
+    };
+
+    document.querySelectorAll('#btn_new_shortcut_focus, #btn_new_shortcut_open_modal').forEach(btn => {
+        btn.addEventListener('click', function () {
+            resetShortcutForm();
+            showShortcutModal();
         });
-    }
+    });
 
     // 7. Form Submit Handler (Zero-Reload Realtime CRUD)
     if (formShortcut) {
@@ -827,6 +865,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         KTAppShortcuts.reloadShortcuts();
                     }
 
+                    // Hide Modal
+                    hideShortcutModal();
+
                     // Reset form back to create mode
                     resetShortcutForm();
 
@@ -854,108 +895,158 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 8. Edit Shortcut Button Click Handler (Populate Form)
+    // 8. Edit Shortcut Button Click Handler (Populate Form & Show Modal)
     document.addEventListener('click', function (e) {
         const editBtn = e.target.closest('.btn-edit-shortcut-row');
-        if (editBtn) {
-            const id = editBtn.dataset.id;
-            if (!id) return;
+        if (!editBtn) return;
 
-            fetch(`/appsupport/shortcuts/${id}`, {
-                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
-            })
-            .then(res => res.json())
-            .then(resData => {
-                if (resData.success && resData.data) {
-                    const data = resData.data;
+        e.preventDefault();
+        const id = editBtn.getAttribute('data-id') || editBtn.dataset.id;
+        if (!id) return;
 
-                    document.getElementById('shortcut_form_method').value = 'PUT';
-                    document.getElementById('shortcut_form_id').value = data.id;
-                    formShortcut.action = `/appsupport/shortcuts/${data.id}`;
+        // Reset form first and update title
+        resetShortcutForm();
 
-                    if (inputName) inputName.value = data.name || '';
-                    if (inputKey) inputKey.value = data.key || 'm';
-                    if (checkCtrl) checkCtrl.checked = Boolean(data.ctrl || data.meta);
-                    if (checkAlt) checkAlt.checked = Boolean(data.alt);
-                    if (checkShift) checkShift.checked = Boolean(data.shift);
-                    document.getElementById('shortcut_input_description').value = data.description || '';
-                    document.getElementById('shortcut_input_is_enabled').checked = Boolean(data.is_enabled);
+        const titleEl = document.getElementById('shortcut_form_card_title');
+        if (titleEl) titleEl.innerHTML = `Edit Pintasan Keyboard`;
+        const subTitleEl = document.getElementById('shortcut_form_card_subtitle');
+        if (subTitleEl) subTitleEl.innerText = `Memuat data pintasan ID #${id}...`;
 
-                    // Roles
-                    const roles = Array.isArray(data.roles) ? data.roles : [];
-                    if (roles.length === 0) {
-                        if (roleCheckAll) {
-                            roleCheckAll.checked = true;
-                            document.querySelectorAll('.role-item-checkbox').forEach(cb => {
-                                cb.checked = false;
-                                cb.disabled = true;
-                            });
-                        }
-                    } else {
-                        if (roleCheckAll) roleCheckAll.checked = false;
+        // Show modal immediately for responsive feedback
+        showShortcutModal();
+
+        fetch(`/appsupport/shortcuts/${id}`, {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(res => {
+            if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+            return res.json();
+        })
+        .then(resData => {
+            if (resData.success && resData.data) {
+                const data = resData.data;
+
+                document.getElementById('shortcut_form_method').value = 'PUT';
+                document.getElementById('shortcut_form_id').value = data.id;
+                formShortcut.action = `/appsupport/shortcuts/${data.id}`;
+
+                if (inputName) inputName.value = data.name || '';
+                if (inputKey) inputKey.value = data.key || 'm';
+                if (checkCtrl) checkCtrl.checked = Boolean(data.ctrl || data.meta);
+                if (checkAlt) checkAlt.checked = Boolean(data.alt);
+                if (checkShift) checkShift.checked = Boolean(data.shift);
+                
+                const descInput = document.getElementById('shortcut_input_description');
+                if (descInput) descInput.value = data.description || '';
+                
+                const enabledInput = document.getElementById('shortcut_input_is_enabled');
+                if (enabledInput) enabledInput.checked = Boolean(data.is_enabled);
+
+                // Roles
+                const roles = Array.isArray(data.roles) ? data.roles : [];
+                if (roles.length === 0) {
+                    if (roleCheckAll) {
+                        roleCheckAll.checked = true;
                         document.querySelectorAll('.role-item-checkbox').forEach(cb => {
-                            cb.disabled = false;
-                            cb.checked = roles.map(r => r.toLowerCase()).includes(cb.value.toLowerCase());
+                            cb.checked = false;
+                            cb.disabled = true;
                         });
                     }
+                } else {
+                    if (roleCheckAll) roleCheckAll.checked = false;
+                    document.querySelectorAll('.role-item-checkbox').forEach(cb => {
+                        cb.disabled = false;
+                        cb.checked = roles.map(r => r.toLowerCase()).includes(cb.value.toLowerCase());
+                    });
+                }
 
-                    // Determine Category
-                    let categoryKey = 'navigation';
+                // Determine Category
+                let categoryKey = data.category || 'navigation';
+                if (!categoryKey || categoryKey === 'navigation') {
                     if (['toggle_sidebar_menus', 'toggle_topbar_tools', 'toggle_topbar_menus', 'visibility_toggle'].includes(data.action_type)) {
                         categoryKey = 'visibility';
-                    } else if (['icon_style', 'theme_mode', 'appearance'].includes(data.action_type)) {
+                    } else if (['icon_style', 'theme_mode', 'appearance', 'switch_language', 'switch_version'].includes(data.action_type)) {
                         categoryKey = 'appearance';
                     } else if (['search', 'lock_screen', 'system_action'].includes(data.action_type)) {
                         categoryKey = 'system';
                     } else if (data.action_type === 'click_element') {
                         categoryKey = 'element';
                     }
+                }
 
-                    // Activate category button
-                    const catBtn = document.querySelector(`.btn-category-select[data-category="${categoryKey}"]`);
-                    if (catBtn) catBtn.click();
+                // Activate category button without auto-overwriting values
+                document.querySelectorAll('.btn-category-select').forEach(b => {
+                    b.classList.remove('active', 'btn-primary', 'btn-info', 'btn-success', 'btn-danger', 'btn-warning');
+                    b.classList.add('btn-outline');
+                });
+                const catBtn = document.querySelector(`.btn-category-select[data-category="${categoryKey}"]`);
+                if (catBtn) catBtn.classList.add('active');
+                currentSelectedCategory = categoryKey;
 
-                    // Match Target within category
-                    setTimeout(() => {
-                        let matched = false;
-                        if (targetSelect) {
-                            for (let i = 0; i < targetSelect.options.length; i++) {
-                                const opt = targetSelect.options[i];
-                                if (opt.getAttribute('data-type') === data.action_type && opt.getAttribute('data-target') === (data.action_target || '')) {
-                                    $(targetSelect).val(opt.value).trigger('change');
-                                    matched = true;
-                                    break;
-                                }
-                            }
+                // Update category badge & hint
+                const catalog = window.SHORTCUT_CATEGORIES_CATALOG ? window.SHORTCUT_CATEGORIES_CATALOG[categoryKey] : null;
+                if (catalog) {
+                    const badgeSelected = document.getElementById('badge_selected_category');
+                    if (badgeSelected) {
+                        badgeSelected.innerText = catalog.name;
+                        badgeSelected.className = `badge ${catalog.badge_class} fs-9`;
+                    }
+                    const hintEl = document.getElementById('category_description_hint');
+                    if (hintEl) {
+                        hintEl.innerText = catalog.description;
+                    }
+                }
 
-                            if (!matched) {
-                                $(targetSelect).val(`custom_${categoryKey === 'element' ? 'element' : (categoryKey === 'visibility' ? 'visibility' : 'url')}`).trigger('change');
-                                if (customTargetWrapper) customTargetWrapper.classList.remove('d-none');
-                                if (customTargetValInput) customTargetValInput.value = data.action_target || '';
-                                if (hiddenActionType) hiddenActionType.value = data.action_type;
-                                if (hiddenActionTarget) hiddenActionTarget.value = data.action_target;
+                // Populate target options for category and select the current target
+                populateTargetOptionsForCategory(categoryKey);
+
+                setTimeout(() => {
+                    let matched = false;
+                    if (targetSelect) {
+                        for (let i = 0; i < targetSelect.options.length; i++) {
+                            const opt = targetSelect.options[i];
+                            if (opt.getAttribute('data-type') === data.action_type && opt.getAttribute('data-target') === (data.action_target || '')) {
+                                $(targetSelect).val(opt.value).trigger('change');
+                                matched = true;
+                                break;
                             }
                         }
-                    }, 50);
 
-                    document.getElementById('shortcut_form_card_title').innerHTML = `<i class="ki-outline ki-pencil fs-3 text-primary me-2"></i> Edit Pintasan Keyboard`;
-                    document.getElementById('shortcut_form_card_subtitle').innerText = `ID #${data.id} • ${data.name}`;
-
-                    updateLiveBadgePreview();
-
-                    const formCard = document.getElementById('card_shortcut_form');
-                    if (formCard) {
-                        formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (!matched) {
+                            $(targetSelect).val(`custom_${categoryKey === 'element' ? 'element' : (categoryKey === 'visibility' ? 'visibility' : 'url')}`).trigger('change');
+                            if (customTargetWrapper) customTargetWrapper.classList.remove('d-none');
+                            if (customTargetValInput) customTargetValInput.value = data.action_target || '';
+                            if (hiddenActionType) hiddenActionType.value = data.action_type;
+                            if (hiddenActionTarget) hiddenActionTarget.value = data.action_target;
+                        }
                     }
-                } else {
-                    Notify.error('Gagal memuat data pintasan.');
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                Notify.error('Gagal terhubung ke server.');
-            });
-        }
+
+                    // Restore name & keys in case change event altered them
+                    if (inputName) inputName.value = data.name || '';
+                    if (inputKey) inputKey.value = data.key || 'm';
+                    if (checkCtrl) checkCtrl.checked = Boolean(data.ctrl || data.meta);
+                    if (checkAlt) checkAlt.checked = Boolean(data.alt);
+                    if (checkShift) checkShift.checked = Boolean(data.shift);
+                    updateLiveBadgePreview();
+                }, 50);
+
+                if (titleEl) titleEl.innerHTML = `Edit Pintasan Keyboard`;
+                if (subTitleEl) subTitleEl.innerText = `ID #${data.id} • ${data.name}`;
+
+                updateLiveBadgePreview();
+            } else {
+                Notify.error(resData.message || 'Gagal memuat data pintasan.');
+                hideShortcutModal();
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            Notify.error('Gagal terhubung ke server untuk memuat data pintasan.');
+            hideShortcutModal();
+        });
     });
 
     // 9. Toggle Shortcut Row Switch

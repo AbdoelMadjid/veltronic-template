@@ -63,6 +63,7 @@
         <!--begin::Modals-->
         @include('pages.appsupport.partials.app-fiturs.modals.app-fiturs-petunjuk')
         @include('pages.appsupport.partials.app-fiturs.modals.log-detail-modal')
+        @include('pages.appsupport.partials.app-fiturs.modals.shortcut-form-modal')
         <!--end::Modals-->
 
     </div>

@@ -1,4 +1,4 @@
-<!--begin::Modal - Berikan Role Massal-->
+<!--begin::Modal - Berikan Peran Massal-->
 <div class="modal fade" id="kt_modal_bulk_assign_role" tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-600px">
@@ -11,10 +11,10 @@
                         <i class="ki-duotone ki-shield-tick fs-2 text-primary me-2">
                             <span class="path1"></span><span class="path2"></span>
                         </i>
-                        Berikan Role Massal
+                        Berikan Peran Massal
                     </h3>
                     <div class="text-muted fw-semibold fs-7 mt-1">
-                        Tetapkan peran (<em>role</em>) secara bersamaan untuk beberapa pengguna terpilih.
+                        Tetapkan peran secara bersamaan untuk beberapa pengguna terpilih.
                     </div>
                 </div>
                 <!--begin::Close-->
@@ -51,7 +51,7 @@
 
                     <!--begin::Input group: Pilih Roles-->
                     <div class="mb-6">
-                        <label class="fs-6 form-label fw-bold text-gray-800 required mb-3">Pilih Peran (Roles)</label>
+                        <label class="fs-6 form-label fw-bold text-gray-800 required mb-3">Pilih Peran</label>
                         <div class="d-flex flex-column gap-2" id="bulk_roles_list_container">
                             @foreach ($roles as $role)
                                 @php
@@ -86,11 +86,11 @@
                     <div class="mb-8">
                         <label class="fs-6 form-label fw-bold text-gray-800 required mb-3">Metode Penerapan Peran</label>
                         <div class="row g-4">
-                            <!-- Option 1: Tambahkan (Append) -->
+                            <!-- Option 1: Tambahkan (Gabungkan) -->
                             <div class="col-sm-6">
                                 <label class="d-flex flex-column justify-content-between h-100 p-4 rounded-3 border border-dashed border-gray-300 cursor-pointer bg-light-subtle border-hover-primary" for="bulk_mode_append">
                                     <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <span class="fw-bold text-gray-800 fs-7">Tambahkan (Append)</span>
+                                        <span class="fw-bold text-gray-800 fs-7">Tambahkan (Gabungkan)</span>
                                         <div class="form-check form-check-custom form-check-solid">
                                             <input class="form-check-input" type="radio" name="bulk_mode" id="bulk_mode_append" value="append" checked />
                                         </div>
@@ -101,11 +101,11 @@
                                 </label>
                             </div>
 
-                            <!-- Option 2: Ganti Semua (Replace) -->
+                            <!-- Option 2: Ganti Semua (Timpa) -->
                             <div class="col-sm-6">
                                 <label class="d-flex flex-column justify-content-between h-100 p-4 rounded-3 border border-dashed border-gray-300 cursor-pointer bg-light-subtle border-hover-primary" for="bulk_mode_replace">
                                     <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <span class="fw-bold text-gray-800 fs-7">Ganti Semua (Replace)</span>
+                                        <span class="fw-bold text-gray-800 fs-7">Ganti Semua (Timpa)</span>
                                         <div class="form-check form-check-custom form-check-solid">
                                             <input class="form-check-input" type="radio" name="bulk_mode" id="bulk_mode_replace" value="replace" />
                                         </div>
@@ -125,7 +125,7 @@
                         <button type="submit" id="kt_modal_bulk_role_submit" class="btn btn-primary">
                             <span class="indicator-label">
                                 <i class="ki-duotone ki-check fs-4 me-1"><span class="path1"></span><span class="path2"></span></i>
-                                Terapkan Role Massal
+                                Terapkan Peran Massal
                             </span>
                             <span class="indicator-progress">
                                 Menerapkan...

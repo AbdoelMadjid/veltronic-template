@@ -38,7 +38,7 @@
 
                     <!--begin::Input group: Avatar-->
                     <div class="d-flex flex-column align-items-center mb-8">
-                        <label class="fs-6 form-label fw-bold text-gray-800 mb-3">Foto Profil (Avatar)</label>
+                        <label class="fs-6 form-label fw-bold text-gray-800 mb-3">Foto Profil</label>
                         <!--begin::Image input-->
                         <div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true">
                             <!--begin::Preview existing avatar-->
@@ -100,7 +100,7 @@
                     <!--begin::Input group: Role-->
                     <div class="d-flex flex-column mb-7 fv-row">
                         <label class="fs-6 fw-bold form-label mb-2">
-                            <span class="required">Peran (Role)</span>
+                            <span class="required">Peran</span>
                             <span class="text-muted fs-8 ms-1">(Dapat memilih lebih dari satu)</span>
                         </label>
                         <select class="form-select form-select-solid" id="user_form_roles" name="roles[]" multiple="multiple"

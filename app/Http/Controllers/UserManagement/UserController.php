@@ -170,7 +170,7 @@ class UserController extends Controller
                             <button type="button" class="btn btn-icon btn-light btn-active-light-warning btn-sm btn-edit-user" data-id="' . $user->id . '" data-bs-toggle="tooltip" title="Ubah Data">
                                 <i class="ki-duotone ki-pencil fs-5"><span class="path1"></span><span class="path2"></span></i>
                             </button>
-                            <button type="button" class="btn btn-icon btn-light btn-active-light-info btn-sm btn-reset-password" data-id="' . $user->id . '" data-name="' . htmlspecialchars($user->name) . '" data-bs-toggle="tooltip" title="Reset Password">
+                            <button type="button" class="btn btn-icon btn-light btn-active-light-info btn-sm btn-reset-password" data-id="' . $user->id . '" data-name="' . htmlspecialchars($user->name) . '" data-bs-toggle="tooltip" title="Atur Ulang Kata Sandi">
                                 <i class="ki-duotone ki-key fs-5"><span class="path1"></span><span class="path2"></span></i>
                             </button>
                             <button type="button" class="btn btn-icon btn-light btn-active-light-danger btn-sm btn-delete-user" data-id="' . $user->id . '" data-name="' . htmlspecialchars($user->name) . '" data-bs-toggle="tooltip" title="Hapus Pengguna">

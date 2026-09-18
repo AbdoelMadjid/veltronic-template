@@ -56,13 +56,13 @@
                         <div class="menu-item px-3">
                             <a href="javascript:void(0)" class="menu-link px-3 btn-edit-user" data-id="{{ $u->id }}">
                                 <i class="ki-duotone ki-pencil fs-5 me-2 text-warning"><span class="path1"></span><span class="path2"></span></i>
-                                Edit Pengguna
+                                Ubah Pengguna
                             </a>
                         </div>
                         <div class="menu-item px-3">
                             <a href="javascript:void(0)" class="menu-link px-3 btn-reset-password" data-id="{{ $u->id }}" data-name="{{ $u->name }}">
                                 <i class="ki-duotone ki-key fs-5 me-2 text-info"><span class="path1"></span><span class="path2"></span></i>
-                                Reset Password
+                                Atur Ulang Kata Sandi
                             </a>
                         </div>
                         <div class="separator my-2"></div>
@@ -119,7 +119,7 @@
                         <div class="fs-7 fw-bolder text-primary">
                             {{ (int) ($u->login_count ?? 0) }}x
                         </div>
-                        <div class="fw-semibold text-muted fs-9">Login</div>
+                        <div class="fw-semibold text-muted fs-9">Masuk</div>
                     </div>
                     <div class="border border-gray-200 border-dashed rounded min-w-80px py-2 px-2 text-center flex-grow-1">
                         <div class="fs-7 fw-bolder {{ $u->email_verified_at ? 'text-success' : 'text-warning' }}">
@@ -145,7 +145,7 @@
                         </span>
                     @empty
                         <span class="badge bg-light text-gray-800 border border-gray-200 fw-bold px-3 py-1 fs-8 shadow-xs">
-                            USER
+                            PENGGUNA
                         </span>
                     @endforelse
                 </div>
@@ -175,6 +175,6 @@
             <i class="ki-duotone ki-profile-user fs-4x text-gray-400"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
         </div>
         <h4 class="fw-bolder text-gray-800 mb-1">Tidak Ada Pengguna Ditemukan</h4>
-        <p class="text-muted fs-7">Coba sesuaikan kata kunci pencarian atau filter peran di sebelah kiri.</p>
+        <p class="text-muted fs-7">Coba sesuaikan kata kunci pencarian atau penyaringan peran di bagian atas.</p>
     </div>
 @endforelse

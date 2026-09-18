@@ -412,69 +412,90 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 2. Filter Form Submission (AJAX Zero-Reload)
+    let isApplyingFilter = false;
+    function applyUserFilter(showIndicator = false) {
+        if (isApplyingFilter) return;
+        isApplyingFilter = true;
+
+        if (showIndicator && btnApplyFilter) {
+            btnApplyFilter.setAttribute('data-kt-indicator', 'on');
+            btnApplyFilter.disabled = true;
+        }
+
+        // Update Sort Label
+        if (sortLabelEl && filterSort) {
+            const sortMap = {
+                'recent': '• Terbaru',
+                'oldest': '• Terlama',
+                'name_asc': '• Nama A-Z',
+                'name_desc': '• Nama Z-A'
+            };
+            sortLabelEl.textContent = sortMap[filterSort.value] || '• Terbaru';
+        }
+
+        // Reload DataTables
+        if (dataTable) {
+            dataTable.ajax.reload(null, false);
+        }
+
+        // Fetch Cards
+        fetchCards().finally(() => {
+            isApplyingFilter = false;
+            if (btnApplyFilter) {
+                btnApplyFilter.removeAttribute('data-kt-indicator');
+                btnApplyFilter.disabled = false;
+            }
+        });
+    }
+
     if (filterForm) {
         filterForm.addEventListener('submit', function (e) {
             e.preventDefault();
-
-            if (btnApplyFilter) {
-                btnApplyFilter.setAttribute('data-kt-indicator', 'on');
-                btnApplyFilter.disabled = true;
-            }
-
-            // Update Sort Label
-            if (sortLabelEl && filterSort) {
-                const sortMap = {
-                    'recent': '• Terbaru',
-                    'oldest': '• Terlama',
-                    'name_asc': '• Nama A-Z',
-                    'name_desc': '• Nama Z-A'
-                };
-                sortLabelEl.textContent = sortMap[filterSort.value] || '• Terbaru';
-            }
-
-            // Reload DataTables
-            if (dataTable) {
-                dataTable.ajax.reload(null, false);
-            }
-
-            // Fetch Cards
-            fetchCards().finally(() => {
-                if (btnApplyFilter) {
-                    btnApplyFilter.removeAttribute('data-kt-indicator');
-                    btnApplyFilter.disabled = false;
-                }
-            });
+            applyUserFilter(true);
         });
     }
+
+    const filterStatus = document.getElementById('filter_status');
 
     // 3. Reset Filter Button
     if (btnResetFilter) {
         btnResetFilter.addEventListener('click', function () {
             if (filterForm) {
                 filterForm.reset();
-                if (filterRole && $(filterRole).data('select2')) {
-                    $(filterRole).val('').trigger('change.select2');
+                if (filterSearch) {
+                    filterSearch.value = '';
                 }
-                if (filterSort && $(filterSort).data('select2')) {
-                    $(filterSort).val('recent').trigger('change.select2');
+                if (filterRole) {
+                    filterRole.value = '';
+                }
+                if (filterStatus) {
+                    filterStatus.value = '';
+                }
+                if (filterSort) {
+                    filterSort.value = 'recent';
                 }
             }
-            if (filterForm) {
-                filterForm.dispatchEvent(new Event('submit'));
-            }
+            applyUserFilter(false);
         });
     }
 
-    // Realtime Search Debounce on Filter Input
+    // Auto-apply filter when selecting Role, Status, or Sort dropdowns (single clean native listener)
+    [filterRole, filterStatus, filterSort].forEach(selectEl => {
+        if (selectEl) {
+            selectEl.addEventListener('change', function () {
+                applyUserFilter(false);
+            });
+        }
+    });
+
+    // Realtime Search Debounce on Filter Input (smooth AJAX reload, zero button flickering)
     let searchDebounce;
     if (filterSearch) {
         filterSearch.addEventListener('input', function () {
             clearTimeout(searchDebounce);
             searchDebounce = setTimeout(() => {
-                if (filterForm) {
-                    filterForm.dispatchEvent(new Event('submit'));
-                }
-            }, 450);
+                applyUserFilter(false);
+            }, 350);
         });
     }
 

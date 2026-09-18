@@ -103,6 +103,11 @@ return [
                             'title_key' => 'skema_page_title_and_breadcrumb',
                             'route'     => 'help.pemrograman.skema.page-title-dan-breadcrumbs',
                         ],
+                        [
+                            'title'     => 'Skema Keyboard Shortcuts',
+                            'title_key' => 'skema_keyboard_shortcuts',
+                            'route'     => 'help.pemrograman.skema.keyboard-shortcuts',
+                        ],
                     ],
                 ],
                 [
@@ -133,6 +138,11 @@ return [
                             'title'     => 'Panduan Page Title & Breadcrumb',
                             'title_key' => 'panduan_page_title_and_breadcrumb',
                             'route'     => 'help.pemrograman.operasional.panduan-page-title-dan-breadcrumbs',
+                        ],
+                        [
+                            'title'     => 'Panduan Keyboard Shortcuts',
+                            'title_key' => 'panduan_keyboard_shortcuts',
+                            'route'     => 'help.pemrograman.operasional.panduan-keyboard-shortcuts',
                         ],
                         [
                             'title'     => 'Konvensi Penamaan',

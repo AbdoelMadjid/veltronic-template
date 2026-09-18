@@ -252,6 +252,19 @@
                                         </div>
                                     </a>
                                 </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.skema.keyboard-shortcuts') }}"
+                                        class="card card-flush h-100 bg-light-warning">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-keyboard fs-2hx text-warning flex-shrink-0 mt-1"><span
+                                                    class="path1"></span><span class="path2"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Skema Keyboard Shortcuts</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Arsitektur global hotkeys (Ctrl+Alt+[Key]), Action Registry frontend modular, dan role-based authorization.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <!--end::Col Skema-->
@@ -330,6 +343,19 @@
                                             <div>
                                                 <h3 class="mb-1 fs-4">Panduan Page Title &amp; Breadcrumbs</h3>
                                                 <p class="text-gray-700 fs-7 mb-0">Best practice membuat view tanpa boilerplate slot serta tata cara kustomisasi title override.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-12">
+                                    <a href="{{ route('help.pemrograman.operasional.panduan-keyboard-shortcuts') }}"
+                                        class="card card-flush h-100 bg-light-info">
+                                        <div class="card-body d-flex align-items-start gap-3 py-4">
+                                            <i class="ki-duotone ki-keyboard fs-2hx text-info flex-shrink-0 mt-1"><span
+                                                    class="path1"></span><span class="path2"></span></i>
+                                            <div>
+                                                <h3 class="mb-1 fs-4">Panduan Keyboard Shortcuts</h3>
+                                                <p class="text-gray-700 fs-7 mb-0">Tata cara kelola pintasan di admin, registrasi handler JS kustom, dan tips deteksi tabrakan tombol.</p>
                                             </div>
                                         </div>
                                     </a>

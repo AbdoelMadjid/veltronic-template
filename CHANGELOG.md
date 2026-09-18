@@ -33,6 +33,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Database Seeder & Operational Guidelines Integration**:
     - Created `AppShortcutSeeder` with 13 comprehensive default shortcuts registered in `DatabaseSeeder.php` and reset default actions in `AppFiturController.php`.
     - Updated operational guidelines modal (`app-fiturs-petunjuk.blade.php`) and bilingual language dictionaries (`lang/id/menu.php`, `lang/en/menu.php`).
+  - **Developer Help Portal (`help/pemrograman`) & Documentation Integration**:
+    - Added **Skema Keyboard Shortcuts** (`help/pemrograman/skema/keyboard-shortcuts.blade.php` & `docs/skema-pemrograman/skema/keyboard-shortcuts.md`).
+    - Added **Panduan Operasional Keyboard Shortcuts** (`help/pemrograman/operasional/panduan-keyboard-shortcuts.blade.php` & `docs/skema-pemrograman/operasional/panduan-keyboard-shortcuts.md`).
+    - Updated Overview table of contents (`help/pemrograman/overview.blade.php`), docs index (`docs/skema-pemrograman/README.md`), and registered sidebar navigation items (`config/sidebar/_sidebar_helps.php`).
 
 ---
 

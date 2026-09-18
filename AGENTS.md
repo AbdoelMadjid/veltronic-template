@@ -38,4 +38,9 @@
 - **WAJIB** menggunakan token tema dinamis (`bg-body`, `text-gray-900`, `text-muted`, `border-gray-200`, `rounded-3`) tanpa warna hardcoded agar sempurna di Dark Mode & Light Mode.
 - Detail lengkap dan contoh implementasi (Role, Permission, Akses Role, Akses User) diatur di `.agents/rules/module-header-banner-and-toolbar-standards.md`.
 
-
+## 8. Standar Wajib Sinkronisasi Ganda Changelog (Dual Changelog Sync Policy)
+- **WAJIB** memperbarui **KEDUA** berkas changelog secara bersamaan setiap kali melakukan push / membuat tag baru:
+  1. `CHANGELOG.md` (Catatan repositori & rilis Markdown).
+  2. `resources/views/pages/help/log/changelog.blade.php` (Tampilan UI web `/help/log/changelog` lengkap dengan badge *Versi Saat Ini*, badge *Latest Release*, deskripsi, dan rincian perubahan).
+- **DILARANG** melakukan push atau release tag hanya dengan memperbarui salah satu berkas saja.
+- Detail lengkap diatur di `.agents/rules/git-versioning-and-release.md`.

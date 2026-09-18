@@ -28,7 +28,7 @@ Dribbble: www.dribbble.com/keenthemes
 Like: www.facebook.com/keenthemes
 License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
 -->
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}" data-kt-icon-style="{{ getActiveIconStyle() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}" data-kt-icon-style="{{ getActiveIconStyle() }}" data-bs-theme="{{ getActiveThemeMode() === 'system' ? 'light' : getActiveThemeMode() }}" data-bs-theme-mode="{{ getActiveThemeMode() }}">
 <!--begin::Head-->
 
 <head>
@@ -50,7 +50,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" /> <!--end::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700&display=swap" /> <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used for this page only)-->
     {{--     
         <link href="{{ $theme_asset_base }}/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
@@ -65,7 +65,11 @@ License: For each use you must have a valid license purchased only from above li
         type="text/css" />
     <link href="{{ asset('assets/css/custom-icon-style.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
-    <!--layout-partial:partials/icon-style/_init.html-->
+    <!--layout-partial:partials/theme-mode/_init.html (Zero-Flicker)-->
+    @include('partials.theme-mode._init')
+    <!--layout-partial:partials/lang/_init.html (Zero-Flicker)-->
+    @include('partials.lang._init')
+    <!--layout-partial:partials/icon-style/_init.html (Zero-Flicker)-->
     @include('partials.icon-style._init')
     <style>
         @media (max-width: 991.98px) {
@@ -141,6 +145,7 @@ License: For each use you must have a valid license purchased only from above li
     data-session-lifetime="{{ (int) \App\Models\AppSupport\AppSetting::get('session_lifetime', 120) }}"
     data-user-auth="{{ auth()->check() ? '1' : '0' }}"
     data-autolock-enabled="{{ (auth()->check() ? (auth()->user()?->setting('autolock_screen', '1') ?? '1') : '1') }}"
+    @if (request()->cookie('sidebar_minimize_state') === 'on' || (isset($_COOKIE['sidebar_minimize_state']) && $_COOKIE['sidebar_minimize_state'] === 'on')) data-kt-app-sidebar-minimize="on" @endif
     class="
         @if (in_array($layout, ['corp', 'fancy', 'emaillayout'])) app-blank
         @elseif (in_array($layout, ['creative', 'overlay']))
@@ -150,19 +155,6 @@ License: For each use you must have a valid license purchased only from above li
         @else
             app-default @endif">
 
-    {{--
-        <body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true"
-            data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
-            data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true"
-            data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true"
-            data-kt-app-toolbar-enabled="true" data-kt-app-toolbar-fixed="true" data-kt-app-toolbar-fixed-mobile="true"
-            class="app-default">
-        --}}
-
-    <!--layout-partial:partials/theme-mode/_init.html-->
-    @include('partials.theme-mode._init')
-    <!--layout-partial:partials/lang/_init.html-->
-    @include('partials.lang._init')
     <!--layout-partial:layout/_default.html-->
     @include('layouts._default')
     <!--layout-partial:partials/_scrolltop.html-->

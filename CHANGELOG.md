@@ -5,6 +5,35 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.31.0] - 2026-09-18
+
+### Added & Enhanced
+- **Zero-Flicker & Zero-Flash Global Layout & Content Rendering Engine**:
+  - **Server-Side Pre-Rendering Theme Mode**:
+    - Menambahkan helper global [`getActiveThemeMode()`](file:///c:/laragon/finnally/veltronic-template/app/utils/helper.php) untuk membaca preferensi mode tema (*dark*, *light*, *system*) dari cookie browser, session, atau pengaturan default database.
+    - Mencetak atribut `data-bs-theme` dan `data-bs-theme-mode` langsung pada tag `<html>` sejak byte pertama HTML diterima browser, mencegah kedipan putih/gelap (*theme mode flashing*).
+  - **Synchronous `<head>` Initializers (Anti-FOUC)**:
+    - Memindahkan pemanggilan `@include('partials.theme-mode._init')` dan `@include('partials.lang._init')` ke dalam tag `<head>` di [`layouts/index.blade.php`](file:///c:/laragon/finnally/veltronic-template/resources/views/layouts/index.blade.php) dan [`layouts/index-v2.blade.php`](file:///c:/laragon/finnally/veltronic-template/resources/views/layouts/index-v2.blade.php).
+    - Memperbarui skrip `_init-v1.blade.php` dan `_init-v2.blade.php` untuk memprioritaskan `localStorage` dan cookie secara sinkron (0 ms) sebelum `<body>` mulai dicat oleh browser.
+  - **Zero-Shift Sidebar State Preservation**:
+    - Menerapkan rendering atribut `data-kt-app-sidebar-minimize="on"` langsung dari server jika cookie `sidebar_minimize_state` bernilai `on`, mengeliminasi pergeseran/hentakan layout (*layout jump / snap*) saat reload atau navigasi.
+  - **Sinkronisasi Cookie Terenkripsi (Laravel & JavaScript)**:
+    - Mendaftarkan `kt_theme_mode`, `data-bs-theme`, `data-bs-theme-mode`, dan `sidebar_minimize_state` ke dalam daftar *unencrypted cookies* di [`bootstrap/app.php`](file:///c:/laragon/finnally/veltronic-template/bootstrap/app.php).
+  - **Font Preloading & Anti-FOIT Engine**:
+    - Menerapkan parameter `display=swap` pada pemuatan Google Fonts Inter untuk mengeliminasi *Flash of Invisible Text* (FOIT).
+  - **Zero-Flicker CSS Rendering Engine**:
+    - Menambahkan optimasi `text-rendering: optimizeLegibility`, `-webkit-font-smoothing`, transisi lembut warna latar/border, dan `font-display: block` pada ikon di [`public/assets/css/custom.css`](file:///c:/laragon/finnally/veltronic-template/public/assets/css/custom.css).
+
+## [v1.30.0] - 2026-09-18
+
+### Added & Enhanced
+- **Zero-Flicker Server-Side Icon Rendering Engine & Overview Grouping**:
+  - **ApplyIconStyle Middleware**: Middleware otomatis untuk memindai dan merender varian gaya KeenIcons (`duotone`, `solid`, `outline`) langsung dari server sebelum HTML dikirim ke browser.
+  - **Preload KeenIcons WOFF Fonts**: Preload font `.woff` untuk duotone, solid, dan outline di `<head>` untuk rendering ikon instan tanpa jeda unduhan font.
+  - **Pengelompokan Kategori Halaman Ikhtisar Pemrograman (`help/pemrograman/overview`)**:
+    - Menata 34 topik ke dalam 6 grup kategori terstruktur dengan badge ikon dinamis.
+    - Menambahkan tombol pil filter kategori cepat (*Quick Filter Pills*) dan pencarian instan (*Realtime Search*).
+
 ## [v1.29.0] - 2026-09-18
 
 ### Added & Enhanced

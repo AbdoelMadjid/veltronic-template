@@ -277,6 +277,37 @@ if (!function_exists('isFeatureActive')) {
     }
 }
 
+if (!function_exists('getActiveThemeMode')) {
+    function getActiveThemeMode(): string
+    {
+        // 1. Prioritize user cookie from browser request
+        $cookieMode = request()->cookie('kt_theme_mode') ?: (request()->cookie('data-bs-theme') ?: request()->cookie('data-bs-theme-mode'));
+        if (!empty($cookieMode) && in_array($cookieMode, ['light', 'dark', 'system'], true)) {
+            return $cookieMode;
+        }
+
+        // 2. Check session
+        if (session()->has('kt_theme_mode')) {
+            $sessionMode = session('kt_theme_mode');
+            if (in_array($sessionMode, ['light', 'dark', 'system'], true)) {
+                return $sessionMode;
+            }
+        }
+
+        // 3. Check DB default setting
+        try {
+            if (class_exists(\App\Models\AppSupport\AppSetting::class) && \Illuminate\Support\Facades\Schema::hasTable('app_settings')) {
+                $dbMode = \App\Models\AppSupport\AppSetting::get('default_theme_mode');
+                if (!empty($dbMode) && in_array($dbMode, ['light', 'dark', 'system'], true)) {
+                    return $dbMode;
+                }
+            }
+        } catch (\Throwable $e) {}
+
+        return 'light';
+    }
+}
+
 if (!function_exists('getActiveIconStyle')) {
     function getActiveIconStyle(): string
     {

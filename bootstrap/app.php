@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'data-kt-lang',
             'kt_icon_style',
             'data-kt-icon-style',
+            'kt_theme_mode',
+            'data-bs-theme',
+            'data-bs-theme-mode',
+            'sidebar_minimize_state',
         ]);
         $middleware->validateCsrfTokens(except: [
             'theme-mode/switch/*',

@@ -151,4 +151,30 @@
     box-shadow: none !important;
 }
 
+/* ==========================================================================
+   Zero-Flicker & Smooth Rendering Engine
+   ========================================================================== */
+html {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent layout jump and visual flashing on theme / layout changes */
+.app-sidebar,
+.app-header,
+.app-toolbar,
+.app-content,
+.card,
+.btn {
+    transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+/* Ensure font icons render with zero shift */
+[class^="ki-"], [class*=" ki-"] {
+    font-display: block;
+    text-rendering: auto;
+}
+
+
 

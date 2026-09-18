@@ -34,13 +34,80 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.30.0
+                            Versi Saat Ini: v1.32.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.32.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.32.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.32.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>18 Sep 2026, 15:30 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Peremajaan Modal Tentang Aplikasi (10 Fitur Arsitektur &amp; Tech Stack Badges), Sinkronisasi Kamus Dwibahasa, serta Revamp Komprehensif README.md &amp; Indeks 34 Dokumentasi Pengembang</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyempurnaan menyeluruh modal <strong>Tentang Aplikasi</strong> (<code>kt_modal_about_app.blade.php</code>) dengan desain KeenThemes Metronic modern yang elegan, responsif, dan adaptif (*Dark/Light Mode*), badge status <em>Enterprise Ready</em>, baris spesifikasi <em>Tech Stack</em> (Laravel 13, PHP 8.3+, Metronic 8.3.2, Bootstrap 5.3, Vite &amp; Realtime AJAX, Spatie Security), penataan grid 10 modul arsitektur sistem berikon duotone, profil pengembang terstandarisasi, tautan cepat ke repositori GitHub, Portal Dokumentasi (<code>help/pemrograman/overview</code>), dan Changelog (<code>help/log/changelog</code>), serta restrukturisasi total berkas <code>README.md</code> menjadi panduan utama proyek yang informatif, rapi, dan bebas ambiguitas dengan tabel 13 pintasan keyboard global, diagram arsitektur alur kerja Mermaid, spesifikasi sistem, dan indeks lengkap 34 topik dokumentasi pengembang.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Redesain Modal Tentang Aplikasi (<code>kt_modal_about_app.blade.php</code>)</strong>: Tampilan modern berlebar <code>mw-850px</code> dengan 10 modul arsitektur enterprise (Bilingual, Hotkeys Hub, Audit Logging, DB Backup, App Profile &amp; SEO, Zero-Reload AJAX CRUD, Theme Versions, KeenIcons Engine, Dynamic Menu &amp; Routing, Operational Guidelines Component).</li>
+                                        <li><strong>Baris Spesifikasi Tech Stack Badges</strong>: Menampilkan pil badge Laravel 13, PHP 8.3+, Metronic 8.3.2, Bootstrap 5.3, Vite, dan Spatie Security.</li>
+                                        <li><strong>Sinkronisasi Kamus Dwibahasa (<code>lang/id/about.php</code> &amp; <code>lang/en/about.php</code>)</strong>: Penambahan kunci terjemahan lengkap dan pendaftaran prefix <code>about.</code> pada <code>public/assets/js/custom/language.js</code>.</li>
+                                        <li><strong>Revamp Total README.md</strong>: Penataan ulang dokumentasi repositori utama dengan header badges estetik, tabel persyaratan sistem, panduan instalasi langkah-demi-langkah, tabel 13 hotkeys global <code>Ctrl+Alt+[Key]</code>, diagram Mermaid MVC &amp; auto-routing, indeks lengkap 34 topik skema pemrograman (21 Skema Arsitektur &amp; 13 Panduan Operasional), serta checklist deployment production.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.32.0-->
+
+                        <!--begin::Item v1.31.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.31.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.31.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>18 Sep 2026, 15:20 WIB
+                                    </span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Zero-Flicker &amp; Zero-Flash Global Layout &amp; Content Rendering Engine (Server-Side Theme Mode Pre-Rendering, Synchronous Head Inits, Zero-Shift Sidebar State &amp; Anti-FOIT Font Engine)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi menyeluruh arsitektur <em>Zero-Flicker &amp; Zero-Flash Global Layout Engine</em> untuk mengeliminasi kedipan tema (*theme mode flashing*), pergeseran layout sidebar (*layout snap / shift*), dan kedipan teks (*Flash of Invisible Text / FOIT*) saat memuat atau me-refresh halaman melalui pre-rendering server-side atribut tema, inisialisasi sinkron di tag <code>&lt;head&gt;</code>, sinkronisasi cookie unencrypted, dan optimasi CSS rendering.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Server-Side Theme Mode Pre-Rendering</strong>: Helper <code>getActiveThemeMode()</code> membaca cookie dan mencetak <code>data-bs-theme</code> langsung ke tag <code>&lt;html&gt;</code> sebelum browser mulai menggambar layout.</li>
+                                        <li><strong>Synchronous Head Inits</strong>: Pemindahan pemanggilan <code>_init.blade.php</code> langsung ke dalam <code>&lt;head&gt;</code> untuk inisialisasi tema dan bahasa secara instan 0 ms.</li>
+                                        <li><strong>Zero-Shift Sidebar Minimization</strong>: Membaca status cookie <code>sidebar_minimize_state</code> dan mencetak <code>data-kt-app-sidebar-minimize="on"</code> dari server tanpa pergeseran transisi saat navigasi.</li>
+                                        <li><strong>Anti-FOIT Font &amp; CSS Smoothing</strong>: Pemuatan Google Fonts Inter dengan <code>display=swap</code> serta optimasi <code>text-rendering: optimizeLegibility</code> pada CSS custom.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.31.0-->
+
                         <!--begin::Item v1.30.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.30.0</div>
@@ -56,7 +123,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>18 Sep 2026, 15:15 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Zero-Flicker Server-Side Icon Rendering Engine (ApplyIconStyle Middleware), Card Wrapping Overview Dokumentasi, Standardisasi Ikon &amp; Perbaikan Empty State Profil</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

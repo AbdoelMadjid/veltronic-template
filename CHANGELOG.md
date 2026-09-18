@@ -5,6 +5,19 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.32.0] - 2026-09-18
+
+### Added & Enhanced
+- **Peremajaan Modal Tentang Aplikasi (10 Fitur Arsitektur & Tech Stack) serta Revamp Komprehensif README.md & Indeks 34 Dokumentasi**:
+  - **Redesain Modal Tentang Aplikasi (`kt_modal_about_app.blade.php`)**:
+    - Menambahkan badge status *Enterprise Ready* dan baris spesifikasi *Tech Stack* (Laravel 13, PHP 8.3+, Metronic 8.3.2, Bootstrap 5.3, Vite & Realtime AJAX, Spatie Security).
+    - Menata grid 10 modul arsitektur sistem (Bilingual Engine, Global Hotkeys Hub, Centralized Audit Logging, Smart DB Backup, App Profile & SEO, Zero-Reload AJAX CRUD, Theme Versions, KeenIcons Engine, Dynamic Menu & Routing, Operational Guidelines Component).
+    - Melengkapi tautan navigasi cepat ke GitHub Repositori, Portal Dokumentasi (`help/pemrograman/overview`), dan Changelog (`help/log/changelog`).
+    - Sinkronisasi kamus dwibahasa di `lang/id/about.php` dan `lang/en/about.php` serta pendaftaran prefix `about.` pada `language.js`.
+  - **Revamp Komprehensif README.md & Indeks 34 Dokumentasi**:
+    - Restrukturisasi dokumen `README.md` menjadi lebih informatif, elegan, rapi, dan bebas ambiguitas.
+    - Menambahkan tabel 13 pintasan keyboard global (`Ctrl+Alt+[Key]`), diagram arsitektur alur kerja & auto-routing engine (Mermaid), serta indeks 34 topik dokumentasi (21 Skema Arsitektur & 13 Panduan Operasional).
+
 ## [v1.31.0] - 2026-09-18
 
 ### Added & Enhanced

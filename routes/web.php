@@ -18,6 +18,23 @@ Route::get('/lang/{locale}', function (Request $request, string $locale) {
         \Illuminate\Support\Facades\Cookie::queue('kt_lang', $locale, 525600);
         \Illuminate\Support\Facades\App::setLocale($locale);
 
+        $langLabel = match(strtolower($locale)) {
+            'id' => 'Bahasa Indonesia (ID)',
+            'en' => 'English (EN)',
+            default => strtoupper($locale),
+        };
+
+        if (class_exists(\App\Models\Profil\UserLog::class)) {
+            \App\Models\Profil\UserLog::record(
+                module: 'appsupport',
+                menu: 'topbar-tools',
+                activity: 'Ganti Bahasa Antarmuka',
+                description: 'Mengubah preferensi bahasa antarmuka menjadi: ' . $langLabel,
+                user: auth()->user(),
+                level: 'info'
+            );
+        }
+
         if ($request->expectsJson() || $request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
             return response()->json([
                 'status' => 'success',
@@ -36,11 +53,60 @@ Route::get('/lang/translations.json', function () {
         ->header('Cache-Control', 'public, max-age=3600');
 })->name('lang.translations');
 
+Route::match(['get', 'post'], '/theme-mode/switch/{mode}', function (Request $request, string $mode) {
+    if (in_array($mode, ['light', 'dark', 'system'], true)) {
+        session(['kt_theme_mode' => $mode]);
+        \Illuminate\Support\Facades\Cookie::queue('kt_theme_mode', $mode, 525600);
+        if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
+            \App\Models\AppSupport\AppSetting::set('default_theme_mode', $mode, 'appearance');
+        }
+
+        $modeLabel = match ($mode) {
+            'dark' => 'Mode Gelap (Dark Mode)',
+            'light' => 'Mode Terang (Light Mode)',
+            'system' => 'Mode Sistem (Auto)',
+            default => ucfirst($mode),
+        };
+
+        if (class_exists(\App\Models\Profil\UserLog::class)) {
+            \App\Models\Profil\UserLog::record(
+                module: 'appsupport',
+                menu: 'topbar-tools',
+                activity: 'Ganti Mode Tema (Dark/Light)',
+                description: 'Mengubah preferensi mode tema antarmuka menjadi: ' . $modeLabel,
+                user: auth()->user(),
+                level: 'info'
+            );
+        }
+
+        if ($request->expectsJson() || $request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
+            return response()->json([
+                'status' => 'success',
+                'mode' => $mode,
+                'message' => 'Theme mode updated successfully.'
+            ]);
+        }
+    }
+
+    return redirect()->back();
+})->name('theme.mode.switch');
+
 Route::get('/theme/version/{version}', function (Request $request, $version) {
     if (in_array($version, ThemeVersion::available(), true)) {
         session(['theme_version' => $version]);
         if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
             \App\Models\AppSupport\AppSetting::set('default_theme_version', $version, 'appearance');
+        }
+
+        if (class_exists(\App\Models\Profil\UserLog::class)) {
+            \App\Models\Profil\UserLog::record(
+                module: 'appsupport',
+                menu: 'topbar-tools',
+                activity: 'Ganti Varian Tema (Theme Version)',
+                description: 'Mengubah versi tata letak layout tema menjadi: ' . strtoupper($version),
+                user: auth()->user(),
+                level: 'info'
+            );
         }
 
         if ($request->expectsJson() || $request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
@@ -61,6 +127,17 @@ Route::get('/frontpage/switch/{frontpage}', function ($frontpage) {
         if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
             \App\Models\AppSupport\AppSetting::set('default_frontpage', $frontpage, 'appearance');
         }
+
+        if (class_exists(\App\Models\Profil\UserLog::class)) {
+            \App\Models\Profil\UserLog::record(
+                module: 'appsupport',
+                menu: 'topbar-tools',
+                activity: 'Ganti Halaman Depan (Frontpage)',
+                description: 'Mengubah preferensi halaman depan (frontpage) menjadi: ' . ucfirst($frontpage),
+                user: auth()->user(),
+                level: 'info'
+            );
+        }
     }
     return redirect()->back();
 })->middleware(['auth', 'role:master|admin'])->name('frontpage.switch');
@@ -72,6 +149,18 @@ Route::match(['get', 'post'], '/icon-style/switch/{style}', function (Request $r
         if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
             \App\Models\AppSupport\AppSetting::set('default_icon_style', $style, 'appearance');
         }
+
+        if (class_exists(\App\Models\Profil\UserLog::class)) {
+            \App\Models\Profil\UserLog::record(
+                module: 'appsupport',
+                menu: 'topbar-tools',
+                activity: 'Ganti Icon Style',
+                description: 'Mengubah varian gaya ikon antarmuka menjadi: ' . ucfirst($style),
+                user: auth()->user(),
+                level: 'info'
+            );
+        }
+
         if ($request->expectsJson() || $request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
             return response()->json([
                 'status' => 'success',

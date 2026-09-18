@@ -5,6 +5,41 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.29.0] - 2026-09-18
+
+### Added & Enhanced
+- **Dashboard App Profile Management Module (`appsupport/app-profil`)**:
+  - **Identitas & Meta SEO Dashboard**: Pengaturan dinamis nama aplikasi (`app_name`), tagline (`app_tagline`), versi rilis (`app_version`), deskripsi pencarian (`meta_description`), kata kunci (`meta_keywords`), author (`meta_author`), dan Open Graph tags (`og_title`, `og_site_name`) dengan fitur **Live Google Search Snippet Preview** & **Open Graph Social Card Preview**.
+  - **Logo & Favicon Dashboard dengan Validasi Resolusi Ketat**:
+    - Dukungan upload berkas gambar dan kustom path/URL untuk logo mode terang (`app_logo_default`), logo mode gelap (`app_logo_dark`), icon logo mini (`app_logo_minimize`), dan favicon browser (`app_favicon`).
+    - **Validasi Ketat Dimensi & Rasio Resolusi (Client & Server-side)**:
+      - *Logo Mode Terang & Gelap*: Resolusi `100×20 px` s/d `600×150 px` (Rekomendasi `200×50 px` Lanskap), maks 1 MB.
+      - *Logo Mini (Minimize)*: Rasio 1:1 Persegi Simetris, `30×30 px` s/d `200×200 px` (Rekomendasi `40×40 px`), maks 512 KB.
+      - *Favicon Browser*: Rasio 1:1 Persegi Simetris, `16×16 px` s/d `128×128 px` (Rekomendasi `32×32 px` / `64×64 px`), maks 256 KB.
+    - Penyimpanan aset gambar dialokasikan langsung ke **`public/assets/logo/`** dengan tracking Git aktif (`.gitkeep`) agar aman saat `git push`, `clone`, atau `git pull`.
+    - Dilengkapi tombol reset per item ke aset standar bawaan tema.
+  - **Pengaturan Footer Dashboard**:
+    - Konfigurasi tahun copyright (`footer_copyright_year`), nama pemilik (`footer_copyright_text`), URL tautan (`footer_copyright_url`), serta toggle visibilitas status info server (`footer_show_system_info`: Laravel, PHP, MySQL version).
+    - **Dynamic Footer Link Repeater**: Tabel interaktif untuk menambah, mengubah, mengurutkan, dan menghapus tautan menu navigasi footer secara realtime.
+  - **Dinamisasi Seluruh Layout Dashboard**:
+    - Menghubungkan seluruh layout (`layouts/index.blade.php`, `index-v2.blade.php`, `document832.blade.php`, `_logo.blade.php`, `_header.blade.php`, `_base-v2.blade.php`, `_footer.blade.php`, `_footer-v2.blade.php`) via helper teroptimasi cache: `app_profile()`, `app_logo_url()`, `app_favicon_url()`, dan `app_footer_links()`.
+  - **Database Seeder & Sinkronisasi File Seeder Otomatis**:
+    - Membuat seeder mandiri `database/seeders/AppProfilSeeder.php` yang terdaftar di `DatabaseSeeder.php`.
+    - Fitur **"Perbarui File Seeder" (`sync-seeder`)**: Mengambil konfigurasi aktif di database dan menulis ulang file `AppProfilSeeder.php` secara otomatis.
+    - Fitur **"Jalankan Seeder" (`run-seeder`)**: Memuat ulang data dari seeder ke database secara instan.
+  - **Integrasi Audit Activity Logs ke App Features (`/appsupport/app-fiturs`)**:
+    - Seluruh mutasi konfigurasi profil dashboard secara otomatis dicatat ke `users_logs` via `UserLog::record('appsupport', 'app-profil', ...)`.
+    - **Pencatatan Log Otomatis 5 Fitur Topbar**:
+      1. **Icon Style Switch**: `Ganti Icon Style` (`duotone`, `solid`, `outline`).
+      2. **Theme Mode Switch**: `Ganti Mode Tema (Dark/Light)` (`light`, `dark`, `system`) dengan listener AJAX realtime.
+      3. **Language Switch**: `Ganti Bahasa Antarmuka` (`id`, `en`).
+      4. **Theme Version Switch**: `Ganti Varian Tema (Theme Version)` (`v1`, `v2`).
+      5. **Frontpage Selection**: `Ganti Halaman Depan (Frontpage)` (`landing`, `auth`, `education`, dll.).
+      Setiap entri log secara akurat merekam akun pengguna pengeksekusi aktif (`user_id = auth()->id()`).
+  - **Standarisasi Komponen Petunjuk Operasional (`<x-petunjuk-modal>`)**:
+    - Mengonversi modal petunjuk operasional `app-profil-petunjuk.blade.php` ke komponen standar `<x-petunjuk-modal>` dengan 4 slot terstruktur (`box1`: Gambaran Umum, `box2`: Komponen, `box3`: Alur Operasional, `box4`: Aturan/Proteksi Sistem).
+    - Memperbarui aturan dokumentasi di `.agents/rules/module-partials-and-operational-guidelines.md` dan `AGENTS.md` yang mewajibkan seluruh modal petunjuk di masa mendatang menggunakan komponen `<x-petunjuk-modal>`.
+
 ## [v1.28.0] - 2026-09-18
 
 ### Added & Enhanced

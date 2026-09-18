@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppSupport\AppFiturController;
+use App\Http\Controllers\AppSupport\AppProfilController;
 use App\Http\Controllers\AppSupport\BackupDbController;
 use App\Http\Controllers\AppSupport\MenuController as AppSupportMenuController;
 use App\Http\Controllers\UserManagement\DataLoginController;
@@ -19,6 +20,15 @@ Route::middleware(['auth'])->group(function () {
     // AppSupport: Modul Menu & Manajemen Fitur/Setting
     Route::prefix('appsupport')->name('appsupport.')->group(function () {
 
+        // Profil & Identitas Aplikasi Dashboard (App Profil)
+        Route::get('/app-profil', [AppProfilController::class, 'index'])->name('app-profil');
+        Route::post('/app-profil/meta', [AppProfilController::class, 'updateMeta'])->name('app-profil.meta');
+        Route::post('/app-profil/logo', [AppProfilController::class, 'updateLogo'])->name('app-profil.logo');
+        Route::post('/app-profil/logo/reset', [AppProfilController::class, 'resetLogo'])->name('app-profil.logo.reset');
+        Route::post('/app-profil/footer', [AppProfilController::class, 'updateFooter'])->name('app-profil.footer');
+        Route::post('/app-profil/sync-seeder', [AppProfilController::class, 'syncToSeeder'])->name('app-profil.sync-seeder');
+        Route::post('/app-profil/run-seeder', [AppProfilController::class, 'runSeeder'])->name('app-profil.run-seeder');
+        Route::post('/app-profil/clear-cache', [AppProfilController::class, 'clearCache'])->name('app-profil.clear-cache');
 
         // Fitur & Setting Management (App Fiturs)
         Route::get('/app-fiturs', [AppFiturController::class, 'index'])->name('app-fiturs');

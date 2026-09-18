@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'kt_icon_style',
             'data-kt-icon-style',
         ]);
+        $middleware->validateCsrfTokens(except: [
+            'theme-mode/switch/*',
+            'icon-style/switch/*',
+        ]);
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);

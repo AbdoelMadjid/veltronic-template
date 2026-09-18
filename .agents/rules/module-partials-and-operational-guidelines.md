@@ -24,23 +24,85 @@ Untuk menjaga kerapian arsitektur kode, memudahkan pemeliharaan (*maintainabilit
 
 ---
 
-## 2. Kewajiban Komponen Petunjuk Operasional di Setiap Modul
+## 2. Kewajiban Komponen Petunjuk Operasional Menggunakan `<x-petunjuk-modal>`
 
-1. **WAJIB ADA DI SETIAP MODUL**:
-   - Setiap modul baru **WAJIB MEMILIKI KOMPONEN PETUNJUK OPERASIONAL** (`[modul]-petunjuk.blade.php`).
-2. **KONTEN PETUNJUK OPERASIONAL**:
-   - **Tujuan Modul**: Penjelasan singkat fungsi modul dalam sistem.
-   - **Alur & Fitur Utama**: Cara menggunakan fitur pencarian, filter, tambah, ubah, dan hapus.
-   - **Hak Akses & Batasan**: Penjelasan hak akses peran (*Role & Permission*) terkait modul.
-   - **Keamanan Data**: Catatan penting mengenai privasi atau dampak aksi permanen (misal: Reset Password atau Hapus Data).
-3. **STANDAR DESAIN PETUNJUK**:
-   - Gunakan komponen bawaan Metronic/Bootstrap seperti Card `card-flush border-0 bg-light-primary` atau `bg-light-info` atau Accordion bersih.
-   - **DILARANG** menggunakan ikon pada judul maupun sub-judul petunjuk (sesuai aturan [ui-icon-and-title-standards.md](file:///.agents/rules/ui-icon-and-title-standards.md)).
+1. **WAJIB MENGGUNAKAN KOMPONEN `<x-petunjuk-modal>`**:
+   - Seluruh modal petunjuk operasional di setiap modul **WAJIB DIBANGUN MENGGUNAKAN BLADE COMPONENT `<x-petunjuk-modal>`** (`resources/views/components/petunjuk-modal.blade.php`) agar memiliki struktur visual, warna, icon, dan tipografi yang 100% seragam di seluruh aplikasi.
+   - **DILARANG** menulis ulang struktur HTML modal mentah secara manual per halaman.
+
+2. **STRUKTUR & PROPS STANDAR `<x-petunjuk-modal>`**:
+   - `id`: ID unik modal (contoh: `kt_modal_[nama_modul]_petunjuk`)
+   - `title`: Judul modal petunjuk (contoh: `Petunjuk Operasional: [Nama Modul]`)
+   - `subtitle`: Penjelasan ringkas panduan modul
+   - `box1Title` & `box1Icon`: Kotak 1 (Biru / Gambaran Umum, default icon: `ki-diamonds`)
+   - `box2Title` & `box2Icon`: Kotak 2 (Netral / Hirarki & Komponen, default icon: `ki-element-11`)
+   - `box3Title` & `box3Icon`: Kotak 3 (Primer / Alur Operasional, default icon: `ki-key`)
+   - `box4Title` & `box4Icon`: Kotak 4 (Kuning Warning / Aturan & Proteksi Sistem, default icon: `ki-security-user`)
+
+3. **CONTOH KODE BLADE STANDAR PETUNJUK OPERASIONAL**:
+   ```blade
+   <x-petunjuk-modal 
+       id="kt_modal_[nama_modul]_petunjuk"
+       title="Petunjuk Operasional: [Nama Modul]"
+       subtitle="Panduan operasional lengkap pengelolaan fitur dan hak akses"
+       box1Title="Gambaran Umum &[Nama Modul]"
+       box1Icon="ki-diamonds"
+       box2Title="Komponen & Struktur Antarmuka"
+       box2Icon="ki-element-11"
+       box3Title="Alur Operasional Penggunaan"
+       box3Icon="ki-key"
+       box4Title="Aturan, Proteksi & Keamanan Sistem"
+       box4Icon="ki-security-user">
+
+       <x-slot:box1>
+           Penjelasan ringkas fungsi dan kegunaan modul ini bagi pengguna.
+       </x-slot:box1>
+
+       <x-slot:box2>
+           <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
+               <li class="d-flex align-items-start">
+                   <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
+                   <div><strong>Komponen A:</strong> Penjelasan bagian A.</div>
+               </li>
+           </ul>
+       </x-slot:box2>
+
+       <x-slot:box3>
+           <ol class="text-gray-700 fs-7 mb-0 ps-4 d-flex flex-column gap-2">
+               <li><strong>Langkah 1:</strong> Cara melakukan aksi pertama.</li>
+               <li><strong>Langkah 2:</strong> Cara melakukan aksi kedua.</li>
+           </ol>
+       </x-slot:box3>
+
+       <x-slot:box4>
+           <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
+               <li class="d-flex align-items-start">
+                   <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                   <div><strong>Catatan Keamanan:</strong> Hal penting yang harus diperhatikan.</div>
+               </li>
+           </ul>
+       </x-slot:box4>
+   </x-petunjuk-modal>
+   ```
+
+4. **PENEMPATAN & PEMICU PETUNJUK DI TOOLBAR**:
+   - Pemicu modal petunjuk **WAJIB diletakkan di toolbar** (`@section('toolbar')`) menggunakan partial `layouts.partials._action-petunjuk-button`:
+   ```blade
+   @section('toolbar')
+       @include('layouts.partials._toolbar', [
+           'action' => view()->make('layouts.partials._action-petunjuk-button', [
+               'targetModal' => '#kt_modal_[nama_modul]_petunjuk',
+               'title' => 'Petunjuk Operasional [Nama Modul]',
+           ]),
+       ])
+   @endsection
+   ```
 
 ---
 
 ## 3. Checklist Kepatuhan Modul Baru
 - [ ] Apakah sub-folder `partials/` sudah dibuat di dalam direktori view modul?
 - [ ] Apakah komponen modal form, modal detail, dan tab panes sudah dipisahkan ke dalam `partials/`?
-- [ ] Apakah komponen `[modul]-petunjuk.blade.php` sudah dibuat dan di-include di view utama?
-- [ ] Apakah file Blade utama bersih dan mudah dibaca tanpa penumpukan ribuan baris?
+- [ ] Apakah file `[modul]-petunjuk.blade.php` sudah dibuat menggunakan komponen `<x-petunjuk-modal>` dengan 4 slot kotak terstruktur?
+- [ ] Apakah pemicu petunjuk sudah ditempatkan di toolbar atas via `_action-petunjuk-button`?
+- [ ] Apakah file Blade utama bersih dan hanya bertindak sebagai koordinator layout?

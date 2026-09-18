@@ -17,6 +17,18 @@ Route::prefix('education')->name('education.')->group(function () use ($educatio
             \Illuminate\Support\Facades\Cookie::queue('kt_lang', $locale, 525600);
             \Illuminate\Support\Facades\App::setLocale($locale);
 
+            if (class_exists(\App\Models\Profil\UserLog::class)) {
+                $langLabel = $locale === 'id' ? 'Bahasa Indonesia (ID)' : 'English (EN)';
+                \App\Models\Profil\UserLog::record(
+                    module: 'appsupport',
+                    menu: 'topbar-tools',
+                    activity: 'Ganti Bahasa Antarmuka',
+                    description: 'Mengubah preferensi bahasa pada landing page menjadi: ' . $langLabel,
+                    user: auth()->user(),
+                    level: 'info'
+                );
+            }
+
             if ($request->expectsJson() || $request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
                 return response()->json([
                     'status' => 'success',

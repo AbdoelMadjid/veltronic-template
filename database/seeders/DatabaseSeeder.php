@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             AppFiturSeeder::class,
             AppSettingSeeder::class,
+            AppProfilSeeder::class,
             AppShortcutSeeder::class,
         ]);
 

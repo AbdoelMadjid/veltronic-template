@@ -18,20 +18,17 @@ License: For each use you must have a valid license purchased only from above li
     <title>{{ trim($__env->yieldContent('title')) ?: getPageTitle() }} - Demo 2 Metronic 832</title>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="description" data-kt-translate="menu.meta_description"
-        content="{{ __('menu.meta_description') }}" />
-    <meta name="keywords" data-kt-translate="menu.meta_keywords"
-        content="{{ __('menu.meta_keywords') }}" />
+    <meta name="description" content="{{ app_profile('meta_description') ?: __('menu.meta_description') }}" />
+    <meta name="keywords" content="{{ app_profile('meta_keywords') ?: __('menu.meta_keywords') }}" />
+    <meta name="author" content="{{ app_profile('meta_author', 'Veltronic Team') }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="{{ app()->getLocale() === 'id' ? 'id_ID' : 'en_US' }}" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" data-kt-translate="menu.og_title"
-        content="{{ __('menu.og_title') }}" />
-    <meta property="og:url" content="https://keenthemes.com/metronic" />
-    <meta property="og:site_name" content="Metronic by Keenthemes" />
-    <link rel="canonical" href="http://preview.keenthemes.com?page=index" />
-    <link rel="shortcut icon"
-        href="{{ \App\Support\ThemeAsset::url('media/logos/favicon.ico', $theme_asset_pack ?? null) }}" />
+    <meta property="og:title" content="{{ app_profile('og_title') ?: (trim($__env->yieldContent('title')) ?: __('menu.og_title')) }}" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:site_name" content="{{ app_profile('og_site_name') ?: app_profile('app_name', 'Veltronic') }}" />
+    <link rel="canonical" href="{{ url()->current() }}" />
+    <link rel="shortcut icon" href="{{ app_favicon_url($theme_asset_pack ?? null) }}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

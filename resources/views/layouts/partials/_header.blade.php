@@ -23,14 +23,14 @@
         @if (!empty($LightHeader) && $LightHeader === true)
             <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15">
                 <a href="/dashboard">
-                    <img alt="Logo" src="{{ \App\Support\ThemeAsset::url('media/logos/default.svg', $theme_asset_pack ?? null) }}"
+                    <img alt="Logo" src="{{ app_logo_url('default', $theme_asset_pack ?? null) }}"
                         class="h-20px h-lg-30px app-sidebar-logo-default theme-light-show" />
                 </a>
             </div>
         @elseif (!empty($DarkHeader) && $DarkHeader === true)
             <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15">
                 <a href="/dashboard">
-                    <img alt="Logo" src="{{ \App\Support\ThemeAsset::url('media/logos/default-dark.svg', $theme_asset_pack ?? null) }}"
+                    <img alt="Logo" src="{{ app_logo_url('dark', $theme_asset_pack ?? null) }}"
                         class="h-20px h-lg-30px app-sidebar-logo-default" />
                 </a>
             </div>
@@ -45,8 +45,8 @@
             <!--end::Sidebar mobile toggle-->
             <!--begin::Mobile logo-->
             <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                <a href="?page=index" class="d-lg-none">
-                    <img alt="Logo" src="{{ \App\Support\ThemeAsset::url('media/logos/default-small.svg', $theme_asset_pack ?? null) }}" class="h-30px" />
+                <a href="/dashboard" class="d-lg-none">
+                    <img alt="Logo" src="{{ app_logo_url('minimize', $theme_asset_pack ?? null) }}" class="h-30px" />
                 </a>
             </div>
         @endif

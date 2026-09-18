@@ -4,15 +4,15 @@
     <a href="/dashboard">
         @if (!empty($LightSidebar) && $LightSidebar === true)
             {{-- Light-sidebar --}}
-            <img alt="Logo" src="{{ \App\Support\ThemeAsset::url('media/logos/default.svg', $theme_asset_pack ?? null) }}"
+            <img alt="Logo" src="{{ app_logo_url('default', $theme_asset_pack ?? null) }}"
                 class="h-25px app-sidebar-logo-default theme-light-show" />
-            <img alt="Logo" src="{{ \App\Support\ThemeAsset::url('media/logos/default-dark.svg', $theme_asset_pack ?? null) }}"
+            <img alt="Logo" src="{{ app_logo_url('dark', $theme_asset_pack ?? null) }}"
                 class="h-25px app-sidebar-logo-default theme-dark-show" />
-            <img alt="Logo" src="{{ \App\Support\ThemeAsset::url('media/logos/default-small.svg', $theme_asset_pack ?? null) }}" class="h-20px app-sidebar-logo-minimize" />
+            <img alt="Logo" src="{{ app_logo_url('minimize', $theme_asset_pack ?? null) }}" class="h-20px app-sidebar-logo-minimize" />
         @else
             {{-- Default: dark-sidebar --}}
-            <img alt="Logo" src="{{ \App\Support\ThemeAsset::url('media/logos/default-dark.svg', $theme_asset_pack ?? null) }}" class="h-25px app-sidebar-logo-default" />
-            <img alt="Logo" src="{{ \App\Support\ThemeAsset::url('media/logos/default-small.svg', $theme_asset_pack ?? null) }}" class="h-20px app-sidebar-logo-minimize" />
+            <img alt="Logo" src="{{ app_logo_url('dark', $theme_asset_pack ?? null) }}" class="h-25px app-sidebar-logo-default" />
+            <img alt="Logo" src="{{ app_logo_url('minimize', $theme_asset_pack ?? null) }}" class="h-20px app-sidebar-logo-minimize" />
         @endif
     </a>
     <!--end::Logo image-->

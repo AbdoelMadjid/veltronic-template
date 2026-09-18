@@ -747,3 +747,117 @@ if (!function_exists('user_avatar')) {
         return new HtmlString($imgHtml);
     }
 }
+
+if (!function_exists('app_profile')) {
+    /**
+     * Ambil data profil atau pengaturan aplikasi dari database / cache.
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    function app_profile(string $key, $default = null)
+    {
+        if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
+            return \App\Models\AppSupport\AppSetting::get($key, $default);
+        }
+        return $default;
+    }
+}
+
+if (!function_exists('app_logo_url')) {
+    /**
+     * Dapatkan URL Logo Dashboard aplikasi secara dinamis dengan fallback aman.
+     *
+     * @param string $variant 'default'|'dark'|'minimize'|'v2_default'|'v2_sticky'
+     * @param string|null $themePack
+     * @return string
+     */
+    function app_logo_url(string $variant = 'default', ?string $themePack = null): string
+    {
+        $settingKey = match ($variant) {
+            'dark' => 'app_logo_dark',
+            'minimize', 'small' => 'app_logo_minimize',
+            default => 'app_logo_default',
+        };
+
+        $val = app_profile($settingKey);
+
+        if (!empty($val)) {
+            if (str_starts_with($val, 'http://') || str_starts_with($val, 'https://')) {
+                return $val;
+            }
+            if (str_starts_with($val, 'uploads/') || str_starts_with($val, 'storage/') || str_starts_with($val, 'assets/')) {
+                return asset($val);
+            }
+            if (file_exists(public_path($val))) {
+                return asset($val);
+            }
+            return \App\Support\ThemeAsset::url($val, $themePack);
+        }
+
+        return match ($variant) {
+            'dark' => \App\Support\ThemeAsset::url('media/logos/default-dark.svg', $themePack),
+            'minimize', 'small' => \App\Support\ThemeAsset::url('media/logos/default-small.svg', $themePack),
+            'v2_sticky' => \App\Support\ThemeAsset::url('media/logos/demo2-sticky.png', $themePack),
+            'v2_default' => \App\Support\ThemeAsset::url('media/logos/demo2.png', $themePack),
+            default => \App\Support\ThemeAsset::url('media/logos/default.svg', $themePack),
+        };
+    }
+}
+
+if (!function_exists('app_favicon_url')) {
+    /**
+     * Dapatkan URL Favicon browser aplikasi secara dinamis.
+     *
+     * @param string|null $themePack
+     * @return string
+     */
+    function app_favicon_url(?string $themePack = null): string
+    {
+        $val = app_profile('app_favicon');
+
+        if (!empty($val)) {
+            if (str_starts_with($val, 'http://') || str_starts_with($val, 'https://')) {
+                return $val;
+            }
+            if (str_starts_with($val, 'uploads/') || str_starts_with($val, 'storage/') || str_starts_with($val, 'assets/')) {
+                return asset($val);
+            }
+            if (file_exists(public_path($val))) {
+                return asset($val);
+            }
+            return \App\Support\ThemeAsset::url($val, $themePack);
+        }
+
+        return \App\Support\ThemeAsset::url('media/logos/favicon.ico', $themePack);
+    }
+}
+
+if (!function_exists('app_footer_links')) {
+    /**
+     * Dapatkan daftar tautan menu footer dashboard yang dinamis.
+     *
+     * @return array
+     */
+    function app_footer_links(): array
+    {
+        $raw = app_profile('footer_links');
+
+        if (!empty($raw)) {
+            if (is_array($raw)) {
+                return $raw;
+            }
+            $decoded = json_decode($raw, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+        }
+
+        return [
+            ['title' => 'About', 'url' => 'https://keenthemes.com', 'target' => '_blank'],
+            ['title' => 'Support', 'url' => 'https://devs.keenthemes.com', 'target' => '_blank'],
+            ['title' => 'Purchase', 'url' => 'https://1.envato.market/EA4JP', 'target' => '_blank'],
+        ];
+    }
+}

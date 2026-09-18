@@ -5,6 +5,27 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.33.0] - 2026-09-18
+
+### Added & Enhanced
+- **Modul Inti Manajemen Theme Frontpage & Multi-Versi Dinamis Landing Page (`appsupport/theme-frontpage`)**:
+  - **Arsitektur Frontpage Dinamis & Multi-Versi Landing**:
+    - Deteksi otomatis direktori template multi-versi landing page (`v1`, `v2`, dst.) via `Frontpage::availableLandingVersions()`.
+    - Resolusi tampilan dinamis `frontpages.landing.{$version}.landing` dengan dukungan pergantian instan antara tema **Landing** (Single Page) dan **Education** (Multi-page Portal).
+    - Kelas helper terpusat `LandingPageConfig` untuk mengelola pengaturan Hero, Branding Logo Light/Dark, Menu Anchor Navigasi, Seksi Konten, Footer, dan Social Media Links.
+  - **Modularisasi Script Tiap Section & Layout Coordinator**:
+    - Memecah struktur landing page `v1` menjadi 9 partials terisolasi di `resources/views/frontpages/landing/v1/sections/` (`hero.blade.php`, `how-it-works.blade.php`, `achievements.blade.php`, `team.blade.php`, `portfolio.blade.php`, `pricing.blade.php`, `clients.blade.php`, `custom.blade.php`, `footer.blade.php`).
+    - File utama `landing.blade.php` bertindak sebagai koordinator layout bersih dengan pengecekan status aktif seksi kondisional.
+  - **GUI Script & Source Code Editor untuk Tiap Seksi (`#modal_section_code`)**:
+    - Tombol aksi *Edit Script Blade / HTML* pada setiap baris seksi konten, tab hero, dan tab footer.
+    - Editor kode monospace bergaya developer dark console dengan fitur *Auto-Wrap*, *Reset ke Script Asli*, dan penyimpanan realtime via AJAX.
+    - Resolusi cerdas file partial section (`resolveSectionFile`) yang memetakan ID seksi bawaan dan kustom secara tepat dan aman.
+  - **Antarmuka Manajemen Responsif & Standar Antigravity Veltronic**:
+    - Implementasi Zero-Reload Realtime CRUD dengan feedback SweetAlert2 dan Toastr.
+    - Button Loading Spinner Policy (`data-kt-indicator="on"`) pada seluruh aksi submit form.
+    - Header Banner terpisah, Toolbar Petunjuk Operasional menggunakan `<x-petunjuk-modal>` 4-box terstruktur, dan Live Preview Responsif (Desktop, Tablet, Mobile).
+    - Terintegrasi 19 endpoint rute backend `appsupport.theme-frontpage.*` di `ThemeFrontpageController.php`.
+
 ## [v1.32.0] - 2026-09-18
 
 ### Added & Enhanced

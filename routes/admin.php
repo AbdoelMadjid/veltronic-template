@@ -4,6 +4,7 @@ use App\Http\Controllers\AppSupport\AppFiturController;
 use App\Http\Controllers\AppSupport\AppProfilController;
 use App\Http\Controllers\AppSupport\BackupDbController;
 use App\Http\Controllers\AppSupport\MenuController as AppSupportMenuController;
+use App\Http\Controllers\AppSupport\ThemeFrontpageController;
 use App\Http\Controllers\UserManagement\DataLoginController;
 use App\Http\Controllers\UserManagement\PermissionController;
 use App\Http\Controllers\UserManagement\RoleAccessController;
@@ -60,6 +61,30 @@ Route::middleware(['auth'])->group(function () {
         // Menu Management (Spatie Permission & Dynamic DB Menu)
         Route::post('menu/reorder', [AppSupportMenuController::class, 'reorder'])->name('menu.reorder');
         Route::resource('menu', AppSupportMenuController::class);
+
+        // Tema Halaman Depan (Theme Frontpage Management)
+        Route::get('/theme-frontpage', [ThemeFrontpageController::class, 'index'])->name('theme-frontpage');
+        Route::post('/theme-frontpage/switch-theme', [ThemeFrontpageController::class, 'switchTheme'])->name('theme-frontpage.switch-theme');
+        Route::post('/theme-frontpage/switch-landing-version', [ThemeFrontpageController::class, 'switchLandingVersion'])->name('theme-frontpage.switch-landing-version');
+        Route::post('/theme-frontpage/hero', [ThemeFrontpageController::class, 'updateHero'])->name('theme-frontpage.hero');
+        Route::post('/theme-frontpage/logo', [ThemeFrontpageController::class, 'updateLogo'])->name('theme-frontpage.logo');
+        Route::post('/theme-frontpage/logo/reset', [ThemeFrontpageController::class, 'resetLogo'])->name('theme-frontpage.logo.reset');
+        Route::post('/theme-frontpage/menu/save', [ThemeFrontpageController::class, 'saveMenu'])->name('theme-frontpage.menu.save');
+        Route::post('/theme-frontpage/menu/reorder', [ThemeFrontpageController::class, 'reorderMenu'])->name('theme-frontpage.menu.reorder');
+        Route::post('/theme-frontpage/menu/toggle', [ThemeFrontpageController::class, 'toggleMenu'])->name('theme-frontpage.menu.toggle');
+        Route::post('/theme-frontpage/menu/delete', [ThemeFrontpageController::class, 'deleteMenu'])->name('theme-frontpage.menu.delete');
+        Route::post('/theme-frontpage/menu/reset', [ThemeFrontpageController::class, 'resetMenu'])->name('theme-frontpage.menu.reset');
+        Route::post('/theme-frontpage/sections/save', [ThemeFrontpageController::class, 'saveSection'])->name('theme-frontpage.sections.save');
+        Route::post('/theme-frontpage/sections/toggle', [ThemeFrontpageController::class, 'toggleSection'])->name('theme-frontpage.sections.toggle');
+        Route::post('/theme-frontpage/sections/reorder', [ThemeFrontpageController::class, 'reorderSections'])->name('theme-frontpage.sections.reorder');
+        Route::post('/theme-frontpage/sections/delete', [ThemeFrontpageController::class, 'deleteSection'])->name('theme-frontpage.sections.delete');
+        Route::post('/theme-frontpage/sections/reset', [ThemeFrontpageController::class, 'resetSections'])->name('theme-frontpage.sections.reset');
+        Route::post('/theme-frontpage/sections/get-code', [ThemeFrontpageController::class, 'getSectionCode'])->name('theme-frontpage.sections.get-code');
+        Route::post('/theme-frontpage/sections/save-code', [ThemeFrontpageController::class, 'saveSectionCode'])->name('theme-frontpage.sections.save-code');
+        Route::post('/theme-frontpage/sections/reset-code', [ThemeFrontpageController::class, 'resetSectionCode'])->name('theme-frontpage.sections.reset-code');
+        Route::post('/theme-frontpage/footer', [ThemeFrontpageController::class, 'updateFooter'])->name('theme-frontpage.footer');
+        Route::post('/theme-frontpage/clear-cache', [ThemeFrontpageController::class, 'clearCache'])->name('theme-frontpage.clear-cache');
+        Route::post('/theme-frontpage/reset-all', [ThemeFrontpageController::class, 'resetAll'])->name('theme-frontpage.reset-all');
     });
 
     // User Management (Users, Roles, Permissions, Akses, Data Login)

@@ -2,17 +2,21 @@
 
 namespace App\Support;
 
+use Illuminate\Support\Facades\File;
+
 class Frontpage
 {
     protected static ?string $cachedDefault = null;
     protected static ?array $cachedAll = null;
     protected static ?array $cachedAvailable = null;
+    protected static ?array $cachedLandingVersions = null;
 
     public static function clearCache(): void
     {
         self::$cachedDefault = null;
         self::$cachedAll = null;
         self::$cachedAvailable = null;
+        self::$cachedLandingVersions = null;
     }
 
     public static function default(): string
@@ -80,10 +84,76 @@ class Frontpage
         return self::default();
     }
 
+    /**
+     * Get available landing versions dynamically from filesystem.
+     *
+     * @return array<string>
+     */
+    public static function availableLandingVersions(): array
+    {
+        if (self::$cachedLandingVersions !== null) {
+            return self::$cachedLandingVersions;
+        }
+
+        $landingPath = resource_path('views/frontpages/landing');
+        $versions = [];
+
+        if (File::isDirectory($landingPath)) {
+            $directories = File::directories($landingPath);
+            foreach ($directories as $dir) {
+                $versions[] = basename($dir);
+            }
+        }
+
+        if (empty($versions)) {
+            $versions = ['v1'];
+        }
+
+        sort($versions);
+        self::$cachedLandingVersions = $versions;
+
+        return self::$cachedLandingVersions;
+    }
+
+    /**
+     * Get currently active landing version (e.g. 'v1', 'v2').
+     */
+    public static function currentLandingVersion(): string
+    {
+        $sessionVersion = session('landing_version');
+        $available = self::availableLandingVersions();
+
+        if ($sessionVersion !== null && in_array($sessionVersion, $available, true)) {
+            return (string) $sessionVersion;
+        }
+
+        try {
+            if (class_exists(\App\Models\AppSupport\AppSetting::class)) {
+                $dbVersion = \App\Models\AppSupport\AppSetting::get('landing_version', 'v1');
+                if (!empty($dbVersion) && in_array($dbVersion, $available, true)) {
+                    return (string) $dbVersion;
+                }
+            }
+        } catch (\Throwable $e) {
+            // fallback
+        }
+
+        return 'v1';
+    }
+
     public static function currentView(): string
     {
         $current = self::current();
         $pages = self::all();
+
+        if ($current === 'landing') {
+            $version = self::currentLandingVersion();
+            $viewName = "frontpages.landing.{$version}.landing";
+            if (view()->exists($viewName)) {
+                return $viewName;
+            }
+            return 'frontpages.landing.v1.landing';
+        }
 
         return $pages[$current]['view'] ?? 'frontpages.landing.v1.landing';
     }

@@ -105,5 +105,8 @@ class AppSetting extends Model
         if (class_exists(\App\Support\Frontpage::class)) {
             \App\Support\Frontpage::clearCache();
         }
+        if (class_exists(\App\Support\LandingPageConfig::class)) {
+            \App\Support\LandingPageConfig::clearCache();
+        }
     }
 }

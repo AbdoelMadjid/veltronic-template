@@ -34,13 +34,58 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.27.0
+                            Versi Saat Ini: v1.28.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.28.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.28.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.28.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>18 Sep 2026, 10:45 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Sistem Pintasan Keyboard Dinamis (Keyboard Shortcuts Engine), Action Registry Modular, Standar Hotkey Bebas Konflik &amp; Dokumentasi Developer</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi menyeluruh sistem pintasan keyboard (<em>Global Hotkeys Engine</em>) berbasis basis data dengan arsitektur <em>Action Registry</em> modular pada antarmuka, pembagian 5 kategori tindakan, standar kombinasi <code>Ctrl + Alt + [Key]</code> yang kebal konflik peramban, form terpandu 2-kolom dengan deteksi tabrakan tombol secara seketika (<em>realtime collision detector</em>), eksekusi CRUD Zero-Reload, 13 seeder pintasan bawaan, perbaikan penampung notifikasi toastr, serta integrasi lengkap skema dan panduan operasional pada portal dokumentasi pengembang.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Database &amp; Model Architecture</strong>: Pembuatan tabel <code>app_shortcuts</code> dan model <code>AppShortcut</code> dengan otorisasi berbasis peran JSON (<code>isAllowedForUser</code>), accessor kombinasi tombol (<code>formatted_combination</code>, <code>mac_combination</code>), katalog kategori <code>CATEGORIES</code>, dan scope query <code>getActiveForCurrentUser</code>.</li>
+                                        <li><strong>Struktur 5 Kategori Tindakan</strong>:
+                                            <ul class="ps-3 mt-1 mb-1">
+                                                <li><strong>Visibilitas Fitur (<code>visibility</code>)</strong>: Toggle global untuk Tools Topbar Navbar (<code>Ctrl+Alt+T</code>), Menu Header Topbar (<code>Ctrl+Alt+H</code>), dan Menu Template Sidebar (<code>Ctrl+Alt+M</code>) dengan sinkronisasi status backend secara persisten.</li>
+                                                <li><strong>Tema, Gaya Ikon, Bahasa &amp; Versi (<code>appearance</code>)</strong>: Beralih mode gelap/terang (<code>Ctrl+Alt+B</code>), switcher gaya KeenIcons (<code>Ctrl+Alt+D/S/O</code>), switcher dwibahasa (<code>Ctrl+Alt+I/E</code>), dan switcher versi layout tampilan (<code>Ctrl+Alt+1/2</code>).</li>
+                                                <li><strong>Aksi Sistem &amp; Keamanan (<code>system</code>)</strong>: Pencarian global (<code>Ctrl+Alt+F</code>), kunci layar instan / lock screen (<code>Ctrl+Alt+L</code>), dan pembuka modal petunjuk operasional modul.</li>
+                                                <li><strong>Navigasi Cepat (<code>navigation</code>)</strong>: Membuka rute cepat ke Dashboard, Fitur Aplikasi, Profil Pengguna, dan Manajemen Pengguna.</li>
+                                                <li><strong>Aksi Elemen (<code>element</code>)</strong>: Trigger klik otomatis pada drawer samping dan modal interaktif Metronic.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Modular Frontend Action Registry (<code>shortcuts.js</code>)</strong>: Pemisahan logika event listener global dengan penanganan aksi spesifik (<code>ActionRegistry</code>), public API <code>window.VeltronicShortcuts.registerActionHandler()</code>, pencocokan ganda <code>e.key</code> &amp; <code>e.code</code> yang kebal Caps Lock/Shift/AltGr, serta pencegahan eksekusi saat mengetik di field input.</li>
+                                        <li><strong>Form Terpandu 2-Kolom &amp; Realtime Collision Warning</strong>: Pemilihan target aksi dinamis dari katalog JSON, deteksi tabrakan kombinasi tombol secara realtime dengan peringatan visual, serta AJAX CRUD Zero-Reload dengan spinner indikator proses.</li>
+                                        <li><strong>Optimalisasi Kontainer Toastr</strong>: Penonaktifan <code>progressBar</code> mentah dan penataan CSS <code>#toast-container</code> pada <code>custom.css</code> untuk menghilangkan garis hitam tebal melintang di layar.</li>
+                                        <li><strong>Database Seeder Bawaan</strong>: Pembuatan <code>AppShortcutSeeder</code> dengan 13 pintasan default yang siap pakai dan terintegrasi di <code>DatabaseSeeder.php</code> serta tombol reset default di controller.</li>
+                                        <li><strong>Dokumentasi Developer Skema &amp; Operasional</strong>: Penambahan halaman <em>Skema Keyboard Shortcuts</em> (<code>help/pemrograman/skema/keyboard-shortcuts</code>) dan <em>Panduan Keyboard Shortcuts</em> (<code>help/pemrograman/operasional/panduan-keyboard-shortcuts</code>), pembaruan Overview daftar isi, serta registrasi menu sidebar dan kamus dwibahasa.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.28.0-->
+
                         <!--begin::Item v1.27.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.27.0</div>
@@ -56,7 +101,7 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>17 Sep 2026, 21:55 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                    <span class="badge badge-light-dark fs-8 ms-auto">Stable Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Sistem Log Aktivitas Sentral (Audit Log Engine), Pencatatan Error Backend, Isolasi Riwayat Profil &amp; Petunjuk App Fiturs</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

@@ -45,6 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Modernized **Skema Auth & Middleware** (`help/pemrograman/skema/auth-dan-middleware.blade.php`) with Spatie Role-Permission Matrix, Direct vs Inherited Permissions, and Login Points/Lockscreen.
     - Updated **Workflow Developer Harian** (`help/pemrograman/operasional/workflow-developer-harian.blade.php`) with Active Agent Guidelines (Rules 4, 5, 6, 7) and anti-regression policies.
     - Updated Overview table of contents (`help/pemrograman/overview.blade.php`), docs index (`docs/skema-pemrograman/README.md`), and registered sidebar navigation items (`config/sidebar/_sidebar_helps.php`) with bilingual dictionary keys.
+    - Localized `help/pemrograman/overview.blade.php` entirely into 100% pure Bahasa Indonesia across all 34 topic cards and filter controls.
+    - Fixed Blade compilation variable evaluation error in `profil-pengguna-dan-avatar-studio.blade.php`.
 
 ---
 

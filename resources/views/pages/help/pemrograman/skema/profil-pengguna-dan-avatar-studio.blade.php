@@ -157,8 +157,8 @@
 
 // Output HTML yang Dihasilkan:
 &lt;div class="symbol symbol-50px symbol-2by3"&gt;
-    &lt;img src="{{ $user->avatar_url }}" 
-         style="object-position: {{ $user->avatar_pos_x }}% {{ $user->avatar_pos_y }}%;" /&gt;
+    &lt;img src="@{{ $user->avatar_url }}" 
+         style="object-position: @{{ $user->avatar_pos_x }}% @{{ $user->avatar_pos_y }}%;" /&gt;
 &lt;/div&gt;</code></pre>
                                     </div>
                                 </div>

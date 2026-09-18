@@ -86,7 +86,7 @@
                                                 <li>Penambahan <strong>Skema Database Backup &amp; Relasi</strong> (<code>help/pemrograman/skema/database-backup-dan-relasi-tabel</code>) &amp; <strong>Panduan Backup &amp; Restore DB</strong> (<code>help/pemrograman/operasional/panduan-backup-dan-restore-database</code>).</li>
                                                 <li>Penambahan <strong>Skema Profil &amp; Avatar Studio</strong> (<code>help/pemrograman/skema/profil-pengguna-dan-avatar-studio</code>) &amp; <strong>Panduan Zero-Reload &amp; Button Loading</strong> (<code>help/pemrograman/operasional/panduan-standar-zero-reload-dan-button-loading</code>).</li>
                                                 <li>Pembaruan modern <strong>Skema Auth &amp; Middleware</strong> (Spatie Matrix, Izin Terwarisi vs Langsung) &amp; <strong>Workflow Developer Harian</strong> (Rules 4, 5, 6, 7).</li>
-                                                <li>Penyelarasan Overview Daftar Isi, registrasi sidebar navigasi lengkap, dan kamus dwibahasa (ID/EN).</li>
+                                                <li>Penyelarasan Overview Daftar Isi dalam 100% Bahasa Indonesia murni terstruktur per kategori, registrasi sidebar navigasi lengkap, perbaikan rendering variabel Blade dokumentasi, dan kamus dwibahasa (ID/EN).</li>
                                             </ul>
                                         </li>
                                     </ul>

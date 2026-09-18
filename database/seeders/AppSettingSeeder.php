@@ -53,7 +53,7 @@ class AppSettingSeeder extends Seeder
             ],
             [
                 'key' => 'session_lifetime',
-                'value' => '5',
+                'value' => '120',
                 'group' => 'security',
                 'type' => 'integer',
                 'description' => 'Durasi masa aktif sesi pengguna dalam hitungan menit',

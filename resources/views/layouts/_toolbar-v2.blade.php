@@ -25,7 +25,12 @@
                         <span class="path6"></span>
                     </i>
                     <span class="d-none d-md-inline">
-                        {!! renderDate(['gregorian_class' => 'text-white fw-bold fs-7 lh-1', 'hijri_class' => 'text-white text-opacity-75 fw-semibold fs-8 lh-1 mt-1']) !!}
+                        {!! renderDate([
+                            'gregorian_class' => 'text-white fw-bold fs-7 lh-1',
+                            'hijri_class' => 'text-white text-opacity-75 fw-semibold fs-8 lh-1 mt-1',
+                            'friday_style' => 'color: #50cd89; font-weight: 700;',
+                            'sunday_style' => 'color: #f1416c; font-weight: 700;',
+                        ]) !!}
                     </span>
                 </div>
             </div>

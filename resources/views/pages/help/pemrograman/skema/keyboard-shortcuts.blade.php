@@ -135,7 +135,7 @@ const ActionRegistry = {
     toggle_dark_mode: () => KTThemeMode.toggle(),
     cycle_icon_style: () => KTIconStyle.cycle(),
     open_petunjuk_modal: () => $('#kt_modal_petunjuk').modal('show'),
-    lock_screen: () => window.location.href = '/lock-screen',
+    lock_screen: () => KTLockScreen.lock(),
     // ...
 };
 

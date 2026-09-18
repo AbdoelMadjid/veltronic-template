@@ -219,6 +219,11 @@
                                     updatePasswordChecklist();
 
                                     registerForm.addEventListener("submit", function(e) {
+                                        try {
+                                            localStorage.removeItem('veltronic_screen_locked');
+                                            localStorage.setItem('veltronic_last_activity', Date.now().toString());
+                                        } catch (e) {}
+
                                         const isEmailValid = validateEmailField();
                                         const isPasswordStrong = validatePasswordStrengthField();
                                         const isPasswordConfirmationValid = validatePasswordConfirmationField();

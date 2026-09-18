@@ -176,6 +176,12 @@
                                     passwordInput.addEventListener("input", validatePasswordInline);
                                     passwordInput.addEventListener("blur", validatePasswordInline);
 
+                                    // Bersihkan status terkunci dari localStorage saat berada di halaman login
+                                    try {
+                                        localStorage.removeItem('veltronic_screen_locked');
+                                        localStorage.setItem('veltronic_last_activity', Date.now().toString());
+                                    } catch (e) {}
+
                                     form.addEventListener("submit", function(e) {
                                         const validEmail = validateEmailInline();
                                         const validPassword = validatePasswordInline();
@@ -183,6 +189,11 @@
                                             e.preventDefault();
                                             return;
                                         }
+
+                                        try {
+                                            localStorage.removeItem('veltronic_screen_locked');
+                                            localStorage.setItem('veltronic_last_activity', Date.now().toString());
+                                        } catch (e) {}
 
                                         const submitBtn = document.getElementById("kt_sign_in_submit") || form.querySelector('button[type="submit"]');
                                         if (submitBtn) {

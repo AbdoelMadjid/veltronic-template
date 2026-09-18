@@ -185,8 +185,8 @@
             <!--end::Avatar-->
             <!--begin::User Info-->
             <div class="d-none d-md-flex flex-column align-items-start justify-content-center ms-3 me-1 text-start">
-                <span class="text-gray-800 fs-7 fw-bold lh-1 mb-1 header-user-name" id="header_navbar_user_name">{{ $profileName }}</span>
-                <span class="text-muted fs-8 fw-semibold lh-1 header-user-email" id="header_navbar_user_email">{{ $profileEmail }}</span>
+                <span class="text-white fw-bold fs-7 lh-1 mb-1 header-user-name" id="header_navbar_user_name">{{ $profileName }}</span>
+                <span class="text-white text-opacity-75 fs-8 fw-semibold lh-1 header-user-email" id="header_navbar_user_email">{{ $profileEmail }}</span>
             </div>
             <!--end::User Info-->
         </div>

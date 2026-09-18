@@ -249,12 +249,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     showToast('success', body.message);
                     // Update header & sidebar logos in DOM realtime
                     if (body.data?.logo_default_url) {
-                        document.querySelectorAll('.app-sidebar-logo-default.theme-light-show, .header-logo img').forEach(el => el.src = body.data.logo_default_url);
+                        document.querySelectorAll('.app-sidebar-logo-default.theme-light-show, .header-logo img.logo-sticky, .header-logo img:not(.logo-default):not(.logo-sticky)').forEach(el => el.src = body.data.logo_default_url);
                         const imgDef = document.getElementById('img_preview_logo_default');
                         if (imgDef) imgDef.src = body.data.logo_default_url;
                     }
                     if (body.data?.logo_dark_url) {
-                        document.querySelectorAll('.app-sidebar-logo-default.theme-dark-show, .app-sidebar-logo-default:not(.theme-light-show)').forEach(el => el.src = body.data.logo_dark_url);
+                        document.querySelectorAll('.app-sidebar-logo-default.theme-dark-show, .app-sidebar-logo-default:not(.theme-light-show), .header-logo img.logo-default').forEach(el => el.src = body.data.logo_dark_url);
                         const imgDark = document.getElementById('img_preview_logo_dark');
                         if (imgDark) imgDark.src = body.data.logo_dark_url;
                     }

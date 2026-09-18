@@ -37,25 +37,6 @@
     display: none !important;
 }
 
-/* 2. Docs & Components Footer Button: Minimized vs Expanded */
-[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer,
-[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
-
-[data-kt-app-sidebar-minimize="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn,
-[data-kt-app-sidebar-minimize-mobile="on"] #kt_app_sidebar:not(:hover) #kt_app_sidebar_footer .btn {
-    width: 40px !important;
-    height: 40px !important;
-    padding: 0 !important;
-    justify-content: center !important;
-    border-radius: 0.475rem !important;
-}
-
 /* ==========================================================================
    Form Validation - Red Exclamation Circle & Spacing Alignment
    ========================================================================== */

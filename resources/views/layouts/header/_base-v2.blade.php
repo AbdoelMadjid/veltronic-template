@@ -14,7 +14,7 @@
         <!--begin::Header Logo-->
         <div class="header-logo me-5 me-md-10 flex-grow-1 flex-lg-grow-0">
             <a href="{{ url('/dashboard') }}">
-                <img alt="Logo" src="{{ app_logo_url('default') }}" class="logo-default h-25px" />
+                <img alt="Logo" src="{{ app_logo_url('dark') }}" class="logo-default h-25px" />
                 <img alt="Logo" src="{{ app_logo_url('default') }}" class="logo-sticky h-25px" />
             </a>
         </div>

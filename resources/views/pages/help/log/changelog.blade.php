@@ -34,13 +34,51 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.28.0
+                            Versi Saat Ini: v1.29.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.29.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.29.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.29.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>18 Sep 2026, 14:00 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Modul Manajemen Profil Aplikasi &amp; Meta SEO, Validasi Logo Resolusi Ketat, Dinamisasi Seluruh Layout, Audit Log Otomatis, Polishing Layout V2 &amp; Proteksi Database Pengujian</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi menyeluruh modul manajemen profil aplikasi (<em>App Profile &amp; SEO Engine</em>) berbasis basis data di <code>appsupport/app-profil</code>, live preview Google Search snippet &amp; Open Graph card, validasi ketat dimensi logo dan favicon, penyimpanan permanen git-tracked di <code>public/assets/logo/</code>, repeater footer link dinamis, otomatisasi seeder <code>AppProfilSeeder</code> (sinkronisasi file &amp; eksekusi ulang), pencatatan audit log otomatis untuk 5 switcher topbar, standarisasi komponen <code>&lt;x-petunjuk-modal&gt;</code>, penyempurnaan estetika header/toolbar Layout V2 (kontras teks profil pengguna, warna hari Jumat, adaptasi logo), serta proteksi SQLite in-memory pada <code>phpunit.xml</code> untuk mencegah wipe database MySQL.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Modul App Profile &amp; Meta SEO (<code>appsupport/app-profil</code>)</strong>: Konfigurasi nama aplikasi, tagline, versi, deskripsi SEO, kata kunci, author, dan Open Graph dengan Live Google Preview &amp; Social Card Preview.</li>
+                                        <li><strong>Validasi Resolusi &amp; Rasio Logo/Favicon</strong>: Validasi ketat dimensi logo terang/gelap (100×20 s/d 600×150 px lanskap), logo mini 1:1 (30×30 s/d 200×200 px), dan favicon 1:1 (16×16 s/d 128×128 px), tersimpan aman di <code>public/assets/logo/</code>.</li>
+                                        <li><strong>Footer Dinamis &amp; Link Repeater</strong>: Tabel interaktif untuk menambah, mengurutkan, dan menghapus tautan navigasi footer secara realtime serta toggle info server.</li>
+                                        <li><strong>Dinamisasi Seluruh Layout Template</strong>: Integrasi helper teroptimasi cache (<code>app_profile()</code>, <code>app_logo_url()</code>, <code>app_favicon_url()</code>, <code>app_footer_links()</code>) ke seluruh varian layout V1 &amp; V2.</li>
+                                        <li><strong>Otomatisasi Seeder</strong>: Fitur "Perbarui File Seeder" (ekspor DB ke <code>AppProfilSeeder.php</code>) dan "Jalankan Seeder" secara langsung dari dashboard.</li>
+                                        <li><strong>Audit Log Otomatis 5 Fitur Topbar</strong>: Pencatatan mutasi ke <code>users_logs</code> untuk switch Icon Style, Theme Mode (Dark/Light), Bahasa, Versi Layout, dan Frontpage.</li>
+                                        <li><strong>Penyempurnaan Varian Tema V2 (Layout Versi 2)</strong>: Kontras teks profil pengguna topbar, pewarnaan kalender hari Jumat (mint green Metronic), adaptasi logo header default/sticky, dan penataan tombol minimize sidebar dengan kelas bawaan template.</li>
+                                        <li><strong>Proteksi Database Pengujian (Testing Isolation)</strong>: Penyelarasan <code>phpunit.xml</code> ke SQLite in-memory untuk mengisolasi pengujian dan melindungi database MySQL dari reset/penghapusan data.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.29.0-->
+
                         <!--begin::Item v1.28.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.28.0</div>
@@ -56,7 +94,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>18 Sep 2026, 10:45 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Sistem Pintasan Keyboard Dinamis (Keyboard Shortcuts Engine), Action Registry Modular, Standar Hotkey Bebas Konflik &amp; Dokumentasi Developer</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

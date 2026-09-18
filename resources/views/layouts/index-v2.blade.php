@@ -57,6 +57,7 @@ License: For each use you must have a valid license purchased only from above li
         if (window.top != window.self) {
             window.top.location.replace(window.self.location.href);
         }
+    </script>
     <style>
         body#kt_body {
             background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg.jpg') }}');

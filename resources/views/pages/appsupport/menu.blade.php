@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('styles')
-    <link href="{{ asset('assets/css/appsupport/menu.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/appsupport/menu.css') }}?v={{ filemtime(public_path('assets/css/appsupport/menu.css')) }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('toolbar')
@@ -46,25 +46,22 @@
             <!--begin::Card-->
             <div class="card card-flush shadow-sm">
                 <!--begin::Card header-->
-                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                    <!--begin::Card title-->
-                    <div class="card-title">
+                <div class="card-header border-0 pt-6 px-6 pb-2 d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-between gap-3">
+                    <!--begin::Card title (Search)-->
+                    <div class="card-title my-0 w-100 w-md-auto">
                         <!--begin::Search-->
-                        <div class="d-flex align-items-center position-relative my-1">
-                            <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                            <input type="text" id="menu-search-input" class="form-control form-control-solid w-250px ps-12" placeholder="Cari nama, URL, key..." value="{{ $search ?? '' }}" />
+                        <div class="d-flex align-items-center position-relative my-0 w-100 w-md-auto">
+                            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4 text-gray-500"></i>
+                            <input type="text" id="menu-search-input" class="form-control form-control-solid w-100 w-md-250px ps-12" placeholder="Cari nama, URL, key..." value="{{ $search ?? '' }}" />
                         </div>
                         <!--end::Search-->
                     </div>
                     <!--end::Card title-->
 
-                    <!--begin::Card toolbar-->
-                    <div class="card-toolbar flex-row-fluid justify-content-end gap-3">
+                    <!--begin::Card toolbar (Filter & Add Button)-->
+                    <div class="card-toolbar d-flex align-items-center justify-content-between justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto flex-nowrap flex-grow-1 flex-md-grow-0 my-0">
                         <!--begin::Category Filter-->
-                        <div class="w-100 mw-175px">
+                        <div class="flex-grow-1 flex-md-grow-0 w-auto w-md-175px">
                             <select id="category-filter-select" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Filter Kategori">
                                 <option value="">Semua Kategori</option>
                                 @foreach($categories as $cat)
@@ -75,9 +72,10 @@
                         <!--end::Category Filter-->
 
                         <!--begin::Add Button (Seeder Pattern)-->
-                        <button type="button" class="btn btn-primary btn-add-menu-modal" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu">
-                            <i class="ki-duotone ki-element-plus fs-2 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
-                            Tambah Menu
+                        <button type="button" class="btn btn-primary fw-bold px-3 px-md-4 flex-shrink-0 btn-add-menu-modal" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tambah Menu">
+                            <i class="ki-outline ki-plus fs-2 me-0 me-md-1"></i>
+                            <span class="d-none d-md-inline">Tambah Menu</span>
                         </button>
                         <!--end::Add Button-->
                     </div>
@@ -272,18 +270,20 @@
                                                 @endphp
                                                 <button type="button" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1 btn-add-child-menu"
                                                     data-bs-toggle="tooltip"
+                                                    data-bs-trigger="hover"
                                                     data-bs-placement="top"
                                                     title="{{ $addTooltip }}"
                                                     data-parent-id="{{ $menu->id }}"
                                                     data-parent-name="{{ $menu->name }}"
                                                     data-parent-category="{{ $menu->category ?? '' }}"
                                                     data-parent-url="{{ $menu->url }}">
-                                                    <i class="ki-duotone ki-plus fs-3"><span class="path1"></span><span class="path2"></span></i>
+                                                    <i class="ki-outline ki-plus fs-3"></i>
                                                 </button>
                                             @endif
 
                                             <button type="button" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 btn-edit-menu"
                                                 data-bs-toggle="tooltip"
+                                                data-bs-trigger="hover"
                                                 data-bs-placement="top"
                                                 title="Edit Menu"
                                                 data-id="{{ $menu->id }}"
@@ -301,7 +301,7 @@
                                                 data-parent="{{ $menu->main_menu_id ?? '' }}"
                                                 data-permissions="{{ json_encode($menu->permissions->pluck('name')->map(fn($p) => strtolower(explode(' ', $p)[0]))->toArray()) }}"
                                                 data-roles="{{ json_encode($menu->assigned_roles->toArray()) }}">
-                                                <i class="ki-duotone ki-pencil fs-4"><span class="path1"></span><span class="path2"></span></i>
+                                                <i class="ki-outline ki-pencil fs-4"></i>
                                             </button>
 
                                             <form action="{{ route('appsupport.menu.destroy', $menu->id) }}" method="POST" class="d-inline form-delete-menu">
@@ -309,9 +309,10 @@
                                                 @method('DELETE')
                                                 <button type="button" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm btn-delete-trigger"
                                                     data-bs-toggle="tooltip"
+                                                    data-bs-trigger="hover"
                                                     data-bs-placement="top"
                                                     title="Hapus Menu">
-                                                    <i class="ki-duotone ki-trash fs-4"><span class="path1"></span><span class="path2"></span></i>
+                                                    <i class="ki-outline ki-trash fs-4"></i>
                                                 </button>
                                             </form>
                                         </td>
@@ -347,5 +348,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/appsupport/menu.js') }}"></script>
+    <script src="{{ asset('assets/js/appsupport/menu.js') }}?v={{ filemtime(public_path('assets/js/appsupport/menu.js')) }}"></script>
 @endsection

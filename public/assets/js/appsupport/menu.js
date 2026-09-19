@@ -826,6 +826,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ========================================================
+    // FORM SUBMIT LOADING SPINNER (RULE 5 COMPLIANCE)
+    // ========================================================
+    const addFormEl = document.getElementById('kt_modal_add_menu_form');
+    if (addFormEl) {
+        addFormEl.addEventListener('submit', function() {
+            const submitBtn = document.getElementById('btn_submit_add_menu');
+            if (submitBtn) {
+                submitBtn.setAttribute('data-kt-indicator', 'on');
+                submitBtn.disabled = true;
+            }
+        });
+    }
+
+    if (editForm) {
+        editForm.addEventListener('submit', function() {
+            const submitBtn = document.getElementById('btn_submit_edit_menu');
+            if (submitBtn) {
+                submitBtn.setAttribute('data-kt-indicator', 'on');
+                submitBtn.disabled = true;
+            }
+        });
+    }
+
+    // ========================================================
     // DRAG & DROP TREE-TABLE REORDERING ENGINE
     // Syarat:
     // 1) Menu Utama (Level 1) dipindahkan -> seluruh anak sub menu ikut berpindah.

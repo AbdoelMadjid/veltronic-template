@@ -1,9 +1,9 @@
-<div class="row g-6">
+<div class="row g-4 g-lg-6">
     <!--begin::Stats Summary Cards-->
-    <div class="col-md-6 col-xl-3">
+    <div class="col-sm-6 col-xl-3">
         <div class="card card-flush shadow-sm border-0 h-100">
-            <div class="card-body p-6 d-flex align-items-center">
-                <div class="symbol symbol-50px symbol-circle bg-light-primary me-4 d-flex align-items-center justify-content-center">
+            <div class="card-body p-5 p-sm-6 d-flex align-items-center">
+                <div class="symbol symbol-45px symbol-sm-50px symbol-circle bg-light-primary me-3 me-sm-4 d-flex align-items-center justify-content-center flex-shrink-0">
                     <i class="ki-outline ki-shield-tick text-primary fs-2"></i>
                 </div>
                 <div>
@@ -14,10 +14,10 @@
         </div>
     </div>
 
-    <div class="col-md-6 col-xl-3">
+    <div class="col-sm-6 col-xl-3">
         <div class="card card-flush shadow-sm border-0 h-100">
-            <div class="card-body p-6 d-flex align-items-center">
-                <div class="symbol symbol-50px symbol-circle bg-light-info me-4 d-flex align-items-center justify-content-center">
+            <div class="card-body p-5 p-sm-6 d-flex align-items-center">
+                <div class="symbol symbol-45px symbol-sm-50px symbol-circle bg-light-info me-3 me-sm-4 d-flex align-items-center justify-content-center flex-shrink-0">
                     <i class="ki-outline ki-code text-info fs-2"></i>
                 </div>
                 <div>
@@ -28,10 +28,10 @@
         </div>
     </div>
 
-    <div class="col-md-6 col-xl-3">
+    <div class="col-sm-6 col-xl-3">
         <div class="card card-flush shadow-sm border-0 h-100">
-            <div class="card-body p-6 d-flex align-items-center">
-                <div class="symbol symbol-50px symbol-circle bg-light-warning me-4 d-flex align-items-center justify-content-center">
+            <div class="card-body p-5 p-sm-6 d-flex align-items-center">
+                <div class="symbol symbol-45px symbol-sm-50px symbol-circle bg-light-warning me-3 me-sm-4 d-flex align-items-center justify-content-center flex-shrink-0">
                     <i class="ki-outline ki-picture text-warning fs-2"></i>
                 </div>
                 <div>
@@ -42,10 +42,10 @@
         </div>
     </div>
 
-    <div class="col-md-6 col-xl-3">
+    <div class="col-sm-6 col-xl-3">
         <div class="card card-flush shadow-sm border-0 h-100">
-            <div class="card-body p-6 d-flex align-items-center">
-                <div class="symbol symbol-50px symbol-circle bg-light-success me-4 d-flex align-items-center justify-content-center">
+            <div class="card-body p-5 p-sm-6 d-flex align-items-center">
+                <div class="symbol symbol-45px symbol-sm-50px symbol-circle bg-light-success me-3 me-sm-4 d-flex align-items-center justify-content-center flex-shrink-0">
                     <i class="ki-outline ki-abstract-26 text-success fs-2"></i>
                 </div>
                 <div>
@@ -60,10 +60,15 @@
     <!--begin::Detail Tables & System Info-->
     <div class="col-xl-6">
         <div class="card card-flush shadow-sm border-0 h-100">
-            <div class="card-header border-0 pt-6">
-                <div class="card-title d-flex align-items-center">
-                    <i class="ki-outline ki-information-5 text-primary fs-3 me-2"></i>
-                    <h3 class="fw-bold text-gray-900 m-0 fs-5">Audit Konfigurasi Aktif</h3>
+            <div class="card-header card-header-mobile-center border-0 pt-6">
+                <div class="card-title d-flex flex-column flex-md-row align-items-center text-center text-md-start">
+                    <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-primary mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="ki-outline ki-information-5 text-primary fs-2 fs-md-3"></i>
+                    </div>
+                    <div class="d-flex flex-column align-items-center align-items-md-start">
+                        <h3 class="fw-bold text-gray-900 m-0 fs-5">Audit Konfigurasi Aktif</h3>
+                        <span class="text-muted fs-8 mt-1">Ringkasan status identitas dan pengaturan saat ini</span>
+                    </div>
                 </div>
             </div>
             <div class="card-body pt-2">
@@ -109,10 +114,15 @@
 
     <div class="col-xl-6">
         <div class="card card-flush shadow-sm border-0 h-100">
-            <div class="card-header border-0 pt-6">
-                <div class="card-title d-flex align-items-center">
-                    <i class="ki-outline ki-data text-info fs-3 me-2"></i>
-                    <h3 class="fw-bold text-gray-900 m-0 fs-5">Lingkungan Server & Aset</h3>
+            <div class="card-header card-header-mobile-center border-0 pt-6">
+                <div class="card-title d-flex flex-column flex-md-row align-items-center text-center text-md-start">
+                    <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-info mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="ki-outline ki-data text-info fs-2 fs-md-3"></i>
+                    </div>
+                    <div class="d-flex flex-column align-items-center align-items-md-start">
+                        <h3 class="fw-bold text-gray-900 m-0 fs-5">Lingkungan Server & Aset</h3>
+                        <span class="text-muted fs-8 mt-1">Informasi platform sistem dan direktori penyimpanan</span>
+                    </div>
                 </div>
             </div>
             <div class="card-body pt-2">
@@ -148,7 +158,7 @@
                         <span class="fw-bold text-gray-900 fs-7">Sinkronisasi & Keamanan</span>
                         <span class="text-muted fs-8">Cache otomatis diperbarui setiap kali konfigurasi disimpan.</span>
                     </div>
-                    <button type="button" class="btn btn-sm btn-primary rounded-pill" onclick="document.getElementById('kt_btn_clear_profile_cache').click()">
+                    <button type="button" class="btn btn-sm btn-primary px-4" onclick="document.getElementById('kt_btn_clear_profile_cache').click()">
                         Refresh Cache
                     </button>
                 </div>

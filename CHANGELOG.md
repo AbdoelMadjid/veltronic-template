@@ -5,6 +5,22 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.36.0] - 2026-09-20
+
+### Added & Enhanced
+- **Standardisasi & Optimalisasi Menyeluruh Antarmuka Modul App Support (`/appsupport/menu`, `/appsupport/app-profil`, `/appsupport/app-fiturs`)**:
+  - **Optimalisasi Menu Manajemen & Profil Aplikasi (`/appsupport/menu`, `/appsupport/app-profil`)**:
+    - Penyesuaian modal form menu dan standardisasi header banner responsif (mode desktop & mobile 4-baris terpusat).
+    - Menerapkan navigasi tab responsif (Rule 9) dengan tampilan icon-only pada mobile (`< md`) dan tooltip hover interaktif.
+  - **Optimalisasi Pengaturan Fitur & Pintasan Keyboard (`/appsupport/app-fiturs`)**:
+    - **Tab Visibilitas & Pengaturan Aplikasi**: Menghapus penomoran dan ikon header card sehingga teks dan deskripsi rata kiri murni (*flush left*), serta menyederhanakan tombol aksi menjadi `Reset` dan `Simpan`.
+    - **Header & Master Switch Pintasan**: Mengganti tombol tambah di header dengan master switch toggle global, serta menjadikan tombol *Tambah Pintasan Baru* adaptif full-width (`w-100`) pada mode mobile/HP.
+    - **Filter Kategori Dropdown & Counter Realtime**: Mengonversi deretan tombol scroll-horizontal kategori menjadi Select Dropdown responsif dengan counter jumlah data per kategori yang sinkron secara realtime (*zero-reload*).
+    - **Header Tabel & List Panduan Semantik**: Menghilangkan wrapping 2 baris pada header tabel (`Kombinasi Tombol` dan `Hak Akses Role`), membersihkan ikon pada badge kategori, serta merapikan 4 kotak panduan pintasan menggunakan tag semantik `<ul>` dan `<li>`.
+  - **Standarisasi Tab Log Aktivitas Sistem (Rule 11 - Responsive Pagination Standards & 12-Grid System)**:
+    - Menata seluruh filter pencarian, dropdown modul, level, waktu, dan tombol aksi menjadi **1 baris inline penuh di desktop** berbasis **Bootstrap 12-Grid System** (`row g-2 align-items-center w-100 m-0`) sehingga terkunci 100% di dalam batas kartu (*zero overflow*).
+    - Mengintegrasikan pager kustom `veltronic_compact` (maksimal 5 angka) dan membebaskan footer pagination dari pembungkus scroll tabel horizontal.
+
 ## [v1.35.0] - 2026-09-19
 
 ### Added & Enhanced

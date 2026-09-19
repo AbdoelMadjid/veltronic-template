@@ -1,48 +1,71 @@
 <!--begin::Modal - Add Menu (Pola Seeder Elegan)-->
 <div class="modal fade" id="kt_modal_add_menu" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-950px">
-        <div class="modal-content border-0 shadow-lg">
+        <div class="modal-content rounded-4 shadow-lg border-0">
             <form class="form" action="{{ route('appsupport.menu.store') }}" method="POST" id="kt_modal_add_menu_form">
                 @csrf
                 
-                <!--begin::Modal Header-->
-                <div class="modal-header pb-0 border-0 justify-content-between align-items-start pt-7 px-8 px-lg-10">
-                    <div class="d-flex flex-column">
-                        <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="badge badge-light-primary fw-bold px-3 py-2 fs-7">
-                                <i class="ki-duotone ki-element-plus text-primary fs-5 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                <!--begin::Modal Header (3-Baris Center pada Mobile)-->
+                <div class="modal-header border-0 pb-0 position-relative pt-7 pt-sm-6 px-6 px-lg-8">
+                    <!--begin::Close Button-->
+                    <div class="position-absolute top-0 end-0 m-3 m-sm-4 z-index-2">
+                        <button type="button" class="btn btn-icon btn-sm btn-active-light-primary" data-bs-dismiss="modal"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                            <i class="ki-outline ki-cross fs-2"></i>
+                        </button>
+                    </div>
+                    <!--end::Close Button-->
+
+                    <!--begin::Header Info-->
+                    <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                        <!-- Row 1: Icon Logo Lingkaran Sempurna (Mobile Only) -->
+                        <div class="d-flex justify-content-center d-sm-none mb-3">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-light-primary text-primary rounded-circle" 
+                                 style="width: 60px; height: 60px; min-width: 60px; min-height: 60px;">
+                                <i class="ki-outline ki-element-plus fs-2x text-primary"></i>
+                            </div>
+                        </div>
+
+                        <!-- Row 2: Title & Badge -->
+                        <div class="d-flex align-items-center justify-content-center justify-content-sm-start gap-2 mb-1">
+                            <span class="badge badge-light-primary fw-bold px-3 py-1 fs-8 d-none d-sm-inline-flex align-items-center gap-1">
+                                <i class="ki-outline ki-element-plus fs-7 text-primary"></i>
                                 Blueprint Seeder
                             </span>
-                            <h2 class="fw-bolder text-gray-900 m-0" id="add_modal_header_title">Tambah Menu Baru</h2>
+                            <h3 class="fw-bolder text-gray-900 m-0 fs-3" id="add_modal_header_title">Tambah Menu Baru</h3>
                         </div>
-                        <span class="text-muted fs-7">Rancang menu aplikasi dengan struktur hirarki, translasi otomatis, dan hak akses permissions & roles.</span>
+
+                        <!-- Row 3: Description -->
+                        <div class="text-muted fw-semibold fs-7 mt-1 mb-0">
+                            Rancang menu aplikasi dengan struktur hirarki, translasi otomatis, dan hak akses permissions & roles.
+                        </div>
                     </div>
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
-                    </div>
+                    <!--end::Header Info-->
                 </div>
                 <!--end::Modal Header-->
 
-                <!--begin::Nav Tabs-->
-                <div class="px-8 px-lg-10 pt-4">
-                    <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-6 fw-bold">
+                <!--begin::Nav Tabs (Responsive Icon-Only on Mobile with Hover Tooltips)-->
+                <div class="px-6 px-lg-8 pt-4 overflow-auto">
+                    <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-6 fw-bold flex-nowrap">
                         <li class="nav-item">
-                            <a class="nav-link text-active-primary active py-3" data-bs-toggle="tab" href="#tab_modal_visual_builder">
-                                <i class="ki-duotone ki-row-horizontal fs-4 me-2"><span class="path1"></span><span class="path2"></span></i>
-                                Visual Builder
+                            <a class="nav-link text-active-primary active py-3 d-flex align-items-center" data-bs-toggle="tab" href="#tab_modal_visual_builder"
+                                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Visual Builder">
+                                <i class="ki-outline ki-row-horizontal fs-2 fs-md-4 me-0 me-md-2"></i>
+                                <span class="d-none d-md-inline">Visual Builder</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-active-primary py-3" data-bs-toggle="tab" href="#tab_modal_php_preview" id="tab_btn_php_preview">
-                                <i class="ki-duotone ki-code fs-4 me-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                                Preview Seeder PHP
+                            <a class="nav-link text-active-primary py-3 d-flex align-items-center" data-bs-toggle="tab" href="#tab_modal_php_preview" id="tab_btn_php_preview"
+                                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Preview Seeder PHP">
+                                <i class="ki-outline ki-code fs-2 fs-md-4 me-0 me-md-2"></i>
+                                <span class="d-none d-md-inline">Preview Seeder PHP</span>
                             </a>
                         </li>
                     </ul>
                 </div>
                 <!--end::Nav Tabs-->
 
-                <div class="modal-body py-6 px-8 px-lg-10">
+                <div class="modal-body py-6 px-6 px-lg-8">
                     <div class="tab-content" id="addMenuTabContent">
                         
                         <!-- ========================================== -->
@@ -52,24 +75,24 @@
                             
                             <!--begin::Mode Selector (Root / Sub / Hirarki Lengkap)-->
                             <div class="bg-light-primary rounded border border-primary border-dashed p-4 mb-6">
-                                <div class="d-flex flex-stack flex-wrap gap-3">
+                                <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3">
                                     <div class="d-flex align-items-center gap-3">
-                                        <div class="symbol symbol-40px symbol-circle bg-primary">
-                                            <i class="ki-duotone ki-category fs-2 text-white"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                        <div class="symbol symbol-40px symbol-circle bg-primary d-flex align-items-center justify-content-center flex-shrink-0">
+                                            <i class="ki-outline ki-category fs-2 text-white"></i>
                                         </div>
                                         <div>
                                             <span class="fs-6 fw-bold text-gray-800 d-block">Pilih Mode Pembuatan</span>
                                             <span class="fs-8 text-muted">Tentukan struktur menu yang ingin Anda buat</span>
                                         </div>
                                     </div>
-                                    <div class="d-flex gap-2" data-kt-buttons="true">
-                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary btn-sm active d-flex align-items-center cursor-pointer" id="mode_label_single">
+                                    <div class="d-flex flex-wrap flex-sm-nowrap gap-2 w-100 w-sm-auto justify-content-end" data-kt-buttons="true">
+                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary btn-sm active d-flex align-items-center cursor-pointer flex-grow-1 flex-sm-grow-0 justify-content-center" id="mode_label_single">
                                             <input class="btn-check" type="radio" name="builder_mode" value="single" id="mode_single" checked />
-                                            <span class="fs-7 fw-bold">Menu Tunggal / Sub Menu</span>
+                                            <span class="fs-7 fw-bold">Menu Tunggal / Sub</span>
                                         </label>
-                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary btn-sm d-flex align-items-center cursor-pointer" id="mode_label_hierarchy">
+                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary btn-sm d-flex align-items-center cursor-pointer flex-grow-1 flex-sm-grow-0 justify-content-center" id="mode_label_hierarchy">
                                             <input class="btn-check" type="radio" name="builder_mode" value="hierarchy" id="mode_hierarchy" />
-                                            <span class="fs-7 fw-bold">Struktur Komplit (Level 1 ➔ 2 ➔ 3)</span>
+                                            <span class="fs-7 fw-bold">Struktur Komplit</span>
                                         </label>
                                     </div>
                                 </div>
@@ -78,7 +101,7 @@
 
                             <!--begin::Card Info Utama (Level 1 / Menu Pokok)-->
                             <div class="card card-bordered shadow-none mb-6 border-gray-300">
-                                <div class="card-header min-h-45px py-2 px-6 bg-light d-flex align-items-center justify-content-between">
+                                <div class="card-header min-h-45px py-2 px-4 px-sm-6 bg-light d-flex align-items-center justify-content-between flex-wrap gap-2">
                                     <div class="card-title m-0">
                                         <span class="badge badge-primary fw-bold me-2 px-2 py-1" id="level_badge_text">Level 1</span>
                                         <span class="fw-bold fs-6 text-gray-800" id="level_title_text">Informasi Menu Utama</span>
@@ -86,7 +109,7 @@
                                     <span class="badge badge-light-info fs-8">Auto-Sync Translation</span>
                                 </div>
                                 
-                                <div class="card-body p-6">
+                                <div class="card-body p-4 p-sm-6">
                                     
                                     <!-- Parent Menu Selector (Hanya muncul jika mode Single) -->
                                     <div class="row g-5 mb-5" id="parent_select_container">
@@ -133,14 +156,14 @@
                                         <div class="col-md-6 fv-row">
                                             <label class="required fs-7 fw-bold text-gray-700 mb-1">Nama Menu (Bahasa Indonesia)</label>
                                             <div class="input-group input-group-sm input-group-solid">
-                                                <span class="input-group-text"><i class="ki-duotone ki-text-bold fs-5"><span class="path1"></span><span class="path2"></span></i></span>
+                                                <span class="input-group-text"><i class="ki-outline ki-text-bold fs-5"></i></span>
                                                 <input type="text" class="form-control" id="main_name" name="name" placeholder="Contoh: Dukungan Aplikasi" required autocomplete="off" />
                                             </div>
                                         </div>
                                         <div class="col-md-6 fv-row">
                                             <label class="fs-7 fw-bold text-gray-700 mb-1">Title (English / EN)</label>
                                             <div class="input-group input-group-sm input-group-solid">
-                                                <span class="input-group-text"><i class="ki-duotone ki-flag fs-5"><span class="path1"></span><span class="path2"></span></i></span>
+                                                <span class="input-group-text"><i class="ki-outline ki-flag fs-5"></i></span>
                                                 <input type="text" class="form-control" id="main_title_en" name="title_en" placeholder="Contoh: App Support" autocomplete="off" />
                                             </div>
                                         </div>
@@ -151,7 +174,7 @@
                                         <div class="col-md-6 fv-row">
                                             <div class="d-flex align-items-center justify-content-between mb-1">
                                                 <label class="fs-7 fw-bold text-gray-700 m-0">Translation Key (title_key)</label>
-                                                <span class="badge badge-light-success fs-9 cursor-pointer" id="btn_regen_key" title="Generate ulang key"><i class="ki-duotone ki-arrows-circle fs-8 text-success me-1"><span class="path1"></span><span class="path2"></span></i>Auto</span>
+                                                <span class="badge badge-light-success fs-9 cursor-pointer" id="btn_regen_key" title="Generate ulang key"><i class="ki-outline ki-arrows-circle fs-8 text-success me-1"></i>Auto</span>
                                             </div>
                                             <input type="text" class="form-control form-control-solid form-control-sm" id="main_title_key" name="title_key" placeholder="Contoh: md_app_support" />
                                             <div class="text-muted fs-8 mt-1">Disimpan di <code>lang/id/menu.php</code> & <code>lang/en/menu.php</code></div>
@@ -159,7 +182,7 @@
                                         <div class="col-md-6 fv-row">
                                             <div class="d-flex align-items-center justify-content-between mb-1">
                                                 <label class="required fs-7 fw-bold text-gray-700 m-0">URL / Route Name</label>
-                                                <span class="badge badge-light-primary fs-9 cursor-pointer" id="btn_regen_url" title="Generate ulang URL"><i class="ki-duotone ki-arrows-circle fs-8 text-primary me-1"><span class="path1"></span><span class="path2"></span></i>Auto</span>
+                                                <span class="badge badge-light-primary fs-9 cursor-pointer" id="btn_regen_url" title="Generate ulang URL"><i class="ki-outline ki-arrows-circle fs-8 text-primary me-1"></i>Auto</span>
                                             </div>
                                             <input type="text" class="form-control form-control-solid form-control-sm" id="main_url" name="url" placeholder="Contoh: appsupport atau appsupport.menu" required />
                                             <div class="text-muted fs-8 mt-1">Sesuai nama route di <code>route:list</code> (contoh: <code>appsupport.menu</code>)</div>
@@ -172,30 +195,30 @@
                                             <label class="fs-7 fw-bold text-gray-700 mb-1">Icon Class (Keenicons)</label>
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class="symbol symbol-40px symbol-light-primary border border-primary border-dashed d-flex align-items-center justify-content-center" id="main_icon_preview_box">
-                                                    <i class="ki-duotone ki-element-11 fs-2 text-primary" id="main_icon_preview_i"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                                    <i class="ki-outline ki-element-11 fs-2 text-primary" id="main_icon_preview_i"></i>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <input type="text" class="form-control form-control-solid form-control-sm" id="main_icon" name="icon" placeholder="ki-duotone ki-element-11 fs-2" value="ki-duotone ki-element-11 fs-2" />
+                                                    <input type="text" class="form-control form-control-solid form-control-sm" id="main_icon" name="icon" placeholder="ki-outline ki-element-11 fs-2" value="ki-outline ki-element-11 fs-2" />
                                                 </div>
                                             </div>
                                             
                                             <!-- Quick Icon Shortcuts -->
                                             <div class="d-flex flex-wrap gap-1 mt-2 align-items-center">
                                                 <span class="fs-9 text-muted me-1">Pilihan Cepat:</span>
-                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-duotone ki-abstract-28 fs-2" data-paths="2"><i class="ki-duotone ki-abstract-28 fs-6"><span class="path1"></span><span class="path2"></span></i></button>
-                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-duotone ki-element-11 fs-2" data-paths="4"><i class="ki-duotone ki-element-11 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i></button>
-                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-duotone ki-lock-3 fs-2" data-paths="3"><i class="ki-duotone ki-lock-3 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i></button>
-                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-duotone ki-user fs-2" data-paths="2"><i class="ki-duotone ki-user fs-6"><span class="path1"></span><span class="path2"></span></i></button>
-                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-duotone ki-setting-2 fs-2" data-paths="2"><i class="ki-duotone ki-setting-2 fs-6"><span class="path1"></span><span class="path2"></span></i></button>
-                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-duotone ki-shield-tick fs-2" data-paths="2"><i class="ki-duotone ki-shield-tick fs-6"><span class="path1"></span><span class="path2"></span></i></button>
-                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-duotone ki-chart-pie-simple fs-2" data-paths="2"><i class="ki-duotone ki-chart-pie-simple fs-6"><span class="path1"></span><span class="path2"></span></i></button>
-                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-duotone ki-file fs-2" data-paths="2"><i class="ki-duotone ki-file fs-6"><span class="path1"></span><span class="path2"></span></i></button>
-                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-duotone ki-category fs-2" data-paths="4"><i class="ki-duotone ki-category fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i></button>
+                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-outline ki-abstract-28 fs-2" data-paths="2" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Abstract"><i class="ki-outline ki-abstract-28 fs-6"></i></button>
+                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-outline ki-element-11 fs-2" data-paths="4" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Element"><i class="ki-outline ki-element-11 fs-6"></i></button>
+                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-outline ki-lock-3 fs-2" data-paths="3" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Lock"><i class="ki-outline ki-lock-3 fs-6"></i></button>
+                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-outline ki-user fs-2" data-paths="2" data-bs-toggle="tooltip" data-bs-trigger="hover" title="User"><i class="ki-outline ki-user fs-6"></i></button>
+                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-outline ki-setting-2 fs-2" data-paths="2" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Setting"><i class="ki-outline ki-setting-2 fs-6"></i></button>
+                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-outline ki-shield-tick fs-2" data-paths="2" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Shield"><i class="ki-outline ki-shield-tick fs-6"></i></button>
+                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-outline ki-chart-pie-simple fs-2" data-paths="2" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Chart"><i class="ki-outline ki-chart-pie-simple fs-6"></i></button>
+                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-outline ki-file fs-2" data-paths="2" data-bs-toggle="tooltip" data-bs-trigger="hover" title="File"><i class="ki-outline ki-file fs-6"></i></button>
+                                                <button type="button" class="btn btn-xs btn-light py-1 px-2 btn-quick-icon" data-icon="ki-outline ki-category fs-2" data-paths="4" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Category"><i class="ki-outline ki-category fs-6"></i></button>
                                             </div>
                                         </div>
                                         <div class="col-md-3 fv-row">
                                             <label class="fs-7 fw-bold text-gray-700 mb-1">Paths Icon</label>
-                                            <input type="number" class="form-control form-control-solid form-control-sm" id="main_paths" name="paths" min="0" max="10" value="4" />
+                                            <input type="number" class="form-control form-control-solid form-control-sm" id="main_paths" name="paths" min="0" max="10" value="0" />
                                             <div class="text-muted fs-8 mt-1">Jumlah span path keenicon</div>
                                         </div>
                                         <div class="col-md-3 fv-row">
@@ -233,19 +256,19 @@
                                     <div class="rounded border p-4 bg-light-secondary mt-5">
                                         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
                                             <div class="d-flex align-items-center gap-2">
-                                                <i class="ki-duotone ki-shield-search fs-4 text-primary"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                                <i class="ki-outline ki-shield-search fs-4 text-primary"></i>
                                                 <span class="fs-7 fw-bold text-gray-800">Akses & Permissions (CRUD Pattern)</span>
                                             </div>
                                             <!-- Quick Presets -->
-                                            <div class="d-flex gap-1">
-                                                <button type="button" class="btn btn-xs btn-light-success py-1 px-2 btn-perm-preset" data-preset="crud">⚡ Full CRUD</button>
-                                                <button type="button" class="btn btn-xs btn-light-primary py-1 px-2 btn-perm-preset" data-preset="read">👁️ Read Only</button>
-                                                <button type="button" class="btn btn-xs btn-light-warning py-1 px-2 btn-perm-preset" data-preset="manage">✏️ Manage</button>
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <button type="button" class="btn btn-xs btn-light-success py-1 px-2 btn-perm-preset" data-preset="crud" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Pilih Semua Aksi CRUD">⚡ Full CRUD</button>
+                                                <button type="button" class="btn btn-xs btn-light-primary py-1 px-2 btn-perm-preset" data-preset="read" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Hanya Izin Read">👁️ Read Only</button>
+                                                <button type="button" class="btn btn-xs btn-light-warning py-1 px-2 btn-perm-preset" data-preset="manage" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Izin Kelola (Read, Create, Update)">✏️ Manage</button>
                                             </div>
                                         </div>
 
                                         <!-- Permissions Checkboxes -->
-                                        <div class="d-flex flex-wrap gap-3 mb-3 p-2 bg-white rounded border border-dashed">
+                                        <div class="d-flex flex-wrap gap-2 gap-sm-3 mb-3 p-3 bg-white rounded border border-dashed">
                                             <div class="form-check form-check-custom form-check-solid form-check-sm">
                                                 <input class="form-check-input perm-cb" type="checkbox" name="permissions[]" value="create" id="perm_create" />
                                                 <label class="form-check-label fs-8 fw-bold text-success cursor-pointer" for="perm_create">Create</label>
@@ -287,13 +310,13 @@
 
                             <!--begin::Section Sub Menu Builder (Hanya di mode Hierarchy)-->
                             <div id="hierarchy_submenus_section" class="d-none">
-                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
                                     <div class="d-flex align-items-center gap-2">
                                         <span class="badge badge-success fw-bold px-2 py-1">Children</span>
                                         <h5 class="fw-bold text-gray-900 m-0">Daftar Sub Menu (Level 2 & Level 3)</h5>
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-light-success" id="btn_add_dynamic_submenu">
-                                        <i class="ki-duotone ki-plus fs-4 me-1"></i> Tambah Sub Menu (Level 2)
+                                    <button type="button" class="btn btn-sm btn-light-success fw-bold" id="btn_add_dynamic_submenu">
+                                        <i class="ki-outline ki-plus fs-4 me-1"></i> Tambah Sub Menu (Level 2)
                                     </button>
                                 </div>
 
@@ -313,13 +336,13 @@
                         <!-- ========================================== -->
                         <div class="tab-pane fade" id="tab_modal_php_preview" role="tabpanel">
                             <div class="bg-gray-900 rounded p-5 text-white position-relative">
-                                <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-gray-700 pb-3">
+                                <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-gray-700 pb-3 flex-wrap gap-2">
                                     <div class="d-flex align-items-center gap-2">
                                         <span class="badge badge-light-warning fw-bold">PHP Array Blueprint</span>
                                         <span class="text-gray-400 fs-8">Struktur seeder siap pakai untuk <code>config/menu_seeder/</code></span>
                                     </div>
-                                    <button type="button" class="btn btn-xs btn-primary" id="btn_copy_php_blueprint">
-                                        <i class="ki-duotone ki-copy fs-5 me-1"><span class="path1"></span><span class="path2"></span></i>
+                                    <button type="button" class="btn btn-xs btn-primary fw-bold" id="btn_copy_php_blueprint" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Salin kode ke clipboard">
+                                        <i class="ki-outline ki-copy fs-5 me-1"></i>
                                         Salin Kode PHP
                                     </button>
                                 </div>
@@ -333,16 +356,16 @@
                     </div>
                 </div>
 
-                <div class="modal-footer border-0 pt-0 pb-7 px-6 px-lg-10 justify-content-center justify-content-sm-end gap-2">
-                    <button type="reset" class="btn btn-light" data-bs-dismiss="modal"
+                <div class="modal-footer border-0 pt-0 pb-7 px-6 px-lg-8 justify-content-center justify-content-sm-end gap-2">
+                    <button type="reset" class="btn btn-light fw-bold" data-bs-dismiss="modal"
                         data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
                         <i class="ki-outline ki-cross fs-4 me-1"></i>
                         <span>Batal</span>
                     </button>
-                    <button type="submit" class="btn btn-primary" id="btn_submit_add_menu"
+                    <button type="submit" class="btn btn-primary fw-bold" id="btn_submit_add_menu"
                         data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan Menu">
                         <span class="indicator-label">
-                            <i class="ki-duotone ki-check fs-2 me-1"><span class="path1"></span><span class="path2"></span></i>
+                            <i class="ki-outline ki-check fs-4 me-1"></i>
                             <span>Simpan Menu</span>
                         </span>
                         <span class="indicator-progress">
@@ -360,22 +383,45 @@
 <!--begin::Modal - Edit Single Menu-->
 <div class="modal fade" id="kt_modal_edit_menu" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-750px">
-        <div class="modal-content border-0 shadow-lg">
+        <div class="modal-content rounded-4 shadow-lg border-0">
             <form class="form" method="POST" id="kt_modal_edit_menu_form">
                 @csrf
                 @method('PUT')
                 
-                <div class="modal-header border-0 pb-0 pt-7 px-8 px-lg-10 justify-content-between">
-                    <div>
-                        <h2 class="fw-bolder text-gray-900 m-0">Edit Menu</h2>
-                        <span class="text-muted fs-7">Perbarui konfigurasi menu, translasi, dan hak akses.</span>
+                <!--begin::Modal Header (3-Baris Center pada Mobile)-->
+                <div class="modal-header border-0 pb-0 position-relative pt-7 pt-sm-6 px-6 px-lg-8">
+                    <!--begin::Close Button-->
+                    <div class="position-absolute top-0 end-0 m-3 m-sm-4 z-index-2">
+                        <button type="button" class="btn btn-icon btn-sm btn-active-light-primary" data-bs-dismiss="modal"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                            <i class="ki-outline ki-cross fs-2"></i>
+                        </button>
                     </div>
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
-                    </div>
-                </div>
+                    <!--end::Close Button-->
 
-                <div class="modal-body py-6 px-8 px-lg-10">
+                    <!--begin::Header Info-->
+                    <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                        <!-- Row 1: Icon Logo Lingkaran Sempurna (Mobile Only) -->
+                        <div class="d-flex justify-content-center d-sm-none mb-3">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-light-primary text-primary rounded-circle" 
+                                 style="width: 60px; height: 60px; min-width: 60px; min-height: 60px;">
+                                <i class="ki-outline ki-pencil fs-2x text-primary"></i>
+                            </div>
+                        </div>
+
+                        <!-- Row 2: Title -->
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-3">Edit Menu</h3>
+
+                        <!-- Row 3: Description -->
+                        <div class="text-muted fw-semibold fs-7 mt-1 mb-0">
+                            Perbarui konfigurasi menu, translasi, dan hak akses.
+                        </div>
+                    </div>
+                    <!--end::Header Info-->
+                </div>
+                <!--end::Modal Header-->
+
+                <div class="modal-body py-6 px-6 px-lg-8">
                     <div class="row g-5 mb-5">
                         <div class="col-md-6 fv-row">
                             <label class="required fs-7 fw-bold text-gray-700 mb-1">Nama Menu (Bahasa Indonesia)</label>
@@ -424,7 +470,7 @@
                             <label class="fs-7 fw-bold text-gray-700 mb-1">Icon Class (Keenicons)</label>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="symbol symbol-35px symbol-light-primary border border-primary border-dashed d-flex align-items-center justify-content-center" id="edit_icon_preview_box">
-                                    <i class="ki-duotone ki-element-11 fs-3 text-primary" id="edit_icon_preview_i"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                    <i class="ki-outline ki-element-11 fs-3 text-primary" id="edit_icon_preview_i"></i>
                                 </div>
                                 <input type="text" class="form-control form-control-solid form-control-sm flex-grow-1" id="edit_icon" name="icon" />
                             </div>
@@ -466,14 +512,14 @@
                     <div class="rounded border p-4 bg-light-secondary mt-5">
                         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
                             <span class="fs-7 fw-bold text-gray-800">Akses & Permissions (CRUD)</span>
-                            <div class="d-flex gap-1">
-                                <button type="button" class="btn btn-xs btn-light-success py-1 px-2 btn-edit-perm-preset" data-preset="crud">⚡ Full CRUD</button>
-                                <button type="button" class="btn btn-xs btn-light-primary py-1 px-2 btn-edit-perm-preset" data-preset="read">👁️ Read Only</button>
-                                <button type="button" class="btn btn-xs btn-light-warning py-1 px-2 btn-edit-perm-preset" data-preset="manage">✏️ Manage</button>
+                            <div class="d-flex gap-1 flex-wrap">
+                                <button type="button" class="btn btn-xs btn-light-success py-1 px-2 btn-edit-perm-preset" data-preset="crud" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Pilih Semua Aksi CRUD">⚡ Full CRUD</button>
+                                <button type="button" class="btn btn-xs btn-light-primary py-1 px-2 btn-edit-perm-preset" data-preset="read" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Hanya Izin Read">👁️ Read Only</button>
+                                <button type="button" class="btn btn-xs btn-light-warning py-1 px-2 btn-edit-perm-preset" data-preset="manage" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Izin Kelola (Read, Create, Update)">✏️ Manage</button>
                             </div>
                         </div>
 
-                        <div class="d-flex flex-wrap gap-3 mb-3 p-2 bg-white rounded border border-dashed">
+                        <div class="d-flex flex-wrap gap-2 gap-sm-3 mb-3 p-3 bg-white rounded border border-dashed">
                             <div class="form-check form-check-custom form-check-solid form-check-sm">
                                 <input class="form-check-input edit-perm-cb" type="checkbox" name="permissions[]" value="create" id="edit_perm_create" />
                                 <label class="form-check-label fs-8 fw-bold text-success cursor-pointer" for="edit_perm_create">Create</label>
@@ -509,15 +555,15 @@
                 </div>
 
                 <div class="modal-footer border-0 pt-0 pb-7 px-6 px-lg-10 justify-content-center justify-content-sm-end gap-2">
-                    <button type="reset" class="btn btn-light" data-bs-dismiss="modal"
+                    <button type="reset" class="btn btn-light fw-bold" data-bs-dismiss="modal"
                         data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
                         <i class="ki-outline ki-cross fs-4 me-1"></i>
                         <span>Batal</span>
                     </button>
-                    <button type="submit" class="btn btn-primary" id="btn_submit_edit_menu"
+                    <button type="submit" class="btn btn-primary fw-bold" id="btn_submit_edit_menu"
                         data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Perbarui Menu">
                         <span class="indicator-label">
-                            <i class="ki-duotone ki-check fs-2 me-1"><span class="path1"></span><span class="path2"></span></i>
+                            <i class="ki-outline ki-check fs-4 me-1"></i>
                             <span>Perbarui Menu</span>
                         </span>
                         <span class="indicator-progress">

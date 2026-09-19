@@ -467,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (btnSaveSettings) {
                     btnSaveSettings.disabled = false;
-                    btnSaveSettings.innerHTML = `<i class="ki-outline ki-check fs-4 me-1 text-white"></i> Simpan Pengaturan`;
+                    btnSaveSettings.innerHTML = `<i class="ki-outline ki-check fs-4 me-1 text-white"></i> Simpan`;
                 }
 
                 if (data.success) {
@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error(err);
                 if (btnSaveSettings) {
                     btnSaveSettings.disabled = false;
-                    btnSaveSettings.innerHTML = `<i class="ki-outline ki-check fs-4 me-1 text-white"></i> Simpan Pengaturan`;
+                    btnSaveSettings.innerHTML = `<i class="ki-outline ki-check fs-4 me-1 text-white"></i> Simpan`;
                 }
                 Notify.error('Gagal terhubung ke server.');
             });
@@ -1280,7 +1280,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="d-flex flex-column">
                         <div class="d-flex align-items-center gap-2 mb-1">
                             <span class="badge ${catBadge} fs-9 px-2 py-0 fw-bold">
-                                <i class="ki-outline ${catIcon} fs-8 me-1"></i> ${catName}
+                                ${catName}
                             </span>
                         </div>
                         <span class="fw-bold text-gray-900 shortcut-name-text">${item.name}</span>
@@ -1349,9 +1349,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (statTotal) statTotal.innerText = rows.length;
         if (statActive) statActive.innerText = checkedSwitches.length;
+
+        const counts = { all: rows.length, visibility: 0, appearance: 0, system: 0, navigation: 0, element: 0 };
+        rows.forEach(r => {
+            const c = r.dataset.category || 'navigation';
+            if (counts[c] !== undefined) counts[c]++;
+        });
+        const labels = {
+            all: 'Semua Kategori',
+            visibility: 'Visibilitas',
+            appearance: 'Tema & Ikon',
+            system: 'Sistem',
+            navigation: 'Navigasi',
+            element: 'Elemen'
+        };
+        const categorySelect = document.getElementById('shortcut_category_filter');
+        if (categorySelect) {
+            Array.from(categorySelect.options).forEach(opt => {
+                const val = opt.value;
+                if (counts[val] !== undefined) {
+                    opt.textContent = `${labels[val] || val} (${counts[val]})`;
+                }
+            });
+            if (typeof $ !== 'undefined' && $(categorySelect).data('select2')) {
+                $(categorySelect).trigger('change.select2');
+            }
+        }
     }
 
-    // 14. Table Category Filter Tabs & Table Search
+    // 14. Table Category Filter Select & Table Search
     function applyShortcutTableFilters() {
         const searchQuery = (searchShortcutsInput?.value || '').toLowerCase().trim();
         const rows = document.querySelectorAll('.shortcut-row');
@@ -1375,19 +1401,20 @@ document.addEventListener('DOMContentLoaded', function () {
         searchShortcutsInput.addEventListener('input', applyShortcutTableFilters);
     }
 
-    document.querySelectorAll('.btn-filter-table-category').forEach(btn => {
-        btn.addEventListener('click', function () {
-            document.querySelectorAll('.btn-filter-table-category').forEach(b => {
-                b.classList.remove('active', 'btn-light-primary');
-                b.classList.add('btn-light');
+    const shortcutCategoryFilter = document.getElementById('shortcut_category_filter');
+    if (shortcutCategoryFilter) {
+        if (typeof $ !== 'undefined') {
+            $(shortcutCategoryFilter).on('change', function () {
+                currentTableCategoryFilter = $(this).val() || 'all';
+                applyShortcutTableFilters();
             });
-            this.classList.add('active', 'btn-light-primary');
-            this.classList.remove('btn-light');
-
-            currentTableCategoryFilter = this.dataset.filter || 'all';
-            applyShortcutTableFilters();
-        });
-    });
+        } else {
+            shortcutCategoryFilter.addEventListener('change', function () {
+                currentTableCategoryFilter = this.value || 'all';
+                applyShortcutTableFilters();
+            });
+        }
+    }
 
     // Initialize initial category population on tab load
     if (window.SHORTCUT_CATEGORIES_CATALOG) {
@@ -1400,13 +1427,38 @@ document.addEventListener('DOMContentLoaded', function () {
     let activityLogsDt = null;
     const tableEl = document.getElementById('kt_activity_logs_table');
 
+    // Register custom DataTables compact pagination method matching Veltronic bootstrap-5 pattern exactly
+    if (typeof $ !== 'undefined' && $.fn.DataTable && $.fn.DataTable.ext && $.fn.DataTable.ext.pager) {
+        $.fn.DataTable.ext.pager.veltronic_compact = function (page, pages) {
+            if (pages <= 1) return [];
+            var numbers = [];
+            for (var p = 0; p < pages; p++) {
+                if (p === 0 || p === pages - 1 || Math.abs(p - page) <= 1) {
+                    numbers.push(p);
+                }
+            }
+            return ['previous', numbers, 'next'];
+        };
+    }
+
     function initActivityLogsDataTable() {
         if (!tableEl || activityLogsDt || typeof $ === 'undefined' || !$.fn.DataTable) return;
 
         activityLogsDt = $(tableEl).DataTable({
+            responsive: false,
+            searchDelay: 500,
             processing: true,
             serverSide: true,
             order: [[6, 'desc']], // Waktu kejadian
+            pageLength: 10,
+            pagingType: 'veltronic_compact',
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+            dom:
+                "<'table-responsive'tr>" +
+                "<'row align-items-center justify-content-between g-3 mt-4 pt-3 border-top border-gray-200'" +
+                "<'col-12 col-md-auto d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-md-start gap-2 text-center text-sm-start text-muted fs-7'l i>" +
+                "<'col-12 col-md-auto d-flex justify-content-center justify-content-md-end'p>" +
+                ">",
             ajax: {
                 url: '/appsupport/app-fiturs/activity-logs',
                 type: 'GET',
@@ -1525,15 +1577,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             ],
             language: {
-                search: "",
-                searchPlaceholder: "Cari data...",
-                lengthMenu: "Tampilkan _MENU_",
+                emptyTable: "Belum ada riwayat aktivitas yang tercatat.",
                 info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data log",
                 infoEmpty: "Menampilkan 0 data",
                 infoFiltered: "(disaring dari _MAX_ total data)",
-                zeroRecords: "Tidak ada riwayat aktivitas yang sesuai filter",
+                lengthMenu: "Tampilkan _MENU_ data",
                 loadingRecords: "Memuat rekaman log...",
-                processing: '<span class="spinner-border spinner-border-sm text-primary me-2"></span> Memproses...',
+                processing: '<div class="spinner-border spinner-border-sm text-primary" role="status"></div> Memproses data...',
+                search: "Cari:",
+                zeroRecords: "Tidak ada riwayat aktivitas yang sesuai filter.",
                 paginate: {
                     first: '<i class="ki-outline ki-double-left fs-4"></i>',
                     last: '<i class="ki-outline ki-double-right fs-4"></i>',
@@ -1541,7 +1593,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     previous: '<i class="ki-outline ki-left fs-4"></i>'
                 }
             },
-            dom: "<'row'<'col-sm-12'tr>><'row align-items-center mt-4'<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'li><'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>>",
             drawCallback: function () {
                 if (typeof KTComponents !== 'undefined' && KTComponents.initTooltips) {
                     KTComponents.initTooltips();

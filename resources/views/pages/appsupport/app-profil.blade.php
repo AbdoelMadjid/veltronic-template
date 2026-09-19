@@ -108,6 +108,39 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* Scoped Mobile Center Card Header with Absolute Top-Right Toolbar */
+        @media (max-width: 767.98px) {
+            .card-header-mobile-center {
+                position: relative !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                padding-top: 1.5rem !important;
+                padding-bottom: 0.75rem !important;
+                min-height: auto !important;
+            }
+            .card-header-mobile-center .card-title {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                margin: 0 !important;
+                padding-left: 2.25rem !important;
+                padding-right: 2.25rem !important;
+            }
+            .card-header-mobile-center .card-toolbar {
+                position: absolute !important;
+                top: 1rem !important;
+                right: 1rem !important;
+                margin: 0 !important;
+                z-index: 5 !important;
+            }
+        }
     </style>
 @endsection
 
@@ -166,5 +199,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/appsupport/app-profil.js') }}"></script>
+    <script src="{{ asset('assets/js/appsupport/app-profil.js') }}?v={{ filemtime(public_path('assets/js/appsupport/app-profil.js')) }}"></script>
 @endsection

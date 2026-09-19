@@ -1,17 +1,15 @@
 <!-- Filter & Search Bar -->
-<div class="card card-flush shadow-sm mb-6">
-    <div class="card-body p-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
-        <div class="d-flex flex-wrap align-items-center gap-3 flex-grow-1">
+<div class="card card-flush shadow-sm border-0 mb-6">
+    <div class="card-body p-4 d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-between gap-3">
+        <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-3 flex-grow-1">
             <!-- Search Input -->
-            <div class="position-relative w-100 mw-300px">
-                <i class="ki-duotone ki-magnifier fs-3 position-absolute top-50 translate-middle-y ms-4 text-gray-500">
-                    <span class="path1"></span><span class="path2"></span>
-                </i>
+            <div class="position-relative w-100 w-md-300px">
+                <i class="ki-outline ki-magnifier fs-3 position-absolute top-50 translate-middle-y ms-4 text-gray-500"></i>
                 <input type="text" id="search_features_input" class="form-control form-control-solid form-control-sm ps-11" placeholder="Cari nama fitur, tools, menu..." />
             </div>
 
             <!-- Status Filter -->
-            <div class="w-100 mw-175px">
+            <div class="w-100 w-sm-175px">
                 <select id="filter_feature_status" class="form-select form-select-solid form-select-sm">
                     <option value="all">Semua Status</option>
                     <option value="active">Hanya Aktif</option>
@@ -23,12 +21,12 @@
 </div>
 
 <!-- ============================================== -->
-<!-- SECTION 1: FITUR & TOOLS DI TOPBAR NAVBAR      -->
+<!-- SECTION: FITUR & TOOLS DI TOPBAR NAVBAR        -->
 <!-- ============================================== -->
 <div class="mb-10">
     <div class="d-flex align-items-center justify-content-between mb-5 gap-3 pb-2 border-bottom flex-wrap">
         <div class="pe-2">
-            <h4 class="fw-bolder text-gray-900 m-0">1. Fitur & Tools di Topbar Navbar</h4>
+            <h4 class="fw-bolder text-gray-900 m-0">Fitur & Tools di Topbar Navbar</h4>
             <span class="text-muted fs-7">Tombol aksi cepat di sudut kanan atas navbar (dari ikon search hingga frontpage switcher).</span>
         </div>
         <div class="d-flex align-items-center gap-3 ms-auto flex-shrink-0">
@@ -84,12 +82,12 @@
 </div>
 
 <!-- ============================================== -->
-<!-- SECTION 2: MENU UTAMA DI TOPBAR HEADER         -->
+<!-- SECTION: MENU UTAMA DI TOPBAR HEADER           -->
 <!-- ============================================== -->
 <div class="mb-10">
     <div class="d-flex align-items-center justify-content-between mb-5 gap-3 pb-2 border-bottom flex-wrap">
         <div class="pe-2">
-            <h4 class="fw-bolder text-gray-900 m-0">2. Menu Utama di Topbar Header</h4>
+            <h4 class="fw-bolder text-gray-900 m-0">Menu Utama di Topbar Header</h4>
             <span class="text-muted fs-7">Navigasi horizontal utama di bilah header atas (mulai dari menu Dashboard hingga Help).</span>
         </div>
         <div class="d-flex align-items-center gap-3 ms-auto flex-shrink-0">
@@ -145,12 +143,12 @@
 </div>
 
 <!-- ============================================== -->
-<!-- SECTION 3: MENU TEMPLATE DI SIDEBAR            -->
+<!-- SECTION: MENU TEMPLATE DI SIDEBAR              -->
 <!-- ============================================== -->
 <div class="mb-5">
     <div class="d-flex align-items-center justify-content-between mb-5 gap-3 pb-2 border-bottom flex-wrap">
         <div class="pe-2">
-            <h4 class="fw-bolder text-gray-900 m-0">3. Menu Template di Sidebar</h4>
+            <h4 class="fw-bolder text-gray-900 m-0">Menu Template di Sidebar</h4>
             <span class="text-muted fs-7">Blok section menu vertikal di sidebar kiri (mulai dari label Dashboard hingga Help).</span>
         </div>
         <div class="d-flex align-items-center gap-3 ms-auto flex-shrink-0">

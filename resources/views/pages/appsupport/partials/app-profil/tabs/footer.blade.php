@@ -2,14 +2,14 @@
     <!--begin::Left Column: Footer Settings & Links Repeater-->
     <div class="col-xl-7">
         <div class="card card-flush shadow-sm border-0">
-            <div class="card-header border-0 pt-6">
-                <div class="card-title d-flex align-items-center">
-                    <div class="symbol symbol-35px symbol-circle bg-light-success me-3 d-flex align-items-center justify-content-center">
-                        <i class="ki-outline ki-document text-success fs-3"></i>
+            <div class="card-header card-header-mobile-center border-0 pt-6">
+                <div class="card-title d-flex flex-column flex-md-row align-items-center text-center text-md-start">
+                    <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-success mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="ki-outline ki-document text-success fs-2 fs-md-3"></i>
                     </div>
-                    <div>
+                    <div class="d-flex flex-column align-items-center align-items-md-start">
                         <h3 class="fw-bold text-gray-900 m-0 fs-4">Pengaturan Footer Dashboard</h3>
-                        <span class="text-muted fs-7">Atur hak cipta, URL brand, toggle info server, dan tautan navigasi footer.</span>
+                        <span class="text-muted fs-7 mt-1">Atur hak cipta, URL brand, toggle info server, dan tautan navigasi footer.</span>
                     </div>
                 </div>
             </div>
@@ -52,13 +52,15 @@
                     <!--begin::Footer Menu Links Repeater Section-->
                     <div class="separator separator-dashed my-6"></div>
 
-                    <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-4 gap-3 text-center text-md-start">
                         <div>
                             <h4 class="fw-bold text-gray-900 m-0 fs-5">Tautan Navigasi Footer</h4>
                             <span class="text-muted fs-8">Tambahkan atau sesuaikan link menu cepat di sebelah kanan footer.</span>
                         </div>
-                        <button type="button" class="btn btn-light-primary btn-sm fw-bold rounded-pill px-3" id="btn_add_footer_link">
-                            <i class="ki-outline ki-plus fs-4 me-1"></i> Tambah Tautan
+                        <button type="button" class="btn btn-light-primary btn-sm fw-bold px-3 w-100 w-md-auto" id="btn_add_footer_link"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tambah baris menu footer baru">
+                            <i class="ki-outline ki-plus fs-4 me-1"></i>
+                            <span>Tambah Tautan</span>
                         </button>
                     </div>
 
@@ -88,7 +90,8 @@
                                             </select>
                                         </td>
                                         <td class="text-end">
-                                            <button type="button" class="btn btn-icon btn-light-danger btn-sm btn-remove-link" title="Hapus baris">
+                                            <button type="button" class="btn btn-icon btn-light-danger btn-sm btn-remove-link"
+                                                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Hapus baris tautan">
                                                 <i class="ki-outline ki-trash fs-5"></i>
                                             </button>
                                         </td>
@@ -108,7 +111,8 @@
                                             </select>
                                         </td>
                                         <td class="text-end">
-                                            <button type="button" class="btn btn-icon btn-light-danger btn-sm btn-remove-link" title="Hapus baris">
+                                            <button type="button" class="btn btn-icon btn-light-danger btn-sm btn-remove-link"
+                                                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Hapus baris tautan">
                                                 <i class="ki-outline ki-trash fs-5"></i>
                                             </button>
                                         </td>
@@ -120,14 +124,21 @@
                     <!--end::Footer Menu Links Repeater-->
 
                     <!--begin::Form Actions-->
-                    <div class="d-flex justify-content-end gap-3 pt-4 border-top">
-                        <button type="button" class="btn btn-light btn-sm fw-bold px-5" id="btn_reset_default_footer_links">Kembalikan Default Links</button>
-                        <button type="submit" class="btn btn-primary btn-sm fw-bold rounded-pill px-6" id="kt_btn_save_footer">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-end gap-2 gap-md-3 pt-4 border-top flex-wrap flex-md-nowrap">
+                        <button type="button" class="btn btn-light btn-sm fw-bold px-4 px-md-5" id="btn_reset_default_footer_links"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan tautan ke pengaturan default">
+                            <i class="ki-outline ki-arrows-circle fs-5 me-1"></i>
+                            <span>Default Links</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm fw-bold px-5 px-md-6" id="kt_btn_save_footer"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan pengaturan hak cipta & tautan footer">
                             <span class="indicator-label">
-                                <i class="ki-outline ki-check fs-4 me-1"></i> Simpan Pengaturan Footer
+                                <i class="ki-outline ki-check fs-4 me-1"></i>
+                                <span>Simpan Pengaturan Footer</span>
                             </span>
                             <span class="indicator-progress">
-                                Menyimpan... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                <span>Menyimpan...</span>
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                             </span>
                         </button>
                     </div>
@@ -141,10 +152,15 @@
     <!--begin::Right Column: Live Footer Preview-->
     <div class="col-xl-5">
         <div class="card card-flush shadow-sm border-0 mb-6">
-            <div class="card-header border-0 pt-6">
-                <div class="card-title d-flex align-items-center">
-                    <i class="ki-outline ki-eye text-primary fs-3 me-2"></i>
-                    <h3 class="fw-bold text-gray-900 m-0 fs-5">Simulasi Tampilan Footer Realtime</h3>
+            <div class="card-header card-header-mobile-center border-0 pt-6">
+                <div class="card-title d-flex flex-column flex-md-row align-items-center text-center text-md-start">
+                    <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-primary mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="ki-outline ki-eye text-primary fs-2 fs-md-3"></i>
+                    </div>
+                    <div class="d-flex flex-column align-items-center align-items-md-start">
+                        <h3 class="fw-bold text-gray-900 m-0 fs-5">Simulasi Tampilan Footer Realtime</h3>
+                        <span class="text-muted fs-8 mt-1">Pratinjau tampilan footer di bagian bawah halaman dashboard</span>
+                    </div>
                 </div>
             </div>
             <div class="card-body pt-2">

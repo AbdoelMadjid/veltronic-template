@@ -5,18 +5,19 @@
         <!--begin::Logo Default (Light Mode)-->
         <div class="col-md-6 col-xl-6">
             <div class="card card-flush shadow-sm border-0 h-100">
-                <div class="card-header border-0 pt-6">
-                    <div class="card-title d-flex align-items-center">
-                        <div class="symbol symbol-35px symbol-circle bg-light-warning me-3 d-flex align-items-center justify-content-center">
-                            <i class="ki-outline ki-sun text-warning fs-3"></i>
+                <div class="card-header card-header-mobile-center position-relative border-0 pt-6">
+                    <div class="card-title w-100 w-md-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start m-0">
+                        <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-warning mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                            <i class="ki-outline ki-sun text-warning fs-2 fs-md-3"></i>
                         </div>
-                        <div>
+                        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
                             <h3 class="fw-bold text-gray-900 m-0 fs-5">Logo Mode Terang (Light Mode)</h3>
-                            <span class="text-muted fs-8">Ditampilkan pada sidebar terang & header terang</span>
+                            <span class="text-muted fs-8 mt-1">Ditampilkan pada sidebar terang & header terang</span>
                         </div>
                     </div>
-                    <div class="card-toolbar">
-                        <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="default" title="Kembalikan ke logo default tema">
+                    <div class="card-toolbar position-absolute position-md-static top-0 end-0 mt-4 me-4 mt-md-0 me-md-0">
+                        <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="default"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan ke logo default tema">
                             <i class="ki-outline ki-arrows-circle fs-5"></i>
                         </button>
                     </div>
@@ -30,7 +31,7 @@
                     <!--end::Preview Box-->
 
                     <!--begin::Dimension Constraints Badges-->
-                    <div class="d-flex flex-wrap gap-2 mb-4">
+                    <div class="d-flex flex-wrap gap-2 mb-4 justify-content-center justify-content-md-start">
                         <span class="badge badge-light-primary fs-8 py-2 px-3">
                             <i class="ki-outline ki-maximize fs-7 me-1"></i> Min: 100×20 px
                         </span>
@@ -76,18 +77,19 @@
         <!--begin::Logo Dark Mode-->
         <div class="col-md-6 col-xl-6">
             <div class="card card-flush shadow-sm border-0 h-100">
-                <div class="card-header border-0 pt-6">
-                    <div class="card-title d-flex align-items-center">
-                        <div class="symbol symbol-35px symbol-circle bg-light-primary me-3 d-flex align-items-center justify-content-center">
-                            <i class="ki-outline ki-moon text-primary fs-3"></i>
+                <div class="card-header card-header-mobile-center position-relative border-0 pt-6">
+                    <div class="card-title w-100 w-md-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start m-0">
+                        <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-primary mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                            <i class="ki-outline ki-moon text-primary fs-2 fs-md-3"></i>
                         </div>
-                        <div>
+                        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
                             <h3 class="fw-bold text-gray-900 m-0 fs-5">Logo Mode Gelap (Dark Mode)</h3>
-                            <span class="text-muted fs-8">Ditampilkan pada sidebar gelap & header gelap</span>
+                            <span class="text-muted fs-8 mt-1">Ditampilkan pada sidebar gelap & header gelap</span>
                         </div>
                     </div>
-                    <div class="card-toolbar">
-                        <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="dark" title="Kembalikan ke logo default tema">
+                    <div class="card-toolbar position-absolute position-md-static top-0 end-0 mt-4 me-4 mt-md-0 me-md-0">
+                        <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="dark"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan ke logo default tema">
                             <i class="ki-outline ki-arrows-circle fs-5"></i>
                         </button>
                     </div>
@@ -101,7 +103,7 @@
                     <!--end::Preview Box-->
 
                     <!--begin::Dimension Constraints Badges-->
-                    <div class="d-flex flex-wrap gap-2 mb-4">
+                    <div class="d-flex flex-wrap gap-2 mb-4 justify-content-center justify-content-md-start">
                         <span class="badge badge-light-primary fs-8 py-2 px-3">
                             <i class="ki-outline ki-maximize fs-7 me-1"></i> Min: 100×20 px
                         </span>
@@ -147,18 +149,19 @@
         <!--begin::Logo Minimize-->
         <div class="col-md-6 col-xl-6">
             <div class="card card-flush shadow-sm border-0 h-100">
-                <div class="card-header border-0 pt-6">
-                    <div class="card-title d-flex align-items-center">
-                        <div class="symbol symbol-35px symbol-circle bg-light-info me-3 d-flex align-items-center justify-content-center">
-                            <i class="ki-outline ki-abstract-26 text-info fs-3"></i>
+                <div class="card-header card-header-mobile-center position-relative border-0 pt-6">
+                    <div class="card-title w-100 w-md-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start m-0">
+                        <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-info mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                            <i class="ki-outline ki-abstract-26 text-info fs-2 fs-md-3"></i>
                         </div>
-                        <div>
+                        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
                             <h3 class="fw-bold text-gray-900 m-0 fs-5">Logo Mini / Minimize Icon</h3>
-                            <span class="text-muted fs-8">Ditampilkan saat sidebar ditutup / diciutkan</span>
+                            <span class="text-muted fs-8 mt-1">Ditampilkan saat sidebar ditutup / diciutkan</span>
                         </div>
                     </div>
-                    <div class="card-toolbar">
-                        <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="minimize" title="Kembalikan ke icon default tema">
+                    <div class="card-toolbar position-absolute position-md-static top-0 end-0 mt-4 me-4 mt-md-0 me-md-0">
+                        <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="minimize"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan ke icon default tema">
                             <i class="ki-outline ki-arrows-circle fs-5"></i>
                         </button>
                     </div>
@@ -172,7 +175,7 @@
                     <!--end::Preview Box-->
 
                     <!--begin::Dimension Constraints Badges-->
-                    <div class="d-flex flex-wrap gap-2 mb-4">
+                    <div class="d-flex flex-wrap gap-2 mb-4 justify-content-center justify-content-md-start">
                         <span class="badge badge-light-info fs-8 py-2 px-3">
                             <i class="ki-outline ki-size fs-7 me-1"></i> Rasio 1:1 (Persegi)
                         </span>
@@ -222,18 +225,19 @@
         <!--begin::Favicon-->
         <div class="col-md-6 col-xl-6">
             <div class="card card-flush shadow-sm border-0 h-100">
-                <div class="card-header border-0 pt-6">
-                    <div class="card-title d-flex align-items-center">
-                        <div class="symbol symbol-35px symbol-circle bg-light-success me-3 d-flex align-items-center justify-content-center">
-                            <i class="ki-outline ki-bookmark text-success fs-3"></i>
+                <div class="card-header card-header-mobile-center position-relative border-0 pt-6">
+                    <div class="card-title w-100 w-md-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start m-0">
+                        <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-success mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                            <i class="ki-outline ki-bookmark text-success fs-2 fs-md-3"></i>
                         </div>
-                        <div>
+                        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
                             <h3 class="fw-bold text-gray-900 m-0 fs-5">Favicon Browser (.ico / .png)</h3>
-                            <span class="text-muted fs-8">Ditampilkan pada tab browser & bookmark</span>
+                            <span class="text-muted fs-8 mt-1">Ditampilkan pada tab browser & bookmark</span>
                         </div>
                     </div>
-                    <div class="card-toolbar">
-                        <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="favicon" title="Kembalikan ke favicon default tema">
+                    <div class="card-toolbar position-absolute position-md-static top-0 end-0 mt-4 me-4 mt-md-0 me-md-0">
+                        <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="favicon"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan ke favicon default tema">
                             <i class="ki-outline ki-arrows-circle fs-5"></i>
                         </button>
                     </div>
@@ -253,7 +257,7 @@
                     <!--end::Preview Box-->
 
                     <!--begin::Dimension Constraints Badges-->
-                    <div class="d-flex flex-wrap gap-2 mb-4">
+                    <div class="d-flex flex-wrap gap-2 mb-4 justify-content-center justify-content-md-start">
                         <span class="badge badge-light-info fs-8 py-2 px-3">
                             <i class="ki-outline ki-size fs-7 me-1"></i> Rasio 1:1 (Persegi)
                         </span>
@@ -303,18 +307,20 @@
 
     <!--begin::Submit Bar-->
     <div class="card card-flush shadow-sm border-0 mt-6">
-        <div class="card-body p-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div class="card-body p-4 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 text-center text-md-start">
             <div class="text-muted fs-7">
                 <i class="ki-outline ki-shield-tick fs-5 me-1 text-success"></i>
                 Setiap berkas divalidasi secara ketat berdasarkan resolusi minimal, maksimal, rasio aspek, dan ukuran berkas sebelum disimpan langsung ke <code>public/assets/logo/</code>.
             </div>
-            <div class="d-flex align-items-center gap-3">
-                <button type="submit" class="btn btn-primary btn-sm fw-bold rounded-pill px-6" id="kt_btn_save_logo">
+            <div class="d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto flex-shrink-0">
+                <button type="submit" class="btn btn-primary btn-sm fw-bold px-6 w-100 w-md-auto" id="kt_btn_save_logo"
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan & terapkan perubahan aset logo">
                     <span class="indicator-label">
                         <i class="ki-outline ki-check fs-4 me-1"></i> Simpan & Terapkan Logo
                     </span>
                     <span class="indicator-progress">
-                        Memvalidasi & Menyimpan... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        <span>Memvalidasi & Menyimpan...</span>
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                     </span>
                 </button>
             </div>

@@ -2,14 +2,14 @@
     <!--begin::Left Column: Meta Form-->
     <div class="col-xl-7">
         <div class="card card-flush shadow-sm border-0">
-            <div class="card-header border-0 pt-6">
-                <div class="card-title d-flex align-items-center">
-                    <div class="symbol symbol-35px symbol-circle bg-light-primary me-3 d-flex align-items-center justify-content-center">
-                        <i class="ki-outline ki-code text-primary fs-3"></i>
+            <div class="card-header card-header-mobile-center border-0 pt-6">
+                <div class="card-title d-flex flex-column flex-md-row align-items-center text-center text-md-start">
+                    <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-primary mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="ki-outline ki-code text-primary fs-2 fs-md-3"></i>
                     </div>
-                    <div>
+                    <div class="d-flex flex-column align-items-center align-items-md-start">
                         <h3 class="fw-bold text-gray-900 m-0 fs-4">Formulir Identitas & Meta SEO Dashboard</h3>
-                        <span class="text-muted fs-7">Atur judul, deskripsi, kata kunci pencarian, dan informasi author aplikasi.</span>
+                        <span class="text-muted fs-7 mt-1">Atur judul, deskripsi, kata kunci pencarian, dan informasi author aplikasi.</span>
                     </div>
                 </div>
             </div>
@@ -82,14 +82,21 @@
                     <!--end::Input Group-->
 
                     <!--begin::Form Actions-->
-                    <div class="d-flex justify-content-end gap-3 pt-4 border-top">
-                        <button type="reset" class="btn btn-light btn-sm fw-bold px-5">Reset Nilai</button>
-                        <button type="submit" class="btn btn-primary btn-sm fw-bold rounded-pill px-6" id="kt_btn_save_meta">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-end gap-2 gap-md-3 pt-4 border-top flex-wrap flex-md-nowrap">
+                        <button type="reset" class="btn btn-light btn-sm fw-bold px-4 px-md-5"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan nilai awal formulir">
+                            <i class="ki-outline ki-arrows-circle fs-5 me-1"></i>
+                            <span>Reset Nilai</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm fw-bold px-5 px-md-6" id="kt_btn_save_meta"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan perubahan identitas & SEO">
                             <span class="indicator-label">
-                                <i class="ki-outline ki-check fs-4 me-1"></i> Simpan Data Meta
+                                <i class="ki-outline ki-check fs-4 me-1"></i>
+                                <span>Simpan Data Meta</span>
                             </span>
                             <span class="indicator-progress">
-                                Menyimpan... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                <span>Menyimpan...</span>
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                             </span>
                         </button>
                     </div>
@@ -104,10 +111,15 @@
     <div class="col-xl-5">
         <!--begin::Google Search Preview-->
         <div class="card card-flush shadow-sm border-0 mb-6">
-            <div class="card-header border-0 pt-6">
-                <div class="card-title d-flex align-items-center">
-                    <i class="ki-outline ki-google text-danger fs-3 me-2"></i>
-                    <h3 class="fw-bold text-gray-900 m-0 fs-5">Simulasi Google Search Snippet</h3>
+            <div class="card-header card-header-mobile-center border-0 pt-6">
+                <div class="card-title d-flex flex-column flex-md-row align-items-center text-center text-md-start">
+                    <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-danger mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="ki-outline ki-google text-danger fs-2 fs-md-3"></i>
+                    </div>
+                    <div class="d-flex flex-column align-items-center align-items-md-start">
+                        <h3 class="fw-bold text-gray-900 m-0 fs-5">Simulasi Google Search Snippet</h3>
+                        <span class="text-muted fs-8 mt-1">Pratinjau tampilan di hasil pencarian Google</span>
+                    </div>
                 </div>
             </div>
             <div class="card-body pt-2">
@@ -126,9 +138,9 @@
                         {{ $settings['meta_description'] ?? 'Sistem dashboard administrasi modern dengan Metronic 8.3.2 dan Laravel 12/13.' }}
                     </div>
                 </div>
-                <div class="alert alert-dismissible bg-light-primary border border-primary border-dashed d-flex flex-column flex-sm-row p-4 mt-4 mb-0">
-                    <i class="ki-outline ki-information-5 fs-2 text-primary me-3 mb-2 mb-sm-0"></i>
-                    <div class="d-flex flex-column pe-0 pe-sm-6">
+                <div class="alert alert-dismissible bg-light-primary border border-primary border-dashed d-flex flex-column flex-md-row p-4 mt-4 mb-0">
+                    <i class="ki-outline ki-information-5 fs-2 text-primary me-3 mb-2 mb-md-0"></i>
+                    <div class="d-flex flex-column pe-0 pe-md-6">
                         <span class="fw-bold fs-7 text-primary">Info SEO</span>
                         <span class="text-gray-700 fs-8">Snippet ini disinkronkan secara realtime dengan field input di sebelah kiri saat Anda mengetik.</span>
                     </div>
@@ -139,10 +151,15 @@
 
         <!--begin::Social Card Preview-->
         <div class="card card-flush shadow-sm border-0">
-            <div class="card-header border-0 pt-6">
-                <div class="card-title d-flex align-items-center">
-                    <i class="ki-outline ki-share text-info fs-3 me-2"></i>
-                    <h3 class="fw-bold text-gray-900 m-0 fs-5">Simulasi Open Graph Social Card</h3>
+            <div class="card-header card-header-mobile-center border-0 pt-6">
+                <div class="card-title d-flex flex-column flex-md-row align-items-center text-center text-md-start">
+                    <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-info mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="ki-outline ki-share text-info fs-2 fs-md-3"></i>
+                    </div>
+                    <div class="d-flex flex-column align-items-center align-items-md-start">
+                        <h3 class="fw-bold text-gray-900 m-0 fs-5">Simulasi Open Graph Social Card</h3>
+                        <span class="text-muted fs-8 mt-1">Pratinjau saat link dibagikan ke media sosial</span>
+                    </div>
                 </div>
             </div>
             <div class="card-body pt-2">

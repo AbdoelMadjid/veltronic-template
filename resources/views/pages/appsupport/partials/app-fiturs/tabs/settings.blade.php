@@ -3,19 +3,14 @@
     <div class="row g-6 mb-6">
 
         <!-- ======================================================== -->
-        <!-- KOLOM KIRI: 1. PREFERENSI DEFAULT TAMPILAN & ANTARMUKA  -->
+        <!-- KOLOM KIRI: PREFERENSI DEFAULT TAMPILAN & ANTARMUKA     -->
         <!-- ======================================================== -->
         <div class="col-lg-6">
             <div class="card card-flush shadow-sm border-0 h-100">
                 <!--begin::Card header-->
                 <div class="card-header border-0 pt-6 pb-2">
                     <div class="card-title d-flex flex-column">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="symbol symbol-35px symbol-circle bg-light-primary text-primary d-flex align-items-center justify-content-center">
-                                <i class="ki-outline ki-color-filter fs-3 text-primary"></i>
-                            </span>
-                            <h4 class="fw-bolder text-gray-900 m-0">1. Preferensi Default Tampilan & Antarmuka</h4>
-                        </div>
+                        <h4 class="fw-bolder text-gray-900 m-0">Preferensi Default Tampilan & Antarmuka</h4>
                         <span class="text-muted fs-8 mt-1">Konfigurasi visual, ikonografi, translasi, serta tata letak awal</span>
                     </div>
                     <div class="card-toolbar">
@@ -51,7 +46,7 @@
                                     <i class="ki-duotone ki-chart-simple fs-2x text-primary mb-2" data-kt-icon-style-ignore="true"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
                                     <span class="fw-bold fs-7 text-gray-900 d-block">Duotone</span>
                                     <span class="text-muted fs-10">Dua Nada (SVG)</span>
-                                </label>
+                                								</label>
                             </div>
 
                             <!-- Solid -->
@@ -243,20 +238,15 @@
 
 
         <!-- ======================================================== -->
-        <!-- KOLOM KANAN: 2. KEAMANAN & 3. PEMELIHARAAN CACHE TOOLS   -->
+        <!-- KOLOM KANAN: KEAMANAN & PEMELIHARAAN CACHE TOOLS         -->
         <!-- ======================================================== -->
         <div class="col-lg-6 d-flex flex-column gap-6">
 
-            <!-- Card 2: Keamanan & Kebijakan Akses -->
+            <!-- Card: Keamanan & Kebijakan Akses -->
             <div class="card card-flush shadow-sm border-0">
                 <div class="card-header border-0 pt-6 pb-2">
                     <div class="card-title d-flex flex-column">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="symbol symbol-35px symbol-circle bg-light-danger text-danger d-flex align-items-center justify-content-center">
-                                <i class="ki-outline ki-shield-tick fs-3 text-danger"></i>
-                            </span>
-                            <h4 class="fw-bolder text-gray-900 m-0">2. Keamanan & Kebijakan Akses</h4>
-                        </div>
+                        <h4 class="fw-bolder text-gray-900 m-0">Keamanan & Kebijakan Akses</h4>
                         <span class="text-muted fs-8 mt-1">Proteksi sesi otentikasi dan registrasi publik</span>
                     </div>
                     <div class="card-toolbar">
@@ -292,16 +282,11 @@
                 </div>
             </div>
 
-            <!-- Card 3: Pemeliharaan Sistem & Cache Tools -->
+            <!-- Card: Pemeliharaan Sistem & Cache Tools -->
             <div class="card card-flush shadow-sm border-0 flex-grow-1">
                 <div class="card-header border-0 pt-6 pb-2">
                     <div class="card-title d-flex flex-column">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="symbol symbol-35px symbol-circle bg-light-warning text-warning d-flex align-items-center justify-content-center">
-                                <i class="ki-outline ki-arrows-circle fs-3 text-warning"></i>
-                            </span>
-                            <h4 class="fw-bolder text-gray-900 m-0">3. Pemeliharaan Sistem & Alat Cache</h4>
-                        </div>
+                        <h4 class="fw-bolder text-gray-900 m-0">Pemeliharaan Sistem & Alat Cache</h4>
                         <span class="text-muted fs-8 mt-1">Pembersihan memori cache dan optimasi server seketika</span>
                     </div>
                     <div class="card-toolbar">
@@ -368,17 +353,17 @@
     <!-- Save & Reset Action Bar (Bottom Bar) -->
     <div class="card card-flush shadow-sm border-0">
         <div class="card-body p-5">
-            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3">
+            <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-3">
                 <div class="d-flex align-items-center gap-2 text-muted fs-8">
                     <i class="ki-outline ki-shield-tick text-success fs-5"></i>
                     Perubahan pengaturan akan langsung diterapkan persisten ke basis data.
                 </div>
-                <div class="d-flex align-items-center gap-3 w-100 w-sm-auto justify-content-end">
+                <div class="d-flex align-items-center justify-content-center justify-content-sm-end gap-3 w-100 w-sm-auto">
                     <button type="button" class="btn btn-light btn-sm fw-bold" id="btn_reset_system_settings" onclick="document.getElementById('system_settings_form').reset()">
-                        <i class="ki-outline ki-arrows-circle fs-5 me-1"></i> Reset Formulir
+                        <i class="ki-outline ki-arrows-circle fs-5 me-1"></i> Reset
                     </button>
                     <button type="submit" class="btn btn-primary btn-sm fw-bold px-6" id="btn_save_system_settings">
-                        <i class="ki-outline ki-check fs-4 me-1 text-white"></i> Simpan Pengaturan
+                        <i class="ki-outline ki-check fs-4 me-1 text-white"></i> Simpan
                     </button>
                 </div>
             </div>

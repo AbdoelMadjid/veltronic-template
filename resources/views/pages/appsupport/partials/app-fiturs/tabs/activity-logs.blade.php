@@ -122,24 +122,21 @@
     <!--begin::Main Table Card-->
     <div class="card card-flush bg-body border border-gray-200 shadow-sm">
         <!--begin::Card header-->
-        <div class="card-header border-0 pt-6">
-            <!--begin::Card title-->
-            <div class="card-title">
-                <!--begin::Search-->
-                <div class="d-flex align-items-center position-relative my-1">
-                    <i class="ki-outline ki-magnifier fs-3 position-absolute ms-5 text-gray-500"></i>
-                    <input type="text" id="log_search_input" class="form-control form-control-solid w-250px w-md-300px ps-13"
-                        placeholder="Cari aktivitas, user, IP..." />
+        <div class="card-header border-0 pt-6 px-6 d-block">
+            <div class="row g-2 align-items-center w-100 m-0">
+                <!--begin::Search Input-->
+                <div class="col-12 col-lg-4 col-xl-3 ps-0">
+                    <div class="d-flex align-items-center position-relative w-100">
+                        <i class="ki-outline ki-magnifier fs-4 position-absolute ms-3 text-gray-500"></i>
+                        <input type="text" id="log_search_input" class="form-control form-control-solid form-control-sm ps-10 w-100"
+                            placeholder="Cari aktivitas, user, IP..." />
+                    </div>
                 </div>
-                <!--end::Search-->
-            </div>
-            <!--end::Card title-->
+                <!--end::Search Input-->
 
-            <!--begin::Card toolbar-->
-            <div class="card-toolbar flex-row-fluid justify-content-end gap-3 flex-wrap">
                 <!--begin::Filter Modul-->
-                <div class="w-150px">
-                    <select id="filter_log_module" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Semua Modul">
+                <div class="col-6 col-sm-3 col-lg-2 col-xl-2">
+                    <select id="filter_log_module" class="form-select form-select-solid form-select-sm w-100" data-control="select2" data-hide-search="true" data-placeholder="Semua Modul">
                         <option value="all">Semua Modul</option>
                         <option value="usermanagement">User Management</option>
                         <option value="appsupport">App Support</option>
@@ -150,8 +147,8 @@
                 <!--end::Filter Modul-->
 
                 <!--begin::Filter Level-->
-                <div class="w-130px">
-                    <select id="filter_log_level" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Semua Level">
+                <div class="col-6 col-sm-3 col-lg-2 col-xl-2">
+                    <select id="filter_log_level" class="form-select form-select-solid form-select-sm w-100" data-control="select2" data-hide-search="true" data-placeholder="Semua Level">
                         <option value="all">Semua Level</option>
                         <option value="info">Info</option>
                         <option value="success">Success</option>
@@ -162,8 +159,8 @@
                 <!--end::Filter Level-->
 
                 <!--begin::Filter Date Range-->
-                <div class="w-150px">
-                    <select id="filter_log_date_range" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Semua Waktu">
+                <div class="col-6 col-sm-3 col-lg-2 col-xl-3">
+                    <select id="filter_log_date_range" class="form-select form-select-solid form-select-sm w-100" data-control="select2" data-hide-search="true" data-placeholder="Semua Waktu">
                         <option value="">Semua Waktu</option>
                         <option value="today">Hari Ini</option>
                         <option value="yesterday">Kemarin</option>
@@ -173,41 +170,42 @@
                 </div>
                 <!--end::Filter Date Range-->
 
-                <!--begin::Reset & Refresh-->
-                <button type="button" class="btn btn-icon btn-light btn-active-light-primary" id="btn_reset_log_filter" data-bs-toggle="tooltip" title="Reset Semua Filter">
-                    <i class="ki-outline ki-arrows-circle fs-3"></i>
-                </button>
-                <button type="button" class="btn btn-icon btn-light-primary" id="btn_refresh_logs" data-bs-toggle="tooltip" title="Muat Ulang Data">
-                    <i class="ki-outline ki-arrows-loop fs-3"></i>
-                </button>
-                <!--end::Reset & Refresh-->
+                <!--begin::Action Buttons-->
+                <div class="col-6 col-sm-3 col-lg-2 col-xl-2 pe-0">
+                    <div class="d-flex align-items-center justify-content-end gap-2">
+                        <button type="button" class="btn btn-icon btn-sm btn-light btn-active-light-primary" id="btn_reset_log_filter" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reset Semua Filter">
+                            <i class="ki-outline ki-arrows-circle fs-4"></i>
+                        </button>
+                        <button type="button" class="btn btn-icon btn-sm btn-light-primary" id="btn_refresh_logs" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Muat Ulang Data">
+                            <i class="ki-outline ki-arrows-loop fs-4"></i>
+                        </button>
+                    </div>
+                </div>
+                <!--end::Action Buttons-->
             </div>
-            <!--end::Card toolbar-->
         </div>
         <!--end::Card header-->
 
         <!--begin::Card body-->
         <div class="card-body pt-0">
             <!--begin::Table-->
-            <div class="table-responsive">
-                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_activity_logs_table">
-                    <thead>
-                        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                            <th class="w-50px text-center">No</th>
-                            <th class="min-w-175px">Pengguna / Pelaku</th>
-                            <th class="min-w-120px">Modul & Menu</th>
-                            <th class="min-w-200px">Aktivitas & Keterangan</th>
-                            <th class="min-w-90px text-center">Level</th>
-                            <th class="min-w-125px">IP & Perangkat</th>
-                            <th class="min-w-150px">Waktu Kejadian</th>
-                            <th class="text-end min-w-80px">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-600 fw-semibold">
-                        <!-- Data populated via AJAX DataTables -->
-                    </tbody>
-                </table>
-            </div>
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_activity_logs_table">
+                <thead>
+                    <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                        <th class="w-50px text-center">No</th>
+                        <th class="min-w-175px">Pengguna / Pelaku</th>
+                        <th class="min-w-120px">Modul & Menu</th>
+                        <th class="min-w-200px">Aktivitas & Keterangan</th>
+                        <th class="min-w-90px text-center">Level</th>
+                        <th class="min-w-125px">IP & Perangkat</th>
+                        <th class="min-w-150px">Waktu Kejadian</th>
+                        <th class="text-end min-w-80px">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 fw-semibold">
+                    <!-- Data populated via AJAX DataTables -->
+                </tbody>
+            </table>
             <!--end::Table-->
         </div>
         <!--end::Card body-->

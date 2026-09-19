@@ -1,67 +1,49 @@
 <!--begin::Shortcuts Full-Width Layout-->
 <div class="d-flex flex-column gap-6">
 
-    <!--begin::Master Switch & Status Summary Card (Full Width)-->
-    <div class="card card-flush shadow-sm border-0 bg-light-primary">
+    <!--begin::Master Switch & Title Card (Full Width)-->
+    <div class="card card-flush shadow-sm border-0">
         <div class="card-body p-6">
-            <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-4">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-4 text-center text-md-start">
                 
-                <!-- Info & Master Switch -->
-                <div class="d-flex align-items-center gap-4">
-                    <div class="symbol symbol-45px symbol-circle bg-primary text-white d-flex align-items-center justify-content-center shadow-xs">
-                        <i class="ki-outline ki-keyboard fs-2 text-white"></i>
+                <!-- Info Left -->
+                <div class="d-flex flex-column flex-md-row align-items-center gap-3 gap-md-4 w-100 w-md-auto">
+                    <div class="symbol symbol-45px symbol-circle bg-light-primary text-primary d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="ki-outline ki-keyboard fs-2 text-primary"></i>
                     </div>
-                    <div>
-                        <div class="d-flex align-items-center gap-2">
-                            <h4 class="fw-bolder text-gray-900 m-0">Pintasan Global</h4>
+                    <div class="d-flex flex-column align-items-center align-items-md-start">
+                        <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2 flex-wrap">
+                            <h4 class="fw-bolder text-gray-900 m-0 fs-4">Pintasan Global</h4>
                             <span class="badge badge-light-primary fw-bold fs-9">Pemantau Aktif</span>
                         </div>
-                        <span class="text-muted fs-8">Status Pemantau Tombol di Seluruh Peramban & Navigasi</span>
-                    </div>
-                    <div class="form-check form-switch form-check-custom form-check-solid ms-2">
-                        <input class="form-check-input h-22px w-40px cursor-pointer" type="checkbox" id="global_shortcuts_master_switch" checked />
+                        <span class="text-muted fs-8 mt-1">Status Pemantau Tombol di Seluruh Peramban & Navigasi</span>
                     </div>
                 </div>
 
-                <!-- Stats Badges & Add Button -->
-                <div class="d-flex flex-wrap align-items-center gap-3">
-                    <div class="d-flex align-items-center gap-2 bg-body px-3 py-2 rounded-3 border border-gray-200">
-                        <span class="text-gray-700 fs-8 fw-semibold">Total Pintasan:</span>
-                        <span class="badge badge-light-primary fw-bold" id="stat_shortcut_total">{{ $shortcutStats['total'] ?? $shortcuts->count() }}</span>
+                <!-- Master Toggle Switch Right -->
+                <div class="d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto">
+                    <div class="form-check form-switch form-check-custom form-check-solid" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Aktifkan / Nonaktifkan Seluruh Pintasan Keyboard">
+                        <input class="form-check-input h-25px w-45px cursor-pointer" type="checkbox" id="global_shortcuts_master_switch" checked />
                     </div>
-                    <div class="d-flex align-items-center gap-2 bg-body px-3 py-2 rounded-3 border border-gray-200">
-                        <span class="text-gray-700 fs-8 fw-semibold">Pintasan Aktif:</span>
-                        <span class="badge badge-light-success fw-bold" id="stat_shortcut_active">{{ $shortcutStats['active'] ?? $shortcuts->where('is_enabled', true)->count() }}</span>
-                    </div>
-                    <div class="d-flex align-items-center gap-2 bg-body px-3 py-2 rounded-3 border border-gray-200">
-                        <span class="text-gray-700 fs-8 fw-semibold">Dibatasi Peran:</span>
-                        <span class="badge badge-light-danger fw-bold" id="stat_shortcut_restricted">{{ $shortcutStats['admin_restricted'] ?? 0 }}</span>
-                    </div>
-
-                    <button type="button" class="btn btn-primary btn-sm ms-lg-2" id="btn_new_shortcut_focus" data-bs-toggle="modal" data-bs-target="#kt_modal_shortcut_manage">
-                        <i class="ki-outline ki-plus-circle fs-4 me-1"></i> Tambah Pintasan
-                    </button>
                 </div>
 
             </div>
         </div>
     </div>
-    <!--end::Master Switch & Status Summary Card-->
+    <!--end::Master Switch & Title Card-->
 
     <!--begin::Tabel Daftar Pintasan Keyboard Card (Full Width)-->
     <div class="card card-flush shadow-sm border-0">
         <!--begin::Card header-->
-        <div class="card-header border-0 pt-6">
-            <div class="card-title d-flex flex-column">
-                <h3 class="fw-bolder text-gray-900 m-0">
-                    <i class="ki-outline ki-keyboard fs-2 text-primary me-2"></i> Daftar Pintasan Keyboard Terdaftar
-                </h3>
+        <div class="card-header border-0 pt-6 flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-3">
+            <div class="card-title d-flex flex-column mb-2 mb-sm-0">
+                <h3 class="fw-bolder text-gray-900 m-0">Daftar Pintasan Keyboard Terdaftar</h3>
                 <span class="text-muted fs-8 mt-1">
                     Pintasan aktif langsung sinkron dengan event listener browser & basis data
                 </span>
             </div>
-            <div class="card-toolbar">
-                <button type="button" class="btn btn-light-primary btn-sm" id="btn_new_shortcut_open_modal" data-bs-toggle="modal" data-bs-target="#kt_modal_shortcut_manage">
+            <div class="card-toolbar m-0 w-100 w-sm-auto">
+                <button type="button" class="btn btn-light-primary btn-sm w-100 w-sm-auto" id="btn_new_shortcut_open_modal" data-bs-toggle="modal" data-bs-target="#kt_modal_shortcut_manage">
                     <i class="ki-outline ki-plus fs-5 me-1"></i> Tambah Pintasan Baru
                 </button>
             </div>
@@ -71,33 +53,23 @@
         <!--begin::Card body-->
         <div class="card-body pt-2">
             <!-- Filter Kategori & Search Toolbar -->
-            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-5">
+            <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-between gap-3 mb-5">
                 <!-- Search Input -->
                 <div class="d-flex align-items-center position-relative w-100 w-md-300px">
                     <i class="ki-outline ki-magnifier fs-4 position-absolute ms-3 text-gray-500"></i>
                     <input type="text" id="shortcut_table_search" class="form-control form-control-solid form-control-sm ps-10" placeholder="Cari nama, tombol, atau role..." />
                 </div>
 
-                <!-- Category Filter Tabs -->
-                <div class="d-flex align-items-center gap-1 overflow-auto pb-1 flex-wrap">
-                    <button type="button" class="btn btn-sm btn-light-primary py-1 px-3 fs-9 active btn-filter-table-category" data-filter="all">
-                        Semua ({{ $shortcuts->count() }})
-                    </button>
-                    <button type="button" class="btn btn-sm btn-light py-1 px-3 fs-9 btn-filter-table-category" data-filter="visibility">
-                        <i class="ki-outline ki-eye fs-7 me-1"></i> Visibilitas
-                    </button>
-                    <button type="button" class="btn btn-sm btn-light py-1 px-3 fs-9 btn-filter-table-category" data-filter="appearance">
-                        <i class="ki-outline ki-color-filter fs-7 me-1"></i> Tema & Ikon
-                    </button>
-                    <button type="button" class="btn btn-sm btn-light py-1 px-3 fs-9 btn-filter-table-category" data-filter="system">
-                        <i class="ki-outline ki-shield-tick fs-7 me-1"></i> Sistem
-                    </button>
-                    <button type="button" class="btn btn-sm btn-light py-1 px-3 fs-9 btn-filter-table-category" data-filter="navigation">
-                        <i class="ki-outline ki-route fs-7 me-1"></i> Navigasi
-                    </button>
-                    <button type="button" class="btn btn-sm btn-light py-1 px-3 fs-9 btn-filter-table-category" data-filter="element">
-                        <i class="ki-outline ki-cursor fs-7 me-1"></i> Elemen
-                    </button>
+                <!-- Category Filter Select Dropdown -->
+                <div class="w-100 w-md-225px flex-shrink-0">
+                    <select id="shortcut_category_filter" class="form-select form-select-solid form-select-sm" data-control="select2" data-hide-search="true">
+                        <option value="all" selected>Semua Kategori ({{ $shortcuts->count() }})</option>
+                        <option value="visibility">Visibilitas ({{ $shortcuts->where('category', 'visibility')->count() }})</option>
+                        <option value="appearance">Tema & Ikon ({{ $shortcuts->where('category', 'appearance')->count() }})</option>
+                        <option value="system">Sistem ({{ $shortcuts->where('category', 'system')->count() }})</option>
+                        <option value="navigation">Navigasi ({{ $shortcuts->where('category', 'navigation')->count() }})</option>
+                        <option value="element">Elemen ({{ $shortcuts->where('category', 'element')->count() }})</option>
+                    </select>
                 </div>
             </div>
 
@@ -105,11 +77,11 @@
             <div class="table-responsive">
                 <table class="table align-middle table-row-dashed fs-8 gy-3 gs-4 mb-0" id="table_app_shortcuts">
                     <thead>
-                        <tr class="text-start text-gray-500 fw-bold fs-8 text-uppercase gs-0 bg-light">
+                        <tr class="text-start text-gray-500 fw-bold fs-8 text-uppercase gs-0 bg-light text-nowrap">
                             <th class="min-w-200px ps-4">Nama Pintasan & Kelompok</th>
-                            <th class="text-center min-w-140px">Kombinasi Tombol</th>
+                            <th class="text-center min-w-150px">Kombinasi Tombol</th>
                             <th class="min-w-180px">Target Aksi</th>
-                            <th class="text-center min-w-130px">Hak Akses Role</th>
+                            <th class="text-center min-w-140px">Hak Akses Role</th>
                             <th class="text-center min-w-80px">Status</th>
                             <th class="text-end min-w-110px pe-4">Aksi</th>
                         </tr>
@@ -127,7 +99,7 @@
                                     <div class="d-flex flex-column">
                                         <div class="d-flex align-items-center gap-2 mb-1">
                                             <span class="badge {{ $catMeta['badge_class'] }} fs-9 px-2 py-0 fw-bold">
-                                                <i class="ki-outline {{ $catMeta['icon'] }} fs-8 me-1"></i> {{ $catMeta['name'] }}
+                                                {{ $catMeta['name'] }}
                                             </span>
                                         </div>
                                         <span class="fw-bold text-gray-900 fs-7 shortcut-name-text">{{ $sc->name }}</span>
@@ -268,7 +240,7 @@
         <div class="card-header pt-6">
             <div class="card-title">
                 <h5 class="fw-bolder text-gray-900 m-0">
-                    <i class="ki-outline ki-book-open fs-3 text-primary me-2"></i> Panduan Kelompok Pintasan & Tata Cara Penggunaan
+                    Panduan Kelompok Pintasan & Tata Cara Penggunaan
                 </h5>
             </div>
         </div>
@@ -277,52 +249,53 @@
                 <div class="col-md-6 col-xl-3">
                     <div class="p-4 bg-light rounded-3 border h-100">
                         <h6 class="fw-bold text-gray-900 mb-2">
-                            <i class="ki-outline ki-eye text-primary fs-5 me-1"></i> 1. Toggle Visibilitas Elemen
+                            Toggle Visibilitas Elemen
                         </h6>
-                        <p class="fs-8 text-muted mb-0">
-                            Menyembunyikan / menampilkan komponen UI:
-                            <br>• <kbd class="bg-light-primary text-primary border px-1">Ctrl + Alt + T</kbd> : Fitur di Topbar
-                            <br>• <kbd class="bg-light-primary text-primary border px-1">Ctrl + Alt + H</kbd> : Menu Header Topbar
-                            <br>• <kbd class="bg-light-primary text-primary border px-1">Ctrl + Alt + M</kbd> : Menu Sidebar
-                        </p>
+                        <p class="fs-8 text-muted mb-2">Menyembunyikan / menampilkan komponen UI:</p>
+                        <ul class="ps-4 mb-0 fs-8 text-muted d-flex flex-column gap-1">
+                            <li><kbd class="bg-light-primary text-primary border px-1">Ctrl + Alt + T</kbd> : Fitur di Topbar</li>
+                            <li><kbd class="bg-light-primary text-primary border px-1">Ctrl + Alt + H</kbd> : Menu Header Topbar</li>
+                            <li><kbd class="bg-light-primary text-primary border px-1">Ctrl + Alt + M</kbd> : Menu Sidebar</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-3">
                     <div class="p-4 bg-light rounded-3 border h-100">
                         <h6 class="fw-bold text-gray-900 mb-2">
-                            <i class="ki-outline ki-color-filter text-success fs-5 me-1"></i> 2. Tema & Bahasa
+                            Tema & Bahasa
                         </h6>
-                        <p class="fs-8 text-muted mb-0">
-                            Beralih varian visual seketika:
-                            <br>• <kbd class="bg-light-success text-success border px-1">Ctrl + Alt + B</kbd> : Mode Gelap/Terang
-                            <br>• <kbd class="bg-light-success text-success border px-1">Ctrl + Alt + I</kbd> : Bahasa Indonesia
-                            <br>• <kbd class="bg-light-success text-success border px-1">Ctrl + Alt + E</kbd> : English
-                            <br>• <kbd class="bg-light-info text-info border px-1">Ctrl + Alt + D/S/O</kbd> : Gaya Ikon
-                        </p>
+                        <p class="fs-8 text-muted mb-2">Beralih varian visual seketika:</p>
+                        <ul class="ps-4 mb-0 fs-8 text-muted d-flex flex-column gap-1">
+                            <li><kbd class="bg-light-success text-success border px-1">Ctrl + Alt + B</kbd> : Mode Gelap/Terang</li>
+                            <li><kbd class="bg-light-success text-success border px-1">Ctrl + Alt + I</kbd> : Bahasa Indonesia</li>
+                            <li><kbd class="bg-light-success text-success border px-1">Ctrl + Alt + E</kbd> : English</li>
+                            <li><kbd class="bg-light-info text-info border px-1">Ctrl + Alt + D/S/O</kbd> : Gaya Ikon</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-3">
                     <div class="p-4 bg-light rounded-3 border h-100">
                         <h6 class="fw-bold text-gray-900 mb-2">
-                            <i class="ki-outline ki-shield-tick text-danger fs-5 me-1"></i> 3. Aksi Sistem & Keamanan
+                            Aksi Sistem & Keamanan
                         </h6>
-                        <p class="fs-8 text-muted mb-0">
-                            Akses cepat fungsi utilitas:
-                            <br>• <kbd class="bg-light-info text-info border px-1">Ctrl + Alt + F</kbd> : Pencarian Global
-                            <br>• <kbd class="bg-light-danger text-danger border px-1">Ctrl + Alt + L</kbd> : Lock Screen
-                            <br>• <kbd class="bg-light-primary text-primary border px-1">Ctrl + Alt + 1/2</kbd> : Versi V1/V2
-                        </p>
+                        <p class="fs-8 text-muted mb-2">Akses cepat fungsi utilitas:</p>
+                        <ul class="ps-4 mb-0 fs-8 text-muted d-flex flex-column gap-1">
+                            <li><kbd class="bg-light-info text-info border px-1">Ctrl + Alt + F</kbd> : Pencarian Global</li>
+                            <li><kbd class="bg-light-danger text-danger border px-1">Ctrl + Alt + L</kbd> : Lock Screen</li>
+                            <li><kbd class="bg-light-primary text-primary border px-1">Ctrl + Alt + 1/2</kbd> : Versi V1/V2</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-3">
                     <div class="p-4 bg-light rounded-3 border h-100">
                         <h6 class="fw-bold text-gray-900 mb-2">
-                            <i class="ki-outline ki-route text-info fs-5 me-1"></i> 4. Navigasi & Proteksi Form
+                            Navigasi & Proteksi Form
                         </h6>
-                        <p class="fs-8 text-muted mb-0">
-                            • <strong>Navigasi Menu:</strong> Langsung membuka rute halaman pilihan.
-                            <br>• <strong>Proteksi Input:</strong> Saat kursor aktif di input teks, pintasan huruf dinonaktifkan otomatis agar tidak mengganggu pengetikan.
-                        </p>
+                        <p class="fs-8 text-muted mb-2">Aturan alur navigasi & proteksi input:</p>
+                        <ul class="ps-4 mb-0 fs-8 text-muted d-flex flex-column gap-1">
+                            <li><strong>Navigasi Menu:</strong> Langsung membuka rute halaman pilihan.</li>
+                            <li><strong>Proteksi Input:</strong> Saat kursor aktif di input teks, pintasan huruf dinonaktifkan otomatis agar tidak mengganggu pengetikan.</li>
+                        </ul>
                     </div>
                 </div>
             </div>

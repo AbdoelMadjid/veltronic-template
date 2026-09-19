@@ -3,19 +3,43 @@
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content rounded-3 border-0 shadow-lg bg-body">
             <!--begin::Modal header-->
-            <div class="modal-header pb-0 border-0 justify-content-between">
-                <div class="d-flex align-items-center">
-                    <div class="symbol symbol-40px symbol-circle bg-light-primary me-3 d-flex align-items-center justify-content-center">
-                        <i class="ki-outline ki-shield-search text-primary fs-2"></i>
+            <div class="modal-header pb-0 border-0 position-relative pt-7 pt-sm-6 px-6 px-lg-8">
+                <!--begin::Close Button-->
+                <div class="position-absolute top-0 end-0 m-3 m-sm-4 z-index-2">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                        <i class="ki-outline ki-cross fs-2"></i>
+                    </button>
+                </div>
+                <!--end::Close Button-->
+
+                <!--begin::Header Info (3-Baris Center pada Mobile)-->
+                <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                    <!-- Row 1 (Mobile only): Icon Logo Lingkaran Sempurna -->
+                    <div class="d-flex justify-content-center d-sm-none mb-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-light-primary text-primary rounded-circle" 
+                             style="width: 60px; height: 60px; min-width: 60px; min-height: 60px;">
+                            <i class="ki-outline ki-shield-search fs-2x text-primary"></i>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="fw-bolder text-gray-900 m-0 fs-5">Detail Riwayat Sesi Login</h3>
-                        <span class="text-muted fs-8">Informasi teknis dan perolehan reward poin sesi.</span>
+
+                    <!-- Row 2: Title -->
+                    <div class="d-flex align-items-center justify-content-center justify-content-sm-start">
+                        <div class="symbol symbol-40px symbol-circle bg-light-primary me-3 d-none d-sm-inline-flex align-items-center justify-content-center">
+                            <i class="ki-outline ki-shield-search text-primary fs-2"></i>
+                        </div>
+                        <div>
+                            <h3 class="fw-bolder text-gray-900 m-0 fs-5">Detail Riwayat Sesi Login</h3>
+                            <span class="text-muted fs-8 d-none d-sm-inline">Informasi teknis dan perolehan reward poin sesi.</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3 (Mobile only): Description -->
+                    <div class="text-muted fw-semibold fs-8 mt-2 mb-0 d-sm-none">
+                        Informasi teknis dan perolehan reward poin sesi.
                     </div>
                 </div>
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                    <i class="ki-outline ki-cross fs-2"></i>
-                </div>
+                <!--end::Header Info-->
             </div>
             <!--end::Modal header-->
 
@@ -76,8 +100,12 @@
             <!--end::Modal body-->
 
             <!--begin::Modal footer-->
-            <div class="modal-footer border-0 pt-0">
-                <button type="button" class="btn btn-light rounded-pill px-5 btn-sm" data-bs-dismiss="modal">Tutup</button>
+            <div class="modal-footer border-0 pt-0 px-6 px-lg-8 pb-6 justify-content-center justify-content-sm-end">
+                <button type="button" class="btn btn-light px-5 btn-sm fw-bold" data-bs-dismiss="modal"
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup Modal">
+                    <i class="ki-outline ki-cross fs-4 me-1"></i>
+                    <span>Tutup</span>
+                </button>
             </div>
             <!--end::Modal footer-->
         </div>
@@ -90,16 +118,35 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content rounded-3 border-0 shadow-lg bg-body">
             <!--begin::Modal header-->
-            <div class="modal-header pb-0 border-0 justify-content-between">
-                <div class="d-flex align-items-center">
-                    <div class="symbol symbol-35px symbol-circle bg-light-danger me-2 d-flex align-items-center justify-content-center">
-                        <i class="ki-outline ki-trash text-danger fs-3"></i>
+            <div class="modal-header pb-0 border-0 position-relative pt-7 pt-sm-6 px-6 px-lg-8">
+                <!--begin::Close Button-->
+                <div class="position-absolute top-0 end-0 m-3 m-sm-4 z-index-2">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                        <i class="ki-outline ki-cross fs-2"></i>
+                    </button>
+                </div>
+                <!--end::Close Button-->
+
+                <!--begin::Header Info (3-Baris Center pada Mobile)-->
+                <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                    <!-- Row 1 (Mobile only): Icon Logo Lingkaran Sempurna -->
+                    <div class="d-flex justify-content-center d-sm-none mb-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-light-danger text-danger rounded-circle" 
+                             style="width: 50px; height: 50px; min-width: 50px; min-height: 50px;">
+                            <i class="ki-outline ki-trash fs-2x text-danger"></i>
+                        </div>
                     </div>
-                    <h3 class="fw-bolder text-gray-900 m-0 fs-6">Pembersihan Riwayat Log</h3>
+
+                    <!-- Row 2: Title -->
+                    <div class="d-flex align-items-center justify-content-center justify-content-sm-start">
+                        <div class="symbol symbol-35px symbol-circle bg-light-danger me-2 d-none d-sm-inline-flex align-items-center justify-content-center">
+                            <i class="ki-outline ki-trash text-danger fs-3"></i>
+                        </div>
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-6">Pembersihan Riwayat Log</h3>
+                    </div>
                 </div>
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                    <i class="ki-outline ki-cross fs-2"></i>
-                </div>
+                <!--end::Header Info-->
             </div>
             <!--end::Modal header-->
 
@@ -121,12 +168,21 @@
             <!--end::Modal body-->
 
             <!--begin::Modal footer-->
-            <div class="modal-footer border-0 pt-0 d-flex justify-content-between">
-                <button type="button" class="btn btn-light rounded-pill px-4 btn-sm" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger rounded-pill px-4 btn-sm" id="kt_btn_confirm_clear_logs">
-                    <span class="indicator-label">Eksekusi Bersihkan</span>
+            <div class="modal-footer border-0 pt-0 px-6 px-lg-8 pb-6 d-flex justify-content-center justify-content-sm-between gap-2">
+                <button type="button" class="btn btn-light px-4 btn-sm fw-bold" data-bs-dismiss="modal"
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
+                    <i class="ki-outline ki-cross fs-4 me-1"></i>
+                    <span>Batal</span>
+                </button>
+                <button type="button" class="btn btn-danger px-4 btn-sm fw-bold" id="kt_btn_confirm_clear_logs"
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Eksekusi Bersihkan">
+                    <span class="indicator-label">
+                        <i class="ki-outline ki-trash fs-5 me-1"></i>
+                        <span>Eksekusi Bersihkan</span>
+                    </span>
                     <span class="indicator-progress">
-                        Memproses... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                        <span>Memproses...</span>
                     </span>
                 </button>
             </div>

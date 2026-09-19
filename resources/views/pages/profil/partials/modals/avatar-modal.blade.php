@@ -13,27 +13,47 @@
         <!--begin::Modal content-->
         <div class="modal-content rounded-4 shadow-lg border-0">
             <!--begin::Modal header-->
-            <div class="modal-header border-0 pb-0">
-                <h3 class="fw-bolder text-gray-900 m-0 fs-3">
-                    <i class="ki-duotone ki-user-square fs-2 text-primary me-2">
-                        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                    </i>
-                    Ubah Foto Profil &amp; Fokus Tampilan
-                </h3>
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+            <div class="modal-header border-0 pb-0 position-relative pt-7 pt-sm-6 px-6 px-lg-10">
+                <!--begin::Close Button (Top-Right on Mobile & Desktop)-->
+                <div class="position-absolute top-0 end-0 m-3 m-sm-4 z-index-2">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                        <i class="ki-outline ki-cross fs-2"></i>
+                    </button>
                 </div>
-                <!--end::Close-->
+                <!--end::Close Button-->
+
+                <!--begin::Header Info (Center in mobile: Row 1 Icon, Row 2 Title, Row 3 Description)-->
+                <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                    <!-- Row 1 (Mobile only): Icon Logo Lingkaran Sempurna -->
+                    <div class="d-flex justify-content-center d-sm-none mb-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-light-primary text-primary rounded-circle" 
+                             style="width: 60px; height: 60px; min-width: 60px; min-height: 60px;">
+                            <i class="ki-duotone ki-user-square fs-2x text-primary">
+                                <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+                            </i>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Title -->
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-3">
+                        <i class="ki-duotone ki-user-square fs-2 text-primary me-2 d-none d-sm-inline-flex">
+                            <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+                        </i>
+                        Ubah Foto Profil &amp; Fokus Tampilan
+                    </h3>
+
+                    <!-- Row 3: Description -->
+                    <div class="text-muted fw-semibold fs-7 mt-2 mb-0">
+                        Unggah foto profil baru Anda atau sesuaikan skala perbesaran (zoom), posisi vertikal, dan horizontal agar fokus wajah atau gambar tampil optimal sesuai bentuk avatar sistem.
+                    </div>
+                </div>
+                <!--end::Header Info-->
             </div>
             <!--end::Modal header-->
 
             <!--begin::Modal body-->
-            <div class="modal-body scroll-y px-8 px-lg-12 pt-4 pb-10">
-                <div class="text-muted fw-semibold fs-7 mb-6">
-                    Unggah foto profil baru Anda atau sesuaikan skala perbesaran (zoom), posisi vertikal, dan horizontal agar fokus wajah atau gambar tampil optimal sesuai bentuk avatar sistem.
-                </div>
-
+            <div class="modal-body scroll-y px-6 px-lg-10 pt-4 pb-8">
                 <!--begin::Form-->
                 <form id="form_modal_avatar" action="{{ route('profil.profil-pengguna.avatar') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -54,13 +74,15 @@
 
                             <!--begin::Action Buttons-->
                             <div class="d-flex align-items-center gap-2 mb-2 flex-wrap justify-content-center">
-                                <button type="button" class="btn btn-sm btn-primary" id="btn_modal_avatar_choose">
+                                <button type="button" class="btn btn-sm btn-primary" id="btn_modal_avatar_choose"
+                                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Pilih berkas foto">
                                     <i class="ki-duotone ki-file-up fs-5 me-1">
                                         <span class="path1"></span><span class="path2"></span>
                                     </i>
                                     Pilih / Ganti Foto
                                 </button>
-                                <button type="button" class="btn btn-sm btn-light-danger {{ $hasAvatar ? '' : 'd-none' }}" id="btn_modal_avatar_remove">
+                                <button type="button" class="btn btn-sm btn-light-danger {{ $hasAvatar ? '' : 'd-none' }}" id="btn_modal_avatar_remove"
+                                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Hapus foto saat ini">
                                     <i class="ki-duotone ki-trash fs-5 me-1">
                                         <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span>
                                     </i>
@@ -80,12 +102,22 @@
 
                     <!--begin::Section 2: Slider Controls for Zoom, Y, X-->
                     <div class="bg-body border border-gray-200 rounded-3 p-5 mb-6">
-                        <div class="d-flex align-items-center justify-content-between mb-4 border-bottom border-gray-200 pb-3">
-                            <span class="fs-6 fw-bolder text-gray-800">
-                                <i class="ki-duotone ki-setting-4 fs-5 text-primary me-1"><span class="path1"></span><span class="path2"></span></i>
-                                Pengaturan Fokus &amp; Perbesaran Avatar
+                        <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3 mb-5 border-bottom border-gray-200 pb-3 text-center text-sm-start">
+                            <div class="d-flex align-items-center">
+                                <div class="symbol symbol-35px symbol-circle bg-light-primary text-primary me-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                                    <i class="ki-duotone ki-setting-4 fs-3 text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                </div>
+                                <div class="d-flex flex-column text-center text-sm-start">
+                                    <span class="fs-6 fw-bolder text-gray-800">
+                                        Pengaturan Fokus &amp; Perbesaran Avatar
+                                    </span>
+                                    <span class="text-muted fs-8 d-none d-sm-inline">Sesuaikan skala zoom dan titik koordinat tampilan</span>
+                                </div>
+                            </div>
+                            <span class="badge badge-light-primary border border-primary border-opacity-25 fw-bold fs-8 px-3 py-2 rounded-pill d-inline-flex align-items-center gap-1">
+                                <i class="ki-outline ki-eye fs-7 text-primary"></i>
+                                <span>Pratinjau Langsung</span>
                             </span>
-                            <span class="badge badge-light-primary fw-semibold fs-8">Pratinjau Langsung</span>
                         </div>
 
                         <!-- Baris 1: Zoom / Perbesaran (Skala Gambar) -->
@@ -165,16 +197,21 @@
                     <!--end::Section 2-->
 
                     <!--begin::Actions-->
-                    <div class="d-flex justify-content-end gap-2 pt-2 border-top border-gray-200">
-                        <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary" id="btn_modal_avatar_save">
+                    <div class="d-flex justify-content-center justify-content-sm-end gap-2 pt-2 border-top border-gray-200">
+                        <button type="reset" class="btn btn-light" data-bs-dismiss="modal"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
+                            <i class="ki-outline ki-cross fs-4 me-1"></i>
+                            <span>Batal</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="btn_modal_avatar_save"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan Avatar & Posisi">
                             <span class="indicator-label">
                                 <i class="ki-duotone ki-check fs-4 me-1"><span class="path1"></span><span class="path2"></span></i>
-                                Simpan Avatar &amp; Posisi
+                                <span>Simpan Avatar &amp; Posisi</span>
                             </span>
                             <span class="indicator-progress">
-                                Menyimpan...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                                <span>Menyimpan...</span>
                             </span>
                         </button>
                     </div>

@@ -5,25 +5,40 @@
         <!--begin::Modal content-->
         <div class="modal-content rounded-3 shadow-lg border-0">
             <!--begin::Modal header-->
-            <div class="modal-header border-0 pb-0 justify-content-between">
-                <div>
+            <div class="modal-header border-0 pb-0 position-relative justify-content-center justify-content-sm-between">
+                <!--begin::Close (Absolute Top Right on Mobile & Desktop)-->
+                <button type="button" class="btn btn-icon btn-sm btn-active-light-primary position-absolute top-0 end-0 m-3 m-sm-4 z-index-2" data-bs-dismiss="modal" aria-label="Close"
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                    <i class="ki-outline ki-cross fs-1"></i>
+                </button>
+                <!--end::Close-->
+
+                <!--begin::Header Info (3-Baris Center pada Mobile)-->
+                <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                    <!-- Row 1 (Mobile only): Icon Logo Lingkaran Sempurna -->
+                    <div class="d-flex justify-content-center d-sm-none mb-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-light-primary text-primary rounded-circle" 
+                             style="width: 60px; height: 60px; min-width: 60px; min-height: 60px;">
+                            <i class="ki-outline ki-shield-tick fs-2x text-primary"></i>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Title -->
                     <h3 class="fw-bolder text-gray-900 m-0 fs-3">
-                        <i class="ki-duotone ki-shield-tick fs-2 text-primary me-2">
-                            <span class="path1"></span><span class="path2"></span>
-                        </i>
+                        <span class="d-none d-sm-inline">
+                            <i class="ki-outline ki-shield-tick fs-2 text-primary me-2"></i>
+                        </span>
                         Berikan Peran Massal
                     </h3>
-                    <div class="text-muted fw-semibold fs-7 mt-1">
+
+                    <!-- Row 3: Description -->
+                    <div class="text-muted fw-semibold fs-7 mt-2 mb-0">
                         Tetapkan peran secara bersamaan untuk beberapa pengguna terpilih.
                     </div>
                 </div>
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
-                </div>
-                <!--end::Close-->
+                <!--end::Header Info-->
             </div>
-            <!--begin::Modal header-->
+            <!--end::Modal header-->
 
             <!--begin::Modal body-->
             <div class="modal-body scroll-y px-8 px-lg-10 pt-4 pb-8">
@@ -120,16 +135,21 @@
                     <!--end::Input group: Mode Penerapan-->
 
                     <!--begin::Actions-->
-                    <div class="d-flex align-items-center justify-content-end gap-3 pt-4 border-top border-gray-200">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" id="kt_modal_bulk_role_submit" class="btn btn-primary">
+                    <div class="d-flex align-items-center justify-content-center justify-content-sm-end gap-2 pt-4 border-top border-gray-200">
+                        <button type="button" class="btn btn-light fw-bold px-4 px-sm-6" data-bs-dismiss="modal"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
+                            <i class="ki-outline ki-cross fs-4 me-1"></i>
+                            <span>Batal</span>
+                        </button>
+                        <button type="submit" id="kt_modal_bulk_role_submit" class="btn btn-primary fw-bold px-4 px-sm-6"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Terapkan Peran Massal">
                             <span class="indicator-label">
-                                <i class="ki-duotone ki-check fs-4 me-1"><span class="path1"></span><span class="path2"></span></i>
-                                Terapkan Peran Massal
+                                <i class="ki-outline ki-check fs-4 me-1"></i>
+                                <span>Terapkan Peran Massal</span>
                             </span>
                             <span class="indicator-progress">
-                                Menerapkan...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                                <span>Menerapkan...</span>
                             </span>
                         </button>
                     </div>

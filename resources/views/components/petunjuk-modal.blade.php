@@ -85,8 +85,10 @@
 
                 <!--begin::Footer Action-->
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary px-8 rounded-pill fw-bold" data-bs-dismiss="modal">
-                        Saya Mengerti
+                    <button type="button" class="btn btn-primary px-6 px-sm-8 fw-bold" data-bs-dismiss="modal"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Saya Mengerti">
+                        <i class="ki-outline ki-check fs-4 me-1"></i>
+                        <span>Saya Mengerti</span>
                     </button>
                 </div>
                 <!--end::Footer Action-->

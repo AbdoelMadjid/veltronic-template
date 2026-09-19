@@ -1,24 +1,17 @@
 <!--begin::Header Banner-->
 <div class="card card-flush shadow-sm border-0 mb-6">
-    <div class="card-body p-6 d-flex flex-wrap align-items-center justify-content-between gap-4">
-        <div class="d-flex align-items-center">
-            <div class="symbol symbol-45px symbol-circle bg-light-primary me-4 d-flex align-items-center justify-content-center">
-                <i class="ki-outline ki-shield-search text-primary fs-2"></i>
+    <div class="card-body p-6 d-flex flex-column flex-md-row align-items-center justify-content-between gap-4 text-center text-md-start">
+        <!-- Baris 1-3 di Mobile (Logo, Judul, Deskripsi) / Sisi Kiri di Desktop -->
+        <div class="d-flex flex-column flex-md-row align-items-center gap-2 gap-md-4 w-100">
+            <!-- Baris 1: Logo / Ikon Utama -->
+            <div class="symbol symbol-55px symbol-md-45px symbol-circle bg-light-primary mb-1 mb-md-0 me-0 me-md-4 d-flex align-items-center justify-content-center flex-shrink-0">
+                <i class="ki-outline ki-shield-search text-primary fs-2x fs-md-2"></i>
             </div>
-            <div>
+            <!-- Baris 2 & 3: Judul & Deskripsi -->
+            <div class="d-flex flex-column align-items-center align-items-md-start">
                 <h2 class="fw-bolder text-gray-900 m-0 fs-3">Matriks Hak Akses Peran (Role Access)</h2>
-                <span class="text-muted fs-7">Atur dan sinkronkan perizinan fitur sistem secara terpusat untuk setiap kelompok peran pengguna.</span>
+                <span class="text-muted fs-7 mt-1">Atur dan sinkronkan perizinan fitur sistem secara terpusat untuk setiap kelompok peran pengguna.</span>
             </div>
-        </div>
-        <div class="d-flex align-items-center gap-3">
-            <button type="button" id="kt_btn_save_role_matrix" class="btn btn-primary btn-sm fw-bold rounded-pill px-4">
-                <span class="indicator-label">
-                    <i class="ki-outline ki-check fs-4 me-1"></i> Simpan Peran Ini
-                </span>
-                <span class="indicator-progress">
-                    Menyimpan... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                </span>
-            </button>
         </div>
     </div>
 </div>
@@ -93,6 +86,28 @@
                 </div>
                 <!--end::Tab Contents-->
             </div>
+
+            <!--begin::Card Footer / Form Action-->
+            <div class="card-footer d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3 py-5 px-6 border-top">
+                <div class="text-muted fs-7 text-center text-sm-start">
+                    <i class="ki-outline ki-information-5 text-primary fs-5 me-1"></i>
+                    Perubahan izin pada peran aktif akan langsung diterapkan setelah disimpan.
+                </div>
+                <div class="w-100 w-sm-auto text-center text-sm-end">
+                    <button type="button" id="kt_btn_save_role_matrix" class="btn btn-primary fw-bold px-6 w-100 w-sm-auto"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan Hak Akses Peran Aktif">
+                        <span class="indicator-label">
+                            <i class="ki-outline ki-disk fs-4 me-1"></i>
+                            <span>Simpan Hak Akses Peran Ini</span>
+                        </span>
+                        <span class="indicator-progress">
+                            <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                            <span>Menyimpan...</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <!--end::Card Footer-->
         </div>
     </div>
     <!--end::Matrix Content-->

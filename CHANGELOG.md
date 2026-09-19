@@ -5,7 +5,28 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v1.34.0] - 2026-09-19
+## [v1.35.0] - 2026-09-19
+
+### Added & Enhanced
+- **Standardisasi Komprehensif Antarmuka Mobile User Management, Aturan Navigasi Halaman Responsif (Rule 11), Modal Dialog Adaptif (Rule 10), Tab Mobile Icon-Only (Rule 9), dan Standarisasi Tombol Notifikasi Metronic**:
+  - **Standarisasi Navigasi & Footer Tabel Mobile (Rule 11 - Responsive Pagination Standards)**:
+    - Mengisolasi pembungkus scroll horizontal (`table-responsive`) hanya pada area baris data tabel pengguna (`/usermanagement/users`) dan riwayat login (`/usermanagement/data-login`), membebaskan area footer, *length menu*, dan *pagination* dari terpotong atau ikut tergeser secara horizontal.
+    - Menerapkan struktur 3-baris rapi rata tengah pada perangkat mobile (`< 768px`): Baris 1 (*Length Menu*), Baris 2 (*DataTables Info* utuh 1 baris inline tanpa terpotong), dan Baris 3 (*DataTables Paginate*).
+    - Mendaftarkan pager kustom `veltronic_compact` pada DataTables JS yang menyelaraskan pola 5-angka ringkas pada Yajra DataTables dengan Laravel Blade pagination (`vendor/pagination/bootstrap-5.blade.php`).
+  - **Standardisasi Responsif Seluruh Modal Dialog User Management (Rule 10 - Responsive Modal Buttons Standards)**:
+    - Merestrukturisasi seluruh modal dialog di modul User Management (Form Pengguna, Bulk Peran, Form Peran, Detail Peran, Form Izin, Generate Izin, Matriks Hak Akses, dan Detail Sesi Login).
+    - Header modal mobile tersusun rapi 3-baris terpusat dengan ikon lingkaran 60px dan tombol close absolut di pojok kanan atas.
+    - Menghapus scroll internal ganda (*Browser-Level Scroll Policy*) agar modal di-scroll secara alami oleh layar browser.
+    - Footer tombol modal tertata rata tengah di mobile dan rata kanan di desktop dengan tooltip hover di setiap tombol.
+  - **Standarisasi Tab Modul Mobile Icon-Only & Hover Tooltips (Rule 9)**:
+    - Mengatur tab navigasi pada profil dan modul user management agar menyembunyikan teks label di layar HP (`d-none d-md-inline`) dengan ikon proporsional dan tooltip hover interaktif.
+  - **Modernisasi Filter Grid Responsif & Standarisasi Tombol Notifikasi Metronic**:
+    - Mengonversi filter riwayat sesi login (`data-login-filter.blade.php`) dan filter pengguna menjadi Bootstrap grid adaptif (`row g-3`) bebas scrollbar horizontal yang canggung.
+    - Mengeliminasi kelas `rounded-pill` pada notifikasi SweetAlert2 ([data-login.js](file:///F:/laragon/finaly/veltronic-template/public/assets/js/usermanagement/data-login.js)) dan menyesuaikannya dengan standar tombol kotak elegan Metronic (`btn btn-primary fw-bold`, `btn btn-danger fw-bold`, `btn btn-light fw-bold`).
+  - **Zero-Reload AJAX & Paginasi Hak Akses Pengguna (`/usermanagement/akses-user`)**:
+    - Menerapkan arsitektur Zero-Reload realtime pada pencarian dan filter peran pengguna dengan *live search debounce* 300ms serta *intercept* klik navigasi halaman via AJAX (`fetchUsers()`).
+    - Memisahkan komponen baris tabel ke partial Blade modular `user-access-rows.blade.php` dan sinkronisasi realtime badge total pengguna.
+
 
 ### Added & Enhanced
 - **Modernisasi Top Filter Pengguna (Single-Row Pure Indonesian), Pengaturan Fitur Aplikasi 2-Kolom & Modal Pintasan Terisolasi, serta Random Deterministik Cover Default Pengguna**:

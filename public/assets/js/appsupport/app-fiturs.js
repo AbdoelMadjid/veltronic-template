@@ -41,6 +41,44 @@ document.addEventListener('DOMContentLoaded', function () {
     // ========================================================
     // DYNAMIC REALTIME ELEMENT VISIBILITY IN DOM
     // ========================================================
+    function syncMobileHubVisibility() {
+        const hubMenus = document.querySelectorAll('#kt_mobile_toolbar_hub_menu');
+        hubMenus.forEach(hub => {
+            const tabsContainer = hub.querySelector('.mobile-hub-tabs');
+            if (!tabsContainer) return;
+
+            const toolButtons = tabsContainer.querySelectorAll('[data-kt-feature-tool]');
+            let hasVisibleButtons = false;
+            toolButtons.forEach(btn => {
+                const isHidden = btn.classList.contains('feature-hidden') || btn.style.display === 'none';
+                if (!isHidden) {
+                    hasVisibleButtons = true;
+                }
+            });
+
+            const hubTriggers = document.querySelectorAll('[data-kt-feature-mobile-hub="true"]');
+            hubTriggers.forEach(trigger => {
+                if (!hasVisibleButtons) {
+                    trigger.classList.add('feature-hidden');
+                    trigger.style.setProperty('display', 'none', 'important');
+                } else {
+                    trigger.classList.remove('feature-hidden');
+                    trigger.style.removeProperty('display');
+                }
+            });
+
+            // If active panel is now hidden, collapse panel
+            const activeBtn = tabsContainer.querySelector('.mobile-hub-tab-btn.active');
+            if (activeBtn && (activeBtn.classList.contains('feature-hidden') || activeBtn.style.display === 'none')) {
+                activeBtn.classList.remove('active');
+                const panelsContainer = hub.querySelector('.mobile-hub-panels');
+                if (panelsContainer) panelsContainer.classList.add('d-none');
+                const panels = hub.querySelectorAll('.mobile-hub-panel');
+                panels.forEach(p => p.classList.add('d-none'));
+            }
+        });
+    }
+
     function updateElementInDOM(key, isEnabled) {
         const targets = document.querySelectorAll(
             `[data-kt-feature-tool="${key}"], [data-kt-feature-menu="${key}"], [data-kt-feature-sidebar="${key}"]`
@@ -51,10 +89,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 el.style.setProperty('display', 'none', 'important');
             } else {
                 el.classList.remove('feature-hidden');
-                el.classList.remove('d-none');
                 el.style.removeProperty('display');
             }
         });
+
+        syncMobileHubVisibility();
     }
 
     // ========================================================

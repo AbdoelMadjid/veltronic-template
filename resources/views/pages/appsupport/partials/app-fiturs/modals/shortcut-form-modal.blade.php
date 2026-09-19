@@ -11,24 +11,41 @@
                 <input type="hidden" name="id" id="shortcut_form_id" value="" />
 
                 <!--begin::Modal header-->
-                <div class="modal-header border-0 pb-0 pt-7 px-8 px-lg-10 justify-content-between align-items-start">
-                    <div class="d-flex flex-column">
-                        <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="badge badge-light-primary fw-bold px-3 py-2 fs-7">
+                <div class="modal-header border-0 pb-0 position-relative pt-7 pt-sm-6 px-6 px-lg-10">
+                    <!--begin::Close Button-->
+                    <div class="position-absolute top-0 end-0 m-3 m-sm-4 z-index-2">
+                        <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                            <i class="ki-outline ki-cross fs-2"></i>
+                        </button>
+                    </div>
+                    <!--end::Close Button-->
+
+                    <!--begin::Header Info (3-Baris Center pada Mobile)-->
+                    <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                        <!-- Row 1 (Mobile only): Icon Logo Lingkaran Sempurna -->
+                        <div class="d-flex justify-content-center d-sm-none mb-3">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-light-primary text-primary rounded-circle" 
+                                 style="width: 60px; height: 60px; min-width: 60px; min-height: 60px;">
+                                <i class="ki-outline ki-keyboard fs-2x text-primary"></i>
+                            </div>
+                        </div>
+
+                        <!-- Row 2: Title -->
+                        <div class="d-flex align-items-center justify-content-center justify-content-sm-start gap-2 mb-1">
+                            <span class="badge badge-light-primary fw-bold px-3 py-2 fs-7 d-none d-sm-inline-flex align-items-center">
                                 <i class="ki-outline ki-keyboard text-primary fs-5 me-1"></i>
                                 Pemantau Tombol
                             </span>
-                            <h2 class="fw-bolder text-gray-900 m-0" id="shortcut_form_card_title">Tambah Pintasan Baru</h2>
+                            <h2 class="fw-bolder text-gray-900 m-0 fs-3" id="shortcut_form_card_title">Tambah Pintasan Baru</h2>
                         </div>
-                        <span class="text-muted fs-8 mt-1" id="shortcut_form_card_subtitle">
+
+                        <!-- Row 3: Description -->
+                        <div class="text-muted fw-semibold fs-7 mt-2 mb-0" id="shortcut_form_card_subtitle">
                             Pilih kelompok aksi, kombinasi tombol, dan filter hak akses
-                        </span>
+                        </div>
                     </div>
-                    <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                        <i class="ki-outline ki-cross fs-1"></i>
-                    </div>
-                    <!--end::Close-->
+                    <!--end::Header Info-->
                 </div>
                 <!--end::Modal header-->
 
@@ -218,14 +235,21 @@
                 <!--end::Modal body-->
 
                 <!--begin::Modal footer-->
-                <div class="modal-footer border-0 pt-0 pb-7 px-8 px-lg-10 flex-center">
-                    <button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" id="btn_save_shortcut_manage" class="btn btn-primary">
+                <div class="modal-footer border-0 pt-0 pb-7 px-6 px-lg-10 justify-content-center justify-content-sm-end gap-2">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
+                        <i class="ki-outline ki-cross fs-4 me-1"></i>
+                        <span>Batal</span>
+                    </button>
+                    <button type="submit" id="btn_save_shortcut_manage" class="btn btn-primary"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan Pintasan">
                         <span class="indicator-label">
-                            <i class="ki-outline ki-check fs-4 me-1"></i> Simpan Pintasan
+                            <i class="ki-outline ki-check fs-4 me-1"></i>
+                            <span>Simpan Pintasan</span>
                         </span>
                         <span class="indicator-progress">
-                            <span class="spinner-border spinner-border-sm align-middle me-2"></span> Menyimpan...
+                            <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                            <span>Menyimpan...</span>
                         </span>
                     </button>
                 </div>

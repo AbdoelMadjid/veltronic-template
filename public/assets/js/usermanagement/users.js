@@ -261,12 +261,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (paginationLinksContainer) {
                         paginationLinksContainer.innerHTML = result.pagination || '';
                     }
-                    const totalText = document.getElementById('users_card_info') || cardsPagination.querySelector('.fs-6');
-                    if (totalText && typeof result.total !== 'undefined') {
-                        const firstItem = result.first_item || 0;
-                        const lastItem = result.last_item || 0;
-                        totalText.textContent = `${firstItem} - ${lastItem} / ${result.total} Pengguna`;
-                    }
                 }
                 if (totalCountEl && typeof result.total !== 'undefined') {
                     totalCountEl.textContent = result.total;
@@ -283,14 +277,37 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Register custom DataTables compact pagination method matching Veltronic bootstrap-5 pattern exactly
+    if (typeof $ !== 'undefined' && $.fn.DataTable && $.fn.DataTable.ext && $.fn.DataTable.ext.pager) {
+        $.fn.DataTable.ext.pager.veltronic_compact = function (page, pages) {
+            if (pages <= 1) return [];
+            var numbers = [];
+            for (var p = 0; p < pages; p++) {
+                if (p === 0 || p === pages - 1 || Math.abs(p - page) <= 1) {
+                    numbers.push(p);
+                }
+            }
+            return ['previous', numbers, 'next'];
+        };
+    }
+
     // 1. Initialize Yajra DataTables (Table View)
     if (tableEl && typeof $ !== 'undefined' && $.fn.DataTable) {
         dataTable = $(tableEl).DataTable({
+            responsive: false,
+            searchDelay: 500,
             processing: true,
             serverSide: true,
             order: [[4, 'desc']],
             pageLength: 10,
+            pagingType: 'veltronic_compact',
             lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+            dom:
+                "<'table-responsive'tr>" +
+                "<'row align-items-center justify-content-between g-3 mt-4 pt-3 border-top border-gray-200'" +
+                "<'col-12 col-md-auto d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-md-start gap-2 text-center text-sm-start text-muted fs-7'l i>" +
+                "<'col-12 col-md-auto d-flex justify-content-center justify-content-md-end'p>" +
+                ">",
             ajax: {
                 url: routes.datatable,
                 type: 'GET',
@@ -390,18 +407,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             ],
             language: {
-                zeroRecords: '<div class="text-center py-6 text-gray-500 fw-semibold fs-6">Tidak ada data pengguna ditemukan.</div>',
-                info: '_START_ - _END_ / _TOTAL_ Pengguna',
-                infoEmpty: '0 Pengguna',
-                infoFiltered: '(disaring dari _MAX_ total)',
-                lengthMenu: 'Tampilkan _MENU_ data',
-                loadingRecords: 'Memuat data...',
-                processing: '<span class="spinner-border spinner-border-sm align-middle me-2"></span> Memuat data...',
+                emptyTable: "Belum ada data pengguna yang tercatat.",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoEmpty: "Menampilkan 0 data",
+                infoFiltered: "(disaring dari _MAX_ total data)",
+                lengthMenu: "Tampilkan _MENU_ data",
+                loadingRecords: "Memuat data...",
+                processing: '<div class="spinner-border spinner-border-sm text-primary" role="status"></div> Memuat data...',
+                search: "Cari:",
+                zeroRecords: "Tidak ada data pengguna yang cocok dengan kriteria pencarian.",
                 paginate: {
-                    first: 'Awal',
-                    last: 'Akhir',
-                    next: '<i class="next"></i>',
-                    previous: '<i class="previous"></i>'
+                    first: '<i class="ki-outline ki-double-left fs-4"></i>',
+                    last: '<i class="ki-outline ki-double-right fs-4"></i>',
+                    next: '<i class="ki-outline ki-right fs-4"></i>',
+                    previous: '<i class="ki-outline ki-left fs-4"></i>'
                 }
             },
             drawCallback: function () {
@@ -425,12 +444,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // Update Sort Label
         if (sortLabelEl && filterSort) {
             const sortMap = {
-                'recent': '• Terbaru',
-                'oldest': '• Terlama',
-                'name_asc': '• Nama A-Z',
-                'name_desc': '• Nama Z-A'
+                'recent': 'Terbaru',
+                'oldest': 'Terlama',
+                'name_asc': 'Nama A-Z',
+                'name_desc': 'Nama Z-A'
             };
-            sortLabelEl.textContent = sortMap[filterSort.value] || '• Terbaru';
+            sortLabelEl.textContent = sortMap[filterSort.value] || 'Terbaru';
         }
 
         // Reload DataTables

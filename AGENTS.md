@@ -44,3 +44,33 @@
   2. `resources/views/pages/help/log/changelog.blade.php` (Tampilan UI web `/help/log/changelog` lengkap dengan badge *Versi Saat Ini*, badge *Latest Release*, deskripsi, dan rincian perubahan).
 - **DILARANG** melakukan push atau release tag hanya dengan memperbarui salah satu berkas saja.
 - Detail lengkap diatur di `.agents/rules/git-versioning-and-release.md`.
+
+## 9. Standar Responsif Tab Modul Mobile (Icon-Only & Hover Tooltips)
+- Pada seluruh navigasi tab modul (`nav-tabs`, `nav-line-tabs`, `nav-pills`), saat dibuka pada perangkat **mobile / HP (`< md`)**, teks nama tab **WAJIB DISEMBUNYIKAN** (`d-none d-md-inline`) sehingga **hanya ikon saja yang tampil** dengan ukuran proporsional (`fs-2 fs-md-4` atau `fs-3 fs-md-4`) dan margin adaptif (`me-0 me-md-2`).
+- Setiap tab **WAJIB MEMILIKI TOOLTIP HOVER** (`data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Nama Tab"`) agar nama tab tetap terbaca saat disentuh/hover.
+- Container tab wajib menggunakan `overflow-auto flex-nowrap` agar rapi dan tidak merusak layout layar sempit.
+- Detail lengkap diatur di `.agents/rules/responsive-module-tabs-standards.md`.
+
+## 10. Standar Responsif Modal Dialog (Header, Section Content, Footer Buttons, & Browser-Level Scroll)
+- **Header Modal Mobile (`< sm`)**: Menggunakan susunan 3-baris rata tengah (Baris 1: Ikon lingkaran sempurna 60px `rounded-circle`, Baris 2: Judul Modal, Baris 3: Deskripsi Modal). Tombol tutup (`x`) ditempatkan secara absolut di pojok kanan atas (`position-absolute top-0 end-0 m-3 m-sm-4`).
+- **Judul Konten / Section Modal**: Menggunakan header elegan responsif (`d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom`) dengan simbol ikon 35px, judul + sub-keterangan, dan badge status/indikator kapsul.
+- **Tombol Footer Modal**:
+  - Jika $\le 2$ tombol (standar Batal & Simpan / Tutup): **Teks tombol TETAP UTUH (Lengkap teks + ikon)** agar informatif bagi pengguna.
+  - Jika $\ge 3$ tombol: Teks label tombol pada mobile disembunyikan (`d-none d-sm-inline`) sehingga hanya ikon yang tampil untuk menghemat ruang.
+  - Setiap tombol **WAJIB MEMILIKI TOOLTIP HOVER** (`data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="..."`).
+  - Posisi tombol footer **WAJIB CENTER-ALIGNED DI MOBILE** dan rata kanan di desktop (`justify-content-center justify-content-sm-end gap-2`).
+- **Bebas Scroll Internal Modal (Browser-Level Scroll Policy)**: **DILARANG** menggunakan `modal-dialog-scrollable`, `scroll-y`, atau scrollbar bertumpuk di dalam modal. Modal harus memanjang secara alami mengikuti konten dan di-scroll langsung oleh browser/layar utama dari header hingga footer.
+- Detail lengkap diatur di `.agents/rules/responsive-modal-buttons-standards.md`.
+
+## 11. Standar Navigasi Halaman & Footer Tabel / Kartu Mobile (Responsive Pagination Standards)
+- **Bebas Scroll Horizontal pada Footer**: Area scroll horizontal (`table-responsive`) **HANYA BOLEH MEMBUNGKUS BARIS DATA TABEL**. Footer, *length menu*, dan *pagination* wajib berada di luar area scroll tabel agar tidak ikut terpotong saat digeser.
+- **Struktur 3-Baris Rata Tengah di Mobile (`< 768px`)**:
+  - **Baris 1**: `Tampilkan [10 v] data` (`.dataTables_length`) — mandiri di baris atas, rata tengah.
+  - **Baris 2**: `Menampilkan X sampai Y dari Z data` (`.dataTables_info`) — utuh 1 baris horizontal (`white-space: nowrap !important;`), rata tengah tanpa pemecahan kata vertikal.
+  - **Baris 3**: Navigasi Tombol Halaman (`.dataTables_paginate`) — rata tengah.
+- **Pola Angka Halaman Ringkas (Compact Numbers Pattern)**:
+  - Jumlah tombol dibatasi **maksimal 5 angka**: Halaman 1 (`1, 2, Last`), Halaman 2 (`1, 2, 3, Last`), Halaman 3 (`1, 2, 3, 4, Last`), Halaman Tengah (`1, n-1, n, n+1, Last`), Halaman Terakhir (`1, Last-1, Last`).
+  - Pola pada Yajra DataTables (`veltronic_compact` pager) **WAJIB SAMA PERSIS** dengan pola Laravel Blade (`pagination::bootstrap-5`).
+- Detail lengkap diatur di `.agents/rules/responsive-pagination-standards.md`.
+
+

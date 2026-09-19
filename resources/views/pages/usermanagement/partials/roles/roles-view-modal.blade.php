@@ -3,25 +3,48 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content border-0 shadow-lg">
             <!--begin::Modal header-->
-            <div class="modal-header border-0 pb-0 justify-content-between">
-                <div class="d-flex align-items-center">
-                    <div class="symbol symbol-45px symbol-circle bg-light-primary me-4 d-flex align-items-center justify-content-center flex-shrink-0">
-                        <i class="ki-outline ki-shield-search text-primary fs-2"></i>
-                    </div>
-                    <div>
-                        <h3 class="fw-bolder text-gray-900 m-0 fs-3" id="role_view_title">Rincian Peran</h3>
-                        <span class="text-muted fs-7" id="role_view_subtitle">Daftar pengguna pemegang peran dan matriks hak akses yang berlaku.</span>
-                    </div>
+            <div class="modal-header border-0 pb-0 position-relative pt-7 pt-sm-6 px-6 px-lg-8">
+                <!--begin::Close Button-->
+                <div class="position-absolute top-0 end-0 m-3 m-sm-4 z-index-2">
+                    <button type="button" class="btn btn-icon btn-sm btn-active-light-primary" data-bs-dismiss="modal" aria-label="Close"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                        <i class="ki-outline ki-cross fs-2"></i>
+                    </button>
                 </div>
+                <!--end::Close Button-->
 
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="ki-outline ki-cross fs-2"></i>
+                <!--begin::Header Info (3-Baris Center pada Mobile)-->
+                <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                    <!-- Row 1 (Mobile only): Icon Logo Lingkaran Sempurna -->
+                    <div class="d-flex justify-content-center d-sm-none mb-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-light-primary text-primary rounded-circle" 
+                             style="width: 60px; height: 60px; min-width: 60px; min-height: 60px;">
+                            <i class="ki-outline ki-shield-search text-primary fs-2x"></i>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Title -->
+                    <div class="d-flex align-items-center justify-content-center justify-content-sm-start">
+                        <div class="symbol symbol-45px symbol-circle bg-light-primary me-4 d-none d-sm-inline-flex align-items-center justify-content-center flex-shrink-0">
+                            <i class="ki-outline ki-shield-search text-primary fs-2"></i>
+                        </div>
+                        <div>
+                            <h3 class="fw-bolder text-gray-900 m-0 fs-3" id="role_view_title">Rincian Peran</h3>
+                            <span class="text-muted fs-7 d-none d-sm-inline" id="role_view_subtitle">Daftar pengguna pemegang peran dan matriks hak akses yang berlaku.</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3 (Mobile only): Description -->
+                    <div class="text-muted fw-semibold fs-7 mt-2 mb-0 d-sm-none" id="role_view_subtitle_mobile">
+                        Daftar pengguna pemegang peran dan matriks hak akses yang berlaku.
+                    </div>
                 </div>
+                <!--end::Header Info-->
             </div>
             <!--end::Modal header-->
 
             <!--begin::Modal body-->
-            <div class="modal-body py-6 px-8">
+            <div class="modal-body py-6 px-6 px-lg-8">
                 <!--begin::Mini Stats Row-->
                 <div class="row g-4 mb-7">
                     <!-- Stat 1: Total Anggota -->
@@ -100,8 +123,12 @@
             <!--end::Modal body-->
 
             <!--begin::Modal footer-->
-            <div class="modal-footer border-0 pt-0 px-8 pb-6">
-                <button type="button" class="btn btn-primary fw-bold" data-bs-dismiss="modal">Tutup</button>
+            <div class="modal-footer border-0 pt-0 px-6 px-lg-8 pb-6 justify-content-center justify-content-sm-end">
+                <button type="button" class="btn btn-primary fw-bold" data-bs-dismiss="modal"
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup Modal">
+                    <i class="ki-outline ki-cross fs-4 me-1"></i>
+                    <span>Tutup</span>
+                </button>
             </div>
             <!--end::Modal footer-->
         </div>

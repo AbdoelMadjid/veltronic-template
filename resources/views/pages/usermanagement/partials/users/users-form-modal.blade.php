@@ -5,36 +5,40 @@
         <!--begin::Modal content-->
         <div class="modal-content rounded">
             <!--begin::Modal header-->
-            <div class="modal-header pb-0 border-0 justify-content-end">
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
-                </div>
+            <div class="modal-header border-0 pb-0 position-relative justify-content-center justify-content-sm-between px-6 px-lg-10 pt-6">
+                <!--begin::Close (Absolute Top Right on Mobile & Desktop)-->
+                <button type="button" class="btn btn-icon btn-sm btn-active-light-primary position-absolute top-0 end-0 m-3 m-sm-4 z-index-2" data-bs-dismiss="modal" aria-label="Close"
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                    <i class="ki-outline ki-cross fs-1"></i>
+                </button>
                 <!--end::Close-->
+
+                <!--begin::Header Info (3-Baris Center pada Mobile)-->
+                <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                    <!-- Row 1 (Mobile only): Icon Logo Lingkaran Sempurna -->
+                    <div class="d-flex justify-content-center d-sm-none mb-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-light-primary text-primary rounded-circle" 
+                             style="width: 60px; height: 60px; min-width: 60px; min-height: 60px;">
+                            <i class="ki-outline ki-user fs-2x text-primary"></i>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Title -->
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-3" id="user_modal_title">
+                        <span class="d-none d-sm-inline">
+                            <i class="ki-outline ki-user fs-2 text-primary me-2"></i>
+                        </span>
+                        Tambah Pengguna Baru
+                    </h3>
+
+                    <!-- Row 3: Description -->
+                    <div class="text-muted fw-semibold fs-7 mt-2 mb-0">
+                        Lengkapi data akun dan hak akses pengguna sistem.
+                    </div>
+                </div>
+                <!--end::Header Info-->
             </div>
             <!--begin::Modal header-->
-
-            <!--begin::Modal body-->
-            <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                <!--begin:Form-->
-                <form id="kt_modal_user_form_element" class="form" action="#" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="_method" id="user_form_method" value="POST" />
-                    <input type="hidden" name="user_id" id="user_form_id" value="" />
-                    <input type="hidden" name="remove_avatar" id="user_form_remove_avatar" value="0" />
-
-                    <!--begin::Heading-->
-                    <div class="mb-9 text-center">
-                        <!--begin::Title-->
-                        <h2 class="fw-bolder text-gray-900 mb-2" id="user_modal_title">Tambah Pengguna Baru</h2>
-                        <!--end::Title-->
-                        <!--begin::Description-->
-                        <div class="text-muted fw-semibold fs-6">
-                            Lengkapi data akun dan hak akses pengguna sistem.
-                        </div>
-                        <!--end::Description-->
-                    </div>
-                    <!--end::Heading-->
 
                     <!--begin::Input group: Avatar-->
                     <div class="d-flex flex-column align-items-center mb-8">
@@ -130,21 +134,24 @@
                     <!--end::Input group: Password-->
 
                     <!--begin::Actions-->
-                    <div class="text-center pt-5">
-                        <button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">
-                            Batal
+                    <div class="d-flex align-items-center justify-content-center justify-content-sm-end gap-2 pt-5 border-top border-gray-200">
+                        <button type="button" class="btn btn-light fw-bold px-4 px-sm-6" data-bs-dismiss="modal"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
+                            <i class="ki-outline ki-cross fs-4 me-1"></i>
+                            <span>Batal</span>
                         </button>
-                        <button type="submit" id="kt_modal_user_form_submit" class="btn btn-primary">
+                        <button type="submit" id="kt_modal_user_form_submit" class="btn btn-primary fw-bold px-4 px-sm-6"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan Data">
                             <!--begin::Indicator label-->
                             <span class="indicator-label">
-                                <i class="ki-duotone ki-check fs-4 me-1"><span class="path1"></span><span class="path2"></span></i>
-                                Simpan Data
+                                <i class="ki-outline ki-check fs-4 me-1"></i>
+                                <span>Simpan Data</span>
                             </span>
                             <!--end::Indicator label-->
                             <!--begin::Indicator progress-->
                             <span class="indicator-progress">
-                                Mohon tunggu...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                                <span>Mohon tunggu...</span>
                             </span>
                             <!--end::Indicator progress-->
                         </button>

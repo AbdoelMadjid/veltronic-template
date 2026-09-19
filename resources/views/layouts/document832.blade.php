@@ -165,6 +165,7 @@ License: For each use you must have a valid license purchased only from above li
         <script src="{{ asset('assets/js/custom/icon-style.js') }}"></script>
         <script src="{{ asset('assets/js/custom/language.js') }}"></script>
         <script src="{{ asset('assets/js/custom/notification-helper.js') }}"></script>
+        <script src="{{ asset('assets/js/custom/tooltip-helper.js') }}"></script>
         @include('partials._notification')
         <!--end::Global Javascript Bundle-->
 

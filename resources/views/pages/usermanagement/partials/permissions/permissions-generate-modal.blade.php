@@ -3,43 +3,69 @@
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <div class="modal-content border-0 shadow-lg rounded-3">
             <!--begin::Modal header-->
-            <div class="modal-header border-0 pb-0 justify-content-between px-8 pt-8">
-                <div>
-                    <h3 class="fw-bolder text-gray-900 m-0 fs-3" id="unified_modal_main_title">Tambah Permission Modul (Batch CRUD)</h3>
-                    <span class="text-muted fs-7" id="unified_modal_sub_title">Buat permission baru secara batch CRUD atau single manual</span>
+            <div class="modal-header border-0 pb-0 position-relative pt-7 pt-sm-6 px-6 px-lg-8">
+                <!--begin::Close Button-->
+                <div class="position-absolute top-0 end-0 m-3 m-sm-4 z-index-2">
+                    <button type="button" class="btn btn-icon btn-sm btn-active-light-primary" data-bs-dismiss="modal" aria-label="Close"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                        <i class="ki-outline ki-cross fs-2"></i>
+                    </button>
                 </div>
+                <!--end::Close Button-->
 
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="ki-outline ki-cross fs-2"></i>
+                <!--begin::Header Info (3-Baris Center pada Mobile)-->
+                <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                    <!-- Row 1 (Mobile only): Icon Logo Lingkaran Sempurna -->
+                    <div class="d-flex justify-content-center d-sm-none mb-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-light-primary text-primary rounded-circle" 
+                             style="width: 60px; height: 60px; min-width: 60px; min-height: 60px;">
+                            <i class="ki-outline ki-element-plus fs-2x text-primary"></i>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Title -->
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-3" id="unified_modal_main_title">
+                        Tambah Permission Modul (Batch CRUD)
+                    </h3>
+
+                    <!-- Row 3: Description -->
+                    <div class="text-muted fw-semibold fs-7 mt-2 mb-0" id="unified_modal_sub_title">
+                        Buat permission baru secara batch CRUD atau single manual.
+                    </div>
                 </div>
+                <!--end::Header Info-->
             </div>
             <!--end::Modal header-->
 
             <!--begin::Modal body-->
             <div class="modal-body py-6 px-8">
                 <!--begin::Nav Tabs-->
-                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-6 fw-bold mb-6" role="tablist" id="perm_modal_nav_tabs">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link text-active-primary active d-flex align-items-center py-3 me-6" 
-                           id="tab_btn_batch_crud"
-                           data-bs-toggle="tab" 
-                           href="#tab_pane_batch_crud" 
-                           role="tab">
-                            <i class="ki-outline ki-flash fs-5 me-2 text-warning"></i>
-                            Modul CRUD Batch (Praktis)
-                        </a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link text-active-primary d-flex align-items-center py-3" 
-                           id="tab_btn_single_perm"
-                           data-bs-toggle="tab" 
-                           href="#tab_pane_single_perm" 
-                           role="tab">
-                            <i class="ki-outline ki-key fs-5 me-2 text-primary"></i>
-                            Single Permission (Kustom)
-                        </a>
-                    </li>
-                </ul>
+                <div class="overflow-auto mb-6">
+                    <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-6 fw-bold flex-nowrap" role="tablist" id="perm_modal_nav_tabs">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link text-active-primary active d-flex align-items-center py-3 me-4 me-md-6" 
+                               id="tab_btn_batch_crud"
+                               data-bs-toggle="tab" 
+                               href="#tab_pane_batch_crud" 
+                               role="tab"
+                               data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Modul CRUD Batch (Praktis)">
+                                <i class="ki-outline ki-element-plus fs-4 fs-md-5 me-0 me-md-2 text-warning"></i>
+                                <span class="d-none d-md-inline">Modul CRUD Batch (Praktis)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link text-active-primary d-flex align-items-center py-3" 
+                               id="tab_btn_single_perm"
+                               data-bs-toggle="tab" 
+                               href="#tab_pane_single_perm" 
+                               role="tab"
+                               data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Single Permission (Kustom)">
+                                <i class="ki-outline ki-key fs-4 fs-md-5 me-0 me-md-2 text-primary"></i>
+                                <span class="d-none d-md-inline">Single Permission (Kustom)</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <!--end::Nav Tabs-->
 
                 <!--begin::Tab Content-->
@@ -165,16 +191,21 @@
                             </div>
 
                             <!-- Modal Footer Batch -->
-                            <div class="d-flex align-items-center justify-content-end gap-3 pt-4 border-0">
-                                <button type="button" class="btn btn-light fw-bold px-6" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary fw-bold px-6" id="kt_btn_submit_generate_perm">
+                            <div class="d-flex align-items-center justify-content-center justify-content-sm-end gap-2 pt-4 border-0">
+                                <button type="button" class="btn btn-light fw-bold px-4 px-sm-6" data-bs-dismiss="modal"
+                                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
+                                    <i class="ki-outline ki-cross fs-4 me-1"></i>
+                                    <span>Batal</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary fw-bold px-4 px-sm-6" id="kt_btn_submit_generate_perm"
+                                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan Akses CRUD">
                                     <span class="indicator-label">
-                                        <i class="ki-outline ki-flash fs-4 me-1"></i>
+                                        <i class="ki-outline ki-element-plus fs-4 me-1"></i>
                                         <span id="btn_batch_text">Simpan 4 Akses CRUD</span>
                                     </span>
                                     <span class="indicator-progress">
                                         <span class="spinner-border spinner-border-sm align-middle me-2"></span>
-                                        Memproses...
+                                        <span>Memproses...</span>
                                     </span>
                                 </button>
                             </div>
@@ -245,15 +276,21 @@
                             </div>
 
                             <!-- Modal Footer Single -->
-                            <div class="d-flex align-items-center justify-content-end gap-3 pt-4 border-0">
-                                <button type="button" class="btn btn-light fw-bold px-6" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary fw-bold px-6" id="kt_btn_save_permission">
+                            <div class="d-flex align-items-center justify-content-center justify-content-sm-end gap-2 pt-4 border-0">
+                                <button type="button" class="btn btn-light fw-bold px-4 px-sm-6" data-bs-dismiss="modal"
+                                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
+                                    <i class="ki-outline ki-cross fs-4 me-1"></i>
+                                    <span>Batal</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary fw-bold px-4 px-sm-6" id="kt_btn_save_permission"
+                                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan Single Permission">
                                     <span class="indicator-label">
-                                        Simpan Single Permission
+                                        <i class="ki-outline ki-check fs-5 me-1"></i>
+                                        <span>Simpan Single Permission</span>
                                     </span>
                                     <span class="indicator-progress">
                                         <span class="spinner-border spinner-border-sm align-middle me-2"></span>
-                                        Menyimpan...
+                                        <span>Menyimpan...</span>
                                     </span>
                                 </button>
                             </div>

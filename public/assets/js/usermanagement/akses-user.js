@@ -12,6 +12,74 @@ var KTAksesUser = function () {
     var directPermModal;
     var directPermForm;
     var directPermSubmitBtn;
+    var searchTimer = null;
+    var currentPage = 1;
+
+    // Fetch user table data via Zero-Reload AJAX
+    var fetchUsers = function (page = 1) {
+        currentPage = page;
+        var searchInput = document.getElementById('table_search_input');
+        var roleDropdown = $('#filter_role_dropdown');
+
+        var search = searchInput ? searchInput.value.trim() : '';
+        var role = roleDropdown.length ? roleDropdown.val() : 'all';
+
+        var params = new URLSearchParams();
+        if (page > 1) params.append('page', page);
+        if (search) params.append('search', search);
+        if (role && role !== 'all') params.append('role', role);
+
+        var url = window.AKSES_USER_ROUTES.base + (params.toString() ? '?' + params.toString() : '');
+
+        var tbody = document.getElementById('user_access_tbody');
+        if (tbody) {
+            tbody.style.opacity = '0.5';
+        }
+
+        fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        })
+        .then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+            if (tbody) {
+                tbody.style.opacity = '1';
+                if (data.html_rows !== undefined) {
+                    tbody.innerHTML = data.html_rows;
+                }
+            }
+
+            var pagEl = document.getElementById('user_access_pagination');
+            if (pagEl && data.html_pagination !== undefined) {
+                pagEl.innerHTML = data.html_pagination;
+            }
+
+            var countEl = document.getElementById('user_access_total_count');
+            if (countEl && data.total !== undefined) {
+                countEl.textContent = data.total;
+            }
+
+            // Re-inisialisasi tooltip jika ada
+            if (window.bootstrap && bootstrap.Tooltip) {
+                document.querySelectorAll('#user_access_tbody [data-bs-toggle="tooltip"]').forEach(function (el) {
+                    new bootstrap.Tooltip(el);
+                });
+            }
+
+            // Zero-Reload: Jaga URL browser tetap bersih tanpa parameter query ?page=xx
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        })
+        .catch(function (err) {
+            if (tbody) tbody.style.opacity = '1';
+            console.error('Gagal mengambil data hak akses pengguna:', err);
+        });
+    };
 
     // Inisialisasi Modal Assign Role
     var initAssignRoleModal = function () {
@@ -22,29 +90,27 @@ var KTAksesUser = function () {
         assignRoleForm = document.getElementById('kt_form_assign_role');
         assignRoleSubmitBtn = document.getElementById('kt_modal_assign_role_submit');
 
-        // Buka modal saat tombol diklik
-        document.querySelectorAll('.btn-action-assign-role').forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                var userId = this.getAttribute('data-user-id');
-                var userName = this.getAttribute('data-user-name');
-                var userRoles = [];
-                try {
-                    userRoles = JSON.parse(this.getAttribute('data-user-roles') || '[]');
-                } catch (err) {
-                    userRoles = [];
-                }
+        // Buka modal saat tombol diklik (Event Delegation)
+        $(document).on('click', '.btn-action-assign-role', function (e) {
+            e.preventDefault();
+            var userId = this.getAttribute('data-user-id');
+            var userName = this.getAttribute('data-user-name');
+            var userRoles = [];
+            try {
+                userRoles = JSON.parse(this.getAttribute('data-user-roles') || '[]');
+            } catch (err) {
+                userRoles = [];
+            }
 
-                document.getElementById('assign_role_user_id').value = userId;
-                document.getElementById('assign_role_user_name_display').textContent = userName;
+            document.getElementById('assign_role_user_id').value = userId;
+            document.getElementById('assign_role_user_name_display').textContent = userName;
 
-                // Reset dan centang checkbox role
-                document.querySelectorAll('.role-checkbox-item').forEach(function (cb) {
-                    cb.checked = userRoles.includes(cb.value);
-                });
-
-                assignRoleModal.show();
+            // Reset dan centang checkbox role
+            document.querySelectorAll('.role-checkbox-item').forEach(function (cb) {
+                cb.checked = userRoles.includes(cb.value);
             });
+
+            assignRoleModal.show();
         });
 
         // Submit form assign role
@@ -118,7 +184,7 @@ var KTAksesUser = function () {
                             buttonsStyling: false,
                             confirmButtonText: 'Selesai',
                             customClass: {
-                                confirmButton: 'btn btn-primary'
+                                confirmButton: 'btn btn-primary fw-bold'
                             }
                         });
                     } else {
@@ -143,98 +209,96 @@ var KTAksesUser = function () {
         directPermForm = document.getElementById('kt_form_direct_permissions');
         directPermSubmitBtn = document.getElementById('kt_modal_direct_permissions_submit');
 
-        // Buka modal saat tombol direct perm diklik
-        document.querySelectorAll('.btn-action-direct-perm').forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                var userId = this.getAttribute('data-user-id');
-                var userName = this.getAttribute('data-user-name');
+        // Buka modal saat tombol direct perm diklik (Event Delegation)
+        $(document).on('click', '.btn-action-direct-perm', function (e) {
+            e.preventDefault();
+            var userId = this.getAttribute('data-user-id');
+            var userName = this.getAttribute('data-user-name');
 
-                document.getElementById('direct_perm_user_id').value = userId;
-                document.getElementById('direct_perm_user_name_display').textContent = userName;
-                document.getElementById('direct_perm_user_roles_display').textContent = 'Memuat...';
+            document.getElementById('direct_perm_user_id').value = userId;
+            document.getElementById('direct_perm_user_name_display').textContent = userName;
+            document.getElementById('direct_perm_user_roles_display').textContent = 'Memuat...';
 
-                // Reset semua checkbox matrix & hapus badge inherited lama
-                document.querySelectorAll('#user_direct_matrix_table .inherited-role-badge').forEach(function (el) {
-                    el.remove();
-                });
-                document.querySelectorAll('#user_direct_matrix_table .form-check').forEach(function (fc) {
-                    fc.classList.remove('d-none');
-                });
-                document.querySelectorAll('#user_direct_matrix_table .matrix-perm-cb').forEach(function (cb) {
-                    cb.checked = false;
-                });
+            // Reset semua checkbox matrix & hapus badge inherited lama
+            document.querySelectorAll('#user_direct_matrix_table .inherited-role-badge').forEach(function (el) {
+                el.remove();
+            });
+            document.querySelectorAll('#user_direct_matrix_table .form-check').forEach(function (fc) {
+                fc.classList.remove('d-none');
+            });
+            document.querySelectorAll('#user_direct_matrix_table .matrix-perm-cb').forEach(function (cb) {
+                cb.checked = false;
+            });
 
-                // Fetch data permission user
-                fetch(window.AKSES_USER_ROUTES.base + '/' + userId + '/permissions', {
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(function (res) {
-                    return res.json();
-                })
-                .then(function (data) {
-                    if (data.success) {
-                        var rolesText = (data.user.roles || []).join(', ') || 'Tanpa Peran';
-                        document.getElementById('direct_perm_user_roles_display').textContent = rolesText;
+            // Fetch data permission user
+            fetch(window.AKSES_USER_ROUTES.base + '/' + userId + '/permissions', {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(function (res) {
+                return res.json();
+            })
+            .then(function (data) {
+                if (data.success) {
+                    var rolesText = (data.user.roles || []).join(', ') || 'Tanpa Peran';
+                    document.getElementById('direct_perm_user_roles_display').textContent = rolesText;
 
-                        var directPerms = data.direct_permissions || [];
-                        var rolePerms = data.role_permissions || [];
-                        var inheritedMap = data.inherited_map || {};
+                    var directPerms = data.direct_permissions || [];
+                    var rolePerms = data.role_permissions || [];
+                    var inheritedMap = data.inherited_map || {};
 
-                        // Render status checkbox dan badge inherited peran
-                        document.querySelectorAll('#user_direct_matrix_table .matrix-perm-cb').forEach(function (cb) {
-                            var permVal = cb.value;
-                            var isDirect = directPerms.includes(permVal);
-                            var isInherited = rolePerms.includes(permVal);
+                    // Render status checkbox dan badge inherited peran
+                    document.querySelectorAll('#user_direct_matrix_table .matrix-perm-cb').forEach(function (cb) {
+                        var permVal = cb.value;
+                        var isDirect = directPerms.includes(permVal);
+                        var isInherited = rolePerms.includes(permVal);
 
-                            var parentWrapper = cb.closest('.form-check');
-                            var cellContainer = cb.closest('td');
+                        var parentWrapper = cb.closest('.form-check');
+                        var cellContainer = cb.closest('td');
 
-                            if (isInherited && parentWrapper && cellContainer) {
-                                // Sembunyikan checkbox dan tampilkan badge 'Peran' yang rapi dan elegan
-                                parentWrapper.classList.add('d-none');
-                                cb.checked = false; // direct checked false karena sudah dicover peran
+                        if (isInherited && parentWrapper && cellContainer) {
+                            // Sembunyikan checkbox dan tampilkan badge 'Peran' yang rapi dan elegan
+                            parentWrapper.classList.add('d-none');
+                            cb.checked = false;
 
-                                var roleSources = (inheritedMap[permVal] || []).join(', ') || 'Peran';
-                                var badge = document.createElement('span');
-                                badge.className = 'badge badge-light-primary fw-bold fs-9 py-1 px-2 d-inline-flex align-items-center inherited-role-badge';
-                                badge.setAttribute('data-bs-toggle', 'tooltip');
-                                badge.setAttribute('data-bs-placement', 'top');
-                                badge.setAttribute('title', 'Sudah aktif otomatis dari peran: ' + roleSources);
-                                badge.innerHTML = '<i class="ki-outline ki-shield-tick text-primary fs-8 me-1"></i>Peran';
+                            var roleSources = (inheritedMap[permVal] || []).join(', ') || 'Peran';
+                            var badge = document.createElement('span');
+                            badge.className = 'badge badge-light-primary fw-bold fs-9 py-1 px-2 d-inline-flex align-items-center inherited-role-badge';
+                            badge.setAttribute('data-bs-toggle', 'tooltip');
+                            badge.setAttribute('data-bs-placement', 'top');
+                            badge.setAttribute('title', 'Sudah aktif otomatis dari peran: ' + roleSources);
+                            badge.innerHTML = '<i class="ki-outline ki-shield-tick text-primary fs-8 me-1"></i>Peran';
 
-                                var flexWrapper = cellContainer.querySelector('.d-flex.justify-content-center') || cellContainer;
-                                flexWrapper.appendChild(badge);
-                            } else {
-                                if (parentWrapper) {
-                                    parentWrapper.classList.remove('d-none');
-                                }
-                                cb.checked = isDirect;
+                            var flexWrapper = cellContainer.querySelector('.d-flex.justify-content-center') || cellContainer;
+                            flexWrapper.appendChild(badge);
+                        } else {
+                            if (parentWrapper) {
+                                parentWrapper.classList.remove('d-none');
                             }
-                        });
-
-                        if (window.KTCRUDMatrixHelper) {
-                            window.KTCRUDMatrixHelper.syncRowCheckStates('#user_direct_matrix_table');
+                            cb.checked = isDirect;
                         }
+                    });
 
-                        // Re-inisialisasi Bootstrap Tooltip
-                        if (window.bootstrap && bootstrap.Tooltip) {
-                            var tooltips = [].slice.call(document.querySelectorAll('#user_direct_matrix_table [data-bs-toggle="tooltip"]'));
-                            tooltips.map(function (el) {
-                                return new bootstrap.Tooltip(el);
-                            });
-                        }
-
-                        directPermModal.show();
-                    } else {
-                        toastr.error('Gagal memuat rincian izin pengguna.', 'Error');
+                    if (window.KTCRUDMatrixHelper) {
+                        window.KTCRUDMatrixHelper.syncRowCheckStates('#user_direct_matrix_table');
                     }
-                })
-                .catch(function () {
-                    toastr.error('Terjadi kesalahan koneksi server.', 'Error');
-                });
+
+                    // Re-inisialisasi Bootstrap Tooltip
+                    if (window.bootstrap && bootstrap.Tooltip) {
+                        var tooltips = [].slice.call(document.querySelectorAll('#user_direct_matrix_table [data-bs-toggle="tooltip"]'));
+                        tooltips.map(function (el) {
+                            return new bootstrap.Tooltip(el);
+                        });
+                    }
+
+                    directPermModal.show();
+                } else {
+                    toastr.error('Gagal memuat rincian izin pengguna.', 'Error');
+                }
+            })
+            .catch(function () {
+                toastr.error('Terjadi kesalahan koneksi server.', 'Error');
             });
         });
 
@@ -291,7 +355,7 @@ var KTAksesUser = function () {
                             buttonsStyling: false,
                             confirmButtonText: 'Selesai',
                             customClass: {
-                                confirmButton: 'btn btn-primary'
+                                confirmButton: 'btn btn-primary fw-bold'
                             }
                         });
                     } else {
@@ -335,40 +399,65 @@ var KTAksesUser = function () {
         }
     };
 
-    // Filter & Search Tabel Utama
-    var initTableFilters = function () {
+    // Filter, Search, & Pagination Intercept Tabel Utama (Zero-Reload)
+    var initTableFiltersAndPagination = function () {
         var searchInput = document.getElementById('table_search_input');
         var roleDropdown = $('#filter_role_dropdown');
         var resetBtn = document.getElementById('btn_reset_filter');
 
-        var applyFilter = function () {
-            var search = searchInput ? searchInput.value.trim() : '';
-            var role = roleDropdown.length ? roleDropdown.val() : 'all';
+        // Pagination Click Listener (Zero-Reload)
+        $(document).on('click', '#user_access_pagination .page-link', function (e) {
+            e.preventDefault();
+            var href = $(this).attr('href');
+            if (!href || href === '#' || $(this).parent().hasClass('disabled') || $(this).parent().hasClass('active')) {
+                return;
+            }
 
-            var url = new URL(window.location.origin + window.location.pathname);
-            if (search) url.searchParams.set('search', search);
-            if (role && role !== 'all') url.searchParams.set('role', role);
+            try {
+                var urlObj = new URL(href, window.location.origin);
+                var targetPage = urlObj.searchParams.get('page') || 1;
+                fetchUsers(targetPage);
+            } catch (err) {
+                // Fallback jika href bukan full URL
+                var match = href.match(/[?&]page=(\d+)/);
+                var targetPage = match ? match[1] : 1;
+                fetchUsers(targetPage);
+            }
+        });
 
-            window.location.href = url.toString();
-        };
-
+        // Live Search with Debouncing
         if (searchInput) {
+            searchInput.addEventListener('input', function () {
+                clearTimeout(searchTimer);
+                searchTimer = setTimeout(function () {
+                    fetchUsers(1);
+                }, 300);
+            });
+
             searchInput.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter') {
-                    applyFilter();
+                    e.preventDefault();
+                    clearTimeout(searchTimer);
+                    fetchUsers(1);
                 }
             });
         }
 
+        // Role Dropdown Change
         if (roleDropdown.length) {
             roleDropdown.on('change', function () {
-                applyFilter();
+                fetchUsers(1);
             });
         }
 
+        // Reset Filter Button
         if (resetBtn) {
             resetBtn.addEventListener('click', function () {
-                window.location.href = window.location.origin + window.location.pathname;
+                if (searchInput) searchInput.value = '';
+                if (roleDropdown.length) {
+                    roleDropdown.val('all').trigger('change.select2');
+                }
+                fetchUsers(1);
             });
         }
     };
@@ -377,7 +466,10 @@ var KTAksesUser = function () {
         init: function () {
             initAssignRoleModal();
             initDirectPermModal();
-            initTableFilters();
+            initTableFiltersAndPagination();
+        },
+        reload: function () {
+            fetchUsers(currentPage);
         }
     };
 }();

@@ -7,10 +7,7 @@
     <!--end::Row-->
 
     <!--begin::Pagination-->
-    <div class="d-flex flex-stack flex-wrap pt-10" id="users_card_pagination">
-        <div class="fs-6 fw-semibold text-gray-700" id="users_card_info">
-            {{ $users->firstItem() ?? 0 }} - {{ $users->lastItem() ?? 0 }} / {{ $users->total() }} Pengguna
-        </div>
+    <div class="pt-10" id="users_card_pagination">
         <div class="users-pagination-links">
             {{ $users->links('pagination::bootstrap-5') }}
         </div>

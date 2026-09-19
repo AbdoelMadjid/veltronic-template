@@ -1,18 +1,23 @@
 <!--begin::Header Banner-->
 <div class="card card-flush shadow-sm border-0 mb-6">
-    <div class="card-body p-6 d-flex flex-wrap align-items-center justify-content-between gap-4">
-        <div class="d-flex align-items-center">
-            <div class="symbol symbol-45px symbol-circle bg-light-primary me-4 d-flex align-items-center justify-content-center">
-                <i class="ki-outline ki-security-user text-primary fs-2"></i>
+    <div class="card-body p-6 d-flex flex-column flex-md-row align-items-center justify-content-between gap-4 text-center text-md-start">
+        <!-- Baris 1-3 di Mobile (Logo, Judul, Deskripsi) / Sisi Kiri di Desktop -->
+        <div class="d-flex flex-column flex-md-row align-items-center gap-2 gap-md-4 w-100 w-md-auto">
+            <!-- Baris 1: Logo / Ikon Utama -->
+            <div class="symbol symbol-55px symbol-md-45px symbol-circle bg-light-primary mb-1 mb-md-0 me-0 me-md-4 d-flex align-items-center justify-content-center flex-shrink-0">
+                <i class="ki-outline ki-security-user text-primary fs-2x fs-md-2"></i>
             </div>
-            <div>
+            <!-- Baris 2 & 3: Judul & Deskripsi -->
+            <div class="d-flex flex-column align-items-center align-items-md-start">
                 <h2 class="fw-bolder text-gray-900 m-0 fs-3">Manajemen Hak Akses Pengguna (User Access)</h2>
-                <span class="text-muted fs-7">Kelola penetapan peran dan konfigurasi izin perorangan (direct permissions) untuk setiap pengguna sistem.</span>
+                <span class="text-muted fs-7 mt-1">Kelola penetapan peran dan konfigurasi izin perorangan (direct permissions) untuk setiap pengguna sistem.</span>
             </div>
         </div>
-        <div class="d-flex align-items-center gap-3">
-            <span class="badge badge-light-primary fs-7 fw-bold px-3 py-2">
-                <i class="ki-outline ki-profile-user text-primary fs-6 me-1"></i> Total: {{ $totalUsers ?? (isset($users) ? $users->total() : 0) }} Pengguna
+
+        <!-- Baris 4: Info Badge di Mobile (Center) / Sisi Kanan di Desktop -->
+        <div class="d-flex align-items-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-2 mt-md-0">
+                    <span class="badge badge-light-primary fs-7 fw-bold px-3 py-2">
+                <i class="ki-outline ki-profile-user text-primary fs-6 me-1"></i> Total: <span id="user_access_total_count">{{ $totalUsers ?? (isset($users) ? $users->total() : 0) }}</span> Pengguna
             </span>
         </div>
     </div>
@@ -21,25 +26,28 @@
 
 <!--begin::Table Card-->
 <div class="card card-flush shadow-sm border-0">
-    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-        <div class="card-title">
-            <div class="d-flex align-items-center position-relative my-1">
-                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
-                <input type="text" id="table_search_input" class="form-control form-control-solid w-250px ps-12" placeholder="Cari Nama / Email Pengguna..." value="{{ request('search') }}" />
-            </div>
+    <div class="card-header border-0 pt-6 px-6 d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-3">
+        <!-- Search Input -->
+        <div class="d-flex align-items-center position-relative my-0 flex-grow-1 flex-sm-grow-0">
+            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4 text-gray-500"></i>
+            <input type="text" id="table_search_input" class="form-control form-control-solid w-100 w-sm-250px w-md-300px ps-12 rounded-3" 
+                   placeholder="Cari Nama / Email Pengguna..." value="{{ request('search') }}" />
         </div>
-        <div class="card-toolbar flex-row-fluid justify-content-end gap-3">
-            <div class="w-100 mw-200px">
-                <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" id="filter_role_dropdown">
+
+        <!-- Filter Role + Reset Button -->
+        <div class="d-flex align-items-center gap-2 flex-nowrap w-100 w-sm-auto justify-content-end">
+            <div class="flex-grow-1 flex-sm-grow-0 w-100 w-sm-180px">
+                <select class="form-select form-select-solid rounded-3" data-control="select2" data-hide-search="true" id="filter_role_dropdown">
                     <option value="all" {{ request('role') == 'all' || !request('role') ? 'selected' : '' }}>Semua Peran</option>
                     @foreach($roles as $r)
                         <option value="{{ $r->id }}" {{ request('role') == $r->id ? 'selected' : '' }}>{{ $r->display_name ?? ucwords(str_replace(['_', '-'], ' ', $r->name)) }}</option>
                     @endforeach
                 </select>
             </div>
-            <button type="button" class="btn btn-light-primary" id="btn_reset_filter">
-                <i class="ki-outline ki-arrows-circle fs-4"></i>
-                <span class="d-none d-sm-inline ms-1">Reset Filter</span>
+            <button type="button" class="btn btn-light-primary fw-bold px-3 px-sm-4 flex-shrink-0 d-inline-flex align-items-center justify-content-center" id="btn_reset_filter"
+                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reset Filter">
+                <i class="ki-outline ki-arrows-circle fs-4 me-0 me-sm-1"></i>
+                <span class="d-none d-sm-inline">Reset Filter</span>
             </button>
         </div>
     </div>
@@ -56,97 +64,14 @@
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-semibold" id="user_access_tbody">
-                    @forelse($users as $user)
-                        <tr id="user-access-row-{{ $user->id }}">
-                            <td class="d-flex align-items-center">
-                                <div class="symbol symbol-50px me-3">
-                                    @if(!empty($user->avatar))
-                                        <div class="image-input-wrapper w-50px h-50px rounded-3" style="{{ user_avatar_style($user) }}"></div>
-                                    @else
-                                        <div class="symbol-label fs-3 bg-light-primary text-primary fw-bold rounded-3">
-                                            {{ $user->initial }}
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="d-flex flex-column">
-                                    <span class="text-gray-800 fw-bold fs-6 mb-1">{{ $user->name }}</span>
-                                    <span class="text-muted fs-7">{{ $user->email ?? $user->username }}</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex flex-wrap gap-1" id="user-roles-container-{{ $user->id }}">
-                                    @forelse($user->roles as $role)
-                                        @php
-                                            $badgeClass = match($role->name) {
-                                                'master' => 'badge-light-danger',
-                                                'admin' => 'badge-light-primary',
-                                                default => 'badge-light-info'
-                                            };
-                                        @endphp
-                                        <span class="badge {{ $badgeClass }} fw-bold">{{ $role->display_name ?? ucwords(str_replace(['_', '-'], ' ', $role->name)) }}</span>
-                                    @empty
-                                        <span class="badge badge-light-secondary text-muted">Tanpa Peran</span>
-                                    @endforelse
-                                </div>
-                            </td>
-                            <td>
-                                @php
-                                    $directCount = $user->permissions->count();
-                                @endphp
-                                <div id="user-direct-perm-container-{{ $user->id }}">
-                                    @if($directCount > 0)
-                                        <span class="badge badge-light-warning fw-bold">
-                                            {{ $directCount }} Izin Khusus
-                                        </span>
-                                    @else
-                                        <span class="badge badge-light-secondary text-muted">Bawaan Peran</span>
-                                    @endif
-                                </div>
-                            </td>
-                            <td>
-                                @if($user->is_active ?? true)
-                                    <span class="badge badge-light-success fw-bold">Aktif</span>
-                                @else
-                                    <span class="badge badge-light-danger fw-bold">Nonaktif</span>
-                                @endif
-                            </td>
-                            <td class="text-end pe-4">
-                                <div class="d-flex justify-content-end flex-shrink-0 gap-2">
-                                    <button type="button" class="btn btn-icon btn-light-primary btn-sm btn-action-assign-role" 
-                                            data-user-id="{{ $user->id }}" 
-                                            data-user-name="{{ $user->name }}" 
-                                            data-user-roles="{{ json_encode($user->roles->pluck('name')->toArray()) }}"
-                                            title="Ubah Peran Pengguna">
-                                        <i class="ki-outline ki-profile-user fs-4"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-icon btn-light-warning btn-sm btn-action-direct-perm" 
-                                            data-user-id="{{ $user->id }}" 
-                                            data-user-name="{{ $user->name }}"
-                                            title="Atur Izin Khusus (Direct Permissions)">
-                                        <i class="ki-outline ki-shield-search fs-4"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="text-center text-muted py-10">
-                                Tidak ada data pengguna yang ditemukan.
-                            </td>
-                        </tr>
-                    @endforelse
+                    @include('pages.usermanagement.partials.akses-user.user-access-rows')
                 </tbody>
             </table>
         </div>
 
         <!--begin::Pagination-->
-        <div class="d-flex flex-stack flex-wrap pt-5">
-            <div class="fs-6 fw-semibold text-gray-700">
-                Menampilkan {{ $users->firstItem() ?? 0 }} sampai {{ $users->lastItem() ?? 0 }} dari {{ $users->total() }} pengguna
-            </div>
-            <div>
-                {{ $users->links('pagination::bootstrap-5') }}
-            </div>
+        <div class="pt-5" id="user_access_pagination">
+            {{ $users->links('pagination::bootstrap-5') }}
         </div>
         <!--end::Pagination-->
     </div>

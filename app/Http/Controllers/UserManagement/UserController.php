@@ -119,7 +119,14 @@ class UserController extends Controller
             $recordsFiltered = (clone $query)->count();
 
             $start = (int) $request->input('start', 0);
-            $length = (int) $request->input('length', 10);
+            $length = (int) $request->input('length', (int) $request->input('per_page', 10));
+            if ($length <= 0) {
+                $length = 10;
+            }
+            $page = (int) $request->input('page', 0);
+            if ($page > 0) {
+                $start = ($page - 1) * $length;
+            }
             $users = $query->skip($start)->take($length)->get();
 
             $data = $users->map(function (User $user, $index) use ($start) {

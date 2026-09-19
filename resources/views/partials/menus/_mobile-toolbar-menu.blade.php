@@ -11,9 +11,11 @@
 <div class="menu-sub menu-sub-dropdown menu-column mobile-toolbar-hub-menu p-3 shadow-lg rounded-4 bg-body border border-gray-200"
     data-kt-menu="true" id="kt_mobile_toolbar_hub_menu">
     <!--begin::Top Toolbar Icons Row-->
-    <div class="d-flex align-items-center justify-content-between gap-1 mobile-hub-tabs">
+    <div class="d-flex align-items-center justify-content-center flex-wrap gap-2 mobile-hub-tabs">
         <!--begin::Activities-->
-        <button type="button" class="{{ $btnClass }}"
+        <button type="button" class="{{ $btnClass }} {{ !app_fitur('tool_activities') ? 'feature-hidden' : '' }}"
+            style="{{ !app_fitur('tool_activities') ? 'display: none !important;' : '' }}"
+            data-kt-feature-tool="tool_activities"
             data-kt-drawer-show="true" data-kt-drawer-target="#kt_activities"
             onclick="if(typeof KTMenu!=='undefined'&&KTMenu.hideDropdowns){KTMenu.hideDropdowns();}"
             data-kt-translate-title="menu.activities"
@@ -25,7 +27,9 @@
         <!--end::Activities-->
 
         <!--begin::Chat-->
-        <button type="button" class="{{ $btnClass }}"
+        <button type="button" class="{{ $btnClass }} {{ !app_fitur('tool_chat') ? 'feature-hidden' : '' }}"
+            style="{{ !app_fitur('tool_chat') ? 'display: none !important;' : '' }}"
+            data-kt-feature-tool="tool_chat"
             data-kt-drawer-show="true" data-kt-drawer-target="#kt_drawer_chat"
             onclick="if(typeof KTMenu!=='undefined'&&KTMenu.hideDropdowns){KTMenu.hideDropdowns();}"
             data-kt-translate-title="menu.chat"
@@ -38,7 +42,10 @@
         <!--end::Chat-->
 
         <!--begin::My apps Tab Toggle-->
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_apps"
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn {{ !app_fitur('tool_my_apps') ? 'feature-hidden' : '' }}"
+            style="{{ !app_fitur('tool_my_apps') ? 'display: none !important;' : '' }}"
+            data-kt-feature-tool="tool_my_apps"
+            data-hub-target="#hub_panel_apps"
             data-kt-translate-title="menu.my_apps"
             title="{{ __('menu.my_apps') }}">
             <i class="ki-duotone ki-element-11 {{ $iconSize }}">
@@ -48,7 +55,10 @@
         <!--end::My apps Tab Toggle-->
 
         <!--begin::Notifications Tab Toggle-->
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_notif"
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn {{ !app_fitur('tool_notifications') ? 'feature-hidden' : '' }}"
+            style="{{ !app_fitur('tool_notifications') ? 'display: none !important;' : '' }}"
+            data-kt-feature-tool="tool_notifications"
+            data-hub-target="#hub_panel_notif"
             data-kt-translate-title="menu.notifications"
             title="{{ __('menu.notifications') }}">
             <i class="ki-duotone {{ $isV2 ? 'ki-binance' : 'ki-notification-status' }} {{ $iconSize }}">
@@ -58,7 +68,10 @@
         <!--end::Notifications Tab Toggle-->
 
         <!--begin::Theme mode Tab Toggle-->
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_theme"
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn {{ !app_fitur('tool_theme_mode') ? 'feature-hidden' : '' }}"
+            style="{{ !app_fitur('tool_theme_mode') ? 'display: none !important;' : '' }}"
+            data-kt-feature-tool="tool_theme_mode"
+            data-hub-target="#hub_panel_theme"
             data-kt-translate-title="menu.theme_mode"
             title="{{ __('menu.theme_mode') }}">
             <i class="ki-duotone ki-night-day theme-light-show {{ $iconSize }}">
@@ -72,7 +85,10 @@
 
         <!--begin::Icon style Tab Toggle-->
         @if(auth()->user()?->isMasterOrAdmin())
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_icons"
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn {{ !app_fitur('tool_icon_style') ? 'feature-hidden' : '' }}"
+            style="{{ !app_fitur('tool_icon_style') ? 'display: none !important;' : '' }}"
+            data-kt-feature-tool="tool_icon_style"
+            data-hub-target="#hub_panel_icons"
             data-kt-translate-title="menu.icon_style"
             title="{{ __('menu.icon_style') }}">
             <span class="icon-style-preview {{ $currentIconStyle !== 'duotone' ? 'd-none' : '' }}" data-kt-icon-preview-style="duotone">
@@ -91,7 +107,10 @@
         <!--end::Icon style Tab Toggle-->
 
         <!--begin::Language Tab Toggle-->
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_lang"
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn {{ !app_fitur('tool_language') ? 'feature-hidden' : '' }}"
+            style="{{ !app_fitur('tool_language') ? 'display: none !important;' : '' }}"
+            data-kt-feature-tool="tool_language"
+            data-hub-target="#hub_panel_lang"
             data-kt-translate-title="menu.language"
             title="{{ __('menu.language') }}">
             <img class="w-20px h-20px rounded-1" data-kt-element="lang-flag-current"
@@ -102,7 +121,10 @@
 
         <!--begin::Version switcher Tab Toggle-->
         @if(auth()->user()?->isMasterOrAdmin())
-        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn" data-hub-target="#hub_panel_version"
+        <button type="button" class="{{ $btnClass }} mobile-hub-tab-btn {{ !app_fitur('tool_theme_version') ? 'feature-hidden' : '' }}"
+            style="{{ !app_fitur('tool_theme_version') ? 'display: none !important;' : '' }}"
+            data-kt-feature-tool="tool_theme_version"
+            data-hub-target="#hub_panel_version"
             data-kt-translate-title="menu.theme_version"
             title="{{ __('menu.theme_version') }}">
             <i class="ki-duotone ki-cube-2 {{ $iconSize }}">
@@ -117,7 +139,8 @@
     <!--begin::Hub Panels Container-->
     <div class="mobile-hub-panels d-none mt-3 pt-3 border-top border-gray-200">
         <!--begin::Panel My Apps-->
-        <div class="mobile-hub-panel d-none" id="hub_panel_apps">
+        <div class="mobile-hub-panel d-none" id="hub_panel_apps" data-kt-feature-tool="tool_my_apps"
+            style="{{ !app_fitur('tool_my_apps') ? 'display: none !important;' : '' }}">
             @if ($isV2)
                 @include('partials.menus._quick-links-menu')
             @else
@@ -127,13 +150,15 @@
         <!--end::Panel My Apps-->
 
         <!--begin::Panel Notifications-->
-        <div class="mobile-hub-panel d-none" id="hub_panel_notif">
+        <div class="mobile-hub-panel d-none" id="hub_panel_notif" data-kt-feature-tool="tool_notifications"
+            style="{{ !app_fitur('tool_notifications') ? 'display: none !important;' : '' }}">
             @include('partials.menus._notifications-menu')
         </div>
         <!--end::Panel Notifications-->
 
         <!--begin::Panel Theme Mode-->
-        <div class="mobile-hub-panel d-none" id="hub_panel_theme">
+        <div class="mobile-hub-panel d-none" id="hub_panel_theme" data-kt-feature-tool="tool_theme_mode"
+            style="{{ !app_fitur('tool_theme_mode') ? 'display: none !important;' : '' }}">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <span class="fs-7 fw-bold text-gray-700 text-uppercase" data-kt-translate="menu.select_theme_mode">{{ __('menu.select_theme_mode') }}</span>
                 <span class="badge badge-light-primary fs-8 py-1 px-2" id="mobile_active_theme_label">Light</span>
@@ -181,7 +206,8 @@
 
         <!--begin::Panel Icon Style-->
         @if(auth()->user()?->isMasterOrAdmin())
-        <div class="mobile-hub-panel d-none" id="hub_panel_icons">
+        <div class="mobile-hub-panel d-none" id="hub_panel_icons" data-kt-feature-tool="tool_icon_style"
+            style="{{ !app_fitur('tool_icon_style') ? 'display: none !important;' : '' }}">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <span class="fs-7 fw-bold text-gray-700 text-uppercase" data-kt-translate="menu.select_icon_style">{{ __('menu.select_icon_style') }}</span>
                 <span class="badge badge-light-primary fs-8 py-1 px-2" id="mobile_active_icon_label">{{ ucfirst($currentIconStyle) }}</span>
@@ -230,7 +256,8 @@
         <!--end::Panel Icon Style-->
 
         <!--begin::Panel Language-->
-        <div class="mobile-hub-panel d-none" id="hub_panel_lang">
+        <div class="mobile-hub-panel d-none" id="hub_panel_lang" data-kt-feature-tool="tool_language"
+            style="{{ !app_fitur('tool_language') ? 'display: none !important;' : '' }}">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <span class="fs-7 fw-bold text-gray-700 text-uppercase" data-kt-translate="menu.select_language">{{ __('menu.select_language') }}</span>
                 <span class="badge badge-light-primary fs-8 py-1 px-2" id="mobile_active_lang_label">{{ \App\Support\LanguageManager::current() === 'id' ? 'Bahasa Indonesia' : 'English' }}</span>
@@ -262,7 +289,8 @@
 
         <!--begin::Panel Theme Version-->
         @if(auth()->user()?->isMasterOrAdmin())
-        <div class="mobile-hub-panel d-none" id="hub_panel_version">
+        <div class="mobile-hub-panel d-none" id="hub_panel_version" data-kt-feature-tool="tool_theme_version"
+            style="{{ !app_fitur('tool_theme_version') ? 'display: none !important;' : '' }}">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <span class="fs-7 fw-bold text-gray-700 text-uppercase" data-kt-translate="menu.theme_version">{{ __('menu.theme_version') }}</span>
                 <span class="badge badge-light-primary fs-8 py-1 px-2">{{ strtoupper($currentVersion) }}</span>

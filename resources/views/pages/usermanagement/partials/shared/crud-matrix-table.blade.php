@@ -14,20 +14,28 @@
             <h5 class="text-gray-900 fw-bold m-0">{{ $matrixTitle ?? 'Hak Akses / Permissions (CRUD Matrix)' }}</h5>
             <span class="text-muted fs-7">{{ $matrixSubtitle ?? 'Pilih izin fitur yang berlaku untuk akun atau peran ini' }}</span>
         </div>
-        <div class="d-flex align-items-center gap-2">
-            <div class="position-relative">
+        <div class="d-flex align-items-center gap-2 flex-nowrap w-100 w-sm-auto justify-content-end">
+            <div class="position-relative flex-grow-1 flex-sm-grow-0">
                 <i class="ki-outline ki-magnifier fs-4 position-absolute top-50 translate-middle-y ms-3 text-gray-500"></i>
-                <input type="text" class="form-control form-control-sm form-control-solid ps-9 w-175px w-md-225px matrix-search-input" 
+                <input type="text" class="form-control form-control-sm form-control-solid ps-9 w-100 w-sm-175px w-md-225px matrix-search-input" 
                        data-target="#{{ $prefix }}_table" 
                        placeholder="Cari Modul..." />
             </div>
             @if(!$isReadonly)
-                <button type="button" class="btn btn-sm btn-light-primary fw-bold btn-matrix-check-all" data-target="#{{ $prefix }}_table">
-                    <i class="ki-outline ki-check-square fs-6 me-1"></i>Pilih Semua
-                </button>
-                <button type="button" class="btn btn-sm btn-light-danger fw-bold btn-matrix-uncheck-all" data-target="#{{ $prefix }}_table">
-                    <i class="ki-outline ki-cross-square fs-6 me-1"></i>Kosongkan
-                </button>
+                <div class="d-flex align-items-center gap-1 flex-shrink-0">
+                    <button type="button" class="btn btn-sm btn-light-primary fw-bold px-2 px-sm-3 btn-matrix-check-all" 
+                        data-target="#{{ $prefix }}_table"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Pilih Semua Izin">
+                        <i class="ki-outline ki-check-square fs-6 me-0 me-sm-1"></i>
+                        <span class="d-none d-sm-inline">Pilih Semua</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-light-danger fw-bold px-2 px-sm-3 btn-matrix-uncheck-all" 
+                        data-target="#{{ $prefix }}_table"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kosongkan Semua Izin">
+                        <i class="ki-outline ki-cross-square fs-6 me-0 me-sm-1"></i>
+                        <span class="d-none d-sm-inline">Kosongkan</span>
+                    </button>
+                </div>
             @endif
         </div>
     </div>

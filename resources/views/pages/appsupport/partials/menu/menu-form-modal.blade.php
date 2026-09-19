@@ -333,10 +333,22 @@
                     </div>
                 </div>
 
-                <div class="modal-footer border-0 pt-0 pb-7 px-8 px-lg-10 flex-center">
-                    <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary" id="btn_submit_add_menu">
-                        <span class="indicator-label"><i class="ki-duotone ki-check fs-2 me-1"></i> Simpan Menu</span>
+                <div class="modal-footer border-0 pt-0 pb-7 px-6 px-lg-10 justify-content-center justify-content-sm-end gap-2">
+                    <button type="reset" class="btn btn-light" data-bs-dismiss="modal"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
+                        <i class="ki-outline ki-cross fs-4 me-1"></i>
+                        <span>Batal</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="btn_submit_add_menu"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan Menu">
+                        <span class="indicator-label">
+                            <i class="ki-duotone ki-check fs-2 me-1"><span class="path1"></span><span class="path2"></span></i>
+                            <span>Simpan Menu</span>
+                        </span>
+                        <span class="indicator-progress">
+                            <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                            <span>Menyimpan...</span>
+                        </span>
                     </button>
                 </div>
             </form>
@@ -496,10 +508,22 @@
                     </div>
                 </div>
 
-                <div class="modal-footer border-0 pt-0 pb-7 px-8 px-lg-10 flex-center">
-                    <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">
-                        <span class="indicator-label"><i class="ki-duotone ki-check fs-2 me-1"></i> Perbarui Menu</span>
+                <div class="modal-footer border-0 pt-0 pb-7 px-6 px-lg-10 justify-content-center justify-content-sm-end gap-2">
+                    <button type="reset" class="btn btn-light" data-bs-dismiss="modal"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batal">
+                        <i class="ki-outline ki-cross fs-4 me-1"></i>
+                        <span>Batal</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="btn_submit_edit_menu"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Perbarui Menu">
+                        <span class="indicator-label">
+                            <i class="ki-duotone ki-check fs-2 me-1"><span class="path1"></span><span class="path2"></span></i>
+                            <span>Perbarui Menu</span>
+                        </span>
+                        <span class="indicator-progress">
+                            <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                            <span>Menyimpan...</span>
+                        </span>
                     </button>
                 </div>
             </form>

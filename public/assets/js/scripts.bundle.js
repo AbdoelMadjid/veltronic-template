@@ -40,11 +40,9 @@ var KTApp = (function () {
                         (t.dismiss = "click"));
                 var i = new bootstrap.Tooltip(e, t);
                 return (
-                    t.dismiss &&
-                        "click" === t.dismiss &&
-                        e.addEventListener("click", function (e) {
-                            i.hide();
-                        }),
+                    e.addEventListener("click", function () {
+                        i.hide();
+                    }),
                     e.setAttribute("data-kt-initialized", "1"),
                     i
                 );

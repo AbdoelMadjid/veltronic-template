@@ -198,7 +198,20 @@
     <!--end::Frontpages-->
 
     <!--begin::Mobile Toolbar Hub-->
-    <div class="app-navbar-item d-flex d-lg-none ms-1 ms-md-4">
+    @php
+        $hasAnyMobileTool = app_fitur('tool_activities')
+            || app_fitur('tool_chat')
+            || app_fitur('tool_my_apps')
+            || app_fitur('tool_notifications')
+            || app_fitur('tool_theme_mode')
+            || (auth()->user()?->isMasterOrAdmin() && app_fitur('tool_icon_style'))
+            || app_fitur('tool_language')
+            || (auth()->user()?->isMasterOrAdmin() && app_fitur('tool_theme_version'));
+    @endphp
+    <div class="app-navbar-item d-flex d-lg-none ms-1 ms-md-4 {{ !$hasAnyMobileTool ? 'feature-hidden' : '' }}"
+        style="{{ !$hasAnyMobileTool ? 'display: none !important;' : '' }}"
+        id="kt_mobile_toolbar_hub_item"
+        data-kt-feature-mobile-hub="true">
         <!--begin::Menu wrapper-->
         <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"

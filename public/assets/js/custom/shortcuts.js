@@ -64,6 +64,54 @@ window.KTAppShortcuts = (function () {
     // MODULAR HANDLER 1: VISIBILITY TOGGLES
     // =========================================================================
 
+    function syncMobileHubVisibility() {
+        const hubMenus = document.querySelectorAll('#kt_mobile_toolbar_hub_menu');
+        hubMenus.forEach(hub => {
+            const tabsContainer = hub.querySelector('.mobile-hub-tabs');
+            if (!tabsContainer) return;
+
+            const toolButtons = tabsContainer.querySelectorAll('[data-kt-feature-tool]');
+            let hasVisibleButtons = false;
+            toolButtons.forEach(btn => {
+                const isHidden = btn.classList.contains('feature-hidden') || 
+                                 btn.style.display === 'none';
+                if (!isHidden) {
+                    hasVisibleButtons = true;
+                }
+            });
+
+            const hubTriggers = document.querySelectorAll('[data-kt-feature-mobile-hub="true"]');
+            hubTriggers.forEach(trigger => {
+                if (!hasVisibleButtons) {
+                    trigger.classList.add('feature-hidden');
+                    trigger.style.setProperty('display', 'none', 'important');
+                } else {
+                    trigger.classList.remove('feature-hidden');
+                    trigger.style.removeProperty('display');
+                }
+            });
+
+            // If active panel is now hidden or all tools are hidden, collapse panels
+            if (!hasVisibleButtons) {
+                const panelsContainer = hub.querySelector('.mobile-hub-panels');
+                if (panelsContainer) panelsContainer.classList.add('d-none');
+                const panels = hub.querySelectorAll('.mobile-hub-panel');
+                panels.forEach(p => p.classList.add('d-none'));
+                const tabBtns = hub.querySelectorAll('.mobile-hub-tab-btn');
+                tabBtns.forEach(b => b.classList.remove('active'));
+            } else {
+                const activeBtn = tabsContainer.querySelector('.mobile-hub-tab-btn.active');
+                if (activeBtn && (activeBtn.classList.contains('feature-hidden') || activeBtn.style.display === 'none')) {
+                    activeBtn.classList.remove('active');
+                    const panelsContainer = hub.querySelector('.mobile-hub-panels');
+                    if (panelsContainer) panelsContainer.classList.add('d-none');
+                    const panels = hub.querySelectorAll('.mobile-hub-panel');
+                    panels.forEach(p => p.classList.add('d-none'));
+                }
+            }
+        });
+    }
+
     function toggleElementsBySelector(selector, category, successMsg, hideMsg, showNotify = true) {
         const elements = document.querySelectorAll(selector);
         if (elements.length === 0) {
@@ -75,24 +123,26 @@ window.KTAppShortcuts = (function () {
 
         let anyVisible = false;
         elements.forEach(el => {
-            const isHidden = el.classList.contains('d-none') || 
-                             el.classList.contains('feature-hidden') || 
+            const isHidden = el.classList.contains('feature-hidden') || 
                              el.style.display === 'none';
             if (!isHidden) anyVisible = true;
         });
 
         const nextShow = !anyVisible;
 
-        // 1. Instant DOM update
+        // 1. Instant DOM update without breaking responsive layout classes (e.g. d-none d-lg-flex)
         elements.forEach(el => {
             if (nextShow) {
-                el.classList.remove('d-none', 'feature-hidden');
+                el.classList.remove('feature-hidden');
                 el.style.removeProperty('display');
             } else {
-                el.classList.add('d-none', 'feature-hidden');
+                el.classList.add('feature-hidden');
                 el.style.setProperty('display', 'none', 'important');
             }
         });
+
+        // Sync mobile hub visibility in realtime
+        syncMobileHubVisibility();
 
         // 2. Sync cards in app-fiturs page if currently open
         if (category) {
@@ -446,6 +496,7 @@ window.KTAppShortcuts = (function () {
     // Initialize immediately or on DOM Ready
     function init() {
         loadUserShortcuts();
+        syncMobileHubVisibility();
         document.removeEventListener('keydown', handleKeyDown);
         document.addEventListener('keydown', handleKeyDown);
     }

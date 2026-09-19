@@ -67,7 +67,30 @@ const KTDataLogin = (function () {
             const allBoxes = table.querySelectorAll('tbody input[type="checkbox"]');
             checkAll.checked = allBoxes.length > 0 && checkedBoxes.length === allBoxes.length;
         }
+
+        const bulkContainer = document.getElementById('kt_bulk_delete_container');
+        if (bulkContainer) {
+            if (count > 0) {
+                bulkContainer.classList.remove('d-none');
+            } else {
+                bulkContainer.classList.add('d-none');
+            }
+        }
     };
+
+    // Register custom DataTables compact pagination method matching Veltronic bootstrap-5 pattern exactly
+    if (typeof $ !== 'undefined' && $.fn.DataTable && $.fn.DataTable.ext && $.fn.DataTable.ext.pager) {
+        $.fn.DataTable.ext.pager.veltronic_compact = function (page, pages) {
+            if (pages <= 1) return [];
+            var numbers = [];
+            for (var p = 0; p < pages; p++) {
+                if (p === 0 || p === pages - 1 || Math.abs(p - page) <= 1) {
+                    numbers.push(p);
+                }
+            }
+            return ['previous', numbers, 'next'];
+        };
+    }
 
     // Initialize DataTable
     const initDataTable = () => {
@@ -81,6 +104,15 @@ const KTDataLogin = (function () {
             serverSide: true,
             order: [[6, 'desc']], // Default Sort by Waktu Sesi (created_at)
             stateSave: false,
+            pageLength: 10,
+            pagingType: 'veltronic_compact',
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+            dom:
+                "<'table-responsive'tr>" +
+                "<'row align-items-center justify-content-between g-3 mt-4 pt-3 border-top border-gray-200'" +
+                "<'col-12 col-md-auto d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-md-start gap-2 text-center text-sm-start text-muted fs-7'l i>" +
+                "<'col-12 col-md-auto d-flex justify-content-center justify-content-md-end'p>" +
+                ">",
             ajax: {
                 url: window.DATA_LOGIN_CONFIG?.urlIndex || window.location.href,
                 type: 'GET',
@@ -198,10 +230,10 @@ const KTDataLogin = (function () {
             ],
             language: {
                 emptyTable: "Belum ada riwayat data login pengguna yang tercatat.",
-                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ total riwayat",
-                infoEmpty: "Menampilkan 0 riwayat",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoEmpty: "Menampilkan 0 data",
                 infoFiltered: "(disaring dari _MAX_ total data)",
-                lengthMenu: "Tampilkan _MENU_",
+                lengthMenu: "Tampilkan _MENU_ data",
                 loadingRecords: "Memuat data...",
                 processing: '<div class="spinner-border spinner-border-sm text-primary" role="status"></div> Memuat riwayat login...',
                 search: "Cari:",
@@ -245,6 +277,19 @@ const KTDataLogin = (function () {
                 });
             }
         });
+
+        // Reset Filter Button
+        const resetFilterBtn = document.getElementById('kt_btn_reset_filter');
+        if (resetFilterBtn) {
+            resetFilterBtn.addEventListener('click', function () {
+                if (searchInput) searchInput.value = '';
+                if (typeSelect) typeSelect.value = 'all';
+                if (pointSelect) pointSelect.value = 'all';
+                if (roleSelect) roleSelect.value = 'all';
+                if (dateRangeSelect) dateRangeSelect.value = '';
+                datatable.draw();
+            });
+        }
 
         // Check All Checkbox
         if (checkAll) {
@@ -379,8 +424,8 @@ const KTDataLogin = (function () {
                 confirmButtonText: 'Ya, Hapus',
                 cancelButtonText: 'Batal',
                 customClass: {
-                    confirmButton: 'btn btn-danger rounded-pill px-5',
-                    cancelButton: 'btn btn-light rounded-pill px-5'
+                    confirmButton: 'btn btn-danger fw-bold',
+                    cancelButton: 'btn btn-light fw-bold'
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -405,7 +450,7 @@ const KTDataLogin = (function () {
                                 icon: 'success',
                                 buttonsStyling: false,
                                 confirmButtonText: 'OK',
-                                customClass: { confirmButton: 'btn btn-primary rounded-pill px-5' }
+                                customClass: { confirmButton: 'btn btn-primary fw-bold' }
                             });
                         } else {
                             Swal.fire({
@@ -413,7 +458,7 @@ const KTDataLogin = (function () {
                                 icon: 'error',
                                 buttonsStyling: false,
                                 confirmButtonText: 'Tutup',
-                                customClass: { confirmButton: 'btn btn-primary rounded-pill px-5' }
+                                customClass: { confirmButton: 'btn btn-primary fw-bold' }
                             });
                         }
                     })
@@ -425,7 +470,7 @@ const KTDataLogin = (function () {
                             icon: 'error',
                             buttonsStyling: false,
                             confirmButtonText: 'Tutup',
-                            customClass: { confirmButton: 'btn btn-primary rounded-pill px-5' }
+                            customClass: { confirmButton: 'btn btn-primary fw-bold' }
                         });
                     });
                 }
@@ -449,8 +494,8 @@ const KTDataLogin = (function () {
                     confirmButtonText: `Ya, Hapus (${ids.length}) Data`,
                     cancelButtonText: 'Batal',
                     customClass: {
-                        confirmButton: 'btn btn-danger rounded-pill px-5',
-                        cancelButton: 'btn btn-light rounded-pill px-5'
+                        confirmButton: 'btn btn-danger fw-bold',
+                        cancelButton: 'btn btn-light fw-bold'
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -481,7 +526,7 @@ const KTDataLogin = (function () {
                                     icon: 'success',
                                     buttonsStyling: false,
                                     confirmButtonText: 'OK',
-                                    customClass: { confirmButton: 'btn btn-primary rounded-pill px-5' }
+                                    customClass: { confirmButton: 'btn btn-primary fw-bold' }
                                 });
                             } else {
                                 Swal.fire({
@@ -489,7 +534,7 @@ const KTDataLogin = (function () {
                                     icon: 'error',
                                     buttonsStyling: false,
                                     confirmButtonText: 'Tutup',
-                                    customClass: { confirmButton: 'btn btn-primary rounded-pill px-5' }
+                                    customClass: { confirmButton: 'btn btn-primary fw-bold' }
                                 });
                             }
                         })
@@ -502,7 +547,7 @@ const KTDataLogin = (function () {
                                 icon: 'error',
                                 buttonsStyling: false,
                                 confirmButtonText: 'Tutup',
-                                customClass: { confirmButton: 'btn btn-primary rounded-pill px-5' }
+                                customClass: { confirmButton: 'btn btn-primary fw-bold' }
                             });
                         });
                     }
@@ -543,7 +588,7 @@ const KTDataLogin = (function () {
                             icon: 'success',
                             buttonsStyling: false,
                             confirmButtonText: 'OK',
-                            customClass: { confirmButton: 'btn btn-primary rounded-pill px-5' }
+                            customClass: { confirmButton: 'btn btn-primary fw-bold' }
                         });
                     } else {
                         Swal.fire({
@@ -551,7 +596,7 @@ const KTDataLogin = (function () {
                             icon: 'error',
                             buttonsStyling: false,
                             confirmButtonText: 'Tutup',
-                            customClass: { confirmButton: 'btn btn-primary rounded-pill px-5' }
+                            customClass: { confirmButton: 'btn btn-primary fw-bold' }
                         });
                     }
                 })
@@ -565,7 +610,7 @@ const KTDataLogin = (function () {
                         icon: 'error',
                         buttonsStyling: false,
                         confirmButtonText: 'Tutup',
-                        customClass: { confirmButton: 'btn btn-primary rounded-pill px-5' }
+                        customClass: { confirmButton: 'btn btn-primary fw-bold' }
                     });
                 });
             });

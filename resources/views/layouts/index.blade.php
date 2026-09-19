@@ -157,8 +157,8 @@ License: For each use you must have a valid license purchased only from above li
 
     <!--layout-partial:layout/_default.html-->
     @include('layouts._default')
-    <!--layout-partial:partials/_scrolltop.html-->
-    @include('partials.drawers._engage-drawer')
+    <!--layout-partial:partials/drawers/_engage-drawer.html-->
+    {{-- @include('partials.drawers._engage-drawer') --}}
     <!--layout-partial:partials/_scrolltop.html-->
     @include('partials._scrolltop')
 
@@ -180,6 +180,7 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ asset('assets/js/custom/notification-helper.js') }}"></script>
     <script src="{{ asset('assets/js/custom/lock-screen.js') }}"></script>
     <script src="{{ asset('assets/js/custom/shortcuts.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/tooltip-helper.js') }}"></script>
     @include('partials._notification')
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->

@@ -34,13 +34,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.34.0
+                            Versi Saat Ini: v1.35.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.35.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.35.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.35.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>19 Sep 2026, 23:55 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Standardisasi Komprehensif Antarmuka Mobile User Management, Aturan Navigasi Halaman Responsif (Rule 11), Modal Dialog Adaptif (Rule 10), Tab Mobile Icon-Only (Rule 9), dan Standarisasi Tombol Notifikasi Metronic</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyempurnaan menyeluruh pengalaman pengguna (UX) pada mode layar sempit/mobile di seluruh modul User Management: standarisasi navigasi &amp; footer tabel mandiri 3-baris rata tengah (Rule 11), restrukturisasi responsif seluruh dialog modal tanpa scroll internal ganda (Rule 10), tab navigasi icon-only dengan tooltip hover di layar smartphone (Rule 9), modernisasi grid filter riwayat sesi login, serta standarisasi tombol notifikasi dialog SweetAlert2 agar presisi mengikuti bentuk kotak elegan standar template Metronic.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Standar Navigasi &amp; Footer Tabel Mobile (Rule 11)</strong>: Mengisolasi pembungkus scroll horizontal hanya pada baris data tabel pengguna dan riwayat sesi login. Footer tabel (<em>Length Menu</em>, <em>DataTables Info</em> utuh 1 baris, dan <em>Pagination</em>) tersusun mandiri 3-baris rata tengah di layar HP dengan pager ringkas 5-angka (<code>veltronic_compact</code>).</li>
+                                        <li><strong>Standar Responsif Modal Dialog (Rule 10)</strong>: Header modal 3-baris terpusat dengan ikon 60px <code>rounded-circle</code>, section header bergaris pemisah, footer tombol rata tengah di mobile dengan tooltip hover, serta penghapusan scroll ganda (<em>Browser-Level Scroll Policy</em>) pada seluruh modal User Management.</li>
+                                        <li><strong>Standar Tab Modul Mobile (Rule 9)</strong>: Teks label tab tersembunyi di layar mobile (<code>d-none d-md-inline</code>) menyisakan ikon proporsional dengan tooltip hover interaktif.</li>
+                                        <li><strong>Modernisasi Filter Grid &amp; SweetAlert Button</strong>: Konversi filter riwayat login (<code>data-login-filter.blade.php</code>) ke sistem grid Bootstrap fleksibel dan penghapusan kelas <code>rounded-pill</code> pada tombol dialog SweetAlert2 untuk konsistensi desain kotak elegan Metronic.</li>
+                                        <li><strong>Zero-Reload Hak Akses Pengguna (<code>/usermanagement/akses-user</code>)</strong>: Implementasi pencarian live search debounced 300ms, filter peran AJAX instan, paginasi asinkron tanpa reload browser, dan pemisahan baris tabel ke partial modular <code>user-access-rows.blade.php</code>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.35.0-->
+
                         <!--begin::Item v1.34.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.34.0</div>
@@ -56,7 +91,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>19 Sep 2026, 01:10 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Modernisasi Top Filter Pengguna (Single-Row Pure Indonesian), Pengaturan Fitur Aplikasi 2-Kolom &amp; Modal Pintasan Terisolasi, serta Random Deterministik Cover Default Pengguna</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

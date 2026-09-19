@@ -37,6 +37,16 @@ class UserAccessController extends Controller
         }
 
         $users = $query->latest('id')->paginate(10)->withQueryString();
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'html_rows' => view('pages.usermanagement.partials.akses-user.user-access-rows', compact('users'))->render(),
+                'html_pagination' => $users->links('pagination::bootstrap-5')->render(),
+                'total' => $users->total(),
+            ]);
+        }
+
         $roles = Role::orderBy('name')->get();
         $matrixTree = \App\Services\UserManagement\PermissionMatrixService::getMatrixTree();
         $totalUsers = User::count();

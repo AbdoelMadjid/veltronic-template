@@ -1,24 +1,25 @@
 <!--begin::Tab Pane Sections Konten-->
 <div class="card card-flush shadow-sm border-0 mb-6">
     <!--begin::Card header-->
-    <div class="card-header pt-6">
+    <div class="card-header pt-6 px-4 px-md-6 flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3">
         <div class="card-title">
             <i class="ki-outline ki-abstract-26 text-primary fs-2 me-2"></i>
             <div>
                 <h3 class="fw-bolder text-gray-900 m-0 fs-4">Manajemen Section / Bagian Konten Landing</h3>
-                <span class="text-muted fs-7">Kelola bagian-bagian konten pada landing page, urutkan susunannya, aktif/nonaktifkan, atau tambahkan section kustom baru.</span>
+                <span class="text-muted fs-7">Kelola bagian konten landing page, urutkan susunannya, aktif/nonaktifkan, atau tambahkan section kustom.</span>
             </div>
         </div>
-        <div class="card-toolbar gap-2">
-            <button type="button" class="btn btn-light-warning btn-sm fw-bold rounded-pill px-4" id="kt_btn_reset_sections_default">
+        <div class="card-toolbar d-flex flex-wrap gap-2 w-100 w-sm-auto justify-content-start justify-content-sm-end">
+            <button type="button" class="btn btn-light-warning btn-sm fw-bold px-3 px-md-4" id="kt_btn_reset_sections_default"
+                data-bs-toggle="tooltip" data-bs-trigger="hover" title="Reset Section ke Bawaan">
                 <span class="indicator-label">
                     <i class="ki-outline ki-arrows-loop fs-4 me-1"></i> Reset Section
                 </span>
                 <span class="indicator-progress">
-                    <span class="spinner-border spinner-border-sm align-middle me-2"></span> Memproses...
+                    <span class="spinner-border spinner-border-sm align-middle me-1"></span> Memproses...
                 </span>
             </button>
-            <button type="button" class="btn btn-primary btn-sm fw-bold rounded-pill px-4" id="kt_btn_add_custom_section">
+            <button type="button" class="btn btn-primary btn-sm fw-bold px-3 px-md-4" id="kt_btn_add_custom_section">
                 <i class="ki-outline ki-plus fs-4 me-1"></i> Tambah Section Kustom
             </button>
         </div>
@@ -26,7 +27,7 @@
     <!--end::Card header-->
 
     <!--begin::Card body-->
-    <div class="card-body pt-2 pb-6">
+    <div class="card-body pt-2 pb-6 px-4 px-md-6">
         <!--begin::Table wrapper-->
         <div class="table-responsive">
             <table class="table table-row-dashed table-row-gray-300 align-middle gs-4 gy-4" id="kt_table_landing_sections">

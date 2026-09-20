@@ -781,13 +781,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 const outgoingList = document.getElementById('modal_outgoing_relations_list');
                 if (data.outgoing_relations && data.outgoing_relations.length > 0) {
                     outgoingList.innerHTML = data.outgoing_relations.map(out => `
-                        <div class="d-flex align-items-center justify-content-between p-2 bg-white rounded border border-gray-200 fs-8">
-                            <div>
-                                <span class="fw-bold text-gray-900">${out.column}</span>
-                                <span class="text-muted mx-1">&rarr;</span>
-                                <span class="badge badge-light-primary fw-bolder">${out.target_table}.${out.target_column}</span>
+                        <div class="p-3 bg-body rounded border border-gray-200 shadow-xs">
+                            <div class="d-flex flex-wrap align-items-center gap-1 mb-2">
+                                <span class="badge badge-light fw-bold text-gray-900 border border-gray-300 font-monospace fs-8">${out.column}</span>
+                                <i class="ki-outline ki-arrow-right text-primary fs-7 mx-1"></i>
+                                <span class="badge badge-light-primary fw-bolder font-monospace fs-8">${out.target_table}.${out.target_column}</span>
                             </div>
-                            <span class="text-muted fs-9">${out.constraint}</span>
+                            <div class="d-flex align-items-center justify-content-between pt-1 border-top border-gray-100 fs-9 text-muted flex-wrap gap-1">
+                                <span class="fw-semibold">Constraint FK:</span>
+                                <span class="font-monospace text-gray-700">${out.constraint}</span>
+                            </div>
                         </div>
                     `).join('');
                 } else {
@@ -798,13 +801,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 const incomingList = document.getElementById('modal_incoming_relations_list');
                 if (data.incoming_relations && data.incoming_relations.length > 0) {
                     incomingList.innerHTML = data.incoming_relations.map(inc => `
-                        <div class="d-flex align-items-center justify-content-between p-2 bg-white rounded border border-gray-200 fs-8">
-                            <div>
-                                <span class="badge badge-light-success fw-bolder">${inc.source_table}.${inc.source_column}</span>
-                                <span class="text-muted mx-1">&rarr;</span>
-                                <span class="fw-bold text-gray-900">${inc.target_column}</span>
+                        <div class="p-3 bg-body rounded border border-gray-200 shadow-xs">
+                            <div class="d-flex flex-wrap align-items-center gap-1 mb-2">
+                                <span class="badge badge-light-success fw-bolder font-monospace fs-8">${inc.source_table}.${inc.source_column}</span>
+                                <i class="ki-outline ki-arrow-right text-success fs-7 mx-1"></i>
+                                <span class="badge badge-light fw-bold text-gray-900 border border-gray-300 font-monospace fs-8">${inc.target_column}</span>
                             </div>
-                            <span class="text-muted fs-9">${inc.constraint}</span>
+                            <div class="d-flex align-items-center justify-content-between pt-1 border-top border-gray-100 fs-9 text-muted flex-wrap gap-1">
+                                <span class="fw-semibold">Constraint FK:</span>
+                                <span class="font-monospace text-gray-700">${inc.constraint}</span>
+                            </div>
                         </div>
                     `).join('');
                 } else {

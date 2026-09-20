@@ -34,13 +34,45 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.36.0
+                            Versi Saat Ini: v1.37.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.37.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.37.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.37.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>20 Sep 2026, 23:55 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Standardisasi &amp; Optimalisasi Antarmuka Mobile Modul Backup Database (/appsupport/backup-db) &amp; Tema Halaman Depan (/appsupport/theme-frontpage)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Optimalisasi tampilan antarmuka mobile/HP pada modul Backup Database dan Manajemen Tema Frontpage: penyesuaian header banner adaptif, navigasi tab responsif mobile icon-only dengan hover tooltip (Rule 9), filter toolbar pencarian full-width, pengaturan saklar relasi dan tombol pilih semua sejajar 1 baris, tombol aksi backup full-width informatif, modal detail relasi dan modal formulir tema/seksi/menu responsif (Rule 10), serta dukungan penuh tema dinamis Metronic.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Backup Database (/appsupport/backup-db)</strong>: Header banner modul responsif, navigasi tab icon-only di mobile, pencarian full-width, saklar relasi &amp; tombol pilih semua 1 baris, tombol backup full-width dengan teks utuh, modal detail relasi masuk/keluar responsif, dan kelas token tema dinamis.</li>
+                                        <li><strong>Tema Halaman Depan (/appsupport/theme-frontpage)</strong>: Header banner dengan tombol preview, navigasi tab icon-only di mobile, kartu pemilih tema adaptif, form branding hero, tabel &amp; modal menu/seksi responsif (Rule 10), serta live preview frame yang responsif.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.37.0 (Minor)-->
+
                         <!--begin::Item v1.36.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.36.0</div>
@@ -56,7 +88,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>20 Sep 2026, 02:15 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Standardisasi &amp; Optimalisasi Menyeluruh Antarmuka Modul App Support (/appsupport/menu, /appsupport/app-profil, /appsupport/app-fiturs)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

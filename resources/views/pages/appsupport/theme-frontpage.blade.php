@@ -1,5 +1,7 @@
 @extends('layouts.index')
 
+@section('title', 'Pengaturan Tema Halaman Depan')
+
 @section('toolbar')
     @include('layouts.partials._toolbar', [
         'action' => view()->make('layouts.partials._action-petunjuk-button', [
@@ -32,7 +34,7 @@
 
             <!--begin::Navs Card-->
             <div class="card card-flush shadow-sm border-0 mb-6">
-                <div class="card-header border-0 pt-2 px-6">
+                <div class="card-header border-0 pt-2 px-4 px-md-6">
                     @include('pages.appsupport.partials.theme-frontpage.navs', ['active' => 'theme'])
                 </div>
             </div>

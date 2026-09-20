@@ -1,20 +1,18 @@
 <!--begin::Backup History Card-->
 <div class="card card-flush shadow-sm border-0 mb-6">
     <!--begin::Card header-->
-    <div class="card-header border-0 pt-6 px-6">
+    <div class="card-header border-0 pt-6 px-4 px-md-6 d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-3">
         <!--begin::Card title-->
-        <div class="card-title">
-            <div class="d-flex align-items-center position-relative my-1">
-                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4"><span class="path1"></span><span class="path2"></span></i>
-                <input type="text" id="kt_filter_history_search" class="form-control form-control-solid w-250px ps-12" placeholder="Cari nama berkas cadangan..." />
-            </div>
+        <div class="d-flex align-items-center position-relative my-1 w-100 w-sm-250px w-xxl-300px">
+            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+            <input type="text" id="kt_filter_history_search" class="form-control form-control-solid w-100 ps-12" placeholder="Cari nama berkas cadangan..." />
         </div>
         <!--end::Card title-->
 
         <!--begin::Card toolbar-->
-        <div class="card-toolbar d-flex align-items-center gap-2 ms-auto flex-shrink-0">
-            <span class="text-muted fs-7">
-                Lokasi penyimpanan: <code class="text-primary">storage/app/backups/</code>
+        <div class="d-flex align-items-center gap-2 ms-0 ms-sm-auto flex-shrink-0">
+            <span class="text-muted fs-8 fs-md-7">
+                Lokasi: <code class="text-primary">storage/app/backups/</code>
             </span>
         </div>
         <!--end::Card toolbar-->
@@ -22,7 +20,7 @@
     <!--end::Card header-->
 
     <!--begin::Card body-->
-    <div class="card-body py-4 px-6">
+    <div class="card-body py-4 px-4 px-md-6">
         <div class="table-responsive">
             <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="kt_backup_history_datatable">
                 <thead>
@@ -79,22 +77,22 @@
                                 <div class="d-flex align-items-center justify-content-end gap-2">
                                     <!-- Download Button -->
                                     <a href="{{ route('appsupport.backup-db.download', $file['name']) }}" class="btn btn-icon btn-light-success btn-sm"
-                                        data-bs-toggle="tooltip" title="Unduh Berkas SQL">
-                                        <i class="ki-duotone ki-file-down fs-5"><span class="path1"></span><span class="path2"></span></i>
+                                        data-bs-toggle="tooltip" data-bs-trigger="hover" title="Unduh Berkas SQL">
+                                        <i class="ki-outline ki-file-down fs-5"></i>
                                     </a>
 
                                     <!-- Restore Button -->
                                     <button type="button" class="btn btn-icon btn-light-warning btn-sm btn-restore-backup"
                                         data-file="{{ $file['name'] }}"
-                                        data-bs-toggle="tooltip" title="Pulihkan / Restore Database">
-                                        <i class="ki-duotone ki-arrows-circle fs-5"><span class="path1"></span><span class="path2"></span></i>
+                                        data-bs-toggle="tooltip" data-bs-trigger="hover" title="Pulihkan / Restore Database">
+                                        <i class="ki-outline ki-arrows-circle fs-5"></i>
                                     </button>
 
                                     <!-- Delete Button -->
                                     <button type="button" class="btn btn-icon btn-light-danger btn-sm btn-delete-backup"
                                         data-file="{{ $file['name'] }}"
-                                        data-bs-toggle="tooltip" title="Hapus Berkas Cadangan">
-                                        <i class="ki-duotone ki-trash fs-5"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                        data-bs-toggle="tooltip" data-bs-trigger="hover" title="Hapus Berkas Cadangan">
+                                        <i class="ki-outline ki-trash fs-5"></i>
                                     </button>
                                 </div>
                             </td>

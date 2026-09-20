@@ -1,16 +1,18 @@
 <!--begin::Tables & Relations Card-->
 <div class="card card-flush shadow-sm border-0 mb-6">
     <!--begin::Card header-->
-    <div class="card-header border-0 pt-6 px-6">
+    <div class="card-header border-0 pt-6 px-4 px-md-6 d-flex flex-column flex-xl-row align-items-stretch align-items-xl-center justify-content-between gap-4">
         <!--begin::Card title (Search & Filter)-->
-        <div class="card-title">
-            <div class="d-flex align-items-center position-relative my-1 me-4">
-                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4"><span class="path1"></span><span class="path2"></span></i>
-                <input type="text" id="kt_filter_table_search" class="form-control form-control-solid w-250px ps-12" placeholder="Cari nama tabel..." />
+        <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-3 w-100 w-xl-auto">
+            <!-- 1. Search Box (Full width di Mobile) -->
+            <div class="d-flex align-items-center position-relative w-100 w-sm-250px w-xxl-300px">
+                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+                <input type="text" id="kt_filter_table_search" class="form-control form-control-solid w-100 ps-12" placeholder="Cari nama tabel..." />
             </div>
 
-            <div class="w-175px my-1">
-                <select id="kt_filter_relation_type" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
+            <!-- Filter Select (Full width di Mobile) -->
+            <div class="w-100 w-sm-175px">
+                <select id="kt_filter_relation_type" class="form-select form-select-solid w-100" data-control="select2" data-hide-search="true">
                     <option value="all" selected>Semua Tabel</option>
                     <option value="with_relations">Memiliki Relasi</option>
                     <option value="no_relations">Tabel Standalone</option>
@@ -20,48 +22,55 @@
         <!--end::Card title-->
 
         <!--begin::Card toolbar (Action buttons)-->
-        <div class="card-toolbar d-flex align-items-center gap-2 ms-auto flex-shrink-0">
-            <!-- Switch Auto-Centang Relasi -->
-            <div class="form-check form-switch form-check-custom form-check-solid me-3" data-bs-toggle="tooltip" title="Otomatis mencentang tabel yang memiliki relasi Foreign Key (merujuk/dirujuk) saat tabel dipilih">
-                <input class="form-check-input h-20px w-35px" type="checkbox" id="kt_switch_auto_relational_select" checked />
-                <label class="form-check-label text-gray-700 fw-bold fs-7 cursor-pointer" for="kt_switch_auto_relational_select">
-                    Auto-Centang Relasi
-                </label>
+        <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center gap-3 w-100 w-xl-auto">
+            <!-- 2. Auto Relasi & Pilih Semua dalam Satu Baris di Mobile -->
+            <div class="d-flex align-items-center justify-content-between justify-content-md-start gap-4 py-1">
+                <!-- Switch Auto-Centang Relasi -->
+                <div class="form-check form-switch form-check-custom form-check-solid" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Otomatis mencentang tabel yang memiliki relasi Foreign Key saat tabel dipilih">
+                    <input class="form-check-input h-20px w-35px cursor-pointer" type="checkbox" id="kt_switch_auto_relational_select" checked />
+                    <label class="form-check-label text-gray-700 fw-bold fs-7 cursor-pointer text-nowrap" for="kt_switch_auto_relational_select">
+                        Auto Relasi
+                    </label>
+                </div>
+
+                <!-- Checkbox Pilih Semua -->
+                <div class="form-check form-check-custom form-check-solid">
+                    <input class="form-check-input cursor-pointer" type="checkbox" id="kt_check_all_tables" />
+                    <label class="form-check-label text-gray-700 fw-bold fs-7 cursor-pointer text-nowrap" for="kt_check_all_tables">
+                        Pilih Semua
+                    </label>
+                </div>
             </div>
 
-            <div class="form-check form-check-custom form-check-solid me-3">
-                <input class="form-check-input" type="checkbox" id="kt_check_all_tables" />
-                <label class="form-check-label text-gray-700 fw-bold fs-7" for="kt_check_all_tables">
-                    Pilih Semua
-                </label>
+            <!-- 3. Tombol Backup Terpilih & Backup Seluruh DB di Baris Berikutnya (Full Width di Mobile dengan Teks Utuh) -->
+            <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 w-100 w-md-auto">
+                <!-- Tombol Backup Terpilih -->
+                <button type="button" class="btn btn-sm btn-light-primary fw-bold d-flex align-items-center justify-content-center flex-grow-1 flex-md-grow-0" id="kt_btn_backup_selected" disabled
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" title="Backup hanya tabel yang dicentang">
+                    <span class="indicator-label d-flex align-items-center">
+                        <i class="ki-outline ki-check-circle fs-5 me-1"></i>
+                        <span>Backup Terpilih</span>
+                        <span class="badge badge-primary ms-1" id="kt_selected_tables_badge">0</span>
+                    </span>
+                    <span class="indicator-progress">
+                        <span class="spinner-border spinner-border-sm align-middle me-1"></span>
+                        <span>Membuat Dump...</span>
+                    </span>
+                </button>
+
+                <!-- Tombol Backup Seluruh DB -->
+                <button type="button" class="btn btn-sm btn-primary fw-bold d-flex align-items-center justify-content-center flex-grow-1 flex-md-grow-0" id="kt_btn_backup_full"
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" title="Backup seluruh tabel dan relasi database">
+                    <span class="indicator-label d-flex align-items-center">
+                        <i class="ki-outline ki-cloud-download fs-5 me-1"></i>
+                        <span>Backup Seluruh DB</span>
+                    </span>
+                    <span class="indicator-progress">
+                        <span class="spinner-border spinner-border-sm align-middle me-1"></span>
+                        <span>Membuat Dump...</span>
+                    </span>
+                </button>
             </div>
-
-            <!-- Tombol Backup Terpilih -->
-            <button type="button" class="btn btn-sm btn-light-primary fw-bold" id="kt_btn_backup_selected" disabled
-                data-bs-toggle="tooltip" title="Backup hanya tabel yang dicentang">
-                <span class="indicator-label">
-                    <i class="ki-duotone ki-check-circle fs-5 me-0 me-sm-1"><span class="path1"></span><span class="path2"></span></i>
-                    <span class="d-none d-sm-inline">Backup Terpilih</span>
-                    <span class="badge badge-primary ms-1" id="kt_selected_tables_badge">0</span>
-                </span>
-                <span class="indicator-progress">
-                    <span class="spinner-border spinner-border-sm align-middle me-2"></span>
-                    <span class="d-none d-sm-inline">Membuat Dump...</span>
-                </span>
-            </button>
-
-            <!-- Tombol Backup Seluruh DB -->
-            <button type="button" class="btn btn-sm btn-primary fw-bold" id="kt_btn_backup_full"
-                data-bs-toggle="tooltip" title="Backup seluruh tabel dan relasi database">
-                <span class="indicator-label">
-                    <i class="ki-duotone ki-cloud-download fs-5 me-0 me-sm-1"><span class="path1"></span><span class="path2"></span></i>
-                    <span class="d-none d-sm-inline">Backup Seluruh DB</span>
-                </span>
-                <span class="indicator-progress">
-                    <span class="spinner-border spinner-border-sm align-middle me-2"></span>
-                    <span class="d-none d-sm-inline">Membuat Dump...</span>
-                </span>
-            </button>
         </div>
         <!--end::Card toolbar-->
     </div>
@@ -163,17 +172,17 @@
                             <td class="text-end pe-4">
                                 <div class="d-flex align-items-center justify-content-end gap-1">
                                     <button type="button" class="btn btn-icon btn-light-info btn-sm btn-table-detail"
-                                        data-table="{{ $table['name'] }}"
-                                        data-bs-toggle="tooltip" title="Lihat Relasi & Skema Kolom">
-                                        <i class="ki-duotone ki-eye fs-5"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                                    </button>
+                                         data-table="{{ $table['name'] }}"
+                                         data-bs-toggle="tooltip" data-bs-trigger="hover" title="Lihat Relasi & Skema Kolom">
+                                         <i class="ki-outline ki-eye fs-5"></i>
+                                     </button>
 
-                                    <button type="button" class="btn btn-icon btn-light-primary btn-sm btn-single-backup"
-                                        data-table="{{ $table['name'] }}"
-                                        data-bs-toggle="tooltip" title="Backup Hanya Tabel Ini">
-                                        <i class="ki-duotone ki-cloud-download fs-5"><span class="path1"></span><span class="path2"></span></i>
-                                    </button>
-                                </div>
+                                     <button type="button" class="btn btn-icon btn-light-primary btn-sm btn-single-backup"
+                                         data-table="{{ $table['name'] }}"
+                                         data-bs-toggle="tooltip" data-bs-trigger="hover" title="Backup Hanya Tabel Ini">
+                                         <i class="ki-outline ki-cloud-download fs-5"></i>
+                                     </button>
+                                 </div>
                             </td>
                         </tr>
                     @empty

@@ -5,6 +5,21 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.37.0] - 2026-09-20
+
+### Added & Enhanced
+- **Standardisasi & Optimalisasi Antarmuka Mobile Modul Backup Database (`/appsupport/backup-db`) & Tema Halaman Depan (`/appsupport/theme-frontpage`)**:
+  - **Optimalisasi Modul Backup Database (`/appsupport/backup-db`)**:
+    - **Header Banner & Navs Tab Mobile (Rule 7 & Rule 9)**: Header banner adaptif dan tab navigasi responsif icon-only pada layar mobile (`< md`) dengan tooltip hover interaktif.
+    - **Filter Toolbar & Aksi Backup Responsif**: Kolom pencarian tabel full-width pada mobile, pengaturan saklar *Otomatis Sertakan Relasi* dan tombol *Pilih Semua* tersusun sejajar rapi dalam 1 baris, serta tombol aksi *Backup Terpilih* dan *Backup Seluruh Data* adaptif full-width pada baris berikutnya dengan teks utuh.
+    - **Modal Detail Relasi Tabel (Rule 10)**: Header modal 3-baris terpusat di mobile dengan ikon 60px dan tombol close absolut, serta penataan kartu/tabel tab *Relasi Keluar (BelongsTo)* dan *Relasi Masuk (HasMany)* yang rapi dan elegan.
+    - **Dark Mode & Tema Dinamis**: Penerapan token warna Metronic (`bg-body`, `text-gray-900`, `text-muted`, `border-gray-200`) pada seluruh tab dan modal.
+  - **Optimalisasi Modul Tema & Halaman Depan (`/appsupport/theme-frontpage`)**:
+    - **Header Banner & Navs Tab Mobile (Rule 7 & Rule 9)**: Banner modul adaptif dengan tombol *Lihat Website* dan tab navigasi icon-only pada mobile lengkap dengan tooltip hover.
+    - **Tab Pemilih Tema (Theme Switcher)**: Kartu tema responsif (`col-12 col-sm-6 col-xl-3`) dengan palet warna dinamis, badge tema aktif, dan tombol aksi ramah sentuhan.
+    - **Tab Hero & Branding, Menu Navigasi, Seksi & Konten, Footer & Medsos**: Form pengaturan, tabel menu & seksi, serta modal dialog tambah/edit yang memenuhi Rule 10 (Responsive Modal Dialogs).
+    - **Tab Live Preview**: Tampilan frame preview interaktif yang responsif dan proporsional di seluruh resolusi layar.
+
 ## [v1.36.0] - 2026-09-20
 
 ### Added & Enhanced

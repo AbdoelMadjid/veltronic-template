@@ -1,11 +1,11 @@
 <!--begin::Auto Backup Settings Card-->
 <div class="card card-flush shadow-sm border-0 mb-6">
     <!--begin::Card header-->
-    <div class="card-header border-0 pt-6 px-6">
+    <div class="card-header border-0 pt-6 px-4 px-md-6 flex-wrap gap-3">
         <div class="card-title">
             <h4 class="fw-bolder text-gray-900 m-0">Konfigurasi Penjadwalan Backup Otomatis</h4>
         </div>
-        <div class="card-toolbar d-flex align-items-center gap-2 ms-auto flex-shrink-0">
+        <div class="card-toolbar d-flex align-items-center gap-2 ms-0 ms-md-auto flex-shrink-0">
             @if(!empty($autoSettings['last_run_at']))
                 <span class="badge badge-light-primary fs-8">
                     Terakhir dieksekusi: {{ \Carbon\Carbon::parse($autoSettings['last_run_at'])->translatedFormat('d M Y, H:i') }}
@@ -16,7 +16,7 @@
     <!--end::Card header-->
 
     <!--begin::Card body-->
-    <div class="card-body py-4 px-6">
+    <div class="card-body py-4 px-4 px-md-6">
         <form id="kt_form_auto_backup_settings" action="{{ route('appsupport.backup-db.settings') }}" method="POST">
             @csrf
 
@@ -142,7 +142,7 @@
             <div class="d-flex justify-content-end pt-4 border-top">
                 <button type="submit" class="btn btn-primary fw-bold" id="kt_btn_save_backup_settings">
                     <span class="indicator-label">
-                        <i class="ki-duotone ki-check fs-5 me-1"><span class="path1"></span><span class="path2"></span></i>
+                        <i class="ki-outline ki-check fs-5 me-1"></i>
                         Simpan Pengaturan
                     </span>
                     <span class="indicator-progress">

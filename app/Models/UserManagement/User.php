@@ -350,4 +350,37 @@ class User extends Authenticatable
 
         return $record;
     }
+
+    /**
+     * Get user presence data array (status, badge_class, label, last_seen_human).
+     */
+    public function getPresenceAttribute(): array
+    {
+        return \App\Services\UserManagement\UserPresenceService::getUserPresence($this);
+    }
+
+    /**
+     * Get presence status string ('online' | 'idle' | 'offline').
+     */
+    public function getPresenceStatusAttribute(): string
+    {
+        return $this->presence['status'] ?? 'offline';
+    }
+
+    /**
+     * Get presence badge CSS class ('bg-success' | 'bg-warning' | 'bg-secondary').
+     */
+    public function getPresenceBadgeClassAttribute(): string
+    {
+        return $this->presence['badge_class'] ?? 'bg-secondary';
+    }
+
+    /**
+     * Get user-friendly presence label.
+     */
+    public function getPresenceLabelAttribute(): string
+    {
+        return $this->presence['label'] ?? 'Offline';
+    }
 }
+

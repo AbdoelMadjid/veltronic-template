@@ -34,13 +34,47 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.41.0
+                            Versi Saat Ini: v1.42.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.42.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.42.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.42.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>22 Sep 2026, 01:05 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Sistem Realtime Status Kehadiran Pengguna (Online, Idle, &amp; Offline) Serta Komponen Sidebar Dashboard Bergaya Jejaring Sosial (/dashboard)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Implementasi menyeluruh arsitektur pelacakan status kehadiran pengguna (Online, Idle/Menjauh, Offline) secara realtime berbasis aktivitas interaksi dan inaktivitas. Menggantikan kartu statis About Us pada sidebar kanan Dashboard (/dashboard) dengan komponen interaktif modern Metronic bergaya jejaring sosial (foto profil berindikator titik status denyut/pulse, live counter kehadiran, filter tab interaktif ber-badge angka realtime, tombol aksi permintaan pertemanan dengan loading indicator, serta modal pop-up profil publik yang dapat diakses oleh seluruh pengguna tanpa batasan role).
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Backend Presence Engine (<code>UserPresenceService.php</code> &amp; <code>UserPresenceController.php</code>)</strong>: Manajemen kehadiran berbasis cache memory berkinerja tinggi dengan TTL otomatis dan fallback database <code>last_login_at</code>. Klasifikasi presisi 🟢 Online (&le; 3 mnt), 🟡 Idle (&ge; 3 mnt atau tab background 60s), dan ⚪ Offline (logout/unload beacon).</li>
+                                        <li><strong>Frontend Live Activity Engine (<code>user-presence.js</code>)</strong>: Event listener interaksi pengguna throttled, pendeteksi inaktivitas dan visibility change dengan toleransi 60 detik, heartbeat periodik 45s, penanganan tab closing via <code>navigator.sendBeacon</code>, serta auto-updater widget dashboard setiap 15 detik tanpa refresh halaman (Zero-Reload Realtime Policy).</li>
+                                        <li><strong>Sidebar Dashboard Presence Widget (<code>widget-user-presence.blade.php</code>)</strong>: Menggantikan kartu About Us dengan widget interaktif Metronic, avatar bulat berindikator titik sudut, live online pill, tab filter (Semua, Online, Idle, Offline) ber-badge angka counter dinamis, dan tombol interaksi sosial <em>Tambah Teman</em> dengan loading spinner.</li>
+                                        <li><strong>Modal Profil Publik Bebas Role (<code>modal-public-profile.blade.php</code>)</strong>: Pop-up profil pengguna aman untuk seluruh role yang menampilkan cover header, avatar + live presence dot, kutipan moto hidup/status, badge role, poin aktivitas, dan tanggal bergabung tanpa membocorkan data privat admin.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.42.0-->
+
                         <!--begin::Item v1.41.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.41.0</div>
@@ -56,7 +90,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>21 Sep 2026, 23:05 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Standardisasi Full Button Header &amp; Modal Responsif Mobile Serta Penataan Layout Toolbar Modul User Management &amp; App Support (/appsupport/backup-db, /usermanagement/roles, /usermanagement/permissions, /usermanagement/users, /usermanagement/data-login, /appsupport/theme-frontpage, /appsupport/app-profil)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

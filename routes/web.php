@@ -185,7 +185,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Realtime User Presence & Social Interactions
+    Route::prefix('user-presence')->name('user-presence.')->group(function () {
+        Route::post('heartbeat', [\App\Http\Controllers\UserManagement\UserPresenceController::class, 'heartbeat'])->name('heartbeat');
+        Route::post('offline', [\App\Http\Controllers\UserManagement\UserPresenceController::class, 'setOffline'])->name('offline');
+        Route::get('dashboard-widget', [\App\Http\Controllers\UserManagement\UserPresenceController::class, 'getDashboardWidget'])->name('dashboard-widget');
+        Route::get('public-profile/{user}', [\App\Http\Controllers\UserManagement\UserPresenceController::class, 'getPublicProfile'])->name('public-profile');
+        Route::post('friend-request/{user}', [\App\Http\Controllers\UserManagement\UserPresenceController::class, 'toggleFriendRequest'])->name('friend-request');
+    });
 });
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

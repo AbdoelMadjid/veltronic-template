@@ -5,6 +5,32 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.42.0] - 2026-09-22
+
+### Added
+- **Sistem Realtime Status Kehadiran Pengguna (Online, Idle, & Offline) Serta Komponen Sidebar Dashboard Bergaya Jejaring Sosial (`/dashboard`)**:
+  - **Backend Presence Engine (`UserPresenceService.php` & `UserPresenceController.php`)**:
+    - Pelacakan status kehadiran pengguna berbasis cache memory dengan TTL otomatis dan fallback database `last_login_at`.
+    - Klasifikasi status kehadiran akurat:
+      - 🟢 **Online**: Interaksi aktif pengguna dalam kurun waktu $\le 3$ menit.
+      - 🟡 **Idle (Menjauh)**: Pengguna tidak berinteraksi $\ge 3$ menit, tab browser diminimize/di-background dengan toleransi jeda 60 detik, atau layar terkunci (*lockscreen*).
+      - ⚪ **Offline**: Pengguna keluar (*logout*), menutup tab (*beacon unload*), atau inaktif $\ge 10$ menit.
+    - Penambahan helper dan accessor status kehadiran pada Model `User.php` (`$user->presence`, `$user->presence_status`, `$user->presence_badge_class`, `$user->presence_label`).
+    - Penyediaan endpoint RESTful di bawah grup `user-presence.*`: Heartbeat, Offline Beacon, Widget Realtime Data, Public Profile Data, dan Permintaan Pertemanan (*Friend Request*).
+  - **Frontend Activity & Live Presence Tracker (`user-presence.js`)**:
+    - Throttled input event listener (`mousemove`, `keydown`, `click`, `scroll`, `touchstart`) untuk pencatatan aktivitas real-time.
+    - Deteksi inaktivitas dan event `visibilitychange` dengan *grace period* 60 detik sebelum beralih status ke *idle*.
+    - Heartbeat otomatis setiap 45 detik dan pengiriman status offline seketika saat browser ditutup via `navigator.sendBeacon`.
+    - Auto-polling live update setiap 15 detik pada widget dashboard tanpa reload halaman (*Zero-Reload Realtime Policy*).
+  - **Widget Kehadiran & Teman di Sidebar Dashboard (`widget-user-presence.blade.php` & `widget-user-presence-items.blade.php`)**:
+    - Menggantikan kartu statis *About Us* pada sidebar kanan dashboard dengan kartu kehadiran interaktif berpenampilan modern Metronic.
+    - Avatar pengguna berlingkar bulat dilengkapi titik status sudut (*presence indicator dot*) dengan animasi denyut (*pulse animation*) untuk status Online.
+    - Filter tab interaktif (*Semua*, *Online*, *Idle*, *Offline*) yang dilengkapi badge angka counter realtime per kategori.
+    - Tombol aksi sosial pertemanan (*Tambah Teman*) dengan indikator loading spinner bawaan (`data-kt-indicator="on"`) dan SweetAlert2/Toastr feedback.
+  - **Modal Profil Publik Interaktif Bebas Role (`modal-public-profile.blade.php`)**:
+    - Modal pop-up profil yang dapat diakses oleh **seluruh pengguna (semua role)** untuk melihat profil publik rekan pengguna lain saat avatar/nama diklik di dashboard.
+    - Menampilkan cover header, avatar dengan live presence dot, nama, email publik, badge role, kutipan moto hidup/status, total poin keaktifan, dan tanggal bergabung tanpa membocorkan data sensitif admin (NIK/alamat).
+
 ## [v1.41.0] - 2026-09-21
 
 ### Added & Enhanced

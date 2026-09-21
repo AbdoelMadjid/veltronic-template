@@ -9,31 +9,31 @@
 
 <div class="crud-matrix-wrapper" id="{{ $prefix }}_wrapper">
     <!--begin::Matrix Toolbar-->
-    <div class="d-flex flex-stack flex-wrap gap-3 mb-4">
+    <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-between gap-3 mb-4">
         <div>
             <h5 class="text-gray-900 fw-bold m-0">{{ $matrixTitle ?? 'Hak Akses / Permissions (CRUD Matrix)' }}</h5>
             <span class="text-muted fs-7">{{ $matrixSubtitle ?? 'Pilih izin fitur yang berlaku untuk akun atau peran ini' }}</span>
         </div>
-        <div class="d-flex align-items-center gap-2 flex-nowrap w-100 w-sm-auto justify-content-end">
+        <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 flex-shrink-0">
             <div class="position-relative flex-grow-1 flex-sm-grow-0">
                 <i class="ki-outline ki-magnifier fs-4 position-absolute top-50 translate-middle-y ms-3 text-gray-500"></i>
-                <input type="text" class="form-control form-control-sm form-control-solid ps-9 w-100 w-sm-175px w-md-225px matrix-search-input" 
+                <input type="text" class="form-control form-control-sm form-control-solid ps-9 w-100 w-sm-175px w-md-200px matrix-search-input h-35px" 
                        data-target="#{{ $prefix }}_table" 
                        placeholder="Cari Modul..." />
             </div>
             @if(!$isReadonly)
-                <div class="d-flex align-items-center gap-1 flex-shrink-0">
-                    <button type="button" class="btn btn-sm btn-light-primary fw-bold px-2 px-sm-3 btn-matrix-check-all" 
+                <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                    <button type="button" class="btn btn-sm btn-light-primary fw-bold px-3 h-35px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 text-nowrap btn-matrix-check-all" 
                         data-target="#{{ $prefix }}_table"
                         data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Pilih Semua Izin">
-                        <i class="ki-outline ki-check-square fs-6 me-0 me-sm-1"></i>
-                        <span class="d-none d-sm-inline">Pilih Semua</span>
+                        <i class="ki-outline ki-check-square fs-5 me-1"></i>
+                        <span>Pilih Semua</span>
                     </button>
-                    <button type="button" class="btn btn-sm btn-light-danger fw-bold px-2 px-sm-3 btn-matrix-uncheck-all" 
+                    <button type="button" class="btn btn-sm btn-light-danger fw-bold px-3 h-35px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 text-nowrap btn-matrix-uncheck-all" 
                         data-target="#{{ $prefix }}_table"
                         data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kosongkan Semua Izin">
-                        <i class="ki-outline ki-cross-square fs-6 me-0 me-sm-1"></i>
-                        <span class="d-none d-sm-inline">Kosongkan</span>
+                        <i class="ki-outline ki-cross-square fs-5 me-1"></i>
+                        <span>Kosongkan</span>
                     </button>
                 </div>
             @endif

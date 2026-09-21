@@ -1,8 +1,8 @@
 <!--begin::Header Banner-->
 <div class="card card-flush shadow-sm border-0 mb-6">
-    <div class="card-body p-6 d-flex flex-column flex-md-row align-items-center justify-content-between gap-4 text-center text-md-start">
+    <div class="card-body p-6 d-flex flex-column flex-xl-row align-items-center justify-content-between gap-4 text-center text-xl-start">
         <!-- Baris 1-3 di Mobile (Logo, Judul, Deskripsi) / Sisi Kiri di Desktop -->
-        <div class="d-flex flex-column flex-md-row align-items-center gap-2 gap-md-4 w-100 w-md-auto">
+        <div class="d-flex flex-column flex-md-row align-items-center gap-2 gap-md-4 w-100 w-xl-auto">
             <!-- Baris 1: Logo / Ikon Utama -->
             <div class="symbol symbol-55px symbol-md-45px symbol-circle bg-light-primary mb-1 mb-md-0 me-0 me-md-4 d-flex align-items-center justify-content-center flex-shrink-0">
                 <i class="ki-outline ki-screen text-primary fs-2x fs-md-2"></i>
@@ -31,30 +31,30 @@
             </div>
         </div>
 
-        <!-- Baris 4: Kumpulan Tombol Aksi (Full tombol informatif di mobile, horizontal di desktop) -->
-        <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-3 mt-md-0">
-            <a href="{{ url('/') }}" target="_blank" class="btn btn-light-primary btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-35px px-3 px-md-4 w-100 w-md-auto">
+        <!-- Baris 4: Kumpulan Tombol Aksi (Full Button di Mobile, Horizontal Rapi di Desktop) -->
+        <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-center justify-content-xl-end gap-2 gap-md-3 w-100 w-xl-auto mt-3 mt-xl-0 flex-shrink-0">
+            <a href="{{ url('/') }}" target="_blank" class="btn btn-light-primary btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-38px px-4 text-nowrap flex-grow-1 flex-xl-grow-0">
                 <i class="ki-outline ki-exit-right-corner fs-4 me-1"></i>
-                <span>Lihat Halaman Depan</span>
+                <span class="text-nowrap">Lihat Halaman Depan</span>
             </a>
-            <button type="button" class="btn btn-light-danger btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-35px px-3 px-md-4 w-100 w-md-auto" id="kt_btn_clear_frontpage_cache">
-                <span class="indicator-label d-inline-flex align-items-center justify-content-center">
+            <button type="button" class="btn btn-light-danger btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-38px px-4 text-nowrap flex-grow-1 flex-xl-grow-0" id="kt_btn_clear_frontpage_cache">
+                <span class="indicator-label d-inline-flex align-items-center justify-content-center text-nowrap">
                     <i class="ki-outline ki-arrows-circle fs-4 me-1"></i>
-                    <span>Bersihkan Cache</span>
+                    <span class="text-nowrap">Bersihkan Cache</span>
                 </span>
                 <span class="indicator-progress">
-                    <span class="spinner-border spinner-border-sm align-middle me-2"></span>
-                    <span>Memproses...</span>
+                    <span class="spinner-border spinner-border-sm align-middle me-1"></span>
+                    <span class="text-nowrap">Memproses...</span>
                 </span>
             </button>
-            <button type="button" class="btn btn-light-warning btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-35px px-3 px-md-4 w-100 w-md-auto" id="kt_btn_reset_frontpage_all">
-                <span class="indicator-label d-inline-flex align-items-center justify-content-center">
+            <button type="button" class="btn btn-light-warning btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-38px px-4 text-nowrap flex-grow-1 flex-xl-grow-0" id="kt_btn_reset_frontpage_all">
+                <span class="indicator-label d-inline-flex align-items-center justify-content-center text-nowrap">
                     <i class="ki-outline ki-arrows-loop fs-4 me-1"></i>
-                    <span>Reset Default</span>
+                    <span class="text-nowrap">Reset Default</span>
                 </span>
                 <span class="indicator-progress">
-                    <span class="spinner-border spinner-border-sm align-middle me-2"></span>
-                    <span>Memproses...</span>
+                    <span class="spinner-border spinner-border-sm align-middle me-1"></span>
+                    <span class="text-nowrap">Memproses...</span>
                 </span>
             </button>
         </div>

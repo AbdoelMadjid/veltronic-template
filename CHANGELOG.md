@@ -5,6 +5,34 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.41.0] - 2026-09-21
+
+### Added & Enhanced
+- **Standardisasi Full Button Header & Modal Responsif Mobile Serta Penataan Layout Toolbar Modul User Management & App Support (`/appsupport/backup-db`, `/usermanagement/roles`, `/usermanagement/permissions`, `/usermanagement/users`, `/usermanagement/data-login`, `/appsupport/theme-frontpage`, `/appsupport/app-profil`)**:
+  - **Optimalisasi Modul Backup Database (`/appsupport/backup-db`)**:
+    - **Tab Struktur & Relasi Tabel (`tables-relation.blade.php`)**: Standardisasi Card Header sesuai Rule 12 dengan memisahkan judul/subjudul di baris atas dan deretan filter di baris kedua. Input pencarian tabel dirancang fleksibel (`flex-grow-1 min-w-0`), dropdown relasi tabel menggunakan lebar tetap proporsional (`w-100 w-sm-160px w-xxl-175px flex-shrink-0`), dan saklar Auto-Relasi, tombol Pilih Semua, serta tombol aksi backup tertata rapi tanpa celah kosong berlebih atau tumpang tindih.
+    - **Tab Riwayat & Auto-Backup**: Standardisasi struktur kartu dengan tipografi murni, badge counter/status, dan penataan footer.
+    - **Header Banner Modul**: Mengonversi tombol *Segarkan Data* dan *Uji Auto-Backup* menjadi Full Button (`h-38px px-4 text-nowrap`) pada mode mobile.
+  - **Optimalisasi Modul Peran & Hak Akses (`/usermanagement/roles`)**:
+    - **Header Banner Modul**: Mengonversi tombol *Tambah Peran Baru* menjadi Full Button pada mode mobile.
+    - **Modal Matrix CRUD Hak Akses**: Mengonversi tombol *Pilih Semua* dan *Kosongkan* pada toolbar matrix permission di dalam modal menjadi Full Button responsif.
+  - **Optimalisasi Modul Hak Akses / Permission (`/usermanagement/permissions`)**:
+    - **Header Banner Modul**: Mengonversi tombol *Modul CRUD (Praktis)* dan *Single Permission* menjadi Full Button pada mode mobile.
+    - **Filter Pencarian & Role Responsif**: Komponen input search dan dropdown filter *Semua Role* disesuaikan menjadi full-width (`w-100`) pada mode mobile dan proporsional di desktop (`w-sm-250px` & `w-sm-200px`) dengan pembatas garis bawah `border-bottom border-gray-200`.
+  - **Optimalisasi Modul Manajemen Pengguna (`/usermanagement/users`)**:
+    - **Perataan Toolbar & Switcher Tampilan Mobile**: Memperbaiki switcher tampilan Card vs Table agar tetap berjejer horizontal rapi (`flex-row flex-nowrap align-items-center flex-shrink-0`), serta menata tombol *Beri Peran Massal* dan *Tambah Pengguna* agar tidak terhimpit di layar mobile.
+  - **Optimalisasi Modul Riwayat Login (`/usermanagement/data-login`)**:
+    - **Header Banner Modul**: Mengonversi tombol *Segarkan Data* dan *Bersihkan Log* menjadi Full Button (`h-38px px-4 text-nowrap`) pada mode mobile.
+  - **Optimalisasi Modul Pengaturan Tema Halaman Depan (`/appsupport/theme-frontpage`)**:
+    - **Header Banner Modul**: Menambahkan `text-nowrap`, `flex-shrink-0`, dan breakpoint `flex-xl-row` pada 3 tombol aksi (*Lihat Halaman Depan*, *Bersihkan Cache*, *Reset Default*) sehingga teks tidak terlipat menjadi 2 baris pada layar desktop.
+  - **Optimalisasi Modul Profil & Identitas Aplikasi Dashboard (`/appsupport/app-profil`)**:
+    - **Header Banner Modul**: Menerapkan breakpoint `flex-xl-row`, `text-nowrap`, dan `flex-shrink-0` pada seluruh 4 tombol aksi (*Perbarui File Seeder*, *Jalankan Seeder*, *Bersihkan Cache*, *Lihat Dashboard*) dengan tinggi seragam `h-38px` dan padding `px-3 px-xl-4` untuk mencegah pemecahan kata menjadi 2 baris pada layar desktop/laptop.
+    - **Petunjuk Operasional Komprehensif (`app-profil-petunjuk.blade.php`)**: Menyempurnakan isi modal petunjuk operasional `<x-petunjuk-modal>` agar secara lengkap mencakup 4 tab navigasi (*Ringkasan / Overview*, *Identitas & Meta SEO*, *Logo & Favicon*, dan *Pengaturan Footer*) serta alur peninjauan status kelengkapan profil.
+
+### Fixed
+- **Fungsionalitas Modal Formulir Tambah/Edit Pengguna (`/usermanagement/users`)**:
+  - Memperbaiki ketiadaan elemen `<div class="modal-body">` dan `<form id="kt_modal_user_form_element">` pada partial modal formulir pengguna yang sebelumnya menyebabkan JavaScript melempar error null reference saat tombol *Tambah Pengguna* diklik.
+
 ## [v1.40.0] - 2026-09-21
 
 ### Added & Enhanced

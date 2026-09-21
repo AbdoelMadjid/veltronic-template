@@ -14,12 +14,12 @@
             </div>
         </div>
 
-        <!-- Baris 4: Kumpulan Tombol Aksi (Icon-only di mobile dengan Tooltip Hover) / Sisi Kanan di Desktop -->
-        <div class="d-flex align-items-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-2 mt-md-0">
-            <button type="button" class="btn btn-primary btn-sm fw-bold px-3 px-md-4" id="kt_btn_add_role_banner"
+        <!-- Baris 4: Kumpulan Tombol Aksi (Full Button di Mobile & Desktop) / Sisi Kanan di Desktop -->
+        <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-3 mt-md-0">
+            <button type="button" class="btn btn-primary btn-sm fw-bold px-4 h-38px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-md-grow-0 text-nowrap" id="kt_btn_add_role_banner"
                 data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tambah Peran Baru">
-                <i class="ki-outline ki-plus fs-3 fs-md-4 me-0 me-md-1"></i>
-                <span class="d-none d-md-inline">Tambah Peran Baru</span>
+                <i class="ki-outline ki-plus fs-4 me-1 text-white"></i>
+                <span>Tambah Peran Baru</span>
             </button>
         </div>
     </div>

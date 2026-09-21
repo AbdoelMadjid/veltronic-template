@@ -38,7 +38,16 @@
                 </div>
                 <!--end::Header Info-->
             </div>
-            <!--begin::Modal header-->
+            <!--end::Modal header-->
+
+            <!--begin::Modal body-->
+            <div class="modal-body py-6 px-6 px-lg-10">
+                <!--begin::Form-->
+                <form id="kt_modal_user_form_element" class="form" action="{{ route('usermanagement.users.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="_method" id="user_form_method" value="POST" />
+                    <input type="hidden" name="user_id" id="user_form_id" value="" />
+                    <input type="hidden" name="remove_avatar" id="user_form_remove_avatar" value="0" />
 
                     <!--begin::Input group: Avatar-->
                     <div class="d-flex flex-column align-items-center mb-8">

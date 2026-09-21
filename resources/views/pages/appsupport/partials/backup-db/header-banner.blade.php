@@ -19,29 +19,29 @@
             </div>
         </div>
 
-        <!-- Baris 4: Kumpulan Tombol Aksi (Icon-only di mobile dengan Tooltip Hover) / Sisi Kanan di Desktop -->
-        <div class="d-flex align-items-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-2 mt-md-0 flex-wrap flex-md-nowrap">
-            <button type="button" class="btn btn-light-primary btn-sm fw-bold px-3 px-md-4" id="kt_btn_refresh_tables"
+        <!-- Baris 4: Kumpulan Tombol Aksi (Full Button di Mobile & Desktop) / Sisi Kanan di Desktop -->
+        <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-3 mt-md-0">
+            <button type="button" class="btn btn-light-primary btn-sm fw-bold px-4 h-38px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-md-grow-0 text-nowrap" id="kt_btn_refresh_tables"
                 data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Segarkan Data Tabel & Relasi">
-                <span class="indicator-label">
-                    <i class="ki-outline ki-arrows-circle fs-4 me-0 me-md-1"></i>
-                    <span class="d-none d-md-inline">Segarkan Data</span>
+                <span class="indicator-label d-inline-flex align-items-center">
+                    <i class="ki-outline ki-arrows-circle fs-4 me-1"></i>
+                    <span>Segarkan Data</span>
                 </span>
                 <span class="indicator-progress">
                     <span class="spinner-border spinner-border-sm align-middle me-1"></span>
-                    <span class="d-none d-md-inline">Memuat...</span>
+                    <span>Memuat...</span>
                 </span>
             </button>
 
-            <button type="button" class="btn btn-light-success btn-sm fw-bold px-3 px-md-4" id="kt_btn_test_auto_backup"
+            <button type="button" class="btn btn-light-success btn-sm fw-bold px-4 h-38px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-md-grow-0 text-nowrap" id="kt_btn_test_auto_backup"
                 data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Jalankan Uji Coba Backup Otomatis">
-                <span class="indicator-label">
-                    <i class="ki-outline ki-timer fs-4 me-0 me-md-1"></i>
-                    <span class="d-none d-md-inline">Uji Auto-Backup</span>
+                <span class="indicator-label d-inline-flex align-items-center">
+                    <i class="ki-outline ki-timer fs-4 me-1"></i>
+                    <span>Uji Auto-Backup</span>
                 </span>
                 <span class="indicator-progress">
                     <span class="spinner-border spinner-border-sm align-middle me-1"></span>
-                    <span class="d-none d-md-inline">Memproses...</span>
+                    <span>Memproses...</span>
                 </span>
             </button>
         </div>

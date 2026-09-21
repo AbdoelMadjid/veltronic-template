@@ -14,17 +14,17 @@
             </div>
         </div>
 
-        <!-- Baris 4: Kumpulan Tombol Aksi (Icon-only di mobile dengan Tooltip Hover) / Sisi Kanan di Desktop -->
-        <div class="d-flex align-items-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-2 mt-md-0">
-            <button type="button" class="btn btn-primary btn-sm fw-bold px-3 px-md-4" id="kt_btn_open_generate_modal"
+        <!-- Baris 4: Kumpulan Tombol Aksi (Full Button di Mobile & Desktop) / Sisi Kanan di Desktop -->
+        <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-3 mt-md-0">
+            <button type="button" class="btn btn-primary btn-sm fw-bold px-4 h-38px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-md-grow-0 text-nowrap" id="kt_btn_open_generate_modal"
                 data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Modul CRUD (Praktis)">
-                <i class="ki-outline ki-element-plus fs-4 me-0 me-md-1"></i>
-                <span class="d-none d-md-inline">Modul CRUD (Praktis)</span>
+                <i class="ki-outline ki-element-plus fs-4 me-1 text-white"></i>
+                <span>Modul CRUD (Praktis)</span>
             </button>
-            <button type="button" class="btn btn-light-primary btn-sm fw-bold px-3 px-md-4" id="kt_btn_add_permission"
+            <button type="button" class="btn btn-light-primary btn-sm fw-bold px-4 h-38px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-md-grow-0 text-nowrap" id="kt_btn_add_permission"
                 data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Single Permission">
-                <i class="ki-outline ki-plus fs-4 me-0 me-md-1"></i>
-                <span class="d-none d-md-inline">Single Permission</span>
+                <i class="ki-outline ki-plus fs-4 me-1"></i>
+                <span>Single Permission</span>
             </button>
         </div>
     </div>
@@ -75,19 +75,19 @@
 <!--end::Stats Summary Cards-->
 
 <!--begin::Module Permissions Table Card-->
-<div class="card card-flush shadow-sm border-0 mb-6">
+<div class="card card-flush shadow-sm border border-gray-200 mb-6">
     <!--begin::Card header-->
-    <div class="card-header border-0 pt-6 px-6">
-        <div class="card-title d-flex align-items-center gap-4 flex-wrap">
-            <!-- Search -->
-            <div class="d-flex align-items-center position-relative my-1">
-                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
-                <input type="text" id="kt_filter_permission_search" class="form-control form-control-solid w-250px ps-12" placeholder="Cari Modul / Fitur..." />
+    <div class="card-header border-bottom border-gray-200 py-5 px-4 px-md-6">
+        <div class="card-title d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-3 w-100 my-0">
+            <!-- Search (Full width di Mobile, 250px-300px di Desktop) -->
+            <div class="d-flex align-items-center position-relative w-100 w-sm-250px w-xxl-300px">
+                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4 text-gray-500"></i>
+                <input type="text" id="kt_filter_permission_search" class="form-control form-control-solid form-control-sm w-100 ps-12 h-38px" placeholder="Cari Modul / Fitur..." />
             </div>
 
-            <!-- Filter Role -->
-            <div class="w-175px my-1">
-                <select id="kt_filter_permission_role" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
+            <!-- Filter Role (Full width di Mobile, 200px di Desktop) -->
+            <div class="w-100 w-sm-200px">
+                <select id="kt_filter_permission_role" class="form-select form-select-solid form-select-sm w-100 h-38px" data-control="select2" data-hide-search="true">
                     <option value="all" selected>All / Semua Role</option>
                     @foreach($roles as $role)
                         <option value="{{ strtolower($role->name) }}">{{ ucfirst($role->name) }}</option>

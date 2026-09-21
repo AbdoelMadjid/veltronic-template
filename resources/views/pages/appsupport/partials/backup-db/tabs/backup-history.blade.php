@@ -1,26 +1,28 @@
 <!--begin::Backup History Card-->
-<div class="card card-flush shadow-sm border-0 mb-6">
+<div class="card shadow-sm border border-gray-200 mb-6">
     <!--begin::Card header-->
-    <div class="card-header border-0 pt-6 px-4 px-md-6 d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-3">
-        <!--begin::Card title-->
-        <div class="d-flex align-items-center position-relative my-1 w-100 w-sm-250px w-xxl-300px">
-            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
-            <input type="text" id="kt_filter_history_search" class="form-control form-control-solid w-100 ps-12" placeholder="Cari nama berkas cadangan..." />
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0 border-bottom border-gray-200">
+        <!-- Sisi Kiri: Judul & Subketerangan Bersih -->
+        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+            <h3 class="fw-bolder text-gray-900 m-0 fs-4">Riwayat Berkas Cadangan</h3>
+            <span class="text-muted fs-7 mt-1">Daftar arsip dump SQL & GZIP yang tersimpan di server dengan rincian eksekutor</span>
         </div>
-        <!--end::Card title-->
 
-        <!--begin::Card toolbar-->
-        <div class="d-flex align-items-center gap-2 ms-0 ms-sm-auto flex-shrink-0">
-            <span class="text-muted fs-8 fs-md-7">
-                Lokasi: <code class="text-primary">storage/app/backups/</code>
+        <!-- Sisi Kanan: Search & Lokasi Berkas -->
+        <div class="card-toolbar d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-center justify-content-md-end gap-3 w-100 w-md-auto mt-2 mt-md-0">
+            <div class="d-flex align-items-center position-relative w-100 w-sm-200px w-xxl-250px">
+                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4 text-gray-500"></i>
+                <input type="text" id="kt_filter_history_search" class="form-control form-control-solid form-control-sm w-100 ps-12 h-35px" placeholder="Cari nama berkas..." />
+            </div>
+            <span class="badge badge-light-secondary fs-8 fw-semibold px-3 py-2 text-nowrap d-inline-flex align-items-center justify-content-center h-35px">
+                <i class="ki-outline ki-folder fs-6 me-1 text-primary"></i> <code class="text-primary fs-8">storage/app/backups/</code>
             </span>
         </div>
-        <!--end::Card toolbar-->
     </div>
     <!--end::Card header-->
 
     <!--begin::Card body-->
-    <div class="card-body py-4 px-4 px-md-6">
+    <div class="card-body py-6 px-4 px-md-6">
         <div class="table-responsive">
             <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="kt_backup_history_datatable">
                 <thead>

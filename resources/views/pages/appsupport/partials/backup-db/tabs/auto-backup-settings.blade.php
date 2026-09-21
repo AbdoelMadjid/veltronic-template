@@ -1,14 +1,18 @@
 <!--begin::Auto Backup Settings Card-->
-<div class="card card-flush shadow-sm border-0 mb-6">
+<div class="card shadow-sm border border-gray-200 mb-6">
     <!--begin::Card header-->
-    <div class="card-header border-0 pt-6 px-4 px-md-6 flex-wrap gap-3">
-        <div class="card-title">
-            <h4 class="fw-bolder text-gray-900 m-0">Konfigurasi Penjadwalan Backup Otomatis</h4>
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0 border-bottom border-gray-200">
+        <!-- Sisi Kiri: Judul & Subketerangan Bersih -->
+        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+            <h3 class="fw-bolder text-gray-900 m-0 fs-4">Konfigurasi Penjadwalan Backup Otomatis</h3>
+            <span class="text-muted fs-7 mt-1">Atur frekuensi dan waktu eksekusi otomatis pencadangan basis data berbasis cron server</span>
         </div>
-        <div class="card-toolbar d-flex align-items-center gap-2 ms-0 ms-md-auto flex-shrink-0">
+
+        <!-- Sisi Kanan: Status Eksekusi Terakhir -->
+        <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
             @if(!empty($autoSettings['last_run_at']))
-                <span class="badge badge-light-primary fs-8">
-                    Terakhir dieksekusi: {{ \Carbon\Carbon::parse($autoSettings['last_run_at'])->translatedFormat('d M Y, H:i') }}
+                <span class="badge badge-light-primary fs-8 fw-semibold px-3 py-2 d-inline-flex align-items-center h-35px">
+                    <i class="ki-outline ki-time fs-6 me-1 text-primary"></i> Terakhir dieksekusi: {{ \Carbon\Carbon::parse($autoSettings['last_run_at'])->translatedFormat('d M Y, H:i') }}
                 </span>
             @endif
         </div>
@@ -16,7 +20,7 @@
     <!--end::Card header-->
 
     <!--begin::Card body-->
-    <div class="card-body py-4 px-4 px-md-6">
+    <div class="card-body py-6 px-4 px-md-6">
         <form id="kt_form_auto_backup_settings" action="{{ route('appsupport.backup-db.settings') }}" method="POST">
             @csrf
 

@@ -147,10 +147,10 @@
                 <!--end::Title / Counter-->
 
                 <!--begin::Controls & Action Buttons (Responsive on Mobile & Desktop)-->
-                <div class="d-flex align-items-center justify-content-between justify-content-sm-end gap-2 gap-sm-3">
-                    <!--begin::View Mode Switcher (Card vs Table)-->
-                    <div class="d-inline-flex align-items-center bg-light-subtle rounded-3 p-1 border border-gray-200">
-                        <ul class="nav nav-pills p-0 m-0 gap-1" role="tablist">
+                <div class="d-flex align-items-center justify-content-between justify-content-sm-end gap-2 gap-sm-3 flex-wrap flex-sm-nowrap">
+                    <!--begin::View Mode Switcher (Card vs Table - Always Horizontal & Fixed)-->
+                    <div class="d-inline-flex align-items-center bg-light-subtle rounded-3 p-1 border border-gray-200 flex-shrink-0">
+                        <ul class="nav nav-pills p-0 m-0 gap-1 flex-row flex-nowrap align-items-center" role="tablist">
                             <li class="nav-item m-0" role="presentation" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tampilan Kartu">
                                 <a class="btn btn-sm btn-icon btn-color-gray-600 btn-active-primary active rounded-2 w-32px h-32px w-sm-35px h-sm-35px"
                                     data-bs-toggle="tab" href="#kt_project_users_card_pane" role="tab">
@@ -167,21 +167,22 @@
                     </div>
                     <!--end::View Mode Switcher-->
 
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="d-flex align-items-center gap-2 flex-grow-1 flex-sm-grow-0 justify-content-end">
                         <!--begin::Tombol Beri Peran Massal-->
-                        <button type="button" id="btn_open_bulk_role" class="btn btn-sm btn-light-primary fw-bold d-none px-3"
+                        <button type="button" id="btn_open_bulk_role" class="btn btn-sm btn-light-primary fw-bold d-none px-2 px-sm-3 h-35px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 text-nowrap fs-8 fs-sm-7"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Berikan Peran Massal ke Pengguna Terpilih">
-                            <i class="ki-outline ki-shield-tick fs-4 me-0 me-sm-1"></i>
+                            <i class="ki-outline ki-shield-tick fs-4 me-1"></i>
                             <span id="bulk_role_selected_badge" class="badge badge-primary me-1">0</span>
-                            <span class="d-none d-sm-inline">Beri Peran Massal</span>
+                            <span class="d-none d-xs-inline">Beri Peran</span>
+                            <span class="d-inline d-xs-none">Peran</span>
                         </button>
                         <!--end::Tombol Beri Peran Massal-->
 
                         <!--begin::Tombol Tambah Pengguna-->
-                        <button type="button" id="btn_open_add_user" class="btn btn-sm btn-primary fw-bold px-3 px-sm-4"
+                        <button type="button" id="btn_open_add_user" class="btn btn-sm btn-primary fw-bold px-3 px-sm-4 h-35px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 text-nowrap fs-8 fs-sm-7"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tambah Pengguna Baru">
-                            <i class="ki-outline ki-plus fs-4 me-0 me-sm-1"></i>
-                            <span class="d-none d-sm-inline">Tambah Pengguna</span>
+                            <i class="ki-outline ki-plus fs-4 me-1 text-white"></i>
+                            <span>Tambah Pengguna</span>
                         </button>
                         <!--end::Tombol Tambah Pengguna-->
                     </div>

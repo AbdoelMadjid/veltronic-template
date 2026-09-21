@@ -1,53 +1,57 @@
 <!--begin::Tables & Relations Card-->
-<div class="card card-flush shadow-sm border-0 mb-6">
+<div class="card shadow-sm border border-gray-200 mb-6">
     <!--begin::Card header-->
-    <div class="card-header border-0 pt-6 px-4 px-md-6 d-flex flex-column flex-xl-row align-items-stretch align-items-xl-center justify-content-between gap-4">
-        <!--begin::Card title (Search & Filter)-->
-        <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-3 w-100 w-xl-auto">
-            <!-- 1. Search Box (Full width di Mobile) -->
-            <div class="d-flex align-items-center position-relative w-100 w-sm-250px w-xxl-300px">
-                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
-                <input type="text" id="kt_filter_table_search" class="form-control form-control-solid w-100 ps-12" placeholder="Cari nama tabel..." />
+    <div class="card-header border-bottom border-gray-200 py-5 px-4 px-md-6 d-flex flex-column gap-4">
+        <!-- 1. Baris Judul & Deskripsi Header -->
+        <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2 text-center text-sm-start w-100">
+            <div class="d-flex flex-column align-items-center align-items-sm-start">
+                <h3 class="fw-bolder text-gray-900 m-0 fs-4">Daftar Tabel & Relasi Database</h3>
+                <span class="text-muted fs-7 mt-1">Pilih tabel database untuk backup spesifik atau cadangkan seluruh skema dan relasi</span>
+            </div>
+        </div>
+
+        <!-- 2. Baris Filter, Switch & Toolbar Aksi (Inline Penuh dari Kiri ke Kanan) -->
+        <div class="d-flex flex-column flex-xl-row align-items-stretch align-items-xl-center justify-content-between gap-3 gap-xl-4 w-100">
+            <!-- 1. Search Box (HANYA INI YANG FLEKSIBEL / FLEX-GROW-1) -->
+            <div class="d-flex align-items-center position-relative flex-grow-1 min-w-0">
+                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4 text-gray-500"></i>
+                <input type="text" id="kt_filter_table_search" class="form-control form-control-solid form-control-sm w-100 ps-12 h-38px" placeholder="Cari nama tabel..." />
             </div>
 
-            <!-- Filter Select (Full width di Mobile) -->
-            <div class="w-100 w-sm-175px">
-                <select id="kt_filter_relation_type" class="form-select form-select-solid w-100" data-control="select2" data-hide-search="true">
+            <!-- 2. Filter Select (Ukuran Tetap & Berjarak) -->
+            <div class="w-100 w-sm-160px w-xxl-175px flex-shrink-0">
+                <select id="kt_filter_relation_type" class="form-select form-select-solid form-select-sm w-100 h-38px" data-control="select2" data-hide-search="true">
                     <option value="all" selected>Semua Tabel</option>
                     <option value="with_relations">Memiliki Relasi</option>
                     <option value="no_relations">Tabel Standalone</option>
                 </select>
             </div>
-        </div>
-        <!--end::Card title-->
 
-        <!--begin::Card toolbar (Action buttons)-->
-        <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center gap-3 w-100 w-xl-auto">
-            <!-- 2. Auto Relasi & Pilih Semua dalam Satu Baris di Mobile -->
-            <div class="d-flex align-items-center justify-content-between justify-content-md-start gap-4 py-1">
+            <!-- 3. Auto Relasi & Pilih Semua (Ukuran Tetap & Berjarak) -->
+            <div class="d-flex align-items-center justify-content-between justify-content-xl-start gap-4 flex-shrink-0 py-1">
                 <!-- Switch Auto-Centang Relasi -->
-                <div class="form-check form-switch form-check-custom form-check-solid" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Otomatis mencentang tabel yang memiliki relasi Foreign Key saat tabel dipilih">
+                <div class="form-check form-switch form-check-custom form-check-solid flex-shrink-0 text-nowrap" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Otomatis mencentang tabel yang memiliki relasi Foreign Key saat tabel dipilih">
                     <input class="form-check-input h-20px w-35px cursor-pointer" type="checkbox" id="kt_switch_auto_relational_select" checked />
-                    <label class="form-check-label text-gray-700 fw-bold fs-7 cursor-pointer text-nowrap" for="kt_switch_auto_relational_select">
+                    <label class="form-check-label text-gray-700 fw-bold fs-7 cursor-pointer text-nowrap ms-2" for="kt_switch_auto_relational_select">
                         Auto Relasi
                     </label>
                 </div>
 
                 <!-- Checkbox Pilih Semua -->
-                <div class="form-check form-check-custom form-check-solid">
+                <div class="form-check form-check-custom form-check-solid flex-shrink-0 text-nowrap">
                     <input class="form-check-input cursor-pointer" type="checkbox" id="kt_check_all_tables" />
-                    <label class="form-check-label text-gray-700 fw-bold fs-7 cursor-pointer text-nowrap" for="kt_check_all_tables">
+                    <label class="form-check-label text-gray-700 fw-bold fs-7 cursor-pointer text-nowrap ms-2" for="kt_check_all_tables">
                         Pilih Semua
                     </label>
                 </div>
             </div>
 
-            <!-- 3. Tombol Backup Terpilih & Backup Seluruh DB di Baris Berikutnya (Full Width di Mobile dengan Teks Utuh) -->
-            <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 w-100 w-md-auto">
+            <!-- 4. Tombol Aksi Backup (Ukuran Tetap & Berjarak) -->
+            <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 flex-shrink-0">
                 <!-- Tombol Backup Terpilih -->
-                <button type="button" class="btn btn-sm btn-light-primary fw-bold d-flex align-items-center justify-content-center flex-grow-1 flex-md-grow-0" id="kt_btn_backup_selected" disabled
+                <button type="button" class="btn btn-sm btn-light-primary fw-bold d-flex align-items-center justify-content-center h-38px px-4 flex-grow-1 flex-sm-grow-0 text-nowrap" id="kt_btn_backup_selected" disabled
                     data-bs-toggle="tooltip" data-bs-trigger="hover" title="Backup hanya tabel yang dicentang">
-                    <span class="indicator-label d-flex align-items-center">
+                    <span class="indicator-label d-flex align-items-center text-nowrap">
                         <i class="ki-outline ki-check-circle fs-5 me-1"></i>
                         <span>Backup Terpilih</span>
                         <span class="badge badge-primary ms-1" id="kt_selected_tables_badge">0</span>
@@ -59,10 +63,10 @@
                 </button>
 
                 <!-- Tombol Backup Seluruh DB -->
-                <button type="button" class="btn btn-sm btn-primary fw-bold d-flex align-items-center justify-content-center flex-grow-1 flex-md-grow-0" id="kt_btn_backup_full"
+                <button type="button" class="btn btn-sm btn-primary fw-bold d-flex align-items-center justify-content-center h-38px px-4 flex-grow-1 flex-sm-grow-0 text-nowrap" id="kt_btn_backup_full"
                     data-bs-toggle="tooltip" data-bs-trigger="hover" title="Backup seluruh tabel dan relasi database">
-                    <span class="indicator-label d-flex align-items-center">
-                        <i class="ki-outline ki-cloud-download fs-5 me-1"></i>
+                    <span class="indicator-label d-flex align-items-center text-nowrap">
+                        <i class="ki-outline ki-cloud-download fs-5 me-1 text-white"></i>
                         <span>Backup Seluruh DB</span>
                     </span>
                     <span class="indicator-progress">
@@ -72,12 +76,12 @@
                 </button>
             </div>
         </div>
-        <!--end::Card toolbar-->
+        <!--end::Baris Filter, Switch & Toolbar Aksi-->
     </div>
     <!--end::Card header-->
 
     <!--begin::Card body-->
-    <div class="card-body py-4 px-6">
+    <div class="card-body py-6 px-4 px-md-6">
         <div class="table-responsive">
             <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="kt_tables_relation_datatable">
                 <thead>

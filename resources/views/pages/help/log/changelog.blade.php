@@ -34,13 +34,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.40.0
+                            Versi Saat Ini: v1.41.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.41.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.41.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.41.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>21 Sep 2026, 23:05 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Standardisasi Full Button Header &amp; Modal Responsif Mobile Serta Penataan Layout Toolbar Modul User Management &amp; App Support (/appsupport/backup-db, /usermanagement/roles, /usermanagement/permissions, /usermanagement/users, /usermanagement/data-login, /appsupport/theme-frontpage, /appsupport/app-profil)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyempurnaan responsivitas mobile dan standardisasi antarmuka modul User Management dan App Support. Menerapkan Full Button Policy pada tombol header banner dan modal dialog, penataan card header fleksibel pada tab struktur relasi tabel database, perataan horizontal toolbar view switcher pengguna, penyesuaian filter pencarian full-width di mobile, perbaikan form wrapper modal tambah pengguna, optimalisasi tombol tema halaman depan dan header profil aplikasi tanpa text-wrapping di desktop, serta penyempurnaan modal petunjuk operasional 4 tab identitas profil.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Modul Backup Database (Rule 12 &amp; Full Button)</strong>: Standardisasi header kartu tab relasi tabel (pencarian fleksibel <code>flex-grow-1 min-w-0</code> dan filter relasi tetap proporsional), serta tombol <em>Segarkan Data</em> &amp; <em>Uji Auto-Backup</em> dikonversi menjadi full button di mobile.</li>
+                                        <li><strong>Modul Roles &amp; Permissions (Full Button &amp; Responsive Search)</strong>: Tombol banner <em>Tambah Peran Baru</em>, <em>Modul CRUD</em>, <em>Single Permission</em>, serta tombol modal <em>Pilih Semua</em> &amp; <em>Kosongkan</em> dikonversi menjadi full button. Filter pencarian &amp; dropdown role beralih full-width (<code>w-100</code>) di mobile.</li>
+                                        <li><strong>Modul User Management (Bug Fix &amp; Toolbar Alignment)</strong>: Memperbaiki elemen form modal tambah/edit pengguna yang hilang (pencegahan error null reset), serta merapikan switcher Card vs Table agar tetap berjejer horizontal rapi.</li>
+                                        <li><strong>Modul Profil &amp; Identitas Aplikasi (Header Desktop &amp; Petunjuk 4 Tab)</strong>: Menerapkan <code>flex-xl-row</code>, <code>text-nowrap</code>, dan <code>flex-shrink-0</code> pada 4 tombol header banner profil agar tidak terpotong di desktop, serta melengkapi modal petunjuk operasional untuk seluruh 4 tab (*Ringkasan*, *Meta SEO*, *Logo*, *Footer*).</li>
+                                        <li><strong>Modul Riwayat Login &amp; Tema Depan (Full Button &amp; Desktop Text-Nowrap)</strong>: Tombol banner login log beralih full button di mobile, dan 3 tombol banner tema halaman depan ditambahkan <code>text-nowrap</code> serta <code>flex-xl-row</code> untuk mencegah pemecahan teks 2 baris pada mode desktop.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.41.0 (Minor)-->
+
                         <!--begin::Item v1.40.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.40.0</div>
@@ -56,7 +91,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>21 Sep 2026, 12:35 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Standardisasi Struktur Kartu Sesuai Rule 12, Integrasi Tata Letak 2-Kolom Terpadu, dan Penataan Footer Tombol Aksi Modul Profil Pengguna (/profil/profil-pengguna)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

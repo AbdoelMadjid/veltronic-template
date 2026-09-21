@@ -73,4 +73,13 @@
   - Pola pada Yajra DataTables (`veltronic_compact` pager) **WAJIB SAMA PERSIS** dengan pola Laravel Blade (`pagination::bootstrap-5`).
 - Detail lengkap diatur di `.agents/rules/responsive-pagination-standards.md`.
 
+## 12. Standar Struktur Kartu (Card Structure) & Responsif Mobile
+- **Struktur Lengkap Kartu Modul**: Setiap kartu pengaturan/konten wajib memiliki batas visual yang tegas (`card shadow-sm border border-gray-200 h-100 d-flex flex-column`), pembatas header (`border-bottom border-gray-200 py-5 py-md-0`), body (`py-6 px-4 px-md-6 flex-grow-1`), dan footer (*jika diperlukan*) berlatar kontras lembut (`card-footer py-4 px-4 px-md-6 mt-auto border-top border-gray-200 bg-light bg-opacity-50`).
+- **Judul Header Bersih (No Icon Box)**: Judul pada header kartu **DILARANG** menggunakan kotak simbol ikon di samping teks judul. Gunakan tipografi murni (`h3.fw-bolder.text-gray-900.fs-4` dan `span.text-muted.fs-7`) dengan badge/toolbar di sisi kanan.
+- **Rata Tengah di Mode Mobile**: Pada layar HP (`< md` atau `< sm`), teks judul header, toolbar badge/tombol, dan footer **WAJIB RATA TENGAH** (`text-center` / `justify-content-center`) dan mengalir vertikal rapi.
+- **Standar Tombol Solid Penuh (Full Button)**: Tombol aksi pada kartu di mode mobile **WAJIB MENAMPILKAN TEKS LENGKAP** (Full Button, bukan icon-only yang samar) dengan warna solid kontras tinggi (`btn-primary`, `btn-success`, `btn-danger`) dan ikon putih (`text-white`).
+- Detail lengkap diatur di `.agents/rules/card-structure-and-responsive-standards.md`.
+
+
+
 

@@ -14,48 +14,44 @@
             </div>
         </div>
 
-        <!-- Baris 4: Kumpulan Tombol Aksi (Icon-only di mobile dengan Tooltip Hover) / Sisi Kanan di Desktop -->
-        <div class="d-flex align-items-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-2 mt-md-0 flex-wrap flex-md-nowrap">
-            <button type="button" class="btn btn-light-success btn-sm fw-bold px-3 px-md-4" id="kt_btn_sync_seeder"
-                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Perbarui File Seeder (database/seeders/AppProfilSeeder.php)">
-                <span class="indicator-label">
-                    <i class="ki-outline ki-file-up fs-4 me-0 me-md-1"></i>
-                    <span class="d-none d-md-inline">Perbarui File Seeder</span>
+        <!-- Baris 4: Kumpulan Tombol Aksi (Full tombol informatif di mobile, horizontal di desktop) -->
+        <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-3 mt-md-0">
+            <button type="button" class="btn btn-light-success btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-35px px-3 px-md-4 w-100 w-md-auto" id="kt_btn_sync_seeder">
+                <span class="indicator-label d-inline-flex align-items-center justify-content-center">
+                    <i class="ki-outline ki-file-up fs-4 me-1"></i>
+                    <span>Perbarui File Seeder</span>
                 </span>
                 <span class="indicator-progress">
-                    <span class="d-none d-md-inline">Menyimpan...</span>
-                    <span class="spinner-border spinner-border-sm align-middle ms-1"></span>
+                    <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                    <span>Menyimpan...</span>
                 </span>
             </button>
 
-            <button type="button" class="btn btn-light-primary btn-sm fw-bold px-3 px-md-4" id="kt_btn_run_seeder"
-                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Jalankan Ulang Seeder (Reset Profil Default)">
-                <span class="indicator-label">
-                    <i class="ki-outline ki-arrows-circle fs-4 me-0 me-md-1"></i>
-                    <span class="d-none d-md-inline">Jalankan Seeder</span>
+            <button type="button" class="btn btn-light-primary btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-35px px-3 px-md-4 w-100 w-md-auto" id="kt_btn_run_seeder">
+                <span class="indicator-label d-inline-flex align-items-center justify-content-center">
+                    <i class="ki-outline ki-arrows-circle fs-4 me-1"></i>
+                    <span>Jalankan Seeder</span>
                 </span>
                 <span class="indicator-progress">
-                    <span class="d-none d-md-inline">Memproses...</span>
-                    <span class="spinner-border spinner-border-sm align-middle ms-1"></span>
+                    <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                    <span>Memproses...</span>
                 </span>
             </button>
 
-            <button type="button" class="btn btn-light-danger btn-sm fw-bold px-3 px-md-4" id="kt_btn_clear_profile_cache"
-                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Bersihkan Cache Profil & Tampilan">
-                <span class="indicator-label">
-                    <i class="ki-outline ki-trash fs-4 me-0 me-md-1"></i>
-                    <span class="d-none d-md-inline">Bersihkan Cache</span>
+            <button type="button" class="btn btn-light-danger btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-35px px-3 px-md-4 w-100 w-md-auto" id="kt_btn_clear_profile_cache">
+                <span class="indicator-label d-inline-flex align-items-center justify-content-center">
+                    <i class="ki-outline ki-trash fs-4 me-1"></i>
+                    <span>Bersihkan Cache</span>
                 </span>
                 <span class="indicator-progress">
-                    <span class="d-none d-md-inline">Memproses...</span>
-                    <span class="spinner-border spinner-border-sm align-middle ms-1"></span>
+                    <span class="spinner-border spinner-border-sm align-middle me-2"></span>
+                    <span>Memproses...</span>
                 </span>
             </button>
 
-            <a href="{{ url('/dashboard') }}" target="_blank" class="btn btn-primary btn-sm fw-bold px-3 px-md-4"
-                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Buka Dashboard di Tab Baru">
-                <i class="ki-outline ki-external-drive fs-4 me-0 me-md-1"></i>
-                <span class="d-none d-md-inline">Lihat Dashboard</span>
+            <a href="{{ url('/dashboard') }}" target="_blank" class="btn btn-primary btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-35px px-3 px-md-4 w-100 w-md-auto">
+                <i class="ki-outline ki-external-drive fs-4 me-1"></i>
+                <span>Lihat Dashboard</span>
             </a>
         </div>
     </div>

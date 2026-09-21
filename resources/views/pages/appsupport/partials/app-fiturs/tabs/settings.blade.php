@@ -6,21 +6,23 @@
         <!-- KOLOM KIRI: PREFERENSI DEFAULT TAMPILAN & ANTARMUKA     -->
         <!-- ======================================================== -->
         <div class="col-lg-6">
-            <div class="card card-flush shadow-sm border-0 h-100">
+            <div class="card shadow-sm border border-gray-200 h-100 d-flex flex-column justify-content-between">
                 <!--begin::Card header-->
-                <div class="card-header border-0 pt-6 pb-2">
-                    <div class="card-title d-flex flex-column">
-                        <h4 class="fw-bolder text-gray-900 m-0">Preferensi Default Tampilan & Antarmuka</h4>
-                        <span class="text-muted fs-8 mt-1">Konfigurasi visual, ikonografi, translasi, serta tata letak awal</span>
+                <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                    <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-4">Preferensi Default Tampilan & Antarmuka</h3>
+                        <span class="text-muted fs-7 mt-1">Konfigurasi visual, ikonografi, translasi, serta tata letak awal</span>
                     </div>
-                    <div class="card-toolbar">
-                        <span class="badge badge-light-primary fw-bold fs-9">Tampilan</span>
+                    <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                        <span class="badge badge-light-primary fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                            Tampilan
+                        </span>
                     </div>
                 </div>
                 <!--end::Card header-->
 
                 <!--begin::Card body-->
-                <div class="card-body pt-4">
+                <div class="card-body py-6 px-4 px-md-6 flex-grow-1">
 
                     <!-- 1.1 Gaya Icon Default -->
                     <div class="mb-7">
@@ -46,7 +48,7 @@
                                     <i class="ki-duotone ki-chart-simple fs-2x text-primary mb-2" data-kt-icon-style-ignore="true"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
                                     <span class="fw-bold fs-7 text-gray-900 d-block">Duotone</span>
                                     <span class="text-muted fs-10">Dua Nada (SVG)</span>
-                                								</label>
+                                </label>
                             </div>
 
                             <!-- Solid -->
@@ -230,6 +232,18 @@
 
                 </div>
                 <!--end::Card body-->
+
+                <!--begin::Card footer-->
+                <div class="card-footer py-4 px-4 px-md-6 mt-auto">
+                    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-sm-between text-center text-sm-start gap-2">
+                        <div class="d-flex align-items-center gap-2 text-muted fs-7">
+                            <i class="ki-outline ki-information-2 fs-5 text-primary"></i>
+                            <span>4 preferensi tampilan antarmuka terkonfigurasi</span>
+                        </div>
+                        <span class="badge badge-light-primary fw-semibold fs-8">UI / UX Preferences</span>
+                    </div>
+                </div>
+                <!--end::Card footer-->
             </div>
         </div>
         <!-- ======================================================== -->
@@ -243,17 +257,23 @@
         <div class="col-lg-6 d-flex flex-column gap-6">
 
             <!-- Card: Keamanan & Kebijakan Akses -->
-            <div class="card card-flush shadow-sm border-0">
-                <div class="card-header border-0 pt-6 pb-2">
-                    <div class="card-title d-flex flex-column">
-                        <h4 class="fw-bolder text-gray-900 m-0">Keamanan & Kebijakan Akses</h4>
-                        <span class="text-muted fs-8 mt-1">Proteksi sesi otentikasi dan registrasi publik</span>
+            <div class="card shadow-sm border border-gray-200">
+                <!--begin::Card header-->
+                <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                    <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-4">Keamanan & Kebijakan Akses</h3>
+                        <span class="text-muted fs-7 mt-1">Proteksi sesi otentikasi dan registrasi publik</span>
                     </div>
-                    <div class="card-toolbar">
-                        <span class="badge badge-light-danger fw-bold fs-9">Keamanan</span>
+                    <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                        <span class="badge badge-light-danger fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                            Keamanan
+                        </span>
                     </div>
                 </div>
-                <div class="card-body pt-4">
+                <!--end::Card header-->
+
+                <!--begin::Card body-->
+                <div class="card-body py-6 px-4 px-md-6">
 
                     <!-- Pendaftaran Akun Publik -->
                     <div class="d-flex align-items-center justify-content-between p-4 bg-light rounded-3 border mb-5">
@@ -280,20 +300,39 @@
                     </div>
 
                 </div>
+                <!--end::Card body-->
+
+                <!--begin::Card footer-->
+                <div class="card-footer py-4 px-4 px-md-6">
+                    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-sm-between text-center text-sm-start gap-2">
+                        <div class="d-flex align-items-center gap-2 text-muted fs-7">
+                            <i class="ki-outline ki-shield-search fs-5 text-danger"></i>
+                            <span>Kebijakan autentikasi & batas sesi aktif</span>
+                        </div>
+                        <span class="badge badge-light-danger fw-semibold fs-8">Security & Session</span>
+                    </div>
+                </div>
+                <!--end::Card footer-->
             </div>
 
             <!-- Card: Pemeliharaan Sistem & Cache Tools -->
-            <div class="card card-flush shadow-sm border-0 flex-grow-1">
-                <div class="card-header border-0 pt-6 pb-2">
-                    <div class="card-title d-flex flex-column">
-                        <h4 class="fw-bolder text-gray-900 m-0">Pemeliharaan Sistem & Alat Cache</h4>
-                        <span class="text-muted fs-8 mt-1">Pembersihan memori cache dan optimasi server seketika</span>
+            <div class="card shadow-sm border border-gray-200 flex-grow-1 d-flex flex-column justify-content-between">
+                <!--begin::Card header-->
+                <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                    <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-4">Pemeliharaan Sistem & Alat Cache</h3>
+                        <span class="text-muted fs-7 mt-1">Pembersihan memori cache dan optimasi server seketika</span>
                     </div>
-                    <div class="card-toolbar">
-                        <span class="badge badge-light-warning fw-bold fs-9">Pemeliharaan</span>
+                    <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                        <span class="badge badge-light-warning fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                            Pemeliharaan
+                        </span>
                     </div>
                 </div>
-                <div class="card-body pt-4">
+                <!--end::Card header-->
+
+                <!--begin::Card body-->
+                <div class="card-body py-6 px-4 px-md-6 flex-grow-1">
                     <p class="fs-8 text-muted mb-4">
                         Pilih jenis cache yang ingin dibersihkan secara instan untuk memperbarui template, routing, dan konfigurasi tanpa merestart web server:
                     </p>
@@ -341,6 +380,19 @@
                     </div>
 
                 </div>
+                <!--end::Card body-->
+
+                <!--begin::Card footer-->
+                <div class="card-footer py-4 px-4 px-md-6 mt-auto">
+                    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-sm-between text-center text-sm-start gap-2">
+                        <div class="d-flex align-items-center gap-2 text-muted fs-7">
+                            <i class="ki-outline ki-wrench fs-5 text-warning"></i>
+                            <span>4 alat utilitas cache sistem siap dieksekusi</span>
+                        </div>
+                        <span class="badge badge-light-warning fw-semibold fs-8">Cache Tools</span>
+                    </div>
+                </div>
+                <!--end::Card footer-->
             </div>
 
         </div>
@@ -351,18 +403,18 @@
     </div>
 
     <!-- Save & Reset Action Bar (Bottom Bar) -->
-    <div class="card card-flush shadow-sm border-0">
-        <div class="card-body p-5">
-            <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-3">
-                <div class="d-flex align-items-center gap-2 text-muted fs-8">
-                    <i class="ki-outline ki-shield-tick text-success fs-5"></i>
-                    Perubahan pengaturan akan langsung diterapkan persisten ke basis data.
+    <div class="card shadow-sm border border-gray-200">
+        <div class="card-body py-4 px-4 px-md-6">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between text-center text-sm-start gap-3">
+                <div class="d-flex align-items-center justify-content-center gap-2 text-gray-700 fs-7">
+                    <i class="ki-outline ki-shield-tick text-success fs-3"></i>
+                    <span>Perubahan pengaturan akan langsung diterapkan persisten ke basis data.</span>
                 </div>
                 <div class="d-flex align-items-center justify-content-center justify-content-sm-end gap-3 w-100 w-sm-auto">
-                    <button type="button" class="btn btn-light btn-sm fw-bold" id="btn_reset_system_settings" onclick="document.getElementById('system_settings_form').reset()">
+                    <button type="button" class="btn btn-light btn-sm fw-bold px-4 h-38px d-inline-flex align-items-center justify-content-center" id="btn_reset_system_settings" onclick="document.getElementById('system_settings_form').reset()">
                         <i class="ki-outline ki-arrows-circle fs-5 me-1"></i> Reset
                     </button>
-                    <button type="submit" class="btn btn-primary btn-sm fw-bold px-6" id="btn_save_system_settings">
+                    <button type="submit" class="btn btn-primary btn-sm fw-bold px-6 h-38px d-inline-flex align-items-center justify-content-center" id="btn_save_system_settings">
                         <i class="ki-outline ki-check fs-4 me-1 text-white"></i> Simpan
                     </button>
                 </div>

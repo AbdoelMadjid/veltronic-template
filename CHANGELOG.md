@@ -5,6 +5,24 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.39.0] - 2026-09-21
+
+### Added & Enhanced
+- **Kodifikasi Rule 12 & Standardisasi Struktur Kartu (Header, Body, Footer) Serta Optimalisasi Responsif Mobile Modul App Support (`/appsupport/app-fiturs`, `/appsupport/app-profil`, `/appsupport/menu`)**:
+  - **Kodifikasi Aturan Baru (Rule 12 - Standar Struktur Kartu & Responsif Mobile)**:
+    - Menetapkan aturan baku arsitektur kartu di seluruh modul aplikasi (`card shadow-sm border border-gray-200 mb-6`), terdiri atas pembatas header (`border-bottom border-gray-200 py-5 py-md-0`), body (`py-6 px-4 px-md-6`), dan footer berlatar kontras lembut (`card-footer border-top border-gray-200 py-4 px-4 px-md-6 bg-light bg-opacity-50`).
+    - **Header Bersih (No Icon Box)**: Melarang penggunaan kotak simbol/ikon di samping judul kartu pada seluruh formulir dan kartu modul untuk menghasilkan tipografi bersih dan modern.
+    - **Perataan Tengah di Mode Mobile**: Judul, deskripsi, badge toolbar, dan footer kartu otomatis rata tengah (`text-center` / `justify-content-center`) pada resolusi mobile (`< md`), serta beralih rata kiri-kanan rapi di mode desktop (`>= md`).
+    - **Tombol Solid Penuh (Full Button)**: Seluruh tombol aksi pada kartu dan bulk toolbar menggunakan tombol solid kontras tinggi (`btn-primary`, `btn-success`, `btn-danger`) dengan teks utuh dan ikon putih (`text-white`) di mobile, melarang tombol icon-only samar atau teks terpotong.
+  - **Optimalisasi Modul Visibilitas & Pengaturan Fitur (`/appsupport/app-fiturs`)**:
+    - **Penghapusan Kelas `card-flush`**: Menghapus `card-flush` pada kartu utama di tab Visibilitas, Pengaturan, dan Pintasan Keyboard sehingga garis pemisah header (`border-bottom`) dan footer (`border-top`) tampil tegas dan jelas.
+    - **Sinkronisasi Tinggi Badge & Tombol**: Menyelaraskan box-model dan tinggi badge counter terpilih (`XX Dipilih`) secara matematis presisi dengan tombol aksi massal di sampingnya (`Tampilkan` & `Sembunyikan`).
+    - **Pencegahan Overflow Layar Sempit**: Menerapkan `flex-wrap` dan padding adaptif (`px-4 px-sm-6`) sehingga deretan tombol bulk action tidak keluar/nabrak batas tepi kartu pada HP layar sempit.
+    - **Penyederhanaan Master Switch Pintasan Keyboard**: Menyederhanakan baris status master switch menjadi 1 kartu ringkas elegan tanpa pemisahan header/footer berlebih.
+  - **Optimalisasi Modul Profil Aplikasi & Menu Manajemen (`/appsupport/app-profil`, `/appsupport/menu`)**:
+    - Penataan header banner, formulir tab overview, logo, meta, dan footer profil sesuai standar Rule 12.
+    - Penataan toolbar atas, judul halaman, dan tombol petunjuk operasional di seluruh tata letak navbar (`_toolbar.blade.php`, `_toolbar-v2.blade.php`, `_page-title.blade.php`, `_action-petunjuk-button.blade.php`).
+
 ## [v1.38.0] - 2026-09-21
 
 ### Added & Enhanced

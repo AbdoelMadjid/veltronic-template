@@ -43,26 +43,34 @@
                 </div>
             @endif
 
-            <!--begin::Card-->
-            <div class="card card-flush shadow-sm">
-                <!--begin::Card header-->
-                <div class="card-header border-0 pt-6 px-6 pb-2 d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-between gap-3">
-                    <!--begin::Card title (Search)-->
-                    <div class="card-title my-0 w-100 w-md-auto">
+            <!--begin::Header Banner & Filter Card-->
+            <div class="card card-flush shadow-sm border-0 mb-6">
+                <div class="card-body p-6 d-flex flex-column flex-xl-row align-items-center justify-content-between gap-4 text-center text-xl-start">
+                    <!-- Sisi Kiri: Logo, Judul & Deskripsi -->
+                    <div class="d-flex flex-column flex-md-row align-items-center gap-2 gap-md-4 w-100 w-xl-auto">
+                        <!-- Logo / Icon -->
+                        <div class="symbol symbol-55px symbol-md-45px symbol-circle bg-light-primary mb-1 mb-md-0 me-0 me-md-4 d-flex align-items-center justify-content-center flex-shrink-0">
+                            <i class="ki-outline ki-category text-primary fs-2x fs-md-2"></i>
+                        </div>
+                        <!-- Judul & Deskripsi -->
+                        <div class="d-flex flex-column align-items-center align-items-md-start">
+                            <h2 class="fw-bolder text-gray-900 m-0 fs-3">Manajemen Menu & Navigasi</h2>
+                            <span class="text-muted fs-7 mt-1">Kelola hierarki menu aplikasi, konfigurasi rute URL, izin akses modul, dan pengurutan navigasi.</span>
+                        </div>
+                    </div>
+
+                    <!-- Sisi Kanan (Rapat Kanan): Search, Filter & Tombol Tambah Menu -->
+                    <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-center justify-content-xl-end gap-2 gap-md-3 w-100 w-xl-auto mt-2 mt-xl-0">
                         <!--begin::Search-->
-                        <div class="d-flex align-items-center position-relative my-0 w-100 w-md-auto">
+                        <div class="d-flex align-items-center position-relative w-100 w-sm-200px w-md-225px">
                             <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4 text-gray-500"></i>
-                            <input type="text" id="menu-search-input" class="form-control form-control-solid w-100 w-md-250px ps-12" placeholder="Cari nama, URL, key..." value="{{ $search ?? '' }}" />
+                            <input type="text" id="menu-search-input" class="form-control form-control-solid form-control-sm ps-12" placeholder="Cari nama, URL, key..." value="{{ $search ?? '' }}" />
                         </div>
                         <!--end::Search-->
-                    </div>
-                    <!--end::Card title-->
 
-                    <!--begin::Card toolbar (Filter & Add Button)-->
-                    <div class="card-toolbar d-flex align-items-center justify-content-between justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto flex-nowrap flex-grow-1 flex-md-grow-0 my-0">
                         <!--begin::Category Filter-->
-                        <div class="flex-grow-1 flex-md-grow-0 w-auto w-md-175px">
-                            <select id="category-filter-select" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Filter Kategori">
+                        <div class="w-100 w-sm-175px">
+                            <select id="category-filter-select" class="form-select form-select-solid form-select-sm" data-control="select2" data-hide-search="true" data-placeholder="Filter Kategori">
                                 <option value="">Semua Kategori</option>
                                 @foreach($categories as $cat)
                                     <option value="{{ $cat }}" {{ ($categoryFilter ?? '') === $cat ? 'selected' : '' }}>{{ ucfirst($cat) }}</option>
@@ -71,23 +79,24 @@
                         </div>
                         <!--end::Category Filter-->
 
-                        <!--begin::Add Button (Seeder Pattern)-->
-                        <button type="button" class="btn btn-primary fw-bold px-3 px-md-4 flex-shrink-0 btn-add-menu-modal" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tambah Menu">
-                            <i class="ki-outline ki-plus fs-2 me-0 me-md-1"></i>
-                            <span class="d-none d-md-inline">Tambah Menu</span>
+                        <!--begin::Add Button-->
+                        <button type="button" class="btn btn-primary btn-sm fw-bold px-3 px-md-4 w-100 w-sm-auto flex-shrink-0 btn-add-menu-modal" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu">
+                            <i class="ki-outline ki-plus fs-3 fs-md-4 me-1"></i>
+                            <span>Tambah Menu</span>
                         </button>
                         <!--end::Add Button-->
                     </div>
-                    <!--end::Card toolbar-->
                 </div>
-                <!--end::Card header-->
+            </div>
+            <!--end::Header Banner & Filter Card-->
 
+            <!--begin::Table Card-->
+            <div class="card card-flush shadow-sm border-0">
                 <!--begin::Card body-->
-                <div class="card-body pt-0">
+                <div class="card-body py-4 px-6">
                     <!--begin::Table-->
                     <div class="table-responsive">
-                        <table class="table align-middle table-row-dashed fs-6 gy-4" id="kt_table_menus">
+                        <table class="table align-middle table-row-dashed table-row-gray-200 fs-6 gy-4" id="kt_table_menus">
                             <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                                     <th class="min-w-260px">Nama Menu & Terjemahan</th>

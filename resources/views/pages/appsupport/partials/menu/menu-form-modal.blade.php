@@ -254,16 +254,16 @@
 
                                     <!--begin::Hak Akses (Permissions & Roles ala Seeder)-->
                                     <div class="rounded border p-4 bg-light-secondary mt-5">
-                                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+                                        <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2 mb-3">
                                             <div class="d-flex align-items-center gap-2">
                                                 <i class="ki-outline ki-shield-search fs-4 text-primary"></i>
                                                 <span class="fs-7 fw-bold text-gray-800">Akses & Permissions (CRUD Pattern)</span>
                                             </div>
-                                            <!-- Quick Presets -->
-                                            <div class="d-flex gap-1 flex-wrap">
-                                                <button type="button" class="btn btn-xs btn-light-success py-1 px-2 btn-perm-preset" data-preset="crud" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Pilih Semua Aksi CRUD">⚡ Full CRUD</button>
-                                                <button type="button" class="btn btn-xs btn-light-primary py-1 px-2 btn-perm-preset" data-preset="read" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Hanya Izin Read">👁️ Read Only</button>
-                                                <button type="button" class="btn btn-xs btn-light-warning py-1 px-2 btn-perm-preset" data-preset="manage" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Izin Kelola (Read, Create, Update)">✏️ Manage</button>
+                                            <!-- Quick Presets (1 baris di mobile) -->
+                                            <div class="d-flex align-items-center gap-1 flex-nowrap">
+                                                <button type="button" class="btn btn-xs btn-light-primary text-primary fs-9 py-0.5 px-2 fw-bold btn-perm-preset" data-preset="crud" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Pilih Semua Aksi CRUD">⚡ Full CRUD</button>
+                                                <button type="button" class="btn btn-xs btn-light-primary text-primary fs-9 py-0.5 px-2 fw-bold btn-perm-preset" data-preset="read" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Hanya Izin Read">👁️ Read Only</button>
+                                                <button type="button" class="btn btn-xs btn-light-primary text-primary fs-9 py-0.5 px-2 fw-bold btn-perm-preset" data-preset="manage" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Izin Kelola (Read, Create, Update)">✏️ Manage</button>
                                             </div>
                                         </div>
 
@@ -510,12 +510,12 @@
 
                     <!-- Hak Akses Edit -->
                     <div class="rounded border p-4 bg-light-secondary mt-5">
-                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+                        <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2 mb-3">
                             <span class="fs-7 fw-bold text-gray-800">Akses & Permissions (CRUD)</span>
-                            <div class="d-flex gap-1 flex-wrap">
-                                <button type="button" class="btn btn-xs btn-light-success py-1 px-2 btn-edit-perm-preset" data-preset="crud" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Pilih Semua Aksi CRUD">⚡ Full CRUD</button>
-                                <button type="button" class="btn btn-xs btn-light-primary py-1 px-2 btn-edit-perm-preset" data-preset="read" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Hanya Izin Read">👁️ Read Only</button>
-                                <button type="button" class="btn btn-xs btn-light-warning py-1 px-2 btn-edit-perm-preset" data-preset="manage" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Izin Kelola (Read, Create, Update)">✏️ Manage</button>
+                            <div class="d-flex align-items-center gap-1 flex-nowrap">
+                                <button type="button" class="btn btn-xs btn-light-primary text-primary fs-9 py-0.5 px-2 fw-bold btn-edit-perm-preset" data-preset="crud" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Pilih Semua Aksi CRUD">⚡ Full CRUD</button>
+                                <button type="button" class="btn btn-xs btn-light-primary text-primary fs-9 py-0.5 px-2 fw-bold btn-edit-perm-preset" data-preset="read" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Hanya Izin Read">👁️ Read Only</button>
+                                <button type="button" class="btn btn-xs btn-light-primary text-primary fs-9 py-0.5 px-2 fw-bold btn-edit-perm-preset" data-preset="manage" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Izin Kelola (Read, Create, Update)">✏️ Manage</button>
                             </div>
                         </div>
 

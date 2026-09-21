@@ -34,18 +34,54 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.38.0
+                            Versi Saat Ini: v1.39.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.39.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.39.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.39.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>21 Sep 2026, 12:00 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Kodifikasi Rule 12 &amp; Standardisasi Struktur Kartu (Header, Body, Footer) Serta Optimalisasi Responsif Mobile Modul App Support (/appsupport/app-fiturs, /appsupport/app-profil, /appsupport/menu)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Kodifikasi aturan baru Rule 12 pada panduan arsitektur antarmuka Veltronic untuk standarisasi struktur kartu (Header tipografi murni tanpa icon box, Body luas proporsional, dan Footer berlatar kontras lembut bergaris pembatas tegas). Disertai optimalisasi antarmuka mobile (center alignment pada layar &lt; md), tombol solid penuh kontras tinggi di mobile, penyelarasan tinggi badge pilihan dengan tombol aksi massal, penghapusan kelas <code>card-flush</code> untuk memunculkan garis pembatas, pencegahan overflow horizontal pada layar sempit, serta penyederhanaan master switch status pintasan.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Kodifikasi Rule 12 (Card Structure &amp; Responsive Standards)</strong>: Standarisasi batas visual tegas (<code>border border-gray-200</code>), garis pemisah header (<code>border-bottom</code>), footer (<code>border-top bg-light bg-opacity-50</code>), header tanpa kotak ikon (no icon box), perataan tengah di mode mobile, dan tombol solid penuh (full button).</li>
+                                        <li><strong>Penghapusan Kelas <code>card-flush</code></strong>: Memulihkan garis pembatas header dan footer yang sebelumnya tertekan/hilang akibat aturan CSS bawaan Metronic pada kartu utama.</li>
+                                        <li><strong>Sinkronisasi Tinggi Badge &amp; Tombol</strong>: Penyelarasan box-model badge counter (<code>XX Dipilih</code>) dan tombol aksi massal (<code>Tampilkan</code> &amp; <code>Sembunyikan</code>) agar 100% presisi sejajar.</li>
+                                        <li><strong>Pencegahan Overflow Mobile</strong>: Penerapan <code>flex-wrap</code> dan padding adaptif pada bulk selected toolbar agar tidak nabrak/keluar batas kartu di layar HP sempit.</li>
+                                        <li><strong>Penyederhanaan Master Switch Pintasan</strong>: Menyatukan saklar utama pintasan keyboard menjadi 1 kartu ringkas elegan tanpa pemisahan header/footer berlebih.</li>
+                                        <li><strong>Standardisasi Modul App Profil, Menu, &amp; Toolbar Navbar</strong>: Penataan header banner, tab overview/logo/meta/footer profil, dan toolbar navbar sesuai standar Rule 12.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.39.0 (Minor)-->
+
                         <!--begin::Item v1.38.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.38.0</div>
                             <div class="timeline-badge">
-                                <i class="fa fa-genderless text-primary fs-1"></i>
+                                <i class="fa fa-genderless text-secondary fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
@@ -56,7 +92,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>21 Sep 2026, 07:45 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Pemisahan Konfigurasi &amp; Live Preview Tema Landing &amp; Education Portal Serta Standarisasi Tampilan Mobile Card Header (/appsupport/theme-frontpage)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

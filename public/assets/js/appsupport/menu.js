@@ -436,11 +436,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 <!-- Hak Akses Sub Menu -->
                 <div class="rounded border p-3 bg-white mb-3">
-                    <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-1 mb-2">
                         <span class="fs-8 fw-bold text-gray-700">Akses CRUD Level 2</span>
-                        <div class="d-flex gap-1">
-                            <button type="button" class="btn btn-xs btn-light-success py-0 px-2 btn-perm-preset" data-preset="crud">⚡ Full</button>
-                            <button type="button" class="btn btn-xs btn-light-primary py-0 px-2 btn-perm-preset" data-preset="read">👁️ Read</button>
+                        <div class="d-flex align-items-center gap-1 flex-nowrap">
+                            <button type="button" class="btn btn-xs btn-light-primary text-primary fs-9 py-0.5 px-2 fw-bold btn-perm-preset" data-preset="crud">⚡ Full CRUD</button>
+                            <button type="button" class="btn btn-xs btn-light-primary text-primary fs-9 py-0.5 px-2 fw-bold btn-perm-preset" data-preset="read">👁️ Read Only</button>
+                            <button type="button" class="btn btn-xs btn-light-primary text-primary fs-9 py-0.5 px-2 fw-bold btn-perm-preset" data-preset="manage">✏️ Manage</button>
                         </div>
                     </div>
                     <div class="d-flex flex-wrap gap-2">

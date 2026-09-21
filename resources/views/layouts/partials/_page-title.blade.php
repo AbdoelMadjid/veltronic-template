@@ -1,5 +1,5 @@
 <!--begin::Page title-->
-<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+<div class="page-title d-flex flex-column justify-content-center flex-wrap me-0 me-md-3 mb-1 mb-md-0">
     @php
         $segments = request()->segments();
 

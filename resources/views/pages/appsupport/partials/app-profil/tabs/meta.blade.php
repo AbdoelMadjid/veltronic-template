@@ -1,23 +1,20 @@
 <div class="row g-6">
     <!--begin::Left Column: Meta Form-->
     <div class="col-xl-7">
-        <div class="card card-flush shadow-sm border-0">
-            <div class="card-header card-header-mobile-center border-0 pt-6">
-                <div class="card-title d-flex flex-column flex-md-row align-items-center text-center text-md-start">
-                    <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-primary mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                        <i class="ki-outline ki-code text-primary fs-2 fs-md-3"></i>
-                    </div>
-                    <div class="d-flex flex-column align-items-center align-items-md-start">
-                        <h3 class="fw-bold text-gray-900 m-0 fs-4">Formulir Identitas & Meta SEO Dashboard</h3>
-                        <span class="text-muted fs-7 mt-1">Atur judul, deskripsi, kata kunci pencarian, dan informasi author aplikasi.</span>
+        <form id="kt_form_app_meta" method="POST" action="{{ route('appsupport.app-profil.meta') }}">
+            @csrf
+            <div class="card shadow-sm border-0 mb-6">
+                <!--begin::Card header-->
+                <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                    <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-4">Formulir Identitas & Meta SEO Dashboard</h3>
+                        <span class="text-muted fs-7 mt-1">Atur judul, deskripsi, kata kunci pencarian, dan informasi author aplikasi</span>
                     </div>
                 </div>
-            </div>
+                <!--end::Card header-->
 
-            <div class="card-body pt-4">
-                <form id="kt_form_app_meta" method="POST" action="{{ route('appsupport.app-profil.meta') }}">
-                    @csrf
-
+                <!--begin::Card body-->
+                <div class="card-body py-6 px-4 px-md-6">
                     <!--begin::Input Group: App Name-->
                     <div class="mb-5">
                         <label class="form-label required fw-bold text-gray-800 fs-6">Nama Aplikasi / Dashboard</label>
@@ -74,55 +71,56 @@
                     <!--end::Input Group-->
 
                     <!--begin::Input Group: OG Title-->
-                    <div class="mb-8">
+                    <div class="mb-2">
                         <label class="form-label fw-bold text-gray-800 fs-6">Open Graph Title</label>
                         <input type="text" class="form-control form-control-solid" id="input_og_title" name="og_title" value="{{ $settings['og_title'] ?? 'Veltronic - Metronic 8.3.2 Admin Dashboard' }}" placeholder="Contoh: Veltronic - Metronic 8.3.2 Admin Dashboard" />
                         <div class="form-text">Judul yang muncul saat tautan dashboard dibagikan di media sosial (WhatsApp, Telegram, Facebook, Twitter).</div>
                     </div>
                     <!--end::Input Group-->
+                </div>
+                <!--end::Card body-->
 
-                    <!--begin::Form Actions-->
-                    <div class="d-flex align-items-center justify-content-center justify-content-md-end gap-2 gap-md-3 pt-4 border-top flex-wrap flex-md-nowrap">
-                        <button type="reset" class="btn btn-light btn-sm fw-bold px-4 px-md-5"
+                <!--begin::Card footer-->
+                <div class="card-footer d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-3 py-4 px-6">
+                    <div class="text-muted fs-8 text-center text-sm-start">
+                        <i class="ki-outline ki-shield-tick fs-6 text-success me-1"></i> Perubahan data meta disinkronkan secara realtime.
+                    </div>
+                    <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-center justify-content-sm-end gap-2">
+                        <button type="reset" class="btn btn-light btn-sm fw-bold px-4 w-100 w-sm-auto d-inline-flex align-items-center justify-content-center h-35px"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan nilai awal formulir">
                             <i class="ki-outline ki-arrows-circle fs-5 me-1"></i>
                             <span>Reset Nilai</span>
                         </button>
-                        <button type="submit" class="btn btn-primary btn-sm fw-bold px-5 px-md-6" id="kt_btn_save_meta"
+                        <button type="submit" class="btn btn-primary btn-sm fw-bold px-5 w-100 w-sm-auto d-inline-flex align-items-center justify-content-center h-35px" id="kt_btn_save_meta"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan perubahan identitas & SEO">
-                            <span class="indicator-label">
+                            <span class="indicator-label d-inline-flex align-items-center justify-content-center">
                                 <i class="ki-outline ki-check fs-4 me-1"></i>
                                 <span>Simpan Data Meta</span>
                             </span>
                             <span class="indicator-progress">
+                                <span class="spinner-border spinner-border-sm align-middle me-2"></span>
                                 <span>Menyimpan...</span>
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                             </span>
                         </button>
                     </div>
-                    <!--end::Form Actions-->
-                </form>
+                </div>
+                <!--end::Card footer-->
             </div>
-        </div>
+        </form>
     </div>
     <!--end::Left Column-->
 
     <!--begin::Right Column: Live Preview Card-->
     <div class="col-xl-5">
         <!--begin::Google Search Preview-->
-        <div class="card card-flush shadow-sm border-0 mb-6">
-            <div class="card-header card-header-mobile-center border-0 pt-6">
-                <div class="card-title d-flex flex-column flex-md-row align-items-center text-center text-md-start">
-                    <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-danger mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                        <i class="ki-outline ki-google text-danger fs-2 fs-md-3"></i>
-                    </div>
-                    <div class="d-flex flex-column align-items-center align-items-md-start">
-                        <h3 class="fw-bold text-gray-900 m-0 fs-5">Simulasi Google Search Snippet</h3>
-                        <span class="text-muted fs-8 mt-1">Pratinjau tampilan di hasil pencarian Google</span>
-                    </div>
+        <div class="card shadow-sm border-0 mb-6">
+            <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-5">Simulasi Google Search Snippet</h3>
+                    <span class="text-muted fs-8 mt-1">Pratinjau tampilan di hasil pencarian Google</span>
                 </div>
             </div>
-            <div class="card-body pt-2">
+            <div class="card-body py-6 px-4 px-md-6">
                 <div class="google-preview-card">
                     <div class="google-preview-url">
                         <span class="symbol symbol-15px symbol-circle bg-light me-1">
@@ -146,23 +144,21 @@
                     </div>
                 </div>
             </div>
+            <div class="card-footer py-3 px-6 text-center text-md-start">
+                <span class="text-muted fs-8">Disinkronkan otomatis dengan field judul dan deskripsi.</span>
+            </div>
         </div>
         <!--end::Google Search Preview-->
 
         <!--begin::Social Card Preview-->
-        <div class="card card-flush shadow-sm border-0">
-            <div class="card-header card-header-mobile-center border-0 pt-6">
-                <div class="card-title d-flex flex-column flex-md-row align-items-center text-center text-md-start">
-                    <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-info mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                        <i class="ki-outline ki-share text-info fs-2 fs-md-3"></i>
-                    </div>
-                    <div class="d-flex flex-column align-items-center align-items-md-start">
-                        <h3 class="fw-bold text-gray-900 m-0 fs-5">Simulasi Open Graph Social Card</h3>
-                        <span class="text-muted fs-8 mt-1">Pratinjau saat link dibagikan ke media sosial</span>
-                    </div>
+        <div class="card shadow-sm border-0">
+            <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-5">Simulasi Open Graph Social Card</h3>
+                    <span class="text-muted fs-8 mt-1">Pratinjau saat link dibagikan ke media sosial</span>
                 </div>
             </div>
-            <div class="card-body pt-2">
+            <div class="card-body py-6 px-4 px-md-6">
                 <div class="social-preview-card">
                     <div class="social-preview-img">
                         <div class="text-center p-4">
@@ -177,6 +173,9 @@
                         <div class="text-muted fs-7 line-clamp-2" id="preview_og_desc">{{ $settings['meta_description'] ?? 'Modern Admin Dashboard' }}</div>
                     </div>
                 </div>
+            </div>
+            <div class="card-footer py-3 px-6 text-center text-md-start">
+                <span class="text-muted fs-8">Tampilan kartu pratinjau standar WhatsApp, Facebook, dan Telegram.</span>
             </div>
         </div>
         <!--end::Social Card Preview-->

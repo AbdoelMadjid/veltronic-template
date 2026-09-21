@@ -1,5 +1,6 @@
 <!--begin::Navs-->
-<ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold overflow-x-auto overflow-y-hidden flex-nowrap" id="app_fiturs_nav_tabs" role="tablist">
+<ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold overflow-x-auto overflow-y-hidden flex-nowrap" role="tablist">
+    <!--begin::Nav item 1-->
     <li class="nav-item" role="presentation">
         <a class="nav-link text-active-primary d-flex align-items-center me-3 me-md-6 py-4 {{ ($active ?? 'visibility') === 'visibility' ? 'active' : '' }}"
             data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_visibility"
@@ -9,6 +10,9 @@
             <span class="d-none d-md-inline">Visibilitas Fitur Dashboard</span>
         </a>
     </li>
+    <!--end::Nav item 1-->
+
+    <!--begin::Nav item 2-->
     <li class="nav-item" role="presentation">
         <a class="nav-link text-active-primary d-flex align-items-center me-3 me-md-6 py-4 {{ ($active ?? '') === 'settings' ? 'active' : '' }}"
             data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_settings"
@@ -18,6 +22,9 @@
             <span class="d-none d-md-inline">Pengaturan Aplikasi</span>
         </a>
     </li>
+    <!--end::Nav item 2-->
+
+    <!--begin::Nav item 3-->
     <li class="nav-item" role="presentation">
         <a class="nav-link text-active-primary d-flex align-items-center me-3 me-md-6 py-4 {{ ($active ?? '') === 'shortcuts' ? 'active' : '' }}"
             data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_shortcuts" id="tab_btn_shortcuts"
@@ -27,6 +34,9 @@
             <span class="d-none d-md-inline">Pintasan Keyboard</span>
         </a>
     </li>
+    <!--end::Nav item 3-->
+
+    <!--begin::Nav item 4-->
     <li class="nav-item" role="presentation">
         <a class="nav-link text-active-primary d-flex align-items-center me-3 me-md-6 py-4 {{ ($active ?? '') === 'activity_logs' ? 'active' : '' }}"
             data-bs-toggle="tab" role="tab" href="#kt_app_fiturs_tab_activity_logs" id="tab_btn_activity_logs"
@@ -36,5 +46,6 @@
             <span class="d-none d-md-inline">Log Aktivitas Sistem</span>
         </a>
     </li>
+    <!--end::Nav item 4-->
 </ul>
 <!--end::Navs-->

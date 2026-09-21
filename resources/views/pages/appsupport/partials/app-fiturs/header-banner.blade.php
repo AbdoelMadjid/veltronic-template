@@ -19,18 +19,16 @@
             </div>
         </div>
 
-        <!-- Baris 4: Kumpulan Tombol Aksi (Icon-only di mobile dengan Tooltip Hover) / Sisi Kanan di Desktop -->
+        <!-- Baris 4: Kumpulan Tombol Aksi (Full Button di Mobile & Desktop) -->
         <div class="d-flex align-items-center justify-content-center justify-content-md-end gap-2 gap-md-3 w-100 w-md-auto mt-2 mt-md-0 flex-wrap flex-md-nowrap">
-            <button type="button" class="btn btn-light-danger btn-sm fw-bold px-3 px-md-4 btn-bulk-action"
-                data-action="reset_all" data-category="all"
-                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top"
-                title="Kembalikan semua pengaturan fitur ke bawaan awal">
+            <button type="button" class="btn btn-light-danger btn-sm fw-bold px-4 w-100 w-md-auto btn-bulk-action"
+                data-action="reset_all" data-category="all">
                 <span class="indicator-label">
-                    <i class="ki-outline ki-arrows-circle fs-4 me-0 me-md-1"></i>
-                    <span class="d-none d-md-inline">Atur Ulang Bawaan</span>
+                    <i class="ki-outline ki-arrows-circle fs-4 me-1"></i>
+                    <span>Atur Ulang Bawaan</span>
                 </span>
                 <span class="indicator-progress">
-                    <span class="d-none d-md-inline">Memproses...</span>
+                    <span>Memproses...</span>
                     <span class="spinner-border spinner-border-sm align-middle ms-1"></span>
                 </span>
             </button>

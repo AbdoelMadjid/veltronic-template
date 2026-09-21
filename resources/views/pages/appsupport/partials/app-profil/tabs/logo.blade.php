@@ -4,28 +4,26 @@
     <div class="row g-6">
         <!--begin::Logo Default (Light Mode)-->
         <div class="col-md-6 col-xl-6">
-            <div class="card card-flush shadow-sm border-0 h-100">
-                <div class="card-header card-header-mobile-center position-relative border-0 pt-6">
-                    <div class="card-title w-100 w-md-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start m-0">
-                        <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-warning mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                            <i class="ki-outline ki-sun text-warning fs-2 fs-md-3"></i>
-                        </div>
-                        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
-                            <h3 class="fw-bold text-gray-900 m-0 fs-5">Logo Mode Terang (Light Mode)</h3>
-                            <span class="text-muted fs-8 mt-1">Ditampilkan pada sidebar terang & header terang</span>
-                        </div>
+            <div class="card shadow-sm border-0 h-100 d-flex flex-column justify-content-between">
+                <!--begin::Card header-->
+                <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                    <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-5">Logo Mode Terang (Light Mode)</h3>
+                        <span class="text-muted fs-8 mt-1">Ditampilkan pada sidebar & header bertema terang</span>
                     </div>
-                    <div class="card-toolbar position-absolute position-md-static top-0 end-0 mt-4 me-4 mt-md-0 me-md-0">
+                    <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
                         <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="default"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan ke logo default tema">
                             <i class="ki-outline ki-arrows-circle fs-5"></i>
                         </button>
                     </div>
                 </div>
+                <!--end::Card header-->
 
-                <div class="card-body pt-2 d-flex flex-column justify-content-between">
+                <!--begin::Card body-->
+                <div class="card-body py-6 px-4 px-md-6 d-flex flex-column justify-content-between">
                     <!--begin::Preview Box-->
-                    <div class="logo-preview-box-light mb-3 position-relative">
+                    <div class="logo-preview-box-light mb-4 position-relative">
                         <img src="{{ app_logo_url('default') }}" id="img_preview_logo_default" alt="Logo Light Preview" class="mh-60px mw-100" />
                     </div>
                     <!--end::Preview Box-->
@@ -42,7 +40,7 @@
                             <i class="ki-outline ki-star fs-7 me-1"></i> Ideal: 200×50 px
                         </span>
                         <span class="badge badge-light-secondary text-gray-700 fs-8 py-2 px-3">
-                            Maks 1 MB (PNG/SVG/WebP)
+                            Maks 1 MB
                         </span>
                     </div>
                     <!--end::Dimension Constraints Badges-->
@@ -64,40 +62,46 @@
                             </div>
                         </div>
 
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <label class="form-label fw-semibold text-gray-700 fs-7">Atau Path / URL Logo Kustom</label>
                             <input type="text" class="form-control form-control-solid form-control-sm" name="app_logo_default_url" value="{{ $settings['app_logo_default'] ?? '' }}" placeholder="media/logos/default.svg atau https://..." />
                         </div>
                     </div>
                 </div>
+                <!--end::Card body-->
+
+                <!--begin::Card footer-->
+                <div class="card-footer py-3 px-6 d-flex align-items-center justify-content-between text-muted fs-8">
+                    <span>Rasio: Lanskap</span>
+                    <span class="badge badge-light-primary fs-9">PNG / SVG / WebP</span>
+                </div>
+                <!--end::Card footer-->
             </div>
         </div>
         <!--end::Logo Default-->
 
         <!--begin::Logo Dark Mode-->
         <div class="col-md-6 col-xl-6">
-            <div class="card card-flush shadow-sm border-0 h-100">
-                <div class="card-header card-header-mobile-center position-relative border-0 pt-6">
-                    <div class="card-title w-100 w-md-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start m-0">
-                        <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-primary mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                            <i class="ki-outline ki-moon text-primary fs-2 fs-md-3"></i>
-                        </div>
-                        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
-                            <h3 class="fw-bold text-gray-900 m-0 fs-5">Logo Mode Gelap (Dark Mode)</h3>
-                            <span class="text-muted fs-8 mt-1">Ditampilkan pada sidebar gelap & header gelap</span>
-                        </div>
+            <div class="card shadow-sm border-0 h-100 d-flex flex-column justify-content-between">
+                <!--begin::Card header-->
+                <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                    <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-5">Logo Mode Gelap (Dark Mode)</h3>
+                        <span class="text-muted fs-8 mt-1">Ditampilkan pada sidebar & header bertema gelap</span>
                     </div>
-                    <div class="card-toolbar position-absolute position-md-static top-0 end-0 mt-4 me-4 mt-md-0 me-md-0">
+                    <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
                         <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="dark"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan ke logo default tema">
                             <i class="ki-outline ki-arrows-circle fs-5"></i>
                         </button>
                     </div>
                 </div>
+                <!--end::Card header-->
 
-                <div class="card-body pt-2 d-flex flex-column justify-content-between">
+                <!--begin::Card body-->
+                <div class="card-body py-6 px-4 px-md-6 d-flex flex-column justify-content-between">
                     <!--begin::Preview Box-->
-                    <div class="logo-preview-box-dark mb-3 position-relative">
+                    <div class="logo-preview-box-dark mb-4 position-relative">
                         <img src="{{ app_logo_url('dark') }}" id="img_preview_logo_dark" alt="Logo Dark Preview" class="mh-60px mw-100" />
                     </div>
                     <!--end::Preview Box-->
@@ -114,7 +118,7 @@
                             <i class="ki-outline ki-star fs-7 me-1"></i> Ideal: 200×50 px
                         </span>
                         <span class="badge badge-light-secondary text-gray-700 fs-8 py-2 px-3">
-                            Maks 1 MB (Transparan/Terang)
+                            Maks 1 MB
                         </span>
                     </div>
                     <!--end::Dimension Constraints Badges-->
@@ -136,40 +140,46 @@
                             </div>
                         </div>
 
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <label class="form-label fw-semibold text-gray-700 fs-7">Atau Path / URL Logo Kustom</label>
                             <input type="text" class="form-control form-control-solid form-control-sm" name="app_logo_dark_url" value="{{ $settings['app_logo_dark'] ?? '' }}" placeholder="media/logos/default-dark.svg atau https://..." />
                         </div>
                     </div>
                 </div>
+                <!--end::Card body-->
+
+                <!--begin::Card footer-->
+                <div class="card-footer py-3 px-6 d-flex align-items-center justify-content-between text-muted fs-8">
+                    <span>Warna terang / transparan</span>
+                    <span class="badge badge-light-primary fs-9">Maks 1 MB</span>
+                </div>
+                <!--end::Card footer-->
             </div>
         </div>
         <!--end::Logo Dark Mode-->
 
         <!--begin::Logo Minimize-->
         <div class="col-md-6 col-xl-6">
-            <div class="card card-flush shadow-sm border-0 h-100">
-                <div class="card-header card-header-mobile-center position-relative border-0 pt-6">
-                    <div class="card-title w-100 w-md-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start m-0">
-                        <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-info mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                            <i class="ki-outline ki-abstract-26 text-info fs-2 fs-md-3"></i>
-                        </div>
-                        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
-                            <h3 class="fw-bold text-gray-900 m-0 fs-5">Logo Mini / Minimize Icon</h3>
-                            <span class="text-muted fs-8 mt-1">Ditampilkan saat sidebar ditutup / diciutkan</span>
-                        </div>
+            <div class="card shadow-sm border-0 h-100 d-flex flex-column justify-content-between">
+                <!--begin::Card header-->
+                <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                    <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-5">Logo Mini / Minimize Icon</h3>
+                        <span class="text-muted fs-8 mt-1">Ditampilkan saat sidebar ditutup / diciutkan</span>
                     </div>
-                    <div class="card-toolbar position-absolute position-md-static top-0 end-0 mt-4 me-4 mt-md-0 me-md-0">
+                    <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
                         <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="minimize"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan ke icon default tema">
                             <i class="ki-outline ki-arrows-circle fs-5"></i>
                         </button>
                     </div>
                 </div>
+                <!--end::Card header-->
 
-                <div class="card-body pt-2 d-flex flex-column justify-content-between">
+                <!--begin::Card body-->
+                <div class="card-body py-6 px-4 px-md-6 d-flex flex-column justify-content-between">
                     <!--begin::Preview Box-->
-                    <div class="logo-preview-box-dark mb-3 position-relative">
+                    <div class="logo-preview-box-dark mb-4 position-relative">
                         <img src="{{ app_logo_url('minimize') }}" id="img_preview_logo_minimize" alt="Logo Mini Preview" class="mh-40px mw-40px" />
                     </div>
                     <!--end::Preview Box-->
@@ -212,40 +222,46 @@
                             </div>
                         </div>
 
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <label class="form-label fw-semibold text-gray-700 fs-7">Atau Path / URL Icon Kustom</label>
                             <input type="text" class="form-control form-control-solid form-control-sm" name="app_logo_minimize_url" value="{{ $settings['app_logo_minimize'] ?? '' }}" placeholder="media/logos/default-small.svg" />
                         </div>
                     </div>
                 </div>
+                <!--end::Card body-->
+
+                <!--begin::Card footer-->
+                <div class="card-footer py-3 px-6 d-flex align-items-center justify-content-between text-muted fs-8">
+                    <span>Rasio Persegi (1:1)</span>
+                    <span class="badge badge-light-info fs-9">Ideal: 40×40 px</span>
+                </div>
+                <!--end::Card footer-->
             </div>
         </div>
         <!--end::Logo Minimize-->
 
         <!--begin::Favicon-->
         <div class="col-md-6 col-xl-6">
-            <div class="card card-flush shadow-sm border-0 h-100">
-                <div class="card-header card-header-mobile-center position-relative border-0 pt-6">
-                    <div class="card-title w-100 w-md-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start m-0">
-                        <div class="symbol symbol-45px symbol-md-35px symbol-circle bg-light-success mb-2 mb-md-0 me-0 me-md-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                            <i class="ki-outline ki-bookmark text-success fs-2 fs-md-3"></i>
-                        </div>
-                        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
-                            <h3 class="fw-bold text-gray-900 m-0 fs-5">Favicon Browser (.ico / .png)</h3>
-                            <span class="text-muted fs-8 mt-1">Ditampilkan pada tab browser & bookmark</span>
-                        </div>
+            <div class="card shadow-sm border-0 h-100 d-flex flex-column justify-content-between">
+                <!--begin::Card header-->
+                <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                    <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-5">Favicon Browser (.ico / .png)</h3>
+                        <span class="text-muted fs-8 mt-1">Ditampilkan pada tab browser & bookmark</span>
                     </div>
-                    <div class="card-toolbar position-absolute position-md-static top-0 end-0 mt-4 me-4 mt-md-0 me-md-0">
+                    <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
                         <button type="button" class="btn btn-light-danger btn-sm btn-icon btn-reset-logo" data-target="favicon"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan ke favicon default tema">
                             <i class="ki-outline ki-arrows-circle fs-5"></i>
                         </button>
                     </div>
                 </div>
+                <!--end::Card header-->
 
-                <div class="card-body pt-2 d-flex flex-column justify-content-between">
+                <!--begin::Card body-->
+                <div class="card-body py-6 px-4 px-md-6 d-flex flex-column justify-content-between">
                     <!--begin::Preview Box-->
-                    <div class="d-flex align-items-center gap-4 p-4 bg-light rounded-3 mb-3">
+                    <div class="d-flex align-items-center gap-4 p-4 bg-light rounded-3 mb-4">
                         <div class="favicon-preview-box">
                             <img src="{{ app_favicon_url() }}" id="img_preview_favicon" alt="Favicon Preview" class="w-25px h-25px" />
                         </div>
@@ -271,7 +287,7 @@
                             <i class="ki-outline ki-star fs-7 me-1"></i> Ideal: 32×32 / 64×64 px
                         </span>
                         <span class="badge badge-light-secondary text-gray-700 fs-8 py-2 px-3">
-                            Maks 256 KB (.ico/.png/.svg)
+                            Maks 256 KB
                         </span>
                     </div>
                     <!--end::Dimension Constraints Badges-->
@@ -294,33 +310,41 @@
                             </div>
                         </div>
 
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <label class="form-label fw-semibold text-gray-700 fs-7">Atau Path / URL Favicon Kustom</label>
                             <input type="text" class="form-control form-control-solid form-control-sm" name="app_favicon_url" value="{{ $settings['app_favicon'] ?? '' }}" placeholder="media/logos/favicon.ico" />
                         </div>
                     </div>
                 </div>
+                <!--end::Card body-->
+
+                <!--begin::Card footer-->
+                <div class="card-footer py-3 px-6 d-flex align-items-center justify-content-between text-muted fs-8">
+                    <span>Format: .ico / .png / .svg</span>
+                    <span class="badge badge-light-success fs-9">Maks 256 KB</span>
+                </div>
+                <!--end::Card footer-->
             </div>
         </div>
         <!--end::Favicon-->
     </div>
 
     <!--begin::Submit Bar-->
-    <div class="card card-flush shadow-sm border-0 mt-6">
+    <div class="card shadow-sm border-0 mt-6">
         <div class="card-body p-4 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 text-center text-md-start">
             <div class="text-muted fs-7">
                 <i class="ki-outline ki-shield-tick fs-5 me-1 text-success"></i>
                 Setiap berkas divalidasi secara ketat berdasarkan resolusi minimal, maksimal, rasio aspek, dan ukuran berkas sebelum disimpan langsung ke <code>public/assets/logo/</code>.
             </div>
             <div class="d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto flex-shrink-0">
-                <button type="submit" class="btn btn-primary btn-sm fw-bold px-6 w-100 w-md-auto" id="kt_btn_save_logo"
+                <button type="submit" class="btn btn-primary btn-sm fw-bold px-6 w-100 w-md-auto d-inline-flex align-items-center justify-content-center h-35px" id="kt_btn_save_logo"
                     data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan & terapkan perubahan aset logo">
-                    <span class="indicator-label">
-                        <i class="ki-outline ki-check fs-4 me-1"></i> Simpan & Terapkan Logo
+                    <span class="indicator-label d-inline-flex align-items-center justify-content-center">
+                        <i class="ki-outline ki-check fs-4 me-1"></i> <span>Simpan & Terapkan Logo</span>
                     </span>
                     <span class="indicator-progress">
+                        <span class="spinner-border spinner-border-sm align-middle me-2"></span>
                         <span>Memvalidasi & Menyimpan...</span>
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                     </span>
                 </button>
             </div>

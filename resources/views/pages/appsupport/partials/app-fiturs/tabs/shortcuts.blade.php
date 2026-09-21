@@ -1,57 +1,47 @@
 <!--begin::Shortcuts Full-Width Layout-->
 <div class="d-flex flex-column gap-6">
 
-    <!--begin::Master Switch & Title Card (Full Width)-->
-    <div class="card card-flush shadow-sm border-0">
-        <div class="card-body p-6">
-            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-4 text-center text-md-start">
-                
-                <!-- Info Left -->
-                <div class="d-flex flex-column flex-md-row align-items-center gap-3 gap-md-4 w-100 w-md-auto">
-                    <div class="symbol symbol-45px symbol-circle bg-light-primary text-primary d-flex align-items-center justify-content-center flex-shrink-0">
-                        <i class="ki-outline ki-keyboard fs-2 text-primary"></i>
-                    </div>
-                    <div class="d-flex flex-column align-items-center align-items-md-start">
-                        <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2 flex-wrap">
-                            <h4 class="fw-bolder text-gray-900 m-0 fs-4">Pintasan Global</h4>
-                            <span class="badge badge-light-primary fw-bold fs-9">Pemantau Aktif</span>
-                        </div>
-                        <span class="text-muted fs-8 mt-1">Status Pemantau Tombol di Seluruh Peramban & Navigasi</span>
-                    </div>
+    <!-- ======================================================== -->
+    <!-- MASTER SWITCH: STATUS PEMANTAU PINTASAN GLOBAL           -->
+    <!-- ======================================================== -->
+    <div class="card shadow-sm border border-gray-200 mb-6">
+        <div class="card-body py-4 px-4 px-md-6 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+            <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2 flex-wrap">
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-4">Status Pintasan Global</h3>
+                    <span class="badge badge-light-primary fw-bold fs-9">Pemantau Aktif</span>
                 </div>
-
-                <!-- Master Toggle Switch Right -->
-                <div class="d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto">
-                    <div class="form-check form-switch form-check-custom form-check-solid" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Aktifkan / Nonaktifkan Seluruh Pintasan Keyboard">
-                        <input class="form-check-input h-25px w-45px cursor-pointer" type="checkbox" id="global_shortcuts_master_switch" checked />
-                    </div>
+                <span class="text-muted fs-7 mt-1">Status pemantau tombol pintasan keyboard di seluruh peramban dan navigasi aplikasi</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                <div class="form-check form-switch form-check-custom form-check-solid" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Aktifkan / Nonaktifkan Seluruh Pintasan Keyboard">
+                    <input class="form-check-input h-25px w-45px cursor-pointer" type="checkbox" id="global_shortcuts_master_switch" checked />
                 </div>
-
             </div>
         </div>
     </div>
-    <!--end::Master Switch & Title Card-->
+    <!--end::Master Switch Card-->
 
-    <!--begin::Tabel Daftar Pintasan Keyboard Card (Full Width)-->
-    <div class="card card-flush shadow-sm border-0">
+    <!-- ======================================================== -->
+    <!-- TABEL DAFTAR PINTASAN KEYBOARD TERDAFTAR                 -->
+    <!-- ======================================================== -->
+    <div class="card shadow-sm border border-gray-200 mb-6">
         <!--begin::Card header-->
-        <div class="card-header border-0 pt-6 flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-3">
-            <div class="card-title d-flex flex-column mb-2 mb-sm-0">
-                <h3 class="fw-bolder text-gray-900 m-0">Daftar Pintasan Keyboard Terdaftar</h3>
-                <span class="text-muted fs-8 mt-1">
-                    Pintasan aktif langsung sinkron dengan event listener browser & basis data
-                </span>
+        <div class="card-header border-bottom border-gray-200 px-4 px-sm-6 py-5 py-md-0 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 min-h-65px">
+            <div class="card-title d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto mb-0">
+                <h3 class="fw-bolder text-gray-900 m-0 fs-4">Daftar Pintasan Keyboard Terdaftar</h3>
+                <span class="text-muted fs-7 mt-1">Pintasan aktif langsung sinkron dengan event listener browser & basis data</span>
             </div>
-            <div class="card-toolbar m-0 w-100 w-sm-auto">
-                <button type="button" class="btn btn-light-primary btn-sm w-100 w-sm-auto" id="btn_new_shortcut_open_modal" data-bs-toggle="modal" data-bs-target="#kt_modal_shortcut_manage">
-                    <i class="ki-outline ki-plus fs-5 me-1"></i> Tambah Pintasan Baru
+            <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                <button type="button" class="btn btn-primary btn-sm w-100 w-md-auto d-inline-flex align-items-center justify-content-center" id="btn_new_shortcut_open_modal" data-bs-toggle="modal" data-bs-target="#kt_modal_shortcut_manage">
+                    <i class="ki-outline ki-plus fs-4 me-1 text-white"></i> <span class="fw-bold">Tambah Pintasan Baru</span>
                 </button>
             </div>
         </div>
         <!--end::Card header-->
 
         <!--begin::Card body-->
-        <div class="card-body pt-2">
+        <div class="card-body py-6 px-4 px-md-6">
             <!-- Filter Kategori & Search Toolbar -->
             <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-between gap-3 mb-5">
                 <!-- Search Input -->
@@ -232,19 +222,38 @@
             </div>
         </div>
         <!--end::Card body-->
+
+        <!--begin::Card footer-->
+        <div class="card-footer border-top border-gray-200 py-4 px-4 px-md-6 mt-auto bg-light bg-opacity-50 d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-sm-between text-center text-sm-start gap-2">
+            <div class="text-muted fs-7">
+                Menampilkan <span class="fw-bold text-gray-800">{{ $shortcuts->count() }}</span> kombinasi pintasan terdaftar
+            </div>
+            <div class="d-flex align-items-center justify-content-center gap-2">
+                <span class="badge badge-light-primary fw-semibold fs-8">Keyboard Shortcuts Manager</span>
+            </div>
+        </div>
+        <!--end::Card footer-->
     </div>
     <!--end::Tabel Daftar Pintasan Keyboard Card-->
 
-    <!--begin::Panduan Lengkap Cheatsheet Card (Categorized Reference)-->
-    <div class="card card-flush shadow-sm border-0">
-        <div class="card-header pt-6">
-            <div class="card-title">
-                <h5 class="fw-bolder text-gray-900 m-0">
-                    Panduan Kelompok Pintasan & Tata Cara Penggunaan
-                </h5>
+    <!-- ======================================================== -->
+    <!-- PANDUAN KELOMPOK PINTASAN & TATA CARA PENGGUNAAN         -->
+    <!-- ======================================================== -->
+    <div class="card shadow-sm border border-gray-200 mb-6">
+        <!--begin::Card header-->
+        <div class="card-header border-bottom border-gray-200 px-4 px-sm-6 py-5 py-md-0 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 min-h-65px">
+            <div class="card-title d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto mb-0">
+                <h3 class="fw-bolder text-gray-900 m-0 fs-4">Panduan Kelompok Pintasan & Tata Cara Penggunaan</h3>
+                <span class="text-muted fs-7 mt-1">Referensi kombinasi tombol cepat untuk meningkatkan produktivitas alur kerja</span>
+            </div>
+            <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                <span class="badge badge-light-primary fw-bold fs-7">Panduan Pintasan</span>
             </div>
         </div>
-        <div class="card-body pt-2">
+        <!--end::Card header-->
+
+        <!--begin::Card body-->
+        <div class="card-body py-6 px-4 px-md-6">
             <div class="row g-4 fs-7 text-gray-700">
                 <div class="col-md-6 col-xl-3">
                     <div class="p-4 bg-light rounded-3 border h-100">
@@ -300,6 +309,7 @@
                 </div>
             </div>
         </div>
+        <!--end::Card body-->
     </div>
     <!--end::Panduan Lengkap Cheatsheet Card-->
 

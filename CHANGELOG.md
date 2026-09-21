@@ -5,6 +5,23 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.40.0] - 2026-09-21
+
+### Added & Enhanced
+- **Standardisasi Struktur Kartu Sesuai Rule 12, Integrasi Tata Letak 2-Kolom Terpadu, dan Penataan Footer Tombol Aksi Modul Profil Pengguna (`/profil/profil-pengguna`)**:
+  - **Standardisasi Arsitektur Kartu Modul Profil Pengguna (Rule 12)**:
+    - Menerapkan arsitektur kartu standar (`card shadow-sm border border-gray-200`) pada seluruh tab modul Profil Pengguna (*Profil Saya*, *Identitas Diri*, *Ganti Password*, *Konfigurasi*, dan *Riwayat Pengguna*).
+    - **Header Bersih (No Icon Box)**: Mengonversi seluruh header kartu dan sub-seksi formulir menjadi tipografi murni bersih dengan judul tebal (`h3.fw-bolder.text-gray-900.fs-4`), deskripsi subjudul (`span.text-muted.fs-7`), serta badge kategori/status pada toolbar sisi kanan (`Akun`, `Dokumen`, `Kependudukan`, `Domisili`, `Keamanan`, `Cover Profil`, `Preferensi`, `Sesi Aktif`, `Audit Log`).
+    - **Penyesuaian Fleksibilitas Kartu**: Menerapkan kartu proporsional sesuai kebutuhan fungsi per tab (kartu informasi akun hanya header & body, kartu formulir dengan body & footer tombol).
+  - **Penyatuan & Penataan 2-Kolom Tab Identitas Diri (`/profil/profil-pengguna` Tab *Identitas Diri*)**:
+    - Menggabungkan data KTP dan rincian domisili ke dalam **1 kartu terpadu (*single card*)** yang dibagi menjadi 2 kolom seimbang:
+      - **Kolom Kiri**: Data Kartu Tanda Penduduk (NIK, Nama Lengkap, Tempat & Tanggal Lahir, Jenis Kelamin & Golongan Darah, Agama & Status Perkawinan, Pekerjaan & Kewarganegaraan, No HP, Moto Hidup).
+      - **Kolom Kanan**: Rincian Alamat Domisili Sesuai KTP (Jalan, Blok & No Rumah, RT & RW, Desa/Kelurahan & Kecamatan, Kab/Kota & Provinsi, Kode Pos, serta kartu notifikasi kelengkapan dokumen resmi).
+    - Menempatkan tombol *Batal* dan *Simpan Perubahan Identitas* di `card-footer` berlatar kontras lembut (`bg-light bg-opacity-50`) dengan dukungan button loading spinner.
+  - **Relokasi Tombol Aksi ke Card Footer Tab Konfigurasi**:
+    - Memindahkan tombol aksi **Simpan Cover** dan **Simpan Preferensi** dari `card-header` ke `card-footer` berlatar kontras lembut dengan penataan responsif (rata tengah di layar mobile `< sm` dan rata kanan di desktop `>= sm`).
+    - Menghilangkan ikon dekoratif pada sub-judul *Notifikasi & Keamanan Akun* serta *Pengaturan Lanjutan & Preferensi Tambahan* demi konsistensi visual tipografi murni.
+
 ## [v1.39.0] - 2026-09-21
 
 ### Added & Enhanced

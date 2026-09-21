@@ -6,14 +6,19 @@
 <div class="row g-5 g-xl-10">
     <!--begin::Col Riwayat Sesi Login-->
     <div class="col-xl-5">
-        <div class="card card-flush h-xl-100">
-            <div class="card-header pt-7">
-                <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bold text-gray-800 fs-4">Sesi Login Aktif</span>
-                    <span class="text-gray-500 mt-1 fw-semibold fs-7">Daftar perangkat yang sedang mengakses akun</span>
-                </h3>
+        <div class="card shadow-sm border border-gray-200 h-100 d-flex flex-column">
+            <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0 border-bottom border-gray-200">
+                <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-4">Sesi Login Aktif</h3>
+                    <span class="text-muted fs-7 mt-1">Daftar perangkat yang sedang mengakses akun</span>
+                </div>
+                <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                    <span class="badge badge-light-success fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                        Sesi Aktif
+                    </span>
+                </div>
             </div>
-            <div class="card-body pt-5">
+            <div class="card-body py-6 px-4 px-md-6 flex-grow-1">
                 @forelse ($activeSessions as $s)
                     <div class="d-flex align-items-center mb-6 pb-6 border-bottom border-gray-200">
                         <div class="symbol symbol-45px me-4">
@@ -59,14 +64,19 @@
 
     <!--begin::Col Log Aktivitas & Perubahan Data-->
     <div class="col-xl-7">
-        <div class="card card-flush h-xl-100">
-            <div class="card-header pt-7">
-                <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bold text-gray-800 fs-4">Riwayat Aktivitas & Perubahan Data</span>
-                    <span class="text-gray-500 mt-1 fw-semibold fs-7">Audit log riwayat tindakan pada akun Anda</span>
-                </h3>
+        <div class="card shadow-sm border border-gray-200 h-100 d-flex flex-column">
+            <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0 border-bottom border-gray-200">
+                <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-4">Riwayat Aktivitas &amp; Perubahan Data</h3>
+                    <span class="text-muted fs-7 mt-1">Audit log riwayat tindakan pada akun Anda</span>
+                </div>
+                <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                    <span class="badge badge-light-info fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                        Audit Log
+                    </span>
+                </div>
             </div>
-            <div class="card-body pt-5">
+            <div class="card-body py-6 px-4 px-md-6 flex-grow-1">
                 <div class="table-responsive">
                     <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                         <thead>

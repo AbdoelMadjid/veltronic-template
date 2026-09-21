@@ -8,14 +8,19 @@
 <div class="row g-5 g-xl-10">
     <!--begin::Col 1 - Informasi Akun-->
     <div class="col-xl-6">
-        <div class="card card-flush h-xl-100">
-            <div class="card-header pt-7">
-                <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bold text-gray-800 fs-4">Informasi Akun</span>
-                    <span class="text-gray-500 mt-1 fw-semibold fs-7">Detail data autentikasi dan akun pengguna</span>
-                </h3>
+        <div class="card shadow-sm border border-gray-200 h-100 d-flex flex-column">
+            <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0 border-bottom border-gray-200">
+                <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-4">Informasi Akun</h3>
+                    <span class="text-muted fs-7 mt-1">Detail data autentikasi dan akun pengguna</span>
+                </div>
+                <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                    <span class="badge badge-light-primary fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                        Akun
+                    </span>
+                </div>
             </div>
-            <div class="card-body pt-5">
+            <div class="card-body py-6 px-4 px-md-6 flex-grow-1">
                 <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
                     <span class="fw-semibold text-gray-600 fs-6">Nama Pengguna</span>
                     <span class="fw-bold text-gray-800 fs-6" id="profil_display_user_name">{{ $authUser?->name }}</span>
@@ -82,14 +87,19 @@
 
     <!--begin::Col 2 - Foto KTP (Sebelah Kanan Informasi Akun)-->
     <div class="col-xl-6">
-        <div class="card card-flush h-xl-100">
-            <div class="card-header pt-7">
-                <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bold text-gray-800 fs-4">Foto Kartu Tanda Penduduk (KTP)</span>
-                    <span class="text-gray-500 mt-1 fw-semibold fs-7">Dokumen identitas resmi kependudukan</span>
-                </h3>
+        <div class="card shadow-sm border border-gray-200 h-100 d-flex flex-column">
+            <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0 border-bottom border-gray-200">
+                <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-4">Foto Kartu Tanda Penduduk (KTP)</h3>
+                    <span class="text-muted fs-7 mt-1">Dokumen identitas resmi kependudukan</span>
+                </div>
+                <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                    <span class="badge badge-light-success fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                        Dokumen
+                    </span>
+                </div>
             </div>
-            <div class="card-body pt-5 d-flex flex-column align-items-center justify-content-center">
+            <div class="card-body py-6 px-4 px-md-6 flex-grow-1 d-flex flex-column align-items-center justify-content-center">
                 <form id="form_profil_ktp" action="{{ route('profil.profil-pengguna.ktp') }}" method="POST" enctype="multipart/form-data" class="w-100">
                     @csrf
                     <input type="file" name="foto_ktp" id="input_profil_ktp_file" accept=".png, .jpg, .jpeg, .webp" class="d-none" />
@@ -144,14 +154,19 @@
 
     <!--begin::Col 3 - Data Kependudukan (KTP) (Posisi Awal di Bawah)-->
     <div class="col-xl-6">
-        <div class="card card-flush h-xl-100">
-            <div class="card-header pt-7">
-                <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bold text-gray-800 fs-4">Data Kependudukan (KTP)</span>
-                    <span class="text-gray-500 mt-1 fw-semibold fs-7">Rincian data identitas sesuai KTP</span>
-                </h3>
+        <div class="card shadow-sm border border-gray-200 h-100 d-flex flex-column">
+            <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0 border-bottom border-gray-200">
+                <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-4">Data Kependudukan (KTP)</h3>
+                    <span class="text-muted fs-7 mt-1">Rincian data identitas sesuai KTP</span>
+                </div>
+                <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                    <span class="badge badge-light-info fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                        Kependudukan
+                    </span>
+                </div>
             </div>
-            <div class="card-body pt-5">
+            <div class="card-body py-6 px-4 px-md-6 flex-grow-1">
                 <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
                     <span class="fw-semibold text-gray-600 fs-6">NIK</span>
                     <span class="fw-bold text-gray-800 fs-6" id="profil_display_nik">{{ $detailData?->nik ?? '-' }}</span>
@@ -201,14 +216,19 @@
 
     <!--begin::Col 4 - Alamat Domisili / KTP-->
     <div class="col-xl-6">
-        <div class="card card-flush h-xl-100">
-            <div class="card-header pt-7">
-                <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bold text-gray-800 fs-4">Alamat Domisili / KTP</span>
-                    <span class="text-gray-500 mt-1 fw-semibold fs-7">Rincian field alamat terpisah</span>
-                </h3>
+        <div class="card shadow-sm border border-gray-200 h-100 d-flex flex-column">
+            <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0 border-bottom border-gray-200">
+                <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                    <h3 class="fw-bolder text-gray-900 m-0 fs-4">Alamat Domisili / KTP</h3>
+                    <span class="text-muted fs-7 mt-1">Rincian field alamat terpisah</span>
+                </div>
+                <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                    <span class="badge badge-light-warning fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                        Domisili
+                    </span>
+                </div>
             </div>
-            <div class="card-body pt-5">
+            <div class="card-body py-6 px-4 px-md-6 flex-grow-1">
                 <div class="d-flex flex-stack py-3 border-bottom border-gray-200">
                     <span class="fw-semibold text-gray-600 fs-6">Alamat Jalan</span>
                     <span class="fw-bold text-gray-800 fs-6" id="profil_display_alamat_jalan">{{ $detailData?->alamat_jalan ?? '-' }}</span>

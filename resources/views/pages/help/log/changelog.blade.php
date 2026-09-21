@@ -34,13 +34,47 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.39.0
+                            Versi Saat Ini: v1.40.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.40.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.40.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.40.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>21 Sep 2026, 12:35 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Standardisasi Struktur Kartu Sesuai Rule 12, Integrasi Tata Letak 2-Kolom Terpadu, dan Penataan Footer Tombol Aksi Modul Profil Pengguna (/profil/profil-pengguna)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembaruan menyeluruh struktur kartu pada modul Profil Pengguna (/profil/profil-pengguna) mengikuti standar Rule 12 (Card Structure &amp; Responsive Standards). Menggabungkan tab Identitas Diri menjadi 1 kartu terpadu 2-kolom (Data KTP &amp; Domisili), merelokasi tombol Simpan Cover dan Simpan Preferensi ke card footer pada tab Konfigurasi, mengonversi seluruh header menjadi tipografi murni tanpa icon box dengan badge kategori, serta menyelaraskan tombol aksi responsif mobile.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Standardisasi Arsitektur Kartu (Rule 12)</strong>: Menerapkan <code>card shadow-sm border border-gray-200</code> di seluruh tab modul profil (Profil Saya, Identitas Diri, Ganti Password, Konfigurasi, Riwayat Pengguna).</li>
+                                        <li><strong>Penyatuan Tab Identitas Diri (2-Kolom Terpadu)</strong>: Menggabungkan data KTP dan domisili ke dalam 1 kartu terpadu dengan pembagian 2 kolom (Kolom Kiri: Data KTP; Kolom Kanan: Rincian Alamat Domisili) dan footer tombol simpan responsif.</li>
+                                        <li><strong>Relokasi Tombol Aksi ke Card Footer Tab Konfigurasi</strong>: Memindahkan tombol <em>Simpan Cover</em> dan <em>Simpan Preferensi</em> dari header ke footer berlatar kontras lembut (<code>card-footer bg-light bg-opacity-50</code>).</li>
+                                        <li><strong>Header Tipografi Murni (No Icon Box)</strong>: Menghapus icon box dekoratif di samping sub-judul konfigurasi dan menggantinya dengan tipografi murni serta badge kategori di sisi kanan toolbar.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.40.0 (Minor)-->
+
                         <!--begin::Item v1.39.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.39.0</div>
@@ -56,7 +90,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>21 Sep 2026, 12:00 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Kodifikasi Rule 12 &amp; Standardisasi Struktur Kartu (Header, Body, Footer) Serta Optimalisasi Responsif Mobile Modul App Support (/appsupport/app-fiturs, /appsupport/app-profil, /appsupport/menu)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

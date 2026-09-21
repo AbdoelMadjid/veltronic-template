@@ -26,7 +26,7 @@
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-fluid">
             <!--begin::Navbar / Header Card-->
-            <div class="card mb-5 mb-xl-10 position-relative overflow-hidden" id="profile_header_card">
+            <div class="card shadow-sm border border-gray-200 mb-5 mb-xl-10 position-relative overflow-hidden" id="profile_header_card">
                 <!--begin::Details Section with Cover Background & Overlay-->
                 <div class="position-relative overflow-hidden rounded-top p-6 p-lg-9 d-flex flex-column justify-content-center" id="profile_cover_wrapper" style="min-height: {{ $coverHeight }}px; transition: min-height 0.2s ease;">
                     <!-- Cover Background Image -->

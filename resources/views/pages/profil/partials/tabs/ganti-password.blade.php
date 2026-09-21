@@ -1,14 +1,20 @@
 <form action="{{ route('profil.profil-pengguna.password') }}" method="POST" id="form_ganti_password">
     @csrf
 
-    <div class="card mb-5 mb-xl-10">
-        <div class="card-header border-0">
-            <div class="card-title m-0">
-                <h3 class="fw-bold m-0 text-gray-800">Ganti Password Akun</h3>
+    <div class="card shadow-sm border border-gray-200 mb-6">
+        <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0 border-bottom border-gray-200">
+            <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+                <h3 class="fw-bolder text-gray-900 m-0 fs-4">Ganti Password Akun</h3>
+                <span class="text-muted fs-7 mt-1">Perbarui kata sandi akun secara berkala untuk menjaga keamanan akses</span>
+            </div>
+            <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                <span class="badge badge-light-danger fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                    Keamanan
+                </span>
             </div>
         </div>
 
-        <div class="card-body border-top p-9">
+        <div class="card-body py-6 px-4 px-md-6">
             <div class="alert alert-light-primary d-flex align-items-center p-5 mb-7 rounded-3">
                 <i class="ki-duotone ki-shield-tick fs-2hx text-primary me-4">
                     <span class="path1"></span><span class="path2"></span>
@@ -69,20 +75,22 @@
             <!--end::Confirm Password-->
         </div>
 
-        <div class="card-footer d-flex justify-content-end py-6 px-9">
-            <button type="reset" class="btn btn-light btn-active-light-primary me-3">Batal</button>
-            <button type="submit" class="btn btn-primary" id="btn_save_password">
-                <span class="indicator-label">
-                    <i class="ki-duotone ki-lock fs-3 me-1">
-                        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                    </i>
-                    Perbarui Password
-                </span>
-                <span class="indicator-progress">
-                    Memperbarui...
-                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                </span>
-            </button>
+        <div class="card-footer py-4 px-4 px-md-6 border-top border-gray-200 bg-light bg-opacity-50">
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-sm-end text-center text-sm-start gap-2">
+                <button type="reset" class="btn btn-light btn-active-light-primary w-100 w-sm-auto">Batal</button>
+                <button type="submit" class="btn btn-primary w-100 w-sm-auto" id="btn_save_password">
+                    <span class="indicator-label">
+                        <i class="ki-duotone ki-lock fs-3 me-1">
+                            <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+                        </i>
+                        Perbarui Password
+                    </span>
+                    <span class="indicator-progress">
+                        Memperbarui...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
+            </div>
         </div>
     </div>
 </form>

@@ -124,7 +124,9 @@ window.KTAppShortcuts = (function () {
         let anyVisible = false;
         elements.forEach(el => {
             const isHidden = el.classList.contains('feature-hidden') || 
-                             el.style.display === 'none';
+                             el.classList.contains('d-none') || 
+                             el.style.display === 'none' ||
+                             getComputedStyle(el).display === 'none';
             if (!isHidden) anyVisible = true;
         });
 
@@ -134,6 +136,9 @@ window.KTAppShortcuts = (function () {
         elements.forEach(el => {
             if (nextShow) {
                 el.classList.remove('feature-hidden');
+                if (!el.classList.contains('d-lg-flex') && !el.classList.contains('d-md-flex') && !el.classList.contains('d-sm-flex')) {
+                    el.classList.remove('d-none');
+                }
                 el.style.removeProperty('display');
             } else {
                 el.classList.add('feature-hidden');
@@ -146,33 +151,46 @@ window.KTAppShortcuts = (function () {
 
         // 2. Sync cards in app-fiturs page if currently open
         if (category) {
-            const cardWrapper = document.querySelector(`.feature-card-wrapper[data-category="${category}"]`);
-            if (cardWrapper) {
-                const cards = cardWrapper.querySelectorAll('.feature-card');
-                cards.forEach(card => {
-                    card.setAttribute('data-is-enabled', nextShow ? '1' : '0');
-                    card.dataset.isEnabled = nextShow ? '1' : '0';
-                    const badge = card.querySelector('.feature-status-badge');
-                    if (nextShow) {
-                        card.classList.remove('bg-light', 'opacity-75');
-                        if (badge) {
-                            badge.className = 'badge badge-light-success fs-8 fw-semibold feature-status-badge mt-1';
-                            badge.innerText = 'Aktif';
-                        }
-                    } else {
-                        card.classList.add('bg-light', 'opacity-75');
-                        if (badge) {
-                            badge.className = 'badge badge-light-danger fs-8 fw-semibold feature-status-badge mt-1';
-                            badge.innerText = 'Tersembunyi';
-                        }
+            const cards = document.querySelectorAll(`.feature-card-wrapper[data-category="${category}"] .feature-card`);
+            cards.forEach(card => {
+                card.setAttribute('data-is-enabled', nextShow ? '1' : '0');
+                card.dataset.isEnabled = nextShow ? '1' : '0';
+                const badge = card.querySelector('.feature-status-badge');
+                if (nextShow) {
+                    card.classList.remove('bg-light', 'opacity-75');
+                    if (badge) {
+                        badge.className = 'badge badge-light-success fs-8 fw-semibold feature-status-badge mt-1 cursor-pointer';
+                        badge.innerText = 'Aktif';
                     }
-                });
-
-                const statEl = document.getElementById(`stat_${category.replace('_menus', '').replace('topbar_', '')}_active`);
-                if (statEl) {
-                    const total = cards.length;
-                    statEl.innerText = nextShow ? `${total}/${total}` : `0/${total}`;
+                } else {
+                    card.classList.add('bg-light', 'opacity-75');
+                    if (badge) {
+                        badge.className = 'badge badge-light-danger fs-8 fw-semibold feature-status-badge mt-1 cursor-pointer';
+                        badge.innerText = 'Tersembunyi';
+                    }
                 }
+            });
+
+            // Reset selection checkboxes and hide toolbar for this category
+            document.querySelectorAll(`.feature-item-checkbox[data-category="${category}"], .select-all-section-checkbox[data-category="${category}"]`).forEach(cb => {
+                cb.checked = false;
+                cb.indeterminate = false;
+            });
+            const bulkToolbar = document.querySelector(`.bulk-selected-toolbar[data-category="${category}"]`);
+            if (bulkToolbar) {
+                bulkToolbar.classList.remove('d-flex');
+                bulkToolbar.classList.add('d-none');
+            }
+
+            let statId = '';
+            if (category === 'topbar_tools') statId = 'stat_topbar_active';
+            else if (category === 'topbar_menus') statId = 'stat_topmenu_active';
+            else if (category === 'sidebar_menus') statId = 'stat_sidebar_active';
+
+            const statEl = document.getElementById(statId);
+            if (statEl) {
+                const total = cards.length;
+                statEl.innerText = nextShow ? `${total}/${total}` : `0/${total}`;
             }
 
             // 3. Persist state to server database via bulk-toggle endpoint

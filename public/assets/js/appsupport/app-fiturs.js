@@ -89,6 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 el.style.setProperty('display', 'none', 'important');
             } else {
                 el.classList.remove('feature-hidden');
+                if (!el.classList.contains('d-lg-flex') && !el.classList.contains('d-md-flex') && !el.classList.contains('d-sm-flex')) {
+                    el.classList.remove('d-none');
+                }
                 el.style.removeProperty('display');
             }
         });

@@ -64,7 +64,7 @@
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
             data-kt-feature-menu="top_menu_dashboard"
             style="{{ !app_fitur('top_menu_dashboard') ? 'display: none !important;' : '' }}"
-            class="menu-item {{ request()->routeIs(['dashboard', 'main.dashboards.*', 'dashboards.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_dashboard') ? 'd-none' : '' }} menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
+            class="menu-item {{ request()->routeIs(['dashboard', 'main.dashboards.*', 'dashboards.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_dashboard') ? 'feature-hidden' : '' }} menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
                 <span class="menu-title" data-kt-translate="menu.dashboards">{{ __('menu.dashboards') }}</span>
@@ -81,7 +81,7 @@
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
             data-kt-feature-menu="top_menu_pages"
             style="{{ !app_fitur('top_menu_pages') ? 'display: none !important;' : '' }}"
-            class="menu-item {{ request()->routeIs('pages.*') ? 'here show' : '' }} {{ !app_fitur('top_menu_pages') ? 'd-none' : '' }} menu-lg-down-accordion me-0 me-lg-2">
+            class="menu-item {{ request()->routeIs('pages.*') ? 'here show' : '' }} {{ !app_fitur('top_menu_pages') ? 'feature-hidden' : '' }} menu-lg-down-accordion me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
                 <span class="menu-title" data-kt-translate="menu.pages">{{ __('menu.pages') }}</span>
@@ -97,7 +97,7 @@
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
             data-kt-feature-menu="top_menu_apps"
             style="{{ !app_fitur('top_menu_apps') ? 'display: none !important;' : '' }}"
-            class="menu-item {{ request()->routeIs(['apps.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_apps') ? 'd-none' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+            class="menu-item {{ request()->routeIs(['apps.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_apps') ? 'feature-hidden' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
                 <span class="menu-title" data-kt-translate="menu.apps">{{ __('menu.apps') }}</span>
@@ -118,7 +118,7 @@
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
             data-kt-feature-menu="top_menu_demo"
             style="{{ !app_fitur('top_menu_demo') ? 'display: none !important;' : '' }}"
-            class="menu-item {{ request()->routeIs(['demo.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_demo') ? 'd-none' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+            class="menu-item {{ request()->routeIs(['demo.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_demo') ? 'feature-hidden' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
                 <span class="menu-title" data-kt-translate="menu.demo">{{ __('menu.demo') }}</span>
@@ -139,7 +139,7 @@
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
             data-kt-feature-menu="top_menu_help"
             style="{{ !app_fitur('top_menu_help') ? 'display: none !important;' : '' }}"
-            class="menu-item {{ request()->routeIs(['help.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_help') ? 'd-none' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+            class="menu-item {{ request()->routeIs(['help.*']) ? 'here show' : '' }} {{ !app_fitur('top_menu_help') ? 'feature-hidden' : '' }} menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
             <!--begin:Menu link-->
             <span class="menu-link py-3">
                 <span class="menu-title" data-kt-translate="menu.help">{{ __('menu.help') }}</span>

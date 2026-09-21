@@ -71,6 +71,7 @@
                                         <li><strong>Pencegahan Overflow Mobile</strong>: Penerapan <code>flex-wrap</code> dan padding adaptif pada bulk selected toolbar agar tidak nabrak/keluar batas kartu di layar HP sempit.</li>
                                         <li><strong>Penyederhanaan Master Switch Pintasan</strong>: Menyatukan saklar utama pintasan keyboard menjadi 1 kartu ringkas elegan tanpa pemisahan header/footer berlebih.</li>
                                         <li><strong>Standardisasi Modul App Profil, Menu, &amp; Toolbar Navbar</strong>: Penataan header banner, tab overview/logo/meta/footer profil, dan toolbar navbar sesuai standar Rule 12.</li>
+                                        <li><strong>Pemulihan Realtime Toggle &amp; Pintasan Keyboard Menu Topbar &amp; Sidebar</strong>: Menyelaraskan kelas Blade menjadi <code>feature-hidden</code>, membersihkan <code>d-none</code> di DOM handler, serta memperbaiki query selector kartu dan sinkronisasi counter statistik pada <code>shortcuts.js</code>.</li>
                                     </ul>
                                 </div>
                             </div>

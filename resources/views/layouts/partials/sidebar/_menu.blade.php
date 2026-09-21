@@ -72,7 +72,7 @@
                 @if ($canViewTemplateSidebar)
                     <!--begin:Section Dashboards-->
                     <div data-kt-feature-sidebar="side_menu_dashboard"
-                        class="{{ !app_fitur('side_menu_dashboard') ? 'd-none' : '' }}"
+                        class="{{ !app_fitur('side_menu_dashboard') ? 'feature-hidden' : '' }}"
                         style="{{ !app_fitur('side_menu_dashboard') ? 'display: none !important;' : '' }}">
                         <div class="menu-item pt-5">
                             <div class="menu-content">
@@ -169,7 +169,7 @@
 
                     <!--begin:Section Demos-->
                     <div data-kt-feature-sidebar="side_menu_demo"
-                        class="{{ !app_fitur('side_menu_demo') ? 'd-none' : '' }}"
+                        class="{{ !app_fitur('side_menu_demo') ? 'feature-hidden' : '' }}"
                         style="{{ !app_fitur('side_menu_demo') ? 'display: none !important;' : '' }}">
                         @foreach (config('sidebar._sidebar_main.menu_demos', []) as $menu)
                             @include('layouts.partials.sidebar._menu-item', ['menu' => $menu])
@@ -179,7 +179,7 @@
 
                     <!--begin:Section Pages-->
                     <div data-kt-feature-sidebar="side_menu_pages"
-                        class="{{ !app_fitur('side_menu_pages') ? 'd-none' : '' }}"
+                        class="{{ !app_fitur('side_menu_pages') ? 'feature-hidden' : '' }}"
                         style="{{ !app_fitur('side_menu_pages') ? 'display: none !important;' : '' }}">
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -197,7 +197,7 @@
 
                     <!--begin:Section Apps-->
                     <div data-kt-feature-sidebar="side_menu_apps"
-                        class="{{ !app_fitur('side_menu_apps') ? 'd-none' : '' }}"
+                        class="{{ !app_fitur('side_menu_apps') ? 'feature-hidden' : '' }}"
                         style="{{ !app_fitur('side_menu_apps') ? 'display: none !important;' : '' }}">
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -215,7 +215,7 @@
 
                     <!--begin:Section Layouts-->
                     <div data-kt-feature-sidebar="side_menu_layouts"
-                        class="{{ !app_fitur('side_menu_layouts') ? 'd-none' : '' }}"
+                        class="{{ !app_fitur('side_menu_layouts') ? 'feature-hidden' : '' }}"
                         style="{{ !app_fitur('side_menu_layouts') ? 'display: none !important;' : '' }}">
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -233,7 +233,7 @@
 
                     <!--begin:Section Help-->
                     <div data-kt-feature-sidebar="side_menu_help"
-                        class="{{ !app_fitur('side_menu_help') ? 'd-none' : '' }}"
+                        class="{{ !app_fitur('side_menu_help') ? 'feature-hidden' : '' }}"
                         style="{{ !app_fitur('side_menu_help') ? 'display: none !important;' : '' }}">
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->

@@ -23,6 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Penataan header banner, formulir tab overview, logo, meta, dan footer profil sesuai standar Rule 12.
     - Penataan toolbar atas, judul halaman, dan tombol petunjuk operasional di seluruh tata letak navbar (`_toolbar.blade.php`, `_toolbar-v2.blade.php`, `_page-title.blade.php`, `_action-petunjuk-button.blade.php`).
 
+### Fixed
+- **Pemulihan Fungsionalitas Toggle & Pintasan Keyboard Menu Topbar Header & Sidebar (`/appsupport/app-fiturs`)**:
+  - Menyelaraskan kelas visibilitas Blade dari `.d-none` menjadi `.feature-hidden` pada `_menu.blade.php`, `__menu-v2.blade.php`, dan `sidebar/_menu.blade.php` sehingga aksi tampilkan/sembunyikan via JavaScript berfungsi realtime tanpa terblokir stylesheet `display: none !important`.
+  - Memperbaiki query selector kartu pada `shortcuts.js` agar mencakup seluruh kartu dalam kategori yang sama saat dieksekusi via pintasan keyboard.
+  - Mereset status checklist dan menyembunyikan bulk toolbar secara otomatis setelah shortcut dijalankan, serta memperbarui counter badge statistik secara realtime.
+
 ## [v1.38.0] - 2026-09-21
 
 ### Added & Enhanced

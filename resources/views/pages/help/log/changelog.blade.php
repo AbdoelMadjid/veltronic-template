@@ -34,29 +34,63 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.37.0
+                            Versi Saat Ini: v1.38.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
-                        <!--begin::Item v1.37.0 (Minor)-->
+                        <!--begin::Item v1.38.0 (Minor)-->
                         <div class="timeline-item mb-7">
-                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.37.0</div>
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.38.0</div>
                             <div class="timeline-badge">
                                 <i class="fa fa-genderless text-primary fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
-                                    <span class="badge badge-primary fw-bold text-white">v1.37.0</span>
+                                    <span class="badge badge-primary fw-bold text-white">v1.38.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>21 Sep 2026, 07:45 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Pemisahan Konfigurasi &amp; Live Preview Tema Landing &amp; Education Portal Serta Standarisasi Tampilan Mobile Card Header (/appsupport/theme-frontpage)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pemisahan menyeluruh konfigurasi tab antarmuka pada rute <code>appsupport/theme-frontpage</code> sehingga seluruh tema (Landing Page &amp; Education Portal) dapat dikonfigurasi dan dipratinjau secara mandiri kapan saja tanpa harus mengaktifkan tema terlebih dahulu. Disertai optimalisasi antarmuka mobile card header (3-baris rata tengah dengan tombol full-width), pembersihan ikon judul card, penyelarasan baseline tombol kartu tema, tombol banner informatif tanpa tooltip, dan dukungan penuh arsitektur Zero-Reload Realtime CRUD (Rule 4 &amp; Rule 5).
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Dekopling Konfigurasi Tema Mandiri</strong>: Tab 1 (Status &amp; Pilihan Tema), Tab 2 (Landing Page - Metronic 8), dan Tab 3 (Education Portal - Unify v2.6) yang dapat dikonfigurasi kapan saja.</li>
+                                        <li><strong>Standarisasi Card Header Mobile (3-Baris Rata Tengah)</strong>: Baris 1 Judul (rata tengah), Baris 2 Deskripsi (rata tengah), Baris 3 Tombol-tombol full-width yang berderet ke bawah di mobile dan sejajar di desktop.</li>
+                                        <li><strong>Penyempurnaan Visual &amp; Estetika Metronic 8</strong>: Pembersihan ikon judul card, baseline tombol footer tema rata presisi, tombol banner utama teks utuh tanpa tooltip, dan perbaikan ikon LinkedIn.</li>
+                                        <li><strong>Helper Terpusat EducationPageConfig</strong>: Pengelolaan terstruktur untuk identitas portal, logo terang/gelap/favicon, navigasi topbar pendaftaran intake, footer kampus, dan direktori 13 rute modul halaman akademik.</li>
+                                        <li><strong>Zero-Reload Realtime Theme Switcher &amp; Form AJAX</strong>: Pergantian tema publik secara seketika memperbarui tab, badge, deskripsi banner, dan tombol status tanpa refresh browser.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.38.0 (Minor)-->
+
+                        <!--begin::Item v1.37.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.37.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-secondary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-secondary fw-bold text-gray-700">v1.37.0</span>
                                     <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
                                     <span class="badge badge-light text-gray-700 fs-8 border">
                                         <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>20 Sep 2026, 23:55 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Standardisasi &amp; Optimalisasi Antarmuka Mobile Modul Backup Database (/appsupport/backup-db) &amp; Tema Halaman Depan (/appsupport/theme-frontpage)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

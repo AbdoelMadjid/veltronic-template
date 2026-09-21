@@ -1,33 +1,31 @@
 <!--begin::Tab Pane Menu Navigasi-->
-<div class="card card-flush shadow-sm border-0 mb-6">
+<div class="card shadow-sm mb-6">
     <!--begin::Card header-->
-    <div class="card-header pt-6 px-4 px-md-6 flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3">
-        <div class="card-title">
-            <i class="ki-outline ki-row-horizontal text-primary fs-2 me-2"></i>
-            <div>
-                <h3 class="fw-bolder text-gray-900 m-0 fs-4">Menu Navigasi Header & Target Anchor</h3>
-                <span class="text-muted fs-7">Atur menu navigasi pada bilah header landing page yang langsung melompat ke section terkait.</span>
-            </div>
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+            <h3 class="fw-bolder text-gray-900 m-0 fs-4">Menu Navigasi Header & Target Anchor</h3>
+            <span class="text-muted fs-7 mt-1">Atur menu navigasi pada bilah header landing page yang langsung melompat ke section terkait.</span>
         </div>
-        <div class="card-toolbar d-flex flex-wrap gap-2 w-100 w-sm-auto justify-content-start justify-content-sm-end">
-            <button type="button" class="btn btn-light-warning btn-sm fw-bold px-3 px-md-4" id="kt_btn_reset_menu_default"
-                data-bs-toggle="tooltip" data-bs-trigger="hover" title="Reset Menu ke Bawaan">
-                <span class="indicator-label">
-                    <i class="ki-outline ki-arrows-loop fs-4 me-1"></i> Reset Menu
+        <div class="card-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-center justify-content-md-end gap-2 w-100 w-md-auto mt-2 mt-md-0">
+            <button type="button" class="btn btn-light-warning btn-sm fw-bold px-3 px-md-4 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto" id="kt_btn_reset_menu_default"
+                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reset Menu ke Bawaan">
+                <span class="indicator-label d-inline-flex align-items-center justify-content-center">
+                    <i class="ki-outline ki-arrows-loop fs-4 me-1"></i> <span>Reset Menu</span>
                 </span>
                 <span class="indicator-progress">
-                    <span class="spinner-border spinner-border-sm align-middle me-1"></span> Memproses...
+                    <span class="spinner-border spinner-border-sm align-middle me-1"></span> <span>Memproses...</span>
                 </span>
             </button>
-            <button type="button" class="btn btn-primary btn-sm fw-bold px-3 px-md-4" id="kt_btn_add_menu_item">
-                <i class="ki-outline ki-plus fs-4 me-1"></i> Tambah Menu Item
+            <button type="button" class="btn btn-primary btn-sm fw-bold px-3 px-md-4 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto" id="kt_btn_add_menu_item"
+                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tambah Menu Navigasi Header">
+                <i class="ki-outline ki-plus fs-4 me-1"></i> <span>Tambah Menu Item</span>
             </button>
         </div>
     </div>
     <!--end::Card header-->
 
     <!--begin::Card body-->
-    <div class="card-body pt-2 pb-6 px-4 px-md-6">
+    <div class="card-body py-6 px-4 px-md-6">
         <!--begin::Info Alert-->
         <div class="alert alert-dismissible bg-light-primary d-flex flex-column flex-sm-row p-4 mb-5 border border-primary border-opacity-25 rounded-3">
             <i class="ki-outline ki-information-5 fs-2 text-primary me-3 mb-2 mb-sm-0"></i>

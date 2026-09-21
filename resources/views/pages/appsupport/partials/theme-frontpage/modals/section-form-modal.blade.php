@@ -7,19 +7,21 @@
                 <input type="hidden" name="section_id" id="input_section_id" value="" />
                 <input type="hidden" name="is_custom" id="input_section_is_custom" value="0" />
 
-                <div class="modal-header border-0 pb-0 position-relative p-4 p-sm-6">
-                    <div class="d-flex flex-column flex-sm-row align-items-center text-center text-sm-start w-100 pe-0 pe-sm-8">
-                        <div class="symbol symbol-45px symbol-sm-40px symbol-circle bg-light-primary mb-2 mb-sm-0 me-0 me-sm-4 d-flex align-items-center justify-content-center flex-shrink-0">
-                            <i class="ki-outline ki-abstract-26 text-primary fs-2 fs-sm-3"></i>
-                        </div>
-                        <div class="d-flex flex-column">
-                            <h2 class="fw-bold text-gray-900 m-0 fs-4" id="modal_section_title">Konfigurasi Bagian Konten (Section)</h2>
-                            <span class="text-muted fs-8 mt-1">Pengaturan judul, anchor, dan konten section</span>
-                        </div>
+                <div class="modal-header border-0 pb-0 position-relative pt-7 pt-sm-6 px-6 px-lg-8">
+                    <div class="position-absolute top-0 end-0 m-3 m-sm-4 z-index-2">
+                        <button type="button" class="btn btn-icon btn-sm btn-active-light-primary" data-bs-dismiss="modal" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
+                            <i class="ki-outline ki-cross fs-2"></i>
+                        </button>
                     </div>
-                    <button type="button" class="btn btn-icon btn-sm btn-active-light-primary position-absolute top-0 end-0 m-3 m-sm-4" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="ki-outline ki-cross fs-1 fs-sm-2"></i>
-                    </button>
+                    <div class="w-100 text-center text-sm-start pe-0 pe-sm-10">
+                        <div class="d-flex justify-content-center d-sm-none mb-3">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-light-primary text-primary rounded-circle" style="width: 60px; height: 60px; min-width: 60px; min-height: 60px;">
+                                <i class="ki-outline ki-abstract-26 fs-2x text-primary"></i>
+                            </div>
+                        </div>
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-3" id="modal_section_title">Konfigurasi Bagian Konten (Section)</h3>
+                        <div class="text-muted fw-semibold fs-7 mt-1 mb-0">Pengaturan judul, anchor, dan konten section</div>
+                    </div>
                 </div>
 
                 <div class="modal-body py-4 py-md-6 px-4 px-md-8">
@@ -94,10 +96,10 @@
                     <!--end::Active Toggle-->
                 </div>
 
-                <div class="modal-footer border-0 pt-0 px-4 px-md-8 pb-6 justify-content-center justify-content-sm-end gap-2">
-                    <button type="reset" class="btn btn-light btn-sm fw-bold px-4" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary btn-sm fw-bold px-6" id="kt_btn_submit_section">
-                        <span class="indicator-label">
+                <div class="modal-footer border-0 pt-0 px-6 px-lg-8 pb-6 justify-content-center justify-content-sm-end gap-2">
+                    <button type="reset" class="btn btn-light btn-sm fw-bold px-4" data-bs-dismiss="modal" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batalkan perubahan">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-sm fw-bold px-6" id="kt_btn_submit_section" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan konfigurasi section">
+                        <span class="indicator-label d-inline-flex align-items-center">
                             <i class="ki-outline ki-check fs-4 me-1"></i> Simpan Section
                         </span>
                         <span class="indicator-progress">

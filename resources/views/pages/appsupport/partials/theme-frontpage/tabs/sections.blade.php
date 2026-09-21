@@ -1,33 +1,31 @@
 <!--begin::Tab Pane Sections Konten-->
-<div class="card card-flush shadow-sm border-0 mb-6">
+<div class="card shadow-sm mb-6">
     <!--begin::Card header-->
-    <div class="card-header pt-6 px-4 px-md-6 flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3">
-        <div class="card-title">
-            <i class="ki-outline ki-abstract-26 text-primary fs-2 me-2"></i>
-            <div>
-                <h3 class="fw-bolder text-gray-900 m-0 fs-4">Manajemen Section / Bagian Konten Landing</h3>
-                <span class="text-muted fs-7">Kelola bagian konten landing page, urutkan susunannya, aktif/nonaktifkan, atau tambahkan section kustom.</span>
-            </div>
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+            <h3 class="fw-bolder text-gray-900 m-0 fs-4">Manajemen Section / Bagian Konten Landing</h3>
+            <span class="text-muted fs-7 mt-1">Kelola bagian konten landing page, urutkan susunannya, aktif/nonaktifkan, atau tambahkan section kustom.</span>
         </div>
-        <div class="card-toolbar d-flex flex-wrap gap-2 w-100 w-sm-auto justify-content-start justify-content-sm-end">
-            <button type="button" class="btn btn-light-warning btn-sm fw-bold px-3 px-md-4" id="kt_btn_reset_sections_default"
-                data-bs-toggle="tooltip" data-bs-trigger="hover" title="Reset Section ke Bawaan">
-                <span class="indicator-label">
-                    <i class="ki-outline ki-arrows-loop fs-4 me-1"></i> Reset Section
+        <div class="card-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-center justify-content-md-end gap-2 w-100 w-md-auto mt-2 mt-md-0">
+            <button type="button" class="btn btn-light-warning btn-sm fw-bold px-3 px-md-4 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto" id="kt_btn_reset_sections_default"
+                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reset Section ke Bawaan">
+                <span class="indicator-label d-inline-flex align-items-center justify-content-center">
+                    <i class="ki-outline ki-arrows-loop fs-4 me-1"></i> <span>Reset Section</span>
                 </span>
                 <span class="indicator-progress">
-                    <span class="spinner-border spinner-border-sm align-middle me-1"></span> Memproses...
+                    <span class="spinner-border spinner-border-sm align-middle me-1"></span> <span>Memproses...</span>
                 </span>
             </button>
-            <button type="button" class="btn btn-primary btn-sm fw-bold px-3 px-md-4" id="kt_btn_add_custom_section">
-                <i class="ki-outline ki-plus fs-4 me-1"></i> Tambah Section Kustom
+            <button type="button" class="btn btn-primary btn-sm fw-bold px-3 px-md-4 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto" id="kt_btn_add_custom_section"
+                data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tambah Section Kustom">
+                <i class="ki-outline ki-plus fs-4 me-1"></i> <span>Tambah Section Kustom</span>
             </button>
         </div>
     </div>
     <!--end::Card header-->
 
     <!--begin::Card body-->
-    <div class="card-body pt-2 pb-6 px-4 px-md-6">
+    <div class="card-body py-6 px-4 px-md-6">
         <!--begin::Table wrapper-->
         <div class="table-responsive">
             <table class="table table-row-dashed table-row-gray-300 align-middle gs-4 gy-4" id="kt_table_landing_sections">

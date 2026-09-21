@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AppSupport;
 use App\Http\Controllers\Controller;
 use App\Models\AppSupport\AppSetting;
 use App\Models\Profil\UserLog;
+use App\Support\EducationPageConfig;
 use App\Support\Frontpage;
 use App\Support\LandingPageConfig;
 use Illuminate\Http\JsonResponse;
@@ -32,6 +33,10 @@ class ThemeFrontpageController extends Controller
         $socialLinks = LandingPageConfig::getSocialLinks();
         $footerLinks = LandingPageConfig::getFooterLinks();
 
+        // Education Portal Config & Pages
+        $educationConfig = EducationPageConfig::get();
+        $educationPages = EducationPageConfig::getPages();
+
         // Diagnostics & stats
         $activeSectionsCount = count(array_filter($sections, fn($s) => !empty($s['is_active'])));
         $activeMenusCount = count(array_filter($menuItems, fn($m) => !empty($m['is_active'])));
@@ -47,6 +52,7 @@ class ThemeFrontpageController extends Controller
             'active_sections' => $activeSectionsCount,
             'social_links_count' => count($socialLinks),
             'footer_groups_count' => count($footerLinks),
+            'total_edu_pages' => count($educationPages),
         ];
 
         return view('pages.appsupport.theme-frontpage', compact(
@@ -60,7 +66,9 @@ class ThemeFrontpageController extends Controller
             'sections',
             'socialLinks',
             'footerLinks',
-            'stats'
+            'stats',
+            'educationConfig',
+            'educationPages'
         ));
     }
 
@@ -727,10 +735,226 @@ class ThemeFrontpageController extends Controller
     }
 
     /**
+     * Update Education Portal Information & Branding.
+     */
+    public function updateEducationInfo(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'education_portal_title' => 'required|string|max:200',
+            'education_portal_tagline' => 'nullable|string|max:255',
+            'education_portal_description' => 'nullable|string|max:500',
+            'education_meta_keywords' => 'nullable|string|max:500',
+            'education_badge' => 'nullable|string|max:100',
+            'education_hero_title' => 'nullable|string|max:200',
+            'education_hero_subtitle' => 'nullable|string|max:500',
+            'education_hero_cta_text' => 'nullable|string|max:100',
+            'education_hero_cta_url' => 'nullable|string|max:255',
+        ]);
+
+        foreach ($validated as $key => $value) {
+            AppSetting::set($key, (string) ($value ?? ''), 'education', 'string');
+        }
+
+        EducationPageConfig::clearCache();
+
+        $this->logActivity(
+            'Ubah Info Portal Education',
+            'Memperbarui informasi umum dan identitas portal education',
+            'success'
+        );
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'message' => 'Informasi & Identitas Education Portal berhasil disimpan.',
+            'data' => $validated,
+        ]);
+    }
+
+    /**
+     * Update Education Portal Logo Assets.
+     */
+    public function updateEducationLogo(Request $request): JsonResponse
+    {
+        $request->validate([
+            'education_logo_light_file' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:1024',
+            'education_logo_dark_file' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:1024',
+            'education_favicon_file' => 'nullable|file|mimes:png,ico,svg,webp|max:256',
+            'education_logo_light_url' => 'nullable|string|max:500',
+            'education_logo_dark_url' => 'nullable|string|max:500',
+            'education_favicon_url' => 'nullable|string|max:500',
+        ]);
+
+        $uploadDir = public_path('assets/logo');
+        if (!File::isDirectory($uploadDir)) {
+            File::makeDirectory($uploadDir, 0755, true, true);
+        }
+
+        $saved = [];
+
+        // 1. Logo Light
+        if ($request->hasFile('education_logo_light_file')) {
+            $file = $request->file('education_logo_light_file');
+            $filename = 'education-logo-light.' . $file->getClientOriginalExtension();
+            $file->move($uploadDir, $filename);
+            $path = 'assets/logo/' . $filename;
+            AppSetting::set('education_logo_light', $path, 'education');
+            $saved['education_logo_light'] = asset($path);
+        } elseif ($request->filled('education_logo_light_url')) {
+            AppSetting::set('education_logo_light', $request->input('education_logo_light_url'), 'education');
+            $saved['education_logo_light'] = $request->input('education_logo_light_url');
+        }
+
+        // 2. Logo Dark / Mini
+        if ($request->hasFile('education_logo_dark_file')) {
+            $file = $request->file('education_logo_dark_file');
+            $filename = 'education-logo-dark.' . $file->getClientOriginalExtension();
+            $file->move($uploadDir, $filename);
+            $path = 'assets/logo/' . $filename;
+            AppSetting::set('education_logo_dark', $path, 'education');
+            $saved['education_logo_dark'] = asset($path);
+        } elseif ($request->filled('education_logo_dark_url')) {
+            AppSetting::set('education_logo_dark', $request->input('education_logo_dark_url'), 'education');
+            $saved['education_logo_dark'] = $request->input('education_logo_dark_url');
+        }
+
+        // 3. Favicon
+        if ($request->hasFile('education_favicon_file')) {
+            $file = $request->file('education_favicon_file');
+            $filename = 'education-favicon.' . $file->getClientOriginalExtension();
+            $file->move($uploadDir, $filename);
+            $path = 'assets/logo/' . $filename;
+            AppSetting::set('education_favicon', $path, 'education');
+            $saved['education_favicon'] = asset($path);
+        } elseif ($request->filled('education_favicon_url')) {
+            AppSetting::set('education_favicon', $request->input('education_favicon_url'), 'education');
+            $saved['education_favicon'] = $request->input('education_favicon_url');
+        }
+
+        EducationPageConfig::clearCache();
+
+        $this->logActivity(
+            'Ubah Logo Education Portal',
+            'Memperbarui logo dan favicon Education Portal',
+            'success'
+        );
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'message' => 'Aset logo & favicon Education Portal berhasil diperbarui.',
+            'data' => $saved,
+        ]);
+    }
+
+    /**
+     * Reset Education Portal Logo to Theme Defaults.
+     */
+    public function resetEducationLogo(Request $request): JsonResponse
+    {
+        $type = $request->input('type', 'all');
+
+        if ($type === 'light' || $type === 'all') {
+            AppSetting::set('education_logo_light', 'assets/img/logo/logo.png', 'education');
+        }
+        if ($type === 'dark' || $type === 'all') {
+            AppSetting::set('education_logo_dark', 'assets/img/logo/logo-mini.png', 'education');
+        }
+        if ($type === 'favicon' || $type === 'all') {
+            AppSetting::set('education_favicon', 'assets/img/logo/logo-mini.png', 'education');
+        }
+
+        EducationPageConfig::clearCache();
+
+        $this->logActivity('Reset Logo Education', 'Mereset logo education ke bawaan template', 'info');
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'message' => 'Logo Education Portal berhasil dikembalikan ke standar tema bawaan.',
+        ]);
+    }
+
+    /**
+     * Update Education Topbar & Navigation Preferences.
+     */
+    public function updateEducationNav(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'education_topbar_apply_text' => 'required|string|max:100',
+            'education_topbar_apply_url' => 'required|string|max:255',
+            'education_topbar_show_lang' => 'nullable|boolean',
+            'education_topbar_show_jump_to' => 'nullable|boolean',
+            'education_topbar_show_search' => 'nullable|boolean',
+        ]);
+
+        $validated['education_topbar_show_lang'] = $request->boolean('education_topbar_show_lang') ? '1' : '0';
+        $validated['education_topbar_show_jump_to'] = $request->boolean('education_topbar_show_jump_to') ? '1' : '0';
+        $validated['education_topbar_show_search'] = $request->boolean('education_topbar_show_search') ? '1' : '0';
+
+        foreach ($validated as $key => $value) {
+            AppSetting::set($key, (string) ($value ?? ''), 'education', 'string');
+        }
+
+        EducationPageConfig::clearCache();
+
+        $this->logActivity(
+            'Ubah Navigasi Education Portal',
+            'Memperbarui preferensi topbar dan navigasi portal education',
+            'success'
+        );
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'message' => 'Pengaturan Topbar & Navigasi Education Portal berhasil disimpan.',
+            'data' => $validated,
+        ]);
+    }
+
+    /**
+     * Update Education Footer, Contact & Social Media.
+     */
+    public function updateEducationFooter(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'education_footer_about' => 'nullable|string|max:1000',
+            'education_footer_copyright' => 'nullable|string|max:255',
+            'education_footer_email' => 'nullable|email|max:150',
+            'education_footer_phone' => 'nullable|string|max:50',
+            'education_footer_address' => 'nullable|string|max:255',
+            'education_social_facebook' => 'nullable|url|max:255',
+            'education_social_twitter' => 'nullable|url|max:255',
+            'education_social_instagram' => 'nullable|url|max:255',
+            'education_social_youtube' => 'nullable|url|max:255',
+            'education_social_linkedin' => 'nullable|url|max:255',
+        ]);
+
+        foreach ($validated as $key => $val) {
+            AppSetting::set($key, (string) ($val ?? ''), 'education', 'string');
+        }
+
+        EducationPageConfig::clearCache();
+
+        $this->logActivity(
+            'Ubah Footer Education Portal',
+            'Memperbarui data footer, kontak, dan tautan sosial media education portal',
+            'success'
+        );
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'message' => 'Pengaturan Footer & Kontak Education Portal berhasil disimpan.',
+        ]);
+    }
+
+    /**
      * Clear Cache for Theme Frontpage.
      */
     public function clearCache(): JsonResponse
     {
+        EducationPageConfig::clearCache();
         LandingPageConfig::clearCache();
         Frontpage::clearCache();
         AppSetting::clearCache();
@@ -745,7 +969,7 @@ class ThemeFrontpageController extends Controller
     }
 
     /**
-     * Reset All Landing Settings to Defaults.
+     * Reset All Theme Settings to Defaults.
      */
     public function resetAll(): JsonResponse
     {
@@ -754,18 +978,25 @@ class ThemeFrontpageController extends Controller
             AppSetting::set($key, (string) $val, 'landing');
         }
 
+        $eduDefaults = EducationPageConfig::defaults();
+        foreach ($eduDefaults as $key => $val) {
+            AppSetting::set($key, (string) $val, 'education');
+        }
+
         AppSetting::set('landing_version', 'v1', 'landing');
         AppSetting::set('default_frontpage', 'landing', 'appearance');
 
+        EducationPageConfig::clearCache();
         LandingPageConfig::clearCache();
         Frontpage::clearCache();
+        AppSetting::clearCache();
 
-        $this->logActivity('Reset Total Landing Page', 'Mengembalikan seluruh konfigurasi landing page ke kondisi default template', 'warning');
+        $this->logActivity('Reset Total Tema Frontpage', 'Mengembalikan seluruh konfigurasi frontpage (landing & education) ke kondisi default', 'warning');
 
         return response()->json([
             'success' => true,
             'status' => 'success',
-            'message' => 'Seluruh pengaturan Landing Page berhasil dikembalikan ke standar awal pabrikan.',
+            'message' => 'Seluruh pengaturan tema Landing Page dan Education Portal berhasil dikembalikan ke standar awal pabrikan.',
         ]);
     }
 

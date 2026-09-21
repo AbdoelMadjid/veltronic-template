@@ -42,41 +42,23 @@
 
             <!--begin::Tab Content-->
             <div class="tab-content" id="kt_theme_frontpage_tabs">
-                <!--begin:::Tab pane Theme Switcher-->
-                <div class="tab-pane fade show active" id="kt_theme_tab_switcher" role="tabpanel">
+                <!--begin:::Tab pane 1: Status & Pilihan Tema-->
+                <div class="tab-pane fade show active" id="kt_theme_main_tab_switcher" role="tabpanel">
                     @include('pages.appsupport.partials.theme-frontpage.tabs.theme-switcher')
                 </div>
-                <!--end:::Tab pane Theme Switcher-->
+                <!--end:::Tab pane 1-->
 
-                <!--begin:::Tab pane Hero & Branding-->
-                <div class="tab-pane fade" id="kt_theme_tab_hero" role="tabpanel">
-                    @include('pages.appsupport.partials.theme-frontpage.tabs.hero')
+                <!--begin:::Tab pane 2: Konfigurasi Landing Page-->
+                <div class="tab-pane fade" id="kt_theme_main_tab_landing" role="tabpanel">
+                    @include('pages.appsupport.partials.theme-frontpage.landing-container')
                 </div>
-                <!--end:::Tab pane Hero & Branding-->
+                <!--end:::Tab pane 2-->
 
-                <!--begin:::Tab pane Menu Navigasi-->
-                <div class="tab-pane fade" id="kt_theme_tab_menu" role="tabpanel">
-                    @include('pages.appsupport.partials.theme-frontpage.tabs.menu')
+                <!--begin:::Tab pane 3: Konfigurasi Education Portal-->
+                <div class="tab-pane fade" id="kt_theme_main_tab_education" role="tabpanel">
+                    @include('pages.appsupport.partials.theme-frontpage.education-container')
                 </div>
-                <!--end:::Tab pane Menu Navigasi-->
-
-                <!--begin:::Tab pane Sections Konten-->
-                <div class="tab-pane fade" id="kt_theme_tab_sections" role="tabpanel">
-                    @include('pages.appsupport.partials.theme-frontpage.tabs.sections')
-                </div>
-                <!--end:::Tab pane Sections Konten-->
-
-                <!--begin:::Tab pane Footer & Kontak-->
-                <div class="tab-pane fade" id="kt_theme_tab_footer" role="tabpanel">
-                    @include('pages.appsupport.partials.theme-frontpage.tabs.footer')
-                </div>
-                <!--end:::Tab pane Footer & Kontak-->
-
-                <!--begin:::Tab pane Pratinjau-->
-                <div class="tab-pane fade" id="kt_theme_tab_preview" role="tabpanel">
-                    @include('pages.appsupport.partials.theme-frontpage.tabs.preview')
-                </div>
-                <!--end:::Tab pane Pratinjau-->
+                <!--end:::Tab pane 3-->
             </div>
             <!--end::Tab Content-->
 

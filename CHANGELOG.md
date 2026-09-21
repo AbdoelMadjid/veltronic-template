@@ -5,6 +5,31 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.38.0] - 2026-09-21
+
+### Added & Enhanced
+- **Pemisahan Konfigurasi & Live Preview Tema Landing & Education Portal Serta Standarisasi Tampilan Mobile Card Header (`/appsupport/theme-frontpage`)**:
+  - **Pemisahan & Dekopling Konfigurasi Tema (Bebas Konfigurasi Kapan Saja Tanpa Bergantung Tema Aktif)**:
+    - **Tab 1 (`Status & Pilihan Tema`)**: Pusat kontrol aktivasi tema publik (*Landing Page* vs *Education Portal*) dengan saklar 1-klik realtime (*zero-reload*).
+    - **Tab 2 (`Landing Page - Metronic 8`)**: Kontainer mandiri konfigurasi Landing Page (*Branding & Hero*, *Menu Navigasi*, *Section Konten*, *Footer & Kontak*, dan *Pratinjau Live*).
+    - **Tab 3 (`Education Portal - Unify v2.6`)**: Kontainer mandiri konfigurasi Education Portal (*Info & Identitas*, *Katalog 13 Halaman*, *Navigasi & Topbar*, *Footer & Kontak*, dan *Pratinjau Live*).
+  - **Optimalisasi & Standarisasi Card Header Mode Mobile (3-Baris Rata Tengah)**:
+    - Pada layar mobile (`< md`), seluruh `card-header` disusun terstruktur 3-baris rapi:
+      - **Baris 1**: Judul kartu rata tengah (`text-center fw-bolder fs-4`).
+      - **Baris 2**: Deskripsi / subjudul penjelas rata tengah (`text-center text-muted fs-7 mt-1`).
+      - **Baris 3**: Tombol aksi beralih menjadi tombol *full width* (`w-100`) rata tengah, dan jika terdapat lebih dari 1 tombol maka berderet rapi ke bawah (`flex-column gap-2`).
+    - Pada layar desktop (`>= md`), struktur `card-header` tetap mempertahankan susunan standar Metronic horizontal (`flex-md-row justify-content-between`).
+  - **Penyempurnaan Visual & Estetika Metronic 8**:
+    - **Pembersihan Ikon Judul Card**: Menghapus seluruh ikon dekoratif dari judul card (`card-title`) pada seluruh form konfigurasi agar tampilan lebih bersih dan konsisten sesuai layout standar Metronic.
+    - **Penyelarasan Baseline Tombol & Card Footer**: Menggunakan struktur `d-flex flex-column h-100` dengan `flex-grow-1` pada body dan menempatkan tombol aksi di footer sehingga tombol pada kartu tema sejajar presisi secara horizontal.
+    - **Tombol Banner Utama Informatif**: Tombol aksi pada banner utama tampil utuh (teks lengkap + ikon) dengan lebar penuh vertikal di mobile tanpa tooltip hover.
+    - **Perbaikan Ikon LinkedIn**: Mengintegrasikan `fab fa-linkedin` standar FontAwesome 6 brand pada footer Education Portal.
+  - **Arsitektur Helper Terpusat `EducationPageConfig`**:
+    - Helper class `App\Support\EducationPageConfig` terintegrasi dengan `AppSetting` (group `education`).
+    - Katalog 13 rute modul halaman akademik Unify Education lengkap dengan filter pencarian instan dan tautan langsung.
+  - **Zero-Reload Realtime Theme Switching & Form Handlers (Rule 4 & Rule 5)**:
+    - Pengalihan tema dan penyimpanan formulir berjalan realtime via AJAX dengan indikator loading spinner Metronic tanpa reload halaman.
+
 ## [v1.37.0] - 2026-09-20
 
 ### Added & Enhanced

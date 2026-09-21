@@ -38,13 +38,21 @@ var KTThemeFrontpage = function () {
     };
 
     var refreshPreview = function () {
-        var iframe = document.getElementById("kt_preview_iframe");
-        if (iframe) {
-            iframe.src = iframe.src;
+        var iframeLanding = document.getElementById("kt_preview_iframe_landing");
+        if (iframeLanding) {
+            iframeLanding.src = iframeLanding.src;
+        }
+        var iframeEdu = document.getElementById("kt_preview_iframe_edu");
+        if (iframeEdu) {
+            iframeEdu.src = iframeEdu.src;
+        }
+        var iframeLegacy = document.getElementById("kt_preview_iframe");
+        if (iframeLegacy) {
+            iframeLegacy.src = iframeLegacy.src;
         }
     };
 
-    // 1. Switch Active Theme (Landing vs Education)
+    // 1. Switch Active Theme (Landing vs Education) with Zero-Reload Realtime UI Update
     var initThemeSwitcher = function () {
         $(document).on("click", ".kt-btn-switch-frontpage", function (e) {
             e.preventDefault();
@@ -62,15 +70,69 @@ var KTThemeFrontpage = function () {
                 success: function (res) {
                     setBtnLoading(btn, false);
                     if (res.success) {
+                        // 1. Update Header Banner Theme Badges & Description
+                        if (theme === "education") {
+                            $("#badge_current_frontpage_theme").removeClass("badge-light-primary").addClass("badge-light-warning").text("EDUCATION");
+                            $("#badge_current_frontpage_version").addClass("d-none");
+                            $("#badge_current_education_multipage").removeClass("d-none");
+                            $("#text_current_frontpage_desc").text("Kelola branding portal akademik, katalog rute multi-halaman (13 modul), preferensi topbar & navigasi, serta kontak & footer universitas.");
+                            $("#nav_badge_theme_label").removeClass("badge-light-primary").addClass("badge-light-warning").text("Aktif: EDUCATION");
+
+                            // 2. Update Theme Switcher Cards (Tab 1)
+                            $("#card_theme_education").removeClass("border-gray-200").addClass("border-warning border-2");
+                            $("#card_theme_education_badge").html('<span class="badge badge-warning fw-bold px-3 fs-7 text-white d-inline-flex align-items-center h-35px"><i class="ki-outline ki-check-circle fs-6 me-1 text-white"></i> Tema Aktif</span>');
+                            $("#card_theme_education_actions").html('<button type="button" class="btn btn-warning text-white btn-sm w-100 fw-bold disabled d-inline-flex align-items-center justify-content-center h-38px" disabled><i class="ki-outline ki-check fs-4 me-1"></i> Sedang Aktif</button><a href="/education" target="_blank" class="btn btn-light-warning btn-sm fw-bold px-4 text-nowrap text-center d-inline-flex align-items-center justify-content-center h-38px"><i class="ki-outline ki-eye fs-4 me-1"></i> Preview</a>');
+
+                            $("#card_theme_landing").removeClass("border-primary border-2").addClass("border-gray-200");
+                            $("#card_theme_landing_badge").html('<span class="badge badge-light-secondary fw-bold px-3 fs-7 d-inline-flex align-items-center h-35px">Tidak Aktif</span>');
+                            $("#card_theme_landing_actions").html('<button type="button" class="btn btn-primary btn-sm w-100 fw-bold d-inline-flex align-items-center justify-content-center h-38px kt-btn-switch-frontpage" data-theme="landing"><span class="indicator-label d-inline-flex align-items-center"><i class="ki-outline ki-rocket fs-4 me-1"></i> Aktifkan Landing Page</span><span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle me-2"></span> Mengaktifkan...</span></button><a href="/landing" target="_blank" class="btn btn-light-primary btn-sm fw-bold px-4 text-nowrap text-center d-inline-flex align-items-center justify-content-center h-38px"><i class="ki-outline ki-eye fs-4 me-1"></i> Preview</a>');
+
+                            // 3. Update Header Badges in Tab Containers
+                            $("#header_landing_active_status").html('<span class="badge badge-light-secondary fw-bold px-3 fs-7 d-inline-flex align-items-center h-35px">Tidak Aktif</span><button type="button" class="btn btn-primary btn-sm fw-bold d-inline-flex align-items-center h-35px px-3 kt-btn-switch-frontpage" data-theme="landing"><span class="indicator-label d-inline-flex align-items-center"><i class="ki-outline ki-rocket fs-4 me-1"></i> Jadikan Tema Aktif</span><span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle me-2"></span> Mengaktifkan...</span></button><a href="/landing" target="_blank" class="btn btn-light-primary btn-sm fw-bold d-inline-flex align-items-center h-35px px-3"><i class="ki-outline ki-exit-right-corner fs-4 me-1"></i> Buka /landing</a>');
+                            $("#header_education_active_status").html('<span class="badge badge-warning fw-bold px-3 fs-7 text-white d-inline-flex align-items-center h-35px"><i class="ki-outline ki-check-circle fs-6 me-1 text-white"></i> Tema Aktif Publik</span><a href="/education" target="_blank" class="btn btn-light-warning btn-sm fw-bold d-inline-flex align-items-center h-35px px-3"><i class="ki-outline ki-exit-right-corner fs-4 me-1"></i> Buka /education</a>');
+
+                            // 4. Update Legacy Preview Frame if present
+                            $("#kt_preview_iframe").attr("src", "/education");
+                            $("#kt_btn_preview_open_tab").attr("href", "/education");
+                        } else {
+                            $("#badge_current_frontpage_theme").removeClass("badge-light-warning").addClass("badge-light-primary").text("LANDING");
+                            $("#badge_current_frontpage_version").removeClass("d-none");
+                            $("#badge_current_education_multipage").addClass("d-none");
+                            $("#text_current_frontpage_desc").text("Kelola pemilihan tema publik, tata letak navigasi anchor, branding logo, serta dinamisasi section konten & footer landing page.");
+                            $("#nav_badge_theme_label").removeClass("badge-light-warning").addClass("badge-light-primary").text("Aktif: LANDING");
+
+                            // 2. Update Theme Switcher Cards (Tab 1)
+                            $("#card_theme_landing").removeClass("border-gray-200").addClass("border-primary border-2");
+                            $("#card_theme_landing_badge").html('<span class="badge badge-success fw-bold px-3 fs-7 d-inline-flex align-items-center h-35px"><i class="ki-outline ki-check-circle fs-6 me-1 text-white"></i> Tema Aktif</span>');
+                            $("#card_theme_landing_actions").html('<button type="button" class="btn btn-success btn-sm w-100 fw-bold disabled d-inline-flex align-items-center justify-content-center h-38px" disabled><i class="ki-outline ki-check fs-4 me-1"></i> Sedang Aktif</button><a href="/landing" target="_blank" class="btn btn-light-primary btn-sm fw-bold px-4 text-nowrap text-center d-inline-flex align-items-center justify-content-center h-38px"><i class="ki-outline ki-eye fs-4 me-1"></i> Preview</a>');
+
+                            $("#card_theme_education").removeClass("border-warning border-2").addClass("border-gray-200");
+                            $("#card_theme_education_badge").html('<span class="badge badge-light-secondary fw-bold px-3 fs-7 d-inline-flex align-items-center h-35px">Tidak Aktif</span>');
+                            $("#card_theme_education_actions").html('<button type="button" class="btn btn-warning text-white btn-sm w-100 fw-bold d-inline-flex align-items-center justify-content-center h-38px kt-btn-switch-frontpage" data-theme="education"><span class="indicator-label d-inline-flex align-items-center"><i class="ki-outline ki-teacher fs-4 me-1"></i> Aktifkan Education Portal</span><span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle me-2"></span> Mengaktifkan...</span></button><a href="/education" target="_blank" class="btn btn-light-warning btn-sm fw-bold px-4 text-nowrap text-center d-inline-flex align-items-center justify-content-center h-38px"><i class="ki-outline ki-eye fs-4 me-1"></i> Preview</a>');
+
+                            // 3. Update Header Badges in Tab Containers
+                            $("#header_landing_active_status").html('<span class="badge badge-success fw-bold px-3 fs-7 d-inline-flex align-items-center h-35px"><i class="ki-outline ki-check-circle fs-6 me-1 text-white"></i> Tema Aktif Publik</span><a href="/landing" target="_blank" class="btn btn-light-primary btn-sm fw-bold d-inline-flex align-items-center h-35px px-3"><i class="ki-outline ki-exit-right-corner fs-4 me-1"></i> Buka /landing</a>');
+                            $("#header_education_active_status").html('<span class="badge badge-light-secondary fw-bold px-3 fs-7 d-inline-flex align-items-center h-35px">Tidak Aktif</span><button type="button" class="btn btn-warning text-white btn-sm fw-bold d-inline-flex align-items-center h-35px px-3 kt-btn-switch-frontpage" data-theme="education"><span class="indicator-label d-inline-flex align-items-center"><i class="ki-outline ki-teacher fs-4 me-1"></i> Jadikan Tema Aktif</span><span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle me-2"></span> Mengaktifkan...</span></button><a href="/education" target="_blank" class="btn btn-light-warning btn-sm fw-bold d-inline-flex align-items-center h-35px px-3"><i class="ki-outline ki-exit-right-corner fs-4 me-1"></i> Buka /education</a>');
+
+                            // 4. Update Legacy Preview Frame if present
+                            $("#kt_preview_iframe").attr("src", "/landing");
+                            $("#kt_btn_preview_open_tab").attr("href", "/landing");
+                        }
+
+                        // Re-initialize tooltips for newly rendered elements
+                        if (typeof bootstrap !== "undefined" && bootstrap.Tooltip) {
+                            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                                return new bootstrap.Tooltip(tooltipTriggerEl);
+                            });
+                        }
+
                         Swal.fire({
                             text: res.message,
                             icon: "success",
                             buttonsStyling: false,
-                            confirmButtonText: "OK, Selesai!",
-                            customClass: { confirmButton: "btn btn-primary btn-sm" }
-                        }).then(function () {
-                            // Update UI cards & badges realtime
-                            location.reload();
+                            confirmButtonText: "OK, Paham",
+                            customClass: { confirmButton: "btn btn-" + (theme === "education" ? "warning" : "primary") + " btn-sm" }
                         });
                     }
                 },
@@ -864,18 +926,228 @@ var KTThemeFrontpage = function () {
         });
     };
 
-    // 8. Interactive Preview Switcher
+    // 8. Interactive Preview Switchers (Landing & Education)
     var initPreview = function () {
-        $(".btn-preview-size").on("click", function () {
+        // Landing Preview
+        $(document).on("click", ".btn-preview-size-landing", function () {
+            $(".btn-preview-size-landing").removeClass("active");
+            $(this).addClass("active");
+            var size = $(this).data("size");
+            $("#kt_preview_container_landing").css("width", size);
+        });
+
+        $(document).on("click", "#kt_btn_refresh_preview_landing", function () {
+            var iframe = document.getElementById("kt_preview_iframe_landing");
+            if (iframe) {
+                iframe.src = iframe.src;
+            }
+            showToast("info", "Pratinjau Landing Page disegarkan.");
+        });
+
+        // Education Preview
+        $(document).on("click", ".btn-preview-size-edu", function () {
+            $(".btn-preview-size-edu").removeClass("active");
+            $(this).addClass("active");
+            var size = $(this).data("size");
+            $("#kt_preview_container_edu").css("width", size);
+        });
+
+        $(document).on("click", "#kt_btn_refresh_preview_edu", function () {
+            var iframe = document.getElementById("kt_preview_iframe_edu");
+            if (iframe) {
+                iframe.src = iframe.src;
+            }
+            showToast("info", "Pratinjau Education Portal disegarkan.");
+        });
+
+        // Universal fallback
+        $(document).on("click", ".btn-preview-size", function () {
             $(".btn-preview-size").removeClass("active");
             $(this).addClass("active");
             var size = $(this).data("size");
             $("#kt_preview_container").css("width", size);
         });
 
-        $("#kt_btn_refresh_preview").on("click", function () {
+        $(document).on("click", "#kt_btn_refresh_preview", function () {
             refreshPreview();
             showToast("info", "Pratinjau disegarkan.");
+        });
+    };
+
+    // 9. Education Portal: Info & Branding Form
+    var initEduInfoForm = function () {
+        $("#kt_form_edu_info").on("submit", function (e) {
+            e.preventDefault();
+            var form = this;
+            var btn = document.getElementById("kt_btn_save_edu_info");
+            var formData = $(form).serialize();
+
+            setBtnLoading(btn, true);
+
+            $.ajax({
+                url: "/appsupport/theme-frontpage/education/info",
+                type: "POST",
+                headers: { "X-CSRF-TOKEN": getCsrfToken() },
+                data: formData,
+                dataType: "json",
+                success: function (res) {
+                    setBtnLoading(btn, false);
+                    if (res.success) {
+                        showToast("success", res.message);
+                        refreshPreview();
+                    }
+                },
+                error: function (xhr) {
+                    setBtnLoading(btn, false);
+                    var msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : "Gagal menyimpan info portal education.";
+                    showToast("error", msg);
+                }
+            });
+        });
+    };
+
+    // 10. Education Portal: Logo Upload & Reset
+    var initEduLogoForm = function () {
+        $("#kt_form_edu_logos").on("submit", function (e) {
+            e.preventDefault();
+            var form = this;
+            var btn = document.getElementById("kt_btn_save_edu_logo");
+            var formData = new FormData(form);
+
+            setBtnLoading(btn, true);
+
+            $.ajax({
+                url: "/appsupport/theme-frontpage/education/logo",
+                type: "POST",
+                headers: { "X-CSRF-TOKEN": getCsrfToken() },
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function (res) {
+                    setBtnLoading(btn, false);
+                    if (res.success) {
+                        showToast("success", res.message);
+                        if (res.data) {
+                            if (res.data.education_logo_light) $("#img_preview_edu_logo_light").attr("src", res.data.education_logo_light);
+                            if (res.data.education_logo_dark) $("#img_preview_edu_logo_dark").attr("src", res.data.education_logo_dark);
+                            if (res.data.education_favicon) $("#img_preview_edu_favicon").attr("src", res.data.education_favicon);
+                        }
+                        refreshPreview();
+                    }
+                },
+                error: function (xhr) {
+                    setBtnLoading(btn, false);
+                    var msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : "Gagal mengunggah logo education.";
+                    showToast("error", msg);
+                }
+            });
+        });
+
+        $("#kt_btn_reset_edu_logo").on("click", function (e) {
+            e.preventDefault();
+            var btn = this;
+            setBtnLoading(btn, true);
+
+            $.ajax({
+                url: "/appsupport/theme-frontpage/education/logo/reset",
+                type: "POST",
+                headers: { "X-CSRF-TOKEN": getCsrfToken() },
+                dataType: "json",
+                success: function (res) {
+                    setBtnLoading(btn, false);
+                    if (res.success) {
+                        showToast("success", res.message);
+                        $("#img_preview_edu_logo_light").attr("src", "/assets/img/logo/logo.png");
+                        $("#img_preview_edu_logo_dark").attr("src", "/assets/img/logo/logo-mini.png");
+                        $("#img_preview_edu_favicon").attr("src", "/assets/img/logo/logo-mini.png");
+                        refreshPreview();
+                    }
+                },
+                error: function () {
+                    setBtnLoading(btn, false);
+                    showToast("error", "Gagal mereset logo education.");
+                }
+            });
+        });
+    };
+
+    // 11. Education Portal: Topbar & Navigasi Form
+    var initEduNavForm = function () {
+        $("#kt_form_edu_nav").on("submit", function (e) {
+            e.preventDefault();
+            var form = this;
+            var btn = document.getElementById("kt_btn_save_edu_nav");
+            var formData = $(form).serialize();
+
+            setBtnLoading(btn, true);
+
+            $.ajax({
+                url: "/appsupport/theme-frontpage/education/nav",
+                type: "POST",
+                headers: { "X-CSRF-TOKEN": getCsrfToken() },
+                data: formData,
+                dataType: "json",
+                success: function (res) {
+                    setBtnLoading(btn, false);
+                    if (res.success) {
+                        showToast("success", res.message);
+                        refreshPreview();
+                    }
+                },
+                error: function (xhr) {
+                    setBtnLoading(btn, false);
+                    var msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : "Gagal menyimpan navigasi portal education.";
+                    showToast("error", msg);
+                }
+            });
+        });
+    };
+
+    // 12. Education Portal: Footer & Kontak Form
+    var initEduFooterForm = function () {
+        $("#kt_form_edu_footer").on("submit", function (e) {
+            e.preventDefault();
+            var form = this;
+            var btn = document.getElementById("kt_btn_save_edu_footer");
+            var formData = $(form).serialize();
+
+            setBtnLoading(btn, true);
+
+            $.ajax({
+                url: "/appsupport/theme-frontpage/education/footer",
+                type: "POST",
+                headers: { "X-CSRF-TOKEN": getCsrfToken() },
+                data: formData,
+                dataType: "json",
+                success: function (res) {
+                    setBtnLoading(btn, false);
+                    if (res.success) {
+                        showToast("success", res.message);
+                        refreshPreview();
+                    }
+                },
+                error: function (xhr) {
+                    setBtnLoading(btn, false);
+                    var msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : "Gagal menyimpan footer portal education.";
+                    showToast("error", msg);
+                }
+            });
+        });
+    };
+
+    // 13. Education Portal: Pages Filter
+    var initEduPagesFilter = function () {
+        $("#kt_edu_pages_search").on("keyup", function () {
+            var val = $(this).val().toLowerCase().trim();
+            $("#kt_edu_pages_tbody .edu-page-row").each(function () {
+                var searchData = $(this).data("search") || "";
+                if (val === "" || searchData.indexOf(val) > -1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
         });
     };
 
@@ -889,6 +1161,11 @@ var KTThemeFrontpage = function () {
             initFooterForm();
             initGlobalActions();
             initPreview();
+            initEduInfoForm();
+            initEduLogoForm();
+            initEduNavForm();
+            initEduFooterForm();
+            initEduPagesFilter();
         }
     };
 }();

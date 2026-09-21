@@ -83,6 +83,12 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/theme-frontpage/sections/save-code', [ThemeFrontpageController::class, 'saveSectionCode'])->name('theme-frontpage.sections.save-code');
         Route::post('/theme-frontpage/sections/reset-code', [ThemeFrontpageController::class, 'resetSectionCode'])->name('theme-frontpage.sections.reset-code');
         Route::post('/theme-frontpage/footer', [ThemeFrontpageController::class, 'updateFooter'])->name('theme-frontpage.footer');
+        // Education Portal Configurations
+        Route::post('/theme-frontpage/education/info', [ThemeFrontpageController::class, 'updateEducationInfo'])->name('theme-frontpage.education.info');
+        Route::post('/theme-frontpage/education/logo', [ThemeFrontpageController::class, 'updateEducationLogo'])->name('theme-frontpage.education.logo');
+        Route::post('/theme-frontpage/education/logo/reset', [ThemeFrontpageController::class, 'resetEducationLogo'])->name('theme-frontpage.education.logo.reset');
+        Route::post('/theme-frontpage/education/nav', [ThemeFrontpageController::class, 'updateEducationNav'])->name('theme-frontpage.education.nav');
+        Route::post('/theme-frontpage/education/footer', [ThemeFrontpageController::class, 'updateEducationFooter'])->name('theme-frontpage.education.footer');
         Route::post('/theme-frontpage/clear-cache', [ThemeFrontpageController::class, 'clearCache'])->name('theme-frontpage.clear-cache');
         Route::post('/theme-frontpage/reset-all', [ThemeFrontpageController::class, 'resetAll'])->name('theme-frontpage.reset-all');
     });

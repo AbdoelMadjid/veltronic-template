@@ -23,7 +23,7 @@
                 </div>
                 <!--end::Modal title-->
                 <!--begin::Close-->
-                <button type="button" class="btn btn-icon btn-sm btn-active-light-primary position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-icon btn-sm btn-active-light-primary position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tutup">
                     <i class="ki-outline ki-cross fs-2 text-white"></i>
                 </button>
                 <!--end::Close-->
@@ -53,10 +53,10 @@
                         <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
                             <label class="fs-7 fw-bold text-gray-800">Source Code (Blade / HTML)</label>
                             <div class="d-flex align-items-center gap-2">
-                                <button type="button" class="btn btn-xs btn-light-info fw-bold" id="btn_format_code" title="Format indentation">
+                                <button type="button" class="btn btn-xs btn-light-info fw-bold" id="btn_format_code" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Format auto-wrap tampilan teks">
                                     <i class="ki-outline ki-text-align-left fs-7"></i> Auto-Wrap
                                 </button>
-                                <button type="button" class="btn btn-xs btn-light-warning fw-bold" id="btn_reset_section_code">
+                                <button type="button" class="btn btn-xs btn-light-warning fw-bold" id="btn_reset_section_code" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Kembalikan script ke bawaan awal">
                                     <i class="ki-outline ki-arrows-circle fs-7"></i> Reset Default
                                 </button>
                             </div>
@@ -76,11 +76,11 @@
                             <i class="ki-outline ki-shield-tick text-success me-1"></i> Perubahan tersimpan realtime & cache di-bust otomatis.
                         </div>
                         <div class="d-flex align-items-center justify-content-center justify-content-sm-end gap-2">
-                            <button type="button" class="btn btn-light btn-sm fw-bold px-4" data-bs-dismiss="modal">
+                            <button type="button" class="btn btn-light btn-sm fw-bold px-4" data-bs-dismiss="modal" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Batalkan perubahan">
                                 Batal
                             </button>
-                            <button type="submit" class="btn btn-primary btn-sm fw-bold px-6" id="btn_submit_section_code">
-                                <span class="indicator-label">
+                            <button type="submit" class="btn btn-primary btn-sm fw-bold px-6" id="btn_submit_section_code" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Simpan script section">
+                                <span class="indicator-label d-inline-flex align-items-center">
                                     <i class="ki-outline ki-check-circle fs-4 me-1"></i> Simpan Script
                                 </span>
                                 <span class="indicator-progress">

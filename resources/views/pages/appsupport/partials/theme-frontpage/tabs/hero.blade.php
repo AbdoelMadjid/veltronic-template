@@ -5,24 +5,24 @@
         <!--begin::Card Hero Settings-->
         <form id="kt_form_landing_hero" class="form">
             @csrf
-            <div class="card card-flush shadow-sm mb-6 border-0">
+            <div class="card shadow-sm mb-6">
                 <!--begin::Card header-->
-                <div class="card-header pt-6 px-4 px-md-6 flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3">
-                    <div class="card-title">
-                        <i class="ki-outline ki-crown-2 text-primary fs-2 me-2"></i>
+                <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                    <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
                         <h3 class="fw-bolder text-gray-900 m-0 fs-4">Konten Hero Banner & Panggilan Aksi</h3>
+                        <span class="text-muted fs-7 mt-1">Atur teks headline utama, tombol aksi, dan preferensi tampilan seksi hero</span>
                     </div>
-                    <div class="card-toolbar">
-                        <button type="button" class="btn btn-light-info btn-sm fw-bold btn-edit-section-code"
-                                data-id="hero" data-name="Hero Banner & Navbar" data-custom="0">
-                            <i class="ki-outline ki-code fs-4 me-1"></i> Edit Script Blade
+                    <div class="card-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                        <button type="button" class="btn btn-light-info btn-sm fw-bold btn-edit-section-code w-100 w-md-auto d-inline-flex align-items-center justify-content-center h-35px"
+                                data-id="hero" data-name="Hero Banner & Navbar" data-custom="0" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit Template Script Blade Hero">
+                            <i class="ki-outline ki-code fs-4 me-1"></i> <span>Edit Script Blade</span>
                         </button>
                     </div>
                 </div>
                 <!--end::Card header-->
 
                 <!--begin::Card body-->
-                <div class="card-body pt-2 pb-6 px-4 px-md-6">
+                <div class="card-body py-6 px-4 px-md-6">
                     <!--begin::Row Badge & Title-->
                     <div class="row mb-5">
                         <div class="col-md-4 mb-4 mb-md-0">
@@ -58,32 +58,22 @@
                     <div class="separator separator-dashed my-6"></div>
 
                     <!--begin::Row CTA Buttons-->
-                    <h5 class="fw-bolder text-gray-800 mb-4 fs-6">
-                        <i class="ki-outline ki-click text-primary fs-5 me-1"></i> Tombol Aksi (Call To Action)
-                    </h5>
                     <div class="row mb-5">
                         <div class="col-md-6 mb-4 mb-md-0">
-                            <label class="form-label fs-7 fw-bold text-gray-800 required">Teks Tombol Utama (Primary CTA)</label>
-                            <input type="text" name="landing_hero_cta_text" class="form-control form-control-solid form-control-sm"
-                                   placeholder="Coba Metronic" value="{{ $config['landing_hero_cta_text'] ?? 'Coba Metronic' }}" required />
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fs-7 fw-bold text-gray-800 required">Tautan Tombol Utama (URL/Anchor)</label>
+                            <label class="form-label fs-7 fw-bold text-gray-800 required">Teks Tombol Utama</label>
+                            <input type="text" name="landing_hero_cta_text" class="form-control form-control-solid form-control-sm mb-2"
+                                   placeholder="Contoh: Coba Metronic" value="{{ $config['landing_hero_cta_text'] ?? 'Coba Metronic' }}" required />
+                            <label class="form-label fs-8 text-muted">URL Tombol Utama</label>
                             <input type="text" name="landing_hero_cta_url" class="form-control form-control-solid form-control-sm"
-                                   placeholder="/#pricing atau /login" value="{{ $config['landing_hero_cta_url'] ?? '/#pricing' }}" required />
-                        </div>
-                    </div>
-
-                    <div class="row mb-5">
-                        <div class="col-md-6 mb-4 mb-md-0">
-                            <label class="form-label fs-7 fw-bold text-gray-800">Teks Tombol Sekunder</label>
-                            <input type="text" name="landing_hero_cta2_text" class="form-control form-control-solid form-control-sm"
-                                   placeholder="Dokumentasi" value="{{ $config['landing_hero_cta2_text'] ?? '' }}" />
+                                   placeholder="Misal: /auth/register atau #how-it-works" value="{{ $config['landing_hero_cta_url'] ?? '/#pricing' }}" required />
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fs-7 fw-bold text-gray-800">Tautan Tombol Sekunder</label>
+                            <label class="form-label fs-7 fw-bold text-gray-800">Teks Tombol Sekunder</label>
+                            <input type="text" name="landing_hero_cta2_text" class="form-control form-control-solid form-control-sm mb-2"
+                                   placeholder="Contoh: Pelajari Fitur" value="{{ $config['landing_hero_cta2_text'] ?? '' }}" />
+                            <label class="form-label fs-8 text-muted">URL Tombol Sekunder</label>
                             <input type="text" name="landing_hero_cta2_url" class="form-control form-control-solid form-control-sm"
-                                   placeholder="https://..." value="{{ $config['landing_hero_cta2_url'] ?? '' }}" />
+                                   placeholder="Misal: #features" value="{{ $config['landing_hero_cta2_url'] ?? '' }}" />
                         </div>
                     </div>
                     <!--end::Row CTA Buttons-->
@@ -91,32 +81,30 @@
                     <div class="separator separator-dashed my-6"></div>
 
                     <!--begin::Row Meta & SEO-->
-                    <h5 class="fw-bolder text-gray-800 mb-4 fs-6">
-                        <i class="ki-outline ki-magnifier text-primary fs-5 me-1"></i> Pengaturan Meta & SEO Halaman
-                    </h5>
-                    <div class="mb-4">
+                    <div class="mb-5">
                         <label class="form-label fs-7 fw-bold text-gray-800 required">Judul Halaman Web (Page Title)</label>
                         <input type="text" name="landing_page_title" class="form-control form-control-solid form-control-sm"
-                               placeholder="Judul Landing Page..." value="{{ $config['landing_page_title'] ?? '' }}" required />
+                               placeholder="Contoh: Veltronic - Template Landing Page Terbaik" value="{{ $config['landing_page_title'] ?? '' }}" required />
                     </div>
-
-                    <div class="mb-4">
-                        <label class="form-label fs-7 fw-bold text-gray-800">Meta Deskripsi</label>
-                        <textarea name="landing_meta_description" rows="2" class="form-control form-control-solid form-control-sm"
-                                  placeholder="Deskripsi ringkas untuk mesin pencari...">{{ $config['landing_meta_description'] ?? '' }}</textarea>
-                    </div>
-
                     <div class="mb-5">
-                        <label class="form-label fs-7 fw-bold text-gray-800">Meta Keywords</label>
-                        <input type="text" name="landing_meta_keywords" class="form-control form-control-solid form-control-sm"
-                               placeholder="metronic, template, dashboard, laravel" value="{{ $config['landing_meta_keywords'] ?? '' }}" />
+                        <label class="form-label fs-7 fw-bold text-gray-800">Deskripsi Meta SEO</label>
+                        <textarea name="landing_meta_description" class="form-control form-control-solid form-control-sm" rows="3"
+                                  placeholder="Deskripsi singkat landing page untuk mesin pencari...">{{ $config['landing_meta_description'] ?? '' }}</textarea>
                     </div>
+                    <div class="mb-5">
+                        <label class="form-label fs-7 fw-bold text-gray-800">Kata Kunci Meta (Keywords)</label>
+                        <input type="text" name="landing_meta_keywords" class="form-control form-control-solid form-control-sm"
+                               placeholder="Contoh: bootstrap 5, metronic, admin template, landing page" value="{{ $config['landing_meta_keywords'] ?? '' }}" />
+                    </div>
+                    <!--end::Row Meta & SEO-->
+
+                    <div class="separator separator-dashed my-6"></div>
 
                     <!--begin::Toggle Clients-->
-                    <div class="d-flex align-items-center justify-content-between p-4 bg-light-subtle rounded-3 border border-gray-200">
-                        <div class="d-flex flex-column pe-2">
-                            <span class="fw-bold text-gray-800 fs-7">Tampilkan Logo Mitra & Klien di Hero</span>
-                            <span class="text-muted fs-8">Tampilkan deretan logo brand di bawah tombol hero</span>
+                    <div class="d-flex align-items-center justify-content-between p-4 rounded-3 bg-light">
+                        <div class="d-flex flex-column pe-4">
+                            <span class="fw-bold text-gray-800 fs-7">Tampilkan Logo Mitra / Klien (Clients Section)</span>
+                            <span class="text-muted fs-8">Aktifkan untuk menampilkan baris logo klien terpercaya di bawah banner hero</span>
                         </div>
                         <div class="form-check form-switch form-check-custom form-check-solid flex-shrink-0">
                             <input class="form-check-input" type="checkbox" name="landing_show_clients" value="1" 
@@ -128,7 +116,7 @@
                 <!--end::Card body-->
 
                 <!--begin::Card footer-->
-                <div class="card-footer d-flex justify-content-center justify-content-sm-end py-4 px-4 px-md-6 border-0">
+                <div class="card-footer d-flex justify-content-center justify-content-sm-end py-4 px-4 px-md-6">
                     <button type="submit" class="btn btn-primary btn-sm fw-bold px-6" id="kt_btn_save_hero">
                         <span class="indicator-label">
                             <i class="ki-outline ki-check fs-4 me-1"></i> Simpan Pengaturan Hero
@@ -150,20 +138,20 @@
         <!--begin::Card Logo-->
         <form id="kt_form_landing_logos" class="form" enctype="multipart/form-data">
             @csrf
-            <div class="card card-flush shadow-sm mb-6 border-0">
-                <div class="card-header pt-6 px-4 px-md-6 flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3">
-                    <div class="card-title">
-                        <i class="ki-outline ki-picture text-primary fs-2 me-2"></i>
+            <div class="card shadow-sm mb-6">
+                <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
+                    <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
                         <h3 class="fw-bolder text-gray-900 m-0 fs-4">Logo & Favicon Landing</h3>
+                        <span class="text-muted fs-7 mt-1">Aset logo header mode terang, mode gelap, dan favicon</span>
                     </div>
-                    <div class="card-toolbar">
-                        <button type="button" class="btn btn-icon btn-light-warning btn-sm" id="kt_btn_reset_landing_logos" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Reset Logo ke Default">
-                            <i class="ki-outline ki-arrows-loop fs-5"></i>
+                    <div class="card-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+                        <button type="button" class="btn btn-light-warning btn-sm fw-bold d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto px-3" id="kt_btn_reset_landing_logos" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Reset Logo ke Default">
+                            <i class="ki-outline ki-arrows-loop fs-5 me-1"></i> <span>Reset Logo</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="card-body pt-2 pb-6 px-4 px-md-6">
+                <div class="card-body py-6 px-4 px-md-6">
                     <!--begin::Logo Light Header-->
                     <div class="mb-6">
                         <label class="form-label fs-7 fw-bold text-gray-800">Logo Header Transparan / Terang</label>
@@ -202,7 +190,7 @@
                     <!--end::Favicon-->
                 </div>
 
-                <div class="card-footer d-flex justify-content-center justify-content-sm-end py-4 px-4 px-md-6 border-0">
+                <div class="card-footer d-flex justify-content-center justify-content-sm-end py-4 px-4 px-md-6">
                     <button type="submit" class="btn btn-primary btn-sm fw-bold px-6" id="kt_btn_save_logos">
                         <span class="indicator-label">
                             <i class="ki-outline ki-check fs-4 me-1"></i> Upload & Simpan Logo

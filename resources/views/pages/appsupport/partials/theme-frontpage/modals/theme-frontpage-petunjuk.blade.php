@@ -35,31 +35,27 @@
     <x-slot:box2>
         <ul class="text-gray-700 fs-7 mb-0 ps-0 list-unstyled d-flex flex-column gap-2">
             <li class="d-flex align-items-start">
-                <span class="bullet bullet-dot bg-info me-2 mt-2 flex-shrink-0"></span>
-                <div><strong>Branding & Hero Banner:</strong> Pengaturan logo terang/gelap, favicon, judul hero, teks highlight gradien, dan tombol CTA.</div>
+                <span class="bullet bullet-dot bg-primary me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Tab Khusus Landing Page:</strong> Meliputi <em>Branding & Hero</em>, <em>Menu Navigasi (Anchor)</em>, <em>Section Konten (On/Off & Urutan)</em>, <em>Footer & Sosial</em>, dan <em>Pratinjau Landing</em>.</div>
             </li>
             <li class="d-flex align-items-start">
-                <span class="bullet bullet-dot bg-info me-2 mt-2 flex-shrink-0"></span>
-                <div><strong>Menu Navigasi & Anchor:</strong> Pengelolaan tautan header yang terhubung langsung ke ID section (<code>#how-it-works</code>, <code>#pricing</code>, dll.).</div>
+                <span class="bullet bullet-dot bg-warning me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Tab Khusus Education Portal:</strong> Meliputi <em>Info & Identitas</em>, <em>Katalog Halaman (13 Rute Multipage)</em>, <em>Navigasi & Topbar</em>, <em>Footer & Kontak Kampus</em>, dan <em>Pratinjau Portal</em>.</div>
             </li>
             <li class="d-flex align-items-start">
-                <span class="bullet bullet-dot bg-info me-2 mt-2 flex-shrink-0"></span>
-                <div><strong>Manajemen Section:</strong> Mengaktifkan/menonaktifkan bagian konten, mengubah urutan kemunculan, dan membuat section kustom baru.</div>
-            </li>
-            <li class="d-flex align-items-start">
-                <span class="bullet bullet-dot bg-info me-2 mt-2 flex-shrink-0"></span>
-                <div><strong>Footer & Sosial:</strong> Pengaturan informasi kontak, legalitas, hak cipta, serta tautan ke media sosial resmi.</div>
+                <span class="bullet bullet-dot bg-success me-2 mt-2 flex-shrink-0"></span>
+                <div><strong>Pilihan Tema Terpusat:</strong> Tab <em>Pilihan Tema</em> selalu tersedia di posisi awal untuk berganti tema aktif secara instan tanpa reload halaman.</div>
             </li>
         </ul>
     </x-slot:box2>
 
     <x-slot:box3>
         <ol class="text-gray-700 fs-7 mb-0 ps-4 d-flex flex-column gap-2">
-            <li><strong>Mengganti Tema Aktif:</strong> Buka tab <em>Pilihan Tema</em> lalu klik tombol <em>Aktifkan</em> pada kartu Landing atau Education.</li>
-            <li><strong>Menyesuaikan Versi Landing:</strong> Pilih varian versi pada dropdown (misal: Versi V1) lalu klik <em>Terapkan Versi</em>.</li>
-            <li><strong>Mengatur Menu & Anchor:</strong> Tambahkan item menu baru pada tab <em>Menu Navigasi</em> dan tentukan target anchor (misal: <code>#pricing</code>).</li>
-            <li><strong>Menyusun Ulang Section:</strong> Gunakan tombol panah Naik/Turun pada tab <em>Section Konten</em> untuk mengubah urutan bagian di landing page.</li>
-            <li><strong>Menyimpan & Meninjau:</strong> Klik <em>Simpan</em> pada masing-masing form, lalu buka tab <em>Pratinjau</em> untuk melihat hasilnya secara realtime.</li>
+            <li><strong>Mengganti Tema:</strong> Buka tab <em>Pilihan Tema</em> lalu klik <em>Aktifkan</em> pada kartu tema pilihan Anda (Landing atau Education). Tab konfigurasi akan berganti secara realtime.</li>
+            <li><strong>Konfigurasi Landing Page:</strong> Atur banner hero, menu anchor, susunan section, serta footer promosi melalui tab-tab Landing.</li>
+            <li><strong>Konfigurasi Education Portal:</strong> Kelola profil universitas, direktori 13 rute halaman akademik, preferensi topbar intake, serta footer kampus melalui tab-tab Education.</li>
+            <li><strong>Menyimpan Perubahan:</strong> Klik tombol <em>Simpan</em> di setiap form untuk memperbarui konfigurasi seketika dengan feedback toast notifikasi.</li>
+            <li><strong>Uji Pratinjau Interaktif:</strong> Buka tab <em>Pratinjau</em> untuk menguji tampilan halaman langsung dalam mode Desktop, Tablet, atau Mobile.</li>
         </ol>
     </x-slot:box3>
 

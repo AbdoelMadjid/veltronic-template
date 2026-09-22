@@ -5,11 +5,6 @@
     <link href="{{ \App\Support\ThemeAsset::url('plugins/custom/datatables/datatables.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" type="text/css" />
     <!--end::Vendor Stylesheets-->
     <style>
-        /* Mencegah scrollbar horizontal pada browser */
-        #kt_app_content_container, .app-container {
-            overflow-x: hidden !important;
-            max-width: 100% !important;
-        }
         .chat-bubble-container {
             transition: background-color 0.3s ease;
             max-width: 100%;
@@ -70,13 +65,13 @@
     <!--begin::Content-->
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
-        <div id="kt_app_content_container" class="app-container container-fluid">
+        <div id="kt_app_content_container" class="app-container container-xxl">
             <!--begin::Layout-->
-            <div class="d-flex flex-column flex-lg-row align-items-lg-stretch">
+            <div class="d-flex flex-column flex-lg-row">
                 <!--begin::Sidebar-->
-                <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0 d-flex flex-column">
+                <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0">
                     <!--begin::Contacts-->
-                    <div class="card card-flush h-lg-100 d-flex flex-column flex-grow-1">
+                    <div class="card card-flush">
                         <!--begin::Card header-->
                         <div class="card-header pt-7" id="kt_chat_contacts_header">
                             <!--begin::Form-->
@@ -96,13 +91,13 @@
                         </div>
                         <!--end::Card header-->
                         <!--begin::Card body-->
-                        <div class="card-body pt-5 d-flex flex-column flex-grow-1" id="kt_chat_contacts_body">
+                        <div class="card-body pt-5" id="kt_chat_contacts_body">
                             <!--begin::List-->
-                            <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto flex-grow-1" data-kt-scroll="true"
+                            <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true"
                                 data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
                                 data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_toolbar, #kt_app_toolbar, #kt_footer, #kt_app_footer, #kt_chat_contacts_header"
                                 data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_contacts_body"
-                                data-kt-scroll-offset="5px" id="chat_contacts_list" style="min-height: 480px;">
+                                data-kt-scroll-offset="5px" id="chat_contacts_list">
                                 <!-- Loading state -->
                                 <div class="d-flex align-items-center justify-content-center py-10" id="chat_contacts_loading">
                                     <div class="spinner-border spinner-border-sm text-primary me-2"></div>
@@ -117,9 +112,9 @@
                 </div>
                 <!--end::Sidebar-->
                 <!--begin::Content-->
-                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10 d-flex flex-column">
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10 min-w-0">
                     <!--begin::Messenger-->
-                    <div class="card card-flush h-lg-100 d-flex flex-column flex-grow-1" id="kt_chat_messenger">
+                    <div class="card" id="kt_chat_messenger">
                         <!--begin::Card header-->
                         <div class="card-header" id="kt_chat_messenger_header">
                             <!--begin::Title-->
@@ -155,7 +150,7 @@
                         </div>
                         <!--end::Card header-->
                         <!--begin::Card body-->
-                        <div class="card-body d-flex flex-column flex-grow-1" id="kt_chat_messenger_body">
+                        <div class="card-body" id="kt_chat_messenger_body">
                             <!--begin::Pinned Banner (if any)-->
                             <div class="p-3 bg-light-warning bg-opacity-75 rounded-3 border border-warning border-dashed mb-4 d-none align-items-center justify-content-between shadow-xs" id="chat_pinned_banner">
                                 <div class="d-flex align-items-center gap-3 overflow-hidden cursor-pointer flex-grow-1" id="chat_pinned_jump_btn" title="Klik untuk melompat ke pesan yang disematkan">
@@ -185,12 +180,12 @@
                             <!--end::Pinned Banner-->
 
                             <!--begin::Messages-->
-                            <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto flex-grow-1" data-kt-element="messages"
+                            <div class="scroll-y me-n5 pe-5" data-kt-element="messages"
                                 data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
                                 data-kt-scroll-max-height="auto"
                                 data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
                                 data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
-                                data-kt-scroll-offset="5px" id="chat_messages_scroll" style="min-height: 480px;">
+                                data-kt-scroll-offset="5px" id="chat_messages_scroll">
                                 <div id="chat_messages_thread" class="d-flex flex-column flex-grow-1">
                                     @if(empty($selectedUserId))
                                         <div class="d-flex flex-column align-items-center justify-content-center text-center p-8 my-auto" style="min-height: 380px;">

@@ -405,7 +405,7 @@ const KTAppCustomChat = (() => {
         const contactsContainer = document.getElementById('chat_contacts_list');
         if (!contactsContainer) return;
 
-        if (!silent) {
+        if (!silent && !contactsContainer.querySelector('.chat-contact-item')) {
             contactsContainer.innerHTML = `
                 <div class="d-flex align-items-center justify-content-center py-10" id="chat_contacts_loading">
                     <div class="spinner-border spinner-border-sm text-primary me-2"></div>
@@ -428,60 +428,81 @@ const KTAppCustomChat = (() => {
                 const contacts = data.contacts || [];
                 cachedContacts = contacts;
 
+                // Build signature of contact list to avoid unnecessary DOM rebuilding
+                const contactsSignature = JSON.stringify(contacts.map(c => ({
+                    id: c.id,
+                    unread: c.unread_count,
+                    status: c.presence?.status,
+                    lastText: c.last_message?.text,
+                    lastTime: c.last_message?.time
+                })));
+
+                const prevContactsHash = contactsContainer.getAttribute('data-contacts-hash');
+
                 if (contacts.length === 0) {
-                    contactsContainer.innerHTML = `
-                        <div class="text-center py-8 px-4 text-muted">
-                            <i class="ki-duotone ki-user fs-2tx text-gray-400 mb-2"><span class="path1"></span><span class="path2"></span></i>
-                            <div class="fs-8 fw-semibold">${searchQuery ? 'Pengguna tidak ditemukan' : 'Belum ada kontak'}</div>
-                        </div>
-                    `;
+                    if (prevContactsHash !== 'empty_' + searchQuery) {
+                        contactsContainer.setAttribute('data-contacts-hash', 'empty_' + searchQuery);
+                        contactsContainer.innerHTML = `
+                            <div class="text-center py-8 px-4 text-muted">
+                                <i class="ki-duotone ki-user fs-2tx text-gray-400 mb-2"><span class="path1"></span><span class="path2"></span></i>
+                                <div class="fs-8 fw-semibold">${searchQuery ? 'Pengguna tidak ditemukan' : 'Belum ada kontak'}</div>
+                            </div>
+                        `;
+                    }
                 } else {
-                    const activeChats = contacts.filter(c => Boolean(c.last_message));
-                    const otherContacts = contacts.filter(c => !c.last_message);
+                    if (prevContactsHash !== contactsSignature) {
+                        contactsContainer.setAttribute('data-contacts-hash', contactsSignature);
 
-                    let sectionsHtml = '';
+                        const activeChats = contacts.filter(c => Boolean(c.last_message));
+                        const otherContacts = contacts.filter(c => !c.last_message);
 
-                    // Section 1: Obrolan Aktif (Sudah / sedang chat)
-                    if (activeChats.length > 0) {
-                        sectionsHtml += `
-                            <div class="d-flex align-items-center justify-content-between px-2 pt-1 pb-2">
-                                <span class="text-uppercase fs-9 fw-bolder text-gray-600 tracking-wider d-flex align-items-center gap-1">
-                                    <i class="ki-duotone ki-messages fs-7 text-primary"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
-                                    Obrolan
-                                </span>
-                                <span class="badge badge-sm badge-light-primary fs-9 fw-bold">${activeChats.length}</span>
-                            </div>
-                            ${activeChats.map(c => renderContactItem(c, false)).join('')}
-                        `;
+                        let sectionsHtml = '';
+
+                        // Section 1: Obrolan Aktif (Sudah / sedang chat)
+                        if (activeChats.length > 0) {
+                            sectionsHtml += `
+                                <div class="d-flex align-items-center justify-content-between px-2 pt-1 pb-2">
+                                    <span class="text-uppercase fs-9 fw-bolder text-gray-600 tracking-wider d-flex align-items-center gap-1">
+                                        <i class="ki-duotone ki-messages fs-7 text-primary"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                        Obrolan
+                                    </span>
+                                    <span class="badge badge-sm badge-light-primary fs-9 fw-bold">${activeChats.length}</span>
+                                </div>
+                                ${activeChats.map(c => renderContactItem(c, false)).join('')}
+                            `;
+                        }
+
+                        // Section 2: Kontak Lainnya (Belum pernah chat)
+                        if (otherContacts.length > 0) {
+                            sectionsHtml += `
+                                <div class="d-flex align-items-center justify-content-between px-2 ${activeChats.length > 0 ? 'pt-4' : 'pt-1'} pb-2">
+                                    <span class="text-uppercase fs-9 fw-bolder text-gray-600 tracking-wider d-flex align-items-center gap-1">
+                                        <i class="ki-duotone ki-profile-user fs-7 text-gray-500"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                        Kontak Lainnya
+                                    </span>
+                                    <span class="badge badge-sm badge-light fs-9 fw-bold text-gray-600">${otherContacts.length}</span>
+                                </div>
+                                ${otherContacts.map(c => renderContactItem(c, true)).join('')}
+                            `;
+                        }
+
+                        contactsContainer.innerHTML = sectionsHtml;
                     }
-
-                    // Section 2: Kontak Lainnya (Belum pernah chat)
-                    if (otherContacts.length > 0) {
-                        sectionsHtml += `
-                            <div class="d-flex align-items-center justify-content-between px-2 ${activeChats.length > 0 ? 'pt-4' : 'pt-1'} pb-2">
-                                <span class="text-uppercase fs-9 fw-bolder text-gray-600 tracking-wider d-flex align-items-center gap-1">
-                                    <i class="ki-duotone ki-profile-user fs-7 text-gray-500"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                                    Kontak Lainnya
-                                </span>
-                                <span class="badge badge-sm badge-light fs-9 fw-bold text-gray-600">${otherContacts.length}</span>
-                            </div>
-                            ${otherContacts.map(c => renderContactItem(c, true)).join('')}
-                        `;
-                    }
-
-                    contactsContainer.innerHTML = sectionsHtml;
                 }
 
-                // Determine target to select
-                let targetToSelect = activeUserId;
-                if (!targetToSelect) {
-                    targetToSelect = autoSelectUserId || getTargetInitialUserId();
-                }
+                // If silent polling, DO NOT trigger loadConversation!
+                if (!silent) {
+                    // Determine target to select
+                    let targetToSelect = activeUserId;
+                    if (!targetToSelect) {
+                        targetToSelect = autoSelectUserId || getTargetInitialUserId();
+                    }
 
-                if (targetToSelect) {
-                    loadConversation(targetToSelect);
-                } else if (!activeUserId) {
-                    renderEmptyChatState();
+                    if (targetToSelect) {
+                        loadConversation(targetToSelect, false);
+                    } else if (!activeUserId) {
+                        renderEmptyChatState();
+                    }
                 }
             }
         })
@@ -632,10 +653,12 @@ const KTAppCustomChat = (() => {
     // Load conversation with a specific user
     const loadConversation = (targetUserId, silent = false) => {
         if (!targetUserId) return;
+        
+        const isSwitchingUser = (activeUserId !== targetUserId);
         activeUserId = targetUserId;
 
         // Reset Reply & Edit states only when explicitly switching conversations
-        if (!silent) {
+        if (!silent || isSwitchingUser) {
             cancelReplyMode();
             cancelEditMode();
         }
@@ -660,14 +683,14 @@ const KTAppCustomChat = (() => {
             if (id === targetUserId) {
                 el.classList.add('bg-light-primary');
                 el.classList.remove('bg-hover-light');
-                const nameEl = el.querySelector('span.fs-5');
+                const nameEl = el.querySelector('span.fs-6');
                 if (nameEl) nameEl.classList.add('text-primary');
                 const badge = el.querySelector('.badge');
                 if (badge) badge.remove();
             } else {
                 el.classList.remove('bg-light-primary');
                 el.classList.add('bg-hover-light');
-                const nameEl = el.querySelector('span.fs-5');
+                const nameEl = el.querySelector('span.fs-6');
                 if (nameEl) nameEl.classList.remove('text-primary');
             }
         });
@@ -679,7 +702,8 @@ const KTAppCustomChat = (() => {
             return;
         }
 
-        if (!silent && threadContainer) {
+        // Show spinner ONLY when explicitly switching users
+        if (!silent && isSwitchingUser && threadContainer) {
             threadContainer.removeAttribute('data-chat-hash');
             threadContainer.innerHTML = `
                 <div class="d-flex align-items-center justify-content-center py-10">
@@ -698,6 +722,8 @@ const KTAppCustomChat = (() => {
         .then(res => res.json())
         .then(data => {
             if (data.status === 'success') {
+                if (activeUserId !== targetUserId) return; // User switched away
+
                 const targetUser = data.target_user;
                 const messages = data.messages || [];
                 const pinnedMessages = data.pinned_messages || [];
@@ -708,13 +734,13 @@ const KTAppCustomChat = (() => {
                 const triggerEmojiBtn = document.getElementById('chat_btn_trigger_emoji');
                 const triggerFileBtn = document.getElementById('chat_btn_trigger_file');
 
-                if (textInput) {
+                if (textInput && textInput.disabled) {
                     textInput.disabled = false;
                     textInput.placeholder = 'Ketik pesan Anda...';
                 }
-                if (sendBtn) sendBtn.disabled = false;
-                if (triggerEmojiBtn) triggerEmojiBtn.disabled = false;
-                if (triggerFileBtn) triggerFileBtn.disabled = false;
+                if (sendBtn && sendBtn.disabled && !isSending) sendBtn.disabled = false;
+                if (triggerEmojiBtn && triggerEmojiBtn.disabled) triggerEmojiBtn.disabled = false;
+                if (triggerFileBtn && triggerFileBtn.disabled) triggerFileBtn.disabled = false;
 
                 const elHeaderName = document.getElementById('chat_header_user_name');
                 const elHeaderStatus = document.getElementById('chat_header_user_status');
@@ -722,17 +748,23 @@ const KTAppCustomChat = (() => {
                 const elHeaderAvatar = document.getElementById('chat_header_avatar_container');
                 const btnViewProfile = document.getElementById('chat_btn_view_profile');
 
-                if (elHeaderName) {
+                if (elHeaderName && elHeaderName.textContent !== targetUser.name) {
                     elHeaderName.textContent = targetUser.name;
                     elHeaderName.setAttribute('data-user-id', targetUser.id);
                 }
-                if (elHeaderStatus) elHeaderStatus.textContent = targetUser.presence?.label || 'Active';
+                const newStatusLabel = targetUser.presence?.label || 'Active';
+                if (elHeaderStatus && elHeaderStatus.textContent !== newStatusLabel) {
+                    elHeaderStatus.textContent = newStatusLabel;
+                }
                 if (elHeaderDot) {
-                    elHeaderDot.className = `badge ${targetUser.presence?.badge_class || 'badge-success'} badge-circle w-10px h-10px me-1`;
+                    const newDotClass = `badge ${targetUser.presence?.badge_class || 'badge-success'} badge-circle w-10px h-10px me-1`;
+                    if (elHeaderDot.className !== newDotClass) {
+                        elHeaderDot.className = newDotClass;
+                    }
                     elHeaderDot.classList.remove('d-none');
                 }
 
-                if (elHeaderAvatar) {
+                if (elHeaderAvatar && elHeaderAvatar.getAttribute('data-user-id') !== String(targetUser.id)) {
                     elHeaderAvatar.innerHTML = buildAvatarHtml(targetUser, 'symbol-40px', true);
                     elHeaderAvatar.setAttribute('data-user-id', targetUser.id);
                 }
@@ -745,31 +777,29 @@ const KTAppCustomChat = (() => {
                 // 2. Update Pinned Messages Banner
                 updatePinnedBanner(pinnedMessages);
 
-                // 3. Render Messages Thread Smartly
+                // 3. Render Messages Thread Smartly & Reconcile Smoothly (Zero-Flicker)
                 if (threadContainer) {
                     const newContentHash = JSON.stringify({
                         userId: targetUserId,
-                        ids: messages.map(m => m.id),
-                        messages: messages.map(m => `${m.id}_${m.is_edited ? 1 : 0}_${m.is_pinned ? 1 : 0}_${m.reactions ? JSON.stringify(m.reactions) : ''}`),
+                        messages: messages.map(m => ({
+                            id: m.id,
+                            msg: m.message,
+                            edited: m.is_edited ? 1 : 0,
+                            pinned: m.is_pinned ? 1 : 0,
+                            reactions: m.reactions || []
+                        })),
                         pins: pinnedMessages.map(p => p.id)
                     });
 
                     const prevContentHash = threadContainer.getAttribute('data-chat-hash');
 
-                    // If silent polling and data hasn't changed, do not touch DOM or scroll
+                    // If silent polling and data hasn't changed, zero DOM mutation!
                     if (silent && prevContentHash === newContentHash) {
                         return;
                     }
 
-                    // Check whether user is near the bottom (within 80px) before re-rendering
-                    const isNearBottom = scrollContainer 
-                        ? ((scrollContainer.scrollHeight - scrollContainer.scrollTop - scrollContainer.clientHeight) <= 80) 
-                        : true;
-                    const prevScrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
-
-                    threadContainer.setAttribute('data-chat-hash', newContentHash);
-
                     if (messages.length === 0) {
+                        threadContainer.setAttribute('data-chat-hash', newContentHash);
                         threadContainer.innerHTML = `
                             <div class="text-center py-10 my-auto text-muted">
                                 <i class="ki-duotone ki-message-text-2 fs-3tx text-gray-300 mb-2"><span class="path1"></span><span class="path2"></span></i>
@@ -777,20 +807,100 @@ const KTAppCustomChat = (() => {
                                 <div class="fs-7 text-muted">Ketik pesan di bawah dan tekan Send untuk memulai obrolan.</div>
                             </div>
                         `;
-                    } else {
-                        threadContainer.innerHTML = messages.map(renderMessageBubble).join('');
+                        return;
+                    }
 
-                        if (!silent) {
-                            // User clicked/opened conversation -> Instant scroll to bottom
-                            scrollToBottom(false);
-                        } else if (isNearBottom) {
-                            // User is already at bottom watching new messages -> Smooth follow to bottom
-                            scrollToBottom(true);
-                        } else {
-                            // User has scrolled up to read chat history -> Preserve scroll position exactly!
-                            if (scrollContainer) {
-                                scrollContainer.scrollTop = prevScrollTop;
+                    const isInitialOrEmpty = !prevContentHash || threadContainer.querySelector('.ki-message-text-2') || threadContainer.children.length === 0 || isSwitchingUser;
+
+                    if (isInitialOrEmpty) {
+                        // Clean full render on initial load or user switch
+                        threadContainer.setAttribute('data-chat-hash', newContentHash);
+                        threadContainer.innerHTML = messages.map(renderMessageBubble).join('');
+                        scrollToBottom(false);
+                    } else {
+                        // INCREMENTAL RECONCILIATION - ZERO FLICKER!
+                        threadContainer.setAttribute('data-chat-hash', newContentHash);
+
+                        const existingBubbles = Array.from(threadContainer.querySelectorAll('.chat-bubble-container'));
+                        const existingBubbleMap = new Map();
+                        existingBubbles.forEach(b => {
+                            const id = parseInt(b.getAttribute('data-message-id'), 10);
+                            if (id) existingBubbleMap.set(id, b);
+                        });
+
+                        const incomingIds = new Set(messages.map(m => m.id));
+
+                        // 1. Remove bubbles that were deleted
+                        existingBubbleMap.forEach((bubbleEl, id) => {
+                            if (!incomingIds.has(id)) {
+                                bubbleEl.remove();
                             }
+                        });
+
+                        const isNearBottom = scrollContainer 
+                            ? ((scrollContainer.scrollHeight - scrollContainer.scrollTop - scrollContainer.clientHeight) <= 100) 
+                            : true;
+                        let hasNewMessages = false;
+
+                        // 2. Append new bubbles or update modified existing bubbles
+                        messages.forEach(msg => {
+                            const existingBubble = existingBubbleMap.get(msg.id);
+
+                            if (!existingBubble) {
+                                // New message -> Append to bottom without touching other bubbles
+                                threadContainer.insertAdjacentHTML('beforeend', renderMessageBubble(msg));
+                                hasNewMessages = true;
+                            } else {
+                                // Update body text if edited
+                                const bodyText = existingBubble.querySelector('.message-body-text');
+                                if (bodyText && bodyText.textContent !== msg.message && msg.message && msg.message !== '[Foto Lampiran]' && msg.message !== '[Berkas Lampiran]') {
+                                    bodyText.textContent = msg.message;
+                                }
+
+                                // Update (diedit) badge
+                                const editedBadge = existingBubble.querySelector('span[title="Pesan telah diedit"]');
+                                if (msg.is_edited && !editedBadge) {
+                                    const pEl = existingBubble.querySelector('[data-kt-element="message-text"]');
+                                    if (pEl) pEl.insertAdjacentHTML('beforeend', '<span class="text-muted fs-8 fst-italic ms-1" title="Pesan telah diedit">(diedit)</span>');
+                                } else if (!msg.is_edited && editedBadge) {
+                                    editedBadge.remove();
+                                }
+
+                                // Update Pin icon
+                                const pinIcon = existingBubble.querySelector('i.ki-pin');
+                                if (msg.is_pinned && !pinIcon) {
+                                    const timeParent = existingBubble.querySelector('.text-muted.fs-7');
+                                    if (timeParent) {
+                                        timeParent.insertAdjacentHTML('afterend', '<i class="ki-duotone ki-pin fs-6 text-warning ms-1" title="Pesan Disematkan"><span class="path1"></span><span class="path2"></span></i>');
+                                    }
+                                } else if (!msg.is_pinned && pinIcon) {
+                                    pinIcon.remove();
+                                }
+
+                                // Update reactions without flashing
+                                const col = existingBubble.querySelector('.d-flex.flex-column');
+                                if (col) {
+                                    let existingReactionsEl = col.querySelector('.d-flex.flex-wrap.align-items-center.mt-1');
+                                    const newBadgesHtml = renderReactionsBadges(msg.reactions, msg.id);
+                                    if (existingReactionsEl) {
+                                        if (newBadgesHtml) {
+                                            const tempDiv = document.createElement('div');
+                                            tempDiv.innerHTML = newBadgesHtml;
+                                            if (existingReactionsEl.innerHTML.trim() !== tempDiv.firstElementChild.innerHTML.trim()) {
+                                                existingReactionsEl.replaceWith(tempDiv.firstElementChild);
+                                            }
+                                        } else {
+                                            existingReactionsEl.remove();
+                                        }
+                                    } else if (newBadgesHtml) {
+                                        col.insertAdjacentHTML('beforeend', newBadgesHtml);
+                                    }
+                                }
+                            }
+                        });
+
+                        if (hasNewMessages && isNearBottom) {
+                            scrollToBottom(true);
                         }
                     }
                 }

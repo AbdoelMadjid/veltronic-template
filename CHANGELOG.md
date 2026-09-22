@@ -32,6 +32,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Penambahan tombol *Ruang Chat* solid ber-badge unread counter realtime pada bar navigasi tab profil pengguna.
 
 ### Fixed & Enhanced
+- **Eliminasi Total Kedipan Konten Chat (*Zero-Flicker Incremental Reconciliation*)**:
+  - Mengganti perombakan total DOM thread pesan (`innerHTML`) dengan mekanisme rekonsiliasi inkremental: pesan baru ditambahkan di bagian bawah tanpa merusak pesan lama, pesan yang diedit diperbarui langsung pada elemen yang bersangkutan, pembaruan reaksi emoji secara selektif, dan retensi posisi scroll pengguna saat membaca riwayat obrolan.
+  - Penambahan tanda tangan data (*data signature hashing*) pada daftar kontak dan thread pesan untuk mencegah rendering ulang DOM berulang saat proses polling latar belakang berlangsung.
+- **Penyelarasan Layout Container & Eliminasi Scrollbar Horizontal Browser**:
+  - Mengubah kontainer dari `container-fluid` menjadi `container-xxl` dan kontainer percakapan dari `card-flush` menjadi `card` standar Metronic (`min-w-0`), menyelaraskan struktur layout dengan modul `apps/chat/private` sehingga menghilangkan scrollbar horizontal pada jendela browser.
 - **Hover Button Ikon Dashboard**: Memperbaiki hilangnya ikon pada tombol status pertemanan (`btn-light-*`) di widget sidebar kehadiran dashboard saat di-hover.
 - **Pemicu Modal Profil Publik di Chat**: Mengaktifkan tombol lihat profil dan avatar pada header chat agar dapat membuka modal profil publik pengguna terkait.
 

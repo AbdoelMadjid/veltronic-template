@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 class UserPresenceService
 {
     const CACHE_PREFIX = 'veltronic_user_presence_';
-    const ONLINE_TIMEOUT_SECONDS = 180; // 3 menit
+    const ONLINE_TIMEOUT_SECONDS = 300; // 5 menit
     const IDLE_TIMEOUT_SECONDS = 600;   // 10 menit
     const CACHE_TTL_SECONDS = 900;      // 15 menit
 
@@ -129,6 +129,12 @@ class UserPresenceService
             default => 'bg-secondary',
         };
 
+        $badgeTextClass = match ($status) {
+            'online' => 'text-white',
+            'idle' => 'text-white',
+            default => 'text-gray-800',
+        };
+
         $label = match ($status) {
             'online' => 'Online',
             'idle' => 'Idle',
@@ -140,6 +146,7 @@ class UserPresenceService
         return [
             'status' => $status,
             'badge_class' => $badgeClass,
+            'badge_text_class' => $badgeTextClass,
             'label' => $label,
             'last_seen_at' => $lastSeen ? $lastSeen->toDateTimeString() : null,
             'last_seen_human' => ($status === 'online') ? 'Aktif sekarang' : $lastSeenHuman,
@@ -158,6 +165,14 @@ class UserPresenceService
     {
         $currentUserId = is_object($currentUser) ? $currentUser->id : ($currentUser ? (int) $currentUser : auth()->id());
 
+        // Load all friendships involving current user in one query
+        $friendships = collect();
+        if ($currentUserId) {
+            $friendships = \App\Models\UserManagement\UserFriendship::where('user_id', $currentUserId)
+                ->orWhere('friend_id', $currentUserId)
+                ->get();
+        }
+
         // Get all active users with roles
         $usersQuery = User::with(['roles', 'settingRecord'])
             ->where('id', '!=', $currentUserId ?: 0)
@@ -169,7 +184,7 @@ class UserPresenceService
         $idleCount = 0;
         $offlineCount = 0;
 
-        $decoratedUsers = $users->map(function ($u) use (&$onlineCount, &$idleCount, &$offlineCount) {
+        $decoratedUsers = $users->map(function ($u) use (&$onlineCount, &$idleCount, &$offlineCount, $currentUserId, $friendships) {
             $presence = self::getUserPresence($u);
 
             if ($presence['status'] === 'online') {
@@ -190,6 +205,26 @@ class UserPresenceService
                 default => 'badge-light-info text-info',
             };
 
+            // Resolve real friendship relation
+            $friendship = $friendships->first(function ($f) use ($currentUserId, $u) {
+                return ($f->user_id == $currentUserId && $f->friend_id == $u->id) ||
+                       ($f->user_id == $u->id && $f->friend_id == $currentUserId);
+            });
+
+            $friendshipStatus = 'none'; // 'none' | 'pending_sent' | 'pending_received' | 'accepted' | 'declined'
+            $friendshipId = null;
+
+            if ($friendship) {
+                $friendshipId = $friendship->id;
+                if ($friendship->status === 'accepted') {
+                    $friendshipStatus = 'accepted';
+                } elseif ($friendship->status === 'pending') {
+                    $friendshipStatus = ($friendship->user_id == $currentUserId) ? 'pending_sent' : 'pending_received';
+                } else {
+                    $friendshipStatus = 'declined';
+                }
+            }
+
             return [
                 'id' => $u->id,
                 'name' => $u->name,
@@ -205,9 +240,10 @@ class UserPresenceService
                 'label' => $presence['label'],
                 'last_seen_human' => $presence['last_seen_human'],
                 'sort_weight' => $sortWeight,
-                // Social connection placeholders (Sosmed ready)
-                'is_friend' => false,
-                'friend_request_sent' => false,
+                // Real friendship properties
+                'is_friend' => ($friendshipStatus === 'accepted'),
+                'friendship_status' => $friendshipStatus,
+                'friendship_id' => $friendshipId,
             ];
         });
 

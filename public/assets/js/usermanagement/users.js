@@ -670,6 +670,19 @@ document.addEventListener('DOMContentLoaded', function () {
                         dataTable.ajax.reload(null, false);
                     }
                     fetchCards();
+
+                    // Realtime sync to Navbar / Topbar / Lockscreen if current auth user was updated
+                    if (data.data && (data.data.is_auth_user || (routes.auth_id && String(formIdEl.value) === String(routes.auth_id)))) {
+                        const navImg = document.getElementById('header_navbar_user_avatar');
+                        if (navImg && data.data.avatar_url) {
+                            navImg.style.backgroundImage = `url('${data.data.avatar_url}')`;
+                        }
+                        const topbarName = document.getElementById('header_navbar_user_name');
+                        const topbarEmail = document.getElementById('header_navbar_user_email');
+                        if (topbarName && data.data.name) topbarName.textContent = data.data.name;
+                        if (topbarEmail && data.data.email) topbarEmail.textContent = data.data.email;
+                        window.dispatchEvent(new CustomEvent('kt.user.updated', { detail: data.data }));
+                    }
                 } else if (response.status === 422 && data.errors) {
                     showErrors(data.errors);
                     if (typeof Notify !== 'undefined') {

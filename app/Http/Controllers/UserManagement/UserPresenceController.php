@@ -73,7 +73,7 @@ class UserPresenceController extends Controller
     }
 
     /**
-     * Social interaction handler: Send / Cancel Friend Request (Sosmed Ready).
+     * Social interaction handler: Send / Accept / Cancel Friend Request.
      */
     public function toggleFriendRequest(Request $request, int $targetUserId): JsonResponse
     {
@@ -87,10 +87,108 @@ class UserPresenceController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Pengguna tidak ditemukan.'], 404);
         }
 
-        // Return pleasant social confirmation
+        // Check existing friendship
+        $friendship = \App\Models\UserManagement\UserFriendship::betweenUsers($currentUser->id, $targetUserId)->first();
+
+        if (!$friendship) {
+            // Send new friend request
+            $friendship = \App\Models\UserManagement\UserFriendship::create([
+                'user_id' => $currentUser->id,
+                'friend_id' => $targetUserId,
+                'status' => 'pending',
+            ]);
+
+            // Dispatch notification to receiver
+            \App\Services\AppSupport\AppNotificationService::send([
+                'user_id' => $targetUserId,
+                'category' => 'friendship',
+                'type' => 'friend_request',
+                'title' => 'Ajakan Pertemanan Baru',
+                'message' => "{$currentUser->name} ingin berteman dengan Anda.",
+                'icon' => 'ki-user-tick',
+                'color' => 'primary',
+                'data' => [
+                    'friendship_id' => $friendship->id,
+                    'sender_id' => $currentUser->id,
+                    'sender_name' => $currentUser->name,
+                    'sender_avatar' => $currentUser->avatar_url,
+                ],
+                'action_state' => 'pending',
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'action' => 'requested',
+                'friendship_status' => 'pending_sent',
+                'message' => 'Permintaan pertemanan berhasil dikirim ke ' . $targetUser->name . '!',
+                'target_id' => $targetUserId,
+            ]);
+        }
+
+        if ($friendship->status === 'pending') {
+            if ($friendship->user_id === $currentUser->id) {
+                // Cancel sent request
+                $friendship->delete();
+
+                return response()->json([
+                    'status' => 'success',
+                    'action' => 'cancelled',
+                    'friendship_status' => 'none',
+                    'message' => 'Permintaan pertemanan telah dibatalkan.',
+                    'target_id' => $targetUserId,
+                ]);
+            } else {
+                // Accept incoming request
+                $friendship->update(['status' => 'accepted']);
+
+                // Notify sender that request was accepted
+                \App\Services\AppSupport\AppNotificationService::send([
+                    'user_id' => $friendship->user_id,
+                    'category' => 'friendship',
+                    'type' => 'friend_accepted',
+                    'title' => 'Permintaan Pertemanan Diterima',
+                    'message' => "{$currentUser->name} telah menerima permintaan pertemanan Anda.",
+                    'icon' => 'ki-user-tick',
+                    'color' => 'success',
+                    'data' => [
+                        'friend_id' => $currentUser->id,
+                        'friend_name' => $currentUser->name,
+                    ],
+                    'action_state' => 'accepted',
+                ]);
+
+                return response()->json([
+                    'status' => 'success',
+                    'action' => 'accepted',
+                    'friendship_status' => 'accepted',
+                    'message' => 'Sekarang Anda telah berteman dengan ' . $targetUser->name . '!',
+                    'target_id' => $targetUserId,
+                ]);
+            }
+        }
+
+        if ($friendship->status === 'accepted') {
+            // Already friends
+            return response()->json([
+                'status' => 'success',
+                'action' => 'already_friends',
+                'friendship_status' => 'accepted',
+                'message' => 'Anda sudah berteman dengan ' . $targetUser->name . '.',
+                'target_id' => $targetUserId,
+            ]);
+        }
+
+        // If previously declined, re-send request
+        $friendship->update([
+            'user_id' => $currentUser->id,
+            'friend_id' => $targetUserId,
+            'status' => 'pending',
+        ]);
+
         return response()->json([
             'status' => 'success',
             'action' => 'requested',
+            'friendship_status' => 'pending_sent',
             'message' => 'Permintaan pertemanan berhasil dikirim ke ' . $targetUser->name . '!',
             'target_id' => $targetUserId,
         ]);
@@ -101,6 +199,7 @@ class UserPresenceController extends Controller
      */
     public function getPublicProfile(Request $request, int $targetUserId): JsonResponse
     {
+        $currentUser = $request->user();
         $targetUser = User::with(['roles', 'detail', 'settingRecord'])->find($targetUserId);
         if (!$targetUser) {
             return response()->json(['status' => 'error', 'message' => 'Pengguna tidak ditemukan.'], 404);
@@ -110,6 +209,23 @@ class UserPresenceController extends Controller
         $roles = $targetUser->roles->pluck('name')->map(fn($r) => strtoupper($r))->toArray();
         if (empty($roles)) {
             $roles = ['PENGGUNA'];
+        }
+
+        // Resolve friendship status
+        $friendshipStatus = 'none';
+        $friendshipId = null;
+        if ($currentUser && $currentUser->id !== $targetUserId) {
+            $f = \App\Models\UserManagement\UserFriendship::betweenUsers($currentUser->id, $targetUserId)->first();
+            if ($f) {
+                $friendshipId = $f->id;
+                if ($f->status === 'accepted') {
+                    $friendshipStatus = 'accepted';
+                } elseif ($f->status === 'pending') {
+                    $friendshipStatus = ($f->user_id === $currentUser->id) ? 'pending_sent' : 'pending_received';
+                } else {
+                    $friendshipStatus = 'declined';
+                }
+            }
         }
 
         $coverBgUrl = $targetUser->cover_bg_url ?: asset('assets/img-temp/1200x800/img1.jpg');
@@ -140,6 +256,9 @@ class UserPresenceController extends Controller
                 'points' => (int) ($targetUser->points ?? 0),
                 'joined_at' => $targetUser->created_at ? $targetUser->created_at->translatedFormat('d F Y') : '-',
                 'presence' => $presence,
+                'friendship_status' => $friendshipStatus,
+                'friendship_id' => $friendshipId,
+                'is_friend' => ($friendshipStatus === 'accepted'),
             ],
         ]);
     }

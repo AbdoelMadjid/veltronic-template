@@ -180,6 +180,7 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ asset('assets/js/custom/notification-helper.js') }}"></script>
     <script src="{{ asset('assets/js/custom/lock-screen.js') }}"></script>
     <script src="{{ asset('assets/js/custom/user-presence.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/app-notifications.js') }}"></script>
     <script src="{{ asset('assets/js/custom/shortcuts.js') }}"></script>
     <script src="{{ asset('assets/js/custom/tooltip-helper.js') }}"></script>
     @include('partials._notification')

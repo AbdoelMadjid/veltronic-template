@@ -5,6 +5,36 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.43.0] - 2026-09-22
+
+### Added
+- **Sistem Pesan & Private Chat Realtime Interaktif Komprehensif (`/profil/profil-pengguna/chat`)**:
+  - **Interaksi Percakapan Lengkap (Reply, Edit, Forward, Pin, Delete, & Reactions)**:
+    - **Balas Pesan (*Reply*)**: Membalas pesan spesifik dengan kutipan balon teks dan thumbnail pratinjau foto jika pesan asli menyertakan lampiran.
+    - **Edit Pesan (*Edit*)**: Mengubah pesan teks yang telah dikirim dengan penanda `(diedit)` dan sinkronisasi realtime.
+    - **Teruskan Pesan (*Forward*)**: Meneruskan pesan ke multi-kontak sekaligus dengan modal pemilihan pengguna interaktif dan counter penerima.
+    - **Sematkan Pesan (*Pin*)**: Menyematkan pesan penting ke banner atas percakapan dilengkapi tombol lompat instan (*jump to message*) dan thumbnail lampiran.
+    - **Hapus Pesan (*Delete*)**: Menghapus pesan dengan konfirmasi modal SweetAlert2.
+    - **Reaksi Emoji (*Emoji Reactions*)**: Reaksi cepat emoji (👍, ❤️, 😂, 😮, 😢, 🙏, 🔥, 🎉) dengan aturan 1 reaksi per pengguna (otomatis mengganti jika memilih emoji berbeda, toggle off jika memilih emoji sama) dan badge counter realtime.
+    - **Sisipkan Emoticon (*Emoticon Picker*)**: Popover picker pemilihan puluhan emoji populer yang dapat disisipkan langsung ke input textarea.
+    - **Lampiran Berkas & Foto (*Attachment*)**: Pratinjau gambar instan sebelum dikirim, dukungan berkas/dokumen, dan modal pratinjau foto resolusi penuh (*Image Preview Modal*) dengan tombol unduh.
+  - **Kategorisasi Kontak Sidebar & Migrasi Otomatis Realtime**:
+    - Membagi daftar kontak menjadi 2 seksi terstruktur: **Obrolan** (percakapan yang sedang/sudah aktif) dan **Kontak Lainnya** (seluruh daftar rekan pengguna lainnya).
+    - Kontak baru yang dikirimi pesan akan otomatis bermigrasi ke seksi *Obrolan* secara instan tanpa reload halaman.
+  - **Penggabungan Notifikasi Chat Cerdas (*Chat Notification Aggregation*)**:
+    - Pesan masuk dari pengirim yang sama secara otomatis disatukan ke dalam 1 kartu notifikasi terpadu di topbar dengan pesan ringkasan (*"X Pesan Baru dari [Nama]"*), mencegah banjir notifikasi.
+  - **Tampilan Awal & Empty State Elegan**:
+    - Pembukaan awal `/profil/profil-pengguna/chat` menampilkan placeholder panduan ramah pengguna (*"Pilih Pengguna untuk Memulai Percakapan"*), mengunci input dan tombol kirim hingga kontak dipilih.
+  - **Penguncian Tinggi Kartu Sejajar & Zero Horizontal Scroll**:
+    - Mengunci tinggi kartu kontak dan kartu messenger (`h-lg-100`, `align-items-lg-stretch`, `mt-auto`) sehingga bagian bawah formulir selalu sejajar presisi dan tidak pernah meloncat / naik-turun.
+    - Menghilangkan scrollbar horizontal semu pada browser dan navigasi tab profil pengguna (`/profil/profil-pengguna`).
+  - **Aksi Cepat Ruang Chat di Tab Profil**:
+    - Penambahan tombol *Ruang Chat* solid ber-badge unread counter realtime pada bar navigasi tab profil pengguna.
+
+### Fixed & Enhanced
+- **Hover Button Ikon Dashboard**: Memperbaiki hilangnya ikon pada tombol status pertemanan (`btn-light-*`) di widget sidebar kehadiran dashboard saat di-hover.
+- **Pemicu Modal Profil Publik di Chat**: Mengaktifkan tombol lihat profil dan avatar pada header chat agar dapat membuka modal profil publik pengguna terkait.
+
 ## [v1.42.0] - 2026-09-22
 
 ### Added

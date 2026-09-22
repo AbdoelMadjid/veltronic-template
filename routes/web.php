@@ -194,6 +194,14 @@ Route::middleware('auth')->group(function () {
         Route::get('public-profile/{user}', [\App\Http\Controllers\UserManagement\UserPresenceController::class, 'getPublicProfile'])->name('public-profile');
         Route::post('friend-request/{user}', [\App\Http\Controllers\UserManagement\UserPresenceController::class, 'toggleFriendRequest'])->name('friend-request');
     });
+
+    // Universal App Notifications (Friendship, Security, Account, Chat, System)
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('feed', [\App\Http\Controllers\AppSupport\NotificationController::class, 'feed'])->name('feed');
+        Route::post('mark-all-read', [\App\Http\Controllers\AppSupport\NotificationController::class, 'markAllAsRead'])->name('mark-all-read');
+        Route::post('{id}/read', [\App\Http\Controllers\AppSupport\NotificationController::class, 'markAsRead'])->name('mark-read');
+        Route::post('{id}/action', [\App\Http\Controllers\AppSupport\NotificationController::class, 'handleAction'])->name('action');
+    });
 });
 
 

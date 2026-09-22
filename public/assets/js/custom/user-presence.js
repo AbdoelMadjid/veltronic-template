@@ -9,7 +9,7 @@
 
 const KTUserPresence = (function () {
     // Configuration
-    const IDLE_TIMEOUT_MS = 3 * 60 * 1000; // 3 minutes without interaction -> Idle
+    const IDLE_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes without interaction -> Idle
     const HEARTBEAT_INTERVAL_MS = 45 * 1000; // Send heartbeat every 45s
     const DASHBOARD_POLL_INTERVAL_MS = 15 * 1000; // Refresh widget every 15s when on dashboard
 
@@ -70,10 +70,9 @@ const KTUserPresence = (function () {
     const checkIdleState = () => {
         const now = Date.now();
         const timeSinceLastActivity = now - lastActivityTime;
-        const isTabHidden = document.visibilityState === 'hidden';
         const isScreenLocked = typeof KTLockScreen !== 'undefined' && KTLockScreen.isLocked ? KTLockScreen.isLocked() : false;
 
-        if (currentStatus === 'online' && (timeSinceLastActivity >= IDLE_TIMEOUT_MS || isTabHidden || isScreenLocked)) {
+        if (currentStatus === 'online' && (timeSinceLastActivity >= IDLE_TIMEOUT_MS || isScreenLocked)) {
             currentStatus = 'idle';
             sendHeartbeat('idle');
             updateSelfIndicator('idle');
@@ -164,7 +163,6 @@ const KTUserPresence = (function () {
     };
 
     // Setup Event Listeners for User Activity
-    let hiddenGraceTimer = null;
     const initActivityListeners = () => {
         const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
         let throttleTimer = null;
@@ -180,24 +178,10 @@ const KTUserPresence = (function () {
             }, { passive: true });
         });
 
-        // Tab visibility change with 60-second grace period
+        // Tab visibility change (kembali aktif saat tab dibuka)
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
-                if (hiddenGraceTimer) {
-                    clearTimeout(hiddenGraceTimer);
-                    hiddenGraceTimer = null;
-                }
                 recordUserActivity();
-            } else {
-                // Berikan toleransi 60 detik sebelum beralih ke mode idle saat tab ditinggal
-                if (hiddenGraceTimer) clearTimeout(hiddenGraceTimer);
-                hiddenGraceTimer = setTimeout(() => {
-                    if (document.visibilityState === 'hidden' && currentStatus === 'online') {
-                        currentStatus = 'idle';
-                        sendHeartbeat('idle');
-                        updateSelfIndicator('idle');
-                    }
-                }, 60 * 1000);
             }
         });
 
@@ -241,9 +225,173 @@ const KTUserPresence = (function () {
                 updateDashboardWidget(true);
             });
         }
+    };
 
-        // 3. Social Interaction: Friend Request Button
-        widgetContainer.addEventListener('click', (e) => {
+    // Public Profile Modal Loader (Global & Accessible by all roles across all pages)
+    const openPublicProfile = (targetId) => {
+        if (!targetId) return;
+
+        const modalEl = document.getElementById('kt_modal_public_user_profile');
+        if (!modalEl) return;
+
+        // Fetch public profile data
+        fetch(`/user-presence/public-profile/${targetId}`, {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success' && data.user) {
+                const u = data.user;
+
+                // Cover styling
+                const coverBg = document.getElementById('pub_user_cover_bg');
+                const coverOverlay = document.getElementById('pub_user_cover_overlay');
+                if (coverBg) {
+                    coverBg.style.backgroundImage = `url('${u.cover_bg_url}')`;
+                    coverBg.style.backgroundPosition = `center ${u.cover_position_y}%`;
+                }
+                if (coverOverlay) {
+                    coverOverlay.style.backgroundColor = u.cover_overlay_color;
+                    coverOverlay.style.opacity = u.cover_opacity;
+                }
+
+                // Avatar
+                const avatarImg = document.getElementById('pub_user_avatar_img');
+                const avatarSymbol = document.getElementById('pub_user_symbol');
+                if (u.has_avatar && avatarImg) {
+                    avatarImg.classList.remove('d-none');
+                    avatarImg.style.backgroundImage = `url('${u.avatar_url}')`;
+                    if (u.avatar_style) {
+                        avatarImg.setAttribute('style', u.avatar_style);
+                    }
+                    if (avatarSymbol) avatarSymbol.classList.add('d-none');
+                } else {
+                    if (avatarImg) avatarImg.classList.add('d-none');
+                    if (avatarSymbol) {
+                        avatarSymbol.classList.remove('d-none');
+                        avatarSymbol.textContent = u.initial;
+                    }
+                }
+
+                // Presence dot on modal
+                const dot = document.getElementById('pub_user_presence_dot');
+                const presenceBadge = document.getElementById('pub_user_presence_badge');
+                if (dot && u.presence) {
+                    dot.className = `position-absolute bottom-0 end-0 w-16px h-16px rounded-circle ${u.presence.badge_class} border border-3 border-white shadow-xs`;
+                }
+                if (presenceBadge && u.presence) {
+                    const textClass = u.presence.badge_text_class || (u.presence.status === 'offline' ? 'text-gray-800' : 'text-white');
+                    presenceBadge.className = `badge ${u.presence.badge_class} ${textClass} fw-bold fs-8 px-3 py-1 shadow-xs rounded-pill`;
+                    presenceBadge.textContent = u.presence.label;
+                }
+
+                // Name, Email, Moto
+                const elName = document.getElementById('pub_user_name');
+                const elEmail = document.getElementById('pub_user_email');
+                const elMoto = document.getElementById('pub_user_moto');
+                const elPoints = document.getElementById('pub_user_points');
+                const elJoined = document.getElementById('pub_user_joined');
+                const elRoles = document.getElementById('pub_user_roles');
+                const btnFriend = document.getElementById('pub_user_btn_friend');
+
+                if (elName) elName.textContent = u.name;
+                if (elEmail) elEmail.textContent = u.email;
+                if (elMoto) elMoto.textContent = `"${u.moto_hidup}"`;
+                if (elPoints) elPoints.textContent = `${u.points} Poin`;
+                if (elJoined) elJoined.textContent = u.joined_at;
+
+                // Roles badges
+                if (elRoles && Array.isArray(u.roles)) {
+                    elRoles.innerHTML = u.roles.map(r => `
+                        <span class="badge bg-white bg-opacity-90 text-gray-800 fw-bold fs-8 px-3 py-1 text-uppercase shadow-xs rounded-pill">
+                            ${r}
+                        </span>
+                    `).join('');
+                }
+
+                // Friend Button setup based on friendship status
+                if (btnFriend) {
+                    btnFriend.setAttribute('data-user-id', u.id);
+                    btnFriend.setAttribute('data-user-name', u.name);
+                    btnFriend.removeAttribute('data-kt-indicator');
+
+                    if (u.friendship_status === 'accepted') {
+                        btnFriend.classList.remove('d-none', 'btn-primary', 'btn-light-warning', 'btn-success', 'btn-social-friend-request');
+                        btnFriend.classList.add('btn-light-success', 'disabled');
+                        btnFriend.disabled = true;
+                        btnFriend.innerHTML = `
+                            <i class="ki-duotone ki-verify fs-5 me-1"><span class="path1"></span><span class="path2"></span></i>
+                            <span>Berteman</span>
+                        `;
+                    } else if (u.friendship_status === 'pending_sent') {
+                        btnFriend.classList.remove('d-none', 'btn-primary', 'btn-light-success', 'disabled');
+                        btnFriend.classList.add('btn-light-warning', 'btn-social-friend-request');
+                        btnFriend.disabled = false;
+                        btnFriend.innerHTML = `
+                            <i class="ki-duotone ki-time fs-5 me-1"><span class="path1"></span><span class="path2"></span></i>
+                            <span class="indicator-label">Batalkan Permintaan</span>
+                            <span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle"></span></span>
+                        `;
+                    } else if (u.friendship_status === 'pending_received') {
+                        btnFriend.classList.remove('d-none', 'btn-primary', 'btn-light-warning', 'btn-light-success', 'disabled');
+                        btnFriend.classList.add('btn-success', 'btn-social-friend-request');
+                        btnFriend.disabled = false;
+                        btnFriend.innerHTML = `
+                            <i class="ki-duotone ki-check-circle fs-5 me-1"><span class="path1"></span><span class="path2"></span></i>
+                            <span class="indicator-label">Terima Ajakan</span>
+                            <span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle"></span></span>
+                        `;
+                    } else {
+                        btnFriend.classList.remove('d-none', 'btn-light-warning', 'btn-light-success', 'btn-success', 'disabled');
+                        btnFriend.classList.add('btn-primary', 'btn-social-friend-request');
+                        btnFriend.disabled = false;
+                        btnFriend.innerHTML = `
+                            <i class="ki-duotone ki-user-tick fs-5 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                            <span class="indicator-label">Tambah Teman</span>
+                            <span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle"></span></span>
+                        `;
+                    }
+                }
+
+                // Chat Button setup
+                const btnChat = document.getElementById('pub_user_btn_chat');
+                if (btnChat) {
+                    btnChat.setAttribute('href', `/profil/profil-pengguna/chat`);
+                    btnChat.onclick = () => {
+                        try {
+                            sessionStorage.setItem('veltronic_target_chat_user', u.id);
+                        } catch (e) {}
+                    };
+                }
+
+                // Show Modal
+                if (typeof bootstrap !== 'undefined') {
+                    bootstrap.Modal.getOrCreateInstance(modalEl).show();
+                }
+            }
+        })
+        .catch(err => {
+            console.error('Failed to load public profile:', err);
+        });
+    };
+
+    // Global Friend Request Click Handler (Supports both Widget & Public Profile Modal)
+    const initGlobalFriendshipHandler = () => {
+        // Handle View Public Profile Click across any page (Dashboard, Chat, Header, etc.)
+        document.addEventListener('click', (e) => {
+            const profileLink = e.target.closest('.btn-view-public-profile');
+            if (!profileLink) return;
+
+            e.preventDefault();
+            const targetId = profileLink.getAttribute('data-user-id');
+            if (targetId) {
+                openPublicProfile(targetId);
+            }
+        });
+        document.addEventListener('click', (e) => {
             const friendBtn = e.target.closest('.btn-social-friend-request');
             if (!friendBtn) return;
 
@@ -269,19 +417,38 @@ const KTUserPresence = (function () {
             })
             .then(res => res.json())
             .then(data => {
+                friendBtn.removeAttribute('data-kt-indicator');
                 if (data.status === 'success') {
-                    friendBtn.removeAttribute('data-kt-indicator');
-                    friendBtn.classList.remove('btn-light-primary', 'btn-active-primary');
-                    friendBtn.classList.add('btn-light-success', 'disabled');
-                    friendBtn.innerHTML = `
-                        <i class="ki-duotone ki-check fs-6 text-success me-1"><span class="path1"></span><span class="path2"></span></i>
-                        <span class="indicator-label">Terkirim</span>
-                    `;
+                    // Update button styling based on new friendship_status
+                    if (data.friendship_status === 'pending_sent') {
+                        friendBtn.className = 'btn btn-sm btn-light-warning fw-bold px-5 btn-social-friend-request';
+                        friendBtn.disabled = false;
+                        friendBtn.innerHTML = `
+                            <i class="ki-duotone ki-time fs-5 text-warning me-1"><span class="path1"></span><span class="path2"></span></i>
+                            <span class="indicator-label">Batalkan Permintaan</span>
+                            <span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle"></span></span>
+                        `;
+                    } else if (data.friendship_status === 'accepted') {
+                        friendBtn.className = 'btn btn-sm btn-light-success fw-bold px-5 disabled';
+                        friendBtn.disabled = true;
+                        friendBtn.innerHTML = `
+                            <i class="ki-duotone ki-verify fs-5 text-success me-1"><span class="path1"></span><span class="path2"></span></i>
+                            <span>Berteman</span>
+                        `;
+                    } else {
+                        friendBtn.className = 'btn btn-sm btn-primary fw-bold px-5 btn-social-friend-request';
+                        friendBtn.disabled = false;
+                        friendBtn.innerHTML = `
+                            <i class="ki-duotone ki-user-tick fs-5 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                            <span class="indicator-label">Tambah Teman</span>
+                            <span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle"></span></span>
+                        `;
+                    }
 
                     if (typeof Swal !== 'undefined') {
                         Swal.fire({
-                            title: 'Permintaan Terkirim!',
-                            text: `Permintaan pertemanan berhasil dikirim ke ${targetName}.`,
+                            title: data.action === 'cancelled' ? 'Dibatalkan' : (data.action === 'accepted' ? 'Berteman!' : 'Permintaan Terkirim!'),
+                            text: data.message,
                             icon: 'success',
                             buttonsStyling: false,
                             confirmButtonText: 'Tutup',
@@ -290,138 +457,30 @@ const KTUserPresence = (function () {
                             }
                         });
                     } else if (typeof toastr !== 'undefined') {
-                        toastr.success(`Permintaan pertemanan terkirim ke ${targetName}`);
+                        toastr.success(data.message);
                     }
+
+                    // Sync Topbar Notifications live
+                    if (window.KTAppNotifications) {
+                        window.KTAppNotifications.refresh();
+                    }
+
+                    // Refresh Dashboard widget items
+                    updateDashboardWidget(true);
                 } else {
-                    friendBtn.removeAttribute('data-kt-indicator');
                     friendBtn.disabled = false;
-                }
-            })
-            .catch(() => {
-                friendBtn.removeAttribute('data-kt-indicator');
-                friendBtn.disabled = false;
-            });
-        });
-
-        // 4. View Public User Profile Modal (Accessible by all roles)
-        widgetContainer.addEventListener('click', (e) => {
-            const profileLink = e.target.closest('.btn-view-public-profile');
-            if (!profileLink) return;
-
-            e.preventDefault();
-            const targetId = profileLink.getAttribute('data-user-id');
-            if (!targetId) return;
-
-            const modalEl = document.getElementById('kt_modal_public_user_profile');
-            if (!modalEl) return;
-
-            // Fetch public profile data
-            fetch(`/user-presence/public-profile/${targetId}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 'success' && data.user) {
-                    const u = data.user;
-
-                    // Cover styling
-                    const coverBg = document.getElementById('pub_user_cover_bg');
-                    const coverOverlay = document.getElementById('pub_user_cover_overlay');
-                    if (coverBg) {
-                        coverBg.style.backgroundImage = `url('${u.cover_bg_url}')`;
-                        coverBg.style.backgroundPosition = `center ${u.cover_position_y}%`;
-                    }
-                    if (coverOverlay) {
-                        coverOverlay.style.backgroundColor = u.cover_overlay_color;
-                        coverOverlay.style.opacity = u.cover_opacity;
-                    }
-
-                    // Avatar
-                    const avatarImg = document.getElementById('pub_user_avatar_img');
-                    const avatarSymbol = document.getElementById('pub_user_symbol');
-                    if (u.has_avatar && avatarImg) {
-                        avatarImg.classList.remove('d-none');
-                        avatarImg.style.backgroundImage = `url('${u.avatar_url}')`;
-                        if (u.avatar_style) {
-                            avatarImg.setAttribute('style', u.avatar_style);
-                        }
-                        if (avatarSymbol) avatarSymbol.classList.add('d-none');
-                    } else {
-                        if (avatarImg) avatarImg.classList.add('d-none');
-                        if (avatarSymbol) {
-                            avatarSymbol.classList.remove('d-none');
-                            avatarSymbol.textContent = u.initial;
-                        }
-                    }
-
-                    // Presence dot on modal
-                    const dot = document.getElementById('pub_user_presence_dot');
-                    const presenceBadge = document.getElementById('pub_user_presence_badge');
-                    if (dot && u.presence) {
-                        dot.className = `position-absolute bottom-0 end-0 w-16px h-16px rounded-circle ${u.presence.badge_class} border border-3 border-white shadow-xs`;
-                    }
-                    if (presenceBadge && u.presence) {
-                        presenceBadge.className = `badge ${u.presence.badge_class} text-white fw-bold fs-8 px-3 py-1 shadow-xs rounded-pill`;
-                        presenceBadge.textContent = u.presence.label;
-                    }
-
-                    // Name, Email, Moto
-                    const elName = document.getElementById('pub_user_name');
-                    const elEmail = document.getElementById('pub_user_email');
-                    const elMoto = document.getElementById('pub_user_moto');
-                    const elPoints = document.getElementById('pub_user_points');
-                    const elJoined = document.getElementById('pub_user_joined');
-                    const elRoles = document.getElementById('pub_user_roles');
-                    const btnFriend = document.getElementById('pub_user_btn_friend');
-
-                    if (elName) elName.textContent = u.name;
-                    if (elEmail) elEmail.textContent = u.email;
-                    if (elMoto) elMoto.textContent = `"${u.moto_hidup}"`;
-                    if (elPoints) elPoints.textContent = `${u.points} Poin`;
-                    if (elJoined) elJoined.textContent = u.joined_at;
-
-                    // Roles badges
-                    if (elRoles && Array.isArray(u.roles)) {
-                        elRoles.innerHTML = u.roles.map(r => `
-                            <span class="badge bg-white bg-opacity-90 text-gray-800 fw-bold fs-8 px-3 py-1 text-uppercase shadow-xs rounded-pill">
-                                ${r}
-                            </span>
-                        `).join('');
-                    }
-
-                    // Friend Button setup
-                    if (btnFriend) {
-                        btnFriend.setAttribute('data-user-id', u.id);
-                        btnFriend.setAttribute('data-user-name', u.name);
-                        btnFriend.removeAttribute('data-kt-indicator');
-                        btnFriend.disabled = false;
-                        btnFriend.className = 'btn btn-sm btn-primary fw-bold px-5 btn-social-friend-request';
-                        btnFriend.innerHTML = `
-                            <i class="ki-duotone ki-user-tick fs-5 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                            <span class="indicator-label">Tambah Teman</span>
-                            <span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle"></span></span>
-                        `;
-                    }
-
-                    // Show Modal
-                    if (typeof bootstrap !== 'undefined') {
-                        bootstrap.Modal.getOrCreateInstance(modalEl).show();
+                    if (typeof toastr !== 'undefined') {
+                        toastr.error(data.message || 'Gagal memproses permintaan pertemanan.');
                     }
                 }
             })
             .catch(err => {
-                console.error('Failed to load public profile:', err);
+                console.error('Friend request error:', err);
+                friendBtn.removeAttribute('data-kt-indicator');
+                friendBtn.disabled = false;
             });
         });
-
-        // Start Dashboard periodic updater
-        if (dashboardPollTimer) clearInterval(dashboardPollTimer);
-        dashboardPollTimer = setInterval(updateDashboardWidget, DASHBOARD_POLL_INTERVAL_MS);
     };
-
 
     // Stop all timers
     const stopTimers = () => {
@@ -438,6 +497,9 @@ const KTUserPresence = (function () {
 
         // Setup activity listeners
         initActivityListeners();
+
+        // Setup global friendship interaction
+        initGlobalFriendshipHandler();
 
         // Setup periodic timers
         heartbeatTimer = setInterval(() => sendHeartbeat(currentStatus), HEARTBEAT_INTERVAL_MS);
@@ -459,6 +521,7 @@ const KTUserPresence = (function () {
         getStatus: () => currentStatus,
         refreshDashboard: () => updateDashboardWidget(true),
         recordActivity: recordUserActivity,
+        openPublicProfile: openPublicProfile,
     };
 })();
 

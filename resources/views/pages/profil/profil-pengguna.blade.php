@@ -57,7 +57,7 @@
                 <!--end::Details Section with Cover Background & Overlay-->
 
                 <!--begin::Navs Container-->
-                <div class="card-body py-0 px-4 px-lg-9 border-top border-gray-200 overflow-auto">
+                <div class="card-body py-0 px-4 px-lg-9 border-top border-gray-200">
                     @include('pages.profil.partials.navs', ['activeTab' => $tab])
                 </div>
                 <!--end::Navs Container-->

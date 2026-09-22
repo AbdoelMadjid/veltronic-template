@@ -7,17 +7,17 @@
 <!--begin::User Presence & Social Widget-->
 <div class="card card-flush shadow-sm border-0 mb-6" id="dashboard_presence_widget">
     <!--begin::Header-->
-    <div class="card-header pt-5 pb-3">
-        <div class="card-title d-flex flex-column">
+    <div class="card-header pt-5 pb-3 border-0 min-h-auto d-flex align-items-center justify-content-between flex-nowrap gap-2">
+        <div class="card-title d-flex flex-column min-w-0 me-2">
             <div class="d-flex align-items-center gap-2">
                 <span class="bullet bullet-vertical bg-primary h-20px w-4px"></span>
-                <h3 class="fw-bolder text-gray-900 fs-5 mb-0">Pengguna & Teman</h3>
+                <h3 class="fw-bolder text-gray-900 fs-5 mb-0 text-truncate">Pengguna &amp; Teman</h3>
             </div>
-            <span class="text-muted fw-semibold fs-8 mt-1">Status realtime & aktivitas pengguna</span>
+            <span class="text-muted fw-semibold fs-8 mt-1 text-truncate">Status realtime &amp; aktivitas pengguna</span>
         </div>
-        <div class="card-toolbar gap-2">
+        <div class="card-toolbar m-0 flex-shrink-0 d-flex align-items-center gap-2">
             <!--begin::Live Online Pill-->
-            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 d-flex align-items-center gap-1" id="presence_stat_online">
+            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 d-flex align-items-center gap-1 text-nowrap" id="presence_stat_online">
                 <span class="w-6px h-6px rounded-circle bg-success"></span>
                 {{ $presenceStats['online'] }} Online
             </span>

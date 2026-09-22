@@ -376,11 +376,61 @@ class User extends Authenticatable
     }
 
     /**
-     * Get user-friendly presence label.
+     * Friend requests sent by this user.
      */
-    public function getPresenceLabelAttribute(): string
+    public function sentFriendRequests()
     {
-        return $this->presence['label'] ?? 'Offline';
+        return $this->hasMany(UserFriendship::class, 'user_id');
+    }
+
+    /**
+     * Friend requests received by this user.
+     */
+    public function receivedFriendRequests()
+    {
+        return $this->hasMany(UserFriendship::class, 'friend_id');
+    }
+
+    /**
+     * App notifications for this user.
+     */
+    public function appNotifications()
+    {
+        return $this->hasMany(\App\Models\AppSupport\AppNotification::class, 'user_id');
+    }
+
+    /**
+     * Check if this user is friend with given user ID.
+     */
+    public function isFriendWith(int $otherUserId): bool
+    {
+        return UserFriendship::betweenUsers($this->id, $otherUserId)
+            ->accepted()
+            ->exists();
+    }
+
+    /**
+     * Chat messages sent by this user.
+     */
+    public function sentChatMessages()
+    {
+        return $this->hasMany(\App\Models\AppSupport\AppChatMessage::class, 'sender_id');
+    }
+
+    /**
+     * Chat messages received by this user.
+     */
+    public function receivedChatMessages()
+    {
+        return $this->hasMany(\App\Models\AppSupport\AppChatMessage::class, 'receiver_id');
+    }
+
+    /**
+     * Total unread chat messages for this user.
+     */
+    public function unreadChatCount(): int
+    {
+        return \App\Models\AppSupport\AppChatMessage::unreadFor($this->id)->count();
     }
 }
 

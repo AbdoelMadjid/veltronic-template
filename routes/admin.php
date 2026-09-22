@@ -146,6 +146,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/profil-pengguna/avatar', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateAvatar'])->name('profil-pengguna.avatar');
         Route::post('/profil-pengguna/ktp', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateFotoKtp'])->name('profil-pengguna.ktp');
         Route::post('/profil-pengguna/moto-hidup', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateMotoHidup'])->name('profil-pengguna.moto-hidup');
+
+        // Chat Pribadi (Private Messenger)
+        Route::get('/profil-pengguna/chat', [\App\Http\Controllers\Profil\ChatController::class, 'index'])->name('profil-pengguna.chat');
+        Route::get('/profil-pengguna/chat/contacts', [\App\Http\Controllers\Profil\ChatController::class, 'getContacts'])->name('profil-pengguna.chat.contacts');
+        Route::get('/profil-pengguna/chat/conversation/{user}', [\App\Http\Controllers\Profil\ChatController::class, 'getConversation'])->name('profil-pengguna.chat.conversation');
+        Route::post('/profil-pengguna/chat/send/{user}', [\App\Http\Controllers\Profil\ChatController::class, 'sendMessage'])->name('profil-pengguna.chat.send');
+        Route::post('/profil-pengguna/chat/edit/{id}', [\App\Http\Controllers\Profil\ChatController::class, 'editMessage'])->name('profil-pengguna.chat.edit');
+        Route::post('/profil-pengguna/chat/pin/{id}', [\App\Http\Controllers\Profil\ChatController::class, 'togglePinMessage'])->name('profil-pengguna.chat.pin');
+        Route::post('/profil-pengguna/chat/react/{id}', [\App\Http\Controllers\Profil\ChatController::class, 'reactMessage'])->name('profil-pengguna.chat.react');
+        Route::post('/profil-pengguna/chat/forward/{id}', [\App\Http\Controllers\Profil\ChatController::class, 'forwardMessage'])->name('profil-pengguna.chat.forward');
+        Route::delete('/profil-pengguna/chat/message/{id}', [\App\Http\Controllers\Profil\ChatController::class, 'deleteMessage'])->name('profil-pengguna.chat.delete');
     });
 
     // Tempat untuk menambahkan route modul admin / master data lainnya yang berkaitan dengan database menu seeder di masa mendatang.

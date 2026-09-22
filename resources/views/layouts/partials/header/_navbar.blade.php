@@ -36,7 +36,7 @@
         style="{{ !app_fitur('tool_notifications') ? 'display: none !important;' : '' }}"
         data-kt-feature-tool="tool_notifications">
         <!--begin::Menu- wrapper-->
-        <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
+        <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px position-relative"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
             data-kt-menu-placement="bottom-end" id="kt_menu_item_wow"
             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
@@ -48,6 +48,9 @@
                 <span class="path3"></span>
                 <span class="path4"></span>
             </i>
+            <!-- Notification pulse dot & badge counter -->
+            <span class="bullet bullet-dot bg-danger h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink d-none" id="app_notification_pulse_dot"></span>
+            <span class="badge badge-circle badge-danger position-absolute top-0 end-0 translate-middle-y fs-9 fw-bolder d-none" id="app_notification_unread_badge" style="transform: translate(20%, -20%);">0</span>
         </div>
         <!--layout-partial:partials/menus/_notifications-menu.html-->
         @include('partials.menus._notifications-menu')

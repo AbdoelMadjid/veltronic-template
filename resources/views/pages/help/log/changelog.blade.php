@@ -34,13 +34,50 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.42.0
+                            Versi Saat Ini: v1.43.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.43.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.43.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.43.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>22 Sep 2026, 14:55 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Sistem Pesan &amp; Private Chat Realtime Interaktif Komprehensif Serta Optimasi Tampilan Layout (/profil/profil-pengguna/chat)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Pembangunan sistem perpesanan privat (Private Chat) interaktif lengkap yang terintegrasi secara mulus dengan modul Profil Pengguna. Dilengkapi fitur interaksi obrolan tingkat lanjut (Balas Pesan dengan thumbnail kutipan foto, Edit Pesan, Teruskan Pesan ke multi-kontak, Sematkan Pesan di banner atas, Hapus Pesan, Reaksi Cepat Emoji 1-per-user dengan realtime counter, Sisipkan Emoticon Picker, dan Kirim Berkas/Foto dengan Modal Pratinjau Resolusi Penuh). Menyediakan kategorisasi kontak cerdas (Obrolan Aktif vs Kontak Lainnya) dengan migrasi otomatis realtime, penggabungan notifikasi pesan sejenis di topbar, empty state panduan elegan, penguncian tinggi kartu sejajar presisi, serta proteksi bebas scrollbar horizontal pada browser.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Fitur Interaksi Percakapan Lengkap (<code>app-chat.js</code> &amp; <code>chat.blade.php</code>)</strong>: Implementasi fitur Balas Pesan (Reply), Edit Pesan (Edit), Teruskan Pesan (Forward), Sematkan Pesan (Pin Banner), Hapus Pesan (Delete), Reaksi Cepat Emoji (Reactions) dengan proteksi 1 reaksi per user per pesan, dan picker popover puluhan emoji populer.</li>
+                                        <li><strong>Kirim Lampiran &amp; Modal Preview Foto (<code>modal-chat-image-preview.blade.php</code>)</strong>: Pengiriman gambar &amp; dokumen berkas dengan live preview thumbnail sebelum kirim serta modal pop-up pratinjau foto resolusi penuh dengan tombol download file.</li>
+                                        <li><strong>Kategorisasi Kontak &amp; Migrasi Realtime</strong>: Pembagian kontak sidebar menjadi seksi <em>Obrolan</em> (sedang/sudah aktif) dan <em>Kontak Lainnya</em> (belum pernah chat) dengan perpindahan otomatis instan saat mengirim pesan baru.</li>
+                                        <li><strong>Penggabungan Notifikasi Chat Topbar</strong>: Notifikasi dari pengirim yang sama disatukan ke dalam 1 kartu notifikasi terpadu (<em>"X Pesan Baru dari [Nama]"</em>) untuk mencegah spam visual.</li>
+                                        <li><strong>Tampilan Awal &amp; Empty State Elegan</strong>: Tampilan placeholder panduan ramah saat pertama kali membuka ruang chat, menonaktifkan form input hingga salah satu kontak dipilih.</li>
+                                        <li><strong>Penguncian Tinggi Kartu Sejajar &amp; Zero Horizontal Scroll</strong>: Penataan struktur <code>h-lg-100</code>, <code>align-items-lg-stretch</code>, dan <code>mt-auto</code> pada kartu kontak &amp; messenger sehingga bagian bawah selalu terkunci sejajar tanpa melompat/naik-turun, serta eliminasi scrollbar horizontal pada tab profil dan browser.</li>
+                                        <li><strong>Perbaikan Tombol Hover &amp; Pemicu Profil Publik</strong>: Memperbaiki ikon tombol <code>btn-light-*</code> pada sidebar dashboard dan mengaktifkan modal profil publik saat avatar/nama header chat diklik.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.43.0-->
+
                         <!--begin::Item v1.42.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.42.0</div>
@@ -56,7 +93,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>22 Sep 2026, 01:05 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Sistem Realtime Status Kehadiran Pengguna (Online, Idle, &amp; Offline) Serta Komponen Sidebar Dashboard Bergaya Jejaring Sosial (/dashboard)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

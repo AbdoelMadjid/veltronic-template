@@ -33,17 +33,17 @@
                 <div class="position-relative z-index-2 d-flex flex-column align-items-center text-center mt-2 mb-2">
                     <!--begin::Avatar Container with Presence Dot-->
                     <div class="position-relative mb-3">
-                        <div class="symbol symbol-85px symbol-circle">
-                            <div id="pub_user_avatar_img" class="symbol-label shadow-sm border border-4 border-white rounded-circle d-none"
+                        <div class="symbol symbol-85px">
+                            <div id="pub_user_avatar_img" class="symbol-label shadow-sm border border-4 border-white rounded-3 d-none"
                                 style="background-position: center; background-size: cover;">
                             </div>
-                            <div id="pub_user_symbol" class="symbol-label fs-1 fw-bold bg-light-primary text-primary shadow-sm border border-4 border-white rounded-circle">
+                            <div id="pub_user_symbol" class="symbol-label fs-1 fw-bold bg-light-primary text-primary shadow-sm border border-4 border-white rounded-3">
                                 U
                             </div>
                         </div>
 
                         <!-- Live Presence Dot on Modal Avatar -->
-                        <span id="pub_user_presence_dot" class="position-absolute bottom-0 end-0 w-16px h-16px rounded-circle bg-success border border-3 border-white shadow-xs" style="transform: translate(5%, -5%);"></span>
+                        <span id="pub_user_presence_dot" class="position-absolute bottom-0 end-0 w-16px h-16px rounded-circle bg-success border border-3 border-white shadow-xs" style="transform: translate(25%, 25%);"></span>
                     </div>
                     <!--end::Avatar Container-->
 
@@ -98,15 +98,19 @@
                 <!--end::Info Grid-->
 
                 <!--begin::Actions-->
-                <div class="d-flex align-items-center justify-content-center gap-3 pt-2">
-                    <button type="button" class="btn btn-sm btn-primary fw-bold px-5 btn-social-friend-request" id="pub_user_btn_friend" data-user-id="" data-user-name="">
+                <div class="d-flex align-items-center justify-content-center flex-wrap gap-2 pt-2">
+                    <a href="javascript:void(0)" class="btn btn-sm btn-light-info fw-bold px-4" id="pub_user_btn_chat">
+                        <i class="ki-duotone ki-messages fs-5 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                        Kirim Pesan
+                    </a>
+                    <button type="button" class="btn btn-sm btn-primary fw-bold px-4 btn-social-friend-request" id="pub_user_btn_friend" data-user-id="" data-user-name="">
                         <i class="ki-duotone ki-user-tick fs-5 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
                         <span class="indicator-label">Tambah Teman</span>
                         <span class="indicator-progress">
                             <span class="spinner-border spinner-border-sm align-middle"></span>
                         </span>
                     </button>
-                    <button type="button" class="btn btn-sm btn-light fw-bold px-5" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-sm btn-light fw-bold px-4" data-bs-dismiss="modal">
                         Tutup
                     </button>
                 </div>

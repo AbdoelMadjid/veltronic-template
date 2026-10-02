@@ -5,6 +5,27 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.44.1] - 2026-10-03
+
+### Fixed & Enhanced
+- **Optimasi Tata Letak & Viewport Responsif Chat Realtime (`/profil/profil-pengguna/chat`)**:
+  - **Penyelarasan Blueprint Metronic Chat (`data-kt-scroll-height="auto"`)**:
+    - Menyelaraskan atribut scroll pada kontak sidebar dan thread pesan menggunakan `data-kt-scroll-height="auto"`, memastikan tinggi kartu messenger selalu presisi dan sejajar sempurna dengan kartu kontak baik saat percakapan masih kosong maupun penuh.
+    - Eliminasi scrollbar browser saat pengguna mengetik teks multibaris di textarea maupun saat thread percakapan memiliki riwayat pesan yang panjang.
+    - Sinkronisasi dinamis `KTScroll` via JavaScript saat memuat percakapan atau menampilkan banner sematan (*pinned message*).
+
+## [v1.44.0] - 2026-10-02
+
+### Added
+- **GUI Generator & Pemulihan Symlink Storage Publik (`/appsupport/app-fiturs` -> Pengaturan Aplikasi)**:
+  - **Tombol Eksekusi Instan Tautkan Storage (`php artisan storage:link`)**:
+    - Tombol aksi berbasis GUI di kartu *Pemeliharaan Sistem, Cache & Storage* untuk menghubungkan folder `public/storage` ke `storage/app/public` secara otomatis dan aman.
+    - Dilengkapi proteksi otomatis pembersihan broken NTFS junction / symlink usang sebelum proses tautan dijalankan (mengatasi galat `Cannot create a file when that file already exists` di Windows / Laragon saat proyek dipindahkan).
+    - Memenuhi standar **Button Loading Spinner Policy** (`data-kt-indicator="on"`, `disabled = true`) dan **Zero-Reload Realtime CRUD Policy**.
+    - Pencatatan jejak audit aktivitas ke tabel log aktivitas terpusat (`UserLog`).
+  - **Pembaruan Petunjuk Operasional**:
+    - Penambahan instruksi panduan pemulihan storage symlink pada modal petunjuk modul (`<x-petunjuk-modal>`).
+
 ## [v1.43.0] - 2026-09-22
 
 ### Added

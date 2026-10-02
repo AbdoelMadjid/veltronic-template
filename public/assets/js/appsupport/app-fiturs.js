@@ -551,6 +551,63 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ========================================================
+    // STORAGE LINK GENERATOR / REPAIR ACTION (php artisan storage:link)
+    // ========================================================
+    const btnStorageLink = document.getElementById('btn_generate_storage_link');
+    if (btnStorageLink) {
+        btnStorageLink.addEventListener('click', function () {
+            const executeStorageLink = () => {
+                btnStorageLink.setAttribute('data-kt-indicator', 'on');
+                btnStorageLink.disabled = true;
+
+                fetch('/appsupport/app-fiturs/storage-link', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    btnStorageLink.removeAttribute('data-kt-indicator');
+                    btnStorageLink.disabled = false;
+
+                    if (data.success) {
+                        Notify.alert({
+                            title: 'Tautan Storage Berhasil!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'Selesai'
+                        });
+
+                        if (typeof activityLogsDt !== 'undefined' && activityLogsDt) {
+                            activityLogsDt.ajax.reload(null, false);
+                        }
+                    } else {
+                        Notify.error(data.message || 'Gagal membuat symlink storage.');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    btnStorageLink.removeAttribute('data-kt-indicator');
+                    btnStorageLink.disabled = false;
+                    Notify.error('Terjadi kesalahan saat memproses symlink storage.');
+                });
+            };
+
+            Notify.confirm({
+                title: 'Tautkan Storage Publik?',
+                text: 'Perintah "php artisan storage:link" akan dijalankan untuk menghubungkan folder public/storage ke storage/app/public.',
+                icon: 'question',
+                confirmButtonText: 'Ya, Tautkan!',
+                cancelButtonText: 'Batal',
+                onConfirm: executeStorageLink
+            });
+        });
+    }
+
+    // ========================================================
     // TAB 3: KEYBOARD SHORTCUTS MANAGER INTERACTIONS (2-COLUMN CRUD)
     // ========================================================
     const masterShortcutsSwitch = document.getElementById('global_shortcuts_master_switch');

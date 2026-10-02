@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/app-fiturs/bulk-toggle', [AppFiturController::class, 'bulkToggle'])->name('app-fiturs.bulk-toggle');
         Route::post('/app-fiturs/settings', [AppFiturController::class, 'saveSettings'])->name('app-fiturs.settings');
         Route::post('/app-fiturs/clear-cache', [AppFiturController::class, 'clearCache'])->name('app-fiturs.clear-cache');
+        Route::post('/app-fiturs/storage-link', [AppFiturController::class, 'storageLink'])->name('app-fiturs.storage-link');
 
         // Keyboard Shortcuts CRUD
         Route::post('/shortcuts', [AppFiturController::class, 'shortcutStore'])->name('shortcuts.store');

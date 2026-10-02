@@ -126,6 +126,22 @@ const KTAppCustomChat = (() => {
         }
     };
 
+    // Update KTScroll instances to keep heights bounded to viewport
+    const updateScrollInstance = () => {
+        if (typeof KTScroll !== 'undefined') {
+            const scrollEl = document.getElementById('chat_messages_scroll');
+            if (scrollEl) {
+                const instance = KTScroll.getInstance(scrollEl);
+                if (instance) instance.update();
+            }
+            const contactsEl = document.getElementById('chat_contacts_list');
+            if (contactsEl) {
+                const contactsInstance = KTScroll.getInstance(contactsEl);
+                if (contactsInstance) contactsInstance.update();
+            }
+        }
+    };
+
     // Scroll to a specific message bubble with highlight animation
     const scrollToMessage = (msgId) => {
         const targetBubble = document.querySelector(`.chat-bubble-container[data-message-id="${msgId}"]`);
@@ -648,6 +664,8 @@ const KTAppCustomChat = (() => {
             banner.classList.remove('d-flex');
             banner.removeAttribute('data-pinned-id');
         }
+
+        updateScrollInstance();
     };
 
     // Load conversation with a specific user
@@ -903,6 +921,8 @@ const KTAppCustomChat = (() => {
                             scrollToBottom(true);
                         }
                     }
+
+                    updateScrollInstance();
                 }
 
                 // 4. Sync Topbar Notification Badges Live
@@ -994,8 +1014,6 @@ const KTAppCustomChat = (() => {
         if (textInput) {
             textInput.value = messageText;
             textInput.focus();
-            textInput.style.height = 'auto';
-            textInput.style.height = (textInput.scrollHeight) + 'px';
         }
     };
 
@@ -1013,7 +1031,6 @@ const KTAppCustomChat = (() => {
         if (sendBtnLabel) sendBtnLabel.textContent = 'Send';
         if (textInput) {
             textInput.value = '';
-            textInput.style.height = 'auto';
         }
     };
 
@@ -1130,7 +1147,6 @@ const KTAppCustomChat = (() => {
                 // Clear inputs
                 if (textInput) {
                     textInput.value = '';
-                    textInput.style.height = 'auto';
                 }
                 if (fileInput) fileInput.value = '';
                 const thumbImg = document.getElementById('chat_attachment_thumb');
@@ -1428,8 +1444,6 @@ const KTAppCustomChat = (() => {
                 textInput.value = textInput.value.substring(0, startPos) + emoji + textInput.value.substring(endPos);
                 textInput.selectionStart = textInput.selectionEnd = startPos + emoji.length;
                 textInput.focus();
-                textInput.style.height = 'auto';
-                textInput.style.height = (textInput.scrollHeight) + 'px';
             }
         });
 
@@ -1487,7 +1501,7 @@ const KTAppCustomChat = (() => {
             });
         }
 
-        // 4. Textarea Enter to Send (Shift+Enter for new line) & Auto-height
+        // 4. Textarea Enter to Send (Shift+Enter for new line)
         const textInput = document.getElementById('chat_message_input');
         if (textInput) {
             textInput.addEventListener('keydown', (e) => {
@@ -1495,11 +1509,6 @@ const KTAppCustomChat = (() => {
                     e.preventDefault();
                     sendMessage();
                 }
-            });
-
-            textInput.addEventListener('input', () => {
-                textInput.style.height = 'auto';
-                textInput.style.height = (textInput.scrollHeight) + 'px';
             });
         }
 

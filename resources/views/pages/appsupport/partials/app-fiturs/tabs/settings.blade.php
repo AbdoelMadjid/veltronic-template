@@ -315,13 +315,13 @@
                 <!--end::Card footer-->
             </div>
 
-            <!-- Card: Pemeliharaan Sistem & Cache Tools -->
+            <!-- Card: Pemeliharaan Sistem, Cache & Storage -->
             <div class="card shadow-sm border border-gray-200 flex-grow-1 d-flex flex-column justify-content-between">
                 <!--begin::Card header-->
                 <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0">
                     <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
-                        <h3 class="fw-bolder text-gray-900 m-0 fs-4">Pemeliharaan Sistem & Alat Cache</h3>
-                        <span class="text-muted fs-7 mt-1">Pembersihan memori cache dan optimasi server seketika</span>
+                        <h3 class="fw-bolder text-gray-900 m-0 fs-4">Pemeliharaan Sistem, Cache & Storage</h3>
+                        <span class="text-muted fs-7 mt-1">Pembersihan memori cache dan perbaikan tautan storage publik</span>
                     </div>
                     <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
                         <span class="badge badge-light-warning fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
@@ -333,6 +333,30 @@
 
                 <!--begin::Card body-->
                 <div class="card-body py-6 px-4 px-md-6 flex-grow-1">
+
+                    <!-- Tautan Storage Publik (php artisan storage:link) -->
+                    <div class="p-4 bg-light rounded-3 border mb-6">
+                        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+                            <div class="d-flex flex-column me-md-3">
+                                <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                                    <span class="fs-7 fw-bold text-gray-900">Tautan Storage Publik (Storage Symlink)</span>
+                                    <span class="badge badge-light-primary fw-semibold fs-9 px-2 py-1">php artisan storage:link</span>
+                                </div>
+                                <span class="fs-9 text-muted">Hubungkan folder <code>public/storage</code> ke <code>storage/app/public</code> agar foto profil, cover, KTP, dan berkas unggahan dapat diakses langsung oleh browser.</span>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-sm fw-bold px-4 py-2 flex-shrink-0 d-inline-flex align-items-center justify-content-center w-100 w-md-auto" id="btn_generate_storage_link">
+                                <span class="indicator-label d-inline-flex align-items-center">
+                                    <i class="ki-outline ki-folder-up fs-4 me-1 text-white"></i> Tautkan Storage
+                                </span>
+                                <span class="indicator-progress">
+                                    Menghubungkan... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="separator separator-dashed my-5"></div>
+
                     <p class="fs-8 text-muted mb-4">
                         Pilih jenis cache yang ingin dibersihkan secara instan untuk memperbarui template, routing, dan konfigurasi tanpa merestart web server:
                     </p>
@@ -387,9 +411,9 @@
                     <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-sm-between text-center text-sm-start gap-2">
                         <div class="d-flex align-items-center gap-2 text-muted fs-7">
                             <i class="ki-outline ki-wrench fs-5 text-warning"></i>
-                            <span>4 alat utilitas cache sistem siap dieksekusi</span>
+                            <span>5 alat utilitas storage & cache sistem siap dieksekusi</span>
                         </div>
-                        <span class="badge badge-light-warning fw-semibold fs-8">Cache Tools</span>
+                        <span class="badge badge-light-warning fw-semibold fs-8">System & Cache Tools</span>
                     </div>
                 </div>
                 <!--end::Card footer-->

@@ -65,13 +65,13 @@
     <!--begin::Content-->
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
-        <div id="kt_app_content_container" class="app-container container-xxl">
+        <div id="kt_app_content_container" class="app-container container-fluid">
             <!--begin::Layout-->
             <div class="d-flex flex-column flex-lg-row">
                 <!--begin::Sidebar-->
                 <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0">
                     <!--begin::Contacts-->
-                    <div class="card card-flush">
+                    <div class="card card-flush" id="kt_chat_contacts_card">
                         <!--begin::Card header-->
                         <div class="card-header pt-7" id="kt_chat_contacts_header">
                             <!--begin::Form-->
@@ -94,7 +94,7 @@
                         <div class="card-body pt-5" id="kt_chat_contacts_body">
                             <!--begin::List-->
                             <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true"
-                                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+                                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-max-height="auto"
                                 data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_toolbar, #kt_app_toolbar, #kt_footer, #kt_app_footer, #kt_chat_contacts_header"
                                 data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_contacts_body"
                                 data-kt-scroll-offset="5px" id="chat_contacts_list">
@@ -112,7 +112,7 @@
                 </div>
                 <!--end::Sidebar-->
                 <!--begin::Content-->
-                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10 min-w-0">
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
                     <!--begin::Messenger-->
                     <div class="card" id="kt_chat_messenger">
                         <!--begin::Card header-->
@@ -152,7 +152,7 @@
                         <!--begin::Card body-->
                         <div class="card-body" id="kt_chat_messenger_body">
                             <!--begin::Pinned Banner (if any)-->
-                            <div class="p-3 bg-light-warning bg-opacity-75 rounded-3 border border-warning border-dashed mb-4 d-none align-items-center justify-content-between shadow-xs" id="chat_pinned_banner">
+                            <div class="p-3 bg-light-warning bg-opacity-75 rounded-3 border border-warning border-dashed mb-4 d-none align-items-center justify-content-between shadow-xs flex-shrink-0" id="chat_pinned_banner">
                                 <div class="d-flex align-items-center gap-3 overflow-hidden cursor-pointer flex-grow-1" id="chat_pinned_jump_btn" title="Klik untuk melompat ke pesan yang disematkan">
                                     <i class="ki-duotone ki-pin fs-2 text-warning flex-shrink-0"><span class="path1"></span><span class="path2"></span></i>
                                     
@@ -180,13 +180,13 @@
                             <!--end::Pinned Banner-->
 
                             <!--begin::Messages-->
-                            <div class="scroll-y me-n5 pe-5" data-kt-element="messages"
+                            <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages"
                                 data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
-                                data-kt-scroll-max-height="auto"
-                                data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
+                                data-kt-scroll-height="auto" data-kt-scroll-max-height="auto"
+                                data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer, #chat_pinned_banner"
                                 data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
                                 data-kt-scroll-offset="5px" id="chat_messages_scroll">
-                                <div id="chat_messages_thread" class="d-flex flex-column flex-grow-1">
+                                <div id="chat_messages_thread" class="d-flex flex-column">
                                     @if(empty($selectedUserId))
                                         <div class="d-flex flex-column align-items-center justify-content-center text-center p-8 my-auto" style="min-height: 380px;">
                                             <div class="symbol symbol-75px symbol-circle bg-light-primary mb-5 d-flex align-items-center justify-content-center shadow-xs">
@@ -210,7 +210,7 @@
                         </div>
                         <!--end::Card body-->
                         <!--begin::Card footer-->
-                        <div class="card-footer pt-4 mt-auto" id="kt_chat_messenger_footer">
+                        <div class="card-footer pt-4" id="kt_chat_messenger_footer">
                             <form id="chat_message_form" onsubmit="return false;">
                                 @csrf
                                 <input type="hidden" name="target_user_id" id="chat_form_target_user_id" value="" />
@@ -278,10 +278,10 @@
                                 <!--end::Attachment preview-->
 
                                 <!--begin::Input-->
-                                <textarea class="form-control form-control-flush mb-3" rows="1"
+                                <textarea class="form-control form-control-flush mb-3" rows="1" data-kt-element="input"
                                     id="chat_message_input" name="message" 
                                     placeholder="{{ empty($selectedUserId) ? 'Silakan pilih pengguna di panel sebelah kiri untuk mulai mengobrol...' : 'Ketik pesan Anda...' }}" 
-                                    {{ empty($selectedUserId) ? 'disabled' : '' }} style="resize: none;"></textarea>
+                                    {{ empty($selectedUserId) ? 'disabled' : '' }}></textarea>
                                 <!--end::Input-->
 
                                 <!--begin:Toolbar-->
@@ -360,6 +360,6 @@
 @section('scripts')
     <!--begin::Vendors Javascript(used for this page only)-->
     <script src="{{ \App\Support\ThemeAsset::url('plugins/custom/datatables/datatables.bundle.js', $theme_asset_pack ?? null) }}"></script>
-    <script src="{{ asset('assets/js/custom/app-chat.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/app-chat.js') }}?v={{ time() }}"></script>
     <!--end::Vendors Javascript-->
 @endsection

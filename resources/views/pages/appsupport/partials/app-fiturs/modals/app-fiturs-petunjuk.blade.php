@@ -23,7 +23,7 @@
             </li>
             <li class="d-flex align-items-start">
                 <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
-                <div><strong>Pengaturan Aplikasi (Settings):</strong> Konfigurasi parameter umum, preferensi gaya ikon (KeenIcons *duotone, outline, solid*), bahasa bawaan, versi tata letak tema, dan pembersih *cache*.</div>
+                <div><strong>Pengaturan Aplikasi (Settings):</strong> Konfigurasi parameter umum, preferensi gaya ikon (KeenIcons *duotone, outline, solid*), bahasa bawaan, versi tata letak tema, pembersih *cache*, serta generator tautan symlink publik (*storage:link*).</div>
             </li>
             <li class="d-flex align-items-start">
                 <span class="bullet bullet-dot bg-gray-500 me-2 mt-2 flex-shrink-0"></span>
@@ -47,6 +47,7 @@
             </li>
             <li><strong>Aksi Fitur Massal:</strong> Centang satu atau beberapa kotak centang fitur, lalu gunakan tombol <em>Aktifkan</em> atau <em>Sembunyikan</em> pada bilah aksi massal di bagian atas section.</li>
             <li><strong>Pusat Pintasan Keyboard:</strong> Buka tab *Pintasan Keyboard (Shortcuts)* untuk mengelola kombinasi tombol, role pengakses, dan target aksi secara dinamis.</li>
+            <li><strong>Tautan Storage Publik & Cache:</strong> Gunakan tombol <em>Tautkan Storage</em> di tab Pengaturan Aplikasi untuk membuat ulang symlink storage publik (<code>storage:link</code>) secara instan saat berkas avatar/foto tidak muncul.</li>
             <li><strong>Reset Konfigurasi (Seeder):</strong> Klik tombol <em>Reset Default (Seeder)</em> di banner atas untuk mengembalikan seluruh visibilitas fitur ke pengaturan bawaan awal basis data.</li>
         </ol>
     </x-slot:box3>

@@ -34,29 +34,93 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.43.0
+                            Versi Saat Ini: v1.44.1
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
-                        <!--begin::Item v1.43.0 (Minor)-->
+                        <!--begin::Item v1.44.1 (Patch)-->
                         <div class="timeline-item mb-7">
-                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.43.0</div>
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.44.1</div>
                             <div class="timeline-badge">
                                 <i class="fa fa-genderless text-primary fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
-                                    <span class="badge badge-primary fw-bold text-white">v1.43.0</span>
+                                    <span class="badge badge-primary fw-bold text-white">v1.44.1</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>03 Okt 2026, 01:35 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Optimasi Tata Letak &amp; Viewport Responsif Chat Realtime (/profil/profil-pengguna/chat)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyelarasan penuh modul obrolan dengan arsitektur Metronic Chat (<code>apps/chat/private</code>) menggunakan kalkulasi tinggi presisi <code>data-kt-scroll-height="auto"</code>. Memastikan tinggi kartu kontak dan percakapan selalu rata sejajar (<em>equal full-height</em>) baik saat obrolan kosong maupun penuh, serta menghilangkan scrollbar browser saat mengetik teks multibaris atau membaca thread percakapan panjang.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Penyelarasan Blueprint Metronic</strong>: Menggunakan <code>data-kt-scroll-height="auto"</code> dengan dependency footer/header untuk mengunci tinggi area scroll sesuai viewport layar.</li>
+                                        <li><strong>Zero Browser Scroll</strong>: Eliminasi scrollbar vertikal pada jendela browser saat mengetik banyak teks di textarea maupun pada riwayat pesan panjang.</li>
+                                        <li><strong>Garis Bawah Kartu Sejajar</strong>: Garis bawah kartu messenger selalu terkunci rata dengan kartu kontak di sebelah kirinya pada berbagai kondisi pesan.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.44.1 (Patch)-->
+
+                        <!--begin::Item v1.44.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.44.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-muted fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-secondary fw-bold text-gray-800">v1.44.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>02 Okt 2026, 22:00 WIB
+                                    </span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">GUI Generator &amp; Pemulihan Symlink Storage Publik (/appsupport/app-fiturs -&gt; Pengaturan Aplikasi)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penambahan fitur utilitas GUI pada tab Pengaturan Aplikasi untuk mengeksekusi perintah <code>php artisan storage:link</code> secara langsung dan realtime. Fitur ini dilengkapi mekanisme deteksi dan pembersihan otomatis broken NTFS junction / symlink usang saat proyek dipindahkan atau diubah namanya, integrasi standar Button Loading Spinner, konfirmasi SweetAlert2, audit UserLog, serta pembaruan modal petunjuk operasional.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Tombol GUI Tautkan Storage Publik</strong>: Eksekusi satu kali klik dari antarmuka web untuk menghubungkan <code>public/storage</code> ke <code>storage/app/public</code> tanpa perlu membuka terminal CLI.</li>
+                                        <li><strong>Proteksi Kerusakan Symlink / Junction Windows</strong>: Pembersihan otomatis broken junction lama sebelum pembuatan link baru untuk mencegah galat duplikasi file.</li>
+                                        <li><strong>Standar UX &amp; Zero-Reload Realtime</strong>: Tombol dilengkapi spinner loading progresif, SweetAlert feedback instan, dan log transaksi otomatis ke modul audit aktivitas.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.44.0 (Minor)-->
+
+                        <!--begin::Item v1.43.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.43.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-muted fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-secondary fw-bold text-gray-800">v1.43.0</span>
                                     <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
                                     <span class="badge badge-light text-gray-700 fs-8 border">
                                         <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>22 Sep 2026, 14:55 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Sistem Pesan &amp; Private Chat Realtime Interaktif Komprehensif Serta Optimasi Tampilan Layout (/profil/profil-pengguna/chat)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

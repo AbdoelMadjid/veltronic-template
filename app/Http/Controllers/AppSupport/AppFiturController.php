@@ -609,6 +609,68 @@ class AppFiturController extends Controller
     }
 
     /**
+     * Create or regenerate storage symlink (php artisan storage:link).
+     */
+    public function storageLink(Request $request): JsonResponse
+    {
+        try {
+            $linkPath = public_path('storage');
+            $targetPath = storage_path('app/public');
+
+            // Pastikan direktori target storage/app/public ada
+            if (!is_dir($targetPath)) {
+                @mkdir($targetPath, 0755, true);
+            }
+
+            // Jika folder/symlink public/storage sudah ada (termasuk junction Windows / broken link),
+            // bersihkan terlebih dahulu agar perintah artisan storage:link tidak gagal karena duplikasi/bentrok.
+            if (file_exists($linkPath) || is_link($linkPath) || is_dir($linkPath)) {
+                if (PHP_OS_FAMILY === 'Windows') {
+                    try {
+                        if (is_link($linkPath)) {
+                            @unlink($linkPath);
+                        } else {
+                            @rmdir($linkPath);
+                        }
+                    } catch (\Throwable $e) {
+                        // ignore and continue
+                    }
+
+                    // Jika masih tersisa junction keras, gunakan perintah powershell aman
+                    if (file_exists($linkPath) || is_dir($linkPath)) {
+                        @exec('powershell -Command "Remove-Item -Path \'' . addslashes($linkPath) . '\' -Force"');
+                    }
+                } else {
+                    @unlink($linkPath);
+                }
+            }
+
+            // Jalankan artisan storage:link
+            Artisan::call('storage:link');
+            $output = trim(Artisan::output());
+
+            UserLog::record(
+                'appsupport',
+                'app-fiturs',
+                'Tautkan Storage Symlink',
+                'Menghubungkan dan memperbaiki symlink direktori publik storage (php artisan storage:link)'
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Symlink public/storage berhasil dibuat dan terhubung ke storage/app/public.',
+                'output' => $output ?: 'The [public/storage] link has been connected to [storage/app/public].',
+                'is_linked' => is_dir($linkPath) || file_exists($linkPath),
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menghubungkan symlink storage: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
      * AJAX DataTables endpoint for System Activity Logs.
      */
     public function activityLogs(Request $request): JsonResponse

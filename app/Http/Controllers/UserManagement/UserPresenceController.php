@@ -75,11 +75,23 @@ class UserPresenceController extends Controller
             'presenceUsers' => $result['users'],
         ])->render();
 
+        // Render Leaderboard widget partial
+        $htmlLeaderboard = view('pages.dashboard.partials.widget-user-leaderboard')->render();
+
+        // Render Live Activity stream widget partial
+        $htmlActivity = view('pages.dashboard.partials.widget-live-activity')->render();
+
+        // Render User Cards widget partial
+        $htmlUserCards = view('pages.dashboard.partials.widget-user-cards')->render();
+
         return response()->json([
             'status' => 'success',
             'stats' => $result['stats'],
             'count' => count($result['users']),
             'html' => $htmlItems,
+            'html_leaderboard' => $htmlLeaderboard,
+            'html_activity' => $htmlActivity,
+            'html_user_cards' => $htmlUserCards,
             'users' => $result['users'],
             'timestamp' => $result['timestamp'],
         ]);
@@ -88,20 +100,21 @@ class UserPresenceController extends Controller
     /**
      * Social interaction handler: Send / Accept / Cancel Friend Request.
      */
-    public function toggleFriendRequest(Request $request, int $targetUserId): JsonResponse
+    public function toggleFriendRequest(Request $request, int|User|string $targetUserId): JsonResponse
     {
+        $targetId = $targetUserId instanceof User ? $targetUserId->id : (int) $targetUserId;
         $currentUser = $request->user();
-        if (!$currentUser || $currentUser->id === $targetUserId) {
+        if (!$currentUser || $currentUser->id === $targetId) {
             return response()->json(['status' => 'error', 'message' => 'Aksi tidak valid.'], 422);
         }
 
-        $targetUser = User::find($targetUserId);
+        $targetUser = $targetUserId instanceof User ? $targetUserId : User::find($targetId);
         if (!$targetUser) {
             return response()->json(['status' => 'error', 'message' => 'Pengguna tidak ditemukan.'], 404);
         }
 
         // Check existing friendship
-        $friendship = \App\Models\UserManagement\UserFriendship::betweenUsers($currentUser->id, $targetUserId)->first();
+        $friendship = \App\Models\UserManagement\UserFriendship::betweenUsers($currentUser->id, $targetId)->first();
 
         if (!$friendship) {
             // Send new friend request
@@ -210,10 +223,14 @@ class UserPresenceController extends Controller
     /**
      * Fetch safe public profile data accessible by any authenticated user.
      */
-    public function getPublicProfile(Request $request, int $targetUserId): JsonResponse
+    public function getPublicProfile(Request $request, int|User|string $targetUserId): JsonResponse
     {
         $currentUser = $request->user();
-        $targetUser = User::with(['roles', 'detail', 'settingRecord'])->find($targetUserId);
+        $targetId = $targetUserId instanceof User ? $targetUserId->id : (int) $targetUserId;
+        $targetUser = $targetUserId instanceof User 
+            ? $targetUserId->loadMissing(['roles', 'detail', 'settingRecord']) 
+            : User::with(['roles', 'detail', 'settingRecord'])->find($targetId);
+
         if (!$targetUser) {
             return response()->json(['status' => 'error', 'message' => 'Pengguna tidak ditemukan.'], 404);
         }

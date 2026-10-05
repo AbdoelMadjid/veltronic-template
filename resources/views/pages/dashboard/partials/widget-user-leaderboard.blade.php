@@ -3,7 +3,7 @@
 @endphp
 
 <!--begin::Leaderboard Widget-->
-<div class="card card-flush shadow-sm border-0 mb-6" id="dashboard_leaderboard_widget">
+<div class="card card-flush shadow-sm border-0 h-100 mb-0" id="dashboard_leaderboard_widget">
     <!--begin::Header-->
     <div class="card-header pt-5 pb-3 border-0 min-h-auto d-flex align-items-center justify-content-between flex-nowrap gap-2">
         <div class="card-title d-flex flex-column min-w-0 me-2">
@@ -70,10 +70,9 @@
 
                             <!-- Details -->
                             <div class="overflow-hidden text-start">
-                                <a href="javascript:void(0)" class="fs-7 fw-bold text-gray-900 text-hover-primary d-block text-truncate btn-open-public-profile" data-user-id="{{ $topUser['id'] }}">
+                                <a href="javascript:void(0)" class="fs-7 fw-bold text-gray-900 text-hover-primary d-block text-truncate btn-view-public-profile btn-open-public-profile" data-user-id="{{ $topUser['id'] }}">
                                     {{ $topUser['name'] }}
                                 </a>
-                                <span class="fs-9 text-muted text-truncate d-block">{{ $topUser['role'] }}</span>
                             </div>
                         </div>
 

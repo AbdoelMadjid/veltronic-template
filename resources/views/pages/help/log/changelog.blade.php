@@ -34,13 +34,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.45.0
+                            Versi Saat Ini: v1.46.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.46.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.46.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.46.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>05 Okt 2026, 15:50 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Kartu Komunitas Pengguna Interaktif, Live Search, Prioritas Pertemanan &amp; Sinkronisasi Realtime Dashboard</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Peningkatan antarmuka dan interaktivitas Dashboard utama. Menggantikan kartu dummy lama dengan direktori kartu pengguna komunitas modular yang dilengkapi cover background kustom, floating avatar, pencarian langsung (<em>Live Search</em>), navigasi batch pengguna 4-kartu, prioritas urutan teratas bagi rekan yang sudah berteman, sinkronisasi nilai poin riil database, serta pembaruan realtime otomatis (<em>Zero-Reload Live Sync</em>) untuk seluruh widget dashboard (Papan Peringkat, Aktivitas Komunitas, Hero Cover Banner, dan Kartu Pengguna).
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Kartu Pengguna Komunitas Modern</strong>: Komponen kartu modular interaktif dengan cover background dinamis, avatar presisi, moto hidup inspiratif, tombol chat cepat, dan tombol modal profil publik sosmed.</li>
+                                        <li><strong>Pencarian Live &amp; Batch Slider</strong>: Pencarian debounced instan dengan penanganan empty state dan navigasi batch pengguna (4 pengguna per view) tanpa reload.</li>
+                                        <li><strong>Prioritas Urutan Pertemanan &amp; Kelengkapan Profil</strong>: Rekan yang sudah berteman otomatis berada di urutan teratas dengan badge penanda khusus <code>Teman</code>, diikuti pembobotan kelengkapan data (login, avatar, background, moto, dan poin riil).</li>
+                                        <li><strong>Pencatatan Aktivitas Komunitas Komprehensif</strong>: Aliran aktivitas komunitas kini otomatis mencatat perubahan avatar, background cover, moto hidup/identitas, pertemanan, dan login.</li>
+                                        <li><strong>Sinkronisasi Realtime Penuh (Zero-Reload)</strong>: Seluruh komponen dashboard otomatis ter-update via polling cerdas dan multi-tab broadcast tanpa refresh dan tanpa mengganggu navigasi pengguna.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.46.0-->
+
                         <!--begin::Item v1.45.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.45.0</div>
@@ -56,7 +91,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>05 Okt 2026, 10:55 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Live Typing Indicator, In-Thread Search, Ekspor Chat &amp; Widget Dashboard Komunitas</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

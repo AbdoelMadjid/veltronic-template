@@ -128,11 +128,41 @@ const KTUserPresence = (function () {
             profileHeaderName.textContent = user.name;
         }
 
-        // 6. Broadcast to Dashboard Widget (if on Dashboard)
-        const dashboardWidget = document.getElementById('dashboard_presence_widget');
-        if (dashboardWidget) {
-            updateDashboardWidget(true);
+        // 5b. Update Dashboard Hero Header Cover & Avatar (if on Dashboard)
+        const heroCoverBg = document.getElementById('hero_dashboard_cover_bg');
+        if (heroCoverBg) {
+            const coverUrl = (user.settings && user.settings.cover_background_url) ? user.settings.cover_background_url : (user.cover_bg_url || '');
+            if (coverUrl) {
+                heroCoverBg.style.backgroundImage = `url('${coverUrl}')`;
+            }
+            if (user.settings && user.settings.cover_position_y !== undefined) {
+                heroCoverBg.style.backgroundPosition = `center ${user.settings.cover_position_y}%`;
+            }
+            if (user.settings && user.settings.cover_blur !== undefined) {
+                const blur = parseInt(user.settings.cover_blur) || 0;
+                heroCoverBg.style.filter = blur > 0 ? `blur(${blur}px)` : 'none';
+            }
         }
+        const heroCoverOverlay = document.getElementById('hero_dashboard_cover_overlay');
+        if (heroCoverOverlay && user.settings) {
+            if (user.settings.cover_overlay_color) heroCoverOverlay.style.backgroundColor = user.settings.cover_overlay_color;
+            if (user.settings.cover_opacity !== undefined) heroCoverOverlay.style.opacity = (parseInt(user.settings.cover_opacity) || 60) / 100;
+        }
+        const heroAvatar = document.getElementById('hero_dashboard_avatar');
+        if (heroAvatar) {
+            if (user.avatar_style) {
+                heroAvatar.style.cssText = user.avatar_style;
+            } else if (user.avatar_url) {
+                heroAvatar.style.backgroundImage = `url('${user.avatar_url}')`;
+            }
+        }
+        const heroName = document.getElementById('hero_dashboard_user_name');
+        if (heroName && user.name) heroName.textContent = user.name;
+        const heroMoto = document.getElementById('hero_dashboard_moto_hidup');
+        if (heroMoto && (user.moto_hidup || user.bio)) heroMoto.textContent = user.moto_hidup || user.bio;
+
+        // 6. Broadcast to Dashboard Widgets (if on Dashboard)
+        updateDashboardWidget(true);
 
         // 7. Broadcast to Chat (if Chat component active)
         if (window.KTAppCustomChat && typeof window.KTAppCustomChat.refresh === 'function') {
@@ -314,6 +344,45 @@ const KTUserPresence = (function () {
                             });
                         }
                     }
+                }
+
+                // 5. Update Leaderboard Widget (Zero-Reload Realtime)
+                if (data.html_leaderboard) {
+                    const lbContainer = document.getElementById('dashboard_leaderboard_widget');
+                    if (lbContainer) {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(data.html_leaderboard, 'text/html');
+                        const newLb = doc.getElementById('dashboard_leaderboard_widget') || doc.body.firstElementChild;
+                        if (newLb) {
+                            const newHash = newLb.innerHTML.trim();
+                            if (manualTrigger || lbContainer.getAttribute('data-widget-hash') !== newHash) {
+                                lbContainer.innerHTML = newLb.innerHTML;
+                                lbContainer.setAttribute('data-widget-hash', newHash);
+                            }
+                        }
+                    }
+                }
+
+                // 6. Update Live Activity Widget (Zero-Reload Realtime)
+                if (data.html_activity) {
+                    const actContainer = document.getElementById('dashboard_live_activity_widget');
+                    if (actContainer) {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(data.html_activity, 'text/html');
+                        const newAct = doc.getElementById('dashboard_live_activity_widget') || doc.body.firstElementChild;
+                        if (newAct) {
+                            const newHash = newAct.innerHTML.trim();
+                            if (manualTrigger || actContainer.getAttribute('data-widget-hash') !== newHash) {
+                                actContainer.innerHTML = newAct.innerHTML;
+                                actContainer.setAttribute('data-widget-hash', newHash);
+                            }
+                        }
+                    }
+                }
+
+                // 7. Update Community User Cards Grid (Zero-Reload Realtime)
+                if (data.html_user_cards && typeof window.KTCommunityUserCardsSync === 'function') {
+                    window.KTCommunityUserCardsSync(data.html_user_cards);
                 }
 
                 // Update counter badges
@@ -577,7 +646,7 @@ const KTUserPresence = (function () {
     const initGlobalFriendshipHandler = () => {
         // Handle View Public Profile Click across any page (Dashboard, Chat, Header, etc.)
         document.addEventListener('click', (e) => {
-            const profileLink = e.target.closest('.btn-view-public-profile');
+            const profileLink = e.target.closest('.btn-view-public-profile, .btn-open-public-profile, [data-action="view-public-profile"]');
             if (!profileLink) return;
 
             e.preventDefault();

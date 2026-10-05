@@ -5,6 +5,27 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.46.0] - 2026-10-05
+
+### Added
+- **Kartu Komunitas Pengguna Interaktif & Slider Batch Pengguna (`/dashboard` -> `widget-user-cards.blade.php`)**:
+  - **Desain Kartu Komunitas Modern**: Menggantikan blok statis lawas dengan kartu pengguna modular berdesain Metronic yang menyajikan cover background kustom, avatar mengambang dengan fokus posisi & zoom, indikator status online/offline, moto hidup dinamis, tombol pesan cepat, dan tombol modal profil.
+  - **Pencarian Cepat Pengguna (Live Search)**: Pencarian interaktif nama pengguna, jabatan/peran, moto hidup, dan email dengan debounce instan, tombol hapus pencarian [x], serta status pencarian kosong (*Empty State*).
+  - **Navigasi Batch Pengguna 4-Kartu**: Menampilkan 4 pengguna per tampilan dengan tombol navigasi Sebelumnya / Berikutnya, tombol Ke Awal, dan counter batch dinamis tanpa memuat ulang halaman.
+  - **Integrasi Modal Profil Publik (`#kt_modal_public_user_profile`)**: Tombol profil dan tautan nama pengguna langsung membuka modal profil publik sosmed-style dengan detail lengkap, kehadiran live, dan aksi pertemanan.
+- **Urutan Cerdas Kelengkapan Data & Prioritas Pertemanan**:
+  - **Prioritas Rekan Berteman**: Menampilkan pengguna yang sudah berteman dengan akun yang sedang login di urutan teratas dilengkapi badge penanda *Teman*.
+  - **Pembobotan Kelengkapan Profil**: Mengurutkan pengguna berdasarkan status login aktif, kepemilikan avatar kustom, cover background kustom, moto hidup, dan kelengkapan data kontak.
+  - **Moto Hidup Dinamis & Deterministik**: Menampilkan moto hidup asli pengguna jika sudah diisi, atau memilih kutipan inspiratif profesional acak yang konsisten per pengguna.
+- **Pencatatan Aktivitas Komunitas Lengkap (`UserPresenceService::getActivityStream`)**:
+  - Mencatat dan menampilkan linimasa pembaruan foto avatar, pembaruan background cover, moto hidup & identitas diri, pertemanan baru, serta aktivitas login pengguna.
+
+### Fixed & Enhanced
+- **Sinkronisasi Data Riil & Realtime Penuh Dashboard**:
+  - **Poin Riil Database**: Memastikan nilai poin pada kartu pengguna mengambil data riil dari kolom `users.points` tanpa manipulasi formula agregasi.
+  - **Penyederhanaan UI**: Menghilangkan label role pada widget Papan Peringkat dan Kartu Pengguna agar tampilan lebih bersih dan rapi.
+  - **Sinkronisasi Realtime Seluruh Widget**: Polling dan broadcast realtime multi-tab otomatis memperbarui Papan Peringkat, Aktivitas Komunitas, Hero Cover Banner, dan Kartu Pengguna tanpa reload dan tanpa mengganggu input pencarian yang sedang aktif.
+
 ## [v1.45.0] - 2026-10-05
 
 ### Added

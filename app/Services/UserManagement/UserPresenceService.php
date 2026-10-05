@@ -327,7 +327,54 @@ class UserPresenceService
             }
         }
 
-        // 2. Recent Active / Logged-in Users
+        // 2. Recent Profile & Media Updates (Avatar, Background Cover, Moto Hidup / Identitas)
+        $recentProfileLogs = \App\Models\Profil\UserLog::with('user')
+            ->where(function ($q) {
+                $q->where('activity', 'like', '%Avatar%')
+                  ->orWhere('activity', 'like', '%Foto Profil%')
+                  ->orWhere('activity', 'like', '%Background%')
+                  ->orWhere('activity', 'like', '%Cover%')
+                  ->orWhere('activity', 'like', '%Identitas%')
+                  ->orWhere('activity', 'like', '%Moto Hidup%');
+            })
+            ->latest('id')
+            ->take($limit)
+            ->get();
+
+        foreach ($recentProfileLogs as $pl) {
+            if ($pl->user) {
+                $actLower = strtolower($pl->activity);
+                $icon = 'ki-user-edit';
+                $color = 'primary';
+                $title = $pl->activity;
+
+                if (str_contains($actLower, 'avatar') || str_contains($actLower, 'foto profil')) {
+                    $icon = 'ki-picture';
+                    $color = 'primary';
+                    $title = 'Pembaruan Avatar';
+                } elseif (str_contains($actLower, 'background') || str_contains($actLower, 'cover')) {
+                    $icon = 'ki-gallery';
+                    $color = 'warning';
+                    $title = 'Pembaruan Background';
+                } elseif (str_contains($actLower, 'identitas') || str_contains($actLower, 'moto')) {
+                    $icon = 'ki-quote';
+                    $color = 'info';
+                    $title = 'Pembaruan Profil';
+                }
+
+                $activities[] = [
+                    'type' => 'profile_update',
+                    'icon' => $icon,
+                    'color' => $color,
+                    'title' => $title,
+                    'description' => "<strong>{$pl->user->name}</strong>: {$pl->description}",
+                    'time_human' => $pl->created_at ? $pl->created_at->diffForHumans() : 'Baru saja',
+                    'timestamp' => $pl->created_at ? $pl->created_at->timestamp : 0,
+                ];
+            }
+        }
+
+        // 3. Recent Active / Logged-in Users
         $recentLogins = User::whereNotNull('last_login_at')
             ->latest('last_login_at')
             ->take($limit)
@@ -345,7 +392,7 @@ class UserPresenceService
             ];
         }
 
-        // Sort combined activities by latest timestamp
+        // Sort combined activities by latest timestamp descending
         usort($activities, fn($a, $b) => $b['timestamp'] <=> $a['timestamp']);
 
         return array_slice($activities, 0, $limit);

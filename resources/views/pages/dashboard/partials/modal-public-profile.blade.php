@@ -1,3 +1,4 @@
+@once
 <!--begin::Modal - Profil Pengguna Publik (Sosmed Style)-->
 <div class="modal fade" id="kt_modal_public_user_profile" tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->
@@ -123,3 +124,4 @@
     <!--end::Modal dialog-->
 </div>
 <!--end::Modal - Profil Pengguna Publik-->
+@endonce

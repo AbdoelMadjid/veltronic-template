@@ -47,6 +47,9 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+        if ($user) {
+            \App\Services\UserManagement\UserPresenceService::setUserOffline($user);
+        }
 
         Auth::logout();
 

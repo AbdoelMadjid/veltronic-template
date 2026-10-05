@@ -163,12 +163,16 @@ const KTAppNotifications = (function () {
         }
 
         return `
-            <div class="d-flex align-items-start justify-content-between py-3 border-bottom border-gray-100 ${unreadClass} notif-row-item" id="notif_item_${item.id}">
+            <div class="d-flex align-items-start justify-content-between py-3 border-bottom border-gray-100 ${unreadClass} notif-row-item cursor-pointer" 
+                 id="notif_item_${item.id}" data-id="${item.id}" data-is-unread="${isUnread ? '1' : '0'}" data-category="${escapeHtml(item.category || '')}" data-type="${escapeHtml(item.type || '')}">
                 <div class="d-flex align-items-start min-w-0 flex-grow-1 me-2">
                     ${symbolHtml}
                     <div class="d-flex flex-column min-w-0 flex-grow-1">
                         <div class="d-flex align-items-center justify-content-between mb-1">
-                            <span class="text-gray-900 fw-bolder fs-7 text-truncate">${escapeHtml(item.title)}</span>
+                            ${item.action_url 
+                                ? `<a href="${escapeHtml(item.action_url)}" class="text-gray-900 text-hover-primary fw-bolder fs-7 text-truncate text-decoration-none">${escapeHtml(item.title)}</a>`
+                                : `<span class="text-gray-900 fw-bolder fs-7 text-truncate">${escapeHtml(item.title)}</span>`
+                            }
                             ${unreadDot}
                         </div>
                         <p class="text-gray-600 fs-8 mb-1 lh-sm">${escapeHtml(item.message)}</p>
@@ -243,6 +247,38 @@ const KTAppNotifications = (function () {
         });
     };
 
+    // Mark Single Notification as Read
+    const markSingleAsRead = (notificationId) => {
+        const token = getCsrfToken();
+        if (!notificationId || !token) return;
+
+        // Instant optimistic UI cleanup
+        const notifRow = document.getElementById(`notif_item_${notificationId}`);
+        if (notifRow) {
+            notifRow.setAttribute('data-is-unread', '0');
+            notifRow.classList.remove('bg-light-subtle', 'border-start', 'border-3', 'border-primary', 'ps-3');
+            const dot = notifRow.querySelector('.bullet-dot');
+            if (dot) dot.remove();
+        }
+
+        fetch(`/notifications/${notificationId}/read`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token,
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success' && data.stats) {
+                updateBadges(data.stats, data.unread_total);
+            }
+        })
+        .catch(() => {});
+    };
+
     // Mark All as Read Action
     const markAllAsRead = () => {
         const token = getCsrfToken();
@@ -290,6 +326,9 @@ const KTAppNotifications = (function () {
         .then(res => res.json())
         .then(data => {
             if (data.status === 'success') {
+                if (data.stats) {
+                    updateBadges(data.stats, data.unread_total);
+                }
                 fetchNotifications(true);
                 // Refresh presence widget on dashboard if active
                 if (window.KTUserPresence && window.KTUserPresence.refreshDashboard) {
@@ -310,6 +349,23 @@ const KTAppNotifications = (function () {
         });
     };
 
+    // Auto-mark informative unread notifications (e.g. friend_accepted) when panel is opened
+    const autoMarkInformativeRead = () => {
+        const unreadItems = document.querySelectorAll('.notif-row-item[data-is-unread="1"]');
+        unreadItems.forEach(itemEl => {
+            const type = itemEl.getAttribute('data-type');
+            const category = itemEl.getAttribute('data-category');
+            const id = itemEl.getAttribute('data-id');
+
+            // Automatically clear informational notifications when viewed in panel
+            if (type === 'friend_accepted' || category === 'system' || category === 'security') {
+                if (id) {
+                    markSingleAsRead(parseInt(id, 10));
+                }
+            }
+        });
+    };
+
     // Initialize Event Listeners
     const initEvents = () => {
         // Mark All Read Button
@@ -326,14 +382,38 @@ const KTAppNotifications = (function () {
         // Delegate Click on Action Buttons (Accept / Decline) inside notification dropdowns
         document.addEventListener('click', (e) => {
             const actionBtn = e.target.closest('.btn-notif-action');
-            if (!actionBtn) return;
-
-            e.preventDefault();
-            const notifId = actionBtn.getAttribute('data-id');
-            const action = actionBtn.getAttribute('data-action');
-            if (notifId && action) {
-                handleAction(notifId, action, actionBtn);
+            if (actionBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const notifId = actionBtn.getAttribute('data-id');
+                const action = actionBtn.getAttribute('data-action');
+                if (notifId && action) {
+                    handleAction(notifId, action, actionBtn);
+                }
+                return;
             }
+
+            // Click on any unread notification row -> Mark as read
+            const notifRow = e.target.closest('.notif-row-item');
+            if (notifRow && notifRow.getAttribute('data-is-unread') === '1') {
+                const notifId = notifRow.getAttribute('data-id');
+                if (notifId) {
+                    markSingleAsRead(parseInt(notifId, 10));
+                }
+            }
+
+            // Detect opening notification menu
+            const notifToggle = e.target.closest('#kt_header_notifications_toggle, [data-kt-menu-trigger="click"]');
+            if (notifToggle) {
+                setTimeout(autoMarkInformativeRead, 500);
+            }
+        });
+
+        // Tab click inside notification dropdown -> Auto mark viewed informative notifications
+        document.querySelectorAll('#kt_menu_notifications .nav-link, #kt_menu_notifications_v2 .nav-link').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', () => {
+                setTimeout(autoMarkInformativeRead, 300);
+            });
         });
     };
 

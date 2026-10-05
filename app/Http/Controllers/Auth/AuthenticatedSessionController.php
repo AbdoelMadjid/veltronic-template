@@ -61,6 +61,11 @@ class AuthenticatedSessionController extends Controller
         $frontpage = $request->session()->get('frontpage');
         $themeVersion = $request->session()->get('theme_version');
 
+        $user = Auth::guard('web')->user();
+        if ($user) {
+            \App\Services\UserManagement\UserPresenceService::setUserOffline($user);
+        }
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

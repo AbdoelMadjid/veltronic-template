@@ -26,7 +26,7 @@ class AppNotificationService
                 'message' => Str::limit($previewText, 60),
                 'icon' => 'ki-messages',
                 'color' => 'info',
-                'action_url' => route('profil.profil-pengguna.chat'),
+                'action_url' => route('profil.profil-pengguna.chat', ['user' => $sender->id]),
                 'data' => [
                     'sender_id' => $sender->id,
                     'sender_name' => $sender->name,
@@ -50,13 +50,14 @@ class AppNotificationService
             ? "{$unreadCount} Pesan Baru dari {$sender->name}" 
             : "Pesan Baru dari {$sender->name}";
 
-        // Find existing unread chat notification from this sender
+        // Find existing unread chat notification from this sender (database-agnostic)
         $existing = AppNotification::forUser($targetUser)
             ->byCategory('chat')
             ->unread()
-            ->whereJsonContains('data->sender_id', $sender->id)
-            ->latest('id')
-            ->first();
+            ->get()
+            ->first(function ($n) use ($sender) {
+                return isset($n->data['sender_id']) && (int) $n->data['sender_id'] === (int) $sender->id;
+            });
 
         if ($existing) {
             $existing->update([
@@ -64,7 +65,7 @@ class AppNotificationService
                 'message' => Str::limit($previewText, 60),
                 'icon' => 'ki-messages',
                 'color' => 'info',
-                'action_url' => route('profil.profil-pengguna.chat'),
+                'action_url' => route('profil.profil-pengguna.chat', ['user' => $sender->id]),
                 'data' => [
                     'sender_id' => $sender->id,
                     'sender_name' => $sender->name,
@@ -78,9 +79,12 @@ class AppNotificationService
             AppNotification::forUser($targetUser)
                 ->byCategory('chat')
                 ->unread()
-                ->whereJsonContains('data->sender_id', $sender->id)
                 ->where('id', '!=', $existing->id)
-                ->delete();
+                ->get()
+                ->filter(function ($n) use ($sender) {
+                    return isset($n->data['sender_id']) && (int) $n->data['sender_id'] === (int) $sender->id;
+                })
+                ->each(fn($n) => $n->delete());
 
             return $existing;
         }
@@ -93,7 +97,7 @@ class AppNotificationService
             'message' => Str::limit($previewText, 60),
             'icon' => 'ki-messages',
             'color' => 'info',
-            'action_url' => route('profil.profil-pengguna.chat'),
+            'action_url' => route('profil.profil-pengguna.chat', ['user' => $sender->id]),
             'data' => [
                 'sender_id' => $sender->id,
                 'sender_name' => $sender->name,
@@ -102,6 +106,26 @@ class AppNotificationService
             ],
             'action_state' => null,
         ]);
+    }
+
+    /**
+     * Mark all unread chat notifications from a specific sender as read.
+     */
+    public static function markChatNotificationsAsRead(User $user, int $senderId): void
+    {
+        AppNotification::forUser($user)
+            ->byCategory('chat')
+            ->unread()
+            ->get()
+            ->filter(function ($n) use ($senderId) {
+                return isset($n->data['sender_id']) && (int) $n->data['sender_id'] === (int) $senderId;
+            })
+            ->each(function ($n) {
+                $n->update([
+                    'is_read' => true,
+                    'read_at' => Carbon::now(),
+                ]);
+            });
     }
 
     /**
@@ -147,6 +171,7 @@ class AppNotificationService
 
             $primaryNotif->update([
                 'title' => $title,
+                'action_url' => route('profil.profil-pengguna.chat', ['user' => $senderId]),
                 'data' => $notifData,
             ]);
 

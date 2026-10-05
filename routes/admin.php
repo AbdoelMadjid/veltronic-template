@@ -153,6 +153,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profil-pengguna/chat/contacts', [\App\Http\Controllers\Profil\ChatController::class, 'getContacts'])->name('profil-pengguna.chat.contacts');
         Route::get('/profil-pengguna/chat/conversation/{user}', [\App\Http\Controllers\Profil\ChatController::class, 'getConversation'])->name('profil-pengguna.chat.conversation');
         Route::post('/profil-pengguna/chat/send/{user}', [\App\Http\Controllers\Profil\ChatController::class, 'sendMessage'])->name('profil-pengguna.chat.send');
+        Route::post('/profil-pengguna/chat/typing/{user}', [\App\Http\Controllers\Profil\ChatController::class, 'recordTyping'])->name('profil-pengguna.chat.typing');
+        Route::get('/profil-pengguna/chat/export/{user}', [\App\Http\Controllers\Profil\ChatController::class, 'exportConversation'])->name('profil-pengguna.chat.export');
         Route::post('/profil-pengguna/chat/edit/{id}', [\App\Http\Controllers\Profil\ChatController::class, 'editMessage'])->name('profil-pengguna.chat.edit');
         Route::post('/profil-pengguna/chat/pin/{id}', [\App\Http\Controllers\Profil\ChatController::class, 'togglePinMessage'])->name('profil-pengguna.chat.pin');
         Route::post('/profil-pengguna/chat/react/{id}', [\App\Http\Controllers\Profil\ChatController::class, 'reactMessage'])->name('profil-pengguna.chat.react');

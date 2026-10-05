@@ -36,6 +36,22 @@ class UserFriendship extends Model
     }
 
     /**
+     * Alias for sender (user).
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Alias for receiver (friend).
+     */
+    public function friend(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'friend_id');
+    }
+
+    /**
      * Scope pending requests.
      */
     public function scopePending(Builder $query): Builder

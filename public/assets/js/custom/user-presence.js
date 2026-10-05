@@ -11,7 +11,7 @@ const KTUserPresence = (function () {
     // Configuration
     const IDLE_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes without interaction -> Idle
     const HEARTBEAT_INTERVAL_MS = 45 * 1000; // Send heartbeat every 45s
-    const DASHBOARD_POLL_INTERVAL_MS = 15 * 1000; // Refresh widget every 15s when on dashboard
+    const DASHBOARD_POLL_INTERVAL_MS = 8 * 1000; // Refresh widget every 8s when on dashboard
 
     // State variables
     let lastActivityTime = Date.now();
@@ -21,11 +21,138 @@ const KTUserPresence = (function () {
     let dashboardPollTimer = null;
     let activeFilter = 'all'; // 'all' | 'online' | 'idle' | 'offline'
     let isRequestInProgress = false;
+    let lastSyncedUserHash = '';
+    let userSyncChannel = null;
+
+    // Setup Cross-Tab Realtime Broadcast Channel
+    try {
+        if (typeof BroadcastChannel !== 'undefined') {
+            userSyncChannel = new BroadcastChannel('veltronic_user_sync_channel');
+            userSyncChannel.onmessage = (event) => {
+                if (event.data && event.data.type === 'USER_UPDATED' && event.data.user) {
+                    applyGlobalUserUpdate(event.data.user, false);
+                }
+            };
+        }
+    } catch (e) {}
+
+    // Fallback Cross-Tab Storage Listener
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'veltronic_user_sync_event' && e.newValue) {
+            try {
+                const data = JSON.parse(e.newValue);
+                if (data && data.user) {
+                    applyGlobalUserUpdate(data.user, false);
+                }
+            } catch (err) {}
+        }
+    });
 
     // Helper: Get CSRF Token
     const getCsrfToken = () => {
         const meta = document.querySelector('meta[name="csrf-token"]');
         return meta ? meta.getAttribute('content') : '';
+    };
+
+    // Apply Global User Profile & Avatar Updates in DOM across All Modules (Zero-Reload Realtime)
+    const applyGlobalUserUpdate = (user, broadcast = true) => {
+        if (!user || typeof user !== 'object') return;
+
+        const currentHash = JSON.stringify({
+            name: user.name,
+            email: user.email,
+            avatar_url: user.avatar_url,
+            avatar_style: user.avatar_style,
+            has_avatar: user.has_avatar,
+            role: user.role,
+            points: user.points
+        });
+
+        if (lastSyncedUserHash === currentHash && !broadcast) {
+            return;
+        }
+        lastSyncedUserHash = currentHash;
+
+        // 1. Update Topbar / Navbar Avatar
+        const navAvatars = document.querySelectorAll('#header_navbar_user_avatar, .header-navbar-user-avatar');
+        navAvatars.forEach(el => {
+            if (user.avatar_style) {
+                el.style.cssText = user.avatar_style;
+            } else if (user.avatar_url) {
+                el.style.backgroundImage = `url('${user.avatar_url}')`;
+                el.style.backgroundSize = 'cover';
+                el.style.backgroundPosition = 'center';
+            } else {
+                el.style.backgroundImage = '';
+            }
+        });
+
+        // 2. Update Topbar / Navbar User Name
+        const navNames = document.querySelectorAll('#header_navbar_user_name, .header-user-name');
+        navNames.forEach(el => {
+            if (user.name && el.textContent !== user.name) {
+                el.textContent = user.name;
+            }
+        });
+
+        // 3. Update Topbar / Navbar User Email
+        const navEmails = document.querySelectorAll('#header_navbar_user_email, .header-user-email');
+        navEmails.forEach(el => {
+            if (user.email && el.textContent !== user.email) {
+                el.textContent = user.email;
+            }
+        });
+
+        // 4. Update Lock Screen Avatar & Name (if initialized)
+        const lockScreenImg = document.getElementById('lock_screen_avatar_img');
+        if (lockScreenImg && user.avatar_url) {
+            lockScreenImg.style.backgroundImage = `url('${user.avatar_url}')`;
+            if (user.avatar_style) lockScreenImg.style.cssText = user.avatar_style;
+        }
+        const lockScreenName = document.getElementById('lock_screen_user_name');
+        if (lockScreenName && user.name) {
+            lockScreenName.textContent = user.name;
+        }
+
+        // 5. Update Profile Page Main Header Elements (if on Profile Page)
+        const profileHeaderImg = document.getElementById('profile_header_avatar_img');
+        if (profileHeaderImg) {
+            if (user.avatar_style) {
+                profileHeaderImg.style.cssText = user.avatar_style;
+            } else if (user.avatar_url) {
+                profileHeaderImg.style.backgroundImage = `url('${user.avatar_url}')`;
+            }
+        }
+        const profileHeaderName = document.getElementById('profile_header_user_name');
+        if (profileHeaderName && user.name) {
+            profileHeaderName.textContent = user.name;
+        }
+
+        // 6. Broadcast to Dashboard Widget (if on Dashboard)
+        const dashboardWidget = document.getElementById('dashboard_presence_widget');
+        if (dashboardWidget) {
+            updateDashboardWidget(true);
+        }
+
+        // 7. Broadcast to Chat (if Chat component active)
+        if (window.KTAppCustomChat && typeof window.KTAppCustomChat.refresh === 'function') {
+            window.KTAppCustomChat.refresh();
+        }
+
+        // 8. Dispatch Local Event for other modular scripts
+        window.dispatchEvent(new CustomEvent('kt.user.updated', { detail: user }));
+
+        // 9. Broadcast across Other Browser Tabs / Windows
+        if (broadcast) {
+            if (userSyncChannel) {
+                try {
+                    userSyncChannel.postMessage({ type: 'USER_UPDATED', user: user, timestamp: Date.now() });
+                } catch (e) {}
+            }
+            try {
+                localStorage.setItem('veltronic_user_sync_event', JSON.stringify({ user: user, timestamp: Date.now() }));
+            } catch (e) {}
+        }
     };
 
     // Send heartbeat to backend
@@ -49,6 +176,23 @@ const KTUserPresence = (function () {
                 stopTimers();
             }
             return response.json();
+        })
+        .then(data => {
+            if (data && data.status === 'success' && data.user) {
+                const incomingHash = JSON.stringify({
+                    name: data.user.name,
+                    email: data.user.email,
+                    avatar_url: data.user.avatar_url,
+                    avatar_style: data.user.avatar_style,
+                    has_avatar: data.user.has_avatar,
+                    role: data.user.role,
+                    points: data.user.points
+                });
+
+                if (incomingHash !== lastSyncedUserHash) {
+                    applyGlobalUserUpdate(data.user, true);
+                }
+            }
         })
         .catch(() => {
             // Ignore network glitch gracefully
@@ -125,10 +269,50 @@ const KTUserPresence = (function () {
         .then(data => {
             if (data.status === 'success') {
                 if (itemsList && data.html !== undefined) {
-                    itemsList.innerHTML = data.html;
-                    // Re-initialize any Metronic tooltips inside widget
-                    if (typeof KTComponents !== 'undefined' && KTComponents.init) {
-                        KTComponents.init();
+                    // Create simple signature to avoid rebuilding DOM if nothing changed
+                    const newHash = JSON.stringify(data.users ? data.users.map(u => ({
+                        id: u.id,
+                        status: u.status,
+                        friendStatus: u.friendship_status,
+                        lastSeen: u.last_seen_human,
+                        avatar: u.avatar_url,
+                        style: u.avatar_style,
+                        name: u.name
+                    })) : data.html);
+
+                    const prevHash = itemsList.getAttribute('data-html-hash');
+
+                    if (manualTrigger || prevHash !== newHash) {
+                        // 1. Dispose all active tooltips in itemsList before removing DOM
+                        const oldTooltips = itemsList.querySelectorAll('[data-bs-toggle="tooltip"]');
+                        oldTooltips.forEach(el => {
+                            try {
+                                if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+                                    const inst = bootstrap.Tooltip.getInstance(el);
+                                    if (inst) {
+                                        inst.hide();
+                                        inst.dispose();
+                                    }
+                                }
+                            } catch (e) {}
+                        });
+
+                        // 2. Remove any orphaned tooltip popovers hanging in body
+                        document.querySelectorAll('.tooltip[role="tooltip"], body > .tooltip').forEach(t => t.remove());
+
+                        // 3. Update DOM & hash
+                        itemsList.innerHTML = data.html;
+                        itemsList.setAttribute('data-html-hash', newHash);
+
+                        // 4. Initialize fresh tooltips with strict hover trigger
+                        if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+                            itemsList.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+                                new bootstrap.Tooltip(el, {
+                                    trigger: 'hover',
+                                    boundary: 'clippingParents'
+                                });
+                            });
+                        }
                     }
                 }
 
@@ -182,6 +366,7 @@ const KTUserPresence = (function () {
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
                 recordUserActivity();
+                updateDashboardWidget(false);
             }
         });
 
@@ -225,6 +410,16 @@ const KTUserPresence = (function () {
                 updateDashboardWidget(true);
             });
         }
+
+        // 3. Auto-fetch initial live data & start periodic polling timer (every 8s)
+        updateDashboardWidget(false);
+
+        if (dashboardPollTimer) clearInterval(dashboardPollTimer);
+        dashboardPollTimer = setInterval(() => {
+            if (document.visibilityState === 'visible') {
+                updateDashboardWidget(false);
+            }
+        }, DASHBOARD_POLL_INTERVAL_MS);
     };
 
     // Public Profile Modal Loader (Global & Accessible by all roles across all pages)
@@ -359,7 +554,7 @@ const KTUserPresence = (function () {
                 // Chat Button setup
                 const btnChat = document.getElementById('pub_user_btn_chat');
                 if (btnChat) {
-                    btnChat.setAttribute('href', `/profil/profil-pengguna/chat`);
+                    btnChat.setAttribute('href', `/profil/profil-pengguna/chat?user=${u.id}`);
                     btnChat.onclick = () => {
                         try {
                             sessionStorage.setItem('veltronic_target_chat_user', u.id);
@@ -401,6 +596,14 @@ const KTUserPresence = (function () {
             const token = getCsrfToken();
 
             if (!targetId || !token) return;
+
+            // Hide tooltip if active
+            try {
+                if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+                    const inst = bootstrap.Tooltip.getInstance(friendBtn);
+                    if (inst) inst.hide();
+                }
+            } catch (e) {}
 
             // Loading state
             friendBtn.setAttribute('data-kt-indicator', 'on');
@@ -507,6 +710,11 @@ const KTUserPresence = (function () {
 
         // Initialize dashboard widget if present
         initDashboardWidget();
+
+        // Realtime update on profile/avatar changes
+        window.addEventListener('kt.user.updated', () => {
+            updateDashboardWidget(true);
+        });
     };
 
     // Auto-init on DOM ready
@@ -522,6 +730,8 @@ const KTUserPresence = (function () {
         refreshDashboard: () => updateDashboardWidget(true),
         recordActivity: recordUserActivity,
         openPublicProfile: openPublicProfile,
+        syncUserProfile: (userData, broadcast = true) => applyGlobalUserUpdate(userData, broadcast),
+        broadcastUserUpdate: (userData) => applyGlobalUserUpdate(userData, true),
     };
 })();
 

@@ -24,9 +24,22 @@ class UserPresenceController extends Controller
         $status = $request->input('status', 'online');
         $presence = UserPresenceService::recordHeartbeat($user, $status);
 
+        $user->loadMissing(['roles', 'settingRecord']);
+
         return response()->json([
             'status' => 'success',
             'data' => $presence,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'avatar_url' => $user->avatar_url,
+                'avatar_style' => $user->avatar_style,
+                'has_avatar' => !empty($user->avatar),
+                'initial' => $user->initial,
+                'role' => strtoupper($user->roles->first()?->name ?? 'PENGGUNA'),
+                'points' => (int) ($user->points ?? 0),
+            ],
         ]);
     }
 

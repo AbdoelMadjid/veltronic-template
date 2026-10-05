@@ -62,10 +62,13 @@ class NotificationController extends Controller
         }
 
         $success = AppNotificationService::markAsRead($id, $user);
+        $stats = AppNotificationService::getUnreadStats($user);
 
         return response()->json([
             'status' => $success ? 'success' : 'not_found',
             'id' => $id,
+            'stats' => $stats,
+            'unread_total' => $stats['total'],
         ]);
     }
 
@@ -128,10 +131,14 @@ class NotificationController extends Controller
                     ]);
                 }
 
+                $stats = AppNotificationService::getUnreadStats($user);
+
                 return response()->json([
                     'status' => 'success',
                     'action_state' => 'accepted',
                     'message' => 'Permintaan pertemanan berhasil diterima!',
+                    'stats' => $stats,
+                    'unread_total' => $stats['total'],
                 ]);
             } elseif ($action === 'decline') {
                 if ($friendship) {
@@ -144,21 +151,28 @@ class NotificationController extends Controller
                     'read_at' => now(),
                 ]);
 
+                $stats = AppNotificationService::getUnreadStats($user);
+
                 return response()->json([
                     'status' => 'success',
                     'action_state' => 'declined',
                     'message' => 'Permintaan pertemanan ditolak.',
+                    'stats' => $stats,
+                    'unread_total' => $stats['total'],
                 ]);
             }
         }
 
         // Generic dismiss / read
         $notif->markAsRead();
+        $stats = AppNotificationService::getUnreadStats($user);
 
         return response()->json([
             'status' => 'success',
             'action_state' => 'read',
             'message' => 'Notifikasi telah diproses.',
+            'stats' => $stats,
+            'unread_total' => $stats['total'],
         ]);
     }
 }

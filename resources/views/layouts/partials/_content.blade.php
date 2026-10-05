@@ -584,6 +584,14 @@ $motoHidup = $authUser?->detail?->moto_hidup ?: 'You sit down. You stare at your
                         <!--begin::User Presence & Social Widget-->
                         @include('pages.dashboard.partials.widget-user-presence')
                         <!--end::User Presence & Social Widget-->
+
+                        <!--begin::User Leaderboard Widget-->
+                        @include('pages.dashboard.partials.widget-user-leaderboard')
+                        <!--end::User Leaderboard Widget-->
+
+                        <!--begin::Live Activity Stream Widget-->
+                        @include('pages.dashboard.partials.widget-live-activity')
+                        <!--end::Live Activity Stream Widget-->
                     </div>
                     <!--end::Sidebar-->
                 </div>

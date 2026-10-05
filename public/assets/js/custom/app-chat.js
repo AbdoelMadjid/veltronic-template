@@ -20,13 +20,81 @@ const KTAppCustomChat = (() => {
         { bg: 'bg-light-info', text: 'text-info' }
     ];
 
-    const POPULAR_EMOJIS = [
-        '😀','😃','😄','😁','😆','😅','😂','🤣','🙂','🙃','😉','😊','😇','🥰','😍','🤩','😘','😋','😜','🤪',
-        '🤑','🤗','🤔','🤐','🤨','😐','😏','😒','🙄','😬','😌','😔','😴','😷','🥵','🥶','🥴','😵','🥳','😎',
-        '🤓','🧐','🥺','😢','😭','😱','😡','🤬','💀','💩','🤡','👻','👽','🤖','👏','👍','👎','👊','✊','🤛',
-        '🤜','🤞','✌','🤟','🤘','👌','🤏','👈','👉','👆','👇','✋','👋','🤙','💪','🙏','🤝','❤️','🧡','💛',
-        '💚','💙','💜','🖤','🤍','💔','❣️','💕','💖','🔥','⭐','✨','💥','💯','🎉','🚀','☕','🍕','🍔','🏆'
-    ];
+    const EMOJI_CATEGORIES = {
+        faces: {
+            name: 'Wajah & Ekspresi',
+            icon: '😀',
+            emojis: [
+                '😀','😃','😄','😁','😆','😅','🤣','😂','🙂','🙃','🫠','😉','😊','😇','🥰','😍','🤩','😘','😗','😚',
+                '😙','😋','😛','😜','🤪','😝','🤑','🤗','🫣','🤭','🫢','🤫','🤔','🫡','🤐','🤨','😐','😑','😶','🫥',
+                '😏','😒','🙄','😬','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤕','🤢','🤮','🤧','🥵','🥶','🥴','😵',
+                '😵‍💫','🤯','🤠','🥳','🥸','😎','🤓','🧐','😕','🫤','😟','🙁','😮','😯','😲','😳','🥺','🥹','😦','😧',
+                '😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😤','😡','😠','🤬','😈','👿','💀',
+                '☠️','💩','🤡','👹','👺','👻','👽','👾','🤖'
+            ]
+        },
+        hands: {
+            name: 'Gestur & Tubuh',
+            icon: '👍',
+            emojis: [
+                '👋','🤚','🖐️','✋','🖖','🫱','🫲','🫳','🫴','🫵','👌','🤌','🤏','✌️','🤞','🫰','🤟','🤘','🤙','👈',
+                '👉','👆','🖕','👇','☝️','👍','👎','✊','👊','🤛','🤜','👏','🙌','🫶','👐','🤲','🤝','🙏','✍️','💅',
+                '🤳','💪','🦾','🦿','🦵','🦶','👂','🦻','👃','🧠','🫀','🫁','🦷','🦴','👀','👁️','👅','👄','🫦','💋'
+            ]
+        },
+        hearts: {
+            name: 'Hati & Cinta',
+            icon: '❤️',
+            emojis: [
+                '❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💔','❤️‍🔥','❤️‍🩹','❣️','💕','💞','💓','💗','💖','💘','💝',
+                '💟','💌','🫀','💑','💏','💋','🏩','💐','🌹','🥀','🌺','🌻','🌼','🌷','🌸'
+            ]
+        },
+        food: {
+            name: 'Makanan & Minuman',
+            icon: '🍕',
+            emojis: [
+                '☕','🍵','🧃','🥤','🧋','🍶','🍺','🍻','🥂','🍷','🥃','🍸','🍹','🧉','🍕','🍔','🍟','🌭','🥪','🌮',
+                '🌯','🫔','🥙','🧆','🍜','🍝','🍣','🍱','🥟','🍤','🍙','🍚','🍛','🍲','🥘','🍳','🍞','🥐','🥖','🥨',
+                '🥯','🧀','🥗','🍿','🧈','🍦','🍧','🍨','🍩','🍪','🎂','🍰','🧁','🍫','🍬','🍭','🍮','🍯','🍎','🍊',
+                '🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🥑','🍆','🥔','🥕','🌽','🌶️','🥒'
+            ]
+        },
+        nature: {
+            name: 'Hewan & Alam',
+            icon: '🐶',
+            emojis: [
+                '🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐻‍❄️','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🐔','🐧','🐦','🐤',
+                '🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🪱','🐛','🦋','🐌','🐞','🐜','🪰','🪲','🪳','🦟','🦗',
+                '🕷️','🦂','🐢','🐍','🦎','🐙','🦑','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🐊','🐅','🐆','🦓',
+                '🦍','🦧','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🦬','🌲','🌳','🌴','🌵','🌾','🌿','☘️','🍀','🍁','🍂',
+                '🍃','🌙','☀️','⛅','🌧️','❄️','🌈','🌊'
+            ]
+        },
+        objects: {
+            name: 'Objek & Aktivitas',
+            icon: '🔥',
+            emojis: [
+                '🔥','⭐','🌟','✨','⚡','💥','💯','💢','💨','💫','💬','💭','💡','🔔','🔕','📢','📣','🎁','🎈','🎉',
+                '🎊','🏆','🥇','🥈','🥉','🎯','🎲','🎮','🕹️','📱','💻','🖥️','📷','📸','📹','🎥','🎙️','🎧','📻','📺',
+                '⌚','⏰','⌛','⏳','🔑','🗝️','🔒','🔓','💰','💵','💳','💎','📦','✉️','📮','🏷️','📌','📍','📎','✂️',
+                '📝','✏️','📖','📚','🔖','🛡️','🚩','⚽','🏀','🏈','⚾','🎾','🏐','🎱','🏓','🏸','🥊','🥋','⛳'
+            ]
+        },
+        travel: {
+            name: 'Perjalanan & Tempat',
+            icon: '🚀',
+            emojis: [
+                '🚀','🛸','🚁','✈️','🛩️','🛫','🛬','🚗','🚕','🚙','🚌','🚎','🏎️','🚓','🚑','🚒','🚐','🛻','🚚','🚛',
+                '🚜','🛴','🚲','🛵','🏍️','🛺','🚨','🚔','🚂','🚆','🚄','🚅','🚈','🚇','🚢','⛵','🚤','⚓','🚦','⛽',
+                '🗽','🗼','🏰','🏯','🏟️','🎡','🎢','🎠','🏖️','🏝️','🏕️','⛺','🏔️','🗻','🏠','🏡','🏢','🏬','🏫','🏨',
+                '🏦','🏪','🏥','🕌','⛪','⛩️'
+            ]
+        }
+    };
+
+    const ALL_EMOJIS = Object.values(EMOJI_CATEGORIES).flatMap(c => c.emojis);
+    const POPULAR_EMOJIS = ALL_EMOJIS;
 
     const QUICK_REACTIONS = ['👍', '❤️', '😂', '😮', '😢', '🙏', '🔥', '🎉'];
 
@@ -90,7 +158,7 @@ const KTAppCustomChat = (() => {
         return innerHtml;
     };
 
-    // Get pre-selected user ID from sessionStorage or fallback URL parameter (and clean URL)
+    // Get pre-selected user ID from sessionStorage or URL parameter
     const getTargetInitialUserId = () => {
         let targetId = null;
         try {
@@ -102,7 +170,7 @@ const KTAppCustomChat = (() => {
         } catch (e) {}
 
         const params = new URLSearchParams(window.location.search);
-        const u = params.get('user');
+        const u = params.get('user') || params.get('user_id') || params.get('target') || params.get('sender_id');
         if (u) {
             try {
                 window.history.replaceState(null, '', window.location.pathname);
@@ -272,6 +340,7 @@ const KTAppCustomChat = (() => {
                             Balas
                         </a>
                     </li>
+                    ${isSender ? `
                     <li>
                         <a class="dropdown-item d-flex align-items-center py-2 px-4 fs-7 fw-semibold text-gray-800 btn-msg-action-edit" href="javascript:void(0)"
                            data-message-id="${msg.id}" data-message-text="${escapeHtml(hasMessageText ? msg.message : '')}">
@@ -279,6 +348,7 @@ const KTAppCustomChat = (() => {
                             Edit
                         </a>
                     </li>
+                    ` : ''}
                     <li>
                         <a class="dropdown-item d-flex align-items-center py-2 px-4 fs-7 fw-semibold text-gray-800 btn-msg-action-forward" href="javascript:void(0)"
                            data-message-id="${msg.id}" data-message-text="${escapeHtml(safeActionText)}">
@@ -305,6 +375,16 @@ const KTAppCustomChat = (() => {
             </div>
         `;
 
+        // Read receipt status indicator for sender messages
+        let readStatusHtml = '';
+        if (isSender) {
+            if (msg.is_read) {
+                readStatusHtml = `<i class="ki-duotone ki-double-check fs-6 text-primary ms-1 chat-msg-status" title="Sudah dibaca"><span class="path1"></span><span class="path2"></span></i>`;
+            } else {
+                readStatusHtml = `<i class="ki-duotone ki-check fs-6 text-muted ms-1 chat-msg-status" title="Terkirim"><span class="path1"></span><span class="path2"></span></i>`;
+            }
+        }
+
         const reactionBtnHtml = `
             <button type="button" class="btn btn-sm btn-icon btn-white bg-body text-gray-500 hover-color-primary shadow-xs rounded-circle w-28px h-28px border border-gray-200 btn-open-reaction-picker"
                     data-message-id="${msg.id}" title="Beri Reaksi Emoticon">
@@ -317,8 +397,9 @@ const KTAppCustomChat = (() => {
                 <div class="d-flex justify-content-end mb-10 chat-bubble-container" data-message-id="${msg.id}">
                     <div class="d-flex flex-column align-items-end position-relative mw-lg-500px">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="me-3">
+                            <div class="me-3 d-flex align-items-center">
                                 <span class="text-muted fs-7 mb-1">${escapeHtml(msg.time)}</span>
+                                ${readStatusHtml}
                                 ${pinnedBadgeHtml}
                                 <a href="javascript:void(0)" class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">Anda</a>
                             </div>
@@ -382,37 +463,56 @@ const KTAppCustomChat = (() => {
         const isActive = activeUserId === contact.id;
         const presence = contact.presence || {};
         const isOnline = presence.status === 'online';
+        const isTyping = Boolean(contact.is_typing);
         const avatarInnerHtml = buildAvatarHtml(contact, 'symbol-45px', true);
 
-        const lastMsgText = contact.last_message 
-            ? ((contact.last_message.is_sender ? 'Anda: ' : '') + contact.last_message.text) 
-            : contact.email;
-        const lastMsgTime = contact.last_message 
-            ? contact.last_message.time 
-            : (isOnline ? '<span class="badge badge-light-success fs-9 py-0 px-2 rounded-pill">Online</span>' : '');
+        let lastMsgText = '';
+        if (contact.last_message) {
+            lastMsgText = escapeHtml((contact.last_message.is_sender ? 'Anda: ' : '') + contact.last_message.text);
+        } else {
+            lastMsgText = escapeHtml(contact.email);
+        }
+
+        let lastMsgTime = '';
+        if (isTyping) {
+            lastMsgTime = `<span class="badge badge-light-primary text-primary fs-9 py-0 px-2 rounded-pill fw-bold">Mengetik...</span>`;
+        } else if (contact.last_message) {
+            lastMsgTime = escapeHtml(contact.last_message.time);
+        } else if (isOnline) {
+            lastMsgTime = '<span class="badge badge-light-success fs-9 py-0 px-2 rounded-pill">Online</span>';
+        }
+
         const unreadBadge = contact.unread_count > 0 ? `
             <span class="badge badge-sm badge-circle badge-light-success">${contact.unread_count}</span>
         ` : '';
 
         return `
-            <div class="d-flex flex-stack py-3 px-3 rounded cursor-pointer chat-contact-item transition-all ${isActive ? 'bg-light-primary' : 'bg-hover-light'}"
+            <div class="d-flex flex-stack py-4 px-3 rounded cursor-pointer chat-contact-item transition-all ${isActive ? 'bg-light-primary' : 'bg-hover-light'}"
                 data-user-id="${contact.id}" data-user-name="${escapeHtml(contact.name)}" style="cursor: pointer;">
+                <!--begin::Details-->
                 <div class="d-flex align-items-center overflow-hidden pointer-events-none">
+                    <!--begin::Avatar-->
                     <div class="symbol symbol-45px symbol-circle position-relative flex-shrink-0">
                         ${avatarInnerHtml}
                         ${isOnline ? '<div class="symbol-badge bg-success start-100 top-100 border-4 h-8px w-8px ms-n2 mt-n2"></div>' : ''}
                     </div>
-                    <div class="ms-4 overflow-hidden text-start">
-                        <span class="fs-6 fw-bold text-gray-900 text-hover-primary mb-1 d-block text-truncate ${isActive ? 'text-primary' : ''}">${escapeHtml(contact.name)}</span>
-                        <div class="fs-8 fw-semibold text-muted text-truncate ${contact.unread_count > 0 ? 'fw-bold text-gray-800' : ''}">${escapeHtml(lastMsgText)}</div>
+                    <!--end::Avatar-->
+                    <!--begin::Details-->
+                    <div class="ms-5 overflow-hidden text-start">
+                        <a href="javascript:void(0)" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2 d-block text-truncate ${isActive ? 'text-primary' : ''}">${escapeHtml(contact.name)}</a>
+                        <div class="fw-semibold text-muted text-truncate ${contact.unread_count > 0 ? 'fw-bold text-gray-800' : ''}">${lastMsgText}</div>
                     </div>
+                    <!--end::Details-->
                 </div>
+                <!--end::Details-->
+                <!--begin::Lat seen-->
                 <div class="d-flex flex-column align-items-end ms-2 flex-shrink-0 pointer-events-none">
-                    <span class="text-muted fs-8 mb-1">${lastMsgTime}</span>
+                    <span class="text-muted fs-7 mb-1">${lastMsgTime}</span>
                     ${unreadBadge}
                 </div>
+                <!--end::Lat seen-->
             </div>
-            <div class="separator separator-dashed my-1"></div>
+            <div class="separator separator-dashed d-none"></div>
         `;
     };
 
@@ -444,11 +544,17 @@ const KTAppCustomChat = (() => {
                 const contacts = data.contacts || [];
                 cachedContacts = contacts;
 
-                // Build signature of contact list to avoid unnecessary DOM rebuilding
+                // Build signature of contact list to avoid unnecessary DOM rebuilding while detecting profile/avatar/typing changes
                 const contactsSignature = JSON.stringify(contacts.map(c => ({
                     id: c.id,
+                    name: c.name,
+                    avatar: c.avatar_url,
+                    style: c.avatar_style,
+                    hasAvatar: c.has_avatar,
+                    initial: c.initial,
                     unread: c.unread_count,
                     status: c.presence?.status,
+                    isTyping: Boolean(c.is_typing),
                     lastText: c.last_message?.text,
                     lastTime: c.last_message?.time
                 })));
@@ -512,6 +618,17 @@ const KTAppCustomChat = (() => {
                     let targetToSelect = activeUserId;
                     if (!targetToSelect) {
                         targetToSelect = autoSelectUserId || getTargetInitialUserId();
+                    }
+
+                    // If still no target, auto-select first unread contact or first active conversation or first contact in list
+                    if (!targetToSelect && contacts && contacts.length > 0) {
+                        const unreadContact = contacts.find(c => (c.unread_count || 0) > 0);
+                        if (unreadContact) {
+                            targetToSelect = unreadContact.id;
+                        } else {
+                            const firstActive = contacts.find(c => Boolean(c.last_message));
+                            targetToSelect = firstActive ? firstActive.id : contacts[0].id;
+                        }
                     }
 
                     if (targetToSelect) {
@@ -720,15 +837,10 @@ const KTAppCustomChat = (() => {
             return;
         }
 
-        // Show spinner ONLY when explicitly switching users
+        // Do not wipe threadContainer with spinner to eliminate flickering/jumping
         if (!silent && isSwitchingUser && threadContainer) {
             threadContainer.removeAttribute('data-chat-hash');
-            threadContainer.innerHTML = `
-                <div class="d-flex align-items-center justify-content-center py-10">
-                    <div class="spinner-border spinner-border-sm text-primary me-2"></div>
-                    <span class="text-muted fs-7">Memuat percakapan...</span>
-                </div>
-            `;
+            threadContainer.style.opacity = '0.7';
         }
 
         fetch(`/profil/profil-pengguna/chat/conversation/${targetUserId}`, {
@@ -752,13 +864,23 @@ const KTAppCustomChat = (() => {
                 const triggerEmojiBtn = document.getElementById('chat_btn_trigger_emoji');
                 const triggerFileBtn = document.getElementById('chat_btn_trigger_file');
 
-                if (textInput && textInput.disabled) {
+                if (textInput) {
                     textInput.disabled = false;
+                    textInput.removeAttribute('disabled');
                     textInput.placeholder = 'Ketik pesan Anda...';
                 }
-                if (sendBtn && sendBtn.disabled && !isSending) sendBtn.disabled = false;
-                if (triggerEmojiBtn && triggerEmojiBtn.disabled) triggerEmojiBtn.disabled = false;
-                if (triggerFileBtn && triggerFileBtn.disabled) triggerFileBtn.disabled = false;
+                if (sendBtn && !isSending) {
+                    sendBtn.disabled = false;
+                    sendBtn.removeAttribute('disabled');
+                }
+                if (triggerEmojiBtn) {
+                    triggerEmojiBtn.disabled = false;
+                    triggerEmojiBtn.removeAttribute('disabled');
+                }
+                if (triggerFileBtn) {
+                    triggerFileBtn.disabled = false;
+                    triggerFileBtn.removeAttribute('disabled');
+                }
 
                 const elHeaderName = document.getElementById('chat_header_user_name');
                 const elHeaderStatus = document.getElementById('chat_header_user_status');
@@ -770,21 +892,56 @@ const KTAppCustomChat = (() => {
                     elHeaderName.textContent = targetUser.name;
                     elHeaderName.setAttribute('data-user-id', targetUser.id);
                 }
-                const newStatusLabel = targetUser.presence?.label || 'Active';
-                if (elHeaderStatus && elHeaderStatus.textContent !== newStatusLabel) {
-                    elHeaderStatus.textContent = newStatusLabel;
+
+                // Header status & Typing Indicator
+                const isTyping = Boolean(targetUser.is_typing);
+                if (elHeaderStatus) {
+                    if (isTyping) {
+                        elHeaderStatus.innerHTML = '<span class="text-primary fw-bold fst-italic">sedang mengetik...</span>';
+                    } else {
+                        const newStatusLabel = targetUser.presence?.label || 'Active';
+                        if (elHeaderStatus.textContent !== newStatusLabel) {
+                            elHeaderStatus.textContent = newStatusLabel;
+                        }
+                    }
                 }
+
                 if (elHeaderDot) {
-                    const newDotClass = `badge ${targetUser.presence?.badge_class || 'badge-success'} badge-circle w-10px h-10px me-1`;
+                    const newDotClass = `badge ${isTyping ? 'badge-primary' : (targetUser.presence?.badge_class || 'badge-success')} badge-circle w-10px h-10px me-1`;
                     if (elHeaderDot.className !== newDotClass) {
                         elHeaderDot.className = newDotClass;
                     }
                     elHeaderDot.classList.remove('d-none');
                 }
 
-                if (elHeaderAvatar && elHeaderAvatar.getAttribute('data-user-id') !== String(targetUser.id)) {
-                    elHeaderAvatar.innerHTML = buildAvatarHtml(targetUser, 'symbol-40px', true);
-                    elHeaderAvatar.setAttribute('data-user-id', targetUser.id);
+                // Update Live Typing Indicator Bubble (di atas composer)
+                const typingBubble = document.getElementById('chat_typing_indicator');
+                const typingName = document.getElementById('chat_typing_name');
+                if (typingBubble) {
+                    if (isTyping) {
+                        if (typingName) typingName.textContent = `${targetUser.name} sedang mengetik`;
+                        if (typingBubble.classList.contains('d-none')) {
+                            typingBubble.classList.remove('d-none');
+                            typingBubble.classList.add('d-flex');
+                            const scrollContainer = document.getElementById('chat_messages_scroll');
+                            if (scrollContainer && (scrollContainer.scrollHeight - scrollContainer.scrollTop - scrollContainer.clientHeight <= 120)) {
+                                scrollToBottom(true);
+                            }
+                        }
+                    } else {
+                        if (!typingBubble.classList.contains('d-none')) {
+                            typingBubble.classList.add('d-none');
+                            typingBubble.classList.remove('d-flex');
+                        }
+                    }
+                }
+
+                if (elHeaderAvatar) {
+                    const freshHeaderAvatarHtml = buildAvatarHtml(targetUser, 'symbol-40px', true);
+                    if (elHeaderAvatar.getAttribute('data-user-id') !== String(targetUser.id) || elHeaderAvatar.innerHTML.trim() !== freshHeaderAvatarHtml.trim()) {
+                        elHeaderAvatar.innerHTML = freshHeaderAvatarHtml;
+                        elHeaderAvatar.setAttribute('data-user-id', targetUser.id);
+                    }
                 }
 
                 if (btnViewProfile) {
@@ -797,13 +954,20 @@ const KTAppCustomChat = (() => {
 
                 // 3. Render Messages Thread Smartly & Reconcile Smoothly (Zero-Flicker)
                 if (threadContainer) {
+                    threadContainer.style.opacity = '1';
                     const newContentHash = JSON.stringify({
                         userId: targetUserId,
+                        targetAvatar: targetUser.avatar_url,
+                        targetStyle: targetUser.avatar_style,
+                        targetName: targetUser.name,
                         messages: messages.map(m => ({
                             id: m.id,
                             msg: m.message,
                             edited: m.is_edited ? 1 : 0,
                             pinned: m.is_pinned ? 1 : 0,
+                            senderAvatar: m.sender_avatar,
+                            senderStyle: m.sender_avatar_style,
+                            senderName: m.sender_name,
                             reactions: m.reactions || []
                         })),
                         pins: pinnedMessages.map(p => p.id)
@@ -869,6 +1033,19 @@ const KTAppCustomChat = (() => {
                                 threadContainer.insertAdjacentHTML('beforeend', renderMessageBubble(msg));
                                 hasNewMessages = true;
                             } else {
+                                // Update avatar & sender name if changed
+                                const avatarContainer = existingBubble.querySelector('.symbol.symbol-35px');
+                                if (avatarContainer) {
+                                    const freshAvatarHtml = buildAvatarHtml(msg, 'symbol-35px', true);
+                                    if (avatarContainer.innerHTML.trim() !== freshAvatarHtml.trim()) {
+                                        avatarContainer.innerHTML = freshAvatarHtml;
+                                    }
+                                }
+                                const senderNameEl = existingBubble.querySelector('.fs-5.fw-bold');
+                                if (senderNameEl && !msg.is_sender && senderNameEl.textContent !== msg.sender_name) {
+                                    senderNameEl.textContent = msg.sender_name;
+                                }
+
                                 // Update body text if edited
                                 const bodyText = existingBubble.querySelector('.message-body-text');
                                 if (bodyText && bodyText.textContent !== msg.message && msg.message && msg.message !== '[Foto Lampiran]' && msg.message !== '[Berkas Lampiran]') {
@@ -893,6 +1070,16 @@ const KTAppCustomChat = (() => {
                                     }
                                 } else if (!msg.is_pinned && pinIcon) {
                                     pinIcon.remove();
+                                }
+
+                                // Update Read receipt icon for sender
+                                const statusIcon = existingBubble.querySelector('.chat-msg-status');
+                                if (msg.is_sender && statusIcon) {
+                                    if (msg.is_read && !statusIcon.classList.contains('ki-double-check')) {
+                                        statusIcon.className = 'ki-duotone ki-double-check fs-6 text-primary ms-1 chat-msg-status';
+                                        statusIcon.setAttribute('title', 'Sudah dibaca');
+                                        statusIcon.innerHTML = '<span class="path1"></span><span class="path2"></span>';
+                                    }
                                 }
 
                                 // Update reactions without flashing
@@ -922,10 +1109,24 @@ const KTAppCustomChat = (() => {
                         }
                     }
 
+                    // 4. Update Typing Indicator Bubble
+                    const typingBubble = document.getElementById('chat_typing_indicator');
+                    const typingName = document.getElementById('chat_typing_name');
+                    if (typingBubble) {
+                        if (targetUser.is_typing) {
+                            if (typingName) typingName.textContent = `${targetUser.name} sedang mengetik`;
+                            typingBubble.classList.remove('d-none');
+                            typingBubble.classList.add('d-flex');
+                        } else {
+                            typingBubble.classList.add('d-none');
+                            typingBubble.classList.remove('d-flex');
+                        }
+                    }
+
                     updateScrollInstance();
                 }
 
-                // 4. Sync Topbar Notification Badges Live
+                // 5. Sync Topbar Notification Badges Live
                 if (window.KTAppNotifications) {
                     window.KTAppNotifications.refresh();
                 }
@@ -1036,8 +1237,15 @@ const KTAppCustomChat = (() => {
 
     // Send or Edit Message Handler
     const sendMessage = (e) => {
-        if (e) e.preventDefault();
-        if (isSending || !activeUserId) return;
+        if (isSending) return;
+        if (!activeUserId) {
+            if (cachedContacts && cachedContacts.length > 0) {
+                loadConversation(cachedContacts[0].id);
+            } else if (typeof toastr !== 'undefined') {
+                toastr.warning('Silakan pilih kontak terlebih dahulu.');
+            }
+            return;
+        }
 
         const textInput = document.getElementById('chat_message_input');
         const fileInput = document.getElementById('chat_file_input');
@@ -1416,17 +1624,60 @@ const KTAppCustomChat = (() => {
         const closeBtn = document.getElementById('chat_btn_close_emoji_picker');
         const container = document.getElementById('chat_emoji_items_container');
         const textInput = document.getElementById('chat_message_input');
+        const countBadge = document.getElementById('chat_emoji_count_badge');
+        const categoryTabs = document.getElementById('chat_emoji_category_tabs');
 
         if (!triggerBtn || !popover || !container) return;
 
-        // Render Emojis into container
-        container.innerHTML = POPULAR_EMOJIS.map(em => `
-            <span class="emoji-btn-item btn-composer-emoji" data-emoji="${em}">${em}</span>
-        `).join('');
+        let currentCat = 'all';
+
+        // Render Emojis for active category
+        const renderCategoryEmojis = (cat = 'all') => {
+            let emojisToRender = [];
+            if (cat === 'all') {
+                emojisToRender = ALL_EMOJIS;
+            } else if (EMOJI_CATEGORIES[cat]) {
+                emojisToRender = EMOJI_CATEGORIES[cat].emojis;
+            }
+
+            if (countBadge) {
+                countBadge.textContent = emojisToRender.length + '+';
+            }
+
+            container.innerHTML = emojisToRender.map(em => `
+                <span class="emoji-btn-item btn-composer-emoji" data-emoji="${em}" title="${em}">${em}</span>
+            `).join('');
+        };
+
+        // Initial render
+        renderCategoryEmojis('all');
+
+        // Category tab switching
+        if (categoryTabs) {
+            categoryTabs.addEventListener('click', (e) => {
+                const tabBtn = e.target.closest('.emoji-cat-tab-btn');
+                if (!tabBtn) return;
+
+                categoryTabs.querySelectorAll('.emoji-cat-tab-btn').forEach(b => {
+                    b.classList.remove('active', 'btn-light-primary');
+                    b.classList.add('btn-light');
+                });
+
+                tabBtn.classList.remove('btn-light');
+                tabBtn.classList.add('active', 'btn-light-primary');
+
+                currentCat = tabBtn.getAttribute('data-cat') || 'all';
+                renderCategoryEmojis(currentCat);
+            });
+        }
 
         triggerBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             e.stopPropagation();
             popover.classList.toggle('d-none');
+            if (!popover.classList.contains('d-none')) {
+                container.scrollTop = 0;
+            }
         });
 
         if (closeBtn) {
@@ -1501,14 +1752,166 @@ const KTAppCustomChat = (() => {
             });
         }
 
-        // 4. Textarea Enter to Send (Shift+Enter for new line)
+        // 4. Textarea Enter to Send & Typing Signal
         const textInput = document.getElementById('chat_message_input');
+        let lastTypingSentTime = 0;
+
+        const sendTypingSignal = () => {
+            if (!activeUserId) return;
+            const now = Date.now();
+            if (now - lastTypingSentTime > 2500) {
+                lastTypingSentTime = now;
+                fetch(`/profil/profil-pengguna/chat/typing/${activeUserId}`, {
+                    method: 'POST',
+                    headers: getHeaders(true),
+                    body: JSON.stringify({ _token: getCsrfToken() })
+                }).catch(() => {});
+            }
+        };
+
         if (textInput) {
+            textInput.addEventListener('input', () => {
+                sendTypingSignal();
+            });
+
             textInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
                     sendMessage();
+                } else {
+                    sendTypingSignal();
                 }
+            });
+        }
+
+        // 4b. In-Thread Search in Conversation
+        let searchMatches = [];
+        let currentSearchMatchIdx = -1;
+
+        const clearSearchHighlights = () => {
+            document.querySelectorAll('.chat-search-active-bubble').forEach(el => el.classList.remove('chat-search-active-bubble'));
+            searchMatches = [];
+            currentSearchMatchIdx = -1;
+            const countEl = document.getElementById('chat_search_match_count');
+            if (countEl) countEl.textContent = '0 hasil';
+        };
+
+        const performThreadSearch = (query) => {
+            clearSearchHighlights();
+            if (!query || query.trim() === '') return;
+
+            const qLower = query.toLowerCase().trim();
+            const thread = document.getElementById('chat_messages_thread');
+            if (!thread) return;
+
+            const bubbles = Array.from(thread.querySelectorAll('.chat-bubble-container'));
+            bubbles.forEach(bubble => {
+                const textContainer = bubble.querySelector('[data-kt-element="message-text"]') || bubble.querySelector('.message-body-text');
+                if (textContainer) {
+                    const txt = textContainer.textContent || '';
+                    if (txt.toLowerCase().includes(qLower)) {
+                        searchMatches.push(bubble);
+                    }
+                }
+            });
+
+            const countEl = document.getElementById('chat_search_match_count');
+            if (countEl) {
+                countEl.textContent = searchMatches.length > 0 ? `1 dari ${searchMatches.length}` : 'Tidak ditemukan';
+            }
+
+            if (searchMatches.length > 0) {
+                currentSearchMatchIdx = 0;
+                highlightSearchMatch(0);
+            }
+        };
+
+        const highlightSearchMatch = (idx) => {
+            if (!searchMatches[idx]) return;
+            document.querySelectorAll('.chat-search-active-bubble').forEach(el => el.classList.remove('chat-search-active-bubble'));
+
+            const targetBubble = searchMatches[idx];
+            const msgBody = targetBubble.querySelector('[data-kt-element="message-text"]') || targetBubble;
+            if (msgBody) msgBody.classList.add('chat-search-active-bubble');
+
+            targetBubble.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            const countEl = document.getElementById('chat_search_match_count');
+            if (countEl) {
+                countEl.textContent = `${idx + 1} dari ${searchMatches.length}`;
+            }
+        };
+
+        const btnToggleSearch = document.getElementById('chat_btn_toggle_search');
+        const searchBar = document.getElementById('chat_thread_search_bar');
+        const searchThreadInput = document.getElementById('chat_in_thread_search_input');
+        const btnSearchNext = document.getElementById('chat_btn_search_next');
+        const btnSearchPrev = document.getElementById('chat_btn_search_prev');
+        const btnCloseSearch = document.getElementById('chat_btn_close_search');
+
+        if (btnToggleSearch && searchBar && searchThreadInput) {
+            btnToggleSearch.addEventListener('click', () => {
+                const isHidden = searchBar.classList.contains('d-none');
+                if (isHidden) {
+                    searchBar.classList.remove('d-none');
+                    searchBar.classList.add('d-flex');
+                    searchThreadInput.focus();
+                    if (searchThreadInput.value.trim()) {
+                        performThreadSearch(searchThreadInput.value.trim());
+                    }
+                } else {
+                    searchBar.classList.add('d-none');
+                    searchBar.classList.remove('d-flex');
+                    clearSearchHighlights();
+                }
+            });
+        }
+
+        if (searchThreadInput) {
+            let threadSearchTimer = null;
+            searchThreadInput.addEventListener('input', () => {
+                clearTimeout(threadSearchTimer);
+                threadSearchTimer = setTimeout(() => {
+                    performThreadSearch(searchThreadInput.value.trim());
+                }, 200);
+            });
+        }
+
+        if (btnSearchNext) {
+            btnSearchNext.addEventListener('click', () => {
+                if (searchMatches.length === 0) return;
+                currentSearchMatchIdx = (currentSearchMatchIdx + 1) % searchMatches.length;
+                highlightSearchMatch(currentSearchMatchIdx);
+            });
+        }
+
+        if (btnSearchPrev) {
+            btnSearchPrev.addEventListener('click', () => {
+                if (searchMatches.length === 0) return;
+                currentSearchMatchIdx = (currentSearchMatchIdx - 1 + searchMatches.length) % searchMatches.length;
+                highlightSearchMatch(currentSearchMatchIdx);
+            });
+        }
+
+        if (btnCloseSearch && searchBar) {
+            btnCloseSearch.addEventListener('click', () => {
+                searchBar.classList.add('d-none');
+                searchBar.classList.remove('d-flex');
+                if (searchThreadInput) searchThreadInput.value = '';
+                clearSearchHighlights();
+            });
+        }
+
+        // 4c. Export Chat (.txt) Trigger
+        const btnExportTxt = document.getElementById('chat_btn_export_txt');
+        if (btnExportTxt) {
+            btnExportTxt.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!activeUserId) {
+                    if (typeof toastr !== 'undefined') toastr.warning('Silakan pilih ruang obrolan terlebih dahulu.');
+                    return;
+                }
+                window.location.href = `/profil/profil-pengguna/chat/export/${activeUserId}`;
             });
         }
 
@@ -1532,7 +1935,11 @@ const KTAppCustomChat = (() => {
         const sizeEl = document.getElementById('chat_attachment_size');
 
         if (triggerBtn && fileInput) {
-            triggerBtn.addEventListener('click', () => fileInput.click());
+            triggerBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                fileInput.click();
+            });
         }
 
         if (fileInput) {
@@ -1717,17 +2124,50 @@ const KTAppCustomChat = (() => {
                     const msgId = parseInt(openReactBtn.getAttribute('data-message-id'), 10);
                     document.querySelectorAll('.chat-reaction-popover').forEach(el => el.remove());
 
+                    const isSenderBubble = !!openReactBtn.closest('.chat-bubble-container.justify-content-end') || 
+                                           !!openReactBtn.closest('.d-flex.justify-content-end');
+
                     const popover = document.createElement('div');
                     popover.className = 'chat-reaction-popover position-absolute d-flex align-items-center gap-1 shadow-lg bg-body border border-gray-300';
                     popover.style.bottom = '100%';
                     popover.style.marginBottom = '6px';
                     popover.style.zIndex = '1050';
 
+                    if (isSenderBubble) {
+                        popover.style.right = '0';
+                        popover.style.left = 'auto';
+                    } else {
+                        popover.style.left = '0';
+                        popover.style.right = 'auto';
+                    }
+
                     popover.innerHTML = QUICK_REACTIONS.map(em => `
                         <span class="emoji-btn-item btn-quick-react-pop" data-message-id="${msgId}" data-emoji="${em}">${em}</span>
                     `).join('');
 
                     openReactBtn.parentElement.appendChild(popover);
+
+                    // Dynamic boundary auto-fit (ensures all 8 emojis are fully visible even for ultra-short messages)
+                    requestAnimationFrame(() => {
+                        const scrollEl = document.getElementById('chat_messages_scroll') || document.body;
+                        if (scrollEl && popover) {
+                            const scrollRect = scrollEl.getBoundingClientRect();
+                            const popRect = popover.getBoundingClientRect();
+                            const pad = 12;
+
+                            if (popRect.right > (scrollRect.right - pad)) {
+                                const overflowRight = popRect.right - (scrollRect.right - pad);
+                                popover.style.right = '0';
+                                popover.style.left = 'auto';
+                                popover.style.transform = `translateX(-${Math.max(0, overflowRight)}px)`;
+                            } else if (popRect.left < (scrollRect.left + pad)) {
+                                const overflowLeft = (scrollRect.left + pad) - popRect.left;
+                                popover.style.left = '0';
+                                popover.style.right = 'auto';
+                                popover.style.transform = `translateX(${Math.max(0, overflowLeft)}px)`;
+                            }
+                        }
+                    });
 
                     const closeHandler = (ev) => {
                         if (!popover.contains(ev.target) && ev.target !== openReactBtn && !openReactBtn.contains(ev.target)) {
@@ -1772,14 +2212,14 @@ const KTAppCustomChat = (() => {
             }
         }, 1500);
 
-        // Poll contacts list every 6 seconds for unread badges and snippet updates
+        // Poll contacts list every 2 seconds for realtime typing indicators, unread badges and snippet updates
         pollContactsTimer = setInterval(() => {
             if (document.visibilityState === 'visible') {
                 const searchInput = document.getElementById('chat_contact_search_input');
                 const query = searchInput ? searchInput.value.trim() : '';
                 loadContacts(query, null, true);
             }
-        }, 6000);
+        }, 2000);
 
         // Instant refresh when user switches back to this browser tab
         document.addEventListener('visibilitychange', () => {
@@ -1798,6 +2238,14 @@ const KTAppCustomChat = (() => {
         initListeners();
         loadContacts('', getTargetInitialUserId());
         initPolling();
+
+        // Realtime update on profile/avatar changes
+        window.addEventListener('kt.user.updated', () => {
+            loadContacts('', activeUserId, true);
+            if (activeUserId) {
+                loadConversation(activeUserId, true);
+            }
+        });
     };
 
     // Auto-init on DOM ready

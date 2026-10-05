@@ -10,9 +10,11 @@ use App\Services\AppSupport\AppNotificationService;
 use App\Services\UserManagement\UserPresenceService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ChatController extends Controller
 {
@@ -60,6 +62,7 @@ class ChatController extends Controller
 
         $contacts = $users->map(function ($targetUser) use ($currentUser) {
             $presence = UserPresenceService::getUserPresence($targetUser);
+            $isTyping = Cache::has("veltronic_typing_{$targetUser->id}_{$currentUser->id}");
 
             // Last message between current user and target user
             $lastMessage = AppChatMessage::conversation($currentUser->id, $targetUser->id)
@@ -90,6 +93,7 @@ class ChatController extends Controller
                 'has_avatar' => !empty($targetUser->avatar),
                 'initial' => $targetUser->initial,
                 'presence' => $presence,
+                'is_typing' => $isTyping,
                 'unread_count' => $unreadCount,
                 'last_message' => $lastMessage ? [
                     'text' => Str::limit($lastMsgText ?: '', 45),
@@ -141,14 +145,7 @@ class ChatController extends Controller
             ]);
 
         // Also mark corresponding chat notifications as read
-        AppNotification::forUser($currentUser)
-            ->where('category', 'chat')
-            ->whereJsonContains('data->sender_id', $targetUserId)
-            ->unread()
-            ->update([
-                'is_read' => true,
-                'read_at' => now(),
-            ]);
+        AppNotificationService::markChatNotificationsAsRead($currentUser, $targetUserId);
 
         // Fetch conversation messages
         $messages = AppChatMessage::conversation($currentUser->id, $targetUserId)
@@ -167,6 +164,7 @@ class ChatController extends Controller
         });
 
         $presence = UserPresenceService::getUserPresence($targetUser);
+        $isPartnerTyping = Cache::has("veltronic_typing_{$targetUserId}_{$currentUser->id}");
 
         return response()->json([
             'status' => 'success',
@@ -179,6 +177,7 @@ class ChatController extends Controller
                 'has_avatar' => !empty($targetUser->avatar),
                 'initial' => $targetUser->initial,
                 'presence' => $presence,
+                'is_typing' => $isPartnerTyping,
             ],
             'messages' => $formattedMessages,
             'pinned_messages' => $pinnedMessages,
@@ -252,6 +251,83 @@ class ChatController extends Controller
             'message' => 'Pesan berhasil dikirim.',
             'chat' => $this->formatMessage($chatMessage, $currentUser, $targetUser),
         ]);
+    }
+
+    /**
+     * Record typing indicator for current user chatting with target user.
+     */
+    public function recordTyping(Request $request, int $targetUserId): JsonResponse
+    {
+        $currentUser = $request->user() ?? auth()->user();
+        if (!$currentUser) {
+            return response()->json(['status' => 'error', 'message' => 'Unauthenticated.'], 401);
+        }
+
+        Cache::put("veltronic_typing_{$currentUser->id}_{$targetUserId}", true, now()->addSeconds(4));
+
+        return response()->json(['status' => 'success']);
+    }
+
+    /**
+     * Export conversation transcript as downloadable plain text file (.txt).
+     */
+    public function exportConversation(Request $request, int $targetUserId): StreamedResponse
+    {
+        $currentUser = $request->user() ?? auth()->user();
+        if (!$currentUser) {
+            abort(401);
+        }
+
+        $targetUser = User::findOrFail($targetUserId);
+
+        $messages = AppChatMessage::conversation($currentUser->id, $targetUserId)
+            ->with(['sender'])
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        $fileName = 'Riwayat_Chat_' . Str::slug($currentUser->name) . '_dan_' . Str::slug($targetUser->name) . '_' . date('Y-m-d_His') . '.txt';
+
+        $headers = [
+            'Content-Type' => 'text/plain; charset=utf-8',
+            'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
+            'Cache-Control' => 'no-store, no-cache',
+        ];
+
+        return response()->stream(function () use ($currentUser, $targetUser, $messages) {
+            $handle = fopen('php://output', 'w');
+            
+            fwrite($handle, "========================================================\n");
+            fwrite($handle, "RIWAYAT PERCAKAPAN VELTRONIC CHAT\n");
+            fwrite($handle, "Antara: {$currentUser->name} ({$currentUser->email}) & {$targetUser->name} ({$targetUser->email})\n");
+            fwrite($handle, "Diekspor Pada: " . date('Y-m-d H:i:s') . "\n");
+            fwrite($handle, "Total Pesan: " . $messages->count() . "\n");
+            fwrite($handle, "========================================================\n\n");
+
+            foreach ($messages as $msg) {
+                $senderName = $msg->sender_id === $currentUser->id ? $currentUser->name : $targetUser->name;
+                $time = $msg->created_at ? $msg->created_at->format('Y-m-d H:i:s') : '-';
+                
+                $line = "[{$time}] {$senderName}: ";
+                if (!empty($msg->message)) {
+                    $line .= $msg->message;
+                }
+                if ($msg->attachment_name) {
+                    $line .= " [Lampiran: {$msg->attachment_name}]";
+                }
+                if ($msg->is_forwarded) {
+                    $line .= " (Diteruskan)";
+                }
+                if ($msg->is_edited) {
+                    $line .= " (Diedit)";
+                }
+                $line .= "\n";
+                
+                fwrite($handle, $line);
+            }
+
+            fwrite($handle, "\n==================== AKHIR RIWAYAT ====================\n");
+            fclose($handle);
+        }, 200, $headers);
     }
 
     /**

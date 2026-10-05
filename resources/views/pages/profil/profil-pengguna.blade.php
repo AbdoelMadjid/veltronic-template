@@ -233,10 +233,20 @@
                 }
                 savedAvatarState.url = targetUrl;
 
-                // Dispatch global event for modular components (like KTLockScreen)
-                window.dispatchEvent(new CustomEvent('kt.user.updated', {
-                    detail: { avatar_url: avatarUrl, avatar_position_x: posX, avatar_position_y: posY, avatar_zoom: zoom }
-                }));
+                const userPayload = {
+                    avatar_url: avatarUrl,
+                    avatar_style: `background-image: url('${targetUrl}'); background-position: ${posX || '50'}% ${posY || '0'}%; background-size: ${zoom && parseInt(zoom) !== 100 ? zoom + '%' : 'cover'};`,
+                    avatar_position_x: posX,
+                    avatar_position_y: posY,
+                    avatar_zoom: zoom
+                };
+
+                // Broadcast across All Tabs & Modules Realtime
+                if (window.KTUserPresence && typeof window.KTUserPresence.broadcastUserUpdate === 'function') {
+                    window.KTUserPresence.broadcastUserUpdate(userPayload);
+                } else {
+                    window.dispatchEvent(new CustomEvent('kt.user.updated', { detail: userPayload }));
+                }
             }
 
             // Realtime updater: KTP card preview, modal, and placeholder
@@ -295,10 +305,14 @@
                         updateAvatarImages(data.user.avatar_url);
                     }
 
-                    // Dispatch global event
-                    window.dispatchEvent(new CustomEvent('kt.user.updated', {
-                        detail: data.user
-                    }));
+                    // Broadcast global user update across All Tabs & Modules
+                    if (window.KTUserPresence && typeof window.KTUserPresence.broadcastUserUpdate === 'function') {
+                        window.KTUserPresence.broadcastUserUpdate(data.user);
+                    } else {
+                        window.dispatchEvent(new CustomEvent('kt.user.updated', {
+                            detail: data.user
+                        }));
+                    }
                 }
 
                 if (data.detail) {

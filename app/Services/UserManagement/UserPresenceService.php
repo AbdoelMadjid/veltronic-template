@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Cache;
 class UserPresenceService
 {
     const CACHE_PREFIX = 'veltronic_user_presence_';
-    const ONLINE_TIMEOUT_SECONDS = 300; // 5 menit
-    const IDLE_TIMEOUT_SECONDS = 600;   // 10 menit
-    const CACHE_TTL_SECONDS = 900;      // 15 menit
+    const ONLINE_TIMEOUT_SECONDS = 90; // 90 detik (2x interval heartbeat 45 detik)
+    const IDLE_TIMEOUT_SECONDS = 300;  // 5 menit
+    const CACHE_TTL_SECONDS = 600;     // 10 menit
 
     /**
      * Record or update user heartbeat presence state.
@@ -110,16 +110,6 @@ class UserPresenceService
 
             if (!empty($cached['last_seen_at'])) {
                 $lastSeen = Carbon::parse($cached['last_seen_at']);
-            }
-        } elseif ($lastSeen) {
-            // Fallback to database last_login_at timestamp if cache key is cold
-            $dbSecondsDiff = Carbon::now()->diffInSeconds($lastSeen);
-            if ($dbSecondsDiff <= self::ONLINE_TIMEOUT_SECONDS) {
-                $status = 'online';
-            } elseif ($dbSecondsDiff <= self::IDLE_TIMEOUT_SECONDS) {
-                $status = 'idle';
-            } else {
-                $status = 'offline';
             }
         }
 
@@ -270,5 +260,94 @@ class UserPresenceService
             ],
             'timestamp' => Carbon::now()->toIso8601String(),
         ];
+    }
+
+    /**
+     * Get Top users leaderboard ranked by activity points.
+     *
+     * @param int $limit
+     * @return array
+     */
+    public static function getTopLeaderboard(int $limit = 5): array
+    {
+        $users = User::with(['roles'])
+            ->orderBy('points', 'desc')
+            ->take($limit)
+            ->get();
+
+        return $users->map(function ($u, $index) {
+            $presence = self::getUserPresence($u);
+            $primaryRole = $u->roles->first()?->name ?? 'Pengguna';
+
+            return [
+                'rank' => $index + 1,
+                'id' => $u->id,
+                'name' => $u->name,
+                'email' => $u->email,
+                'avatar_url' => $u->avatar_url,
+                'avatar_style' => $u->avatar_style,
+                'has_avatar' => !empty($u->avatar),
+                'initial' => $u->initial,
+                'points' => (int) ($u->points ?? 0),
+                'role' => strtoupper($primaryRole),
+                'status' => $presence['status'],
+                'badge_class' => $presence['badge_class'],
+            ];
+        })->toArray();
+    }
+
+    /**
+     * Get Live Activity Stream for Dashboard.
+     *
+     * @param int $limit
+     * @return array
+     */
+    public static function getActivityStream(int $limit = 6): array
+    {
+        $activities = [];
+
+        // 1. Recent Friendships
+        $recentFriends = \App\Models\UserManagement\UserFriendship::with(['user', 'friend'])
+            ->where('status', 'accepted')
+            ->latest('updated_at')
+            ->take($limit)
+            ->get();
+
+        foreach ($recentFriends as $rf) {
+            if ($rf->user && $rf->friend) {
+                $activities[] = [
+                    'type' => 'friendship',
+                    'icon' => 'ki-people',
+                    'color' => 'success',
+                    'title' => 'Pertemanan Baru',
+                    'description' => "<strong>{$rf->user->name}</strong> dan <strong>{$rf->friend->name}</strong> kini berteman.",
+                    'time_human' => $rf->updated_at ? $rf->updated_at->diffForHumans() : 'Baru saja',
+                    'timestamp' => $rf->updated_at ? $rf->updated_at->timestamp : 0,
+                ];
+            }
+        }
+
+        // 2. Recent Active / Logged-in Users
+        $recentLogins = User::whereNotNull('last_login_at')
+            ->latest('last_login_at')
+            ->take($limit)
+            ->get();
+
+        foreach ($recentLogins as $rl) {
+            $activities[] = [
+                'type' => 'login',
+                'icon' => 'ki-entrance-left',
+                'color' => 'primary',
+                'title' => 'Aktivitas Masuk',
+                'description' => "<strong>{$rl->name}</strong> baru saja aktif di sistem.",
+                'time_human' => $rl->last_login_at ? Carbon::parse($rl->last_login_at)->diffForHumans() : 'Baru saja',
+                'timestamp' => $rl->last_login_at ? Carbon::parse($rl->last_login_at)->timestamp : 0,
+            ];
+        }
+
+        // Sort combined activities by latest timestamp
+        usort($activities, fn($a, $b) => $b['timestamp'] <=> $a['timestamp']);
+
+        return array_slice($activities, 0, $limit);
     }
 }

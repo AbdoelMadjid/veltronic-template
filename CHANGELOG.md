@@ -5,6 +5,30 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.45.0] - 2026-10-05
+
+### Added
+- **Fitur Live Typing Indicator, In-Thread Search & Ekspor Riwayat Chat (`/profil/profil-pengguna/chat`)**:
+  - **Live Typing Indicator ("Sedang mengetik...")**:
+    - Deteksi pengetikan instan berbasis Cache TTL (4 detik) saat mitra obrolan mengetik di textarea composer.
+    - Menampilkan indikator pengetikan di header chat, bubble pengetikan bergerak di atas textarea, serta badge kapsul `Mengetik...` pada daftar kontak sidebar.
+  - **Pencarian Pesan Dalam Percakapan (*In-Thread Search*)**:
+    - Tombol pencarian interaktif di toolbar kartu percakapan dengan input pencarian instan.
+    - Menghitung jumlah pesan yang cocok (*match counter*), navigasi lompat Sebelumnya / Berikutnya (*Prev/Next*), serta penyorotan latar belakang pesan.
+  - **Ekspor Riwayat Percakapan (*Export Chat History .txt*)**:
+    - Fitur unduhan berkas teks `.txt` berisi seluruh riwayat percakapan lengkap dengan stempel waktu dan nama pengirim via streaming download (`/profil/profil-pengguna/chat/export/{user}`).
+  - **Indikator Status Pesan Terkirim & Terbaca (*Sent vs Read Checks*)**:
+    - Ikon centang tunggal abu-abu (`ki-check`) untuk pesan yang terkirim dan centang ganda biru (`ki-double-check`) untuk pesan yang telah dibaca penerima.
+- **Widget Papan Peringkat & Aktivitas Komunitas Dashboard (`/dashboard`)**:
+  - **Widget Top 5 Leaderboard Pengguna (`widget-user-leaderboard.blade.php`)**: Menampilkan daftar 5 pengguna teratas dengan poin aktivitas tertinggi, avatar, dan badge level.
+  - **Widget Live Activity Stream (`widget-live-activity.blade.php`)**: Menampilkan linimasa aktivitas komunitas realtime (kehadiran online, kirim pesan, friendship, dll.).
+
+### Fixed & Enhanced
+- **Perbaikan Relasi Model & Optimasi Realtime**:
+  - **Model `UserFriendship`**: Penambahan alias relasi `user()` dan `friend()` untuk mencegah `RelationNotFoundException`.
+  - **Widget Kehadiran Dashboard**: Penambahan hashing data (`data-html-hash`) dan pembersihan eksplisit tooltip Bootstrap untuk mengeliminasi bug tooltip menggantung saat polling data kehadiran.
+  - **Composer Chat Otomatis Aktif**: Penghapusan atribut `disabled` statis pada textarea composer dan tombol aksi, serta auto-select obrolan pertama saat halaman obrolan dibuka.
+
 ## [v1.44.1] - 2026-10-03
 
 ### Fixed & Enhanced

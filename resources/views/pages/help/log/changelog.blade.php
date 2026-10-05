@@ -34,29 +34,64 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.44.1
+                            Versi Saat Ini: v1.45.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
-                        <!--begin::Item v1.44.1 (Patch)-->
+                        <!--begin::Item v1.45.0 (Minor)-->
                         <div class="timeline-item mb-7">
-                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.44.1</div>
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.45.0</div>
                             <div class="timeline-badge">
                                 <i class="fa fa-genderless text-primary fs-1"></i>
                             </div>
                             <div class="timeline-content ps-3">
                                 <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
-                                    <span class="badge badge-primary fw-bold text-white">v1.44.1</span>
+                                    <span class="badge badge-primary fw-bold text-white">v1.45.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>05 Okt 2026, 10:55 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Live Typing Indicator, In-Thread Search, Ekspor Chat &amp; Widget Dashboard Komunitas</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Peningkatan komprehensif pada modul obrolan realtime dan dashboard. Menghadirkan fitur deteksi pengetikan instan (*Live Typing Indicator*) pada thread aktif dan sidebar kontak, pencarian cepat pesan dalam thread (*In-Thread Search*), ekspor berkas riwayat obrolan (<code>.txt</code>), indikator centang status pengiriman/terbaca (*Sent vs Read checks*), serta widget gamifikasi *Top 5 Leaderboard* dan *Community Live Activity Stream* di dashboard utama.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Live Typing Indicator</strong>: Animasi bubble pengetikan bergerak pada header chat, composer, dan badge kapsul <code>Mengetik...</code> pada sidebar kontak secara realtime.</li>
+                                        <li><strong>In-Thread Search</strong>: Pencarian teks percakapan instan dengan highlight, match counter, dan navigasi lompat sebelumnya/berikutnya.</li>
+                                        <li><strong>Ekspor Riwayat Percakapan</strong>: Unduhan log pesan berformat <code>.txt</code> langsung via streaming response.</li>
+                                        <li><strong>Indikator Centang Terkirim vs Dibaca</strong>: Ikon centang tunggal abu-abu (terkirim) dan centang ganda biru (dibaca) pada pesan pengirim.</li>
+                                        <li><strong>Widget Gamifikasi &amp; Aktivitas</strong>: Widget Top 5 User Leaderboard &amp; Live Activity Stream pada dashboard utama.</li>
+                                        <li><strong>Perbaikan Anti-Regresi</strong>: Memperbaiki relasi model <code>UserFriendship</code>, eliminasi bug tooltip menggantung pada widget kehadiran, serta auto-select obrolan aktif pertama.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.45.0 (Minor)-->
+
+                        <!--begin::Item v1.44.1 (Patch)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.44.1</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-muted fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-secondary fw-bold text-gray-800">v1.44.1</span>
                                     <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
                                     <span class="badge badge-light text-gray-700 fs-8 border">
                                         <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>03 Okt 2026, 01:35 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Optimasi Tata Letak &amp; Viewport Responsif Chat Realtime (/profil/profil-pengguna/chat)</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

@@ -1,5 +1,5 @@
 <!--begin::Tab pane: Table View-->
-<div id="kt_project_users_table_pane" class="tab-pane fade">
+<div id="kt_project_users_table_pane" class="tab-pane fade show active">
     <!--begin::Card-->
     <div class="card card-flush shadow-sm border-0">
         <!--begin::Card body-->

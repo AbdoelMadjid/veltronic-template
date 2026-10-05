@@ -46,23 +46,46 @@
                 <form id="kt_modal_bulk_role_form" class="form" action="#" method="POST">
                     @csrf
 
-                    <!--begin::Alert Selected Users Info-->
-                    <div class="notice d-flex bg-light-primary rounded-3 border-primary border border-dashed p-4 mb-6">
-                        <i class="ki-duotone ki-information-5 fs-2tx text-primary me-3 align-self-center">
-                            <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                        </i>
-                        <div class="d-flex flex-stack flex-grow-1">
-                            <div class="fw-semibold">
-                                <div class="fs-6 text-gray-900 fw-bold">
-                                    <span id="bulk_role_modal_count" class="badge badge-primary fs-7 me-1">0</span> Pengguna Terpilih
-                                </div>
-                                <div class="fs-8 text-muted">
-                                    Peran yang Anda pilih di bawah ini akan diterapkan sekaligus kepada pengguna yang telah dicentang.
-                                </div>
+                    <!--begin::Input group: Target Pengguna-->
+                    <div class="mb-6">
+                        <label class="fs-6 form-label fw-bold text-gray-800 required mb-3">Target Pengguna</label>
+                        <div class="row g-4">
+                            <!-- Option 1: Pengguna Terpilih -->
+                            <div class="col-sm-6">
+                                <label class="d-flex flex-column justify-content-between h-100 p-4 rounded-3 border border-dashed border-gray-300 cursor-pointer bg-light-subtle border-hover-primary" for="bulk_target_selected">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="fw-bold text-gray-800 fs-7">
+                                            Pengguna Terpilih (<span id="bulk_target_selected_count">0</span>)
+                                        </span>
+                                        <div class="form-check form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="radio" name="bulk_target" id="bulk_target_selected" value="selected" checked />
+                                        </div>
+                                    </div>
+                                    <span class="text-muted fs-8">
+                                        Hanya terapkan peran ke pengguna yang saat ini dicentang di tabel atau kartu.
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Option 2: Semua Pengguna -->
+                            <div class="col-sm-6">
+                                <label class="d-flex flex-column justify-content-between h-100 p-4 rounded-3 border border-dashed border-gray-300 cursor-pointer bg-light-subtle border-hover-primary" for="bulk_target_all">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="fw-bold text-gray-800 fs-7">
+                                            Semua Pengguna (<span id="bulk_target_all_count">{{ $users->total() }}</span>)
+                                        </span>
+                                        <div class="form-check form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="radio" name="bulk_target" id="bulk_target_all" value="all" />
+                                        </div>
+                                    </div>
+                                    <span class="text-muted fs-8">
+                                        Terapkan peran secara serentak ke seluruh akun pengguna yang ada di sistem database.
+                                    </span>
+                                </label>
                             </div>
                         </div>
                     </div>
-                    <!--end::Alert Selected Users Info-->
+                    <!--end::Input group: Target Pengguna-->
 
                     <!--begin::Input group: Pilih Roles-->
                     <div class="mb-6">

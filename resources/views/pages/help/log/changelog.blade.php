@@ -34,13 +34,46 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.46.1
+                            Versi Saat Ini: v1.47.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.47.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.47.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.47.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>05 Okt 2026, 19:35 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Penugasan Peran Massal Lanjutan (Semua/Terpilih), Default Tampilan Tabel Modul Pengguna, &amp; Standarisasi UserFactory Nama Indonesia</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyempurnaan arsitektur modul User Management (<code class="text-primary">/usermanagement/users</code>) dan generator data factory. Menyediakan tombol toolbar permanen Beri Peran Massal dengan dukungan target Semua Pengguna Sistem maupun Pengguna Terpilih, metode penerapan peran gabung (append) atau timpa (replace) dengan database transaction, mengubah view mode default menjadi Tampilan Tabel (Table View) dengan auto-adjust lebar kolom, serta standarisasi nama Indonesia murni tanpa gelar dan email selaras slug nama pada UserFactory &amp; RoleSeeder.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Penugasan Peran Massal Lanjutan</strong>: Tombol Beri Peran Massal permanen di toolbar dengan badge counter dinamis, modal fleksibel dengan pilihan target <em>Semua Pengguna</em> atau <em>Pengguna Terpilih</em>, serta pilihan mode <em>Tambahkan (Gabungkan)</em> atau <em>Ganti Semua (Timpa)</em>.</li>
+                                        <li><strong>Default Tampilan Tabel</strong>: Menjadikan Tampilan Tabel (Table View) sebagai tampilan awal saat membuka rute <code>/usermanagement/users</code> dan menambahkan listener <code>shown.bs.tab</code> untuk auto-adjust kolom Yajra DataTables.</li>
+                                        <li><strong>Standarisasi UserFactory &amp; Seeder</strong>: Menghasilkan nama asli Indonesia 2 kata tanpa gelar via locale Faker <code>id_ID</code>, menyamakan format email dengan slug nama pengguna, serta menambahkan peran organisasi baru (<code>ketua</code>, <code>sekretaris</code>, <code>bendahara</code>, <code>anggota</code>).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.47.0-->
+
                         <!--begin::Item v1.46.1 (Patch)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.46.1</div>
@@ -56,7 +89,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>05 Okt 2026, 18:50 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Restrukturisasi Tata Letak Dashboard, 10 Pengguna per Halaman, Tampilan Email, Auto-Sync Nama KTP &amp; Isolasi Viewport Chat</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

@@ -152,13 +152,13 @@
                     <div class="d-inline-flex align-items-center bg-light-subtle rounded-3 p-1 border border-gray-200 flex-shrink-0">
                         <ul class="nav nav-pills p-0 m-0 gap-1 flex-row flex-nowrap align-items-center" role="tablist">
                             <li class="nav-item m-0" role="presentation" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tampilan Kartu">
-                                <a class="btn btn-sm btn-icon btn-color-gray-600 btn-active-primary active rounded-2 w-32px h-32px w-sm-35px h-sm-35px"
+                                <a class="btn btn-sm btn-icon btn-color-gray-600 btn-active-primary rounded-2 w-32px h-32px w-sm-35px h-sm-35px"
                                     data-bs-toggle="tab" href="#kt_project_users_card_pane" role="tab">
                                     <i class="ki-outline ki-element-plus fs-3"></i>
                                 </a>
                             </li>
                             <li class="nav-item m-0" role="presentation" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tampilan Tabel">
-                                <a class="btn btn-sm btn-icon btn-color-gray-600 btn-active-primary rounded-2 w-32px h-32px w-sm-35px h-sm-35px"
+                                <a class="btn btn-sm btn-icon btn-color-gray-600 btn-active-primary active rounded-2 w-32px h-32px w-sm-35px h-sm-35px"
                                     data-bs-toggle="tab" href="#kt_project_users_table_pane" role="tab">
                                     <i class="ki-outline ki-row-horizontal fs-3"></i>
                                 </a>
@@ -169,12 +169,11 @@
 
                     <div class="d-flex align-items-center gap-2 flex-grow-1 flex-sm-grow-0 justify-content-end">
                         <!--begin::Tombol Beri Peran Massal-->
-                        <button type="button" id="btn_open_bulk_role" class="btn btn-sm btn-light-primary fw-bold d-none px-2 px-sm-3 h-35px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 text-nowrap fs-8 fs-sm-7"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Berikan Peran Massal ke Pengguna Terpilih">
-                            <i class="ki-outline ki-shield-tick fs-4 me-1"></i>
-                            <span id="bulk_role_selected_badge" class="badge badge-primary me-1">0</span>
-                            <span class="d-none d-xs-inline">Beri Peran</span>
-                            <span class="d-inline d-xs-none">Peran</span>
+                        <button type="button" id="btn_open_bulk_role" class="btn btn-sm btn-light-primary fw-bold px-3 px-sm-4 h-35px d-inline-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 text-nowrap fs-8 fs-sm-7"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Berikan atau Ubah Peran Pengguna Secara Massal">
+                            <i class="ki-outline ki-shield-tick fs-4 me-1 text-primary"></i>
+                            <span>Beri Peran Massal</span>
+                            <span id="bulk_role_selected_badge" class="badge badge-primary ms-1 d-none">0</span>
                         </button>
                         <!--end::Tombol Beri Peran Massal-->
 

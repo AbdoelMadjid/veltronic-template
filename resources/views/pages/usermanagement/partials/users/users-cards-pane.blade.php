@@ -1,5 +1,5 @@
 <!--begin::Tab pane: Card View-->
-<div id="kt_project_users_card_pane" class="tab-pane fade show active">
+<div id="kt_project_users_card_pane" class="tab-pane fade">
     <!--begin::Row-->
     <div class="row g-6 g-xl-9" id="users_card_container">
         @include('pages.usermanagement.partials.users.users-cards-list', ['users' => $users])

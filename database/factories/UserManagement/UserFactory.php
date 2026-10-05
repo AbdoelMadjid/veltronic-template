@@ -31,9 +31,30 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        static $usedEmails = [];
+
+        $faker = fake('id_ID');
+        $gender = $faker->randomElement(['male', 'female']);
+        $firstName = $faker->firstName($gender);
+        $lastName = $faker->lastName($gender);
+        $name = trim("{$firstName} {$lastName}");
+
+        // Generate email yang disamakan persis dengan nama pengguna
+        $nameSlug = Str::slug($name, '.');
+        $domain = $faker->randomElement(['gmail.com', 'yahoo.com', 'outlook.com', 'mail.com']);
+        $candidateEmail = "{$nameSlug}@{$domain}";
+
+        if (isset($usedEmails[$candidateEmail])) {
+            $counter = ++$usedEmails[$candidateEmail];
+            $email = "{$nameSlug}{$counter}@{$domain}";
+        } else {
+            $usedEmails[$candidateEmail] = 1;
+            $email = $candidateEmail;
+        }
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $name,
+            'email' => $email,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

@@ -83,13 +83,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const count = selectedUserIds.size;
         if (badgeBulkCount) {
             badgeBulkCount.textContent = count;
-        }
-        if (btnBulkRole) {
             if (count > 0) {
-                btnBulkRole.classList.remove('d-none');
+                badgeBulkCount.classList.remove('d-none');
             } else {
-                btnBulkRole.classList.add('d-none');
+                badgeBulkCount.classList.add('d-none');
             }
+        }
+        const targetSelectedCountEl = document.getElementById('bulk_target_selected_count');
+        if (targetSelectedCountEl) {
+            targetSelectedCountEl.textContent = count;
         }
         if (modalBulkCountEl) {
             modalBulkCountEl.textContent = count;
@@ -427,6 +429,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 initTooltips();
                 updateBulkActionUI();
             }
+        });
+
+        // Auto adjust DataTables columns when tab is switched
+        document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(tabTrigger => {
+            tabTrigger.addEventListener('shown.bs.tab', function (e) {
+                if (dataTable && (e.target.getAttribute('href') === '#kt_project_users_table_pane' || e.target.getAttribute('data-bs-target') === '#kt_project_users_table_pane')) {
+                    dataTable.columns.adjust().responsive?.recalc();
+                }
+            });
         });
     }
 
@@ -1011,23 +1022,31 @@ document.addEventListener('DOMContentLoaded', function () {
     // 11. Buka Modal Berikan Role Massal
     if (btnBulkRole) {
         btnBulkRole.addEventListener('click', function () {
-            if (selectedUserIds.size === 0) {
-                if (typeof Notify !== 'undefined') {
-                    Notify.warning('Silakan pilih minimal satu pengguna terlebih dahulu.');
-                }
-                return;
-            }
             if (formBulkRole) {
                 formBulkRole.querySelectorAll('.bulk-role-checkbox').forEach(cb => {
                     cb.checked = false;
                 });
                 const defaultRadio = document.getElementById('bulk_mode_append');
                 if (defaultRadio) defaultRadio.checked = true;
+
+                // Tentukan target default berdasarkan apakah ada user yang sedang dicentang
+                const targetSelectedRadio = document.getElementById('bulk_target_selected');
+                const targetAllRadio = document.getElementById('bulk_target_all');
+                if (selectedUserIds.size > 0) {
+                    if (targetSelectedRadio) targetSelectedRadio.checked = true;
+                } else {
+                    if (targetAllRadio) targetAllRadio.checked = true;
+                }
+
                 const errorEl = document.getElementById('error_bulk_roles');
                 if (errorEl) errorEl.textContent = '';
             }
             if (modalBulkCountEl) {
                 modalBulkCountEl.textContent = selectedUserIds.size;
+            }
+            const targetSelectedCountEl = document.getElementById('bulk_target_selected_count');
+            if (targetSelectedCountEl) {
+                targetSelectedCountEl.textContent = selectedUserIds.size;
             }
             if (modalBulkRole) {
                 modalBulkRole.show();
@@ -1042,6 +1061,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const errorEl = document.getElementById('error_bulk_roles');
             if (errorEl) errorEl.textContent = '';
+
+            const targetEl = formBulkRole.querySelector('input[name="bulk_target"]:checked');
+            const target = targetEl ? targetEl.value : (selectedUserIds.size > 0 ? 'selected' : 'all');
+
+            if (target === 'selected' && selectedUserIds.size === 0) {
+                const msg = 'Silakan pilih minimal satu pengguna terlebih dahulu atau pilih opsi "Semua Pengguna".';
+                if (errorEl) errorEl.textContent = msg;
+                if (typeof Notify !== 'undefined') {
+                    Notify.warning(msg);
+                }
+                return;
+            }
 
             const checkedRoles = Array.from(formBulkRole.querySelectorAll('.bulk-role-checkbox:checked')).map(cb => cb.value);
             if (checkedRoles.length === 0) {
@@ -1071,6 +1102,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         'X-CSRF-TOKEN': csrfToken
                     },
                     body: JSON.stringify({
+                        target: target,
                         user_ids: userIds,
                         roles: checkedRoles,
                         mode: mode

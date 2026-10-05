@@ -5,6 +5,22 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.47.0] - 2026-10-05
+
+### Added & Enhanced
+- **Penugasan Peran Massal Lanjutan & Dukungan Target Semua Pengguna (`/usermanagement/users`)**:
+  - **Tombol Toolbar Permanen**: Tombol *Beri Peran Massal* kini selalu terlihat jelas di toolbar berdampingan dengan *Tambah Pengguna* dilengkapi badge counter seleksi dinamis.
+  - **Dukungan Opsi Target Semua Pengguna**: Modal peran massal kini menyediakan opsi **Semua Pengguna (Total X orang)** untuk menerapkan atau menambahkan role (misal: `anggota`) ke seluruh akun di database dalam 1 kali klik, atau opsi **Pengguna Terpilih** untuk akun yang dicentang saja.
+  - **Metode Penerapan Fleksibel**: Menyediakan mode *Tambahkan (Gabungkan)* untuk menambah role tanpa menghapus role yang sudah ada, serta mode *Ganti Semua (Timpa)*.
+  - **Optimasi Backend & Chunking**: Pemrosesan penugasan peran massal menggunakan `DB::transaction()` dan `User::chunk()` dengan pencatatan audit log otomatis dan pembaruan UI secara zero-reload.
+- **Default Tampilan Tabel Modul Pengguna (`/usermanagement/users`)**:
+  - Mengubah tampilan awal modul manajemen pengguna secara default menjadi **Tampilan Tabel (Table View)** dengan Yajra DataTables yang ter-load secara instan.
+  - Menambahkan listener `shown.bs.tab` untuk auto-adjust lebar kolom tabel saat berpindah antar-tab.
+- **Standarisasi UserFactory & Seeder Nama Indonesia Murni**:
+  - **Nama Indonesia Tanpa Gelar**: Mengonfigurasi `UserFactory` dengan Faker locale `id_ID` (`firstName` + `lastName`) yang menghasilkan nama Indonesia bersih 2 kata tanpa gelar kehormatan/akademis (*Dr., Ir., S.Kom, H.*, dsb.).
+  - **Email Selaras Slug Nama**: Format email diselaraskan secara otomatis dengan slug nama pengguna (`nama.depan.nama.belakang@domain`) dengan proteksi keunikan counter email otomatis.
+  - **Penambahan Role Organisasi**: Menambahkan peran baru pada `RoleSeeder`: `ketua`, `sekretaris`, `bendahara`, dan `anggota`.
+
 ## [v1.46.1] - 2026-10-05
 
 ### Added & Enhanced

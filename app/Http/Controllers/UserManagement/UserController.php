@@ -501,17 +501,25 @@ class UserController extends Controller
     }
 
     /**
-     * Assign roles in bulk to selected users.
+     * Assign roles in bulk to selected or all users.
      */
     public function bulkAssignRole(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'user_ids' => ['required', 'array', 'min:1'],
-            'user_ids.*' => ['required', 'integer', 'exists:users,id'],
+        $target = $request->input('target', 'selected');
+
+        $rules = [
+            'target' => ['required', 'in:selected,all'],
             'roles' => ['required', 'array', 'min:1'],
             'roles.*' => ['required', 'string', 'exists:roles,name'],
             'mode' => ['required', 'in:append,replace'],
-        ], [
+        ];
+
+        if ($target === 'selected') {
+            $rules['user_ids'] = ['required', 'array', 'min:1'];
+            $rules['user_ids.*'] = ['required', 'integer', 'exists:users,id'];
+        }
+
+        $validated = $request->validate($rules, [
             'user_ids.required' => 'Pilih minimal satu pengguna.',
             'user_ids.min' => 'Pilih minimal satu pengguna.',
             'roles.required' => 'Pilih minimal satu peran yang akan diberikan.',
@@ -519,34 +527,49 @@ class UserController extends Controller
             'mode.required' => 'Pilih metode penerapan peran.',
         ]);
 
-        $userIds = $validated['user_ids'];
         $roleNames = $validated['roles'];
         $mode = $validated['mode'];
+        $userIds = $target === 'selected' ? ($validated['user_ids'] ?? []) : [];
 
         DB::beginTransaction();
         try {
-            $users = User::whereIn('id', $userIds)->get();
             $count = 0;
 
-            foreach ($users as $user) {
-                if ($mode === 'replace') {
-                    $user->syncRoles($roleNames);
-                } else {
-                    $user->assignRole($roleNames);
+            if ($target === 'all') {
+                User::chunk(100, function ($users) use ($mode, $roleNames, &$count) {
+                    foreach ($users as $user) {
+                        if ($mode === 'replace') {
+                            $user->syncRoles($roleNames);
+                        } else {
+                            $user->assignRole($roleNames);
+                        }
+                        $count++;
+                    }
+                });
+            } else {
+                $users = User::whereIn('id', $userIds)->get();
+                foreach ($users as $user) {
+                    if ($mode === 'replace') {
+                        $user->syncRoles($roleNames);
+                    } else {
+                        $user->assignRole($roleNames);
+                    }
+                    $count++;
                 }
-                $count++;
             }
 
             DB::commit();
 
-            UserLog::record('usermanagement', 'users', 'Penugasan Peran Massal', "Menerapkan peran [" . implode(', ', $roleNames) . "] (mode: {$mode}) kepada {$count} pengguna", null, 'info');
+            $targetDesc = $target === 'all' ? "seluruh ({$count}) pengguna sistem" : "{$count} pengguna terpilih";
+            UserLog::record('usermanagement', 'users', 'Penugasan Peran Massal', "Menerapkan peran [" . implode(', ', $roleNames) . "] (mode: {$mode}) kepada {$targetDesc}", null, 'info');
 
             return response()->json([
                 'status' => 'success',
                 'success' => true,
-                'message' => "Berhasil menerapkan peran kepada {$count} pengguna terpilih.",
+                'message' => "Berhasil menerapkan peran kepada {$count} pengguna (" . ($target === 'all' ? 'Semua Pengguna' : 'Pengguna Terpilih') . ").",
                 'data' => [
                     'updated_count' => $count,
+                    'target' => $target,
                     'roles' => $roleNames,
                     'mode' => $mode,
                 ],

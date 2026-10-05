@@ -5,6 +5,24 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.46.1] - 2026-10-05
+
+### Added & Enhanced
+- **Restrukturisasi Tata Letak Dashboard (`/dashboard`)**:
+  - **Penempatan Kolom Kiri**: Menempatkan **Rekan Komunitas & Pengguna** di area konten utama sebelah kiri dengan padding rapat presisi terhadap garis kartu utama.
+  - **Penyusunan Sidebar Kanan Berurutan ke Bawah**: Menata widget **Pengguna & Teman**, **Papan Peringkat**, dan **Aktivitas Komunitas** tersusun rapi secara vertikal di sisi kanan.
+  - **Kapasitas 10 Pengguna per Halaman**: Memperluas kapasitas tampilan kartu dari 4 menjadi 10 pengguna per batch/halaman.
+  - **Tampilan Email Tiap Pengguna**: Menambahkan baris email dengan ikon amplop (`ki-sms`) dan tooltip hover di bawah nama pengguna pada setiap kartu komunitas.
+  - **Perbaikan Interaktivitas & Navigasi**: Memperbaiki fungsi *Live Search*, tombol navigasi batch atas (*Prev/Next*), dan tombol navigasi batch bawah (*Lihat 10 Pengguna Berikutnya* / *Ke Awal*) menggunakan *Event Delegation* yang tangguh.
+- **Sinkronisasi Otomatis Nama Akun & KTP (`/profil/profil-pengguna`)**:
+  - **Auto-Sync Nama Akun**: Setiap perubahan pada isian *Nama Lengkap Sesuai KTP* pada formulir Identitas Diri kini secara otomatis menyinkronkan data kolom `users.name` di database.
+  - **Zero-Reload Live Update**: Tampilan nama pengguna di seluruh antarmuka (Header Profil, Navbar atas, Dashboard, Lock Screen, dan Obrolan) langsung ter-update secara seketika.
+
+### Fixed
+- **Isolasi Viewport & Scrollbar Halaman Chat (`/profil/profil-pengguna/chat`)**:
+  - Mengeliminasi scrollbar browser di layar laptop maupun layar PC lebar dengan kalkulasi tinggi terisolasi (`calc(100vh - 250px)` dan `min-height: 350px`) hanya pada kartu obrolan.
+  - Mempertahankan 100% integritas struktur bawaan Metronic dan posisi footer (*Copyright, Info Versi, Menu Link, & Tombol Scrolltop*).
+
 ## [v1.46.0] - 2026-10-05
 
 ### Added

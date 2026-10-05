@@ -83,12 +83,12 @@
             border-radius: 8px !important;
         }
 
-        /* Prevent outer browser scroll & enforce fixed bottom input on desktop */
+        /* Scope zero-scroll strictly to chat row while preserving standard Metronic layout & footer */
         @media (min-width: 992px) {
             #kt_chat_layout_row {
-                height: calc(100vh - 220px) !important;
-                max-height: calc(100vh - 220px) !important;
-                min-height: 550px !important;
+                height: calc(100vh - 250px) !important;
+                max-height: calc(100vh - 250px) !important;
+                min-height: 350px !important;
                 overflow: hidden !important;
             }
             #kt_chat_sidebar_col,
@@ -107,6 +107,10 @@
                 display: flex !important;
                 flex-direction: column !important;
             }
+            #kt_chat_contacts_header,
+            #kt_chat_messenger_header {
+                flex-shrink: 0 !important;
+            }
             #kt_chat_contacts_body,
             #kt_chat_messenger_body {
                 flex: 1 1 0% !important;
@@ -122,6 +126,7 @@
                 min-height: 0 !important;
                 height: 100% !important;
                 max-height: 100% !important;
+                overflow-x: hidden !important;
                 overflow-y: auto !important;
             }
             #kt_chat_messenger_footer {
@@ -132,11 +137,13 @@
         @media (max-width: 991.98px) {
             #chat_contacts_list {
                 max-height: 280px !important;
+                overflow-x: hidden !important;
                 overflow-y: auto !important;
             }
             #chat_messages_scroll {
-                min-height: 320px !important;
-                max-height: 480px !important;
+                min-height: 260px !important;
+                max-height: 420px !important;
+                overflow-x: hidden !important;
                 overflow-y: auto !important;
             }
         }
@@ -162,11 +169,11 @@
             <!--begin::Layout-->
             <div class="d-flex flex-column flex-lg-row align-items-lg-stretch" id="kt_chat_layout_row">
                 <!--begin::Sidebar-->
-                <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0 d-flex flex-column" id="kt_chat_sidebar_col">
+                <div class="flex-column flex-lg-row-auto w-100 w-lg-280px w-xl-325px w-xxl-380px mb-6 mb-lg-0 d-flex flex-column" id="kt_chat_sidebar_col">
                     <!--begin::Contacts-->
                     <div class="card card-flush h-100 d-flex flex-column" id="kt_chat_contacts_card">
                         <!--begin::Card header-->
-                        <div class="card-header pt-7 flex-shrink-0" id="kt_chat_contacts_header">
+                        <div class="card-header pt-5 pb-3 flex-shrink-0" id="kt_chat_contacts_header">
                             <!--begin::Form-->
                             <form class="w-100 position-relative" autocomplete="off" onsubmit="return false;">
                                 <!--begin::Icon-->
@@ -205,11 +212,11 @@
                 </div>
                 <!--end::Sidebar-->
                 <!--begin::Content-->
-                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10 d-flex flex-column" id="kt_chat_messenger_col">
+                <div class="flex-lg-row-fluid ms-lg-5 ms-xl-7 d-flex flex-column min-w-0" id="kt_chat_messenger_col">
                     <!--begin::Messenger-->
                     <div class="card h-100 d-flex flex-column" id="kt_chat_messenger">
                         <!--begin::Card header-->
-                        <div class="card-header flex-shrink-0" id="kt_chat_messenger_header">
+                        <div class="card-header pt-4 pb-3 flex-shrink-0 flex-wrap gap-2" id="kt_chat_messenger_header">
                             <!--begin::Title-->
                             <div class="card-title">
                                 <!--begin::User-->

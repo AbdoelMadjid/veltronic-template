@@ -74,11 +74,11 @@
         ->values();
 
     $totalUsers = $communityUsers->count();
-    $pageSize = 4;
+    $pageSize = 10;
 @endphp
 
 <!--begin::Community User Cards Section-->
-<div class="mb-10" id="dashboard_user_cards_section">
+<div class="mb-0" id="dashboard_user_cards_section">
     <!--begin::Header Section-->
     <div class="d-flex align-items-center justify-content-between flex-wrap gap-4 mb-6">
         <!-- Title & Icon -->
@@ -182,11 +182,15 @@
                         </div>
                         <!--end::Floating Avatar-->
 
-                        <!--begin::Name & Role-->
+                        <!--begin::Name, Email & Role-->
                         <div class="mb-3">
-                            <a href="javascript:void(0)" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-1 d-inline-block text-truncate mw-100 btn-view-public-profile btn-open-public-profile" data-user-id="{{ $u->id }}">
+                            <a href="javascript:void(0)" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-0 d-inline-block text-truncate mw-100 btn-view-public-profile btn-open-public-profile" data-user-id="{{ $u->id }}">
                                 {{ $u->name }}
                             </a>
+                            <div class="text-muted fw-medium fs-8 mb-2 d-flex align-items-center justify-content-center gap-1 text-truncate" title="{{ $u->email }}">
+                                <i class="ki-duotone ki-sms fs-7 text-muted"><span class="path1"></span><span class="path2"></span></i>
+                                <span class="text-truncate">{{ $u->email }}</span>
+                            </div>
                             <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap">
                                 @if($isFriend)
                                     <span class="badge badge-light-success fw-bold fs-8 d-flex align-items-center gap-1">
@@ -200,7 +204,7 @@
                                 </span>
                             </div>
                         </div>
-                        <!--end::Name & Role-->
+                        <!--end::Name, Email & Role-->
 
                         <!--begin::Moto / Bio-->
                         <p class="text-muted fs-7 mb-4 flex-grow-1 text-truncate-2" style="min-height: 38px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" title="{{ $uMoto }}">
@@ -256,141 +260,150 @@
     </div>
     <!--end::Row Cards Container-->
 
-    @if($totalUsers > $pageSize)
-        <!--begin::Footer Action Bar-->
-        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mt-6 pt-4 border-top border-gray-200" id="user_cards_footer_bar">
-            <div class="text-muted fs-8 fw-semibold" id="user_cards_page_label">
-                Halaman <span class="fw-bold text-gray-900" id="user_cards_current_page">1</span> dari <span class="fw-bold text-gray-900" id="user_cards_total_pages">{{ ceil($totalUsers / $pageSize) }}</span>
-            </div>
-
-            <div class="d-flex align-items-center gap-2">
-                <!-- Tombol Kembali ke Halaman 1 -->
-                <button type="button" class="btn btn-sm btn-light btn-active-light-primary fw-bold d-none" id="btn_footer_reset_user_cards">
-                    <i class="ki-duotone ki-arrows-circle fs-5 me-1"></i> Ke Awal
-                </button>
-
-                <!-- Tombol Lihat 4 Pengguna Berikutnya -->
-                <button type="button" class="btn btn-sm btn-light-primary fw-bold d-flex align-items-center gap-2" id="btn_footer_next_user_cards">
-                    <span id="btn_footer_next_label">Lihat {{ min($pageSize, $totalUsers - $pageSize) }} Pengguna Berikutnya</span>
-                    <i class="ki-duotone ki-arrow-right fs-4"><span class="path1"></span><span class="path2"></span></i>
-                </button>
-            </div>
+    <!--begin::Footer Action Bar-->
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mt-6 pt-4 border-top border-gray-200 {{ $totalUsers <= $pageSize ? 'd-none' : '' }}" id="user_cards_footer_bar">
+        <div class="text-muted fs-8 fw-semibold" id="user_cards_page_label">
+            Halaman <span class="fw-bold text-gray-900" id="user_cards_current_page">1</span> dari <span class="fw-bold text-gray-900" id="user_cards_total_pages">{{ max(1, (int) ceil($totalUsers / $pageSize)) }}</span>
         </div>
-        <!--end::Footer Action Bar-->
-    @endif
+
+        <div class="d-flex align-items-center gap-2">
+            <!-- Tombol Kembali ke Halaman 1 -->
+            <button type="button" class="btn btn-sm btn-light btn-active-light-primary fw-bold d-none" id="btn_footer_reset_user_cards">
+                <i class="ki-duotone ki-arrows-circle fs-5 me-1"></i> Ke Awal
+            </button>
+
+            <!-- Tombol Lihat Pengguna Berikutnya -->
+            <button type="button" class="btn btn-sm btn-light-primary fw-bold d-flex align-items-center gap-2" id="btn_footer_next_user_cards">
+                <span id="btn_footer_next_label">Lihat {{ min($pageSize, max(0, $totalUsers - $pageSize)) }} Pengguna Berikutnya</span>
+                <i class="ki-duotone ki-arrow-right fs-4"><span class="path1"></span><span class="path2"></span></i>
+            </button>
+        </div>
+    </div>
+    <!--end::Footer Action Bar-->
 </div>
 <!--end::Community User Cards Section-->
 
 <!--begin::User Cards Interactive Slider & Search Script-->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const totalUsers = {{ $totalUsers }};
-        const pageSize = {{ $pageSize }};
-        let currentPage = 1;
-        let activeQuery = '';
+(function() {
+    let currentPage = 1;
+    let activeQuery = '';
+    const pageSize = {{ $pageSize }};
 
-        const searchInput = document.getElementById('input_search_user_cards');
-        const clearSearchBtn = document.getElementById('btn_clear_user_cards_search');
+    function getAllCardCols() {
+        return Array.from(document.querySelectorAll('.community-user-card-col'));
+    }
+
+    function getFilteredCards() {
+        const allCards = getAllCardCols();
+        if (!activeQuery) return allCards;
+        const q = activeQuery.toLowerCase().trim();
+        return allCards.filter(col => {
+            const term = (col.getAttribute('data-search-term') || '').toLowerCase();
+            return term.includes(q);
+        });
+    }
+
+    function updateBatchView(page = 1) {
+        const allCards = getAllCardCols();
+        const totalUsers = allCards.length;
+        const filtered = getFilteredCards();
+        const filteredTotal = filtered.length;
+        const totalPages = Math.max(1, Math.ceil(filteredTotal / pageSize));
+
+        currentPage = Math.max(1, Math.min(page, totalPages));
+        const startIdx = (currentPage - 1) * pageSize;
+        const endIdx = startIdx + pageSize;
+
+        // Sembunyikan semua kartu terlebih dahulu
+        allCards.forEach(col => col.classList.add('d-none'));
+
+        const searchEmptyEl = document.getElementById('user_cards_search_empty');
+        const emptyQueryEl = document.getElementById('user_cards_empty_query');
         const counterEl = document.getElementById('user_cards_batch_counter');
-        const pageLabelEl = document.getElementById('user_cards_current_page');
-        const totalPagesEl = document.getElementById('user_cards_total_pages');
         const footerBar = document.getElementById('user_cards_footer_bar');
         const btnPrev = document.getElementById('btn_prev_user_cards');
         const btnNext = document.getElementById('btn_next_user_cards');
+        const pageLabelEl = document.getElementById('user_cards_current_page');
+        const totalPagesEl = document.getElementById('user_cards_total_pages');
+        const btnFooterReset = document.getElementById('btn_footer_reset_user_cards');
         const btnFooterNext = document.getElementById('btn_footer_next_user_cards');
         const btnFooterNextLabel = document.getElementById('btn_footer_next_label');
-        const btnFooterReset = document.getElementById('btn_footer_reset_user_cards');
-        const searchEmptyEl = document.getElementById('user_cards_search_empty');
-        const emptyQueryEl = document.getElementById('user_cards_empty_query');
-        const btnResetEmpty = document.getElementById('btn_reset_empty_search');
-        const allCardCols = Array.from(document.querySelectorAll('.community-user-card-col'));
 
-        function getFilteredCards() {
-            if (!activeQuery) return allCardCols;
-            const q = activeQuery.toLowerCase().trim();
-            return allCardCols.filter(col => {
-                const term = col.getAttribute('data-search-term') || '';
-                return term.includes(q);
-            });
+        if (filteredTotal === 0) {
+            if (searchEmptyEl) {
+                searchEmptyEl.classList.remove('d-none');
+                if (emptyQueryEl) emptyQueryEl.textContent = activeQuery;
+            }
+            if (counterEl) counterEl.textContent = '0 Rekan Ditemukan';
+            if (footerBar) footerBar.classList.add('d-none');
+            if (btnPrev) btnPrev.disabled = true;
+            if (btnNext) btnNext.disabled = true;
+            return;
         }
 
-        function updateBatchView(page = 1) {
-            const filtered = getFilteredCards();
-            const filteredTotal = filtered.length;
-            const totalPages = Math.max(1, Math.ceil(filteredTotal / pageSize));
+        if (searchEmptyEl) searchEmptyEl.classList.add('d-none');
 
-            currentPage = Math.max(1, Math.min(page, totalPages));
-            const startIdx = (currentPage - 1) * pageSize;
-            const endIdx = startIdx + pageSize;
-
-            // Sembunyikan semua kartu terlebih dahulu
-            allCardCols.forEach(col => col.classList.add('d-none'));
-
-            if (filteredTotal === 0) {
-                // Tampilkan Empty State
-                if (searchEmptyEl) {
-                    searchEmptyEl.classList.remove('d-none');
-                    if (emptyQueryEl) emptyQueryEl.textContent = activeQuery;
-                }
-                if (counterEl) counterEl.textContent = '0 Rekan Ditemukan';
-                if (footerBar) footerBar.classList.add('d-none');
-                if (btnPrev) btnPrev.disabled = true;
-                if (btnNext) btnNext.disabled = true;
-                return;
+        // Tampilkan kartu yang ada dalam slice batch halaman aktif
+        filtered.forEach((col, idx) => {
+            if (idx >= startIdx && idx < endIdx) {
+                col.classList.remove('d-none');
             }
+        });
 
-            if (searchEmptyEl) searchEmptyEl.classList.add('d-none');
-            if (footerBar) footerBar.classList.remove('d-none');
-
-            // Tampilkan kartu yang ada dalam slice batch halaman aktif
-            filtered.forEach((col, idx) => {
-                if (idx >= startIdx && idx < endIdx) {
-                    col.classList.remove('d-none');
-                }
-            });
-
-            // Update Counter Text
-            const displayedStart = startIdx + 1;
-            const displayedEnd = Math.min(endIdx, filteredTotal);
-            if (counterEl) {
-                if (activeQuery) {
-                    counterEl.textContent = `Ditemukan ${displayedStart}-${displayedEnd} dari ${filteredTotal} Rekan`;
-                } else {
-                    counterEl.textContent = `${displayedStart} - ${displayedEnd} dari ${totalUsers} Rekan`;
-                }
-            }
-
-            if (pageLabelEl) pageLabelEl.textContent = currentPage;
-            if (totalPagesEl) totalPagesEl.textContent = totalPages;
-
-            // Update Header Buttons Disabled State
-            if (btnPrev) btnPrev.disabled = (currentPage === 1);
-            if (btnNext) btnNext.disabled = (currentPage === totalPages);
-
-            // Update Footer Buttons State
-            if (btnFooterReset) {
-                if (currentPage > 1) {
-                    btnFooterReset.classList.remove('d-none');
-                } else {
-                    btnFooterReset.classList.add('d-none');
-                }
-            }
-
-            if (btnFooterNext) {
-                if (currentPage < totalPages) {
-                    const remaining = filteredTotal - (currentPage * pageSize);
-                    const nextBatchCount = Math.min(pageSize, remaining);
-                    if (btnFooterNextLabel) btnFooterNextLabel.textContent = `Lihat ${nextBatchCount} Pengguna Berikutnya`;
-                    btnFooterNext.disabled = false;
-                    btnFooterNext.classList.remove('d-none');
-                } else {
-                    if (btnFooterNextLabel) btnFooterNextLabel.textContent = `Sudah di Halaman Terakhir`;
-                    btnFooterNext.disabled = true;
-                }
+        // Update Counter Text
+        const displayedStart = startIdx + 1;
+        const displayedEnd = Math.min(endIdx, filteredTotal);
+        if (counterEl) {
+            if (activeQuery) {
+                counterEl.textContent = `Ditemukan ${displayedStart}-${displayedEnd} dari ${filteredTotal} Rekan`;
+            } else {
+                counterEl.textContent = `${displayedStart} - ${displayedEnd} dari ${totalUsers} Rekan`;
             }
         }
 
-        // Live Search Input Listener
+        if (pageLabelEl) pageLabelEl.textContent = currentPage;
+        if (totalPagesEl) totalPagesEl.textContent = totalPages;
+
+        // Update Header Buttons Disabled State
+        if (btnPrev) btnPrev.disabled = (currentPage === 1);
+        if (btnNext) btnNext.disabled = (currentPage === totalPages);
+
+        // Update Footer Bar State
+        if (footerBar) {
+            if (filteredTotal > pageSize) {
+                footerBar.classList.remove('d-none');
+            } else {
+                footerBar.classList.add('d-none');
+            }
+        }
+
+        if (btnFooterReset) {
+            if (currentPage > 1) {
+                btnFooterReset.classList.remove('d-none');
+            } else {
+                btnFooterReset.classList.add('d-none');
+            }
+        }
+
+        if (btnFooterNext) {
+            if (currentPage < totalPages) {
+                const remaining = filteredTotal - (currentPage * pageSize);
+                const nextBatchCount = Math.min(pageSize, remaining);
+                if (btnFooterNextLabel) btnFooterNextLabel.textContent = `Lihat ${nextBatchCount} Pengguna Berikutnya`;
+                btnFooterNext.disabled = false;
+                btnFooterNext.classList.remove('d-none');
+            } else {
+                if (btnFooterNextLabel) btnFooterNextLabel.textContent = `Sudah di Halaman Terakhir`;
+                btnFooterNext.disabled = true;
+            }
+        }
+    }
+
+    function initUserCards() {
+        const searchInput = document.getElementById('input_search_user_cards');
+        const clearSearchBtn = document.getElementById('btn_clear_user_cards_search');
+
         if (searchInput) {
             let searchTimeout = null;
             searchInput.addEventListener('input', function() {
@@ -405,11 +418,10 @@
                         }
                     }
                     updateBatchView(1);
-                }, 150);
+                }, 100);
             });
         }
 
-        // Clear Search Button
         function clearSearch() {
             if (searchInput) searchInput.value = '';
             activeQuery = '';
@@ -419,71 +431,85 @@
         }
 
         if (clearSearchBtn) clearSearchBtn.addEventListener('click', clearSearch);
-        if (btnResetEmpty) btnResetEmpty.addEventListener('click', clearSearch);
 
-        // Header Navigation Buttons
-        if (btnPrev) {
-            btnPrev.addEventListener('click', function(e) {
+        // Event Delegation for All Clicks (prev, next, footer, reset search, profile modal)
+        document.addEventListener('click', function(e) {
+            // Header Prev Button
+            if (e.target.closest('#btn_prev_user_cards')) {
                 e.preventDefault();
                 if (currentPage > 1) updateBatchView(currentPage - 1);
-            });
-        }
-
-        if (btnNext) {
-            btnNext.addEventListener('click', function(e) {
+                return;
+            }
+            // Header Next Button
+            if (e.target.closest('#btn_next_user_cards')) {
                 e.preventDefault();
-                updateBatchView(currentPage + 1);
-            });
-        }
-
-        // Footer Navigation Buttons
-        if (btnFooterNext) {
-            btnFooterNext.addEventListener('click', function(e) {
+                const filtered = getFilteredCards();
+                const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+                if (currentPage < totalPages) updateBatchView(currentPage + 1);
+                return;
+            }
+            // Footer Next Button
+            if (e.target.closest('#btn_footer_next_user_cards')) {
                 e.preventDefault();
-                updateBatchView(currentPage + 1);
-            });
-        }
-
-        if (btnFooterReset) {
-            btnFooterReset.addEventListener('click', function(e) {
+                const filtered = getFilteredCards();
+                const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+                if (currentPage < totalPages) updateBatchView(currentPage + 1);
+                return;
+            }
+            // Footer Reset Button
+            if (e.target.closest('#btn_footer_reset_user_cards')) {
                 e.preventDefault();
                 updateBatchView(1);
-            });
-        }
-
-        // Direct Profile Modal Trigger (Fallback Listener)
-        document.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-open-public-profile, .btn-view-public-profile');
-            if (!btn) return;
-            e.preventDefault();
-            const targetId = btn.getAttribute('data-user-id');
-            if (targetId && window.KTUserPresence && typeof window.KTUserPresence.openPublicProfile === 'function') {
-                window.KTUserPresence.openPublicProfile(targetId);
+                return;
+            }
+            // Empty State Reset Search Button
+            if (e.target.closest('#btn_reset_empty_search')) {
+                e.preventDefault();
+                clearSearch();
+                return;
+            }
+            // Profile Modal Trigger
+            const profileBtn = e.target.closest('.btn-open-public-profile, .btn-view-public-profile');
+            if (profileBtn) {
+                e.preventDefault();
+                const targetId = profileBtn.getAttribute('data-user-id');
+                if (targetId && window.KTUserPresence && typeof window.KTUserPresence.openPublicProfile === 'function') {
+                    window.KTUserPresence.openPublicProfile(targetId);
+                }
             }
         });
 
-        // Realtime Live Sync for User Cards Grid
-        window.KTCommunityUserCardsSync = function(newHtml) {
-            if (!newHtml) return;
-            try {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(newHtml, 'text/html');
-                const newGrid = doc.getElementById('community_user_cards_grid');
-                const curGrid = document.getElementById('community_user_cards_grid');
-                if (!newGrid || !curGrid) return;
+        // Jalankan initial batch view
+        updateBatchView(1);
+    }
 
-                const newContent = newGrid.innerHTML.trim();
-                if (curGrid.getAttribute('data-grid-hash') === newContent) return;
+    // Realtime Live Sync for User Cards Grid
+    window.KTCommunityUserCardsSync = function(newHtml) {
+        if (!newHtml) return;
+        try {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(newHtml, 'text/html');
+            const newGrid = doc.getElementById('community_user_cards_grid');
+            const curGrid = document.getElementById('community_user_cards_grid');
+            if (!newGrid || !curGrid) return;
 
-                curGrid.innerHTML = newContent;
-                curGrid.setAttribute('data-grid-hash', newContent);
-                allCardCols = Array.from(document.querySelectorAll('.community-user-card-col'));
-                updateBatchView(currentPage);
-            } catch (err) {
-                console.error('Failed to sync user cards:', err);
-            }
-        };
-    });
+            const newContent = newGrid.innerHTML.trim();
+            if (curGrid.getAttribute('data-grid-hash') === newContent) return;
+
+            curGrid.innerHTML = newContent;
+            curGrid.setAttribute('data-grid-hash', newContent);
+            updateBatchView(currentPage);
+        } catch (err) {
+            console.error('Failed to sync user cards:', err);
+        }
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initUserCards);
+    } else {
+        initUserCards();
+    }
+})();
 </script>
 <!--end::User Cards Interactive Slider & Search Script-->
 

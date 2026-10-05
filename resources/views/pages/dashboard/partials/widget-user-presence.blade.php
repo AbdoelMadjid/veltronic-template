@@ -5,7 +5,7 @@
 @endphp
 
 <!--begin::User Presence & Social Widget-->
-<div class="card card-flush shadow-sm border-0 mb-6" id="dashboard_presence_widget">
+<div class="card card-flush shadow-sm border-0 mb-0" id="dashboard_presence_widget">
     <!--begin::Header-->
     <div class="card-header pt-5 pb-3 border-0 min-h-auto d-flex align-items-center justify-content-between flex-nowrap gap-2">
         <div class="card-title d-flex flex-column min-w-0 me-2">

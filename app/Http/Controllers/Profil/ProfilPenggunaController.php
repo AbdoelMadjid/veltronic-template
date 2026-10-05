@@ -151,11 +151,16 @@ class ProfilPenggunaController extends Controller
             unset($validated['foto_ktp']);
         }
 
+        // Sinkronkan Nama Pengguna (User Name) jika nama_lengkap KTP diubah
+        if (!empty($validated['nama_lengkap'])) {
+            $user->update(['name' => $validated['nama_lengkap']]);
+        }
+
         $detail->fill($validated);
         $detail->user_id = $user->id;
         $detail->save();
 
-        $log = UserLog::log('Pembaruan Identitas Diri', 'Memperbarui data KTP dan alamat terperinci.', $user);
+        $log = UserLog::log('Pembaruan Identitas Diri', 'Memperbarui data KTP dan nama pengguna resmi.', $user);
 
         $freshUser = $user->fresh();
         $freshDetail = $detail->fresh();

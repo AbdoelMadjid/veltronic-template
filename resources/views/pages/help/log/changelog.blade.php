@@ -34,13 +34,48 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.46.0
+                            Versi Saat Ini: v1.46.1
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.46.1 (Patch)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.46.1</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-warning fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-warning fw-bold text-white">v1.46.1</span>
+                                    <span class="badge badge-light-warning fw-bold fs-8">Patch</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>05 Okt 2026, 18:50 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Restrukturisasi Tata Letak Dashboard, 10 Pengguna per Halaman, Tampilan Email, Auto-Sync Nama KTP &amp; Isolasi Viewport Chat</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Penyempurnaan tata letak dan interaktivitas dashboard serta modul profil. Mengatur posisi kartu Rekan Komunitas &amp; Pengguna di kolom kiri utama dengan kapasitas 10 pengguna per halaman, menyusun widget kehadiran, leaderboard, dan aktivitas komunitas secara vertikal di kolom kanan, menambahkan baris email pada kartu pengguna, memperbaiki fungsi navigasi slider batch, menyinkronkan otomatis perubahan nama KTP ke nama akun pengguna, serta mengisolasi pembatasan tinggi halaman obrolan agar bebas scrollbar browser tanpa merusak layout footer Metronic.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Restrukturisasi Tata Letak Dashboard</strong>: Menata kartu Rekan Komunitas &amp; Pengguna di kolom kiri dengan padding rapat terhadap garis kartu, serta menyusun widget Pengguna &amp; Teman, Papan Peringkat, dan Aktivitas Komunitas secara berurutan ke bawah di kolom kanan.</li>
+                                        <li><strong>Kapasitas 10 Pengguna &amp; Tampilan Email</strong>: Memperluas kapasitas batch menjadi 10 pengguna per tampilan kartu dan menampilkan alamat email berikon <code>ki-sms</code> di bawah nama pengguna.</li>
+                                        <li><strong>Perbaikan Fungsionalitas Pencarian &amp; Navigasi</strong>: Memperbaiki fungsi live search, tombol navigasi batch atas (Prev/Next), dan tombol batch bawah menggunakan event delegation yang tangguh.</li>
+                                        <li><strong>Sinkronisasi Otomatis Nama Akun dengan Nama KTP</strong>: Pembaruan Nama Lengkap Sesuai KTP pada formulir Identitas Diri kini otomatis menyinkronkan data <code>users.name</code> dan memicu pembaruan nama pengguna realtime di seluruh UI.</li>
+                                        <li><strong>Isolasi Viewport Chat Realtime</strong>: Mengeliminasi scrollbar browser di layar laptop/PC dengan tinggi obrolan terisolasi (<code>calc(100vh - 250px)</code> dan <code>min-height: 350px</code>) serta menjaga keutuhan footer bawaan Metronic.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.46.1-->
+
                         <!--begin::Item v1.46.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.46.0</div>
@@ -56,7 +91,6 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>05 Okt 2026, 15:50 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Kartu Komunitas Pengguna Interaktif, Live Search, Prioritas Pertemanan &amp; Sinkronisasi Realtime Dashboard</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

@@ -75,38 +75,30 @@
             <!--end::Hero Header Cover (Full Width)-->
 
             <!--begin::Body-->
-            <div class="card-body p-lg-17 pt-lg-12">
+            <div class="card-body p-6 p-lg-8">
                 <!--begin::Layout-->
-                <div class="d-flex flex-column flex-lg-row mb-17">
-                    <!--begin::Content-->
-                    <div class="flex-lg-row-fluid me-0 me-lg-20">
-                        <!--begin::Community & Leaderboard Widgets-->
-                        <div class="row g-5 g-xl-8 mb-10">
-                            <!--begin::Leaderboard Col-->
-                            <div class="col-xl-6">
-                                @include('pages.dashboard.partials.widget-user-leaderboard')
-                            </div>
-                            <!--end::Leaderboard Col-->
-
-                            <!--begin::Live Activity Col-->
-                            <div class="col-xl-6">
-                                @include('pages.dashboard.partials.widget-live-activity')
-                            </div>
-                            <!--end::Live Activity Col-->
-                        </div>
-                        <!--end::Community & Leaderboard Widgets-->
-
-                        <!--begin::Community User Cards (Replaces Junior React Developer & UI/UX Designer)-->
+                <div class="d-flex flex-column flex-lg-row gap-6 gap-xl-8">
+                    <!--begin::Content (Rekan Komunitas & Pengguna di Kiri)-->
+                    <div class="flex-lg-row-fluid">
+                        <!--begin::Community User Cards-->
                         @include('pages.dashboard.partials.widget-user-cards')
                         <!--end::Community User Cards-->
                     </div>
                     <!--end::Content-->
 
-                    <!--begin::Sidebar-->
-                    <div class="flex-lg-row-auto w-100 w-lg-275px w-xxl-350px">
-                        <!--begin::User Presence & Social Widget-->
+                    <!--begin::Sidebar (Pengguna & Teman, Papan Peringkat, Aktivitas Komunitas di Kanan)-->
+                    <div class="flex-lg-row-auto w-100 w-lg-325px w-xxl-375px d-flex flex-column gap-6">
+                        <!--begin::User Presence & Social Widget (Pengguna & Teman)-->
                         @include('pages.dashboard.partials.widget-user-presence')
                         <!--end::User Presence & Social Widget-->
+
+                        <!--begin::Leaderboard Widget (Papan Peringkat)-->
+                        @include('pages.dashboard.partials.widget-user-leaderboard')
+                        <!--end::Leaderboard Widget-->
+
+                        <!--begin::Live Activity Widget (Aktivitas Komunitas)-->
+                        @include('pages.dashboard.partials.widget-live-activity')
+                        <!--end::Live Activity Widget-->
                     </div>
                     <!--end::Sidebar-->
                 </div>

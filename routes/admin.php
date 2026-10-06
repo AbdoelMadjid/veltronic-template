@@ -147,6 +147,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/profil-pengguna/avatar', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateAvatar'])->name('profil-pengguna.avatar');
         Route::post('/profil-pengguna/ktp', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateFotoKtp'])->name('profil-pengguna.ktp');
         Route::post('/profil-pengguna/moto-hidup', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'updateMotoHidup'])->name('profil-pengguna.moto-hidup');
+        Route::post('/profil-pengguna/request-deletion', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'requestAccountDeletion'])->name('profil-pengguna.request-deletion');
+        Route::post('/profil-pengguna/cancel-deletion', [\App\Http\Controllers\Profil\ProfilPenggunaController::class, 'cancelAccountDeletion'])->name('profil-pengguna.cancel-deletion');
 
         // Chat Pribadi (Private Messenger)
         Route::get('/profil-pengguna/chat', [\App\Http\Controllers\Profil\ChatController::class, 'index'])->name('profil-pengguna.chat');

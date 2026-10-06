@@ -61,9 +61,10 @@
             data-hub-target="#hub_panel_notif"
             data-kt-translate-title="menu.notifications"
             title="{{ __('menu.notifications') }}">
-            <i class="ki-duotone {{ $isV2 ? 'ki-binance' : 'ki-notification-status' }} {{ $iconSize }}">
-                <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span>@if($isV2)<span class="path5"></span>@endif
+            <i class="ki-duotone ki-notification-status {{ $iconSize }}">
+                <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span>
             </i>
+            <span class="bullet bullet-dot bg-danger h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink d-none" id="app_notification_pulse_dot_mobile"></span>
         </button>
         <!--end::Notifications Tab Toggle-->
 

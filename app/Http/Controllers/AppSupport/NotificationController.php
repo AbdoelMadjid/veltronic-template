@@ -163,6 +163,130 @@ class NotificationController extends Controller
             }
         }
 
+        // Handle Account Deletion Request Action (Master / Admin only)
+        if ($notif->type === 'account_deletion_request' || ($notif->category === 'security' && isset($data['request_user_id']))) {
+            if (!$user->isMasterOrAdmin()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Anda tidak memiliki hak akses untuk memproses permintaan keluar akun.',
+                ], 403);
+            }
+
+            $targetUserId = $data['request_user_id'] ?? null;
+            $requestId = $data['request_id'] ?? null;
+
+            $deletionRequest = $requestId
+                ? \App\Models\Profil\AccountDeletionRequest::find($requestId)
+                : ($targetUserId ? \App\Models\Profil\AccountDeletionRequest::where('user_id', $targetUserId)->pending()->latest()->first() : null);
+
+            if ($action === 'accept' || $action === 'accept_account_deletion') {
+                $targetUser = $targetUserId ? User::find($targetUserId) : null;
+                $targetUserName = $targetUser ? $targetUser->name : ($data['request_user_name'] ?? 'Pengguna');
+
+                if ($targetUser) {
+                    // Clean up files
+                    if ($targetUser->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($targetUser->avatar)) {
+                        \Illuminate\Support\Facades\Storage::disk('public')->delete($targetUser->avatar);
+                    }
+                    if ($targetUser->detail?->foto_ktp && \Illuminate\Support\Facades\Storage::disk('public')->exists($targetUser->detail->foto_ktp)) {
+                        \Illuminate\Support\Facades\Storage::disk('public')->delete($targetUser->detail->foto_ktp);
+                    }
+
+                    // Invalidate active sessions
+                    try {
+                        if (\Illuminate\Support\Facades\DB::getSchemaBuilder()->hasTable('sessions')) {
+                            \Illuminate\Support\Facades\DB::table('sessions')->where('user_id', $targetUser->id)->delete();
+                        }
+                    } catch (\Throwable $e) {}
+
+                    $targetUser->delete();
+                }
+
+                if ($deletionRequest) {
+                    $deletionRequest->update([
+                        'status' => 'approved',
+                        'processed_by' => $user->id,
+                        'processed_at' => now(),
+                    ]);
+                }
+
+                // Update all master/admin notifications for this request
+                AppNotification::where('type', 'account_deletion_request')
+                    ->where(function ($q) use ($requestId, $targetUserId) {
+                        if ($requestId) {
+                            $q->whereJsonContains('data->request_id', (int) $requestId);
+                        }
+                        if ($targetUserId) {
+                            $q->orWhereJsonContains('data->request_user_id', (int) $targetUserId);
+                        }
+                    })
+                    ->update([
+                        'action_state' => 'accepted',
+                        'is_read' => true,
+                        'read_at' => now(),
+                    ]);
+
+                $stats = AppNotificationService::getUnreadStats($user);
+
+                return response()->json([
+                    'status' => 'success',
+                    'action_state' => 'accepted',
+                    'message' => "Permintaan disetujui. Akun {$targetUserName} telah berhasil dihapus dari sistem.",
+                    'stats' => $stats,
+                    'unread_total' => $stats['total'],
+                ]);
+            } elseif ($action === 'decline' || $action === 'decline_account_deletion') {
+                if ($deletionRequest) {
+                    $deletionRequest->update([
+                        'status' => 'rejected',
+                        'processed_by' => $user->id,
+                        'processed_at' => now(),
+                        'admin_notes' => $request->input('admin_notes', 'Permintaan keluar akun ditolak oleh Administrator.'),
+                    ]);
+                }
+
+                // Send notification to target user if still exists
+                if ($targetUserId && User::find($targetUserId)) {
+                    AppNotificationService::send([
+                        'user_id' => $targetUserId,
+                        'category' => 'security',
+                        'type' => 'account_deletion_declined',
+                        'title' => 'Permintaan Keluar Akun Ditolak',
+                        'message' => 'Permintaan keluar akun Anda telah ditolak oleh Administrator. Akun Anda tetap aktif.',
+                        'icon' => 'ki-shield-cross',
+                        'color' => 'warning',
+                        'action_state' => 'declined',
+                    ]);
+                }
+
+                // Update all master/admin notifications for this request
+                AppNotification::where('type', 'account_deletion_request')
+                    ->where(function ($q) use ($requestId, $targetUserId) {
+                        if ($requestId) {
+                            $q->whereJsonContains('data->request_id', (int) $requestId);
+                        }
+                        if ($targetUserId) {
+                            $q->orWhereJsonContains('data->request_user_id', (int) $targetUserId);
+                        }
+                    })
+                    ->update([
+                        'action_state' => 'declined',
+                        'is_read' => true,
+                        'read_at' => now(),
+                    ]);
+
+                $stats = AppNotificationService::getUnreadStats($user);
+
+                return response()->json([
+                    'status' => 'success',
+                    'action_state' => 'declined',
+                    'message' => 'Permintaan keluar akun telah ditolak.',
+                    'stats' => $stats,
+                    'unread_total' => $stats['total'],
+                ]);
+            }
+        }
+
         // Generic dismiss / read
         $notif->markAsRead();
         $stats = AppNotificationService::getUnreadStats($user);

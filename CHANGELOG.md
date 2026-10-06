@@ -5,6 +5,16 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.48.0] - 2026-10-06
+
+### Added & Enhanced
+- **Fitur Permintaan Keluar Akun (Pola Breeze) & Manajemen Peninjauan Admin (`/profil/profil-pengguna`)**:
+  - **Zona Bahaya Profil Pengguna**: Menambahkan kartu *Zona Bahaya & Permintaan Keluar Akun* pada tab Konfigurasi modul profil pengguna (`/profil/profil-pengguna`) dengan standar Rule 12.
+  - **Modal Dialog Permintaan Keluar (`#modal_request_account_deletion`)**: Dibangun mengikuti standar Rule 10 (Responsive Modal Dialog) dengan verifikasi kata sandi saat ini (`Hash::check`) dan kolom alasan keluar opsional.
+  - **Penyiaran Notifikasi Terarah (Master & Admin Saja)**: Permintaan keluar akun secara otomatis disiarkan ke notifikasi navbar atas hanya untuk pengguna ber-role `master` dan `admin` dengan badge keamanan, kategori `security`, dan tipe `account_deletion_request`.
+  - **Pemrosesan Aksi Cepat Notifikasi Navbar**: Master dan Admin dapat langsung menyetujui (*Terima & Hapus*) atau menolak (*Tolak*) permintaan keluar akun langsung dari dropdown notifikasi topbar dengan konfirmasi SweetAlert2.
+  - **Audit Log & Pembatalan Permintaan**: Pengguna dapat membatalkan pengajuan keluar akun secara mandiri selama status masih pending, dan seluruh proses tercatat di `users_logs` dan tabel `account_deletion_requests`.
+
 ## [v1.47.0] - 2026-10-05
 
 ### Added & Enhanced

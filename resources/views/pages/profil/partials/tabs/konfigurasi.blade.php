@@ -420,3 +420,74 @@
 </form>
 <!--end::Form 2: Preferensi & Notifikasi Pengguna-->
 
+<!--begin::Card 3: Zona Bahaya & Permintaan Keluar Akun (Pola Breeze)-->
+<div class="card shadow-sm border border-gray-200 border-danger border-opacity-50 mb-6" id="card_account_deletion">
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-5 py-md-0 border-bottom border-gray-200">
+        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start w-100 w-md-auto">
+            <h3 class="fw-bolder text-gray-900 m-0 fs-4">Zona Bahaya &amp; Permintaan Keluar Akun</h3>
+            <span class="text-muted fs-7 mt-1">Penonaktifan akun dan penghapusan data secara permanen dari sistem</span>
+        </div>
+        <div class="card-toolbar d-flex align-items-center justify-content-center justify-content-md-end w-100 w-md-auto mt-2 mt-md-0">
+            <span class="badge badge-light-danger fw-bold px-3 fs-7 d-inline-flex align-items-center justify-content-center h-35px w-100 w-md-auto">
+                Zona Bahaya
+            </span>
+        </div>
+    </div>
+
+    <div class="card-body py-6 px-4 px-md-6" id="account_deletion_card_body">
+        @php
+            $hasPendingDeletion = isset($pendingDeletionRequest) && $pendingDeletionRequest;
+        @endphp
+
+        <!-- State 1: Ada Permintaan Pending -->
+        <div id="wrapper_deletion_pending" class="{{ $hasPendingDeletion ? '' : 'd-none' }} d-flex flex-column gap-3">
+            <div class="alert alert-light-warning d-flex align-items-start p-5 rounded-3 border border-warning border-dashed mb-0">
+                <i class="ki-duotone ki-time fs-2hx text-warning me-4 flex-shrink-0 mt-1">
+                    <span class="path1"></span><span class="path2"></span>
+                </i>
+                <div class="d-flex flex-column flex-grow-1">
+                    <h5 class="text-gray-900 fw-bold fs-6 mb-1">Permintaan Keluar Akun Sedang Ditinjau</h5>
+                    <div class="text-gray-700 fs-7 mb-2">
+                        Anda telah mengajukan permohonan keluar akun pada <span class="fw-bold" id="label_deletion_time">{{ $hasPendingDeletion ? $pendingDeletionRequest->created_at->format('d M Y H:i') : '' }}</span>. Permintaan ini sedang dalam antrean verifikasi oleh Master &amp; Administrator.
+                    </div>
+                    <div id="wrapper_deletion_reason_box" class="bg-body bg-opacity-75 p-3 rounded border border-gray-200 fs-8 text-gray-800 {{ $hasPendingDeletion && $pendingDeletionRequest->reason ? '' : 'd-none' }}">
+                        <strong>Alasan:</strong> <span id="label_deletion_reason">{{ $hasPendingDeletion ? $pendingDeletionRequest->reason : '' }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3 pt-2">
+                <span class="text-muted fs-8">Anda dapat membatalkan permohonan ini selama belum disetujui oleh Administrator.</span>
+                <button type="button" class="btn btn-sm btn-light-warning w-100 w-sm-auto" id="btn_cancel_account_deletion" data-bs-toggle="tooltip" title="Batalkan pengajuan keluar akun">
+                    <span class="indicator-label">
+                        <i class="ki-duotone ki-cross fs-4 me-1"><span class="path1"></span><span class="path2"></span></i>
+                        Batalkan Permintaan
+                    </span>
+                    <span class="indicator-progress">
+                        Membatalkan...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- State 2: Normal (Belum ada permintaan) -->
+        <div id="wrapper_deletion_normal" class="{{ $hasPendingDeletion ? 'd-none' : '' }}">
+            <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-4">
+                <div class="d-flex flex-column pe-md-6">
+                    <div class="fs-6 fw-bold text-gray-900 mb-1">Keluar / Hapus Akun Pengguna</div>
+                    <div class="fs-7 text-muted">
+                        Setelah permohonan keluar akun disetujui oleh Master/Admin, seluruh hak akses, preferensi, dan data akun Anda akan dihapus secara permanen dari sistem.
+                    </div>
+                </div>
+                <div class="flex-shrink-0 w-100 w-md-auto text-center text-md-end">
+                    <button type="button" class="btn btn-danger w-100 w-md-auto" data-bs-toggle="modal" data-bs-target="#modal_request_account_deletion" id="btn_open_deletion_modal">
+                        <i class="ki-duotone ki-trash fs-4 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                        Permintaan Keluar Akun
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Card 3: Zona Bahaya & Permintaan Keluar Akun-->
+

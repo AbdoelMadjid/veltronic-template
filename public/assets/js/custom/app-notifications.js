@@ -31,55 +31,54 @@ const KTAppNotifications = (function () {
 
     // Update Topbar Bell Indicators & Tab Badges
     const updateBadges = (stats, unreadTotal) => {
-        const pulseDot = document.getElementById('app_notification_pulse_dot');
-        const unreadBadge = document.getElementById('app_notification_unread_badge');
-        const headerBadge = document.getElementById('notif_header_badge');
-        const headerBadgeV2 = document.getElementById('notif_header_badge_v2');
+        const pulseDots = document.querySelectorAll('#app_notification_pulse_dot, #app_notification_pulse_dot_v2, #app_notification_pulse_dot_mobile, .app-notification-pulse-dot');
+        const unreadBadges = document.querySelectorAll('#app_notification_unread_badge, #app_notification_unread_badge_v2, #app_notification_unread_badge_mobile, .app-notification-unread-badge');
+        const headerBadges = document.querySelectorAll('#notif_header_badge, #notif_header_badge_v2, .notif-header-badge');
 
-        const friendsBadge = document.getElementById('notif_tab_count_friends');
-        const securityBadge = document.getElementById('notif_tab_count_security');
-        const chatBadge = document.getElementById('notif_tab_count_chat');
-
-        const friendsBadgeV2 = document.getElementById('notif_tab_count_friends_v2');
-        const securityBadgeV2 = document.getElementById('notif_tab_count_security_v2');
-        const chatBadgeV2 = document.getElementById('notif_tab_count_chat_v2');
+        const friendsBadges = document.querySelectorAll('#notif_tab_count_friends, #notif_tab_count_friends_v2');
+        const securityBadges = document.querySelectorAll('#notif_tab_count_security, #notif_tab_count_security_v2');
+        const chatBadges = document.querySelectorAll('#notif_tab_count_chat, #notif_tab_count_chat_v2');
 
         // 1. Topbar Bell Indicator
-        if (unreadTotal > 0) {
-            if (pulseDot) pulseDot.classList.remove('d-none');
-            if (unreadBadge) {
-                unreadBadge.classList.remove('d-none');
-                unreadBadge.textContent = unreadTotal > 99 ? '99+' : unreadTotal;
+        pulseDots.forEach(dot => {
+            if (unreadTotal > 0) {
+                dot.classList.remove('d-none');
+            } else {
+                dot.classList.add('d-none');
             }
-        } else {
-            if (pulseDot) pulseDot.classList.add('d-none');
-            if (unreadBadge) unreadBadge.classList.add('d-none');
-        }
+        });
+
+        unreadBadges.forEach(badge => {
+            if (unreadTotal > 0) {
+                badge.classList.remove('d-none');
+                badge.textContent = unreadTotal > 99 ? '99+' : unreadTotal;
+            } else {
+                badge.classList.add('d-none');
+            }
+        });
 
         // 2. Dropdown Header Text
         const headerText = `${unreadTotal} belum dibaca`;
-        if (headerBadge) headerBadge.textContent = headerText;
-        if (headerBadgeV2) headerBadgeV2.textContent = headerText;
+        headerBadges.forEach(hb => {
+            hb.textContent = headerText;
+        });
 
         // 3. Tab Specific Badges
-        const updateTabBadge = (el, count) => {
-            if (!el) return;
-            if (count > 0) {
-                el.classList.remove('d-none');
-                el.textContent = count > 99 ? '99+' : count;
-            } else {
-                el.classList.add('d-none');
-            }
+        const updateTabBadgeList = (nodeList, count) => {
+            nodeList.forEach(el => {
+                if (count > 0) {
+                    el.classList.remove('d-none');
+                    el.textContent = count > 99 ? '99+' : count;
+                } else {
+                    el.classList.add('d-none');
+                }
+            });
         };
 
         if (stats) {
-            updateTabBadge(friendsBadge, stats.friendship);
-            updateTabBadge(securityBadge, stats.security);
-            updateTabBadge(chatBadge, stats.chat);
-
-            updateTabBadge(friendsBadgeV2, stats.friendship);
-            updateTabBadge(securityBadgeV2, stats.security);
-            updateTabBadge(chatBadgeV2, stats.chat);
+            updateTabBadgeList(friendsBadges, stats.friendship);
+            updateTabBadgeList(securityBadges, stats.security);
+            updateTabBadgeList(chatBadges, stats.chat);
         }
     };
 
@@ -109,9 +108,41 @@ const KTAppNotifications = (function () {
             `;
         }
 
-        // Action Buttons Rendering (e.g. Friendship Accept/Decline)
+        // Action Buttons Rendering (e.g. Account Deletion, Friendship Accept/Decline)
         let actionsHtml = '';
-        if (item.category === 'friendship' && item.type === 'friend_request') {
+        if (item.type === 'account_deletion_request') {
+            if (item.action_state === 'accepted') {
+                actionsHtml = `
+                    <div class="d-flex align-items-center gap-1 mt-2">
+                        <span class="badge badge-light-success fw-bold fs-9 py-1 px-2 rounded-pill">
+                            <i class="ki-duotone ki-check fs-8 text-success me-1"><span class="path1"></span><span class="path2"></span></i>
+                            Disetujui / Akun Dihapus
+                        </span>
+                    </div>
+                `;
+            } else if (item.action_state === 'declined') {
+                actionsHtml = `
+                    <div class="d-flex align-items-center gap-1 mt-2">
+                        <span class="badge badge-light-danger fw-bold fs-9 py-1 px-2 rounded-pill">
+                            Permintaan Ditolak
+                        </span>
+                    </div>
+                `;
+            } else {
+                actionsHtml = `
+                    <div class="d-flex align-items-center gap-2 mt-2">
+                        <button type="button" class="btn btn-xs btn-danger fw-bold py-1 px-3 btn-notif-action" data-id="${item.id}" data-action="accept_account_deletion">
+                            <span class="indicator-label">Terima &amp; Hapus</span>
+                            <span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle"></span></span>
+                        </button>
+                        <button type="button" class="btn btn-xs btn-light-secondary fw-bold py-1 px-3 btn-notif-action" data-id="${item.id}" data-action="decline_account_deletion">
+                            <span class="indicator-label">Tolak</span>
+                            <span class="indicator-progress"><span class="spinner-border spinner-border-sm align-middle"></span></span>
+                        </button>
+                    </div>
+                `;
+            }
+        } else if (item.category === 'friendship' && item.type === 'friend_request') {
             if (item.action_state === 'accepted') {
                 actionsHtml = `
                     <div class="d-flex align-items-center gap-1 mt-2">
@@ -308,64 +339,124 @@ const KTAppNotifications = (function () {
         const token = getCsrfToken();
         if (!notificationId || !action || !token) return;
 
-        if (buttonEl) {
-            buttonEl.setAttribute('data-kt-indicator', 'on');
-            buttonEl.disabled = true;
-        }
-
-        fetch(`/notifications/${notificationId}/action`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': token,
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: JSON.stringify({ action: action })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                if (data.stats) {
-                    updateBadges(data.stats, data.unread_total);
-                }
-                fetchNotifications(true);
-                // Refresh presence widget on dashboard if active
-                if (window.KTUserPresence && window.KTUserPresence.refreshDashboard) {
-                    window.KTUserPresence.refreshDashboard();
-                }
-
-                if (typeof toastr !== 'undefined') {
-                    if (action === 'accept') toastr.success(data.message || 'Permintaan pertemanan diterima!');
-                    else toastr.info(data.message || 'Permintaan pertemanan ditolak.');
-                }
-            }
-        })
-        .catch(() => {
+        const performPost = () => {
             if (buttonEl) {
-                buttonEl.removeAttribute('data-kt-indicator');
-                buttonEl.disabled = false;
+                buttonEl.setAttribute('data-kt-indicator', 'on');
+                buttonEl.disabled = true;
             }
-        });
+
+            fetch(`/notifications/${notificationId}/action`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({ action: action })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    if (data.stats) {
+                        updateBadges(data.stats, data.unread_total);
+                    }
+                    fetchNotifications(true);
+                    // Refresh presence widget on dashboard if active
+                    if (window.KTUserPresence && window.KTUserPresence.refreshDashboard) {
+                        window.KTUserPresence.refreshDashboard();
+                    }
+
+                    if (typeof Swal !== 'undefined' && (action === 'accept_account_deletion' || action === 'decline_account_deletion')) {
+                        Swal.fire({
+                            text: data.message,
+                            icon: action === 'accept_account_deletion' ? 'success' : 'info',
+                            buttonsStyling: false,
+                            confirmButtonText: "OK",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        });
+                    } else if (typeof toastr !== 'undefined') {
+                        if (action === 'accept' || action === 'accept_account_deletion') toastr.success(data.message || 'Permintaan berhasil diproses!');
+                        else toastr.info(data.message || 'Permintaan ditolak.');
+                    }
+                } else {
+                    if (buttonEl) {
+                        buttonEl.removeAttribute('data-kt-indicator');
+                        buttonEl.disabled = false;
+                    }
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            text: data.message || 'Gagal memproses permintaan.',
+                            icon: 'error',
+                            buttonsStyling: false,
+                            confirmButtonText: "OK",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        });
+                    }
+                }
+            })
+            .catch(() => {
+                if (buttonEl) {
+                    buttonEl.removeAttribute('data-kt-indicator');
+                    buttonEl.disabled = false;
+                }
+            });
+        };
+
+        if (action === 'accept_account_deletion') {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Konfirmasi Penghapusan Akun',
+                    text: 'Apakah Anda yakin ingin menyetujui permintaan keluar akun ini? Akun dan data pengguna akan dihapus permanen dari sistem.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    buttonsStyling: false,
+                    confirmButtonText: 'Ya, Setujui & Hapus',
+                    cancelButtonText: 'Batal',
+                    customClass: {
+                        confirmButton: 'btn btn-danger',
+                        cancelButton: 'btn btn-light'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        performPost();
+                    }
+                });
+            } else if (confirm('Apakah Anda yakin ingin menyetujui permintaan keluar akun ini?')) {
+                performPost();
+            }
+        } else if (action === 'decline_account_deletion') {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Tolak Permintaan Keluar Akun',
+                    text: 'Apakah Anda yakin ingin menolak permohonan keluar akun dari pengguna ini?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    buttonsStyling: false,
+                    confirmButtonText: 'Ya, Tolak Permintaan',
+                    cancelButtonText: 'Batal',
+                    customClass: {
+                        confirmButton: 'btn btn-warning',
+                        cancelButton: 'btn btn-light'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        performPost();
+                    }
+                });
+            } else if (confirm('Apakah Anda yakin ingin menolak permohonan keluar akun ini?')) {
+                performPost();
+            }
+        } else {
+            performPost();
+        }
     };
 
     // Auto-mark informative unread notifications (e.g. friend_accepted) when panel is opened
-    const autoMarkInformativeRead = () => {
-        const unreadItems = document.querySelectorAll('.notif-row-item[data-is-unread="1"]');
-        unreadItems.forEach(itemEl => {
-            const type = itemEl.getAttribute('data-type');
-            const category = itemEl.getAttribute('data-category');
-            const id = itemEl.getAttribute('data-id');
-
-            // Automatically clear informational notifications when viewed in panel
-            if (type === 'friend_accepted' || category === 'system' || category === 'security') {
-                if (id) {
-                    markSingleAsRead(parseInt(id, 10));
-                }
-            }
-        });
-    };
-
     // Initialize Event Listeners
     const initEvents = () => {
         // Mark All Read Button
@@ -401,19 +492,6 @@ const KTAppNotifications = (function () {
                     markSingleAsRead(parseInt(notifId, 10));
                 }
             }
-
-            // Detect opening notification menu
-            const notifToggle = e.target.closest('#kt_header_notifications_toggle, [data-kt-menu-trigger="click"]');
-            if (notifToggle) {
-                setTimeout(autoMarkInformativeRead, 500);
-            }
-        });
-
-        // Tab click inside notification dropdown -> Auto mark viewed informative notifications
-        document.querySelectorAll('#kt_menu_notifications .nav-link, #kt_menu_notifications_v2 .nav-link').forEach(tab => {
-            tab.addEventListener('shown.bs.tab', () => {
-                setTimeout(autoMarkInformativeRead, 300);
-            });
         });
     };
 

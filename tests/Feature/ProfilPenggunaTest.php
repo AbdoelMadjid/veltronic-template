@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Models\UserManagement\User;
 use App\Models\Profil\UserDetail;
 use App\Models\Profil\UserSetting;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +14,7 @@ use Tests\TestCase;
 
 class ProfilPenggunaTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -230,6 +230,159 @@ class ProfilPenggunaTest extends TestCase
         $this->assertDatabaseHas('users_logs', [
             'user_id' => $user->id,
             'activity' => 'Pembaruan Moto Hidup',
+        ]);
+    }
+
+    public function test_user_can_submit_account_deletion_request(): void
+    {
+        Role::firstOrCreate(['name' => 'master', 'guard_name' => 'web']);
+
+        $user = User::factory()->create([
+            'password' => Hash::make('secret123'),
+        ]);
+        $user->assignRole('user');
+
+        $response = $this->actingAs($user)->postJson('/profil/profil-pengguna/request-deletion', [
+            'password' => 'secret123',
+            'reason' => 'Ingin berhenti menggunakan layanan.',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'status' => 'pending',
+            'reason' => 'Ingin berhenti menggunakan layanan.',
+        ]);
+
+        $this->assertDatabaseHas('account_deletion_requests', [
+            'user_id' => $user->id,
+            'status' => 'pending',
+            'reason' => 'Ingin berhenti menggunakan layanan.',
+        ]);
+
+        $this->assertDatabaseHas('app_notifications', [
+            'category' => 'security',
+            'type' => 'account_deletion_request',
+            'target_role' => 'master',
+        ]);
+
+        $this->assertDatabaseHas('app_notifications', [
+            'category' => 'security',
+            'type' => 'account_deletion_request',
+            'target_role' => 'admin',
+        ]);
+    }
+
+    public function test_user_cannot_submit_account_deletion_with_wrong_password(): void
+    {
+        $user = User::factory()->create([
+            'password' => Hash::make('secret123'),
+        ]);
+        $user->assignRole('user');
+
+        $response = $this->actingAs($user)->postJson('/profil/profil-pengguna/request-deletion', [
+            'password' => 'wrong-password',
+            'reason' => 'Test',
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['password']);
+    }
+
+    public function test_user_can_cancel_pending_account_deletion_request(): void
+    {
+        $user = User::factory()->create([
+            'password' => Hash::make('secret123'),
+        ]);
+        $user->assignRole('user');
+
+        $this->actingAs($user)->postJson('/profil/profil-pengguna/request-deletion', [
+            'password' => 'secret123',
+            'reason' => 'Test reason',
+        ]);
+
+        $cancelResponse = $this->actingAs($user)->postJson('/profil/profil-pengguna/cancel-deletion');
+        $cancelResponse->assertStatus(200);
+        $cancelResponse->assertJson(['success' => true]);
+
+        $this->assertDatabaseHas('account_deletion_requests', [
+            'user_id' => $user->id,
+            'status' => 'cancelled',
+        ]);
+    }
+
+    public function test_admin_can_accept_account_deletion_request_via_notification(): void
+    {
+        Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'master', 'guard_name' => 'web']);
+
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $user = User::factory()->create([
+            'password' => Hash::make('secret123'),
+        ]);
+        $user->assignRole('user');
+
+        $this->actingAs($user)->postJson('/profil/profil-pengguna/request-deletion', [
+            'password' => 'secret123',
+            'reason' => 'Saya ingin keluar akun',
+        ]);
+
+        $notif = \App\Models\AppSupport\AppNotification::where('type', 'account_deletion_request')
+            ->where('target_role', 'admin')
+            ->first();
+
+        $this->assertNotNull($notif);
+
+        $actionResponse = $this->actingAs($admin)->postJson("/notifications/{$notif->id}/action", [
+            'action' => 'accept_account_deletion',
+        ]);
+
+        $actionResponse->assertStatus(200);
+        $actionResponse->assertJson(['status' => 'success', 'action_state' => 'accepted']);
+
+        // User should be deleted
+        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+    }
+
+    public function test_admin_can_decline_account_deletion_request_via_notification(): void
+    {
+        Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $user = User::factory()->create([
+            'password' => Hash::make('secret123'),
+        ]);
+        $user->assignRole('user');
+
+        $this->actingAs($user)->postJson('/profil/profil-pengguna/request-deletion', [
+            'password' => 'secret123',
+            'reason' => 'Saya ingin keluar akun',
+        ]);
+
+        $notif = \App\Models\AppSupport\AppNotification::where('type', 'account_deletion_request')
+            ->where('target_role', 'admin')
+            ->first();
+
+        $this->assertNotNull($notif);
+
+        $actionResponse = $this->actingAs($admin)->postJson("/notifications/{$notif->id}/action", [
+            'action' => 'decline_account_deletion',
+        ]);
+
+        $actionResponse->assertStatus(200);
+        $actionResponse->assertJson(['status' => 'success', 'action_state' => 'declined']);
+
+        // User should still exist
+        $this->assertDatabaseHas('users', ['id' => $user->id]);
+
+        // User should receive declined notification
+        $this->assertDatabaseHas('app_notifications', [
+            'user_id' => $user->id,
+            'type' => 'account_deletion_declined',
         ]);
     }
 }

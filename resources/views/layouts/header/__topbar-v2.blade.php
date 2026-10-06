@@ -28,8 +28,11 @@
         <!--begin::Menu- wrapper-->
         <div class="position-relative btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px"
             data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-            <i class="ki-duotone ki-binance fs-1"><span class="path1"></span><span class="path2"></span><span
-                    class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+            <i class="ki-duotone ki-notification-status fs-1"><span class="path1"></span><span class="path2"></span><span
+                    class="path3"></span><span class="path4"></span></i>
+            <!-- Notification pulse dot & badge counter -->
+            <span class="bullet bullet-dot bg-danger h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink d-none" id="app_notification_pulse_dot_v2"></span>
+            <span class="badge badge-circle badge-danger position-absolute top-0 end-0 translate-middle-y fs-9 fw-bolder d-none" id="app_notification_unread_badge_v2" style="transform: translate(20%, -20%);">0</span>
         </div>
         <!--layout-partial:partials/menus/_notifications-menu.html-->
         @include('partials.menus._notifications-menu')

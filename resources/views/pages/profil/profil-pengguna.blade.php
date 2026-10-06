@@ -103,6 +103,10 @@
     <!--begin::Modal Update Avatar & Fokus Posisi-->
     @include('pages.profil.partials.modals.avatar-modal')
     <!--end::Modal Update Avatar & Fokus Posisi-->
+
+    <!--begin::Modal Permintaan Keluar Akun-->
+    @include('pages.profil.partials.modals.request-deletion-modal')
+    <!--end::Modal Permintaan Keluar Akun-->
 @endsection
 
 @section('scripts')
@@ -969,6 +973,189 @@
 
             // Backward compatibility
             handleAjaxForm('form_konfigurasi', 'btn_save_konfigurasi', handleCoverSettingsSync);
+
+            // ==========================================
+            // Handler: Permintaan Keluar Akun (Pola Breeze)
+            // ==========================================
+            const formDeletion = document.getElementById('form_request_account_deletion');
+            const btnSubmitDeletion = document.getElementById('btn_submit_account_deletion');
+            const modalDeletionEl = document.getElementById('modal_request_account_deletion');
+            const inputDeletionPassword = document.getElementById('input_deletion_password');
+            const errorDeletionPassword = document.getElementById('error_deletion_password');
+            const btnCancelDeletion = document.getElementById('btn_cancel_account_deletion');
+
+            if (btnSubmitDeletion && formDeletion) {
+                btnSubmitDeletion.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (errorDeletionPassword) {
+                        errorDeletionPassword.classList.add('d-none');
+                        errorDeletionPassword.innerText = '';
+                    }
+
+                    if (!inputDeletionPassword.value.trim()) {
+                        if (errorDeletionPassword) {
+                            errorDeletionPassword.innerText = 'Password konfirmasi wajib diisi.';
+                            errorDeletionPassword.classList.remove('d-none');
+                        }
+                        inputDeletionPassword.focus();
+                        return;
+                    }
+
+                    btnSubmitDeletion.setAttribute('data-kt-indicator', 'on');
+                    btnSubmitDeletion.disabled = true;
+
+                    const formData = new FormData(formDeletion);
+
+                    fetch(formDeletion.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(async response => {
+                        const data = await response.json().catch(() => ({}));
+                        return { ok: response.ok, status: response.status, body: data };
+                    })
+                    .then(res => {
+                        btnSubmitDeletion.removeAttribute('data-kt-indicator');
+                        btnSubmitDeletion.disabled = false;
+
+                        if (res.ok && res.body.success) {
+                            // Tutup modal
+                            if (modalDeletionEl) {
+                                const modalInstance = bootstrap.Modal.getInstance(modalDeletionEl) || new bootstrap.Modal(modalDeletionEl);
+                                modalInstance.hide();
+                            }
+                            formDeletion.reset();
+
+                            // Update Realtime UI ke State Pending
+                            const wrapperPending = document.getElementById('wrapper_deletion_pending');
+                            const wrapperNormal = document.getElementById('wrapper_deletion_normal');
+                            const labelTime = document.getElementById('label_deletion_time');
+                            const labelReason = document.getElementById('label_deletion_reason');
+                            const wrapperReasonBox = document.getElementById('wrapper_deletion_reason_box');
+
+                            if (wrapperPending && wrapperNormal) {
+                                wrapperNormal.classList.add('d-none');
+                                wrapperPending.classList.remove('d-none');
+                            }
+                            if (labelTime && res.body.created_at) {
+                                labelTime.innerText = res.body.created_at;
+                            }
+                            if (res.body.reason) {
+                                if (labelReason) labelReason.innerText = res.body.reason;
+                                if (wrapperReasonBox) wrapperReasonBox.classList.remove('d-none');
+                            } else {
+                                if (wrapperReasonBox) wrapperReasonBox.classList.add('d-none');
+                            }
+
+                            if (res.body.log) {
+                                prependUserLog(res.body.log.activity, res.body.log.description, res.body.log.ip_address);
+                            }
+
+                            if (window.KTAppNotifications && typeof window.KTAppNotifications.refresh === 'function') {
+                                window.KTAppNotifications.refresh();
+                            }
+
+                            showNotification('success', res.body.message || 'Permintaan keluar akun berhasil diajukan.', 'Berhasil Diajukan');
+                        } else {
+                            if (res.body.errors && res.body.errors.password && errorDeletionPassword) {
+                                errorDeletionPassword.innerText = res.body.errors.password[0];
+                                errorDeletionPassword.classList.remove('d-none');
+                            }
+                            showNotification('error', res.body.message || 'Gagal mengajukan permintaan keluar akun.', 'Gagal');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error submitting deletion request:', err);
+                        btnSubmitDeletion.removeAttribute('data-kt-indicator');
+                        btnSubmitDeletion.disabled = false;
+                        showNotification('error', 'Terjadi kesalahan jaringan. Silakan coba lagi.', 'Kesalahan');
+                    });
+                });
+            }
+
+            // Handler: Pembatalan Permintaan Keluar Akun
+            if (btnCancelDeletion) {
+                btnCancelDeletion.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const doCancel = () => {
+                        btnCancelDeletion.setAttribute('data-kt-indicator', 'on');
+                        btnCancelDeletion.disabled = true;
+
+                        fetch("{{ route('profil.profil-pengguna.cancel-deletion') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(async response => {
+                            const data = await response.json().catch(() => ({}));
+                            return { ok: response.ok, status: response.status, body: data };
+                        })
+                        .then(res => {
+                            btnCancelDeletion.removeAttribute('data-kt-indicator');
+                            btnCancelDeletion.disabled = false;
+
+                            if (res.ok && res.body.success) {
+                                const wrapperPending = document.getElementById('wrapper_deletion_pending');
+                                const wrapperNormal = document.getElementById('wrapper_deletion_normal');
+                                if (wrapperPending && wrapperNormal) {
+                                    wrapperPending.classList.add('d-none');
+                                    wrapperNormal.classList.remove('d-none');
+                                }
+
+                                if (res.body.log) {
+                                    prependUserLog(res.body.log.activity, res.body.log.description, res.body.log.ip_address);
+                                }
+
+                                if (window.KTAppNotifications && typeof window.KTAppNotifications.refresh === 'function') {
+                                    window.KTAppNotifications.refresh();
+                                }
+
+                                showNotification('success', res.body.message || 'Permintaan keluar akun berhasil dibatalkan.', 'Dibatalkan');
+                            } else {
+                                showNotification('error', res.body.message || 'Gagal membatalkan permohonan.', 'Gagal');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Error cancelling deletion request:', err);
+                            btnCancelDeletion.removeAttribute('data-kt-indicator');
+                            btnCancelDeletion.disabled = false;
+                            showNotification('error', 'Terjadi gangguan jaringan.', 'Kesalahan');
+                        });
+                    };
+
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Batalkan Permintaan?',
+                            text: 'Apakah Anda yakin ingin membatalkan pengajuan keluar akun ini?',
+                            icon: 'question',
+                            showCancelButton: true,
+                            buttonsStyling: false,
+                            confirmButtonText: 'Ya, Batalkan Pengajuan',
+                            cancelButtonText: 'Tutup',
+                            customClass: {
+                                confirmButton: 'btn btn-warning',
+                                cancelButton: 'btn btn-light'
+                            }
+                        }).then((res) => {
+                            if (res.isConfirmed) {
+                                doCancel();
+                            }
+                        });
+                    } else if (confirm('Apakah Anda yakin ingin membatalkan pengajuan keluar akun ini?')) {
+                        doCancel();
+                    }
+                });
+            }
         });
     </script>
     <!--end::Profil Pengguna Actions-->

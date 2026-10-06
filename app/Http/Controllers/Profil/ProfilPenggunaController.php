@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Profil;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profil\AccountDeletionRequest;
 use App\Models\UserManagement\User;
 use App\Models\Profil\UserDetail;
 use App\Models\Profil\UserLog;
+use App\Services\AppSupport\AppNotificationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
@@ -36,6 +39,11 @@ class ProfilPenggunaController extends Controller
         $settings = $user->settingRecord?->toFlatArray() ?? [];
         $logs = $user->logs()->where('module', 'profil')->take(25)->get();
 
+        $pendingDeletionRequest = AccountDeletionRequest::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->latest()
+            ->first();
+
         // Get active login sessions
         $sessions = [];
         try {
@@ -53,6 +61,7 @@ class ProfilPenggunaController extends Controller
             'settings' => $settings,
             'logs' => $logs,
             'sessions' => $sessions,
+            'pendingDeletionRequest' => $pendingDeletionRequest,
             'activeTab' => $request->query('tab', 'profil-saya'),
         ]);
     }
@@ -651,5 +660,169 @@ class ProfilPenggunaController extends Controller
 
         return redirect()->route('profil.profil-pengguna')
             ->with('success', 'Foto KTP berhasil diunggah.');
+    }
+
+    /**
+     * Submit an account deletion / exit request (Pola Breeze with password confirmation).
+     */
+    public function requestAccountDeletion(Request $request): JsonResponse|RedirectResponse
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $request->validate([
+            'password' => ['required', 'string'],
+            'reason' => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        if (!Hash::check($request->input('password'), $user->password)) {
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Password yang Anda masukkan tidak sesuai.',
+                    'errors' => [
+                        'password' => ['Password yang Anda masukkan tidak sesuai.'],
+                    ],
+                ], 422);
+            }
+            return back()->withErrors(['password' => 'Password yang Anda masukkan tidak sesuai.']);
+        }
+
+        // Check if there is already a pending request
+        $existing = AccountDeletionRequest::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->first();
+
+        if ($existing) {
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Anda sudah memiliki permohonan keluar akun yang sedang menunggu peninjauan Master / Admin.',
+                ], 422);
+            }
+            return back()->with('error', 'Anda sudah memiliki permohonan keluar akun yang sedang menunggu peninjauan.');
+        }
+
+        // Create Deletion Request
+        $deletionRequest = AccountDeletionRequest::create([
+            'user_id' => $user->id,
+            'reason' => $request->input('reason'),
+            'status' => 'pending',
+        ]);
+
+        // Broadcast notification specifically to roles Master & Admin
+        $reasonSnippet = $request->input('reason') ? ' Alasan: "' . Str::limit($request->input('reason'), 80) . '"' : '';
+        AppNotificationService::sendToRole(['master', 'admin'], [
+            'category' => 'security',
+            'type' => 'account_deletion_request',
+            'title' => 'Permintaan Keluar Akun: ' . $user->name,
+            'message' => "Pengguna {$user->name} ({$user->email}) mengajukan permohonan keluar akun.{$reasonSnippet}",
+            'icon' => 'ki-trash',
+            'color' => 'danger',
+            'action_url' => route('profil.profil-pengguna'),
+            'data' => [
+                'request_id' => $deletionRequest->id,
+                'request_user_id' => $user->id,
+                'request_user_name' => $user->name,
+                'request_user_email' => $user->email,
+                'reason' => $request->input('reason'),
+                'avatar' => $user->avatar_url,
+            ],
+            'action_state' => 'pending',
+        ]);
+
+        // Send confirmation notification to requesting user's own topbar
+        AppNotificationService::send([
+            'user_id' => $user->id,
+            'category' => 'security',
+            'type' => 'account_deletion_submitted',
+            'title' => 'Permintaan Keluar Akun Diajukan',
+            'message' => 'Permintaan keluar akun Anda sedang ditinjau oleh Administrator / Master.',
+            'icon' => 'ki-trash',
+            'color' => 'warning',
+            'action_url' => route('profil.profil-pengguna', ['tab' => 'konfigurasi']),
+            'data' => [
+                'request_id' => $deletionRequest->id,
+                'reason' => $request->input('reason'),
+            ],
+            'action_state' => 'pending',
+        ]);
+
+        $log = UserLog::log('Pengajuan Keluar Akun', 'Pengguna mengajukan permohonan keluar akun ke Administrator.', $user);
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'status' => 'pending',
+                'message' => 'Permintaan keluar akun berhasil diajukan. Master & Admin akan meninjau permohonan Anda.',
+                'request_id' => $deletionRequest->id,
+                'reason' => $deletionRequest->reason,
+                'created_at' => $deletionRequest->created_at->format('d M Y H:i'),
+                'log' => [
+                    'activity' => $log->activity,
+                    'description' => $log->description,
+                    'ip_address' => $log->ip_address,
+                    'time' => 'Baru saja',
+                ],
+            ]);
+        }
+
+        return redirect()->route('profil.profil-pengguna', ['tab' => 'konfigurasi'])
+            ->with('success', 'Permintaan keluar akun berhasil diajukan.');
+    }
+
+    /**
+     * Cancel pending account deletion request.
+     */
+    public function cancelAccountDeletion(Request $request): JsonResponse|RedirectResponse
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $existing = AccountDeletionRequest::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->latest()
+            ->first();
+
+        if (!$existing) {
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Tidak ada permohonan keluar akun yang sedang aktif untuk dibatalkan.',
+                ], 404);
+            }
+            return back()->with('error', 'Tidak ada permohonan keluar akun yang sedang aktif.');
+        }
+
+        $existing->update([
+            'status' => 'cancelled',
+            'processed_at' => now(),
+        ]);
+
+        // Remove / update user & master notifications
+        \App\Models\AppSupport\AppNotification::whereIn('type', ['account_deletion_request', 'account_deletion_submitted'])
+            ->where(function ($q) use ($existing, $user) {
+                $q->whereJsonContains('data->request_id', (int) $existing->id)
+                  ->orWhere('user_id', $user->id);
+            })
+            ->delete();
+
+        $log = UserLog::log('Pembatalan Keluar Akun', 'Pengguna membatalkan permohonan keluar akun.', $user);
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Permintaan keluar akun berhasil dibatalkan.',
+                'log' => [
+                    'activity' => $log->activity,
+                    'description' => $log->description,
+                    'ip_address' => $log->ip_address,
+                    'time' => 'Baru saja',
+                ],
+            ]);
+        }
+
+        return redirect()->route('profil.profil-pengguna', ['tab' => 'konfigurasi'])
+            ->with('success', 'Permintaan keluar akun berhasil dibatalkan.');
     }
 }

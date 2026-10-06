@@ -20,7 +20,7 @@ class AppFiturSeeder extends Seeder
                 'category' => 'topbar_tools',
                 'description' => 'Pencarian cepat global pada topbar header',
                 'icon' => 'ki-magnifier',
-                'is_enabled' => true,
+                'is_enabled' => false,
                 'order' => 1,
             ],
             [
@@ -47,7 +47,7 @@ class AppFiturSeeder extends Seeder
                 'category' => 'topbar_tools',
                 'description' => 'Drawer interaksi perpesanan cepat langsung',
                 'icon' => 'ki-message-text-2',
-                'is_enabled' => true,
+                'is_enabled' => false,
                 'order' => 4,
             ],
             [

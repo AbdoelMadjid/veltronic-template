@@ -49,7 +49,21 @@ class AppNotification extends Model
      */
     public function scopeForUser(Builder $query, User $user): Builder
     {
-        $userRoles = $user->roles->pluck('name')->map(fn($r) => strtolower($r))->toArray();
+        $userRoles = [];
+        if (method_exists($user, 'getRoleNames')) {
+            $userRoles = $user->getRoleNames()->map(fn($r) => strtolower($r))->toArray();
+        }
+        if (empty($userRoles) && isset($user->roles)) {
+            $userRoles = $user->roles->pluck('name')->map(fn($r) => strtolower($r))->toArray();
+        }
+        if (!empty($user->role)) {
+            $userRoles[] = strtolower($user->role);
+        }
+        if (method_exists($user, 'hasRole')) {
+            if ($user->hasRole('master')) $userRoles[] = 'master';
+            if ($user->hasRole('admin')) $userRoles[] = 'admin';
+        }
+        $userRoles = array_values(array_unique(array_filter($userRoles)));
 
         return $query->where(function (Builder $q) use ($user, $userRoles) {
             $q->where('user_id', $user->id);

@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ThemeVersionRenderTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_dashboard_renders_v1_layout_when_theme_version_is_v1(): void
     {
         $response = $this

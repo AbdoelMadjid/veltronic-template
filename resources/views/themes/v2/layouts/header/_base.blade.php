@@ -24,11 +24,11 @@
             <!--begin::Navbar-->
             <div class="d-flex align-items-stretch" id="kt_header_nav">
                 <!--layout-partial:layout/header/__menu.html-->
-                @include('layouts.header.__menu-v2')
+                @include('themes.v2.layouts.header.__menu')
             </div>
             <!--end::Navbar-->
             <!--layout-partial:layout/header/__topbar.html-->
-            @include('layouts.header.__topbar-v2')
+            @include('themes.v2.layouts.header.__topbar')
         </div>
         <!--end::Wrapper-->
     </div>

@@ -1,20 +1,24 @@
 @php
     $activeThemeVersion = \App\Support\ThemeVersion::current();
     $currentRoute = \Illuminate\Support\Facades\Route::currentRouteName() ?? '';
-    $isAuthenticationPage = str_starts_with($currentRoute, 'pages.authentication.')
-        || in_array($currentRoute, ['login', 'register', 'password.request', 'password.reset', 'password.confirm', 'password.email', 'verification.notice', 'verification.verify'])
-        || !empty($CreativeLayout)
-        || !empty($CorpLayout)
-        || !empty($FancyLayout)
-        || !empty($OverlayLayout)
-        || !empty($EmailLayout)
-        || !empty($GeneralAuth);
-    $resolvedLayout = \App\Support\ThemeVersion::resolveView('layouts.index', $activeThemeVersion);
-
-    if (!$isAuthenticationPage && $resolvedLayout !== 'layouts.index') {
-        echo view($resolvedLayout)->render();
-        return;
-    }
+    $isAuthenticationPage =
+        str_starts_with($currentRoute, 'pages.authentication.') ||
+        in_array($currentRoute, [
+            'login',
+            'register',
+            'password.request',
+            'password.reset',
+            'password.confirm',
+            'password.email',
+            'verification.notice',
+            'verification.verify',
+        ]) ||
+        !empty($CreativeLayout) ||
+        !empty($CorpLayout) ||
+        !empty($FancyLayout) ||
+        !empty($OverlayLayout) ||
+        !empty($EmailLayout) ||
+        !empty($GeneralAuth);
 @endphp
 <!DOCTYPE html>
 <!--
@@ -28,12 +32,16 @@ Dribbble: www.dribbble.com/keenthemes
 Like: www.facebook.com/keenthemes
 License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
 -->
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}" data-kt-icon-style="{{ getActiveIconStyle() }}" data-bs-theme="{{ getActiveThemeMode() === 'system' ? 'light' : getActiveThemeMode() }}" data-bs-theme-mode="{{ getActiveThemeMode() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-kt-lang="{{ app()->getLocale() }}"
+    data-kt-icon-style="{{ getActiveIconStyle() }}"
+    data-bs-theme="{{ getActiveThemeMode() === 'system' ? 'light' : getActiveThemeMode() }}"
+    data-bs-theme-mode="{{ getActiveThemeMode() }}">
 <!--begin::Head-->
 
 <head>
     <base href="{{ url('/') }}/">
-    <title>{{ trim($__env->yieldContent('title')) ?: getPageTitle() }} - {{ app_profile('app_name', 'Veltronic Template') }}</title>
+    <title>{{ trim($__env->yieldContent('title')) ?: getPageTitle() }} -
+        {{ app_profile('app_name', 'Veltronic Template') }}</title>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="description" content="{{ app_profile('meta_description') ?: __('menu.meta_description') }}" />
@@ -42,19 +50,22 @@ License: For each use you must have a valid license purchased only from above li
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="{{ app()->getLocale() === 'id' ? 'id_ID' : 'en_US' }}" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="{{ app_profile('og_title') ?: (trim($__env->yieldContent('title')) ?: __('menu.og_title')) }}" />
+    <meta property="og:title"
+        content="{{ app_profile('og_title') ?: (trim($__env->yieldContent('title')) ?: __('menu.og_title')) }}" />
     <meta property="og:url" content="{{ url()->current() }}" />
-    <meta property="og:site_name" content="{{ app_profile('og_site_name') ?: app_profile('app_name', 'Veltronic') }}" />
+    <meta property="og:site_name"
+        content="{{ app_profile('og_site_name') ?: app_profile('app_name', 'Veltronic') }}" />
     <link rel="canonical" href="{{ url()->current() }}" />
     <link rel="shortcut icon" href="{{ app_favicon_url($theme_asset_pack ?? null) }}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700&display=swap" /> <!--end::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700&display=swap" />
+    <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used for this page only)-->
-    {{--     
+    {{--
         <link href="{{ $theme_asset_base }}/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-        <link href="{{ $theme_asset_base }}/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" /> 
+        <link href="{{ $theme_asset_base }}/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     --}}
     @yield('styles')
     <!--end::Vendor Stylesheets-->
@@ -82,6 +93,15 @@ License: For each use you must have a valid license purchased only from above li
                 padding-top: 1rem !important;
             }
         }
+        @if ($activeThemeVersion === 'v2')
+            body#kt_body {
+                background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg.jpg') }}');
+            }
+
+            [data-bs-theme="dark"] body#kt_body {
+                background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg-dark.jpg') }}');
+            }
+        @endif
     </style>
     <!--end::Global Stylesheets Bundle-->
     <script>
@@ -120,43 +140,53 @@ License: For each use you must have a valid license purchased only from above li
 @endphp
 
 <body
-    id="{{ in_array($layout, ['corp', 'fancy', 'creative', 'overlay', 'emaillayout', 'generalauth']) ? 'kt_body' : 'kt_app_body' }}"
-    {{-- hanya untuk layout sidebar/header --}}
-    @if (!in_array($layout, ['corp', 'fancy', 'creative', 'overlay'])) data-kt-app-layout="{{ str_contains($layout, 'aside') ? 'dark-sidebar' : $layout }}"
-        data-kt-app-header-fixed="true"
-        data-kt-app-toolbar-enabled="true"
-        @if ($layout === 'light-sidebar' || str_contains($layout, 'dark-sidebar'))
+    @if ($activeThemeVersion === 'v2' && !$isAuthenticationPage)
+        id="kt_body"
+        style="background-image: url('{{ \App\Support\ThemeAsset::url('media/patterns/header-bg.jpg') }}')"
+        class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled"
+    @else
+        id="{{ in_array($layout, ['corp', 'fancy', 'creative', 'overlay', 'emaillayout', 'generalauth']) ? 'kt_body' : 'kt_app_body' }}"
+        {{-- hanya untuk layout sidebar/header --}}
+        @if (!in_array($layout, ['corp', 'fancy', 'creative', 'overlay'])) data-kt-app-layout="{{ str_contains($layout, 'aside') ? 'dark-sidebar' : $layout }}"
             data-kt-app-header-fixed="true"
-            data-kt-app-header-fixed-mobile="true"
-            data-kt-app-sidebar-enabled="true"
-            data-kt-app-sidebar-fixed="true"
-            data-kt-app-sidebar-hoverable="true"
-            data-kt-app-sidebar-push-header="true"
-            data-kt-app-sidebar-push-toolbar="true"
-            data-kt-app-sidebar-push-footer="true"
             data-kt-app-toolbar-enabled="true"
-            data-kt-app-toolbar-fixed="true"
-            data-kt-app-toolbar-fixed-mobile="false" @endif
-    @if ($layout === 'dark-sidebar aside') data-kt-app-aside-enabled="true"
-            data-kt-app-aside-fixed="true"
-            data-kt-app-aside-push-footer="true" @endif
+            @if ($layout === 'light-sidebar' || str_contains($layout, 'dark-sidebar'))
+                data-kt-app-header-fixed="true"
+                data-kt-app-header-fixed-mobile="true"
+                data-kt-app-sidebar-enabled="true"
+                data-kt-app-sidebar-fixed="true"
+                data-kt-app-sidebar-hoverable="true"
+                data-kt-app-sidebar-push-header="true"
+                data-kt-app-sidebar-push-toolbar="true"
+                data-kt-app-sidebar-push-footer="true"
+                data-kt-app-toolbar-enabled="true"
+                data-kt-app-toolbar-fixed="true"
+                data-kt-app-toolbar-fixed-mobile="false" @endif
+            @if ($layout === 'dark-sidebar aside') data-kt-app-aside-enabled="true"
+                data-kt-app-aside-fixed="true"
+                data-kt-app-aside-push-footer="true" @endif
+        @endif
+        @if (request()->cookie('sidebar_minimize_state') === 'on' ||
+                (isset($_COOKIE['sidebar_minimize_state']) && $_COOKIE['sidebar_minimize_state'] === 'on')) data-kt-app-sidebar-minimize="on" @endif
+        class="
+            @if (in_array($layout, ['corp', 'fancy', 'emaillayout'])) app-blank
+            @elseif (in_array($layout, ['creative', 'overlay']))
+                app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center bgi-no-repeat
+            @elseif (in_array($layout, ['generalauth']))
+                app-blank bgi-size-cover bgi-position-center bgi-no-repeat
+            @else
+                app-default @endif"
     @endif
-
     data-session-lifetime="{{ (int) \App\Models\AppSupport\AppSetting::get('session_lifetime', 120) }}"
     data-user-auth="{{ auth()->check() ? '1' : '0' }}"
-    data-autolock-enabled="{{ (auth()->check() ? (auth()->user()?->setting('autolock_screen', '1') ?? '1') : '1') }}"
-    @if (request()->cookie('sidebar_minimize_state') === 'on' || (isset($_COOKIE['sidebar_minimize_state']) && $_COOKIE['sidebar_minimize_state'] === 'on')) data-kt-app-sidebar-minimize="on" @endif
-    class="
-        @if (in_array($layout, ['corp', 'fancy', 'emaillayout'])) app-blank
-        @elseif (in_array($layout, ['creative', 'overlay']))
-            app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center bgi-no-repeat
-        @elseif (in_array($layout, ['generalauth']))
-            app-blank bgi-size-cover bgi-position-center bgi-no-repeat
-        @else
-            app-default @endif">
+    data-autolock-enabled="{{ auth()->check() ? auth()->user()?->setting('autolock_screen', '1') ?? '1' : '1' }}">
 
-    <!--layout-partial:layout/_default.html-->
-    @include('layouts._default')
+    <!--layout-wrapper:dynamic-theme-wrapper-->
+    @if ($isAuthenticationPage)
+        @yield('content')
+    @else
+        @include(\App\Support\ThemeVersion::resolveView('layouts._wrapper', $activeThemeVersion))
+    @endif
     <!--layout-partial:partials/drawers/_engage-drawer.html-->
     {{-- @include('partials.drawers._engage-drawer') --}}
     <!--layout-partial:partials/_scrolltop.html-->
@@ -166,6 +196,7 @@ License: For each use you must have a valid license purchased only from above li
     @include('partials.modals._global')
     <!--end::Modals-->
 
+    @include('partials.drawers._engage-drawer')
     <!--begin::Javascript-->
     {{--  <script>
         var hostUrl = "{{ $theme_asset_base }}/";

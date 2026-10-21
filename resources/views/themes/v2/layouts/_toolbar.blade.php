@@ -3,10 +3,10 @@
     <!--begin::Container-->
     <div id="kt_toolbar_container" class="container-xxl d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-2 gap-md-0 flex-wrap">
         <!--layout-partial:layout/_page-title.html-->
-        @include('layouts._page-title-v2')
+        @include('themes.v2.layouts._page-title')
         <!--begin::Actions-->
         @isset($action)
-            {{ $action }}
+            {!! $action !!}
         @else
             <div class="d-flex align-items-center justify-content-between justify-content-md-end w-100 w-md-auto py-1">
                 <div class="d-flex align-items-center bg-white bg-opacity-10 px-3 py-1 py-md-1.5 rounded-2 fs-7 fw-semibold text-white shadow-xs cursor-pointer flex-grow-1 flex-md-grow-0"

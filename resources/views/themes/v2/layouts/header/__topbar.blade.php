@@ -4,8 +4,8 @@
     <div class="d-flex align-items-stretch ms-1 ms-lg-3 {{ !app_fitur('tool_search') ? 'feature-hidden' : '' }}"
         style="{{ !app_fitur('tool_search') ? 'display: none !important;' : '' }}"
         data-kt-feature-tool="tool_search">
-        <!--layout-partial:partials/search/_dropdown.html-->
-        @include('partials.search._dropdown')
+        <!--layout-partial:themes/v2/partials/search/_dropdown.html-->
+        @include('themes.v2.partials.search._dropdown')
     </div>
     <!--end::Search-->
     <!--begin::Activities-->
@@ -34,8 +34,8 @@
             <span class="bullet bullet-dot bg-danger h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink d-none" id="app_notification_pulse_dot_v2"></span>
             <span class="badge badge-circle badge-danger position-absolute top-0 end-0 translate-middle-y fs-9 fw-bolder d-none" id="app_notification_unread_badge_v2" style="transform: translate(20%, -20%);">0</span>
         </div>
-        <!--layout-partial:partials/menus/_notifications-menu.html-->
-        @include('partials.menus._notifications-menu')
+        <!--layout-partial:themes/v2/partials/menus/_notifications-menu.html-->
+        @include('themes.v2.partials.menus._notifications-menu')
         <!--end::Menu wrapper-->
     </div>
     <!--end::Notifications-->
@@ -65,8 +65,8 @@
             <i class="ki-duotone ki-element-11 fs-1"><span class="path1"></span><span class="path2"></span><span
                     class="path3"></span><span class="path4"></span></i>
         </div>
-        <!--layout-partial:partials/menus/_quick-links-menu.html-->
-        @include('partials.menus._quick-links-menu')
+        <!--layout-partial:themes/v2/partials/menus/_quick-links-menu.html-->
+        @include('themes.v2.partials.menus._quick-links-menu')
         <!--end::Menu wrapper-->
     </div>
     <!--end::Quick links-->

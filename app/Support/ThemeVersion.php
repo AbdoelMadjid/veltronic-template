@@ -41,7 +41,10 @@ class ThemeVersion
             return self::$cachedAvailable;
         }
 
-        $versions = config('theme.versions', [self::default()]);
+        $themes = config('theme.themes');
+        $versions = is_array($themes) && $themes !== []
+            ? array_keys($themes)
+            : config('theme.versions', [self::default()]);
 
         if (!is_array($versions) || $versions === []) {
             self::$cachedAvailable = [self::default()];
@@ -72,6 +75,16 @@ class ThemeVersion
     public static function resolveView(string $baseView, ?string $version = null): string
     {
         $version = self::normalize($version ?? self::current());
+        $themeViewPath = trim(str_replace('/', '.', (string) config("theme.themes.{$version}.view_path", '')), '.');
+
+        if ($themeViewPath !== '') {
+            $candidate = $themeViewPath.'.'.$baseView;
+
+            if (view()->exists($candidate)) {
+                return $candidate;
+            }
+        }
+
         $candidate = $baseView.'-'.$version;
 
         return view()->exists($candidate) ? $candidate : $baseView;
@@ -80,6 +93,12 @@ class ThemeVersion
     public static function assetBase(?string $assetPack = null): string
     {
         $assetPack = self::normalize($assetPack ?? self::current());
+        $bases = config('theme.themes');
+
+        if (is_array($bases) && isset($bases[$assetPack]['asset_base'])) {
+            return (string) $bases[$assetPack]['asset_base'];
+        }
+
         $bases = config('theme.asset_bases', []);
 
         if (is_array($bases) && isset($bases[$assetPack])) {

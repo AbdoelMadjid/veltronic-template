@@ -19,7 +19,7 @@
             <!--layout-partial:partials/search/partials/_form-dropdown.html-->
             @include('partials.search.partials._form-dropdown')
             <!--layout-partial:partials/search/partials/_results.html-->
-            @include('partials.search.partials._results-v2')
+            @include('themes.v2.partials.search.partials._results')
             <!--layout-partial:partials/search/partials/_main.html-->
             @include('partials.search.partials._main')
             <!--layout-partial:partials/search/partials/_empty.html-->
@@ -27,7 +27,7 @@
         </div>
         <!--end::Wrapper-->
         <!--layout-partial:partials/search/partials/_advanced-options.html-->
-        @include('partials.search.partials._advanced-options-v2')
+        @include('themes.v2.partials.search.partials._advanced-options')
         <!--layout-partial:partials/search/partials/_preferences.html-->
         @include('partials.search.partials._preferences')
     </div>

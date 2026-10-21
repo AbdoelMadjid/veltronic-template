@@ -1,3 +1,9 @@
+@php
+    $currentThemeVersion = \App\Support\ThemeVersion::current();
+@endphp
+@if ($currentThemeVersion === 'v2')
+    @include('themes.v2.layouts._toolbar', ['action' => $action ?? null])
+@else
 <!--begin::Toolbar-->
 @isset($kt_app_toolbar)
     {{ $kt_app_toolbar }}
@@ -46,3 +52,4 @@
     <!--end::Toolbar-->
 @endisset
 <!--end::Toolbar-->
+@endif

@@ -40,16 +40,16 @@
                             <h4>1. Prinsip Utama Multi-Version Theme</h4>
                             <div class="schema-flow">
                                 <div class="schema-step">
-                                    <strong>Config-Driven:</strong> Daftar versi tema didefinisikan secara deklaratif di <code>config/theme.php</code> (contoh: <code>['v1', 'v2']</code>).
+                                    <strong>Universal Master Shell:</strong> <code>layouts/index.blade.php</code> bertindak sebagai root shell universal untuk seluruh tag HTML, head, script, modal, dan drawers tanpa pembajakan output buffer.
                                 </div>
                                 <div class="schema-step">
-                                    <strong>Suffix-Based View Resolution:</strong> View dengan suffix versi (misal <code>_toolbar-v2.blade.php</code>) akan diprioritaskan jika versi v2 aktif. Jika tidak ada, fallback otomatis ke base view (<code>_toolbar.blade.php</code>).
+                                    <strong>Pluggable Layout Body Wrapper:</strong> Variasi visual tata letak dipisahkan ke dalam wrapper (V1: <code>layouts/_wrapper.blade.php</code>, V2: <code>themes/v2/layouts/_wrapper.blade.php</code>) dan dimuat via <code>ThemeVersion::resolveView('layouts._wrapper')</code>.
                                 </div>
                                 <div class="schema-step">
-                                    <strong>Unified Asset Root:</strong> Semua aset tetap berada di folder tunggal <code>public/assets</code> dengan penamaan suffix file seperti <code>style.bundle-v2.css</code>.
+                                    <strong>Unified Asset Root with Suffix:</strong> Semua aset tetap berada di folder tunggal <code>public/assets</code> dengan penamaan suffix file seperti <code>style.bundle-v2.css</code>.
                                 </div>
                                 <div class="schema-step">
-                                    <strong>Runtime State Preservation:</strong> Versi aktif disimpan dalam session <code>theme_version</code> dan dipelihara bahkan setelah user login atau logout.
+                                    <strong>Runtime State Preservation:</strong> Versi aktif disimpan dalam session <code>theme_version</code> dan disinkronkan ke tabel database <code>AppSetting</code>.
                                 </div>
                             </div>
                         </div>
@@ -93,8 +93,8 @@ class ThemeVersion
                             <h4>3. Alur Resolusi View & Asset di Blade</h4>
                             <div class="schema-flow">
                                 <div class="schema-step">
-                                    <strong>Pola Include View Modular:</strong>
-                                    <pre class="schema-code mt-2"><code>@@include(\App\Support\ThemeVersion::resolveView('partials.theme-mode._main', $theme_version ?? null))</code></pre>
+                                    <strong>Pola Include Wrapper Body di Master Shell:</strong>
+                                    <pre class="schema-code mt-2"><code>@@include(\App\Support\ThemeVersion::resolveView('layouts._wrapper', $activeThemeVersion))</code></pre>
                                 </div>
                                 <div class="schema-step">
                                     <strong>Pola Resolusi URL Asset:</strong>

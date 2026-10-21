@@ -10,6 +10,12 @@ class ThemeAsset
         $activeVersion = ThemeVersion::normalize($version ?? ThemeVersion::current());
         $base = ThemeVersion::assetBase($activeVersion);
 
+        $themeAssetPath = trim((string) config("theme.themes.{$activeVersion}.asset_path", ''), '/\\');
+
+        if ($themeAssetPath !== '' && is_file(public_path($themeAssetPath.'/'.$path))) {
+            return asset($themeAssetPath.'/'.$path);
+        }
+
         if ($activeVersion !== 'v1') {
             $versionedPath = self::versionedPath($path, $activeVersion);
 

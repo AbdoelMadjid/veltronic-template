@@ -26,7 +26,7 @@
                     <span class="schema-pill">Theme Versioning</span>
                     <h2 class="fw-bold">Panduan Pergantian Versi Metronic</h2>
                     <p class="schema-lead">
-                        Panduan standar untuk menambah versi tema baru (misalnya v3, v55) tanpa hardcode versi, tanpa folder aset terpisah, dan tetap aman terhadap regresi.
+                        Tambahkan tema melalui satu registri, simpan view dan aset khusus di folder tema, lalu gunakan komponen bersama sebagai fallback.
                     </p>
                 </div>
 
@@ -38,8 +38,10 @@
                                 <li>Jangan hardcode string versi seperti <code>'v2'</code> di Blade.</li>
                                 <li>Pakai resolver versi: <code>App\Support\ThemeVersion</code>.</li>
                                 <li>Pakai resolver aset: <code>App\Support\ThemeAsset::url(...)</code>.</li>
-                                <li>Jangan buat folder <code>assets-v3</code>, gunakan suffix file <code>-v3</code>.</li>
-                                <li>Buat file <code>-vN.blade.php</code> hanya jika memang ada perbedaan layout/style.</li>
+                                <li>Daftarkan tema di <code>config/theme.php</code> pada key <code>themes</code>.</li>
+                                <li>Simpan view khusus pada <code>resources/views/themes/vN/</code> dengan struktur direktori yang sama seperti view dasar.</li>
+                                <li>Simpan aset khusus pada <code>public/themes/vN/</code> dan isi <code>asset_path</code> di registri bila diperlukan.</li>
+                                <li>View dan aset yang tidak berbeda tetap memakai file bersama.</li>
                             </ul>
                         </div>
                     </div>
@@ -67,7 +69,7 @@ tests/Unit/ThemeAssetTest.php</code></pre>
                                 <li><code>available()</code>: daftar versi legal untuk switch runtime.</li>
                                 <li><code>normalize($version)</code>: validasi versi input; fallback ke default jika tidak valid.</li>
                                 <li><code>current()</code>: membaca <code>session('theme_version')</code> lalu dinormalisasi.</li>
-                                <li><code>resolveView($baseView, $version)</code>: pilih view <code>-vN</code> jika ada; jika tidak, pakai base view.</li>
+                                <li><code>resolveView($baseView, $version)</code>: pilih view di folder tema; dukung suffix lama sebagai fallback; lalu pakai base view.</li>
                                 <li><code>assetBase($assetPack)</code>: menentukan root folder assets berdasarkan mapping config.</li>
                             </ul>
                             <div class="schema-note mt-3">Efek praktis: view dispatcher cukup memanggil satu helper, tanpa if-else hardcode v1/v2/v3.</div>
@@ -151,13 +153,12 @@ php artisan optimize:clear</code></pre>
 
                     <div class="schema-col-6">
                         <div class="schema-card">
-                            <h4>Flow Tambah Versi (Bagian 1: Setup)</h4>
+                            <h4>Flow Tambah Versi (Pola Universal Wrapper)</h4>
                             <ul class="schema-list">
-                                <li>Case 2: fallback ke base file jika suffix tidak ada.</li>
-                                <li>Mencegah hardcode path <code>public/assets</code> di Blade.</li>
-                                <li>Mencegah hardcode path <code>public/assets</code> di Blade.</li>
-                                <li>Jika file suffix tidak ada, helper fallback otomatis ke file base tanpa error.</li>
-                                <li>Jika file suffix tidak ada, helper fallback otomatis ke file base tanpa error.</li>
+                                <li><strong>Langkah 1: Registrasi Config:</strong> Daftarkan key tema baru di <code>config/theme.php</code> (misal <code>'v3' => ['label' => 'Tema V3', 'view_path' => 'themes/v3', 'asset_base' => 'assets']</code>).</li>
+                                <li><strong>Langkah 2: Buat Wrapper Layout:</strong> Cukup buat 1 file wrapper di <code>resources/views/themes/v3/layouts/_wrapper.blade.php</code> (tanpa perlu menduplikasi tag html, head, script, atau modal).</li>
+                                <li><strong>Langkah 3: Sinkronisasi Aset (Opsi):</strong> Jalankan <code>php artisan theme:assets-diff v3 --source=assets-v3</code> untuk mengekstrak suffix CSS/JS unik ke <code>public/assets/</code>.</li>
+                                <li><strong>Langkah 4: Fallback Otomatis:</strong> Seluruh halaman modul dan aset yang tidak di-override akan otomatis menggunakan master shell dan aset bersama.</li>
                             </ul>
                         </div>
                     </div>

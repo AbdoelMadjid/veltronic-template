@@ -1,171 +1,135 @@
-# Panduan Pergantian Versi Metronic
+# Panduan Operasional Pergantian Versi Metronic (Theme Versioning)
 
 URL aplikasi: `/help/pemrograman/operasional/panduan-pergantian-versi-metronic`
 
 [⬅ Kembali ke README Docs](../README.md)
 
-Panduan standar untuk menambah versi tema baru (misalnya v3, v55) tanpa hardcode versi, tanpa folder aset terpisah, dan tetap aman terhadap regresi.
+Panduan operasional standar untuk mengelola varian tema Metronic (V1, V2, hingga VN) menggunakan arsitektur **Universal Master Shell + Pluggable Layout Wrapper** tanpa duplikasi tag HTML, tanpa folder aset terpisah, dan terbukti aman dari regresi.
 
 Tag:
-- `suffix-based versioning`
-- `single assets root`
+- `universal-master-shell`
+- `pluggable-layout-wrapper`
+- `suffix-based-assets`
+- `single-assets-root`
 - `config-driven`
-- `regression-safe`
+- `zero-reload-compatible`
 
-## Prinsip Utama
+---
 
-- Jangan hardcode string versi seperti `'v2'` di Blade.
-- Pakai resolver versi: `App\Support\ThemeVersion`.
-- Pakai resolver aset: `App\Support\ThemeAsset::url(...)`.
-- Jangan buat folder `assets-v3`, gunakan suffix file `-v3`.
-- Buat file `-vN.blade.php` hanya jika memang ada perbedaan layout/style.
+## 1. Prinsip Utama Arsitektur
 
-## Komponen Inti
+1. **Universal Master Shell (Single Source of Truth):**
+   - File [resources/views/layouts/index.blade.php](file:///c:/laragon/finnally/veltronic-template/resources/views/layouts/index.blade.php) adalah master layout tunggal untuk seluruh aplikasi.
+   - Mengelola tag `<html>`, `<head>`, meta SEO, favicon, asset CSS global, inisialisasi Zero-Flicker (`theme-mode`, `lang`, `icon-style`), modal global, drawers, dan bundle JavaScript.
+   - **DILARANG** melakukan output buffering hack (`echo view(...)->render(); return;`) di dalam layout.
+2. **Pluggable Layout Body Wrapper:**
+   - Variasi visual antar versi (misal: Sidebar vertikal pada V1 vs Horizontal Top Header pada V2) dipisahkan ke dalam file layout wrapper:
+     - V1 (Metronic Demo 1): [resources/views/layouts/_wrapper.blade.php](file:///c:/laragon/finnally/veltronic-template/resources/views/layouts/_wrapper.blade.php)
+     - V2 (Metronic Demo 2): [resources/views/themes/v2/layouts/_wrapper.blade.php](file:///c:/laragon/finnally/veltronic-template/resources/views/themes/v2/layouts/_wrapper.blade.php)
+   - Layout utama memanggil wrapper secara dinamis:
+     ```blade
+     @include(\App\Support\ThemeVersion::resolveView('layouts._wrapper', $activeThemeVersion))
+     ```
+3. **Unified Single Assets Root & Suffixing:**
+   - Semua aset statis tetap berada di folder tunggal `public/assets/`.
+   - File CSS/JS yang memiliki modifikasi spesifik versi menggunakan penamaan suffix: `style.bundle-v2.css`.
+   - Resolusi aset menggunakan helper cerdas: `ThemeAsset::url('css/style.bundle.css')`.
+4. **Zero Configuration View Fallback:**
+   - View atau parsial yang tidak berbeda antar versi otomatis menggunakan file bersama/dasar. Anda hanya perlu membuat file khusus di `resources/views/themes/vN/` jika file tersebut benar-benar berbeda.
 
-> Catatan: Seluruh komponen di atas sudah disiapkan untuk flow multi-versi agar penambahan versi baru tinggal konfigurasi + file yang berbeda saja.
+---
 
-## Rincian Komponen Inti (Core Resolver)
+## 2. Komponen Inti Arsitektur
 
-Core resolver utama pada proyek:
-- `app/Support/ThemeVersion.php`
-- `app/Support/ThemeAsset.php`
-- `app/Console/Commands/ThemeAssetsDiff.php`
-- `config/theme.php`
-- `tests/Feature/ThemeVersionRenderTest.php`
-- `tests/Unit/ThemeAssetTest.php`
+| Komponen | File Path | Fungsi Utama |
+|---|---|---|
+| **Theme Registry** | `config/theme.php` | Mendefinisikan versi aktif, label, lokasi view khusus, dan asset base. |
+| **Theme Resolver** | `app/Support/ThemeVersion.php` | Normalisasi versi, membaca session/database, dan resolusi path view fallback. |
+| **Asset Resolver** | `app/Support/ThemeAsset.php` | Menghasilkan URL asset dengan deteksi suffix `-vN` dan auto-fallback. |
+| **Master Shell** | `resources/views/layouts/index.blade.php` | HTML root shell universal untuk seluruh 400+ halaman modul. |
+| **V1 Wrapper** | `resources/views/layouts/_wrapper.blade.php` | Struktur tata letak sidebar Demo 1 (`kt_app_wrapper`, `kt_app_main`). |
+| **V2 Wrapper** | `resources/views/themes/v2/layouts/_wrapper.blade.php` | Struktur tata letak horizontal Demo 2 (`kt_wrapper`, `header-bg.jpg`). |
+| **Route Switcher** | `routes/web.php` (`/theme/version/{v}`) | Endpoint switch runtime, proteksi role master/admin, simpan session + DB, dan kirim JSON AJAX. |
+| **Asset Diff CLI** | `app/Console/Commands/ThemeAssetsDiff.php` | Tool CLI untuk menyerap dan memberi suffix aset baru secara otomatis. |
+| **Quality Gate** | `tests/Feature/ThemeVersionRenderTest.php` | Pengujian otomatis integritas render V1 & V2. |
 
-### Contoh Pattern yang Benar
+---
+
+## 3. Alur Kerja (Workflow) Menambah Tema Baru (Misal: V3)
+
+Untuk menambahkan varian tema baru (misal: Metronic Demo 3), Anda **TIDAK PERLU** lagi menyalin seluruh file HTML, head, modal, dan puluhan script. Cukup ikuti 4 langkah ringkas:
+
+### Langkah 1: Daftarkan di Registri Konfigurasi
+Buka [config/theme.php](file:///c:/laragon/finnally/veltronic-template/config/theme.php) dan tambahkan key versi baru:
+```php
+'themes' => [
+    'v1' => ['label' => 'Tema V1', 'view_path' => 'themes/v1', 'asset_base' => 'assets'],
+    'v2' => ['label' => 'Tema V2', 'view_path' => 'themes/v2', 'asset_base' => 'assets'],
+    'v3' => ['label' => 'Tema V3', 'view_path' => 'themes/v3', 'asset_base' => 'assets'],
+],
+```
+
+### Langkah 2: Buat 1 File Layout Wrapper Body
+Buat file `resources/views/themes/v3/layouts/_wrapper.blade.php`:
+```blade
+<div class="d-flex flex-column flex-root">
+    <div class="page d-flex flex-row flex-column-fluid">
+        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper_v3">
+            @include('themes.v3.layouts.header._base')
+            
+            @hasSection('toolbar')
+                @yield('toolbar')
+            @else
+                @include('themes.v3.layouts._toolbar')
+            @endif
+
+            <div class="content d-flex flex-column flex-column-fluid">
+                @yield('content')
+            </div>
+
+            @include('themes.v3.layouts._footer')
+        </div>
+    </div>
+</div>
+```
+
+### Langkah 3: Ekstraksi & Suffix Aset (Opsional jika ada CSS/JS Khusus)
+Jika tema baru membawa bundle CSS/JS yang dimodifikasi, gunakan artisan command:
+```bash
+# 1) Preview dampak perubahan (Dry Run)
+php artisan theme:assets-diff v3 --source=assets-v3 --dry-run
+
+# 2) Eksekusi sinkronisasi aset ke public/assets/ dengan suffix -v3
+php artisan theme:assets-diff v3 --source=assets-v3
+```
+
+### Langkah 4: Validasi & Uji Targeted Test
+Jalankan pengujian targeted untuk memastikan layout v3 me-render kontainer yang tepat:
+```bash
+php artisan test tests/Feature/ThemeVersionRenderTest.php tests/Unit/ThemeAssetTest.php
+```
+
+---
+
+## 4. Pola Resolusi Aset di Blade
+
+Semua stylesheet dan script di Blade wajib menggunakan `ThemeAsset::url()`:
 
 ```blade
-<link rel="stylesheet" href="{{ ThemeAsset::url('css/style.bundle.css') }}" />
-<script src="{{ ThemeAsset::url('js/scripts.bundle.js') }}"></script>
+<!-- Global CSS: otomatis memuat style.bundle-v2.css jika V2 aktif, atau fallback ke style.bundle.css -->
+<link href="{{ \App\Support\ThemeAsset::url('css/style.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" />
+
+<!-- Plugin CSS -->
+<link href="{{ \App\Support\ThemeAsset::url('plugins/custom/datatables/datatables.bundle.css', $theme_asset_pack ?? null) }}" rel="stylesheet" />
+
+<!-- Global Javascript -->
+<script src="{{ \App\Support\ThemeAsset::url('js/scripts.bundle.js', $theme_asset_pack ?? null) }}"></script>
 ```
 
-### Signature
+---
 
-```bash
-php artisan theme:assets-diff {theme_version} \
-  [--source=...] \
-  [--base=assets] \
-  [--dry-run] \
-  [--keep-source] \
-  [--force]
-```
+## 5. Standar Toolbar Modul Adaptif
 
-### Arti Parameter & Opsi
-
-- `{theme_version}`: versi target, contoh `v3`.
-- `--source`: folder sumber relatif ke `public/`, contoh `assets-v3`.
-- `--base`: folder assets utama (default `assets`).
-- `--dry-run`: simulasi tanpa perubahan file.
-- `--keep-source`: file source tidak dibersihkan.
-- `--force`: timpa file suffix yang sudah ada.
-
-### Logika Proses per File
-
-```text
-ThemeAsset::url("css/style.bundle.css", "v3")
--> cek assets/css/style.bundle-v3.css
--> jika ada pakai -v3, jika tidak pakai assets/css/style.bundle.css
-```
-
-```html
-<!-- CSS page/plugin -->
-<link rel="stylesheet" href="{{ ThemeAsset::url('css/datatables.bundle.css') }}" />
-
-<!-- CSS global (layout) -->
-<link rel="stylesheet" href="{{ ThemeAsset::url('css/style.bundle.css') }}" />
-
-<!-- JS global -->
-<script src="{{ ThemeAsset::url('js/scripts.bundle.js') }}"></script>
-```
-
-- `default()`: mengambil versi default dari `config/theme.php`.
-- `available()`: daftar versi legal untuk switch runtime.
-- `normalize($version)`: validasi versi input; fallback ke default jika tidak valid.
-- `current()`: membaca `session('theme_version')` lalu dinormalisasi.
-- `resolveView($baseView, $version)`: pilih view `-vN` jika ada; jika tidak, pakai base view.
-- `assetBase($assetPack)`: menentukan root folder assets berdasarkan mapping config.
-- Menerima path relatif, contoh: `css/style.bundle.css`.
-- Jika versi aktif bukan default, command mencoba file suffix terlebih dahulu: `css/style.bundle-vN.css`.
-- Jika file suffix ada, dipakai; jika tidak, fallback ke file base.
-- Method internal `versionedPath()` yang membentuk nama file suffix otomatis.
-- `{theme_version}`: versi target, contoh `v3`.
-- `--source`: path source relatif ke `public/` (contoh `assets-v3`).
-- `--base`: base assets relatif ke `public/` (default `assets`).
-- `--dry-run`: simulasi, tidak ada perubahan file.
-- `--keep-source`: source tidak dibersihkan setelah proses.
-- `--force`: timpa file suffix versi yang sudah ada.
-
-Langkah/aturan:
-- Jika file source belum ada di base: dipindah ke base dengan path yang sama (`moved_unique`).
-- Jika file source sama persis dengan base (hash sama): ditandai `deleted_same` lalu file source dibersihkan.
-- Jika file beda dan extension `css/js`: file di-rename ke format suffix `-vN` pada path base.
-- Jika file beda tapi bukan `css/js`: ikuti kebijakan media/non-code (dipindah/ditahan) dan tandai untuk review jika perlu.
-
-> Catatan: Efek praktis: view dispatcher cukup memanggil satu helper, tanpa if-else hardcode v1/v2/v3.
-
-## Rincian Komponen Inti (Config & Quality Gate)
-
-File kontrol konfigurasi:
-- `config/theme.php` untuk daftar versi legal + default.
-- Test gate:
-- `tests/Feature/ThemeVersionRenderTest.php`
-- `tests/Unit/ThemeAssetTest.php`
-
-### Contoh Skema Pemakaian
-
-```bash
-# 1) Preview dampak
-php artisan theme:assets-diff v3 --source=assets-v3 --dry-run
-
-# 2) Eksekusi aktual
-php artisan theme:assets-diff v3 --source=assets-v3
-```
-
-### Interpretasi Ringkasan Output
-
-```bash
-# 1) Lihat dampak dulu
-php artisan theme:assets-diff v3 --source=assets-v3 --dry-run
-
-# 2) Eksekusi aktual
-php artisan theme:assets-diff v3 --source=assets-v3
-
-# 3) Jika ingin simpan source (audit/manual compare)
-php artisan theme:assets-diff v3 --source=assets-v3 --keep-source
-
-# 4) Jika suffix -v3 sudah ada dan harus di-replace
-php artisan theme:assets-diff v3 --source=assets-v3 --force
-```
-
-> Catatan: Standar aman: jalankan `--dry-run` dulu, review angka ringkasan, baru jalankan mode apply.
-
-## Pola Wajib di Blade: `ThemeAsset::url()`
-
-> Peringatan: Jika route help baru belum muncul, cek nama file dan path: `resources/views/pages/help/pemrograman/...`.
-
-## Flow Tambah Versi (Bagian 1: Setup)
-
-- Case 2: fallback ke base file jika suffix tidak ada.
-- Mencegah hardcode path `public/assets` di Blade.
-- Mencegah hardcode path `public/assets` di Blade.
-- Jika file suffix tidak ada, helper fallback otomatis ke file base tanpa error.
-- Jika file suffix tidak ada, helper fallback otomatis ke file base tanpa error.
-
-## Flow Tambah Versi (Bagian 2: Validasi)
-
-- `{theme_version}`: versi target, contoh `v3`.
-- `--source`: path source relatif ke `public/` (contoh `assets-v3`).
-- `--base`: base assets relatif ke `public/` (default `assets`).
-- `--dry-run`: simulasi, tidak ada perubahan file.
-
-## Rincian Command `ThemeAssetsDiff`
-
-- `--keep-source`: source tidak dibersihkan setelah proses.
-- `--force`: timpa file suffix versi yang sudah ada.
-- Tidak ada hardcode `'v2'` untuk behavior inti.
-- Tidak ada path `assets-vN` di Blade/layout shared.
-- Semua file versi pakai suffix `-vN`.
-
-> Catatan: Tujuan akhirnya: scalable untuk v3, v10, atau v55 tanpa perlu mengubah pola arsitektur.
+Seluruh halaman modul yang mendefinisikan `@section('toolbar')` kini otomatis didukung di semua varian tema:
+- Di V1: Otomatis menggunakan kontainer toolbar `kt_app_toolbar` dengan styling background neutral.
+- Di V2: Otomatis didelegasikan ke toolbar horizontal Demo 2 dengan breadcrumbs putih elegan dan action button yang di-render unescaped `{!! $action !!}`.

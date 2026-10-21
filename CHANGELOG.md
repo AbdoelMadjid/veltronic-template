@@ -5,6 +5,26 @@ All notable changes to the Veltronic Metronic 8 Template project will be documen
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.49.0] - 2026-10-21
+
+### Added & Enhanced
+- **Arsitektur Universal Master Shell & Pluggable Layout Wrapper (Pergantian Tema V1 & V2 Metronic)**:
+  - **Universal Master Shell (`layouts/index.blade.php`)**: Mengeliminasi anti-pattern layout hijacking (`echo view(...)->render(); return;`) pada layout utama. Mengadopsi arsitektur Universal Master Shell yang menangani `<!DOCTYPE html>`, dynamic `<html>` & `<body>` attributes (seperti `data-kt-app-layout="dark-sidebar"` di V1 Demo 1 dan `data-kt-app-layout` kosong + background image di V2 Demo 2), head styles, dynamic scripts, serta global partials/drawers/modals dalam satu titik sentral.
+  - **Pluggable Layout Wrapper**: Memisahkan kerangka struktur layout V1 dan V2 ke wrapper modular:
+    - `layouts/_wrapper.blade.php`: Layout wrapper V1 (Metronic Demo 1) dengan Sidebar vertikal, Topbar Header, Toolbar, Content Container, dan Footer.
+    - `themes/v2/layouts/_wrapper.blade.php`: Layout wrapper V2 (Metronic Demo 2) dengan Header Horizontal bernavigasi menu atas, background pattern header, Toolbar horizontal terpadu, Content Container, dan Footer.
+    - Pemuatan wrapper dilakukan secara dinamis melalui `@include(\App\Support\ThemeVersion::resolveView('layouts._wrapper', $activeThemeVersion))`.
+  - **Toolbar Action Button Rendering (`layouts/partials/_toolbar.blade.php`)**:
+    - Memperbaiki rendering tombol aksi toolbar pada V2 agar menggunakan unescaped `{!! $action !!}`, sehingga tombol aksi (seperti Tambah Data, Export, dll.) yang dikirim dalam bentuk HTML/Blade string dapat dirender secara sempurna tanpa ter-escape menjadi teks mentah.
+  - **Backward Compatibility 100% (`themes/v2/layouts/index.blade.php`)**:
+    - File `resources/views/themes/v2/layouts/index.blade.php` dipertahankan dan disederhanakan menjadi `@extends('layouts.index')` sehingga kode modul lama yang merender langsung view V2 tetap berfungsi sempurna tanpa *breaking change*.
+  - **Pembersihan Berkas Redundan (`resources/views/themes/v2/`)**:
+    - Membersihkan 33 berkas duplikat/forwarder tak terpakai di folder `themes/v2/` dan mempertahankan 13 berkas inti layout spesifik V2.
+    - Menjaga keutuhan 15 berkas variasi widget (`*-v2.blade.php`) di `resources/views/partials/widgets/` dan memirroring ke `themes/v2/partials/widgets/` untuk style widget v2.
+  - **Sinkronisasi Dokumentasi Interaktif & Panduan Operasional**:
+    - Memperbarui dokumentasi Markdown (`docs/skema-pemrograman/operasional/panduan-pergantian-versi-metronic.md`, `docs/skema-pemrograman/skema/pergantian-versi-tampilan.md`, `docs/skema-pemrograman/skema/layout.md`).
+    - Memperbarui dokumentasi Blade UI interaktif (`/help/pemrograman/operasional/panduan-pergantian-versi-metronic` dan `/help/pemrograman/skema/pergantian-versi-tampilan`).
+
 ## [v1.48.0] - 2026-10-06
 
 ### Added & Enhanced

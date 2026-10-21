@@ -34,13 +34,49 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Versi Saat Ini: v1.48.0
+                            Versi Saat Ini: v1.49.0
                         </span>
                     </div>
                 </div>
                 <div class="card-body pt-2">
                     <!--begin::Timeline-->
                     <div class="timeline-label">
+                        <!--begin::Item v1.49.0 (Minor)-->
+                        <div class="timeline-item mb-7">
+                            <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.49.0</div>
+                            <div class="timeline-badge">
+                                <i class="fa fa-genderless text-primary fs-1"></i>
+                            </div>
+                            <div class="timeline-content ps-3">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge badge-primary fw-bold text-white">v1.49.0</span>
+                                    <span class="badge badge-light-primary fw-bold fs-8">Minor</span>
+                                    <span class="badge badge-light text-gray-700 fs-8 border">
+                                        <i class="ki-duotone ki-calendar-8 fs-8 me-1 text-gray-600">
+                                             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
+                                        </i>21 Okt 2026, 09:20 WIB
+                                    </span>
+                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                </div>
+                                <h4 class="text-gray-900 fw-bold fs-6 mb-2">Arsitektur Universal Master Shell &amp; Pluggable Layout Wrapper (Pergantian Tema V1 &amp; V2 Metronic)</h4>
+                                <p class="text-gray-700 fs-7 mb-3">
+                                    Refaktorisasi menyeluruh pada arsitektur tata letak pergantian versi tampilan (Metronic Demo 1 V1 &amp; Demo 2 V2). Mengeliminasi anti-pattern layout hijacking pada <code class="text-primary">layouts/index.blade.php</code> dan beralih ke pola <strong>Universal Master Shell</strong> yang mengelola kerangka HTML, dynamic body attributes, dynamic scripts, serta global partials dalam satu pusat kendali yang bersih, ramping, dan modular.
+                                </p>
+                                <div class="bg-light rounded p-4 border border-dashed border-gray-300">
+                                    <div class="fw-semibold text-gray-800 fs-7 mb-2">Sorotan Perubahan:</div>
+                                    <ul class="text-gray-700 fs-7 mb-0 ps-4">
+                                        <li><strong>Universal Master Shell (<code>layouts/index.blade.php</code>)</strong>: Menjadi cangkang tunggal untuk seluruh versi tampilan tanpa <em>hijacking</em> (<code>echo view(...)->render(); return;</code>). Mendukung dynamic body class, layout attributes, serta background image otomatis sesuai tema aktif.</li>
+                                        <li><strong>Pluggable Layout Wrapper</strong>: Memisahkan kerangka visual ke wrapper modular (<code>layouts/_wrapper.blade.php</code> untuk Sidebar V1 dan <code>themes/v2/layouts/_wrapper.blade.php</code> untuk Header Horizontal V2) yang di-include secara dinamis via <code>ThemeVersion::resolveView()</code>.</li>
+                                        <li><strong>Toolbar Action Buttons Unescaped Rendering</strong>: Memperbaiki rendering tombol aksi toolbar pada V2 agar menggunakan <code>{!! $action !!}</code> sehingga tombol aksi kustom (seperti Tambah Data, Export, dll.) ter-render secara sempurna tanpa ter-escape.</li>
+                                        <li><strong>100% Backward Compatibility</strong>: Berkas <code>themes/v2/layouts/index.blade.php</code> dipertahankan sebagai <code>@extends('layouts.index')</code>, menjamin kompatibilitas mundur penuh bagi pemanggilan langsung view layout V2.</li>
+                                        <li><strong>Pembersihan &amp; Preservasi File</strong>: Membersihkan 33 berkas duplikat tak terpakai di folder <code>themes/v2/</code> sekaligus mempertahankan seluruh 15 berkas variasi widget (<code>*-v2.blade.php</code>) pada <code>partials/widgets/</code>.</li>
+                                        <li><strong>Pembaruan Dokumentasi Skema &amp; Operasional</strong>: Menyelaraskan seluruh panduan di <code>docs/skema-pemrograman/</code> dan modul UI bantuan interaktif (<code>/help/pemrograman/operasional/panduan-pergantian-versi-metronic</code> serta <code>/help/pemrograman/skema/pergantian-versi-tampilan</code>).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item v1.49.0-->
+
                         <!--begin::Item v1.48.0 (Minor)-->
                         <div class="timeline-item mb-7">
                             <div class="timeline-label fw-bold text-gray-800 fs-7 w-80px">v1.48.0</div>
@@ -56,7 +92,7 @@
                                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span>
                                         </i>06 Okt 2026, 11:30 WIB
                                     </span>
-                                    <span class="badge badge-light-success fs-8 ms-auto">Latest Release</span>
+                                    <span class="badge badge-light-secondary fs-8 ms-auto">Stable Release</span>
                                 </div>
                                 <h4 class="text-gray-900 fw-bold fs-6 mb-2">Fitur Permintaan Keluar Akun (Pola Breeze), Penyiaran Notifikasi Terarah Navbar, &amp; Pemrosesan Cepat Master/Admin</h4>
                                 <p class="text-gray-700 fs-7 mb-3">

@@ -115,12 +115,18 @@ class ThemeVersion
                             <div class="schema-flow">
                                 <div class="schema-step">
                                     <strong>Route Switcher (<code>routes/web.php</code>):</strong>
-                                    <pre class="schema-code mt-2"><code>Route::get('/theme/version/{version}', function ($version) {
+                                    <pre class="schema-code mt-2"><code>Route::get('/theme/version/{version}', function (Request $request, $version) {
     if (in_array($version, ThemeVersion::available(), true)) {
         session(['theme_version' => $version]);
+        AppSetting::set('default_theme_version', $version, 'appearance');
+        UserLog::record('appsupport', 'topbar-tools', 'Ganti Varian Tema', 'Ubah layout: ' . strtoupper($version));
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json(['status' => 'success', 'version' => $version]);
+        }
     }
     return redirect()->back();
-})->name('theme.version.switch');</code></pre>
+})->middleware(['auth', 'role:master|admin'])->name('theme.version.switch');</code></pre>
                                 </div>
                                 <div class="schema-step">
                                     <strong>UI Switcher Menu:</strong> Tersedia di navbar topbar (ikon cube) dan menu dropdown profil user.
